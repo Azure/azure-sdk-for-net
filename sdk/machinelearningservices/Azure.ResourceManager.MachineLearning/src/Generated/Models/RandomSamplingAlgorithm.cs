@@ -22,22 +22,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="RandomSamplingAlgorithm"/>. </summary>
         /// <param name="samplingAlgorithmType"> [Required] The algorithm used for generating hyperparameter values, along with configuration properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="logbase"> An optional positive number or e in string format to be used as base for log based random sampling. </param>
-        /// <param name="rule"> The specific type of random algorithm. </param>
         /// <param name="seed"> An optional integer to use as the seed for random number generation. </param>
-        internal RandomSamplingAlgorithm(SamplingAlgorithmType samplingAlgorithmType, IDictionary<string, BinaryData> serializedAdditionalRawData, string logbase, RandomSamplingAlgorithmRule? rule, int? seed) : base(samplingAlgorithmType, serializedAdditionalRawData)
+        /// <param name="rule"> The specific type of random algorithm. </param>
+        internal RandomSamplingAlgorithm(SamplingAlgorithmType samplingAlgorithmType, IDictionary<string, BinaryData> serializedAdditionalRawData, int? seed, RandomSamplingAlgorithmRule? rule) : base(samplingAlgorithmType, serializedAdditionalRawData)
         {
-            Logbase = logbase;
-            Rule = rule;
             Seed = seed;
+            Rule = rule;
             SamplingAlgorithmType = samplingAlgorithmType;
         }
 
-        /// <summary> An optional positive number or e in string format to be used as base for log based random sampling. </summary>
-        public string Logbase { get; set; }
-        /// <summary> The specific type of random algorithm. </summary>
-        public RandomSamplingAlgorithmRule? Rule { get; set; }
         /// <summary> An optional integer to use as the seed for random number generation. </summary>
+        [WirePath("seed")]
         public int? Seed { get; set; }
+        /// <summary> The specific type of random algorithm. </summary>
+        [WirePath("rule")]
+        public RandomSamplingAlgorithmRule? Rule { get; set; }
     }
 }

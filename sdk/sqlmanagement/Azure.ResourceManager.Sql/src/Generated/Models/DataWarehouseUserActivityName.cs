@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(DataWarehouseUserActivityName left, DataWarehouseUserActivityName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataWarehouseUserActivityName"/> values are not the same. </summary>
         public static bool operator !=(DataWarehouseUserActivityName left, DataWarehouseUserActivityName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataWarehouseUserActivityName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataWarehouseUserActivityName"/>. </summary>
         public static implicit operator DataWarehouseUserActivityName(string value) => new DataWarehouseUserActivityName(value);
 
         /// <inheritdoc />

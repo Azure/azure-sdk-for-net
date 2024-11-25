@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Concurrent;
 using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics;
 using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection;
 using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering;
@@ -45,9 +46,10 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
             string projectionError = string.Empty;
             Dictionary<string, AccumulatedValues> metricAccumulators = CreateMetricAccumulators(_collectionConfiguration);
             LiveMetricsBuffer liveMetricsBuffer = new();
-            DocumentBuffer filledBuffer = _documentBuffer.FlipDocumentBuffers();
             IEnumerable<DocumentStream> documentStreams = _collectionConfiguration.DocumentStreams;
-            foreach (var item in filledBuffer.ReadAllAndClear())
+
+            ConcurrentQueue<DocumentIngress> filledBuffer = _documentBuffer.FlipDocumentBuffers();
+            while (filledBuffer.TryDequeue(out DocumentIngress? item))
             {
                 bool matchesDocumentStreamFilter = false;
 
@@ -194,8 +196,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
             Dictionary<string, AccumulatedValues> metricAccumulators = new();
 
             // prepare the accumulators based on the collection configuration
-            IEnumerable<Tuple<string, Models.AggregationType?>> allMetrics = collectionConfiguration.TelemetryMetadata;
-            foreach (Tuple<string, Models.AggregationType?> metricId in allMetrics)
+            IEnumerable<Tuple<string, AggregationType?>> allMetrics = collectionConfiguration.TelemetryMetadata;
+            foreach (Tuple<string, AggregationType?> metricId in allMetrics)
             {
                 var derivedMetricInfoAggregation = metricId.Item2;
                 if (!derivedMetricInfoAggregation.HasValue)
@@ -203,7 +205,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
                     continue;
                 }
 
-                if (Enum.TryParse(derivedMetricInfoAggregation.ToString(), out AspNetCore.LiveMetrics.Filtering.AggregationType aggregationType))
+                if (Enum.TryParse(derivedMetricInfoAggregation.ToString(), out AspNetCore.LiveMetrics.Filtering.AggregationTypeEnum aggregationType))
                 {
                     var accumulatedValues = new AccumulatedValues(metricId.Item1, aggregationType);
 

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator ==(EncryptionScopeState left, EncryptionScopeState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EncryptionScopeState"/> values are not the same. </summary>
         public static bool operator !=(EncryptionScopeState left, EncryptionScopeState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EncryptionScopeState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EncryptionScopeState"/>. </summary>
         public static implicit operator EncryptionScopeState(string value) => new EncryptionScopeState(value);
 
         /// <inheritdoc />

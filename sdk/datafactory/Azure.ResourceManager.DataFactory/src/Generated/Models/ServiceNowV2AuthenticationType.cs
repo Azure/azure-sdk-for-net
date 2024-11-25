@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator ==(ServiceNowV2AuthenticationType left, ServiceNowV2AuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceNowV2AuthenticationType"/> values are not the same. </summary>
         public static bool operator !=(ServiceNowV2AuthenticationType left, ServiceNowV2AuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ServiceNowV2AuthenticationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceNowV2AuthenticationType"/>. </summary>
         public static implicit operator ServiceNowV2AuthenticationType(string value) => new ServiceNowV2AuthenticationType(value);
 
         /// <inheritdoc />

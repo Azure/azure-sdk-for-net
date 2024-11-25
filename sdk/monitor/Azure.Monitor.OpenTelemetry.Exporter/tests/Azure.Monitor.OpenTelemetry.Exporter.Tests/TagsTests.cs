@@ -98,7 +98,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             IEnumerable<KeyValuePair<string, object?>> tagObjects = new Dictionary<string, object?>
             {
-                [SemanticConventions.AttributeNetHostIp] = "127.0.0.1",
                 [SemanticConventions.AttributeHttpScheme] = "https",
                 [SemanticConventions.AttributeHttpMethod] = "GET",
                 [SemanticConventions.AttributeHttpHost] = "localhost",
@@ -109,11 +108,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activityTagsProcessor.CategorizeTags(activity);
 
             Assert.Equal(OperationType.Http, activityTagsProcessor.activityType);
-            Assert.Equal(5, activityTagsProcessor.MappedTags.Length);
+            Assert.Equal(4, activityTagsProcessor.MappedTags.Length);
             Assert.Equal("https", AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpScheme));
+            Assert.Equal("GET", AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpMethod));
             Assert.Equal("localhost", AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpHost));
             Assert.Equal("8888", AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpHostPort));
-            Assert.Equal("127.0.0.1", AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeNetHostIp));
         }
 
         [Fact]

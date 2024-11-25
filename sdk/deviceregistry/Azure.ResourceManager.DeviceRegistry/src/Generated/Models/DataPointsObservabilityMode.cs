@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         public static bool operator ==(DataPointsObservabilityMode left, DataPointsObservabilityMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataPointsObservabilityMode"/> values are not the same. </summary>
         public static bool operator !=(DataPointsObservabilityMode left, DataPointsObservabilityMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataPointsObservabilityMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataPointsObservabilityMode"/>. </summary>
         public static implicit operator DataPointsObservabilityMode(string value) => new DataPointsObservabilityMode(value);
 
         /// <inheritdoc />

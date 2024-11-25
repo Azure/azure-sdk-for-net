@@ -40,6 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Properties of Kubernetes. </summary>
+        [WirePath("properties")]
         public MachineLearningKubernetesProperties Properties { get; set; }
     }
 }

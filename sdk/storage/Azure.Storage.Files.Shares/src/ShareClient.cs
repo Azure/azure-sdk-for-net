@@ -490,6 +490,8 @@ namespace Azure.Storage.Files.Shares
                 options?.EnablePaidBursting,
                 options?.PaidBurstingMaxIops,
                 options?.PaidBurstingMaxBandwidthMibps,
+                options?.ProvisionedMaxIops,
+                options?.ProvisionedMaxBandwidthMibps,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -531,6 +533,8 @@ namespace Azure.Storage.Files.Shares
                 options?.EnablePaidBursting,
                 options?.PaidBurstingMaxIops,
                 options?.PaidBurstingMaxBandwidthMibps,
+                options?.ProvisionedMaxIops,
+                options?.ProvisionedMaxBandwidthMibps,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -577,6 +581,8 @@ namespace Azure.Storage.Files.Shares
                 enablePaidBursting: default,
                 paidBurstingMaxIops: default,
                 paidBurstingMaxBandwidthMibps: default,
+                provisionedMaxIops: default,
+                provisionedMaxBandwidthMibps: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -623,6 +629,8 @@ namespace Azure.Storage.Files.Shares
                 enablePaidBursting: default,
                 paidBurstingMaxIops: default,
                 paidBurstingMaxBandwidthMibps: default,
+                provisionedMaxIops: default,
+                provisionedMaxBandwidthMibps: default,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -668,6 +676,12 @@ namespace Azure.Storage.Files.Shares
         ///  Optional. Supported in version 2024-11-04 and above.  Only applicable for premium file storage accounts.
         ///  Default if not specified is the maximum throughput the file share can support. Current maximum for a file share is 10,340 MiB/sec.
         /// </param>
+        /// <param name="provisionedMaxIops">
+        /// Provisioned max IOPS.
+        /// </param>
+        /// <param name="provisionedMaxBandwidthMibps">
+        /// Provisioned max bandwidth MiBps.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -696,6 +710,8 @@ namespace Azure.Storage.Files.Shares
             bool? enablePaidBursting,
             long? paidBurstingMaxIops,
             long? paidBurstingMaxBandwidthMibps,
+            long? provisionedMaxIops,
+            long? provisionedMaxBandwidthMibps,
             bool async,
             CancellationToken cancellationToken,
             string operationName = default)
@@ -728,6 +744,8 @@ namespace Azure.Storage.Files.Shares
                             paidBurstingEnabled: enablePaidBursting,
                             paidBurstingMaxIops: paidBurstingMaxIops,
                             paidBurstingMaxBandwidthMibps: paidBurstingMaxBandwidthMibps,
+                            shareProvisionedIops: provisionedMaxIops,
+                            shareProvisionedBandwidthMibps: provisionedMaxBandwidthMibps,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -743,6 +761,8 @@ namespace Azure.Storage.Files.Shares
                             paidBurstingEnabled: enablePaidBursting,
                             paidBurstingMaxIops: paidBurstingMaxIops,
                             paidBurstingMaxBandwidthMibps: paidBurstingMaxBandwidthMibps,
+                            shareProvisionedIops: provisionedMaxIops,
+                            shareProvisionedBandwidthMibps: provisionedMaxBandwidthMibps,
                             cancellationToken: cancellationToken);
                     }
 
@@ -791,7 +811,7 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual Response<ShareInfo> CreateIfNotExists(
-            ShareCreateOptions options,
+            ShareCreateOptions options = default,
             CancellationToken cancellationToken = default) =>
             CreateIfNotExistsInternal(
                 options?.Metadata,
@@ -803,6 +823,8 @@ namespace Azure.Storage.Files.Shares
                 options?.EnablePaidBursting,
                 options?.PaidBurstingMaxIops,
                 options?.PaidBurstingMaxBandwidthMibps,
+                options?.ProvisionedMaxIops,
+                options?.ProvisionedMaxBandwidthMibps,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -831,7 +853,7 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual async Task<Response<ShareInfo>> CreateIfNotExistsAsync(
-            ShareCreateOptions options,
+            ShareCreateOptions options = default,
             CancellationToken cancellationToken = default) =>
             await CreateIfNotExistsInternal(
                 options?.Metadata,
@@ -843,6 +865,8 @@ namespace Azure.Storage.Files.Shares
                 options?.EnablePaidBursting,
                 options?.PaidBurstingMaxIops,
                 options?.PaidBurstingMaxBandwidthMibps,
+                options?.ProvisionedMaxIops,
+                options?.ProvisionedMaxBandwidthMibps,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -874,10 +898,12 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<ShareInfo> CreateIfNotExists(
-            Metadata metadata = default,
-            int? quotaInGB = default,
-            CancellationToken cancellationToken = default) =>
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            Metadata metadata,
+            int? quotaInGB,
+            CancellationToken cancellationToken) =>
             CreateIfNotExistsInternal(
                 metadata,
                 quotaInGB,
@@ -888,6 +914,8 @@ namespace Azure.Storage.Files.Shares
                 enablePaidBursting: default,
                 paidBurstingMaxIops: default,
                 paidBurstingMaxBandwidthMibps: default,
+                provisionedMaxIops: default,
+                provisionedMaxBandwidthMibps: default,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -918,10 +946,14 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<ShareInfo>> CreateIfNotExistsAsync(
-            Metadata metadata = default,
-            int? quotaInGB = default,
-            CancellationToken cancellationToken = default) =>
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+
+            Metadata metadata,
+            int? quotaInGB,
+            CancellationToken cancellationToken) =>
             await CreateIfNotExistsInternal(
                 metadata,
                 quotaInGB,
@@ -932,6 +964,8 @@ namespace Azure.Storage.Files.Shares
                 enablePaidBursting: default,
                 paidBurstingMaxIops: default,
                 paidBurstingMaxBandwidthMibps: default,
+                provisionedMaxIops: default,
+                provisionedMaxBandwidthMibps: default,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -976,6 +1010,12 @@ namespace Azure.Storage.Files.Shares
         ///  Optional. Supported in version 2024-11-04 and above.  Only applicable for premium file storage accounts.
         ///  Default if not specified is the maximum throughput the file share can support. Current maximum for a file share is 10,340 MiB/sec.
         /// </param>
+        /// <param name="provisionedMaxIops">
+        /// Provisioned max IOPS.
+        /// </param>
+        /// <param name="provisionedMaxBandwidthMibps">
+        /// Provisioned max bandwidth MiBps.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1001,6 +1041,8 @@ namespace Azure.Storage.Files.Shares
             bool? enablePaidBursting,
             long? paidBurstingMaxIops,
             long? paidBurstingMaxBandwidthMibps,
+            long? provisionedMaxIops,
+            long? provisionedMaxBandwidthMibps,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1024,6 +1066,8 @@ namespace Azure.Storage.Files.Shares
                         enablePaidBursting,
                         paidBurstingMaxIops,
                         paidBurstingMaxBandwidthMibps,
+                        provisionedMaxIops,
+                        provisionedMaxBandwidthMibps,
                         async,
                         cancellationToken,
                         operationName: $"{nameof(ShareClient)}.{nameof(CreateIfNotExists)}")
@@ -1993,6 +2037,8 @@ namespace Azure.Storage.Files.Shares
                 enablePaidBursting: options?.EnablePaidBursting,
                 paidBurstingMaxIops: options?.PaidBurstingMaxIops,
                 paidBurstingMaxBandwidthMibps: options?.PaidBurstingMaxBandwidthMibps,
+                provisionedMaxIops: options?.ProvisionedMaxIops,
+                provisionedMaxBandwidthBandwidthMibps: options?.ProvisionedMaxBandwidthMibps,
                 conditions: options?.Conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetProperties)}",
                 async: false,
@@ -2032,6 +2078,8 @@ namespace Azure.Storage.Files.Shares
                 enablePaidBursting: options?.EnablePaidBursting,
                 paidBurstingMaxIops: options?.PaidBurstingMaxIops,
                 paidBurstingMaxBandwidthMibps: options?.PaidBurstingMaxBandwidthMibps,
+                provisionedMaxIops: options?.ProvisionedMaxIops,
+                provisionedMaxBandwidthBandwidthMibps: options?.ProvisionedMaxBandwidthMibps,
                 conditions: options?.Conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetProperties)}",
                 async: true,
@@ -2072,6 +2120,16 @@ namespace Azure.Storage.Files.Shares
         ///  Optional. Supported in version 2024-11-04 and above.  Only applicable for premium file storage accounts.
         ///  Default if not specified is the maximum throughput the file share can support. Current maximum for a file share is 10,340 MiB/sec.
         /// </param>
+        /// <param name="provisionedMaxIops">
+        /// Optional.  Supported in version 2025-01-05 and above.  Only applicable to provisioned v2 storage accounts.
+        /// Sets the max provisioned IOPs for a share. For SSD, min IOPs is 3,000 and max is 100,000.
+        /// For HDD, min IOPs is 500 and max is 50,000.
+        /// </param>
+        /// <param name="provisionedMaxBandwidthBandwidthMibps">
+        /// Optional.  Supported in version 2025-01-05 and above.  Only applicable to provisioned v2 storage accounts.
+        /// Sets the max provisioned brandwith for a share.  For SSD, min bandwidth is 125 MiB/sec and max is 10,340 MiB/sec.
+        /// For HDD, min bandwidth is 60 MiB/sec and max is 5,120 MiB/sec.
+        /// </param>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on setting the quota.
@@ -2102,6 +2160,8 @@ namespace Azure.Storage.Files.Shares
             bool? enablePaidBursting,
             long? paidBurstingMaxIops,
             long? paidBurstingMaxBandwidthMibps,
+            long? provisionedMaxIops,
+            long? provisionedMaxBandwidthBandwidthMibps,
             ShareFileRequestConditions conditions,
             string operationName,
             bool async,
@@ -2134,6 +2194,8 @@ namespace Azure.Storage.Files.Shares
                             paidBurstingEnabled: enablePaidBursting,
                             paidBurstingMaxIops: paidBurstingMaxIops,
                             paidBurstingMaxBandwidthMibps: paidBurstingMaxBandwidthMibps,
+                            shareProvisionedIops: provisionedMaxIops,
+                            shareProvisionedBandwidthMibps: provisionedMaxBandwidthBandwidthMibps,
                             shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -2148,6 +2210,8 @@ namespace Azure.Storage.Files.Shares
                             paidBurstingEnabled: enablePaidBursting,
                             paidBurstingMaxIops: paidBurstingMaxIops,
                             paidBurstingMaxBandwidthMibps: paidBurstingMaxBandwidthMibps,
+                            shareProvisionedIops: provisionedMaxIops,
+                            shareProvisionedBandwidthMibps: provisionedMaxBandwidthBandwidthMibps,
                             shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
@@ -2212,6 +2276,8 @@ namespace Azure.Storage.Files.Shares
                 enablePaidBursting: default,
                 paidBurstingMaxIops: default,
                 paidBurstingMaxBandwidthMibps: default,
+                provisionedMaxIops: default,
+                provisionedMaxBandwidthBandwidthMibps: default,
                 conditions: conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: false,
@@ -2258,6 +2324,8 @@ namespace Azure.Storage.Files.Shares
                 enablePaidBursting: default,
                 paidBurstingMaxIops: default,
                 paidBurstingMaxBandwidthMibps: default,
+                provisionedMaxIops: default,
+                provisionedMaxBandwidthBandwidthMibps: default,
                 conditions: conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: true,
@@ -2302,6 +2370,8 @@ namespace Azure.Storage.Files.Shares
                 enablePaidBursting: default,
                 paidBurstingMaxIops: default,
                 paidBurstingMaxBandwidthMibps: default,
+                provisionedMaxIops: default,
+                provisionedMaxBandwidthBandwidthMibps: default,
                 conditions: default,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: false,
@@ -2345,6 +2415,8 @@ namespace Azure.Storage.Files.Shares
                 enablePaidBursting: default,
                 paidBurstingMaxIops: default,
                 paidBurstingMaxBandwidthMibps: default,
+                provisionedMaxIops: default,
+                provisionedMaxBandwidthBandwidthMibps: default,
                 conditions: default,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: true,

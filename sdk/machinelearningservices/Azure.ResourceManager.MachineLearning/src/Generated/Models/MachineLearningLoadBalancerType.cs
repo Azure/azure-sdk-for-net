@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(MachineLearningLoadBalancerType left, MachineLearningLoadBalancerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningLoadBalancerType"/> values are not the same. </summary>
         public static bool operator !=(MachineLearningLoadBalancerType left, MachineLearningLoadBalancerType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MachineLearningLoadBalancerType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningLoadBalancerType"/>. </summary>
         public static implicit operator MachineLearningLoadBalancerType(string value) => new MachineLearningLoadBalancerType(value);
 
         /// <inheritdoc />

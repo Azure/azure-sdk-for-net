@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -20,13 +22,21 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         void IJsonModel<ManagedClusterNatGatewayProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterNatGatewayProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ManagedClusterNatGatewayProfile)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(ManagedOutboundIPProfile))
             {
                 writer.WritePropertyName("managedOutboundIPProfile"u8);
@@ -62,7 +72,6 @@ namespace Azure.ResourceManager.ContainerService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ManagedClusterNatGatewayProfile IJsonModel<ManagedClusterNatGatewayProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -133,6 +142,77 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new ManagedClusterNatGatewayProfile(managedOutboundIPProfile, effectiveOutboundIPs ?? new ChangeTrackingList<WritableSubResource>(), idleTimeoutInMinutes, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ManagedOutboundIPCount", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  managedOutboundIPProfile: ");
+                builder.AppendLine("{");
+                builder.Append("    count: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(ManagedOutboundIPProfile))
+                {
+                    builder.Append("  managedOutboundIPProfile: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ManagedOutboundIPProfile, options, 2, false, "  managedOutboundIPProfile: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EffectiveOutboundIPs), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  effectiveOutboundIPs: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(EffectiveOutboundIPs))
+                {
+                    if (EffectiveOutboundIPs.Any())
+                    {
+                        builder.Append("  effectiveOutboundIPs: ");
+                        builder.AppendLine("[");
+                        foreach (var item in EffectiveOutboundIPs)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  effectiveOutboundIPs: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IdleTimeoutInMinutes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  idleTimeoutInMinutes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IdleTimeoutInMinutes))
+                {
+                    builder.Append("  idleTimeoutInMinutes: ");
+                    builder.AppendLine($"{IdleTimeoutInMinutes.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ManagedClusterNatGatewayProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterNatGatewayProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -141,6 +221,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ManagedClusterNatGatewayProfile)} does not support writing '{options.Format}' format.");
             }

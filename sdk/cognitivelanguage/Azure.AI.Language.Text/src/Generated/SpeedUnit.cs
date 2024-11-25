@@ -69,7 +69,7 @@ namespace Azure.AI.Language.Text
         public static bool operator ==(SpeedUnit left, SpeedUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SpeedUnit"/> values are not the same. </summary>
         public static bool operator !=(SpeedUnit left, SpeedUnit right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SpeedUnit"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SpeedUnit"/>. </summary>
         public static implicit operator SpeedUnit(string value) => new SpeedUnit(value);
 
         /// <inheritdoc />

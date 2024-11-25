@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
         public static bool operator ==(VirtualNetworkLinkState left, VirtualNetworkLinkState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualNetworkLinkState"/> values are not the same. </summary>
         public static bool operator !=(VirtualNetworkLinkState left, VirtualNetworkLinkState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VirtualNetworkLinkState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualNetworkLinkState"/>. </summary>
         public static implicit operator VirtualNetworkLinkState(string value) => new VirtualNetworkLinkState(value);
 
         /// <inheritdoc />

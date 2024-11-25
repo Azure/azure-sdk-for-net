@@ -60,8 +60,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <param name="toolsRunningStatus"> Gets or sets the current running status of VMware Tools running in the guest operating system. </param>
         /// <param name="toolsVersionStatus"> Gets or sets the current version status of VMware Tools installed in the guest operating system. </param>
         /// <param name="toolsVersion"> Gets or sets the current version of VMware Tools. </param>
+        /// <param name="windowsConfiguration"> Windows Configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OSProfileForVmInstance(string computerName, string adminUsername, string adminPassword, string guestId, VMwareOSType? osType, string osSku, string toolsRunningStatus, string toolsVersionStatus, string toolsVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OSProfileForVmInstance(string computerName, string adminUsername, string adminPassword, string guestId, VMwareOSType? osType, string osSku, string toolsRunningStatus, string toolsVersionStatus, string toolsVersion, VMwareVmWindowsConfiguration windowsConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ComputerName = computerName;
             AdminUsername = adminUsername;
@@ -72,6 +73,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             ToolsRunningStatus = toolsRunningStatus;
             ToolsVersionStatus = toolsVersionStatus;
             ToolsVersion = toolsVersion;
+            WindowsConfiguration = windowsConfiguration;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -93,5 +95,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public string ToolsVersionStatus { get; }
         /// <summary> Gets or sets the current version of VMware Tools. </summary>
         public string ToolsVersion { get; }
+        /// <summary> Windows Configuration. </summary>
+        public VMwareVmWindowsConfiguration WindowsConfiguration { get; set; }
     }
 }

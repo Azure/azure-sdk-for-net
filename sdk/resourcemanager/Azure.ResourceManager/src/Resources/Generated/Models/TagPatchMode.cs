@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator ==(TagPatchMode left, TagPatchMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TagPatchMode"/> values are not the same. </summary>
         public static bool operator !=(TagPatchMode left, TagPatchMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TagPatchMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TagPatchMode"/>. </summary>
         public static implicit operator TagPatchMode(string value) => new TagPatchMode(value);
 
         /// <inheritdoc />

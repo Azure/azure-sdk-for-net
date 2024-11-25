@@ -53,16 +53,19 @@ namespace Azure.ResourceManager.Network.Models
         {
             Argument.AssertNotNull(managedRuleSets, nameof(managedRuleSets));
 
+            Exceptions = new ChangeTrackingList<ExceptionEntry>();
             Exclusions = new ChangeTrackingList<OwaspCrsExclusionEntry>();
             ManagedRuleSets = managedRuleSets.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedRulesDefinition"/>. </summary>
+        /// <param name="exceptions"> The exceptions that are applied on the policy. </param>
         /// <param name="exclusions"> The Exclusions that are applied on the policy. </param>
         /// <param name="managedRuleSets"> The managed rule sets that are associated with the policy. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedRulesDefinition(IList<OwaspCrsExclusionEntry> exclusions, IList<ManagedRuleSet> managedRuleSets, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedRulesDefinition(IList<ExceptionEntry> exceptions, IList<OwaspCrsExclusionEntry> exclusions, IList<ManagedRuleSet> managedRuleSets, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Exceptions = exceptions;
             Exclusions = exclusions;
             ManagedRuleSets = managedRuleSets;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -73,6 +76,8 @@ namespace Azure.ResourceManager.Network.Models
         {
         }
 
+        /// <summary> The exceptions that are applied on the policy. </summary>
+        public IList<ExceptionEntry> Exceptions { get; }
         /// <summary> The Exclusions that are applied on the policy. </summary>
         public IList<OwaspCrsExclusionEntry> Exclusions { get; }
         /// <summary> The managed rule sets that are associated with the policy. </summary>

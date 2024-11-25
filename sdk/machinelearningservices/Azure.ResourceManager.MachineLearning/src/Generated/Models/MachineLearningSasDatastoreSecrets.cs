@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Storage container SAS token. </summary>
+        [WirePath("sasToken")]
         public string SasToken { get; set; }
     }
 }

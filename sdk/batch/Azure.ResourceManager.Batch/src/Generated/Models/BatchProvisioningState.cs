@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Batch.Models
         public static bool operator ==(BatchProvisioningState left, BatchProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BatchProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(BatchProvisioningState left, BatchProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BatchProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchProvisioningState"/>. </summary>
         public static implicit operator BatchProvisioningState(string value) => new BatchProvisioningState(value);
 
         /// <inheritdoc />

@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Whether to enable workload identity. </summary>
+        [WirePath("enabled")]
         public bool? IsWorkloadIdentityEnabled { get; set; }
     }
 }

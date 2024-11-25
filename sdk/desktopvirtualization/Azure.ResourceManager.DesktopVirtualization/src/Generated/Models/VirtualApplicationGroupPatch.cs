@@ -73,12 +73,16 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> tags to be updated. </summary>
-        public IDictionary<string, string> Tags { get; }
+        [WirePath("tags")]
+        public IDictionary<string, string> Tags { get; set; }
         /// <summary> Description of ApplicationGroup. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> Friendly name of ApplicationGroup. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; set; }
         /// <summary> Boolean representing whether the applicationGroup is show in the feed. </summary>
+        [WirePath("properties.showInFeed")]
         public bool? ShowInFeed { get; set; }
     }
 }

@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Gets the additional workspace storage accounts. </summary>
+        [WirePath("additionalWorkspaceStorageAccounts")]
         public IList<string> AdditionalWorkspaceStorageAccounts { get; }
         /// <summary> Gets or sets the default workspace resource group. </summary>
+        [WirePath("defaultWorkspaceResourceGroup")]
         public string DefaultWorkspaceResourceGroup { get; set; }
     }
 }

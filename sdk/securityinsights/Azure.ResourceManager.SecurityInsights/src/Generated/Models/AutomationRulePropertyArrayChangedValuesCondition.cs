@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Gets or sets the array type. </summary>
+        [WirePath("arrayType")]
         public AutomationRulePropertyArrayChangedConditionSupportedArrayType? ArrayType { get; set; }
         /// <summary> Gets or sets the change type. </summary>
+        [WirePath("changeType")]
         public AutomationRulePropertyArrayChangedConditionSupportedChangeType? ChangeType { get; set; }
     }
 }

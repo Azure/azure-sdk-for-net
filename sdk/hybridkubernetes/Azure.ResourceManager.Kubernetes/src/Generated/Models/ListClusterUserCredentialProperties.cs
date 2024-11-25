@@ -71,8 +71,10 @@ namespace Azure.ResourceManager.Kubernetes.Models
         }
 
         /// <summary> The mode of client authentication. </summary>
+        [WirePath("authenticationMethod")]
         public AuthenticationMethod AuthenticationMethod { get; }
         /// <summary> Boolean value to indicate whether the request is for client side proxy or not. </summary>
+        [WirePath("clientProxy")]
         public bool ClientProxy { get; }
     }
 }

@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Gets or sets the action configuration. </summary>
+        [WirePath("actionConfiguration")]
         public SecurityInsightsIncidentActionConfiguration ActionConfiguration { get; set; }
     }
 }

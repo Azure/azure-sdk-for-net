@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static bool operator ==(SourceControlTokenType left, SourceControlTokenType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SourceControlTokenType"/> values are not the same. </summary>
         public static bool operator !=(SourceControlTokenType left, SourceControlTokenType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SourceControlTokenType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SourceControlTokenType"/>. </summary>
         public static implicit operator SourceControlTokenType(string value) => new SourceControlTokenType(value);
 
         /// <inheritdoc />

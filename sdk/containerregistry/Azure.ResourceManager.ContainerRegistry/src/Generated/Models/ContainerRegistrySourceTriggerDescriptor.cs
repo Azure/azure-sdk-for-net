@@ -72,18 +72,25 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The unique ID of the trigger. </summary>
+        [WirePath("id")]
         public Guid? Id { get; set; }
         /// <summary> The event type of the trigger. </summary>
+        [WirePath("eventType")]
         public string EventType { get; set; }
         /// <summary> The unique ID that identifies a commit. </summary>
+        [WirePath("commitId")]
         public string CommitId { get; set; }
         /// <summary> The unique ID that identifies pull request. </summary>
+        [WirePath("pullRequestId")]
         public string PullRequestId { get; set; }
         /// <summary> The repository URL. </summary>
+        [WirePath("repositoryUrl")]
         public Uri RepositoryUri { get; set; }
         /// <summary> The branch name in the repository. </summary>
+        [WirePath("branchName")]
         public string BranchName { get; set; }
         /// <summary> The source control provider type. </summary>
+        [WirePath("providerType")]
         public string ProviderType { get; set; }
     }
 }

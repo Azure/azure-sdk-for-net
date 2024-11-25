@@ -74,8 +74,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> [Required] The path for the route. </summary>
+        [WirePath("path")]
         public string Path { get; set; }
         /// <summary> [Required] The port for the route. </summary>
+        [WirePath("port")]
         public int Port { get; set; }
     }
 }

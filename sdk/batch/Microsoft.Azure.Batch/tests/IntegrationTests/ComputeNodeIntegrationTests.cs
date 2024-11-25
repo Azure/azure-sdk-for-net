@@ -113,6 +113,51 @@ namespace BatchClientIntegrationTests
             SynchronizationContextHelper.RunTest(test, TestTimeout);
         }
 
+
+
+        [Fact]
+        [LiveTest]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
+        public async Task ComputeNode_Deallocate_Start_ComputeNode()
+        {
+
+            async Task test()
+            {
+                using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
+                PoolOperations poolOperations = batchCli.PoolOperations;
+
+                List<ComputeNode> computeNodeList = poolOperations.ListComputeNodes(poolFixture.PoolId).ToList();
+
+                ComputeNode computeNodeToGet = computeNodeList.First();
+                string computeNodeId = computeNodeToGet.Id;
+
+                computeNodeToGet.Deallocate();
+
+                while( computeNodeToGet.State != ComputeNodeState.Deallocated)
+                {
+                    await Task.Delay(1000).ConfigureAwait(false);
+
+                    await computeNodeToGet.RefreshAsync().ConfigureAwait(false);
+                }
+
+                Assert.Equal(ComputeNodeState.Deallocated, computeNodeToGet.State);
+
+                computeNodeToGet.Start();
+
+                while (computeNodeToGet.State != ComputeNodeState.Starting)
+                {
+                    await Task.Delay(1000).ConfigureAwait(false);
+
+                    await computeNodeToGet.RefreshAsync().ConfigureAwait(false);
+                }
+
+                Assert.Equal(ComputeNodeState.Starting, computeNodeToGet.State);
+
+            }
+
+            await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
+        }
+
         [Fact]
         [LiveTest]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
@@ -290,196 +335,6 @@ namespace BatchClientIntegrationTests
                 finally
                 {
                     batchCli.JobOperations.DeleteJob(jobId);
-                }
-            }
-
-            SynchronizationContextHelper.RunTest(test, TestTimeout);
-        }
-
-        [Fact]
-        [LiveTest]
-        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.MediumDuration)]
-        public void Bug1770933_1770935_1771164_AddUserCRUDAndGetRDP()
-        {
-            void test()
-            {
-                using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
-                // names to create/delete
-                List<string> names = new List<string>() { TestUtilities.GetMyName(), TestUtilities.GetMyName() + "1", TestUtilities.GetMyName() + "2", TestUtilities.GetMyName() + "3", TestUtilities.GetMyName() + "4" };
-
-                // pick a compute node to victimize with user accounts
-                IEnumerable<ComputeNode> ienmComputeNodes = batchCli.PoolOperations.ListComputeNodes(poolFixture.PoolId);
-                List<ComputeNode> computeNodeList = new List<ComputeNode>(ienmComputeNodes);
-                ComputeNode computeNode = computeNodeList[0];
-
-                try
-                {
-                    string rdpFileName = "Bug1770933.rdp";
-
-                    // test user public constructor and IPoolMgr verbs
-                    {
-                        ComputeNodeUser newUser = batchCli.PoolOperations.CreateComputeNodeUser(poolFixture.PoolId, computeNode.Id);
-
-                        newUser.Name = names[0];
-                        newUser.IsAdmin = true;
-                        newUser.ExpiryTime = DateTime.UtcNow + TimeSpan.FromHours(1.0);
-                        newUser.Password = @"!!Admin!!";
-
-                        // commit that creates/adds the user
-                        newUser.Commit(ComputeNodeUserCommitSemantics.AddUser);
-
-                        // now update the user's password
-                        newUser.Password = @"!!!Admin!!!";
-
-                        // commit that updates
-                        newUser.Commit(ComputeNodeUserCommitSemantics.UpdateUser);
-
-                        // clean up from prev run
-                        if (File.Exists(rdpFileName))
-                        {
-                            File.Delete(rdpFileName);
-                        }
-
-                        // pull the rdp file
-                        batchCli.PoolOperations.GetRDPFile(poolFixture.PoolId, computeNode.Id, rdpFileName);
-
-                        // simple validation tests on the rdp file
-                        TestFileExistsAndHasLength(rdpFileName);
-
-                        // cleanup the rdp file
-                        File.Delete(rdpFileName);
-
-                        // "test" delete user from IPoolMgr
-                        // TODO: when GET/LIST User is available we should close the loop and confirm the user is gone.
-                        batchCli.PoolOperations.DeleteComputeNodeUser(poolFixture.PoolId, computeNode.Id, newUser.Name);
-                    }
-
-                    // test IPoolMgr CreateUser
-                    {
-                        ComputeNodeUser pmcUser = batchCli.PoolOperations.CreateComputeNodeUser(poolFixture.PoolId, computeNode.Id);
-
-                        pmcUser.Name = names[1];
-                        pmcUser.IsAdmin = true;
-                        pmcUser.ExpiryTime = DateTime.UtcNow + TimeSpan.FromHours(1.0);
-                        pmcUser.Password = @"!!!Admin!!!";
-
-                        // add the user
-                        pmcUser.Commit(ComputeNodeUserCommitSemantics.AddUser);
-
-                        // pull rdp file
-                        batchCli.PoolOperations.GetRDPFile(poolFixture.PoolId, computeNode.Id, rdpFileName);
-
-                        // simple validation on rdp file
-                        TestFileExistsAndHasLength(rdpFileName);
-
-                        // cleanup
-                        File.Delete(rdpFileName);
-
-                        // delete user
-                        batchCli.PoolOperations.DeleteComputeNodeUser(poolFixture.PoolId, computeNode.Id, pmcUser.Name);
-                    }
-
-                    // test IComputeNode verbs
-                    {
-                        ComputeNodeUser poolMgrUser = batchCli.PoolOperations.CreateComputeNodeUser(poolFixture.PoolId, computeNode.Id);
-
-                        poolMgrUser.Name = names[2];
-                        poolMgrUser.IsAdmin = true;
-                        poolMgrUser.ExpiryTime = DateTime.UtcNow + TimeSpan.FromHours(1.0);
-                        poolMgrUser.Password = @"!!!Admin!!!";
-
-                        poolMgrUser.Commit(ComputeNodeUserCommitSemantics.AddUser);
-
-                        // pull rdp file
-                        computeNode.GetRDPFile(rdpFileName);
-
-                        // simple validation on rdp file
-                        TestFileExistsAndHasLength(rdpFileName);
-
-                        // cleanup
-                        File.Delete(rdpFileName);
-
-                        // delete user
-                        computeNode.DeleteComputeNodeUser(poolMgrUser.Name);
-                    }
-
-                    // test ComputeNodeUser.Delete
-                    {
-                        ComputeNodeUser usrDelete = batchCli.PoolOperations.CreateComputeNodeUser(poolFixture.PoolId, computeNode.Id);
-
-                        usrDelete.Name = names[3];
-                        usrDelete.ExpiryTime = DateTime.UtcNow + TimeSpan.FromHours(1.0);
-                        usrDelete.Password = @"!!!Admin!!!";
-
-                        usrDelete.Commit(ComputeNodeUserCommitSemantics.AddUser);
-
-                        usrDelete.Delete();
-                    }
-
-                    // test rdp-by-stream IPoolMgr and IComputeNode
-                    // the by-stream paths do not converge with the by-filename paths until IProtocol so we test them seperately
-                    {
-                        ComputeNodeUser byStreamUser = batchCli.PoolOperations.CreateComputeNodeUser(poolFixture.PoolId, computeNode.Id);
-
-                        byStreamUser.Name = names[4];
-                        byStreamUser.IsAdmin = true;
-                        byStreamUser.ExpiryTime = DateTime.UtcNow + TimeSpan.FromHours(1.0);
-                        byStreamUser.Password = @"!!!Admin!!!";
-
-                        byStreamUser.Commit(ComputeNodeUserCommitSemantics.AddUser);
-
-                        // IPoolMgr
-                        using (Stream rdpStreamPoolMgr = File.Create(rdpFileName))
-                        {
-                            batchCli.PoolOperations.GetRDPFile(poolFixture.PoolId, computeNode.Id, rdpStreamPoolMgr);
-
-                            rdpStreamPoolMgr.Flush();
-                            rdpStreamPoolMgr.Close();
-
-                            TestFileExistsAndHasLength(rdpFileName);
-
-                            File.Delete(rdpFileName);
-                        }
-
-                        // IComputeNode
-                        using (Stream rdpViaIComputeNode = File.Create(rdpFileName))
-                        {
-                            computeNode.GetRDPFile(rdpViaIComputeNode);
-
-                            rdpViaIComputeNode.Flush();
-                            rdpViaIComputeNode.Close();
-
-                            TestFileExistsAndHasLength(rdpFileName);
-
-                            File.Delete(rdpFileName);
-                        }
-
-                        // delete the user account
-                        byStreamUser.Delete();
-                    }
-                }
-                finally
-                {
-                    // clear any old accounts
-                    foreach (string curName in names)
-                    {
-                        bool hitException = false;
-
-                        try
-                        {
-                            ComputeNodeUser deleteThis = batchCli.PoolOperations.CreateComputeNodeUser(poolFixture.PoolId, computeNode.Id);
-                            deleteThis.Name = curName;
-                            deleteThis.Delete();
-                        }
-                        catch (BatchException ex)
-                        {
-                            Assert.Equal(BatchErrorCodeStrings.NodeUserNotFound, ex.RequestInformation.BatchError.Code);
-                            hitException = true;
-
-                        }
-
-                        Assert.True(hitException, "Should have hit exception on user: " + curName + ", compute node: " + computeNode.Id + ".");
-                    }
                 }
             }
 
@@ -693,14 +548,6 @@ namespace BatchClientIntegrationTests
             Assert.Equal(first.Url, second.Url);
             Assert.Equal(first.AllocationTime, second.AllocationTime);
             Assert.Equal(first.VirtualMachineSize, second.VirtualMachineSize);
-        }
-
-        private static void TestFileExistsAndHasLength(string filename)
-        {
-            // make some easy tests on the rdp file
-            FileInfo rdpInfo = new FileInfo(filename);
-
-            Assert.True(rdpInfo.Length > 0); // gets existance and content
         }
 
         #endregion

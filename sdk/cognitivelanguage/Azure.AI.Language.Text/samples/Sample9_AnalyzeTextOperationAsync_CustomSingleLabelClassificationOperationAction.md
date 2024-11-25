@@ -6,10 +6,11 @@ This sample demonstrates how to perform custom single-label classification on on
 
 To create a new `TextAnalysisClient`, you will need the service endpoint and credentials of your Language resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential`, which you can create with an API key.
 
-```C# Snippet:CreateTextClient
+```C# Snippet:CreateTextAnalysisClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
-TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+TextAnalysisClientOptions options = new TextAnalysisClientOptions(TextAnalysisClientOptions.ServiceVersion.V2023_04_01);
+var client = new TextAnalysisClient(endpoint, credential, options);
 ```
 
 The values of the `endpoint` and `apiKey` variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
@@ -63,7 +64,7 @@ foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.
         CustomSingleLabelClassificationOperationResult customClassificationResult = (CustomSingleLabelClassificationOperationResult)analyzeTextLROResult;
 
         // View the classifications recognized in the input documents.
-        foreach (ClassificationDocumentResultWithDetectedLanguage customClassificationDocument in customClassificationResult.Results.Documents)
+        foreach (ClassificationActionResult customClassificationDocument in customClassificationResult.Results.Documents)
         {
             Console.WriteLine($"Result for document with Id = \"{customClassificationDocument.Id}\":");
             Console.WriteLine($"  Recognized {customClassificationDocument.Class.Count} classifications:");

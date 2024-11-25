@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static bool operator ==(CosmosDBServiceSize left, CosmosDBServiceSize right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBServiceSize"/> values are not the same. </summary>
         public static bool operator !=(CosmosDBServiceSize left, CosmosDBServiceSize right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CosmosDBServiceSize"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBServiceSize"/>. </summary>
         public static implicit operator CosmosDBServiceSize(string value) => new CosmosDBServiceSize(value);
 
         /// <inheritdoc />

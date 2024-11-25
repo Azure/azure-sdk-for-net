@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.2 (Unreleased)
+## 1.4.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -8,10 +8,16 @@
 
 ### Bugs Fixed
 
+### Other Changes
+
+## 1.4.0-beta.2 (2024-10-11)
+
+### Bugs Fixed
+
 * RPC attributes are now correctly exported to Application Insights as custom properties.
   ([#45316](https://github.com/Azure/azure-sdk-for-net/pull/45316))
-
-### Other Changes
+* Fixed an issue where unmapped attributes were dropped from telemetry.
+  ([#45909](https://github.com/Azure/azure-sdk-for-net/pull/45909))
 
 ## 1.4.0-beta.1 (2024-07-12)
 

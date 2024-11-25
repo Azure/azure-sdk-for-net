@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static bool operator ==(AnalyticalStorageSchemaType left, AnalyticalStorageSchemaType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnalyticalStorageSchemaType"/> values are not the same. </summary>
         public static bool operator !=(AnalyticalStorageSchemaType left, AnalyticalStorageSchemaType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AnalyticalStorageSchemaType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AnalyticalStorageSchemaType"/>. </summary>
         public static implicit operator AnalyticalStorageSchemaType(string value) => new AnalyticalStorageSchemaType(value);
 
         /// <inheritdoc />

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator ==(VirtualMachinePowerState left, VirtualMachinePowerState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualMachinePowerState"/> values are not the same. </summary>
         public static bool operator !=(VirtualMachinePowerState left, VirtualMachinePowerState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VirtualMachinePowerState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualMachinePowerState"/>. </summary>
         public static implicit operator VirtualMachinePowerState(string value) => new VirtualMachinePowerState(value);
 
         /// <inheritdoc />

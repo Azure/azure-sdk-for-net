@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(SqlNameAvailabilityResourceType left, SqlNameAvailabilityResourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlNameAvailabilityResourceType"/> values are not the same. </summary>
         public static bool operator !=(SqlNameAvailabilityResourceType left, SqlNameAvailabilityResourceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SqlNameAvailabilityResourceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlNameAvailabilityResourceType"/>. </summary>
         public static implicit operator SqlNameAvailabilityResourceType(string value) => new SqlNameAvailabilityResourceType(value);
 
         /// <inheritdoc />

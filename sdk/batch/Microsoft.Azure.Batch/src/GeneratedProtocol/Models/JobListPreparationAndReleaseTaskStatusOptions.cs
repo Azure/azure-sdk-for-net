@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <param name="filter">An OData $filter clause. For more information
         /// on constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-job-preparation-and-release-status.</param>
+        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-job-preparation-and-release-status.</param>
         /// <param name="select">An OData $select clause.</param>
         /// <param name="maxResults">The maximum number of items to return in
         /// the response. A maximum of 1000 Tasks can be returned.</param>
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets an OData $filter clause. For more information on
         /// constructing this filter, see
-        /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-job-preparation-and-release-status.
+        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-job-preparation-and-release-status.
         /// </summary>
         [Newtonsoft.Json.JsonIgnore]
         public string Filter { get; set; }

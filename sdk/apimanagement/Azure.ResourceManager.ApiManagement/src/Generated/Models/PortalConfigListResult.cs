@@ -63,10 +63,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The developer portal configurations. </summary>
-        [WirePath("value")]
         public IReadOnlyList<PortalConfigContractData> Value { get; }
         /// <summary> Next page link if any. </summary>
-        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         public static bool operator ==(InitialUploadPolicy left, InitialUploadPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InitialUploadPolicy"/> values are not the same. </summary>
         public static bool operator !=(InitialUploadPolicy left, InitialUploadPolicy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="InitialUploadPolicy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="InitialUploadPolicy"/>. </summary>
         public static implicit operator InitialUploadPolicy(string value) => new InitialUploadPolicy(value);
 
         /// <inheritdoc />

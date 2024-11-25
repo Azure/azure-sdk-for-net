@@ -770,12 +770,18 @@ namespace BatchClientIntegrationTests
                         startTask.EnvironmentSettings = new List<EnvironmentSetting>() { new EnvironmentSetting("test", "test") };
                         startTask.ResourceFiles = new List<ResourceFile>() { ResourceFile.FromUrl("http://test", "Test") };
 
+                        var ubuntuImageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+
+                        VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
+                            ubuntuImageDetails.ImageReference,
+                            nodeAgentSkuId: ubuntuImageDetails.NodeAgentSkuId);
+
                         //Pool Specification
                         PoolSpecification poolSpecification = new PoolSpecification()
                         {
                             TargetDedicatedComputeNodes = 0,
                             VirtualMachineSize = PoolFixture.VMSize,
-                            CloudServiceConfiguration = new CloudServiceConfiguration(PoolFixture.OSFamily),
+                            VirtualMachineConfiguration = virtualMachineConfiguration,
                             StartTask = startTask
                         };
 
@@ -966,7 +972,13 @@ namespace BatchClientIntegrationTests
 
                 PoolSpecification poolSpec = new PoolSpecification();
 
-                poolSpec.CloudServiceConfiguration = new CloudServiceConfiguration(PoolFixture.OSFamily, "*");
+                var ubuntuImageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+
+                VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
+                    ubuntuImageDetails.ImageReference,
+                    nodeAgentSkuId: ubuntuImageDetails.NodeAgentSkuId);
+
+                poolSpec.VirtualMachineConfiguration = virtualMachineConfiguration;
                 poolSpec.TargetDedicatedComputeNodes = 0;
                 poolSpec.VirtualMachineSize = PoolFixture.VMSize;
                 poolSpec.DisplayName = originalDisplayName;
@@ -1087,7 +1099,7 @@ namespace BatchClientIntegrationTests
                 // Create an unbound pool and verify that display name can be set
                 string poolId = testName + "_pool_" + TestUtilities.GetMyName();
 
-                CloudPool unboundPool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, new CloudServiceConfiguration(PoolFixture.OSFamily), 0);
+                CloudPool unboundPool = batchCli.PoolOperations.CreatePool(poolId, PoolFixture.VMSize, virtualMachineConfiguration, 0);
                 unboundPool.DisplayName = originalDisplayName;
 
                 Assert.Equal(originalDisplayName, unboundPool.DisplayName);
@@ -1214,10 +1226,16 @@ namespace BatchClientIntegrationTests
 
                     // test custom retry policy per-call
                     {
+                        var ubuntuImageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+
+                        VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
+                            ubuntuImageDetails.ImageReference,
+                            nodeAgentSkuId: ubuntuImageDetails.NodeAgentSkuId);
+
                         CloudPool unboundPool = batchCli.PoolOperations.CreatePool(
                             @"really/\bad+&*pool_^#name" + TestUtilities.GetMyName(),
                             PoolFixture.VMSize,
-                            new CloudServiceConfiguration(PoolFixture.OSFamily),
+                           virtualMachineConfiguration,
                             targetDedicatedComputeNodes: 0);
                         Bug1770942RetryPolicy retryPolicy = new Bug1770942RetryPolicy(testOutputHelper);
 
@@ -1236,11 +1254,17 @@ namespace BatchClientIntegrationTests
                         // create some pools that can be listed and filtered
                         foreach (string poolId in poolIdsToCreate)
                         {
+                            var ubuntuImageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+
+                            VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
+                                ubuntuImageDetails.ImageReference,
+                                nodeAgentSkuId: ubuntuImageDetails.NodeAgentSkuId);
+
                             // no compute nodes because this is only a list/predicate test
                             CloudPool unboundPool = batchCli.PoolOperations.CreatePool(
                                 poolId,
                                 PoolFixture.VMSize,
-                                new CloudServiceConfiguration(PoolFixture.OSFamily),
+                                virtualMachineConfiguration,
                                 targetDedicatedComputeNodes: 0);
 
                             unboundPool.Commit();

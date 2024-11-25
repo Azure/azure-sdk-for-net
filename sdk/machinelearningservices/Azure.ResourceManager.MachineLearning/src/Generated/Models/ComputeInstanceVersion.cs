@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Runtime of compute instance. </summary>
+        [WirePath("runtime")]
         public string Runtime { get; }
     }
 }

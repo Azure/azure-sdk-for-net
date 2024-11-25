@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public static bool operator ==(RedisEnterpriseCustomerManagedKeyIdentityType left, RedisEnterpriseCustomerManagedKeyIdentityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RedisEnterpriseCustomerManagedKeyIdentityType"/> values are not the same. </summary>
         public static bool operator !=(RedisEnterpriseCustomerManagedKeyIdentityType left, RedisEnterpriseCustomerManagedKeyIdentityType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RedisEnterpriseCustomerManagedKeyIdentityType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RedisEnterpriseCustomerManagedKeyIdentityType"/>. </summary>
         public static implicit operator RedisEnterpriseCustomerManagedKeyIdentityType(string value) => new RedisEnterpriseCustomerManagedKeyIdentityType(value);
 
         /// <inheritdoc />

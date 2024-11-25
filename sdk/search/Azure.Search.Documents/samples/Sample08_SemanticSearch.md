@@ -125,6 +125,7 @@ SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
             QueryCaption = new(QueryCaptionType.Extractive),
             QueryAnswer = new(QueryAnswerType.Extractive)
         },
+        QueryLanguage = QueryLanguage.EnUs,
         QueryType = SearchQueryType.Semantic
     });
 
@@ -176,6 +177,7 @@ SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
             QueryAnswer = new(QueryAnswerType.Extractive),
             SemanticQuery = "Is there any hotel located on the main commercial artery of the city in the heart of New York?"
         },
+        QueryLanguage = QueryLanguage.EnUs,
     });
 
 int count = 0;

@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         void IJsonModel<NetworkCloudKubernetesClusterPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudKubernetesClusterPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkCloudKubernetesClusterPatch)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -39,6 +47,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (Optional.IsDefined(AdministratorConfiguration))
+            {
+                writer.WritePropertyName("administratorConfiguration"u8);
+                writer.WriteObjectValue(AdministratorConfiguration, options);
+            }
             if (Optional.IsDefined(ControlPlaneNodeConfiguration))
             {
                 writer.WritePropertyName("controlPlaneNodeConfiguration"u8);
@@ -65,7 +78,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         NetworkCloudKubernetesClusterPatch IJsonModel<NetworkCloudKubernetesClusterPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -89,6 +101,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
+            AdministratorConfigurationPatch administratorConfiguration = default;
             ControlPlaneNodePatchConfiguration controlPlaneNodeConfiguration = default;
             string kubernetesVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -118,6 +131,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("administratorConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            administratorConfiguration = AdministratorConfigurationPatch.DeserializeAdministratorConfigurationPatch(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("controlPlaneNodeConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -141,7 +163,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkCloudKubernetesClusterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), controlPlaneNodeConfiguration, kubernetesVersion, serializedAdditionalRawData);
+            return new NetworkCloudKubernetesClusterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), administratorConfiguration, controlPlaneNodeConfiguration, kubernetesVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudKubernetesClusterPatch>.Write(ModelReaderWriterOptions options)

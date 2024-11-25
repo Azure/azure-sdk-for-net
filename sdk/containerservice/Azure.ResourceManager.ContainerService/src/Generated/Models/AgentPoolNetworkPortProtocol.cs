@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static bool operator ==(AgentPoolNetworkPortProtocol left, AgentPoolNetworkPortProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AgentPoolNetworkPortProtocol"/> values are not the same. </summary>
         public static bool operator !=(AgentPoolNetworkPortProtocol left, AgentPoolNetworkPortProtocol right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AgentPoolNetworkPortProtocol"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AgentPoolNetworkPortProtocol"/>. </summary>
         public static implicit operator AgentPoolNetworkPortProtocol(string value) => new AgentPoolNetworkPortProtocol(value);
 
         /// <inheritdoc />

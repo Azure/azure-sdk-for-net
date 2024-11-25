@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
         public static bool operator ==(ManagedNetworkKind left, ManagedNetworkKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedNetworkKind"/> values are not the same. </summary>
         public static bool operator !=(ManagedNetworkKind left, ManagedNetworkKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ManagedNetworkKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedNetworkKind"/>. </summary>
         public static implicit operator ManagedNetworkKind(string value) => new ManagedNetworkKind(value);
 
         /// <inheritdoc />

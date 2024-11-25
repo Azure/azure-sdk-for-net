@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         }
 
         /// <summary> The client Id for authenticating a Managed Identity. </summary>
+        [WirePath("clientId")]
         public string ClientId { get; set; }
     }
 }

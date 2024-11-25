@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator ==(TopicSpaceProvisioningState left, TopicSpaceProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TopicSpaceProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(TopicSpaceProvisioningState left, TopicSpaceProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TopicSpaceProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TopicSpaceProvisioningState"/>. </summary>
         public static implicit operator TopicSpaceProvisioningState(string value) => new TopicSpaceProvisioningState(value);
 
         /// <inheritdoc />

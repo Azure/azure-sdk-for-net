@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Monitor.Models
 
         void IJsonModel<MonitorPrivateLinkScopePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<MonitorPrivateLinkScopePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MonitorPrivateLinkScopePatch)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -52,7 +60,6 @@ namespace Azure.ResourceManager.Monitor.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         MonitorPrivateLinkScopePatch IJsonModel<MonitorPrivateLinkScopePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

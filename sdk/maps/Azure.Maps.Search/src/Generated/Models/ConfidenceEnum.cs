@@ -50,7 +50,7 @@ namespace Azure.Maps.Search.Models
         public static bool operator ==(ConfidenceEnum left, ConfidenceEnum right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConfidenceEnum"/> values are not the same. </summary>
         public static bool operator !=(ConfidenceEnum left, ConfidenceEnum right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ConfidenceEnum"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConfidenceEnum"/>. </summary>
         public static implicit operator ConfidenceEnum(string value) => new ConfidenceEnum(value);
 
         /// <inheritdoc />

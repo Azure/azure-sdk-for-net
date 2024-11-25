@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> [Required] TargetRollingWindowSize value. </summary>
+        [WirePath("value")]
         public int Value { get; set; }
     }
 }

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         public static bool operator ==(DataLakeStoreSubscriptionState left, DataLakeStoreSubscriptionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataLakeStoreSubscriptionState"/> values are not the same. </summary>
         public static bool operator !=(DataLakeStoreSubscriptionState left, DataLakeStoreSubscriptionState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataLakeStoreSubscriptionState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataLakeStoreSubscriptionState"/>. </summary>
         public static implicit operator DataLakeStoreSubscriptionState(string value) => new DataLakeStoreSubscriptionState(value);
 
         /// <inheritdoc />

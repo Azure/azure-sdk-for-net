@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
         public static bool operator ==(LargeInstanceProvisioningState left, LargeInstanceProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LargeInstanceProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(LargeInstanceProvisioningState left, LargeInstanceProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LargeInstanceProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LargeInstanceProvisioningState"/>. </summary>
         public static implicit operator LargeInstanceProvisioningState(string value) => new LargeInstanceProvisioningState(value);
 
         /// <inheritdoc />

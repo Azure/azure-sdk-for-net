@@ -40,6 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Properties of AmlCompute. </summary>
+        [WirePath("properties")]
         public AmlComputeProperties Properties { get; set; }
     }
 }

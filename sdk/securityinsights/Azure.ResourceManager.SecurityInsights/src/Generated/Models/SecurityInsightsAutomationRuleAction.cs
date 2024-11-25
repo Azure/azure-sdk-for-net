@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary>
     /// Describes an automation rule action.
     /// Please note <see cref="SecurityInsightsAutomationRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AutomationRuleModifyPropertiesAction"/> and <see cref="AutomationRuleRunPlaybookAction"/>.
+    /// The available derived classes include <see cref="AutomationRuleAddIncidentTaskAction"/>, <see cref="AutomationRuleModifyPropertiesAction"/> and <see cref="AutomationRuleRunPlaybookAction"/>.
     /// </summary>
     public abstract partial class SecurityInsightsAutomationRuleAction
     {
@@ -73,6 +73,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Gets or sets the order. </summary>
+        [WirePath("order")]
         public int Order { get; set; }
         /// <summary> The type of the automation rule action. </summary>
         internal ActionType ActionType { get; set; }

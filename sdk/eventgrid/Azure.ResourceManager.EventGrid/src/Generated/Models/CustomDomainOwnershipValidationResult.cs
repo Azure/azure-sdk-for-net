@@ -64,8 +64,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> List of custom domain configurations for the namespace under topics configuration. </summary>
+        [WirePath("customDomainsForTopicsConfiguration")]
         public IReadOnlyList<CustomDomainConfiguration> CustomDomainsForTopicsConfiguration { get; }
         /// <summary> List of custom domain configurations for the namespace under topic spaces configuration. </summary>
+        [WirePath("customDomainsForTopicSpacesConfiguration")]
         public IReadOnlyList<CustomDomainConfiguration> CustomDomainsForTopicSpacesConfiguration { get; }
     }
 }

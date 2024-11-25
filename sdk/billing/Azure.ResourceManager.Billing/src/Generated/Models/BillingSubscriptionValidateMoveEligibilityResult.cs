@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BillingSubscriptionValidateMoveEligibilityResult"/>. </summary>
-        /// <param name="isMoveEligible"> Specifies whether the subscription is eligible to move. </param>
-        /// <param name="errorDetails"> Validation error details. </param>
+        /// <param name="isMoveEligible"> Specifies whether the subscription is eligible to be transferred. </param>
+        /// <param name="errorDetails"> Error details of the transfer eligibility validation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BillingSubscriptionValidateMoveEligibilityResult(bool? isMoveEligible, BillingSubscriptionValidateMoveEligibilityError errorDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +61,11 @@ namespace Azure.ResourceManager.Billing.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Specifies whether the subscription is eligible to move. </summary>
+        /// <summary> Specifies whether the subscription is eligible to be transferred. </summary>
+        [WirePath("isMoveEligible")]
         public bool? IsMoveEligible { get; }
-        /// <summary> Validation error details. </summary>
+        /// <summary> Error details of the transfer eligibility validation. </summary>
+        [WirePath("errorDetails")]
         public BillingSubscriptionValidateMoveEligibilityError ErrorDetails { get; }
     }
 }

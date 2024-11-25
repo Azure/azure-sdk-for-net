@@ -16,6 +16,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     public abstract class SocketIOAction
     {
+        private const string DefaultNamespace = "/";
+
         internal string ActionName
         {
             get
@@ -25,13 +27,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
         }
 
         /// <summary>
+        /// Target namespace. Default is '/'.
+        /// </summary>
+        public string Namespace { get; set; } = DefaultNamespace;
+
+        /// <summary>
         /// Creates an instance of <see cref="AddSocketToRoomAction"></see> for output binding.
         /// </summary>
         /// <param name="namespace">Target namespace.</param>
         /// <param name="socketId">Target socketId.</param>
         /// <param name="room">Target roome.</param>
         /// <returns>An instance of <see cref="AddSocketToRoomAction"></see>.</returns>
-        public static AddSocketToRoomAction CreateAddSocketToRoomAction(string @namespace, string socketId, string room)
+        public static AddSocketToRoomAction CreateAddSocketToRoomAction(string socketId, string room, string @namespace = DefaultNamespace)
         {
             return new AddSocketToRoomAction
             {
@@ -48,7 +55,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
         /// <param name="socketId">Target socketId.</param>
         /// <param name="room">Target roome.</param>
         /// <returns>An instance of <see cref="RemoveSocketFromRoomAction"></see>.</returns>
-        public static RemoveSocketFromRoomAction CreateRemoveSocketFromRoomAction(string @namespace, string socketId, string room)
+        public static RemoveSocketFromRoomAction CreateRemoveSocketFromRoomAction(string socketId, string room, string @namespace = DefaultNamespace)
         {
             return new RemoveSocketFromRoomAction
             {
@@ -62,14 +69,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
         /// Creates an instance of <see cref="DisconnectSocketsAction"></see> for output binding.
         /// </summary>
         /// <param name="namespace">Target namespace.</param>
-        /// <param name="rooms">Target rooms</param>
+        /// <param name="rooms">Target rooms, If not set, disconnect the whole namespace.</param>
+        /// <param name="closeUnderlyingConnection">Whether to close the underlying connection.</param>
         /// <returns>An instance of <see cref="DisconnectSocketsAction"></see>.</returns>
-        public static DisconnectSocketsAction CreateDisconnectSocketsAction(string @namespace, IEnumerable<string> rooms)
+        public static DisconnectSocketsAction CreateDisconnectSocketsAction(IEnumerable<string> rooms, bool closeUnderlyingConnection = false, string @namespace = DefaultNamespace)
         {
             return new DisconnectSocketsAction
             {
                 Namespace = @namespace,
-                Rooms = rooms.ToArray(),
+                Rooms = rooms?.ToArray(),
+                CloseUnderlyingConnection = closeUnderlyingConnection,
             };
         }
 
@@ -81,12 +90,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
         /// <param name="parameters">SocketIO data.</param>
         /// <param name="exceptRooms">Except rooms</param>
         /// <returns>An instance of <see cref="SendToNamespaceAction"></see>.</returns>
-        public static SendToNamespaceAction CreateSendToNamespaceAction(string @namespace, string eventName, IEnumerable<object> parameters, IList<string> exceptRooms = null)
+        public static SendToNamespaceAction CreateSendToNamespaceAction(string eventName, IEnumerable<object> parameters, IList<string> exceptRooms = null, string @namespace = DefaultNamespace)
         {
             return new SendToNamespaceAction
             {
                 EventName = eventName,
-                Parameters = parameters.ToArray(),
+                Parameters = parameters?.ToArray(),
                 Namespace = @namespace,
                 ExceptRooms = exceptRooms,
             };
@@ -101,12 +110,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
         /// <param name="parameters">SocketIO data.</param>
         /// <param name="exceptRooms">Except rooms</param>
         /// <returns>An instance of <see cref="SendToNamespaceAction"></see>.</returns>
-        public static SendToRoomsAction CreateSendToRoomsAction(string @namespace, IEnumerable<string> rooms, string eventName, IEnumerable<object> parameters, IList<string> exceptRooms = null)
+        public static SendToRoomsAction CreateSendToRoomsAction(IEnumerable<string> rooms, string eventName, IEnumerable<object> parameters, IList<string> exceptRooms = null, string @namespace = DefaultNamespace)
         {
             return new SendToRoomsAction
             {
                 EventName = eventName,
-                Parameters = parameters.ToArray(),
+                Parameters = parameters?.ToArray(),
                 Namespace = @namespace,
                 Rooms = rooms.ToArray(),
                 ExceptRooms = exceptRooms,
@@ -121,12 +130,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
         /// <param name="eventName">Event name</param>
         /// <param name="parameters">SocketIO data.</param>
         /// <returns>An instance of <see cref="SendToSocketAction"></see>.</returns>
-        public static SendToSocketAction CreateSendToSocketAction(string @namespace, string socketId, string eventName, IEnumerable<object> parameters)
+        public static SendToSocketAction CreateSendToSocketAction(string socketId, string eventName, IEnumerable<object> parameters, string @namespace = DefaultNamespace)
         {
             return new SendToSocketAction
             {
                 EventName = eventName,
-                Parameters = parameters.ToArray(),
+                Parameters = parameters?.ToArray(),
                 SocketId = socketId,
                 Namespace = @namespace,
             };

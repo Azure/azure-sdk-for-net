@@ -74,14 +74,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.additionalData")]
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
         /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; }
         /// <summary> The technical identifier of the application. </summary>
+        [WirePath("properties.appId")]
         public int? AppId { get; }
         /// <summary> The name of the related cloud application. </summary>
+        [WirePath("properties.appName")]
         public string AppName { get; }
         /// <summary> The user defined instance name of the cloud application. It is often used to distinguish between several applications of the same type that a customer has. </summary>
+        [WirePath("properties.instanceName")]
         public string InstanceName { get; }
     }
 }

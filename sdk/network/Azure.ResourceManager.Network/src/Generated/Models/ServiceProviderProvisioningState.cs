@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(ServiceProviderProvisioningState left, ServiceProviderProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceProviderProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(ServiceProviderProvisioningState left, ServiceProviderProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ServiceProviderProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceProviderProvisioningState"/>. </summary>
         public static implicit operator ServiceProviderProvisioningState(string value) => new ServiceProviderProvisioningState(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator ==(AdministrativeEnableState left, AdministrativeEnableState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AdministrativeEnableState"/> values are not the same. </summary>
         public static bool operator !=(AdministrativeEnableState left, AdministrativeEnableState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AdministrativeEnableState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AdministrativeEnableState"/>. </summary>
         public static implicit operator AdministrativeEnableState(string value) => new AdministrativeEnableState(value);
 
         /// <inheritdoc />

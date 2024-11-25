@@ -51,7 +51,7 @@ namespace Azure.AI.Language.Text
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> Response by document. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="errors"/>, <paramref name="modelVersion"/> or <paramref name="documents"/> is null. </exception>
-        internal EntityLinkingResult(IEnumerable<DocumentError> errors, string modelVersion, IEnumerable<EntityLinkingResultWithDetectedLanguage> documents)
+        internal EntityLinkingResult(IEnumerable<DocumentError> errors, string modelVersion, IEnumerable<EntityLinkingActionResult> documents)
         {
             Argument.AssertNotNull(errors, nameof(errors));
             Argument.AssertNotNull(modelVersion, nameof(modelVersion));
@@ -68,7 +68,7 @@ namespace Azure.AI.Language.Text
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> Response by document. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EntityLinkingResult(IReadOnlyList<DocumentError> errors, RequestStatistics statistics, string modelVersion, IReadOnlyList<EntityLinkingResultWithDetectedLanguage> documents, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EntityLinkingResult(IReadOnlyList<DocumentError> errors, RequestStatistics statistics, string modelVersion, IReadOnlyList<EntityLinkingActionResult> documents, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Errors = errors;
             Statistics = statistics;
@@ -89,6 +89,6 @@ namespace Azure.AI.Language.Text
         /// <summary> This field indicates which model is used for scoring. </summary>
         public string ModelVersion { get; }
         /// <summary> Response by document. </summary>
-        public IReadOnlyList<EntityLinkingResultWithDetectedLanguage> Documents { get; }
+        public IReadOnlyList<EntityLinkingActionResult> Documents { get; }
     }
 }

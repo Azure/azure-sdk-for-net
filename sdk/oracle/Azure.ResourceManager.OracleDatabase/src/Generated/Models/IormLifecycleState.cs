@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static bool operator ==(IormLifecycleState left, IormLifecycleState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IormLifecycleState"/> values are not the same. </summary>
         public static bool operator !=(IormLifecycleState left, IormLifecycleState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IormLifecycleState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IormLifecycleState"/>. </summary>
         public static implicit operator IormLifecycleState(string value) => new IormLifecycleState(value);
 
         /// <inheritdoc />

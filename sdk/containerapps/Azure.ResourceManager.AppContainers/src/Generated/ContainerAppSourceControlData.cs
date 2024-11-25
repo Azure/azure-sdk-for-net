@@ -80,16 +80,20 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Current provisioning State of the operation. </summary>
+        [WirePath("properties.operationState")]
         public ContainerAppSourceControlOperationState? OperationState { get; }
         /// <summary> The repo url which will be integrated to ContainerApp. </summary>
+        [WirePath("properties.repoUrl")]
         public Uri RepoUri { get; set; }
         /// <summary> The branch which will trigger the auto deployment. </summary>
+        [WirePath("properties.branch")]
         public string Branch { get; set; }
         /// <summary>
         /// Container App Revision Template with all possible settings and the
         /// defaults if user did not provide them. The defaults are populated
         /// as they were at the creation time
         /// </summary>
+        [WirePath("properties.githubActionConfiguration")]
         public ContainerAppGitHubActionConfiguration GitHubActionConfiguration { get; set; }
     }
 }

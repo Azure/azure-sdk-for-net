@@ -9,17 +9,17 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Avs.Samples
 {
     public partial class Sample_WorkloadNetworkPublicIPCollection
     {
-        // WorkloadNetworks_ListPublicIPs
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_WorkloadNetworksListPublicIPs()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/WorkloadNetworks_ListPublicIPs.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_ListPublicIPs.json
             // this example is just showing the usage of "WorkloadNetworks_ListPublicIPs" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -27,16 +27,16 @@ namespace Azure.ResourceManager.Avs.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AvsPrivateCloudResource created on azure
-            // for more information of creating AvsPrivateCloudResource, please refer to the document of AvsPrivateCloudResource
+            // this example assumes you already have this WorkloadNetworkResource created on azure
+            // for more information of creating WorkloadNetworkResource, please refer to the document of WorkloadNetworkResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "group1";
             string privateCloudName = "cloud1";
-            ResourceIdentifier avsPrivateCloudResourceId = AvsPrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
-            AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
+            ResourceIdentifier workloadNetworkResourceId = WorkloadNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
+            WorkloadNetworkResource workloadNetwork = client.GetWorkloadNetworkResource(workloadNetworkResourceId);
 
             // get the collection of this WorkloadNetworkPublicIPResource
-            WorkloadNetworkPublicIPCollection collection = avsPrivateCloud.GetWorkloadNetworkPublicIPs();
+            WorkloadNetworkPublicIPCollection collection = workloadNetwork.GetWorkloadNetworkPublicIPs();
 
             // invoke the operation and iterate over the result
             await foreach (WorkloadNetworkPublicIPResource item in collection.GetAllAsync())
@@ -48,15 +48,14 @@ namespace Azure.ResourceManager.Avs.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // WorkloadNetworks_GetPublicIP
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_WorkloadNetworksGetPublicIP()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/WorkloadNetworks_GetPublicIPs.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_GetPublicIP.json
             // this example is just showing the usage of "WorkloadNetworks_GetPublicIP" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -64,16 +63,16 @@ namespace Azure.ResourceManager.Avs.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AvsPrivateCloudResource created on azure
-            // for more information of creating AvsPrivateCloudResource, please refer to the document of AvsPrivateCloudResource
+            // this example assumes you already have this WorkloadNetworkResource created on azure
+            // for more information of creating WorkloadNetworkResource, please refer to the document of WorkloadNetworkResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "group1";
             string privateCloudName = "cloud1";
-            ResourceIdentifier avsPrivateCloudResourceId = AvsPrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
-            AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
+            ResourceIdentifier workloadNetworkResourceId = WorkloadNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
+            WorkloadNetworkResource workloadNetwork = client.GetWorkloadNetworkResource(workloadNetworkResourceId);
 
             // get the collection of this WorkloadNetworkPublicIPResource
-            WorkloadNetworkPublicIPCollection collection = avsPrivateCloud.GetWorkloadNetworkPublicIPs();
+            WorkloadNetworkPublicIPCollection collection = workloadNetwork.GetWorkloadNetworkPublicIPs();
 
             // invoke the operation
             string publicIPId = "publicIP1";
@@ -86,12 +85,11 @@ namespace Azure.ResourceManager.Avs.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // WorkloadNetworks_GetPublicIP
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_WorkloadNetworksGetPublicIP()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/WorkloadNetworks_GetPublicIPs.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_GetPublicIP.json
             // this example is just showing the usage of "WorkloadNetworks_GetPublicIP" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -99,16 +97,16 @@ namespace Azure.ResourceManager.Avs.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AvsPrivateCloudResource created on azure
-            // for more information of creating AvsPrivateCloudResource, please refer to the document of AvsPrivateCloudResource
+            // this example assumes you already have this WorkloadNetworkResource created on azure
+            // for more information of creating WorkloadNetworkResource, please refer to the document of WorkloadNetworkResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "group1";
             string privateCloudName = "cloud1";
-            ResourceIdentifier avsPrivateCloudResourceId = AvsPrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
-            AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
+            ResourceIdentifier workloadNetworkResourceId = WorkloadNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
+            WorkloadNetworkResource workloadNetwork = client.GetWorkloadNetworkResource(workloadNetworkResourceId);
 
             // get the collection of this WorkloadNetworkPublicIPResource
-            WorkloadNetworkPublicIPCollection collection = avsPrivateCloud.GetWorkloadNetworkPublicIPs();
+            WorkloadNetworkPublicIPCollection collection = workloadNetwork.GetWorkloadNetworkPublicIPs();
 
             // invoke the operation
             string publicIPId = "publicIP1";
@@ -117,12 +115,11 @@ namespace Azure.ResourceManager.Avs.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // WorkloadNetworks_GetPublicIP
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_WorkloadNetworksGetPublicIP()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/WorkloadNetworks_GetPublicIPs.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_GetPublicIP.json
             // this example is just showing the usage of "WorkloadNetworks_GetPublicIP" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -130,16 +127,16 @@ namespace Azure.ResourceManager.Avs.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AvsPrivateCloudResource created on azure
-            // for more information of creating AvsPrivateCloudResource, please refer to the document of AvsPrivateCloudResource
+            // this example assumes you already have this WorkloadNetworkResource created on azure
+            // for more information of creating WorkloadNetworkResource, please refer to the document of WorkloadNetworkResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "group1";
             string privateCloudName = "cloud1";
-            ResourceIdentifier avsPrivateCloudResourceId = AvsPrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
-            AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
+            ResourceIdentifier workloadNetworkResourceId = WorkloadNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
+            WorkloadNetworkResource workloadNetwork = client.GetWorkloadNetworkResource(workloadNetworkResourceId);
 
             // get the collection of this WorkloadNetworkPublicIPResource
-            WorkloadNetworkPublicIPCollection collection = avsPrivateCloud.GetWorkloadNetworkPublicIPs();
+            WorkloadNetworkPublicIPCollection collection = workloadNetwork.GetWorkloadNetworkPublicIPs();
 
             // invoke the operation
             string publicIPId = "publicIP1";
@@ -148,7 +145,7 @@ namespace Azure.ResourceManager.Avs.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -160,12 +157,11 @@ namespace Azure.ResourceManager.Avs.Samples
             }
         }
 
-        // WorkloadNetworks_CreatePublicIP
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_WorkloadNetworksCreatePublicIP()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/WorkloadNetworks_CreatePublicIPs.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_CreatePublicIP.json
             // this example is just showing the usage of "WorkloadNetworks_CreatePublicIP" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -173,23 +169,23 @@ namespace Azure.ResourceManager.Avs.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AvsPrivateCloudResource created on azure
-            // for more information of creating AvsPrivateCloudResource, please refer to the document of AvsPrivateCloudResource
+            // this example assumes you already have this WorkloadNetworkResource created on azure
+            // for more information of creating WorkloadNetworkResource, please refer to the document of WorkloadNetworkResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "group1";
             string privateCloudName = "cloud1";
-            ResourceIdentifier avsPrivateCloudResourceId = AvsPrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
-            AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
+            ResourceIdentifier workloadNetworkResourceId = WorkloadNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
+            WorkloadNetworkResource workloadNetwork = client.GetWorkloadNetworkResource(workloadNetworkResourceId);
 
             // get the collection of this WorkloadNetworkPublicIPResource
-            WorkloadNetworkPublicIPCollection collection = avsPrivateCloud.GetWorkloadNetworkPublicIPs();
+            WorkloadNetworkPublicIPCollection collection = workloadNetwork.GetWorkloadNetworkPublicIPs();
 
             // invoke the operation
             string publicIPId = "publicIP1";
             WorkloadNetworkPublicIPData data = new WorkloadNetworkPublicIPData()
             {
                 DisplayName = "publicIP1",
-                NumberOfPublicIPs = 32,
+                NumberOfPublicIPs = 32L,
             };
             ArmOperation<WorkloadNetworkPublicIPResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, publicIPId, data);
             WorkloadNetworkPublicIPResource result = lro.Value;

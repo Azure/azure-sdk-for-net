@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> [Required] The numerical data quality metric to calculate. </summary>
+        [WirePath("metric")]
         public NumericalDataQualityMetric Metric { get; set; }
     }
 }

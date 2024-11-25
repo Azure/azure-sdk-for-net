@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator ==(SecurityAlertSimulatorBundleType left, SecurityAlertSimulatorBundleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityAlertSimulatorBundleType"/> values are not the same. </summary>
         public static bool operator !=(SecurityAlertSimulatorBundleType left, SecurityAlertSimulatorBundleType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SecurityAlertSimulatorBundleType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityAlertSimulatorBundleType"/>. </summary>
         public static implicit operator SecurityAlertSimulatorBundleType(string value) => new SecurityAlertSimulatorBundleType(value);
 
         /// <inheritdoc />

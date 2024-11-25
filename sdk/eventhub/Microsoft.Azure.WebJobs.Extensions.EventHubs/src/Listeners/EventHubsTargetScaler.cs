@@ -178,6 +178,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
         /// <returns></returns>
         internal static int GetValidWorkerCount(int workerCount, int[] sortedValidWorkerCountList)
         {
+            if (sortedValidWorkerCountList.Length == 0)
+            {
+                return 0;
+            }
+
             int i = Array.BinarySearch(sortedValidWorkerCountList, workerCount);
             if (i >= 0)
             {

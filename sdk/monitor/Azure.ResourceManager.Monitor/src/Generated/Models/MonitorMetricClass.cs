@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator ==(MonitorMetricClass left, MonitorMetricClass right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MonitorMetricClass"/> values are not the same. </summary>
         public static bool operator !=(MonitorMetricClass left, MonitorMetricClass right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MonitorMetricClass"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitorMetricClass"/>. </summary>
         public static implicit operator MonitorMetricClass(string value) => new MonitorMetricClass(value);
 
         /// <inheritdoc />

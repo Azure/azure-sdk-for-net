@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
     public class CloudHsmClustersPrivateEndpointConnectionTests : HardwareSecurityModulesManagementTestBase
     {
         private CloudHsmClusterResource _cloudHsmClusterResource;
-        private HardwareSecurityModulesPrivateEndpointConnectionCollection _privateEndpointConnectionCollection { get => _cloudHsmClusterResource.GetHardwareSecurityModulesPrivateEndpointConnections(); }
+        private CloudHsmClusterPrivateEndpointConnectionCollection _privateEndpointConnectionCollection { get => _cloudHsmClusterResource.GetCloudHsmClusterPrivateEndpointConnections(); }
 
         public CloudHsmClustersPrivateEndpointConnectionTests(bool isAsync)
         : base(isAsync)
@@ -38,37 +38,38 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
         {
             PrivateEndpointResource privateEndpoint = await CreatePrivateEndpoint();
 
-            List<HardwareSecurityModulesPrivateEndpointConnectionResource> privateEndpointConnections = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
+            List<CloudHsmClusterPrivateEndpointConnectionResource> privateEndpointConnections = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotNull(privateEndpointConnections);
 
-            HardwareSecurityModulesPrivateEndpointConnectionResource privateEndpointConnectionResource = privateEndpointConnections.FirstOrDefault();
+            CloudHsmClusterPrivateEndpointConnectionResource privateEndpointConnectionResource = privateEndpointConnections.FirstOrDefault();
             var expectedPrivateEndpointManualLinkServiceConnections = privateEndpoint.Data.ManualPrivateLinkServiceConnections.FirstOrDefault();
 
             Assert.IsNotNull(privateEndpointConnectionResource);
-            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Status.ToString(),privateEndpointConnectionResource.Data.ConnectionState.Status.ToString());
-            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Description, privateEndpointConnectionResource.Data.ConnectionState.Description);
-            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.GroupIds, privateEndpointConnectionResource.Data.GroupIds);
-            Assert.AreEqual(HardwareSecurityModulesPrivateEndpointServiceConnectionStatus.Pending, privateEndpointConnectionResource.Data.ConnectionState.Status);
+            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Status.ToString(),privateEndpointConnectionResource.Data.Properties.ConnectionState.Status.ToString());
+            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Description, privateEndpointConnectionResource.Data.Properties.ConnectionState.Description);
+            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.GroupIds, privateEndpointConnectionResource.Data.Properties.GroupIds);
+            Assert.AreEqual(CloudHsmClusterPrivateEndpointServiceConnectionStatus.Pending, privateEndpointConnectionResource.Data.Properties.ConnectionState.Status);
 
-            //Update Private endpoint
-            _ = await _privateEndpointConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionResource.Data.Name, new HardwareSecurityModulesPrivateEndpointConnectionData()
+            CloudHsmClusterPrivateEndpointConnectionData data = new CloudHsmClusterPrivateEndpointConnectionData()
             {
-                ConnectionState = new HardwareSecurityModulesPrivateLinkServiceConnectionState()
+                Properties = new CloudHsmClusterPrivateEndpointConnectionProperties(new CloudHsmClusterPrivateLinkServiceConnectionState()
                 {
                     Status = "Approved",
                     Description = "Approve by sdk test case"
-                }
-            });
+                }),
+            };
+
+            _ = await _privateEndpointConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionResource.Data.Name, data);
 
             privateEndpoint = await privateEndpoint.GetAsync();
             privateEndpointConnectionResource = await _privateEndpointConnectionCollection.GetAsync(privateEndpointConnectionResource.Data.Name);
             expectedPrivateEndpointManualLinkServiceConnections = privateEndpoint.Data.ManualPrivateLinkServiceConnections.FirstOrDefault();
 
             Assert.IsNotNull(privateEndpoint);
-            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Status.ToString(), privateEndpointConnectionResource.Data.ConnectionState.Status.ToString());
-            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Description, privateEndpointConnectionResource.Data.ConnectionState.Description);
-            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.GroupIds, privateEndpointConnectionResource.Data.GroupIds);
-            Assert.AreEqual(HardwareSecurityModulesPrivateEndpointServiceConnectionStatus.Approved, privateEndpointConnectionResource.Data.ConnectionState.Status);
+            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Status.ToString(), privateEndpointConnectionResource.Data.Properties.ConnectionState.Status.ToString());
+            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Description, privateEndpointConnectionResource.Data.Properties.ConnectionState.Description);
+            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.GroupIds, privateEndpointConnectionResource.Data.Properties.GroupIds);
+            Assert.AreEqual(CloudHsmClusterPrivateEndpointServiceConnectionStatus.Approved, privateEndpointConnectionResource.Data.Properties.ConnectionState.Status);
         }
 
         [Ignore("Exception")]
@@ -78,16 +79,16 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
             PrivateEndpointResource privateEndpoint = await CreatePrivateEndpoint();
             Assert.IsTrue(privateEndpoint.Data.ManualPrivateLinkServiceConnections.Count == 1);
 
-            List<HardwareSecurityModulesPrivateEndpointConnectionResource> privateEndpointConnections = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
-            HardwareSecurityModulesPrivateEndpointConnectionResource privateEndpointConnectionResource = privateEndpointConnections.FirstOrDefault();
+            List<CloudHsmClusterPrivateEndpointConnectionResource> privateEndpointConnections = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
+            CloudHsmClusterPrivateEndpointConnectionResource privateEndpointConnectionResource = privateEndpointConnections.FirstOrDefault();
             var expectedPrivateEndpointManualLinkServiceConnections = privateEndpoint.Data.ManualPrivateLinkServiceConnections.FirstOrDefault();
 
             Assert.IsTrue(privateEndpointConnections.Count == 1);
             Assert.IsNotNull(privateEndpointConnectionResource);
-            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Status.ToString(), privateEndpointConnectionResource.Data.ConnectionState.Status.ToString());
-            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Description, privateEndpointConnectionResource.Data.ConnectionState.Description);
-            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.GroupIds, privateEndpointConnectionResource.Data.GroupIds);
-            Assert.AreEqual(HardwareSecurityModulesPrivateEndpointServiceConnectionStatus.Pending, privateEndpointConnectionResource.Data.ConnectionState.Status);
+            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Status.ToString(), privateEndpointConnectionResource.Data.Properties.ConnectionState.Status.ToString());
+            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.ConnectionState.Description, privateEndpointConnectionResource.Data.Properties.ConnectionState.Description);
+            Assert.AreEqual(expectedPrivateEndpointManualLinkServiceConnections.GroupIds, privateEndpointConnectionResource.Data.Properties.GroupIds);
+            Assert.AreEqual(CloudHsmClusterPrivateEndpointServiceConnectionStatus.Pending, privateEndpointConnectionResource.Data.Properties.ConnectionState.Status);
         }
 
         [Ignore("Exception")]
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
         public async Task DeletePrivateEndpointConnection()
         {
             var privateEndpoint = await CreatePrivateEndpoint();
-            List<HardwareSecurityModulesPrivateEndpointConnectionResource> privateEndpointConnections = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
+            List<CloudHsmClusterPrivateEndpointConnectionResource> privateEndpointConnections = await _privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
             string pecName = privateEndpointConnections[0].Data.Name;
             //Check that the resource is there before deleting.
             Assert.IsTrue(await _privateEndpointConnectionCollection.ExistsAsync(pecName));
@@ -114,15 +115,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
             string resourceName = Recording.GenerateAssetName("CloudhsmSDKTest");
             CloudHsmClusterData cloudHsmClusterBody = new CloudHsmClusterData(Location)
             {
-                SecurityDomain = new CloudHsmClusterSecurityDomainProperties()
-                {
-                    FipsState = 2,
-                },
                 Sku = new CloudHsmClusterSku(CloudHsmClusterSkuFamily.B, CloudHsmClusterSkuName.StandardB1),
                 Tags =
                 {
                     ["Dept"] = "SDK Testing",
                     ["Env"] = "df",
+                    ["UseMockHfc"] = "true",
+                    ["MockHfcDelayInMs"] = "1"
                 },
             };
 

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(FailoverGroupDatabasesSecondaryType left, FailoverGroupDatabasesSecondaryType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FailoverGroupDatabasesSecondaryType"/> values are not the same. </summary>
         public static bool operator !=(FailoverGroupDatabasesSecondaryType left, FailoverGroupDatabasesSecondaryType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FailoverGroupDatabasesSecondaryType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FailoverGroupDatabasesSecondaryType"/>. </summary>
         public static implicit operator FailoverGroupDatabasesSecondaryType(string value) => new FailoverGroupDatabasesSecondaryType(value);
 
         /// <inheritdoc />

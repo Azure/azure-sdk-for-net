@@ -27,14 +27,16 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryLinkedServiceProperties"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal DataFactoryLinkedServiceProperties(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties)
+        internal DataFactoryLinkedServiceProperties(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties)
         {
             LinkedServiceType = linkedServiceType;
+            LinkedServiceVersion = linkedServiceVersion;
             ConnectVia = connectVia;
             Description = description;
             Parameters = parameters;
@@ -44,6 +46,8 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Type of linked service. </summary>
         internal string LinkedServiceType { get; set; }
+        /// <summary> Version of the linked service. </summary>
+        public string LinkedServiceVersion { get; set; }
         /// <summary> The integration runtime reference. </summary>
         public IntegrationRuntimeReference ConnectVia { get; set; }
         /// <summary> Linked service description. </summary>

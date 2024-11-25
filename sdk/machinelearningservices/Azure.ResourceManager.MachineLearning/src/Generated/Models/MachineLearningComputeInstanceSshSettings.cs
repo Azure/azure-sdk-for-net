@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> State of the public SSH port. Possible values are: Disabled - Indicates that the public ssh port is closed on this instance. Enabled - Indicates that the public ssh port is open and accessible according to the VNet/subnet policy if applicable. </summary>
+        [WirePath("sshPublicAccess")]
         public MachineLearningSshPublicAccess? SshPublicAccess { get; set; }
         /// <summary> Describes the admin user name. </summary>
+        [WirePath("adminUserName")]
         public string AdminUserName { get; }
         /// <summary> Describes the port for connecting through SSH. </summary>
+        [WirePath("sshPort")]
         public int? SshPort { get; }
         /// <summary> Specifies the SSH rsa public key file as a string. Use "ssh-keygen -t rsa -b 2048" to generate your SSH key pairs. </summary>
+        [WirePath("adminPublicKey")]
         public string AdminPublicKey { get; set; }
     }
 }

@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
 
         private async Task<FabricCapacityResource> CreateFabricCapacityAsync(string capacityName)
         {
-            var capacityData = new FabricCapacityData(DefaultLocation, new FabricSku() { Name = "F2", Tier = "Fabric"})
-            {
-                Properties = new FabricCapacityProperties(new FabricCapacityAdministration(new[] { "VsavTest@pbiotest.onmicrosoft.com" }))
-            };
+            var capacityData = new FabricCapacityData(
+                DefaultLocation,
+                new FabricCapacityProperties(new FabricCapacityAdministration(new[] { "VsavTest@pbiotest.onmicrosoft.com" })),
+                new FabricSku() { Name = "F2", Tier = "Fabric" });
             var capacity = await _fabricCapacityCollection.CreateOrUpdateAsync(WaitUntil.Completed, capacityName, capacityData);
             return capacity.Value;
         }
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
                 Name = TestEnvironment.CapacityName,
                 ResourceType = ResourceType
             };
-            var result = await Subscription.CheckNameAvailabilityFabricCapacityAsync(DefaultLocation, content);
+            var result = await Subscription.CheckFabricCapacityNameAvailabilityAsync(DefaultLocation, content);
 
             // Assert
             Assert.IsNotNull(result?.Value);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Fabric.Tests.Scenario
                 Name = TestEnvironment.CapacityName + "1",
                 ResourceType = ResourceType
             };
-            var result = await Subscription.CheckNameAvailabilityFabricCapacityAsync(DefaultLocation, content);
+            var result = await Subscription.CheckFabricCapacityNameAvailabilityAsync(DefaultLocation, content);
 
             // Assert
             Assert.IsNotNull(result?.Value);

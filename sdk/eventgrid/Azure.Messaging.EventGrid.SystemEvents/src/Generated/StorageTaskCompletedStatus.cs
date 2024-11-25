@@ -33,7 +33,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public static bool operator ==(StorageTaskCompletedStatus left, StorageTaskCompletedStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageTaskCompletedStatus"/> values are not the same. </summary>
         public static bool operator !=(StorageTaskCompletedStatus left, StorageTaskCompletedStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StorageTaskCompletedStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageTaskCompletedStatus"/>. </summary>
         public static implicit operator StorageTaskCompletedStatus(string value) => new StorageTaskCompletedStatus(value);
 
         /// <inheritdoc />

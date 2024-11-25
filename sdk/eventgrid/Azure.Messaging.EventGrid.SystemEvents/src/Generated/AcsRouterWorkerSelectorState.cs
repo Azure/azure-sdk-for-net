@@ -33,7 +33,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public static bool operator ==(AcsRouterWorkerSelectorState left, AcsRouterWorkerSelectorState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AcsRouterWorkerSelectorState"/> values are not the same. </summary>
         public static bool operator !=(AcsRouterWorkerSelectorState left, AcsRouterWorkerSelectorState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AcsRouterWorkerSelectorState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AcsRouterWorkerSelectorState"/>. </summary>
         public static implicit operator AcsRouterWorkerSelectorState(string value) => new AcsRouterWorkerSelectorState(value);
 
         /// <inheritdoc />

@@ -3,7 +3,6 @@
 
 using System;
 using System.Buffers;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading;
@@ -29,13 +28,15 @@ namespace Azure.Identity
         {
             string tokenFilePath = EnvironmentVariables.AzureFederatedTokenFile;
             string tenantId = EnvironmentVariables.TenantId;
-            string clientId = options.ClientId ?? EnvironmentVariables.ClientId;
+            string clientId = options.ManagedIdentityId?._userAssignedId ?? EnvironmentVariables.ClientId;
 
             if (options.ExcludeTokenExchangeManagedIdentitySource || string.IsNullOrEmpty(tokenFilePath) || string.IsNullOrEmpty(tenantId) || string.IsNullOrEmpty(clientId))
             {
+                AzureIdentityEventSource.Singleton.ManagedIdentitySourceAttempted("TokenExchangeManagedIdentitySource", false);
                 return default;
             }
 
+            AzureIdentityEventSource.Singleton.ManagedIdentitySourceAttempted("TokenExchangeManagedIdentitySource", true);
             return new TokenExchangeManagedIdentitySource(options.Pipeline, tenantId, clientId, tokenFilePath);
         }
 

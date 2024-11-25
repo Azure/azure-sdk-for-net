@@ -80,16 +80,22 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> ObjectId of user session. (internal use). </summary>
+        [WirePath("properties.objectId")]
         public string ObjectId { get; }
         /// <summary> The user principal name. </summary>
+        [WirePath("properties.userPrincipalName")]
         public string UserPrincipalName { get; set; }
         /// <summary> Application type of application. </summary>
+        [WirePath("properties.applicationType")]
         public VirtualApplicationType? ApplicationType { get; set; }
         /// <summary> State of user session. </summary>
+        [WirePath("properties.sessionState")]
         public UserSessionState? SessionState { get; set; }
         /// <summary> The active directory user name. </summary>
+        [WirePath("properties.activeDirectoryUserName")]
         public string ActiveDirectoryUserName { get; set; }
         /// <summary> The timestamp of the user session create. </summary>
+        [WirePath("properties.createTime")]
         public DateTimeOffset? CreateOn { get; set; }
     }
 }

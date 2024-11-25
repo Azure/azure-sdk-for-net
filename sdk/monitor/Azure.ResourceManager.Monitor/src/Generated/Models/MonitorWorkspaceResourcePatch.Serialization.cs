@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Monitor.Models
 
         void IJsonModel<MonitorWorkspaceResourcePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<MonitorWorkspaceResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MonitorWorkspaceResourcePatch)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -37,6 +45,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndObject();
             }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Metrics))
+            {
+                writer.WritePropertyName("metrics"u8);
+                writer.WriteObjectValue(Metrics, options);
+            }
+            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -52,7 +68,6 @@ namespace Azure.ResourceManager.Monitor.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         MonitorWorkspaceResourcePatch IJsonModel<MonitorWorkspaceResourcePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -76,6 +91,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
+            MonitorWorkspaceMetricProperties metrics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,13 +110,34 @@ namespace Azure.ResourceManager.Monitor.Models
                     tags = dictionary;
                     continue;
                 }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("metrics"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            metrics = MonitorWorkspaceMetricProperties.DeserializeMonitorWorkspaceMetricProperties(property0.Value, options);
+                            continue;
+                        }
+                    }
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MonitorWorkspaceResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new MonitorWorkspaceResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), metrics, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorWorkspaceResourcePatch>.Write(ModelReaderWriterOptions options)

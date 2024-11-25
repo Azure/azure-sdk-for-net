@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator ==(SecurityAssessmentStatusCode left, SecurityAssessmentStatusCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityAssessmentStatusCode"/> values are not the same. </summary>
         public static bool operator !=(SecurityAssessmentStatusCode left, SecurityAssessmentStatusCode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SecurityAssessmentStatusCode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityAssessmentStatusCode"/>. </summary>
         public static implicit operator SecurityAssessmentStatusCode(string value) => new SecurityAssessmentStatusCode(value);
 
         /// <inheritdoc />

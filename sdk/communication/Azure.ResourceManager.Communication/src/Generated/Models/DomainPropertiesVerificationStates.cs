@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.Communication.Models
         }
 
         /// <summary> A class that represents a VerificationStatus record. </summary>
+        [WirePath("Domain")]
         public DomainVerificationStatusRecord Domain { get; }
         /// <summary> A class that represents a VerificationStatus record. </summary>
+        [WirePath("SPF")]
         public DomainVerificationStatusRecord Spf { get; }
         /// <summary> A class that represents a VerificationStatus record. </summary>
+        [WirePath("DKIM")]
         public DomainVerificationStatusRecord Dkim { get; }
         /// <summary> A class that represents a VerificationStatus record. </summary>
+        [WirePath("DKIM2")]
         public DomainVerificationStatusRecord Dkim2 { get; }
         /// <summary> A class that represents a VerificationStatus record. </summary>
+        [WirePath("DMARC")]
         public DomainVerificationStatusRecord Dmarc { get; }
     }
 }

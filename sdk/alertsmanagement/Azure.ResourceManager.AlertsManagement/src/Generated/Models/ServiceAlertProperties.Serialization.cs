@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         void IJsonModel<ServiceAlertProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAlertProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServiceAlertProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Essentials))
             {
                 writer.WritePropertyName("essentials"u8);
@@ -70,7 +78,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ServiceAlertProperties IJsonModel<ServiceAlertProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

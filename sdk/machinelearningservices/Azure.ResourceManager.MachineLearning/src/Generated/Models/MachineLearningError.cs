@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The error object. </summary>
+        [WirePath("error")]
         public ResponseError Error { get; }
     }
 }

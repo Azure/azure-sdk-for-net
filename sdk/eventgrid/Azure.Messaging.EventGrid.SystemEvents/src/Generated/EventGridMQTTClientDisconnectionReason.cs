@@ -60,7 +60,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public static bool operator ==(EventGridMQTTClientDisconnectionReason left, EventGridMQTTClientDisconnectionReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventGridMQTTClientDisconnectionReason"/> values are not the same. </summary>
         public static bool operator !=(EventGridMQTTClientDisconnectionReason left, EventGridMQTTClientDisconnectionReason right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EventGridMQTTClientDisconnectionReason"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EventGridMQTTClientDisconnectionReason"/>. </summary>
         public static implicit operator EventGridMQTTClientDisconnectionReason(string value) => new EventGridMQTTClientDisconnectionReason(value);
 
         /// <inheritdoc />

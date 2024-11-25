@@ -33,7 +33,7 @@ namespace Azure.Compute.Batch
         public static bool operator ==(BatchTaskExecutionResult left, BatchTaskExecutionResult right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BatchTaskExecutionResult"/> values are not the same. </summary>
         public static bool operator !=(BatchTaskExecutionResult left, BatchTaskExecutionResult right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BatchTaskExecutionResult"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BatchTaskExecutionResult"/>. </summary>
         public static implicit operator BatchTaskExecutionResult(string value) => new BatchTaskExecutionResult(value);
 
         /// <inheritdoc />

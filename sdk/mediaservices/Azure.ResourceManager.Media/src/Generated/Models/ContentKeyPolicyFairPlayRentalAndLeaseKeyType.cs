@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator ==(ContentKeyPolicyFairPlayRentalAndLeaseKeyType left, ContentKeyPolicyFairPlayRentalAndLeaseKeyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContentKeyPolicyFairPlayRentalAndLeaseKeyType"/> values are not the same. </summary>
         public static bool operator !=(ContentKeyPolicyFairPlayRentalAndLeaseKeyType left, ContentKeyPolicyFairPlayRentalAndLeaseKeyType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContentKeyPolicyFairPlayRentalAndLeaseKeyType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContentKeyPolicyFairPlayRentalAndLeaseKeyType"/>. </summary>
         public static implicit operator ContentKeyPolicyFairPlayRentalAndLeaseKeyType(string value) => new ContentKeyPolicyFairPlayRentalAndLeaseKeyType(value);
 
         /// <inheritdoc />

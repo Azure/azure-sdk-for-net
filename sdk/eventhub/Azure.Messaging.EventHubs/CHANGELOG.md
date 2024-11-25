@@ -1,5 +1,19 @@
 # Release History
 
+## 5.12.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+- Querying runtime data and other management operations will now correctly guards against the race condition where an AMQP link is in the process of closing as the operation attempts to use it.  These errors will now properly be classified as retriable as they are for producer and consumer operations.
+
+### Other Changes
+
+- Added annotations to make the package compatible with trimming and native AOT compilation.
+
 ## 5.11.5 (2024-07-31)
 
 ### Other Changes

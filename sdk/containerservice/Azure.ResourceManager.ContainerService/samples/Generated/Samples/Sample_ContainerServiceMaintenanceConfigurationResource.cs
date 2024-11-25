@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ContainerService.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ContainerService.Samples
 {
     public partial class Sample_ContainerServiceMaintenanceConfigurationResource
     {
-        // Get Maintenance Configuration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetMaintenanceConfiguration()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/MaintenanceConfigurationsGet.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.ContainerService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Maintenance Configuration Configured With Maintenance Window
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetMaintenanceConfigurationConfiguredWithMaintenanceWindow()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/MaintenanceConfigurationsGet_MaintenanceWindow.json
@@ -79,9 +78,8 @@ namespace Azure.ResourceManager.ContainerService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create/Update Maintenance Configuration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateUpdateMaintenanceConfiguration()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/MaintenanceConfigurationsCreate_Update.json
@@ -134,9 +132,8 @@ EndOn = DateTimeOffset.Parse("2020-11-30T12:00:00Z"),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create/Update Maintenance Configuration with Maintenance Window
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateUpdateMaintenanceConfigurationWithMaintenanceWindow()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/MaintenanceConfigurationsCreate_Update_MaintenanceWindow.json
@@ -182,9 +179,8 @@ new ContainerServiceDateSpan(DateTimeOffset.Parse("2023-02-18"),DateTimeOffset.P
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete Maintenance Configuration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteMaintenanceConfiguration()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/MaintenanceConfigurationsDelete.json
@@ -207,12 +203,11 @@ new ContainerServiceDateSpan(DateTimeOffset.Parse("2023-02-18"),DateTimeOffset.P
             // invoke the operation
             await containerServiceMaintenanceConfiguration.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Delete Maintenance Configuration For Node OS Upgrade
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteMaintenanceConfigurationForNodeOSUpgrade()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/MaintenanceConfigurationsDelete_MaintenanceWindow.json
@@ -235,7 +230,7 @@ new ContainerServiceDateSpan(DateTimeOffset.Parse("2023-02-18"),DateTimeOffset.P
             // invoke the operation
             await containerServiceMaintenanceConfiguration.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

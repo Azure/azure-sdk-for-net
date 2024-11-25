@@ -33,7 +33,7 @@ namespace Azure.AI.Language.Text
         public static bool operator ==(WarningCode left, WarningCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WarningCode"/> values are not the same. </summary>
         public static bool operator !=(WarningCode left, WarningCode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WarningCode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WarningCode"/>. </summary>
         public static implicit operator WarningCode(string value) => new WarningCode(value);
 
         /// <inheritdoc />

@@ -67,12 +67,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Virtual network subnet resource ID the compute nodes belong to. </summary>
+        [WirePath("subnetId")]
         public ResourceIdentifier SubnetId { get; set; }
         /// <summary> A CIDR notation IP range from which to assign service cluster IPs. It must not overlap with any Subnet IP ranges. </summary>
+        [WirePath("serviceCidr")]
         public string ServiceCidr { get; set; }
         /// <summary> An IP address assigned to the Kubernetes DNS service. It must be within the Kubernetes service address range specified in serviceCidr. </summary>
+        [WirePath("dnsServiceIP")]
         public string DnsServiceIP { get; set; }
         /// <summary> A CIDR notation IP range assigned to the Docker bridge network. It must not overlap with any Subnet IP ranges or the Kubernetes service address range. </summary>
+        [WirePath("dockerBridgeCidr")]
         public string DockerBridgeCidr { get; set; }
     }
 }

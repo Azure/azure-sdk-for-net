@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator ==(PlayerVisibility left, PlayerVisibility right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PlayerVisibility"/> values are not the same. </summary>
         public static bool operator !=(PlayerVisibility left, PlayerVisibility right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PlayerVisibility"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PlayerVisibility"/>. </summary>
         public static implicit operator PlayerVisibility(string value) => new PlayerVisibility(value);
 
         /// <inheritdoc />

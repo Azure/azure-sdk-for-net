@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         void IJsonModel<ApplicationHealthPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApplicationHealthPolicy)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("considerWarningAsError"u8);
             writer.WriteBooleanValue(ConsiderWarningAsError);
             writer.WritePropertyName("maxPercentUnhealthyDeployedApplications"u8);
@@ -61,7 +69,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ApplicationHealthPolicy IJsonModel<ApplicationHealthPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

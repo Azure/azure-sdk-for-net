@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Number of processes per MPI node. </summary>
+        [WirePath("processCountPerInstance")]
         public int? ProcessCountPerInstance { get; set; }
     }
 }

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(ComputePrivateEndpointConnectionProvisioningState left, ComputePrivateEndpointConnectionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ComputePrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(ComputePrivateEndpointConnectionProvisioningState left, ComputePrivateEndpointConnectionProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ComputePrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputePrivateEndpointConnectionProvisioningState"/>. </summary>
         public static implicit operator ComputePrivateEndpointConnectionProvisioningState(string value) => new ComputePrivateEndpointConnectionProvisioningState(value);
 
         /// <inheritdoc />

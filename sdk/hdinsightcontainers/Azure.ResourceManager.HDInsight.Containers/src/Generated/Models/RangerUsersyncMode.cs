@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public static bool operator ==(RangerUsersyncMode left, RangerUsersyncMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RangerUsersyncMode"/> values are not the same. </summary>
         public static bool operator !=(RangerUsersyncMode left, RangerUsersyncMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RangerUsersyncMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RangerUsersyncMode"/>. </summary>
         public static implicit operator RangerUsersyncMode(string value) => new RangerUsersyncMode(value);
 
         /// <inheritdoc />

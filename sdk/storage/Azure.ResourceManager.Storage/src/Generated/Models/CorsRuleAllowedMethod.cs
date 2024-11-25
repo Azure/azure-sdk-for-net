@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator ==(CorsRuleAllowedMethod left, CorsRuleAllowedMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CorsRuleAllowedMethod"/> values are not the same. </summary>
         public static bool operator !=(CorsRuleAllowedMethod left, CorsRuleAllowedMethod right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CorsRuleAllowedMethod"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CorsRuleAllowedMethod"/>. </summary>
         public static implicit operator CorsRuleAllowedMethod(string value) => new CorsRuleAllowedMethod(value);
 
         /// <inheritdoc />

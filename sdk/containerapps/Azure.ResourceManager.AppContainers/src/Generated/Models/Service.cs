@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Dev ContainerApp service type. </summary>
+        [WirePath("type")]
         public string ServiceType { get; set; }
     }
 }

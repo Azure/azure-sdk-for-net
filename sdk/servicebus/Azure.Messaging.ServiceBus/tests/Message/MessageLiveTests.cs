@@ -21,7 +21,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
                 var sender = client.CreateSender(scope.QueueName);
                 var receiver = client.CreateReceiver(scope.QueueName);
 
@@ -108,7 +108,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
 
                 var maxMessageSize = (256 * 1024) - 77;     // 77 bytes is the current serialization hit.
                 var maxPayload = Enumerable.Repeat<byte>(0x20, maxMessageSize).ToArray();
@@ -127,7 +127,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
 
                 var maxSizeMessage = new ServiceBusMessage((BinaryData)null);
 
@@ -144,7 +144,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: true, enableSession: true))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
                 var sender = client.CreateSender(scope.QueueName);
                 var msg = new ServiceBusMessage(new BinaryData(ServiceBusTestUtilities.GetRandomBuffer(100)));
                 msg.ContentType = "contenttype";
@@ -224,7 +224,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false,
                              enableSession: false, defaultMessageTimeToLive: TimeSpan.FromDays(100)))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
                 var sender = client.CreateSender(scope.QueueName);
                 var msg = new ServiceBusMessage();
                 await sender.SendMessageAsync(msg);
@@ -244,7 +244,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false,
                              enableSession: false))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
                 var sender = client.CreateSender(scope.QueueName);
                 // Use a message Time To Live of greater than 49 days so that we can verify the TTL is recalculated correctly on the client based on
                 // the absolute expiry time. 49 days is the largest number of milliseconds that can be sent over AMQP, so the recalculation is a workaround.
@@ -269,7 +269,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
         {
             await using (var scope = await ServiceBusScope.CreateWithTopic(enablePartitioning: true, enableSession: true))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
                 var sender = client.CreateSender(scope.TopicName);
                 var msg = new ServiceBusMessage(new BinaryData(ServiceBusTestUtilities.GetRandomBuffer(100)));
                 msg.ContentType = "contenttype";
@@ -345,7 +345,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
                 var sender = client.CreateSender(scope.QueueName);
                 var serializer = new JsonObjectSerializer();
                 var testBody = new TestBody
@@ -373,7 +373,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
                 var sender = client.CreateSender(scope.QueueName);
 
                 var msg = new ServiceBusMessage();
@@ -462,7 +462,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
                 var sender = client.CreateSender(scope.QueueName);
 
                 var msg = new ServiceBusMessage();
@@ -502,7 +502,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
                 var sender = client.CreateSender(scope.QueueName);
 
                 var msg = new ServiceBusMessage();
@@ -540,7 +540,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
                 var sender = client.CreateSender(scope.QueueName);
                 var msg = new ServiceBusMessage();
                 msg.GetRawAmqpMessage().Body = new AmqpMessageBody(new ReadOnlyMemory<byte>[]
@@ -611,7 +611,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 amqpMessage.DeliveryAnnotations.Add("deliveryAnnotationKey1", null);
                 amqpMessage.DeliveryAnnotations.Add("deliveryAnnotationKey2", "deliveryAnnotationVal2");
 
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
                 var sender = client.CreateSender(scope.QueueName);
 
                 var now = DateTimeOffset.UtcNow;
@@ -684,7 +684,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 amqpMessage.Properties.AbsoluteExpiryTime = expiry;
                 amqpMessage.Properties.CreationTime = creation;
 
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
                 var sender = client.CreateSender(scope.QueueName);
 
                 var now = DateTimeOffset.UtcNow;
@@ -708,7 +708,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: true, enableSession: useSession))
             {
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
                 var sender = client.CreateSender(scope.QueueName);
                 var msg = new ServiceBusMessage(new BinaryData(ServiceBusTestUtilities.GetRandomBuffer(100)));
                 msg.ContentType = "contenttype";

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static bool operator ==(DomainJoinedType left, DomainJoinedType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DomainJoinedType"/> values are not the same. </summary>
         public static bool operator !=(DomainJoinedType left, DomainJoinedType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DomainJoinedType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DomainJoinedType"/>. </summary>
         public static implicit operator DomainJoinedType(string value) => new DomainJoinedType(value);
 
         /// <inheritdoc />

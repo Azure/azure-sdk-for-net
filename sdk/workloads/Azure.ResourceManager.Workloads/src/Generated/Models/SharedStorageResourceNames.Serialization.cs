@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Workloads.Models
 
         void IJsonModel<SharedStorageResourceNames>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SharedStorageResourceNames>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SharedStorageResourceNames)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(SharedStorageAccountName))
             {
                 writer.WritePropertyName("sharedStorageAccountName"u8);
@@ -51,7 +59,6 @@ namespace Azure.ResourceManager.Workloads.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SharedStorageResourceNames IJsonModel<SharedStorageResourceNames>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -102,17 +102,6 @@
         },
         {
           "Key": {
-            "Type": "CloudServiceConfiguration",
-            "Name": "CloudServiceConfiguration",
-            "SummaryComment": "The <see cref=\"CloudServiceConfiguration\"/> for the pool.",
-            "RemarksComment": null,
-            "BoundAccess": "read",
-            "UnboundAccess": "read,write"
-          },
-          "Value": null
-        },
-        {
-          "Key": {
             "Type": "DateTime?",
             "Name": "CreationTime",
             "SummaryComment": "The creation time for the pool.",
@@ -156,7 +145,7 @@
             "Name": "DisplayName",
             "SummaryComment": "The display name of the pool.",
             "RemarksComment": null,
-            "BoundAccess": "read",
+            "BoundAccess": "read,write",
             "UnboundAccess": "read,write"
           },
           "Value": null
@@ -189,7 +178,7 @@
             "Name": "InterComputeNodeCommunicationEnabled",
             "SummaryComment": "Whether the pool permits direct communication between its compute nodes.",
             "RemarksComment": "Enabling inter-node communication limits the maximum size of the pool due to deployment restrictions on the nodes of the pool. This may result in the pool not reaching its desired size.",
-            "BoundAccess": "read",
+            "BoundAccess": "read,write",
             "UnboundAccess": "read,write"
           },
           "Value": {
@@ -203,7 +192,7 @@
             "Name": "NetworkConfiguration",
             "SummaryComment": "The network configuration of the pool.",
             "RemarksComment": null,
-            "BoundAccess": "read",
+            "BoundAccess": "read,write",
             "UnboundAccess": "read,write"
           },
           "Value": null
@@ -225,7 +214,7 @@
             "Name": "TaskSlotsPerNode",
             "SummaryComment": "The number of task slots that can be used to run concurrent tasks on a single compute node in the pool.",
             "RemarksComment": "The default value is 1. The maximum value is the smaller of 4 times the number of cores of the <see cref=\"VirtualMachineSize\"/> of the pool or 256.",
-            "BoundAccess": "read",
+            "BoundAccess": "read,write",
             "UnboundAccess": "read,write"
           },
           "Value": {
@@ -272,7 +261,7 @@
             "Name": "TaskSchedulingPolicy",
             "SummaryComment": "How tasks are distributed among compute nodes in the pool.",
             "RemarksComment": null,
-            "BoundAccess": "read",
+            "BoundAccess": "read,write",
             "UnboundAccess": "read,write"
           },
           "Value": null
@@ -372,7 +361,7 @@
             "Name": "UserAccounts",
             "SummaryComment": "The list of user accounts to be created on each node in the pool.",
             "RemarksComment": null,
-            "BoundAccess": "read",
+            "BoundAccess": "read,write",
             "UnboundAccess": "read,write"
           },
           "Value": {
@@ -386,7 +375,7 @@
             "Name": "VirtualMachineConfiguration",
             "SummaryComment": "The <see cref=\"VirtualMachineConfiguration\"/> of the pool.",
             "RemarksComment": null,
-            "BoundAccess": "read",
+            "BoundAccess": "read,write",
             "UnboundAccess": "read,write"
           },
           "Value": null
@@ -397,7 +386,7 @@
             "Name": "VirtualMachineSize",
             "SummaryComment": "The size of the virtual machines in the pool.  All virtual machines in a pool are the same size.",
             "RemarksComment": "<para>For information about available sizes of virtual machines in pools, see Choose a VM size for compute nodes in an Azure Batch pool (https://docs.microsoft.com/azure/batch/batch-pool-vm-sizes).</para>",
-            "BoundAccess": "read",
+            "BoundAccess": "read,write",
             "UnboundAccess": "read,write"
           },
           "Value": {
@@ -407,22 +396,11 @@
         },
         {
           "Key": {
-            "Type": "IList<string>",
-            "Name": "ApplicationLicenses",
-            "SummaryComment": "The list of application licenses the Batch service will make available on each compute node in the pool.",
-            "RemarksComment": "<para>The list of application licenses must be a subset of available Batch service application licenses.</para><para>The permitted licenses available on the pool are 'maya', 'vray', '3dsmax', 'arnold'. An additional charge applies for each application license added to the pool.</para>",
-            "BoundAccess": "read",
-            "UnboundAccess": "read,write"
-          },
-          "Value": null
-        },
-        {
-          "Key": {
             "Type": "IList<MountConfiguration>",
             "Name": "MountConfiguration",
             "SummaryComment": "A list of file systems to mount on each node in the pool.",
             "RemarksComment": "This supports Azure Files, NFS, CIFS/SMB, and Blobfuse.",
-            "BoundAccess": "read",
+            "BoundAccess": "read,write",
             "UnboundAccess": "read,write"
           },
           "Value": {
@@ -436,8 +414,8 @@
             "Name": "Identity",
             "SummaryComment": "The identity of the Batch pool, if configured.",
             "RemarksComment": "The list of user identities associated with the Batch pool. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'.",
-            "BoundAccess": "read,write",
-            "UnboundAccess": "read,write"
+            "BoundAccess": "read",
+            "UnboundAccess": "read"
           },
           "Value": null
         },
@@ -485,7 +463,7 @@
             "Name": "ResourceTags",
             "SummaryComment": "The user-specified tags associated with the pool.",
             "RemarksComment": "The user-defined tags to be associated with the Azure Batch Pool. When specified, these tags are propagated to the backing Azure resources associated with the pool. This property can only be specified when the Batch account was created with the poolAllocationMode property set to 'UserSubscription'.",
-            "BoundAccess": "read",
+            "BoundAccess": "read,write",
             "UnboundAccess": "read,write"
           },
           "Value": {

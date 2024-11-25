@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> The collection value. </summary>
+        [WirePath("value")]
         public IReadOnlyList<ContainerServicePrivateLinkResourceData> Value { get; }
     }
 }

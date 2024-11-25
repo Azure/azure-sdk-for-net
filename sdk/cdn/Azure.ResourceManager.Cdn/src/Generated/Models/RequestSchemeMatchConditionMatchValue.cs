@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(RequestSchemeMatchConditionMatchValue left, RequestSchemeMatchConditionMatchValue right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RequestSchemeMatchConditionMatchValue"/> values are not the same. </summary>
         public static bool operator !=(RequestSchemeMatchConditionMatchValue left, RequestSchemeMatchConditionMatchValue right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RequestSchemeMatchConditionMatchValue"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RequestSchemeMatchConditionMatchValue"/>. </summary>
         public static implicit operator RequestSchemeMatchConditionMatchValue(string value) => new RequestSchemeMatchConditionMatchValue(value);
 
         /// <inheritdoc />

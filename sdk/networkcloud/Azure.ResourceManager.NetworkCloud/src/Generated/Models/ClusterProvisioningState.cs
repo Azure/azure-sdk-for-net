@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator ==(ClusterProvisioningState left, ClusterProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClusterProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(ClusterProvisioningState left, ClusterProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ClusterProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ClusterProvisioningState"/>. </summary>
         public static implicit operator ClusterProvisioningState(string value) => new ClusterProvisioningState(value);
 
         /// <inheritdoc />

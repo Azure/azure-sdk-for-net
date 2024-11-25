@@ -111,7 +111,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         public static bool operator ==(ContextTagKeys left, ContextTagKeys right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContextTagKeys"/> values are not the same. </summary>
         public static bool operator !=(ContextTagKeys left, ContextTagKeys right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContextTagKeys"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContextTagKeys"/>. </summary>
         public static implicit operator ContextTagKeys(string value) => new ContextTagKeys(value);
 
         /// <inheritdoc />

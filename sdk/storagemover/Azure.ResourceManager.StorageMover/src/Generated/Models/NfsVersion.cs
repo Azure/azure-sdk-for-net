@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static bool operator ==(NfsVersion left, NfsVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NfsVersion"/> values are not the same. </summary>
         public static bool operator !=(NfsVersion left, NfsVersion right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NfsVersion"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NfsVersion"/>. </summary>
         public static implicit operator NfsVersion(string value) => new NfsVersion(value);
 
         /// <inheritdoc />

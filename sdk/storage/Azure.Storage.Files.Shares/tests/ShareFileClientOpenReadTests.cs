@@ -97,6 +97,9 @@ namespace Azure.Storage.Files.Shares.Tests
                 Conditions = conditions
             });
 
+        protected override async Task<Stream> OpenReadAsyncOverload(ShareFileClient client, int? bufferSize = null, long position = 0, bool allowModifications = false)
+            => await client.OpenReadAsync(allowModifications, position, bufferSize);
+
         protected override async Task StageDataAsync(ShareFileClient client, Stream data)
         {
             await client.CreateAsync(data.Length);

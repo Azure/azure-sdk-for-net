@@ -30,7 +30,7 @@ namespace Azure.Maps.Search.Models
         public static bool operator ==(FeatureCollectionEnum left, FeatureCollectionEnum right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FeatureCollectionEnum"/> values are not the same. </summary>
         public static bool operator !=(FeatureCollectionEnum left, FeatureCollectionEnum right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FeatureCollectionEnum"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FeatureCollectionEnum"/>. </summary>
         public static implicit operator FeatureCollectionEnum(string value) => new FeatureCollectionEnum(value);
 
         /// <inheritdoc />

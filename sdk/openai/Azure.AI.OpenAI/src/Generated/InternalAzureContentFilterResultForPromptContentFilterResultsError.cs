@@ -40,8 +40,7 @@ namespace Azure.AI.OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
+        internal IDictionary<string, BinaryData> SerializedAdditionalRawData { get; set; }
         /// <summary> Initializes a new instance of <see cref="InternalAzureContentFilterResultForPromptContentFilterResultsError"/>. </summary>
         /// <param name="code"> A distinct, machine-readable code associated with the error. </param>
         /// <param name="message"> A human-readable message associated with the error. </param>
@@ -62,7 +61,7 @@ namespace Azure.AI.OpenAI
         {
             Code = code;
             Message = message;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            SerializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalAzureContentFilterResultForPromptContentFilterResultsError"/> for deserialization. </summary>

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static bool operator ==(OracleDatabaseEditionType left, OracleDatabaseEditionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OracleDatabaseEditionType"/> values are not the same. </summary>
         public static bool operator !=(OracleDatabaseEditionType left, OracleDatabaseEditionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OracleDatabaseEditionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OracleDatabaseEditionType"/>. </summary>
         public static implicit operator OracleDatabaseEditionType(string value) => new OracleDatabaseEditionType(value);
 
         /// <inheritdoc />

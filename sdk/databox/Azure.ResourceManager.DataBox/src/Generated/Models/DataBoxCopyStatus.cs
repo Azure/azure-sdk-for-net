@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataBox.Models
         public static bool operator ==(DataBoxCopyStatus left, DataBoxCopyStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxCopyStatus"/> values are not the same. </summary>
         public static bool operator !=(DataBoxCopyStatus left, DataBoxCopyStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataBoxCopyStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxCopyStatus"/>. </summary>
         public static implicit operator DataBoxCopyStatus(string value) => new DataBoxCopyStatus(value);
 
         /// <inheritdoc />

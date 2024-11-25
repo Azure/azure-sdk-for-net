@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static bool operator ==(ComponentPurgeState left, ComponentPurgeState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ComponentPurgeState"/> values are not the same. </summary>
         public static bool operator !=(ComponentPurgeState left, ComponentPurgeState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ComponentPurgeState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ComponentPurgeState"/>. </summary>
         public static implicit operator ComponentPurgeState(string value) => new ComponentPurgeState(value);
 
         /// <inheritdoc />

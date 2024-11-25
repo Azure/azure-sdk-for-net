@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator ==(TeradataAuthenticationType left, TeradataAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TeradataAuthenticationType"/> values are not the same. </summary>
         public static bool operator !=(TeradataAuthenticationType left, TeradataAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TeradataAuthenticationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TeradataAuthenticationType"/>. </summary>
         public static implicit operator TeradataAuthenticationType(string value) => new TeradataAuthenticationType(value);
 
         /// <inheritdoc />

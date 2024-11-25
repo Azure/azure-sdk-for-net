@@ -19,22 +19,30 @@ namespace Azure.ResourceManager.Billing.Models
 
         void IJsonModel<BillingSubscriptionMoveContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<BillingSubscriptionMoveContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BillingSubscriptionMoveContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (Optional.IsDefined(DestinationEnrollmentAccountId))
-            {
-                writer.WritePropertyName("destinationEnrollmentAccountId"u8);
-                writer.WriteStringValue(DestinationEnrollmentAccountId);
-            }
             if (Optional.IsDefined(DestinationInvoiceSectionId))
             {
                 writer.WritePropertyName("destinationInvoiceSectionId"u8);
                 writer.WriteStringValue(DestinationInvoiceSectionId);
+            }
+            if (Optional.IsDefined(DestinationEnrollmentAccountId))
+            {
+                writer.WritePropertyName("destinationEnrollmentAccountId"u8);
+                writer.WriteStringValue(DestinationEnrollmentAccountId);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -51,7 +59,6 @@ namespace Azure.ResourceManager.Billing.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         BillingSubscriptionMoveContent IJsonModel<BillingSubscriptionMoveContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -74,17 +81,12 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            string destinationEnrollmentAccountId = default;
             ResourceIdentifier destinationInvoiceSectionId = default;
+            string destinationEnrollmentAccountId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("destinationEnrollmentAccountId"u8))
-                {
-                    destinationEnrollmentAccountId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("destinationInvoiceSectionId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -94,13 +96,18 @@ namespace Azure.ResourceManager.Billing.Models
                     destinationInvoiceSectionId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("destinationEnrollmentAccountId"u8))
+                {
+                    destinationEnrollmentAccountId = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BillingSubscriptionMoveContent(destinationEnrollmentAccountId, destinationInvoiceSectionId, serializedAdditionalRawData);
+            return new BillingSubscriptionMoveContent(destinationInvoiceSectionId, destinationEnrollmentAccountId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingSubscriptionMoveContent>.Write(ModelReaderWriterOptions options)

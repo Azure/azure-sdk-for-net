@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The name of the usage. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The limit of the usage. </summary>
+        [WirePath("limit")]
         public long? Limit { get; }
         /// <summary> The current value of the usage. </summary>
+        [WirePath("currentValue")]
         public long? CurrentValue { get; }
         /// <summary> The unit of measurement. </summary>
+        [WirePath("unit")]
         public ContainerRegistryUsageUnit? Unit { get; }
     }
 }

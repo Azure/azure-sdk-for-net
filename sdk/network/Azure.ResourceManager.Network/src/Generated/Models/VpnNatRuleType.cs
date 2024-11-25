@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(VpnNatRuleType left, VpnNatRuleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VpnNatRuleType"/> values are not the same. </summary>
         public static bool operator !=(VpnNatRuleType left, VpnNatRuleType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VpnNatRuleType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VpnNatRuleType"/>. </summary>
         public static implicit operator VpnNatRuleType(string value) => new VpnNatRuleType(value);
 
         /// <inheritdoc />

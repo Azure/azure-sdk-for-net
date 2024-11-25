@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-05";
+            _apiVersion = apiVersion ?? "2024-04-03";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> Get a msixpackage. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
         /// <param name="msixPackageFullName"> The version specific package full name of the MSIX package within specified hostpool. </param>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> Get a msixpackage. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
         /// <param name="msixPackageFullName"> The version specific package full name of the MSIX package within specified hostpool. </param>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> Create or update a MSIX package. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
         /// <param name="msixPackageFullName"> The version specific package full name of the MSIX package within specified hostpool. </param>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> Create or update a MSIX package. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
         /// <param name="msixPackageFullName"> The version specific package full name of the MSIX package within specified hostpool. </param>
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> Remove an MSIX Package. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
         /// <param name="msixPackageFullName"> The version specific package full name of the MSIX package within specified hostpool. </param>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> Remove an MSIX Package. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
         /// <param name="msixPackageFullName"> The version specific package full name of the MSIX package within specified hostpool. </param>
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> Update an  MSIX Package. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
         /// <param name="msixPackageFullName"> The version specific package full name of the MSIX package within specified hostpool. </param>
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> Update an  MSIX Package. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
         /// <param name="msixPackageFullName"> The version specific package full name of the MSIX package within specified hostpool. </param>
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> List MSIX packages in hostpool. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
         /// <param name="pageSize"> Number of items per page. </param>
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary> List MSIX packages in hostpool. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
         /// <param name="pageSize"> Number of items per page. </param>
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         /// <summary> List MSIX packages in hostpool. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
         /// <param name="pageSize"> Number of items per page. </param>
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         /// <summary> List MSIX packages in hostpool. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="hostPoolName"> The name of the host pool within the specified resource group. </param>
         /// <param name="pageSize"> Number of items per page. </param>

@@ -72,8 +72,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Keyvault certificate URL in https://keyvaultname.vault.azure.net/certificates/certificateName/certificateVersion format. </summary>
+        [WirePath("certificateUrl")]
         public Uri CertificateUri { get; set; }
         /// <summary> The identity that will be used to access the certificate. </summary>
+        [WirePath("identity")]
         public CustomJwtAuthenticationManagedIdentity Identity { get; set; }
     }
 }

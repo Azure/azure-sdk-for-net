@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         void IJsonModel<DataFactoryDatasetProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryDatasetProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataFactoryDatasetProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetType);
             if (Optional.IsDefined(Description))
@@ -95,7 +103,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
         DataFactoryDatasetProperties IJsonModel<DataFactoryDatasetProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -167,6 +174,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "HiveObject": return HiveObjectDataset.DeserializeHiveObjectDataset(element, options);
                     case "HttpFile": return DataFactoryHttpDataset.DeserializeDataFactoryHttpDataset(element, options);
                     case "HubspotObject": return HubspotObjectDataset.DeserializeHubspotObjectDataset(element, options);
+                    case "Iceberg": return IcebergDataset.DeserializeIcebergDataset(element, options);
                     case "ImpalaObject": return ImpalaObjectDataset.DeserializeImpalaObjectDataset(element, options);
                     case "InformixTable": return InformixTableDataset.DeserializeInformixTableDataset(element, options);
                     case "JiraObject": return JiraObjectDataset.DeserializeJiraObjectDataset(element, options);

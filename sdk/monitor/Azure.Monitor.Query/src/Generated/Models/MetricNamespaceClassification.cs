@@ -34,7 +34,7 @@ namespace Azure.Monitor.Query.Models
         public static bool operator ==(MetricNamespaceClassification left, MetricNamespaceClassification right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MetricNamespaceClassification"/> values are not the same. </summary>
         public static bool operator !=(MetricNamespaceClassification left, MetricNamespaceClassification right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MetricNamespaceClassification"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MetricNamespaceClassification"/>. </summary>
         public static implicit operator MetricNamespaceClassification(string value) => new MetricNamespaceClassification(value);
 
         /// <inheritdoc />

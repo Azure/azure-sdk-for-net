@@ -33,7 +33,7 @@ namespace Azure.IoT.Hub.Service.Models
         public static bool operator ==(JobPropertiesStorageAuthenticationType left, JobPropertiesStorageAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JobPropertiesStorageAuthenticationType"/> values are not the same. </summary>
         public static bool operator !=(JobPropertiesStorageAuthenticationType left, JobPropertiesStorageAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="JobPropertiesStorageAuthenticationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="JobPropertiesStorageAuthenticationType"/>. </summary>
         public static implicit operator JobPropertiesStorageAuthenticationType(string value) => new JobPropertiesStorageAuthenticationType(value);
 
         /// <inheritdoc />

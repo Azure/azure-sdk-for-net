@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator ==(RoutePolicyConditionType left, RoutePolicyConditionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RoutePolicyConditionType"/> values are not the same. </summary>
         public static bool operator !=(RoutePolicyConditionType left, RoutePolicyConditionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RoutePolicyConditionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RoutePolicyConditionType"/>. </summary>
         public static implicit operator RoutePolicyConditionType(string value) => new RoutePolicyConditionType(value);
 
         /// <inheritdoc />

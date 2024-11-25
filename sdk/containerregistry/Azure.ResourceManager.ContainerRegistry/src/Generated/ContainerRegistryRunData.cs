@@ -114,36 +114,51 @@ namespace Azure.ResourceManager.ContainerRegistry
         }
 
         /// <summary> The unique identifier for the run. </summary>
+        [WirePath("properties.runId")]
         public string RunId { get; set; }
         /// <summary> The current status of the run. </summary>
+        [WirePath("properties.status")]
         public ContainerRegistryRunStatus? Status { get; set; }
         /// <summary> The last updated time for the run. </summary>
+        [WirePath("properties.lastUpdatedTime")]
         public DateTimeOffset? LastUpdatedOn { get; set; }
         /// <summary> The type of run. </summary>
+        [WirePath("properties.runType")]
         public ContainerRegistryRunType? RunType { get; set; }
         /// <summary> The dedicated agent pool for the run. </summary>
+        [WirePath("properties.agentPoolName")]
         public string AgentPoolName { get; set; }
         /// <summary> The time the run was scheduled. </summary>
+        [WirePath("properties.createTime")]
         public DateTimeOffset? CreatedOn { get; set; }
         /// <summary> The time the run started. </summary>
+        [WirePath("properties.startTime")]
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> The time the run finished. </summary>
+        [WirePath("properties.finishTime")]
         public DateTimeOffset? FinishOn { get; set; }
         /// <summary> The list of all images that were generated from the run. This is applicable if the run generates base image dependencies. </summary>
+        [WirePath("properties.outputImages")]
         public IList<ContainerRegistryImageDescriptor> OutputImages { get; }
         /// <summary> The task against which run was scheduled. </summary>
+        [WirePath("properties.task")]
         public string Task { get; set; }
         /// <summary> The image update trigger that caused the run. This is applicable if the task has base image trigger configured. </summary>
+        [WirePath("properties.imageUpdateTrigger")]
         public ContainerRegistryImageUpdateTrigger ImageUpdateTrigger { get; set; }
         /// <summary> The source trigger that caused the run. </summary>
+        [WirePath("properties.sourceTrigger")]
         public ContainerRegistrySourceTriggerDescriptor SourceTrigger { get; set; }
         /// <summary> The timer trigger that caused the run. </summary>
+        [WirePath("properties.timerTrigger")]
         public ContainerRegistryTimerTriggerDescriptor TimerTrigger { get; set; }
         /// <summary> The platform properties against which the run will happen. </summary>
+        [WirePath("properties.platform")]
         public ContainerRegistryPlatformProperties Platform { get; set; }
         /// <summary> The machine configuration of the run agent. </summary>
         internal ContainerRegistryAgentProperties AgentConfiguration { get; set; }
         /// <summary> The CPU configuration in terms of number of cores required for the run. </summary>
+        [WirePath("properties.agentConfiguration.cpu")]
         public int? AgentCpu
         {
             get => AgentConfiguration is null ? default : AgentConfiguration.Cpu;
@@ -156,18 +171,25 @@ namespace Azure.ResourceManager.ContainerRegistry
         }
 
         /// <summary> The scope of the credentials that were used to login to the source registry during this run. </summary>
+        [WirePath("properties.sourceRegistryAuth")]
         public string SourceRegistryAuth { get; set; }
         /// <summary> The list of custom registries that were logged in during this run. </summary>
+        [WirePath("properties.customRegistries")]
         public IList<string> CustomRegistries { get; }
         /// <summary> The error message received from backend systems after the run is scheduled. </summary>
+        [WirePath("properties.runErrorMessage")]
         public string RunErrorMessage { get; }
         /// <summary> The update trigger token passed for the Run. </summary>
+        [WirePath("properties.updateTriggerToken")]
         public string UpdateTriggerToken { get; set; }
         /// <summary> The image description for the log artifact. </summary>
+        [WirePath("properties.logArtifact")]
         public ContainerRegistryImageDescriptor LogArtifact { get; }
         /// <summary> The provisioning state of a run. </summary>
+        [WirePath("properties.provisioningState")]
         public ContainerRegistryProvisioningState? ProvisioningState { get; set; }
         /// <summary> The value that indicates whether archiving is enabled or not. </summary>
+        [WirePath("properties.isArchiveEnabled")]
         public bool? IsArchiveEnabled { get; set; }
     }
 }

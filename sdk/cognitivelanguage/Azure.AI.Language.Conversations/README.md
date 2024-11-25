@@ -8,7 +8,7 @@ Conversation Language Understanding - aka CLU for short - is a cloud-based conve
 
 Conversation Summarization is one feature offered by Azure AI Language, which is a combination of generative Large Language models and task-optimized encoder models that offer summarization solutions with higher quality, cost efficiency, and lower latency.
 
-Conversation PII detection another feature offered by Azure AI Language, which is a collection of machine learning and AI algorithms to identify, categorize, and redact sensitive information in text. The Conversational PII model is a specialized model for handling speech transcriptions and the more informal, conversational tone of meeting and call transcripts. 
+Conversation PII detection another feature offered by Azure AI Language, which is a collection of machine learning and AI algorithms to identify, categorize, and redact sensitive information in text. The Conversational PII model is a specialized model for handling speech transcriptions and the more informal, conversational tone of meeting and call transcripts.
 
 [Source code][conversationanalysis_client_src] | [Package (NuGet)][conversationanalysis_nuget_package] | [API reference documentation][conversationanalysis_refdocs] | [Samples][conversationanalysis_samples] | [Product documentation][conversationanalysis_docs] | [Analysis REST API documentation][conversationanalysis_restdocs]
 
@@ -93,6 +93,35 @@ ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, cre
 ```
 
 Note that regional endpoints do not support AAD authentication. Instead, create a [custom domain][custom_domain] name for your resource to use AAD authentication.
+
+### Service API versions
+
+The client library targets the latest service API version by default. A client instance accepts an optional service API version parameter from its options to specify which API version service to communicate.
+
+|SDK version  |Supported API version of service
+|-------------|-----------------------------------------------------
+|2.0.0-beta.1 | 2022-05-01, 2023-04-01, 2024-05-01, 2024-05-15-preview (default)
+|1.1.0 | 2022-05-01, 2023-04-01 (default)
+|1.0.0 | 2022-05-01 (default)
+
+#### Select a service API version
+
+You have the flexibility to explicitly select a supported service API version when instantiating a client by configuring its associated options. This ensures that the client can communicate with services using the specified API version.
+
+For example,
+
+```C# Snippet:CreateConversationAnalysisClientForSpecificApiVersion
+Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
+AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
+ConversationsClientOptions options = new ConversationsClientOptions(ConversationsClientOptions.ServiceVersion.V2024_05_01);
+ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential, options);
+```
+
+When selecting an API version, it's important to verify that there are no breaking changes compared to the latest API version. If there are significant differences, API calls may fail due to incompatibility.
+
+Always ensure that the chosen API version is fully supported and operational for your specific use case and that it aligns with the service's versioning policy.
+
+If you do not select an api version we will default to the latest version available, which has the possibility of being a preview version.
 
 ## Key concepts
 

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator ==(RegionCategory left, RegionCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RegionCategory"/> values are not the same. </summary>
         public static bool operator !=(RegionCategory left, RegionCategory right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RegionCategory"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RegionCategory"/>. </summary>
         public static implicit operator RegionCategory(string value) => new RegionCategory(value);
 
         /// <inheritdoc />

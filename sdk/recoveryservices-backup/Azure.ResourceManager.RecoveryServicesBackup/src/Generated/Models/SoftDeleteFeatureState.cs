@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static bool operator ==(SoftDeleteFeatureState left, SoftDeleteFeatureState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SoftDeleteFeatureState"/> values are not the same. </summary>
         public static bool operator !=(SoftDeleteFeatureState left, SoftDeleteFeatureState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SoftDeleteFeatureState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SoftDeleteFeatureState"/>. </summary>
         public static implicit operator SoftDeleteFeatureState(string value) => new SoftDeleteFeatureState(value);
 
         /// <inheritdoc />

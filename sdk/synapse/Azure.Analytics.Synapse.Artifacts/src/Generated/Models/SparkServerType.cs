@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(SparkServerType left, SparkServerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SparkServerType"/> values are not the same. </summary>
         public static bool operator !=(SparkServerType left, SparkServerType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SparkServerType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SparkServerType"/>. </summary>
         public static implicit operator SparkServerType(string value) => new SparkServerType(value);
 
         /// <inheritdoc />

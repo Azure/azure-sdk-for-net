@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static bool operator ==(SupportedFilterType left, SupportedFilterType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SupportedFilterType"/> values are not the same. </summary>
         public static bool operator !=(SupportedFilterType left, SupportedFilterType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SupportedFilterType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SupportedFilterType"/>. </summary>
         public static implicit operator SupportedFilterType(string value) => new SupportedFilterType(value);
 
         /// <inheritdoc />

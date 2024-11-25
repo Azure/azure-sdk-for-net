@@ -15,11 +15,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
     public class SendToNamespaceAction : SocketIOAction
     {
         /// <summary>
-        /// Target namespace
-        /// </summary>
-        public string Namespace { get; set; }
-
-        /// <summary>
         /// The event name.
         /// </summary>
         public string EventName { get; set; }

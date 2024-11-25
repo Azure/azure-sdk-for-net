@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningAssetContainer"/>. </summary>
         /// <param name="description"> The asset description text. </param>
-        /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
         /// <param name="latestVersion"> The latest version inside this container. </param>
         /// <param name="nextVersion"> The next auto incremental version. </param>
-        internal MachineLearningAssetContainer(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? isArchived, string latestVersion, string nextVersion) : base(description, properties, tags, serializedAdditionalRawData)
+        internal MachineLearningAssetContainer(string description, IDictionary<string, string> tags, IDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? isArchived, string latestVersion, string nextVersion) : base(description, tags, properties, serializedAdditionalRawData)
         {
             IsArchived = isArchived;
             LatestVersion = latestVersion;
@@ -34,10 +34,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Is the asset archived?. </summary>
+        [WirePath("isArchived")]
         public bool? IsArchived { get; set; }
         /// <summary> The latest version inside this container. </summary>
+        [WirePath("latestVersion")]
         public string LatestVersion { get; }
         /// <summary> The next auto incremental version. </summary>
+        [WirePath("nextVersion")]
         public string NextVersion { get; }
     }
 }

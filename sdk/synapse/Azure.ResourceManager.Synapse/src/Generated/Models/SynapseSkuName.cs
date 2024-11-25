@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator ==(SynapseSkuName left, SynapseSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseSkuName"/> values are not the same. </summary>
         public static bool operator !=(SynapseSkuName left, SynapseSkuName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SynapseSkuName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SynapseSkuName"/>. </summary>
         public static implicit operator SynapseSkuName(string value) => new SynapseSkuName(value);
 
         /// <inheritdoc />

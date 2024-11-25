@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Tells whether the cluster is Running or Stopped. </summary>
+        [WirePath("code")]
         public ContainerServiceStateCode? Code { get; set; }
     }
 }

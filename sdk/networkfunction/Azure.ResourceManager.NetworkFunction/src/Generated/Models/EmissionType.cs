@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         public static bool operator ==(EmissionType left, EmissionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EmissionType"/> values are not the same. </summary>
         public static bool operator !=(EmissionType left, EmissionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EmissionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EmissionType"/>. </summary>
         public static implicit operator EmissionType(string value) => new EmissionType(value);
 
         /// <inheritdoc />

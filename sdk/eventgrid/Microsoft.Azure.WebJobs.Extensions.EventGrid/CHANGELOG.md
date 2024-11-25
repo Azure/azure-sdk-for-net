@@ -10,6 +10,13 @@
 
 ### Other Changes
 
+## 3.4.3 (2024-11-19)
+
+### Bugs Fixed
+
+- Return correct `WebHook-Allowed-Origin` response header for CloudEvent schema subscriptions for gov cloud.
+- Prevent DateTime values from being translated by NewtonSoft when parsing payloads. They are now treated as strings.
+
 ## 3.4.2 (2024-07-30)
 
 ### Other Changes

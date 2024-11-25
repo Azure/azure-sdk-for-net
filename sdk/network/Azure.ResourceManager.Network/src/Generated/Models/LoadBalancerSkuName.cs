@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(LoadBalancerSkuName left, LoadBalancerSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LoadBalancerSkuName"/> values are not the same. </summary>
         public static bool operator !=(LoadBalancerSkuName left, LoadBalancerSkuName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LoadBalancerSkuName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LoadBalancerSkuName"/>. </summary>
         public static implicit operator LoadBalancerSkuName(string value) => new LoadBalancerSkuName(value);
 
         /// <inheritdoc />

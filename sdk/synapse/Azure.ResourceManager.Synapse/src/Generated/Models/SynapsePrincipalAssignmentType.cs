@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator ==(SynapsePrincipalAssignmentType left, SynapsePrincipalAssignmentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapsePrincipalAssignmentType"/> values are not the same. </summary>
         public static bool operator !=(SynapsePrincipalAssignmentType left, SynapsePrincipalAssignmentType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SynapsePrincipalAssignmentType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SynapsePrincipalAssignmentType"/>. </summary>
         public static implicit operator SynapsePrincipalAssignmentType(string value) => new SynapsePrincipalAssignmentType(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static bool operator ==(VirtualApplicationGroupType left, VirtualApplicationGroupType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualApplicationGroupType"/> values are not the same. </summary>
         public static bool operator !=(VirtualApplicationGroupType left, VirtualApplicationGroupType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VirtualApplicationGroupType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualApplicationGroupType"/>. </summary>
         public static implicit operator VirtualApplicationGroupType(string value) => new VirtualApplicationGroupType(value);
 
         /// <inheritdoc />

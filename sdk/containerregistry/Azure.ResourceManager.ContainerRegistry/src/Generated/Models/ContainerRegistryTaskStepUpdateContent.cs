@@ -70,8 +70,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> The type of the step. </summary>
         internal ContainerRegistryTaskStepType StepType { get; set; }
         /// <summary> The URL(absolute or relative) of the source context for the task step. </summary>
+        [WirePath("contextPath")]
         public string ContextPath { get; set; }
         /// <summary> The token (git PAT or SAS token of storage account blob) associated with the context for a step. </summary>
+        [WirePath("contextAccessToken")]
         public string ContextAccessToken { get; set; }
     }
 }

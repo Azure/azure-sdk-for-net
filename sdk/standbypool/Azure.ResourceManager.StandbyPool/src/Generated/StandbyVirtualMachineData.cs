@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.StandbyPool
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachineData"/>. </summary>
-        public StandbyVirtualMachineData()
+        internal StandbyVirtualMachineData()
         {
         }
 
@@ -61,19 +61,15 @@ namespace Azure.ResourceManager.StandbyPool
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="virtualMachineResourceId"> Resource id of the virtual machine. </param>
-        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier virtualMachineResourceId, StandbyPoolProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal StandbyVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StandbyVirtualMachineProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            VirtualMachineResourceId = virtualMachineResourceId;
-            ProvisioningState = provisioningState;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource id of the virtual machine. </summary>
-        public ResourceIdentifier VirtualMachineResourceId { get; set; }
-        /// <summary> The status of the last operation. </summary>
-        public StandbyPoolProvisioningState? ProvisioningState { get; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public StandbyVirtualMachineProperties Properties { get; }
     }
 }

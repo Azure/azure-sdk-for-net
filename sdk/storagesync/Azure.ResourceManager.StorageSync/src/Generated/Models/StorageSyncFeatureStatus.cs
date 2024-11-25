@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         public static bool operator ==(StorageSyncFeatureStatus left, StorageSyncFeatureStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageSyncFeatureStatus"/> values are not the same. </summary>
         public static bool operator !=(StorageSyncFeatureStatus left, StorageSyncFeatureStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StorageSyncFeatureStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageSyncFeatureStatus"/>. </summary>
         public static implicit operator StorageSyncFeatureStatus(string value) => new StorageSyncFeatureStatus(value);
 
         /// <inheritdoc />

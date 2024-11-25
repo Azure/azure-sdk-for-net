@@ -161,6 +161,28 @@
     {
       "Key": {
         "Type": "int",
+        "Name": "Deallocated",
+        "SummaryComment": "The number of Compute Nodes in the deallocated state.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "int",
+        "Name": "Deallocating",
+        "SummaryComment": "The number of Compute Nodes in the deallocating state.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "none"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "int",
         "Name": "Total",
         "SummaryComment": "The total number of nodes.",
         "RemarksComment": null,

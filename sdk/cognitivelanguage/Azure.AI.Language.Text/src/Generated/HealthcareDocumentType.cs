@@ -54,7 +54,7 @@ namespace Azure.AI.Language.Text
         public static bool operator ==(HealthcareDocumentType left, HealthcareDocumentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HealthcareDocumentType"/> values are not the same. </summary>
         public static bool operator !=(HealthcareDocumentType left, HealthcareDocumentType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HealthcareDocumentType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HealthcareDocumentType"/>. </summary>
         public static implicit operator HealthcareDocumentType(string value) => new HealthcareDocumentType(value);
 
         /// <inheritdoc />

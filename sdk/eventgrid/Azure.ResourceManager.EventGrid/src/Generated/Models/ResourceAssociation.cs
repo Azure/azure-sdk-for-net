@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Association name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Network security perimeter access mode. </summary>
+        [WirePath("accessMode")]
         public NetworkSecurityPerimeterAssociationAccessMode? AccessMode { get; set; }
     }
 }

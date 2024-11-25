@@ -43,8 +43,7 @@ namespace Azure.AI.OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
+        internal IDictionary<string, BinaryData> SerializedAdditionalRawData { get; set; }
         /// <summary> Initializes a new instance of <see cref="ContentFilterSeverityResult"/>. </summary>
         /// <param name="filtered"> Whether the content severity resulted in a content filtering action. </param>
         /// <param name="severity"> The labeled severity of the content. </param>
@@ -62,7 +61,7 @@ namespace Azure.AI.OpenAI
         {
             Filtered = filtered;
             Severity = severity;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            SerializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Initializes a new instance of <see cref="ContentFilterSeverityResult"/> for deserialization. </summary>

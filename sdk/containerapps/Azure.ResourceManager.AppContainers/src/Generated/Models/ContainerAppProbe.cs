@@ -76,22 +76,31 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1. Maximum value is 10. </summary>
+        [WirePath("failureThreshold")]
         public int? FailureThreshold { get; set; }
         /// <summary> HTTPGet specifies the http request to perform. </summary>
+        [WirePath("httpGet")]
         public ContainerAppHttpRequestInfo HttpGet { get; set; }
         /// <summary> Number of seconds after the container has started before liveness probes are initiated. Minimum value is 1. Maximum value is 60. </summary>
+        [WirePath("initialDelaySeconds")]
         public int? InitialDelaySeconds { get; set; }
         /// <summary> How often (in seconds) to perform the probe. Default to 10 seconds. Minimum value is 1. Maximum value is 240. </summary>
+        [WirePath("periodSeconds")]
         public int? PeriodSeconds { get; set; }
         /// <summary> Minimum consecutive successes for the probe to be considered successful after having failed. Defaults to 1. Must be 1 for liveness and startup. Minimum value is 1. Maximum value is 10. </summary>
+        [WirePath("successThreshold")]
         public int? SuccessThreshold { get; set; }
         /// <summary> TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported. </summary>
+        [WirePath("tcpSocket")]
         public ContainerAppTcpSocketRequestInfo TcpSocket { get; set; }
         /// <summary> Optional duration in seconds the pod needs to terminate gracefully upon probe failure. The grace period is the duration in seconds after the processes running in the pod are sent a termination signal and the time when the processes are forcibly halted with a kill signal. Set this value longer than the expected cleanup time for your process. If this value is nil, the pod's terminationGracePeriodSeconds will be used. Otherwise, this value overrides the value provided by the pod spec. Value must be non-negative integer. The value zero indicates stop immediately via the kill signal (no opportunity to shut down). This is an alpha field and requires enabling ProbeTerminationGracePeriod feature gate. Maximum value is 3600 seconds (1 hour). </summary>
+        [WirePath("terminationGracePeriodSeconds")]
         public long? TerminationGracePeriodSeconds { get; set; }
         /// <summary> Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. Maximum value is 240. </summary>
+        [WirePath("timeoutSeconds")]
         public int? TimeoutSeconds { get; set; }
         /// <summary> The type of probe. </summary>
+        [WirePath("type")]
         public ContainerAppProbeType? ProbeType { get; set; }
     }
 }

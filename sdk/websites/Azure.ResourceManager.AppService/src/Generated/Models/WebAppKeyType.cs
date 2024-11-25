@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
         public static bool operator ==(WebAppKeyType left, WebAppKeyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebAppKeyType"/> values are not the same. </summary>
         public static bool operator !=(WebAppKeyType left, WebAppKeyType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WebAppKeyType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WebAppKeyType"/>. </summary>
         public static implicit operator WebAppKeyType(string value) => new WebAppKeyType(value);
 
         /// <inheritdoc />

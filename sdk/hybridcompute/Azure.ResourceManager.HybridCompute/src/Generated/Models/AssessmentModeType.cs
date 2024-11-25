@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static bool operator ==(AssessmentModeType left, AssessmentModeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AssessmentModeType"/> values are not the same. </summary>
         public static bool operator !=(AssessmentModeType left, AssessmentModeType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AssessmentModeType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AssessmentModeType"/>. </summary>
         public static implicit operator AssessmentModeType(string value) => new AssessmentModeType(value);
 
         /// <inheritdoc />

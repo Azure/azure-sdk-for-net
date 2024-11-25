@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(SqlServerKeyType left, SqlServerKeyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlServerKeyType"/> values are not the same. </summary>
         public static bool operator !=(SqlServerKeyType left, SqlServerKeyType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SqlServerKeyType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlServerKeyType"/>. </summary>
         public static implicit operator SqlServerKeyType(string value) => new SqlServerKeyType(value);
 
         /// <inheritdoc />

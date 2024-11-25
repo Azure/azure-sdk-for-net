@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> The method that should be used to authenticate the user. </summary>
+        [WirePath("method")]
         public ContainerAppOpenIdConnectClientCredentialMethod? Method { get; set; }
         /// <summary> The app setting that contains the client secret for the custom Open ID Connect provider. </summary>
+        [WirePath("clientSecretSettingName")]
         public string ClientSecretSettingName { get; set; }
     }
 }

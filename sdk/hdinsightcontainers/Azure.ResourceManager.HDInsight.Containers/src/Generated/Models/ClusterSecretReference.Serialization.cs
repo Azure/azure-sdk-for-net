@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
         void IJsonModel<ClusterSecretReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ClusterSecretReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ClusterSecretReference)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("referenceName"u8);
             writer.WriteStringValue(ReferenceName);
             writer.WritePropertyName("type"u8);
@@ -53,7 +61,6 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ClusterSecretReference IJsonModel<ClusterSecretReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

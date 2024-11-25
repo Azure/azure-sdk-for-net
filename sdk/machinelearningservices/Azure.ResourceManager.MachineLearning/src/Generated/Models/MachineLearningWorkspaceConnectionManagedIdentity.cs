@@ -52,19 +52,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceConnectionManagedIdentity"/>. </summary>
-        /// <param name="clientId"></param>
         /// <param name="resourceId"></param>
+        /// <param name="clientId"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningWorkspaceConnectionManagedIdentity(string clientId, ResourceIdentifier resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningWorkspaceConnectionManagedIdentity(ResourceIdentifier resourceId, string clientId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ClientId = clientId;
             ResourceId = resourceId;
+            ClientId = clientId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the client id. </summary>
-        public string ClientId { get; set; }
         /// <summary> Gets or sets the resource id. </summary>
+        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
+        /// <summary> Gets or sets the client id. </summary>
+        [WirePath("clientId")]
+        public string ClientId { get; set; }
     }
 }

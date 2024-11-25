@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerInstance
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-05-01";
+            _apiVersion = apiVersion ?? "2024-05-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary> Delete container group virtual network association links. The operation does not delete other resources provided by the user. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -103,8 +103,8 @@ namespace Azure.ResourceManager.ContainerInstance
         }
 
         /// <summary> Delete container group virtual network association links. The operation does not delete other resources provided by the user. </summary>
-        /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="virtualNetworkName"> The name of the virtual network. </param>
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

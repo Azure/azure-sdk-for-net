@@ -11,7 +11,7 @@ using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
-    public partial class GeoJsonFeature
+    internal partial class GeoJsonFeature
     {
         internal static GeoJsonFeature DeserializeGeoJsonFeature(JsonElement element)
         {
@@ -23,7 +23,7 @@ namespace Azure.Maps.Search.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Boundary": return Boundary.DeserializeBoundary(element);
+                    case "Boundary": return BoundaryInternal.DeserializeBoundaryInternal(element);
                 }
             }
             GeoJsonGeometry geometry = default;
@@ -31,7 +31,7 @@ namespace Azure.Maps.Search.Models
             string id = default;
             string featureType = default;
             GeoJsonObjectType type = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
-            IReadOnlyList<double> boundingBox = default;
+            IReadOnlyList<double> bbox = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("geometry"u8))
@@ -63,7 +63,7 @@ namespace Azure.Maps.Search.Models
                     type = new GeoJsonObjectType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("boundingBox"u8))
+                if (property.NameEquals("bbox"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,13 +74,13 @@ namespace Azure.Maps.Search.Models
                     {
                         array.Add(item.GetDouble());
                     }
-                    boundingBox = array;
+                    bbox = array;
                     continue;
                 }
             }
             return new GeoJsonFeature(
                 type,
-                boundingBox ?? new ChangeTrackingList<double>(),
+                bbox ?? new ChangeTrackingList<double>(),
                 geometry,
                 properties,
                 id,

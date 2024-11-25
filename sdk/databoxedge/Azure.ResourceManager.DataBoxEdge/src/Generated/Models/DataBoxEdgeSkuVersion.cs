@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static bool operator ==(DataBoxEdgeSkuVersion left, DataBoxEdgeSkuVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxEdgeSkuVersion"/> values are not the same. </summary>
         public static bool operator !=(DataBoxEdgeSkuVersion left, DataBoxEdgeSkuVersion right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataBoxEdgeSkuVersion"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxEdgeSkuVersion"/>. </summary>
         public static implicit operator DataBoxEdgeSkuVersion(string value) => new DataBoxEdgeSkuVersion(value);
 
         /// <inheritdoc />

@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Gets or sets the pat. </summary>
+        [WirePath("pat")]
         public string Pat { get; set; }
     }
 }

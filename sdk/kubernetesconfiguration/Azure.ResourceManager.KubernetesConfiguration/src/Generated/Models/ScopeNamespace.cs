@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         }
 
         /// <summary> Namespace where the extension will be created for an Namespace scoped extension.  If this namespace does not exist, it will be created. </summary>
+        [WirePath("targetNamespace")]
         public string TargetNamespace { get; set; }
     }
 }

@@ -188,7 +188,7 @@ namespace Azure.Storage.Blobs.Specialized
                     keyWrapAlgorithm,
                     contentEncryptionKey,
                     cancellationToken).ConfigureAwait(false)
-                : key.UnwrapKey(
+                : key.WrapKey(
                     keyWrapAlgorithm,
                     contentEncryptionKey,
                     cancellationToken);

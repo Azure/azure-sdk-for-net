@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(DistributedAvailabilityGroupReplicationMode left, DistributedAvailabilityGroupReplicationMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DistributedAvailabilityGroupReplicationMode"/> values are not the same. </summary>
         public static bool operator !=(DistributedAvailabilityGroupReplicationMode left, DistributedAvailabilityGroupReplicationMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DistributedAvailabilityGroupReplicationMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DistributedAvailabilityGroupReplicationMode"/>. </summary>
         public static implicit operator DistributedAvailabilityGroupReplicationMode(string value) => new DistributedAvailabilityGroupReplicationMode(value);
 
         /// <inheritdoc />

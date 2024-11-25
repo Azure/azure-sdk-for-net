@@ -19,13 +19,21 @@ namespace Azure.AI.Language.Text
 
         void IJsonModel<SentimentResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SentimentResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SentimentResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("errors"u8);
             writer.WriteStartArray();
             foreach (var item in Errors)
@@ -62,7 +70,6 @@ namespace Azure.AI.Language.Text
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SentimentResult IJsonModel<SentimentResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -88,7 +95,7 @@ namespace Azure.AI.Language.Text
             IReadOnlyList<DocumentError> errors = default;
             RequestStatistics statistics = default;
             string modelVersion = default;
-            IReadOnlyList<SentimentDocumentResultWithDetectedLanguage> documents = default;
+            IReadOnlyList<SentimentActionResult> documents = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,10 +126,10 @@ namespace Azure.AI.Language.Text
                 }
                 if (property.NameEquals("documents"u8))
                 {
-                    List<SentimentDocumentResultWithDetectedLanguage> array = new List<SentimentDocumentResultWithDetectedLanguage>();
+                    List<SentimentActionResult> array = new List<SentimentActionResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SentimentDocumentResultWithDetectedLanguage.DeserializeSentimentDocumentResultWithDetectedLanguage(item, options));
+                        array.Add(SentimentActionResult.DeserializeSentimentActionResult(item, options));
                     }
                     documents = array;
                     continue;

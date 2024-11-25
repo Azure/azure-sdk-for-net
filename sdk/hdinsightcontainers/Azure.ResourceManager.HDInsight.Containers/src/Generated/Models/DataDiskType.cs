@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public static bool operator ==(DataDiskType left, DataDiskType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataDiskType"/> values are not the same. </summary>
         public static bool operator !=(DataDiskType left, DataDiskType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataDiskType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataDiskType"/>. </summary>
         public static implicit operator DataDiskType(string value) => new DataDiskType(value);
 
         /// <inheritdoc />

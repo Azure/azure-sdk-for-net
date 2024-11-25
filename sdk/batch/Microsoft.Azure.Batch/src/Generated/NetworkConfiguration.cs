@@ -138,21 +138,17 @@ namespace Microsoft.Azure.Batch
         /// join.
         /// </summary>
         /// <remarks>
-        /// The virtual network must be in the same region and subscription as the Azure Batch account. The specified subnet 
-        /// should have enough free IP addresses to accommodate the number of nodes in the pool. If the subnet doesn't have 
-        /// enough free IP addresses, the pool will partially allocate compute nodes, and a resize error will occur. The 
-        /// 'MicrosoftAzureBatch' service principal must have the 'Classic Virtual Machine Contributor' Role-Based Access 
-        /// Control (RBAC) role for the specified VNet. The specified subnet must allow communication from the Azure Batch 
-        /// service to be able to schedule tasks on the compute nodes. This can be verified by checking if the specified 
-        /// VNet has any associated Network Security Groups (NSG). If communication to the compute nodes in the specified 
-        /// subnet is denied by an NSG, then the Batch service will set the state of the compute nodes to unusable. For pools 
-        /// created via <see cref="CloudPool.VirtualMachineConfiguration"/> only  only ARM virtual networks ('Microsoft.Network/virtualNetworks') 
-        /// are supported, but for pools created with <see cref="CloudPool.CloudServiceConfiguration"/> both ARM and classic 
-        /// virtual networks are supported. If the specified VNet has any associated Network Security Groups (NSG), then 
-        /// a few reserved system ports must be enabled for inbound communication. For pools created with a <see cref="CloudPool.VirtualMachineConfiguration"/>, 
-        /// enable ports 29876 and 29877, as well as port 22 for Linux and port 3389 for Windows. For pools created with 
-        /// a <see cref="CloudPool.CloudServiceConfiguration"/>, enable ports 10100, 20100, and 30100. Also enable outbound 
-        /// connections to Azure Storage on port 443. For more details see: https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration.
+        /// The virtual network must be in the same region and subscription as the Azure Batch Account. The specified subnet 
+        /// should have enough free IP addresses to accommodate the number of Compute Nodes which will run Tasks from the 
+        /// Job. This can be up to the number of Compute Nodes in the Pool. The 'MicrosoftAzureBatch' service principal must 
+        /// have the 'Classic Virtual Machine Contributor' Role-Based Access Control (RBAC) role for the specified VNet so 
+        /// that Azure Batch service can schedule Tasks on the Nodes. This can be verified by checking if the specified VNet 
+        /// has any associated Network Security Groups (NSG). If communication to the Nodes in the specified subnet is denied 
+        /// by an NSG, then the Batch service will set the state of the Compute Nodes to unusable. This is of the form /subscriptions/{subscription}/resourceGroups/{group}/providers/{provider}/virtualNetworks/{network}/subnets/{subnet}. 
+        /// If the specified VNet has any associated Network Security Groups (NSG), then a few reserved system ports must 
+        /// be enabled for inbound communication from the Azure Batch service. For Pools created with a Virtual Machine configuration, 
+        /// enable ports 29876 and 29877, as well as port 22 for Linux and port 3389 for Windows. Port 443 is also required 
+        /// to be open for outbound connections for communications to Azure Storage. For more details see: https://docs.microsoft.com/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration
         /// </remarks>
         public string SubnetId
         {

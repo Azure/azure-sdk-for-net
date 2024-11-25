@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public static bool operator ==(ClusterAvailableUpgradeType left, ClusterAvailableUpgradeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClusterAvailableUpgradeType"/> values are not the same. </summary>
         public static bool operator !=(ClusterAvailableUpgradeType left, ClusterAvailableUpgradeType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ClusterAvailableUpgradeType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ClusterAvailableUpgradeType"/>. </summary>
         public static implicit operator ClusterAvailableUpgradeType(string value) => new ClusterAvailableUpgradeType(value);
 
         /// <inheritdoc />

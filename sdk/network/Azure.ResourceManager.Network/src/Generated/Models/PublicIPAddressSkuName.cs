@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(PublicIPAddressSkuName left, PublicIPAddressSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PublicIPAddressSkuName"/> values are not the same. </summary>
         public static bool operator !=(PublicIPAddressSkuName left, PublicIPAddressSkuName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PublicIPAddressSkuName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PublicIPAddressSkuName"/>. </summary>
         public static implicit operator PublicIPAddressSkuName(string value) => new PublicIPAddressSkuName(value);
 
         /// <inheritdoc />

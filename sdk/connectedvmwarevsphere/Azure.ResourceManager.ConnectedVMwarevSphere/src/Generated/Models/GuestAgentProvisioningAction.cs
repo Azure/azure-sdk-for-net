@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static bool operator ==(GuestAgentProvisioningAction left, GuestAgentProvisioningAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GuestAgentProvisioningAction"/> values are not the same. </summary>
         public static bool operator !=(GuestAgentProvisioningAction left, GuestAgentProvisioningAction right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="GuestAgentProvisioningAction"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="GuestAgentProvisioningAction"/>. </summary>
         public static implicit operator GuestAgentProvisioningAction(string value) => new GuestAgentProvisioningAction(value);
 
         /// <inheritdoc />

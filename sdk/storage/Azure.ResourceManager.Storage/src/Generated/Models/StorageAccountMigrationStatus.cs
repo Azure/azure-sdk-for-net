@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator ==(StorageAccountMigrationStatus left, StorageAccountMigrationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageAccountMigrationStatus"/> values are not the same. </summary>
         public static bool operator !=(StorageAccountMigrationStatus left, StorageAccountMigrationStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StorageAccountMigrationStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageAccountMigrationStatus"/>. </summary>
         public static implicit operator StorageAccountMigrationStatus(string value) => new StorageAccountMigrationStatus(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator ==(MediaServicesPublicNetworkAccess left, MediaServicesPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MediaServicesPublicNetworkAccess"/> values are not the same. </summary>
         public static bool operator !=(MediaServicesPublicNetworkAccess left, MediaServicesPublicNetworkAccess right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MediaServicesPublicNetworkAccess"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MediaServicesPublicNetworkAccess"/>. </summary>
         public static implicit operator MediaServicesPublicNetworkAccess(string value) => new MediaServicesPublicNetworkAccess(value);
 
         /// <inheritdoc />

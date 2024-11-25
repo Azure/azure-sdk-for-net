@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> [Required] The numerical prediction drift metric to calculate. </summary>
+        [WirePath("metric")]
         public NumericalPredictionDriftMetric Metric { get; set; }
     }
 }

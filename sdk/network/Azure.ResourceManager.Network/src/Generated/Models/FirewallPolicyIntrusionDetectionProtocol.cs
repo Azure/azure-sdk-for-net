@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(FirewallPolicyIntrusionDetectionProtocol left, FirewallPolicyIntrusionDetectionProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FirewallPolicyIntrusionDetectionProtocol"/> values are not the same. </summary>
         public static bool operator !=(FirewallPolicyIntrusionDetectionProtocol left, FirewallPolicyIntrusionDetectionProtocol right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FirewallPolicyIntrusionDetectionProtocol"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FirewallPolicyIntrusionDetectionProtocol"/>. </summary>
         public static implicit operator FirewallPolicyIntrusionDetectionProtocol(string value) => new FirewallPolicyIntrusionDetectionProtocol(value);
 
         /// <inheritdoc />

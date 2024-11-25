@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(VirtualNetworkGatewayConnectionType left, VirtualNetworkGatewayConnectionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualNetworkGatewayConnectionType"/> values are not the same. </summary>
         public static bool operator !=(VirtualNetworkGatewayConnectionType left, VirtualNetworkGatewayConnectionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VirtualNetworkGatewayConnectionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualNetworkGatewayConnectionType"/>. </summary>
         public static implicit operator VirtualNetworkGatewayConnectionType(string value) => new VirtualNetworkGatewayConnectionType(value);
 
         /// <inheritdoc />

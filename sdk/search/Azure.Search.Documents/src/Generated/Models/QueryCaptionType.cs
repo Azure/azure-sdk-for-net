@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Models
         public static bool operator ==(QueryCaptionType left, QueryCaptionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="QueryCaptionType"/> values are not the same. </summary>
         public static bool operator !=(QueryCaptionType left, QueryCaptionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="QueryCaptionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="QueryCaptionType"/>. </summary>
         public static implicit operator QueryCaptionType(string value) => new QueryCaptionType(value);
 
         /// <inheritdoc />

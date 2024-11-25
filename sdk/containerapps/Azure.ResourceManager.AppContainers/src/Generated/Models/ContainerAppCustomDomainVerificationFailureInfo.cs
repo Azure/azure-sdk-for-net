@@ -67,12 +67,16 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Standardized string to programmatically identify the error. </summary>
+        [WirePath("code")]
         public string Code { get; }
         /// <summary> Detailed error description and debugging information. </summary>
+        [WirePath("message")]
         public string Message { get; }
         /// <summary> Detailed error description and debugging information. </summary>
+        [WirePath("target")]
         public string Target { get; }
         /// <summary> Details or the error. </summary>
+        [WirePath("details")]
         public IReadOnlyList<ContainerAppCustomDomainVerificationFailureInfoDetailsItem> Details { get; }
     }
 }

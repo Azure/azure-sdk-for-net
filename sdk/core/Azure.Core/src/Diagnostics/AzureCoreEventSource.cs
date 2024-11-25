@@ -35,6 +35,7 @@ namespace Azure.Core.Diagnostics
         private const int RequestRedirectBlockedEvent = 21;
         private const int RequestRedirectCountExceededEvent = 22;
         private const int PipelineTransportOptionsNotAppliedEvent = 23;
+        private const int FailedToDecodeCaeChallengeClaimsEvent = 24;
 
         private AzureCoreEventSource() : base(EventSourceName) { }
 
@@ -316,6 +317,21 @@ namespace Azure.Core.Diagnostics
                 stringBuilder.Append(Environment.NewLine);
             }
             return stringBuilder.ToString();
+        }
+
+        [NonEvent]
+        public void FailedToDecodeCaeChallengeClaims(string? encodedClaims, Exception exception)
+        {
+            if (IsEnabled(EventLevel.Error, EventKeywords.None))
+            {
+                FailedToDecodeCaeChallengeClaims(encodedClaims, exception.ToString());
+            }
+        }
+
+        [Event(FailedToDecodeCaeChallengeClaimsEvent, Level = EventLevel.Error, Message = "BearerTokenAuthenticationPolicy Failed to decode CAE claims: '{0}'. Exception: {1}")]
+        public void FailedToDecodeCaeChallengeClaims(string? encodedClaims, string exception)
+        {
+            WriteEvent(FailedToDecodeCaeChallengeClaimsEvent, encodedClaims, exception);
         }
     }
 }

@@ -75,7 +75,7 @@ namespace Azure.AI.Language.Text
         public static bool operator ==(WeightUnit left, WeightUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WeightUnit"/> values are not the same. </summary>
         public static bool operator !=(WeightUnit left, WeightUnit right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WeightUnit"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WeightUnit"/>. </summary>
         public static implicit operator WeightUnit(string value) => new WeightUnit(value);
 
         /// <inheritdoc />

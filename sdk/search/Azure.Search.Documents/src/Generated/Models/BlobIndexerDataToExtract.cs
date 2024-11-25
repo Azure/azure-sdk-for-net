@@ -36,7 +36,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public static bool operator ==(BlobIndexerDataToExtract left, BlobIndexerDataToExtract right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BlobIndexerDataToExtract"/> values are not the same. </summary>
         public static bool operator !=(BlobIndexerDataToExtract left, BlobIndexerDataToExtract right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BlobIndexerDataToExtract"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BlobIndexerDataToExtract"/>. </summary>
         public static implicit operator BlobIndexerDataToExtract(string value) => new BlobIndexerDataToExtract(value);
 
         /// <inheritdoc />

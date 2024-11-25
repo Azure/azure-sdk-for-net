@@ -80,14 +80,19 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Timestamp describing when the pod was created by controller. </summary>
+        [WirePath("properties.createdTime")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Current running state of the replica. </summary>
+        [WirePath("properties.runningState")]
         public ContainerAppReplicaRunningState? RunningState { get; }
         /// <summary> The details of replica current running state. </summary>
+        [WirePath("properties.runningStateDetails")]
         public string RunningStateDetails { get; }
         /// <summary> The containers collection under a replica. </summary>
+        [WirePath("properties.containers")]
         public IList<ContainerAppReplicaContainer> Containers { get; }
         /// <summary> The init containers collection under a replica. </summary>
+        [WirePath("properties.initContainers")]
         public IList<ContainerAppReplicaContainer> InitContainers { get; }
     }
 }

@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Batch.Models
 
         void IJsonModel<BatchVmDataDisk>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<BatchVmDataDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BatchVmDataDisk)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("lun"u8);
             writer.WriteNumberValue(Lun);
             if (Optional.IsDefined(Caching))
@@ -55,7 +63,6 @@ namespace Azure.ResourceManager.Batch.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         BatchVmDataDisk IJsonModel<BatchVmDataDisk>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

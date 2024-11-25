@@ -79,6 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Public blob access allowed. </summary>
+        [WirePath("allowBlobPublicAccess")]
         public bool? AllowBlobPublicAccess { get; set; }
         /// <summary> This is populated once the storage account is created. </summary>
         internal ArmResourceId ArmResourceIdentifier { get; set; }
@@ -86,6 +87,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Arm ResourceId is in the format "/subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Storage/storageAccounts/{StorageAccountName}"
         /// or "/subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{AcrName}"
         /// </summary>
+        [WirePath("armResourceId.resourceId")]
         public ResourceIdentifier ArmResourceId
         {
             get => ArmResourceIdentifier is null ? default : ArmResourceIdentifier.ResourceId;
@@ -98,8 +100,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> HNS enabled for storage account. </summary>
+        [WirePath("storageAccountHnsEnabled")]
         public bool? StorageAccountHnsEnabled { get; set; }
         /// <summary> Name of the storage account. </summary>
+        [WirePath("storageAccountName")]
         public string StorageAccountName { get; set; }
         /// <summary>
         /// Allowed values:
@@ -112,6 +116,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// "Premium_LRS",
         /// "Premium_ZRS"
         /// </summary>
+        [WirePath("storageAccountType")]
         public string StorageAccountType { get; set; }
     }
 }

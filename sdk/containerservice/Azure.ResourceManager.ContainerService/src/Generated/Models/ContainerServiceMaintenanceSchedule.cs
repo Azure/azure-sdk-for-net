@@ -68,6 +68,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> For schedules like: 'recur every day' or 'recur every 3 days'. </summary>
         internal DailySchedule Daily { get; set; }
         /// <summary> Specifies the number of days between each set of occurrences. </summary>
+        [WirePath("daily.intervalDays")]
         public int? DailyIntervalDays
         {
             get => Daily is null ? default(int?) : Daily.IntervalDays;
@@ -78,10 +79,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> For schedules like: 'recur every Monday' or 'recur every 3 weeks on Wednesday'. </summary>
+        [WirePath("weekly")]
         public ContainerServiceMaintenanceWeeklySchedule Weekly { get; set; }
         /// <summary> For schedules like: 'recur every month on the 15th' or 'recur every 3 months on the 20th'. </summary>
+        [WirePath("absoluteMonthly")]
         public ContainerServiceMaintenanceAbsoluteMonthlySchedule AbsoluteMonthly { get; set; }
         /// <summary> For schedules like: 'recur every month on the first Monday' or 'recur every 3 months on last Friday'. </summary>
+        [WirePath("relativeMonthly")]
         public ContainerServiceMaintenanceRelativeMonthlySchedule RelativeMonthly { get; set; }
     }
 }

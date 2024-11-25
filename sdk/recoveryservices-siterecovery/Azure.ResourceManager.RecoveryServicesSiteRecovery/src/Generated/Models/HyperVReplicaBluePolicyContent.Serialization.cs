@@ -19,86 +19,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         void IJsonModel<HyperVReplicaBluePolicyContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaBluePolicyContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HyperVReplicaBluePolicyContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(ReplicationFrequencyInSeconds))
             {
                 writer.WritePropertyName("replicationFrequencyInSeconds"u8);
                 writer.WriteNumberValue(ReplicationFrequencyInSeconds.Value);
             }
-            if (Optional.IsDefined(RecoveryPoints))
-            {
-                writer.WritePropertyName("recoveryPoints"u8);
-                writer.WriteNumberValue(RecoveryPoints.Value);
-            }
-            if (Optional.IsDefined(ApplicationConsistentSnapshotFrequencyInHours))
-            {
-                writer.WritePropertyName("applicationConsistentSnapshotFrequencyInHours"u8);
-                writer.WriteNumberValue(ApplicationConsistentSnapshotFrequencyInHours.Value);
-            }
-            if (Optional.IsDefined(Compression))
-            {
-                writer.WritePropertyName("compression"u8);
-                writer.WriteStringValue(Compression);
-            }
-            if (Optional.IsDefined(InitialReplicationMethod))
-            {
-                writer.WritePropertyName("initialReplicationMethod"u8);
-                writer.WriteStringValue(InitialReplicationMethod);
-            }
-            if (Optional.IsDefined(OnlineReplicationStartTime))
-            {
-                writer.WritePropertyName("onlineReplicationStartTime"u8);
-                writer.WriteStringValue(OnlineReplicationStartTime);
-            }
-            if (Optional.IsDefined(OfflineReplicationImportPath))
-            {
-                writer.WritePropertyName("offlineReplicationImportPath"u8);
-                writer.WriteStringValue(OfflineReplicationImportPath);
-            }
-            if (Optional.IsDefined(OfflineReplicationExportPath))
-            {
-                writer.WritePropertyName("offlineReplicationExportPath"u8);
-                writer.WriteStringValue(OfflineReplicationExportPath);
-            }
-            if (Optional.IsDefined(ReplicationPort))
-            {
-                writer.WritePropertyName("replicationPort"u8);
-                writer.WriteNumberValue(ReplicationPort.Value);
-            }
-            if (Optional.IsDefined(AllowedAuthenticationType))
-            {
-                writer.WritePropertyName("allowedAuthenticationType"u8);
-                writer.WriteNumberValue(AllowedAuthenticationType.Value);
-            }
-            if (Optional.IsDefined(ReplicaDeletion))
-            {
-                writer.WritePropertyName("replicaDeletion"u8);
-                writer.WriteStringValue(ReplicaDeletion);
-            }
-            writer.WritePropertyName("instanceType"u8);
-            writer.WriteStringValue(InstanceType);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         HyperVReplicaBluePolicyContent IJsonModel<HyperVReplicaBluePolicyContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

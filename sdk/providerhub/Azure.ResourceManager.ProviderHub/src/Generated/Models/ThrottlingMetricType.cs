@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static bool operator ==(ThrottlingMetricType left, ThrottlingMetricType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ThrottlingMetricType"/> values are not the same. </summary>
         public static bool operator !=(ThrottlingMetricType left, ThrottlingMetricType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ThrottlingMetricType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ThrottlingMetricType"/>. </summary>
         public static implicit operator ThrottlingMetricType(string value) => new ThrottlingMetricType(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static bool operator ==(PostgreSqlFlexibleServerGeoRedundantBackupEnum left, PostgreSqlFlexibleServerGeoRedundantBackupEnum right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerGeoRedundantBackupEnum"/> values are not the same. </summary>
         public static bool operator !=(PostgreSqlFlexibleServerGeoRedundantBackupEnum left, PostgreSqlFlexibleServerGeoRedundantBackupEnum right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerGeoRedundantBackupEnum"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServerGeoRedundantBackupEnum"/>. </summary>
         public static implicit operator PostgreSqlFlexibleServerGeoRedundantBackupEnum(string value) => new PostgreSqlFlexibleServerGeoRedundantBackupEnum(value);
 
         /// <inheritdoc />

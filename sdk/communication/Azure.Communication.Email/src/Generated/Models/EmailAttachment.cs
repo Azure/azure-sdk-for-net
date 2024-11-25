@@ -12,6 +12,19 @@ namespace Azure.Communication.Email
     /// <summary> Attachment to the email. </summary>
     public partial class EmailAttachment
     {
+        /// <summary> Initializes a new instance of <see cref="EmailAttachment"/>. </summary>
+        /// <param name="name"> Name of the attachment. </param>
+        /// <param name="contentType"> MIME type of the content being attached. </param>
+        /// <param name="content"> Base64 encoded contents of the attachment. </param>
+        /// <param name="contentId"> Unique identifier (CID) to reference an inline attachment. </param>
+        internal EmailAttachment(string name, string contentType, BinaryData content, string contentId)
+        {
+            Name = name;
+            ContentType = contentType;
+            Content = content;
+            ContentId = contentId;
+        }
+
         /// <summary> Name of the attachment. </summary>
         public string Name { get; }
         /// <summary> MIME type of the content being attached. </summary>

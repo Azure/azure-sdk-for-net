@@ -162,30 +162,28 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a token for a user account, authenticating them using the given username and password. Note: This will fail with an
-        /// <see cref="AuthenticationFailedException"/> if the specified user account has MFA enabled. Acquired tokens are cached by the
-        /// credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential instances to
-        /// optimize cache effectiveness.
+        /// Obtains a token for a user account, authenticating them using the provided username and password. Acquired tokens are
+        /// <see href="https://aka.ms/azsdk/net/identity/token-cache">cached</see> by the credential instance. Token lifetime and
+        /// refreshing is handled automatically. Where possible, reuse credential instances to optimize cache effectiveness.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
-        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed, particularly if the specified user account has MFA enabled.</exception>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return GetTokenImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
-        /// Obtains a token for a user account, authenticating them using the given username and password. Note: This will fail with an
-        /// <see cref="AuthenticationFailedException"/> if the specified user account has MFA enabled. Acquired tokens are cached by the
-        /// credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential instances to
-        /// optimize cache effectiveness.
+        /// Obtains a token for a user account, authenticating them using the provided username and password. Acquired tokens are
+        /// <see href="https://aka.ms/azsdk/net/identity/token-cache">cached</see> by the credential instance. Token lifetime and
+        /// refreshing is handled automatically. Where possible, reuse credential instances to optimize cache effectiveness.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
-        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed, particularly if the specified user account has MFA enabled.</exception>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
@@ -228,9 +226,7 @@ namespace Azure.Identity
                             _record,
                             tenantId,
                             requestContext.IsCaeEnabled,
-#if PREVIEW_FEATURE_FLAG
-                            null,
-#endif
+                            requestContext,
                             async,
                             cancellationToken)
                             .ConfigureAwait(false);

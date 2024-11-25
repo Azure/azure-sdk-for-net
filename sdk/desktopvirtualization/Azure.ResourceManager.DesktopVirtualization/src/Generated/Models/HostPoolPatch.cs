@@ -103,42 +103,61 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> tags to be updated. </summary>
-        public IDictionary<string, string> Tags { get; }
+        [WirePath("tags")]
+        public IDictionary<string, string> Tags { get; set; }
         /// <summary> Friendly name of HostPool. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; set; }
         /// <summary> Description of HostPool. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> Custom rdp property of HostPool. </summary>
+        [WirePath("properties.customRdpProperty")]
         public string CustomRdpProperty { get; set; }
         /// <summary> The max session limit of HostPool. </summary>
+        [WirePath("properties.maxSessionLimit")]
         public int? MaxSessionLimit { get; set; }
         /// <summary> PersonalDesktopAssignment type for HostPool. </summary>
+        [WirePath("properties.personalDesktopAssignmentType")]
         public PersonalDesktopAssignmentType? PersonalDesktopAssignmentType { get; set; }
         /// <summary> The type of the load balancer. </summary>
+        [WirePath("properties.loadBalancerType")]
         public HostPoolLoadBalancerType? LoadBalancerType { get; set; }
         /// <summary> The ring number of HostPool. </summary>
+        [WirePath("properties.ring")]
         public int? Ring { get; set; }
         /// <summary> Is validation environment. </summary>
+        [WirePath("properties.validationEnvironment")]
         public bool? IsValidationEnvironment { get; set; }
         /// <summary> The registration info of HostPool. </summary>
+        [WirePath("properties.registrationInfo")]
         public HostPoolRegistrationInfoPatch RegistrationInfo { get; set; }
         /// <summary> VM template for sessionhosts configuration within hostpool. </summary>
+        [WirePath("properties.vmTemplate")]
         public string VmTemplate { get; set; }
         /// <summary> URL to customer ADFS server for signing WVD SSO certificates. </summary>
+        [WirePath("properties.ssoadfsAuthority")]
         public string SsoAdfsAuthority { get; set; }
         /// <summary> ClientId for the registered Relying Party used to issue WVD SSO certificates. </summary>
+        [WirePath("properties.ssoClientId")]
         public string SsoClientId { get; set; }
         /// <summary> Path to Azure KeyVault storing the secret used for communication to ADFS. </summary>
+        [WirePath("properties.ssoClientSecretKeyVaultPath")]
         public string SsoClientSecretKeyVaultPath { get; set; }
         /// <summary> The type of single sign on Secret Type. </summary>
+        [WirePath("properties.ssoSecretType")]
         public HostPoolSsoSecretType? SsoSecretType { get; set; }
         /// <summary> The type of preferred application group type, default to Desktop Application Group. </summary>
+        [WirePath("properties.preferredAppGroupType")]
         public PreferredAppGroupType? PreferredAppGroupType { get; set; }
         /// <summary> The flag to turn on/off StartVMOnConnect feature. </summary>
+        [WirePath("properties.startVMOnConnect")]
         public bool? StartVmOnConnect { get; set; }
         /// <summary> Enabled to allow this resource to be access from the public network. </summary>
+        [WirePath("properties.publicNetworkAccess")]
         public HostPoolPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> The session host configuration for updating agent, monitoring agent, and stack component. </summary>
+        [WirePath("properties.agentUpdate")]
         public SessionHostAgentUpdatePatchProperties AgentUpdate { get; set; }
     }
 }

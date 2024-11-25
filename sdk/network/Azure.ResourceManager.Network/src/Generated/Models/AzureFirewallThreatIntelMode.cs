@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(AzureFirewallThreatIntelMode left, AzureFirewallThreatIntelMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AzureFirewallThreatIntelMode"/> values are not the same. </summary>
         public static bool operator !=(AzureFirewallThreatIntelMode left, AzureFirewallThreatIntelMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AzureFirewallThreatIntelMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AzureFirewallThreatIntelMode"/>. </summary>
         public static implicit operator AzureFirewallThreatIntelMode(string value) => new AzureFirewallThreatIntelMode(value);
 
         /// <inheritdoc />

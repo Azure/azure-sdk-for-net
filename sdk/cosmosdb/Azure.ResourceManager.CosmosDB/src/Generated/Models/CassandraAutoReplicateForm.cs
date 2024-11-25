@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static bool operator ==(CassandraAutoReplicateForm left, CassandraAutoReplicateForm right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CassandraAutoReplicateForm"/> values are not the same. </summary>
         public static bool operator !=(CassandraAutoReplicateForm left, CassandraAutoReplicateForm right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CassandraAutoReplicateForm"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CassandraAutoReplicateForm"/>. </summary>
         public static implicit operator CassandraAutoReplicateForm(string value) => new CassandraAutoReplicateForm(value);
 
         /// <inheritdoc />

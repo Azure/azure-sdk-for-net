@@ -51,7 +51,7 @@ namespace Azure.Analytics.Defender.Easm
         public static bool operator ==(AssetUpdateTransfers left, AssetUpdateTransfers right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AssetUpdateTransfers"/> values are not the same. </summary>
         public static bool operator !=(AssetUpdateTransfers left, AssetUpdateTransfers right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AssetUpdateTransfers"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AssetUpdateTransfers"/>. </summary>
         public static implicit operator AssetUpdateTransfers(string value) => new AssetUpdateTransfers(value);
 
         /// <inheritdoc />

@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         }
 
         /// <summary> Status code provided by the Extension. </summary>
+        [WirePath("code")]
         public string Code { get; set; }
         /// <summary> Short description of status of the extension. </summary>
+        [WirePath("displayStatus")]
         public string DisplayStatus { get; set; }
         /// <summary> Level of the status. </summary>
+        [WirePath("level")]
         public KubernetesClusterExtensionStatusLevel? Level { get; set; }
         /// <summary> Detailed message of the status from the Extension. </summary>
+        [WirePath("message")]
         public string Message { get; set; }
         /// <summary> DateLiteral (per ISO8601) noting the time of installation status. </summary>
+        [WirePath("time")]
         public string Time { get; set; }
     }
 }

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public static bool operator ==(SapNamingPatternType left, SapNamingPatternType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapNamingPatternType"/> values are not the same. </summary>
         public static bool operator !=(SapNamingPatternType left, SapNamingPatternType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SapNamingPatternType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SapNamingPatternType"/>. </summary>
         public static implicit operator SapNamingPatternType(string value) => new SapNamingPatternType(value);
 
         /// <inheritdoc />

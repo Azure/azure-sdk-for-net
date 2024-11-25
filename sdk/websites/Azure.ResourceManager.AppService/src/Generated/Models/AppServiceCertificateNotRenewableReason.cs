@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
         public static bool operator ==(AppServiceCertificateNotRenewableReason left, AppServiceCertificateNotRenewableReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppServiceCertificateNotRenewableReason"/> values are not the same. </summary>
         public static bool operator !=(AppServiceCertificateNotRenewableReason left, AppServiceCertificateNotRenewableReason right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AppServiceCertificateNotRenewableReason"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AppServiceCertificateNotRenewableReason"/>. </summary>
         public static implicit operator AppServiceCertificateNotRenewableReason(string value) => new AppServiceCertificateNotRenewableReason(value);
 
         /// <inheritdoc />

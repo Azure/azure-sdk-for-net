@@ -92,5 +92,6 @@
     <AzureStorageBlobsSharedTestSources>$(MSBuildThisFileDirectory)\Azure.Storage.Blobs\tests\Shared\</AzureStorageBlobsSharedTestSources>
     <AzureStorageDataMovementSharedSources>$(MSBuildThisFileDirectory)\Azure.Storage.DataMovement\src\Shared\</AzureStorageDataMovementSharedSources>
     <AzureStorageDataMovementTestSharedSources>$(MSBuildThisFileDirectory)\Azure.Storage.DataMovement\tests\Shared\</AzureStorageDataMovementTestSharedSources>
+	<AzureStorageStressTestSharedSources>$(MSBuildThisFileDirectory)\Azure.Storage.Common\src\stress\Shared\</AzureStorageStressTestSharedSources>
   </PropertyGroup>
 </Project>

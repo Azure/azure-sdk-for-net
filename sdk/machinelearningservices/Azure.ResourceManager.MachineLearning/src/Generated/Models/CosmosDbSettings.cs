@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDbSettings"/>. </summary>
-        /// <param name="collectionsThroughput"></param>
+        /// <param name="collectionsThroughput"> The throughput of the collections in cosmosdb database. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CosmosDbSettings(int? collectionsThroughput, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +59,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the collections throughput. </summary>
+        /// <summary> The throughput of the collections in cosmosdb database. </summary>
+        [WirePath("collectionsThroughput")]
         public int? CollectionsThroughput { get; set; }
     }
 }

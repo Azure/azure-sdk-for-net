@@ -6,13 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using Azure.Messaging.ServiceBus.Administration;
-using Microsoft.Azure.Amqp.Framing;
 using Moq;
-using Moq.Protected;
 using NUnit.Framework;
-using NUnit.Framework.Constraints;
 
 namespace Azure.Messaging.ServiceBus.Tests.Samples
 {
@@ -208,7 +204,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             }
 
             // This is a simple local method that returns an IAsyncEnumerable to use as the return for ReceiveMessagesAsync
-            // below, since IAsyncEnumerables cannot be created directly.
+            // below, since an IAsyncEnumerable cannot be created directly.
 
             async IAsyncEnumerable<ServiceBusReceivedMessage> mockReturn()
             {
@@ -443,7 +439,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 });
 
             // The rest of this snippet illustrates how to defer a service bus message using the mocked
-            // service bus client above, this would be where application methods deferrring a message would be
+            // service bus client above, this would be where application methods deferring a message would be
             // called.
 
             string mockQueueName = "MockQueueName";
@@ -1014,7 +1010,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             }
 
             // This is a simple local method that returns an IAsyncEnumerable to use as the return for ReceiveMessagesAsync
-            // below, since IAsyncEnumerables cannot be created directly.
+            // below, since an IAsyncEnumerable cannot be created directly.
 
             async IAsyncEnumerable<ServiceBusReceivedMessage> mockReturn()
             {
@@ -1304,8 +1300,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         public async Task MockNamespaceProperties()
         {
             #region Snippet:ServiceBus_MockingNamespaceProperties
-            Mock<Response<NamespaceProperties>> mockResponse = new Mock<Response<NamespaceProperties>>();
-            Mock<ServiceBusAdministrationClient> mockAdministrationClient = new Mock<ServiceBusAdministrationClient>();
+            Mock<Response<NamespaceProperties>> mockResponse = new();
+            Mock<ServiceBusAdministrationClient> mockAdministrationClient = new();
 
             NamespaceProperties mockNamespaceProperties = ServiceBusModelFactory.NamespaceProperties("name", DateTimeOffset.UtcNow, DateTime.UtcNow, MessagingSku.Basic, 100, "alias");
 
@@ -1356,7 +1352,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 ServiceBusReceivedMessage message = ServiceBusModelFactory.ServiceBusReceivedMessage(
                     body: new BinaryData("message"),
                     messageId: "messageId",
-                    partitionKey: "hellokey",
+                    partitionKey: "helloKey",
                     correlationId: "correlationId",
                     contentType: "contentType",
                     replyTo: "replyTo"
@@ -1444,7 +1440,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     body: new BinaryData("message"),
                     messageId: "messageId",
                     sessionId: "session",
-                    partitionKey: "hellokey",
+                    partitionKey: "helloKey",
                     correlationId: "correlationId",
                     contentType: "contentType",
                     replyTo: "replyTo"
@@ -1539,7 +1535,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             ServiceBusReceivedMessage message = ServiceBusModelFactory.ServiceBusReceivedMessage(
                     body: new BinaryData("message"),
                     messageId: "messageId",
-                    partitionKey: "hellokey",
+                    partitionKey: "helloKey",
                     correlationId: "correlationId",
                     contentType: "contentType",
                     replyTo: "replyTo"
@@ -1621,7 +1617,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             ServiceBusReceivedMessage message = ServiceBusModelFactory.ServiceBusReceivedMessage(
                     body: new BinaryData("message"),
                     messageId: "messageId",
-                    partitionKey: "hellokey",
+                    partitionKey: "helloKey",
                     correlationId: "correlationId",
                     contentType: "contentType",
                     replyTo: "replyTo"

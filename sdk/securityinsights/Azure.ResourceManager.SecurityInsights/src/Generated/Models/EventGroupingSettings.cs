@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> The event grouping aggregation kinds. </summary>
+        [WirePath("aggregationKind")]
         public EventGroupingAggregationKind? AggregationKind { get; set; }
     }
 }

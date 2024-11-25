@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Metric name. </summary>
+        [WirePath("metricName")]
         public string MetricName { get; }
         /// <summary> Metric value. </summary>
+        [WirePath("metricValue")]
         public int? MetricValue { get; }
     }
 }

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Sphere.Models
         public static bool operator ==(SphereProvisioningState left, SphereProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SphereProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(SphereProvisioningState left, SphereProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SphereProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SphereProvisioningState"/>. </summary>
         public static implicit operator SphereProvisioningState(string value) => new SphereProvisioningState(value);
 
         /// <inheritdoc />

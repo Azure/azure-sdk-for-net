@@ -62,10 +62,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Please note <see cref="MonitorComputeIdentityBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AmlTokenComputeIdentity"/> and <see cref="ManagedComputeIdentity"/>.
         /// </summary>
+        [WirePath("computeIdentity")]
         public MonitorComputeIdentityBase ComputeIdentity { get; set; }
         /// <summary> [Required] The instance type running the Spark job. </summary>
+        [WirePath("instanceType")]
         public string InstanceType { get; set; }
         /// <summary> [Required] The Spark runtime version. </summary>
+        [WirePath("runtimeVersion")]
         public string RuntimeVersion { get; set; }
     }
 }

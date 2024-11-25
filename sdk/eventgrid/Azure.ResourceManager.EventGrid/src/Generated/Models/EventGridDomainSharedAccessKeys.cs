@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Shared access key1 for the domain. </summary>
+        [WirePath("key1")]
         public string Key1 { get; }
         /// <summary> Shared access key2 for the domain. </summary>
+        [WirePath("key2")]
         public string Key2 { get; }
     }
 }

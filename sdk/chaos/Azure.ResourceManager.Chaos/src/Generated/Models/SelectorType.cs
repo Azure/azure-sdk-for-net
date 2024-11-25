@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Chaos.Models
         public static bool operator ==(SelectorType left, SelectorType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SelectorType"/> values are not the same. </summary>
         public static bool operator !=(SelectorType left, SelectorType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SelectorType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SelectorType"/>. </summary>
         public static implicit operator SelectorType(string value) => new SelectorType(value);
 
         /// <inheritdoc />

@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
 
         void IJsonModel<AccountSasToken>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AccountSasToken>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AccountSasToken)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("storageAccountSasToken"u8);
             writer.WriteStringValue(StorageAccountSasToken);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -43,7 +51,6 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AccountSasToken IJsonModel<AccountSasToken>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

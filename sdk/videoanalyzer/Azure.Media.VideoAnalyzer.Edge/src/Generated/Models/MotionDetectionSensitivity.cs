@@ -36,7 +36,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static bool operator ==(MotionDetectionSensitivity left, MotionDetectionSensitivity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MotionDetectionSensitivity"/> values are not the same. </summary>
         public static bool operator !=(MotionDetectionSensitivity left, MotionDetectionSensitivity right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MotionDetectionSensitivity"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MotionDetectionSensitivity"/>. </summary>
         public static implicit operator MotionDetectionSensitivity(string value) => new MotionDetectionSensitivity(value);
 
         /// <inheritdoc />

@@ -12,8 +12,8 @@ You can set `endpoint` and `apiKey` based on an environment variable, a configur
 
 ```C# Snippet:CreateDocumentIntelligenceAdministrationClient
 string endpoint = "<endpoint>";
-string apiKey = "<apiKey>";
-var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+var credential = new DefaultAzureCredential();
+var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), credential);
 ```
 
 ## Compose a model
@@ -74,15 +74,20 @@ DocumentModelDetails cleaningSuppliesModel = cleaningSuppliesOperation.Value;
 When a purchase order happens, the employee in charge uploads the document to our application. The application then needs to analyze the document to extract the total value of the purchase order. Instead of asking the user to look for the specific `modelId` according to the nature of the document, you can compose a model that aggregates the four models and pass it to `AnalyzeDocument` to let the service decide which model fits best according to the document provided.
 
 ```C# Snippet:DocumentIntelligenceSampleComposeModel
+// Note that to compose a model you must assign a classifier responsible for detecting the type of
+// document submitted on analysis requests. This piece of information is necessary to determine which
+// of the component models should be the one to analyze the input document.
+
 string purchaseOrderModelId = "<purchaseOrderModelId>";
-var componentModelIds = new List<ComponentDocumentModelDetails>()
+string classifierId = "<classifierId>";
+var docTypes = new Dictionary<string, DocumentTypeDetails>()
 {
-    new ComponentDocumentModelDetails(officeSuppliesModelId),
-    new ComponentDocumentModelDetails(officeEquipmentModelId),
-    new ComponentDocumentModelDetails(furnitureModelId),
-    new ComponentDocumentModelDetails(cleaningSuppliesModelId)
+    { "officeSupplies", new DocumentTypeDetails() { ModelId = officeSuppliesModelId } },
+    { "officeEquipment", new DocumentTypeDetails() { ModelId = officeEquipmentModelId } },
+    { "furniture", new DocumentTypeDetails() { ModelId = furnitureModelId } },
+    { "cleaningSupplies", new DocumentTypeDetails() { ModelId = cleaningSuppliesModelId } }
 };
-var purchaseOrderContent = new ComposeDocumentModelContent(purchaseOrderModelId, componentModelIds)
+var purchaseOrderContent = new ComposeDocumentModelContent(purchaseOrderModelId, classifierId, docTypes)
 {
     Description = "Composed Purchase order"
 };

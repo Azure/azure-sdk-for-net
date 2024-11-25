@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static bool operator ==(VmWorkloadProtectedItemHealthStatus left, VmWorkloadProtectedItemHealthStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VmWorkloadProtectedItemHealthStatus"/> values are not the same. </summary>
         public static bool operator !=(VmWorkloadProtectedItemHealthStatus left, VmWorkloadProtectedItemHealthStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VmWorkloadProtectedItemHealthStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VmWorkloadProtectedItemHealthStatus"/>. </summary>
         public static implicit operator VmWorkloadProtectedItemHealthStatus(string value) => new VmWorkloadProtectedItemHealthStatus(value);
 
         /// <inheritdoc />

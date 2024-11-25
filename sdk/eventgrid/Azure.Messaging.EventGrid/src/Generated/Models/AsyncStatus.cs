@@ -36,7 +36,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public static bool operator ==(AsyncStatus left, AsyncStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AsyncStatus"/> values are not the same. </summary>
         public static bool operator !=(AsyncStatus left, AsyncStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AsyncStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AsyncStatus"/>. </summary>
         public static implicit operator AsyncStatus(string value) => new AsyncStatus(value);
 
         /// <inheritdoc />

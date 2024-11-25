@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.Communication.Models
         }
 
         /// <summary> Tags of the service which is a list of key value pairs that describe the resource. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }
 }

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(CapacityReservationInstanceViewType left, CapacityReservationInstanceViewType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CapacityReservationInstanceViewType"/> values are not the same. </summary>
         public static bool operator !=(CapacityReservationInstanceViewType left, CapacityReservationInstanceViewType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CapacityReservationInstanceViewType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CapacityReservationInstanceViewType"/>. </summary>
         public static implicit operator CapacityReservationInstanceViewType(string value) => new CapacityReservationInstanceViewType(value);
 
         /// <inheritdoc />

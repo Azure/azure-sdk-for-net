@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Gets the mesh revisions. </summary>
+        [WirePath("meshRevisions")]
         public IList<MeshRevision> MeshRevisions { get; }
     }
 }

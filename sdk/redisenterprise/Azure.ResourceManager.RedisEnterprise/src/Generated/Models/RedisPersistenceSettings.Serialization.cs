@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +20,21 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         void IJsonModel<RedisPersistenceSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<RedisPersistenceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RedisPersistenceSettings)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(IsAofEnabled))
             {
                 writer.WritePropertyName("aofEnabled"u8);
@@ -61,7 +70,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         RedisPersistenceSettings IJsonModel<RedisPersistenceSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -137,6 +145,83 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             return new RedisPersistenceSettings(aofEnabled, rdbEnabled, aofFrequency, rdbFrequency, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAofEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  aofEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsAofEnabled))
+                {
+                    builder.Append("  aofEnabled: ");
+                    var boolValue = IsAofEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsRdbEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  rdbEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsRdbEnabled))
+                {
+                    builder.Append("  rdbEnabled: ");
+                    var boolValue = IsRdbEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AofFrequency), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  aofFrequency: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AofFrequency))
+                {
+                    builder.Append("  aofFrequency: ");
+                    builder.AppendLine($"'{AofFrequency.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RdbFrequency), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  rdbFrequency: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RdbFrequency))
+                {
+                    builder.Append("  rdbFrequency: ");
+                    builder.AppendLine($"'{RdbFrequency.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<RedisPersistenceSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RedisPersistenceSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -145,6 +230,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RedisPersistenceSettings)} does not support writing '{options.Format}' format.");
             }

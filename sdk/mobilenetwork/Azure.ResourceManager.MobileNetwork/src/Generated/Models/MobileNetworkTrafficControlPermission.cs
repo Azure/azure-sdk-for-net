@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static bool operator ==(MobileNetworkTrafficControlPermission left, MobileNetworkTrafficControlPermission right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MobileNetworkTrafficControlPermission"/> values are not the same. </summary>
         public static bool operator !=(MobileNetworkTrafficControlPermission left, MobileNetworkTrafficControlPermission right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MobileNetworkTrafficControlPermission"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MobileNetworkTrafficControlPermission"/>. </summary>
         public static implicit operator MobileNetworkTrafficControlPermission(string value) => new MobileNetworkTrafficControlPermission(value);
 
         /// <inheritdoc />

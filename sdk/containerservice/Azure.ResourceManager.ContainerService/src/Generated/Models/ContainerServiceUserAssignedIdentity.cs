@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> The resource ID of the user assigned identity. </summary>
+        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
         /// <summary> The client ID of the user assigned identity. </summary>
+        [WirePath("clientId")]
         public Guid? ClientId { get; set; }
         /// <summary> The object ID of the user assigned identity. </summary>
+        [WirePath("objectId")]
         public Guid? ObjectId { get; set; }
     }
 }

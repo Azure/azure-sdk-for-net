@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-﻿namespace Microsoft.Azure.Batch
+namespace Microsoft.Azure.Batch
 {
     using System;
     using System.Collections;
@@ -28,24 +28,24 @@
         private static Models.NodeFile CreateNodeFileFromHeadersType(string filePath, Models.IProtocolNodeFile protocolNodeFile)
         {
             Models.NodeFile file = new Models.NodeFile()
+            {
+                IsDirectory = protocolNodeFile.OcpBatchFileIsdirectory,
+                Name = filePath,
+                Properties = new Models.FileProperties()
                 {
-                    IsDirectory = protocolNodeFile.OcpBatchFileIsdirectory,
-                    Name = filePath,
-                    Properties = new Models.FileProperties()
-                        {
-                            ContentLength = protocolNodeFile.ContentLength.GetValueOrDefault(),
-                            ContentType = protocolNodeFile.ContentType,
-                            CreationTime = protocolNodeFile.OcpCreationTime,
-                            LastModified = protocolNodeFile.LastModified.GetValueOrDefault(),
-                            FileMode = protocolNodeFile.OcpBatchFileMode
-                        },
-                    Url = protocolNodeFile.OcpBatchFileUrl
-                };
+                    ContentLength = protocolNodeFile.ContentLength.GetValueOrDefault(),
+                    ContentType = protocolNodeFile.ContentType,
+                    CreationTime = protocolNodeFile.OcpCreationTime,
+                    LastModified = protocolNodeFile.LastModified.GetValueOrDefault(),
+                    FileMode = protocolNodeFile.OcpBatchFileMode
+                },
+                Url = protocolNodeFile.OcpBatchFileUrl
+            };
 
             return file;
         }
 
-#region // constructors
+        #region // constructors
 
         /// <summary>
         /// instantiate based on creds and base url
@@ -71,9 +71,9 @@
             this._internalClient = false;
         }
 
-#endregion // constructors
+        #endregion // constructors
 
-#region // IProtocolLayer
+        #region // IProtocolLayer
 
         public Task<AzureOperationResponse<IPage<Models.CloudJobSchedule>, Models.JobScheduleListHeaders>> ListJobSchedules(
             string skipToken,
@@ -135,11 +135,11 @@
             using (var response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false))
             {
                 var result = new AzureOperationResponse<bool, Models.JobScheduleExistsHeaders>()
-                    {
-                        Body = response.Body,
-                        RequestId = response.RequestId,
-                        Headers = response.Headers
-                    };
+                {
+                    Body = response.Body,
+                    RequestId = response.RequestId,
+                    Headers = response.Headers
+                };
 
                 return result;
             }
@@ -441,11 +441,12 @@
             Models.OnAllTasksComplete? onAllTasksComplete,
             Models.PoolInformation poolInfo,
             Models.JobConstraints constraints,
+            Models.JobNetworkConfiguration networkConfiguration,
             IList<Models.MetadataItem> metadata,
             BehaviorManager bhMgr,
             CancellationToken cancellationToken)
         {
-            var parameters = new Models.JobPatchParameter(priority, maxParallelTasks, allowTaskPreemption, onAllTasksComplete, constraints, poolInfo, metadata);
+            var parameters = new Models.JobPatchParameter(priority, maxParallelTasks, allowTaskPreemption, onAllTasksComplete, constraints, poolInfo, networkConfiguration, metadata);
             var request = new JobPatchBatchRequest(this._client, parameters, cancellationToken);
 
             request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Job.PatchWithHttpMessagesAsync(
@@ -633,7 +634,7 @@
             //TODO: This branch exists in the hope that one day there will be a skiptoken for this API.
             //if (string.IsNullOrEmpty(skipToken))
             //{
-                
+
             //}
             //else
             //{
@@ -677,11 +678,11 @@
             await CopyStreamAsync(response.Body, stream, cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
 
             var result = new AzureOperationResponse<Models.NodeFile, Models.FileGetFromTaskHeaders>()
-                {
-                    Body = CreateNodeFileFromHeadersType(filePath, response.Headers),
-                    RequestId = response.RequestId,
-                    Headers = response.Headers,
-                };
+            {
+                Body = CreateNodeFileFromHeadersType(filePath, response.Headers),
+                RequestId = response.RequestId,
+                Headers = response.Headers,
+            };
 
             return result;
         }
@@ -709,11 +710,11 @@
             using (var response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false))
             {
                 var result = new AzureOperationResponse<Models.NodeFile, Models.FileGetPropertiesFromTaskHeaders>()
-                    {
-                        Body = CreateNodeFileFromHeadersType(filePath, response.Headers),
-                        RequestId = response.RequestId,
-                        Headers = response.Headers,
-                    };
+                {
+                    Body = CreateNodeFileFromHeadersType(filePath, response.Headers),
+                    RequestId = response.RequestId,
+                    Headers = response.Headers,
+                };
 
                 return result;
             }
@@ -763,7 +764,7 @@
                     lambdaCancelToken);
 
             var asyncTask = ProcessAndExecuteBatchRequest(request, bhMgr);
-            
+
             return asyncTask;
         }
 
@@ -841,11 +842,11 @@
             using (var response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false))
             {
                 var result = new AzureOperationResponse<bool, Models.PoolExistsHeaders>()
-                    {
-                        Body = response.Body,
-                        RequestId = response.RequestId,
-                        Headers = response.Headers
-                    };
+                {
+                    Body = response.Body,
+                    RequestId = response.RequestId,
+                    Headers = response.Headers
+                };
 
                 return result;
             }
@@ -904,10 +905,23 @@
             Models.ApplicationPackageReference[] applicationPackageReferences,
             Models.MetadataItem[] metadata,
             Models.NodeCommunicationMode? targetNodeCommunicationMode,
+            string displayName,
+            string vmSize,
+            int? taskSlotsPerNode,
+            Models.TaskSchedulingPolicy taskSchedulingPolicy,
+            bool? enableInterNodeCommunication,
+            Models.VirtualMachineConfiguration virtualMachineConfiguration,
+            Models.NetworkConfiguration networkConfiguration,
+            IList<Models.UserAccount> userAccounts,
+            IList<Models.MountConfiguration> mountConfiguration,
+            Models.UpgradePolicy upgradePolicy,
+            IDictionary<string, string> resourceTags,
             BehaviorManager bhMgr,
             CancellationToken cancellationToken)
         {
-            var parameters = new Models.PoolPatchParameter(startTask, certificateReferences, applicationPackageReferences, metadata, targetNodeCommunicationMode);
+            var parameters = new Models.PoolPatchParameter(startTask, certificateReferences, applicationPackageReferences, metadata, targetNodeCommunicationMode, displayName,
+            vmSize, taskSlotsPerNode, taskSchedulingPolicy, enableInterNodeCommunication, virtualMachineConfiguration, networkConfiguration, userAccounts, mountConfiguration,
+            upgradePolicy, resourceTags);
             var request = new PoolPatchBatchRequest(this._client, parameters, cancellationToken);
 
             request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Pool.PatchWithHttpMessagesAsync(
@@ -1117,11 +1131,11 @@
         }
 
         public Task<AzureOperationHeaderResponse<Models.ComputeNodeUpdateUserHeaders>> UpdateComputeNodeUser(
-            string poolId, 
-            string computeNodeId, 
-            string userName, 
-            string password, 
-            DateTime? expiryTime, 
+            string poolId,
+            string computeNodeId,
+            string userName,
+            string password,
+            DateTime? expiryTime,
             string sshPublicKey,
             BehaviorManager bhMgr,
             CancellationToken cancellationToken)
@@ -1189,34 +1203,6 @@
             return asyncTask;
         }
 
-        public async Task<AzureOperationHeaderResponse<Models.ComputeNodeGetRemoteDesktopHeaders>> GetComputeNodeRDPFile(string poolId, string computeNodeId, Stream rdpStream, BehaviorManager bhMgr, CancellationToken cancellationToken)
-        {
-            var request = new ComputeNodeGetRemoteDesktopBatchRequest(this._client, cancellationToken);
-
-            request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.ComputeNode.GetRemoteDesktopWithHttpMessagesAsync(
-                poolId,
-                computeNodeId,
-                request.Options,
-                request.CustomHeaders,
-                lambdaCancelToken);
-
-            var asyncTask = ProcessAndExecuteBatchRequest(request, bhMgr);
-
-            var response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
-
-            await CopyStreamAsync(response.Body, rdpStream, cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
-
-            var result = new AzureOperationHeaderResponse<Models.ComputeNodeGetRemoteDesktopHeaders>()
-                {
-                    Request = response.Request,
-                    RequestId = response.RequestId,
-                    Response = response.Response,
-                    Headers = response.Headers
-                };
-
-            return result;
-        }
-
         public Task<AzureOperationResponse<Models.ComputeNodeGetRemoteLoginSettingsResult, Models.ComputeNodeGetRemoteLoginSettingsHeaders>> GetRemoteLoginSettings(string poolId, string computeNodeId, BehaviorManager bhMgr, CancellationToken cancellationToken)
         {
             var request = new ComputeNodeGetRemoteLoginSettingsBatchRequest(this._client, cancellationToken);
@@ -1231,7 +1217,7 @@
             var asyncTask = ProcessAndExecuteBatchRequest(request, bhMgr);
 
             return asyncTask;
-        } 
+        }
 
         public Task<AzureOperationHeaderResponse<Models.ComputeNodeRebootHeaders>> RebootComputeNode(string poolId, string computeNodeId, Common.ComputeNodeRebootOption? rebootOption, BehaviorManager bhMgr, CancellationToken cancellationToken)
         {
@@ -1239,6 +1225,40 @@
             var request = new ComputeNodeRebootBatchRequest(this._client, parameters, cancellationToken);
 
             request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.ComputeNode.RebootWithHttpMessagesAsync(
+                poolId,
+                computeNodeId,
+                request.Parameters,
+                request.Options,
+                request.CustomHeaders,
+                lambdaCancelToken);
+
+            var asyncTask = ProcessAndExecuteBatchRequest(request, bhMgr);
+
+            return asyncTask;
+        }
+
+        public Task<AzureOperationHeaderResponse<Models.ComputeNodeStartHeaders>> StartComputeNode(string poolId, string computeNodeId, BehaviorManager bhMgr, CancellationToken cancellationToken)
+        {
+            var request = new ComputeNodeStartBatchRequest(this._client, cancellationToken);
+
+            request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.ComputeNode.StartWithHttpMessagesAsync(
+                poolId,
+                computeNodeId,
+                request.Options,
+                request.CustomHeaders,
+                lambdaCancelToken);
+
+            var asyncTask = ProcessAndExecuteBatchRequest(request, bhMgr);
+
+            return asyncTask;
+        }
+
+        public Task<AzureOperationHeaderResponse<Models.ComputeNodeDeallocateHeaders>> DeallocateComputeNode(string poolId, string computeNodeId, Common.ComputeNodeDeallocateOption? deallocateOption, BehaviorManager bhMgr, CancellationToken cancellationToken)
+        {
+            var parameters = UtilitiesInternal.MapNullableEnum<Common.ComputeNodeDeallocateOption, Protocol.Models.ComputeNodeDeallocateOption>(deallocateOption);
+            var request = new ComputeNodeDeallocateBatchRequest(this._client, parameters, cancellationToken);
+
+            request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.ComputeNode.DeallocateWithHttpMessagesAsync(
                 poolId,
                 computeNodeId,
                 request.Parameters,
@@ -1492,11 +1512,11 @@
             using (var response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false))
             {
                 var result = new AzureOperationResponse<Models.NodeFile, Models.FileGetPropertiesFromComputeNodeHeaders>()
-                    {
-                        Body = CreateNodeFileFromHeadersType(filePath, response.Headers),
-                        RequestId = response.RequestId,
-                        Headers = response.Headers
-                    };
+                {
+                    Body = CreateNodeFileFromHeadersType(filePath, response.Headers),
+                    RequestId = response.RequestId,
+                    Headers = response.Headers
+                };
 
                 return result;
             }
@@ -1711,9 +1731,9 @@
         }
 
         public Task<AzureOperationResponse<Models.TaskAddCollectionResult, Models.TaskAddCollectionHeaders>> AddTaskCollection(
-            string jobId, 
-            IEnumerable<Models.TaskAddParameter> tasks, 
-            BehaviorManager bhMgr, 
+            string jobId,
+            IEnumerable<Models.TaskAddParameter> tasks,
+            BehaviorManager bhMgr,
             CancellationToken cancellationToken)
         {
             var request = new TaskAddCollectionBatchRequest(this._client, tasks.ToList(), cancellationToken);
@@ -1949,9 +1969,9 @@
             }
         }
 
-#endregion // internal/private
+        #endregion // internal/private
 
-#region // IDisposable
+        #region // IDisposable
 
         /// <summary>
         /// A value indicating whether or not the ServiceClient has already
@@ -1984,6 +2004,6 @@
             this._disposed = true;
         }
 
-#endregion // IDisposable
+        #endregion // IDisposable
     }
 }

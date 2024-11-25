@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public static bool operator ==(RedisEnterprisePrivateEndpointServiceConnectionStatus left, RedisEnterprisePrivateEndpointServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RedisEnterprisePrivateEndpointServiceConnectionStatus"/> values are not the same. </summary>
         public static bool operator !=(RedisEnterprisePrivateEndpointServiceConnectionStatus left, RedisEnterprisePrivateEndpointServiceConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RedisEnterprisePrivateEndpointServiceConnectionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RedisEnterprisePrivateEndpointServiceConnectionStatus"/>. </summary>
         public static implicit operator RedisEnterprisePrivateEndpointServiceConnectionStatus(string value) => new RedisEnterprisePrivateEndpointServiceConnectionStatus(value);
 
         /// <inheritdoc />

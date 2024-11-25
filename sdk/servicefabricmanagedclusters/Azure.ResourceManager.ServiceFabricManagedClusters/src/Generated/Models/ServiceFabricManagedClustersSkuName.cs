@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static bool operator ==(ServiceFabricManagedClustersSkuName left, ServiceFabricManagedClustersSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceFabricManagedClustersSkuName"/> values are not the same. </summary>
         public static bool operator !=(ServiceFabricManagedClustersSkuName left, ServiceFabricManagedClustersSkuName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ServiceFabricManagedClustersSkuName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceFabricManagedClustersSkuName"/>. </summary>
         public static implicit operator ServiceFabricManagedClustersSkuName(string value) => new ServiceFabricManagedClustersSkuName(value);
 
         /// <inheritdoc />

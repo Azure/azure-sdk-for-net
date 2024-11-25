@@ -39,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(ParquetCompressionCodecEnum left, ParquetCompressionCodecEnum right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ParquetCompressionCodecEnum"/> values are not the same. </summary>
         public static bool operator !=(ParquetCompressionCodecEnum left, ParquetCompressionCodecEnum right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ParquetCompressionCodecEnum"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ParquetCompressionCodecEnum"/>. </summary>
         public static implicit operator ParquetCompressionCodecEnum(string value) => new ParquetCompressionCodecEnum(value);
 
         /// <inheritdoc />

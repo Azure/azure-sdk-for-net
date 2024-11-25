@@ -92,8 +92,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Mock<BlobStorageResourceContainer> sourceMock = GetMockBlobContainerResource();
             Mock<BlobStorageResourceContainer> destinationMock = GetMockBlobContainerResource();
 
-            Mock<TransferJobInternal.QueueChunkTaskInternal> mockPartQueueChunkTask = MockQueueInternalTasks.GetQueueChunkTask();
-
             // Set up default checkpointer with transfer job
             LocalTransferCheckpointer checkpointer = new(default);
             await checkpointer.AddNewJobAsync(
@@ -112,14 +110,13 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 It.IsAny<StorageResourceContainer>(),
                 It.IsAny<CancellationToken>()))
                 .Returns(GetStorageResourceItemsAsyncEnumerable(blobItems));
-            ServiceToServiceTransferJob transferJob = new ServiceToServiceTransferJob(
-                new DataTransfer(
-                    id: transferId,
-                    transferManager: new TransferManager()),
+            TransferJobInternal transferJob = new(
+                new DataTransfer(id: transferId),
                 sourceMock.Object,
                 destinationMock.Object,
+                ServiceToServiceJobPart.CreateJobPartAsync,
+                ServiceToServiceJobPart.CreateJobPartAsync,
                 new DataTransferOptions(),
-                mockPartQueueChunkTask.Object,
                 checkpointer,
                 DataTransferErrorMode.StopOnAnyFailure,
                 ArrayPool<byte>.Shared,
@@ -148,8 +145,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Mock<BlobStorageResourceContainer> sourceMock = GetMockBlobContainerResource();
             Mock<BlobStorageResourceContainer> destinationMock = GetMockBlobContainerResource();
 
-            Mock<TransferJobInternal.QueueChunkTaskInternal> mockPartQueueChunkTask = MockQueueInternalTasks.GetQueueChunkTask();
-
             // Set up default checkpointer with transfer job
             LocalTransferCheckpointer checkpointer = new(default);
             await checkpointer.AddNewJobAsync(
@@ -171,14 +166,13 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 It.IsAny<StorageResourceContainer>(),
                 It.IsAny<CancellationToken>()))
                 .Returns(GetStorageResourceItemsAsyncEnumerable(blobItems));
-            ServiceToServiceTransferJob transferJob = new ServiceToServiceTransferJob(
-                new DataTransfer(
-                    id: transferId,
-                    transferManager: new TransferManager()),
+            TransferJobInternal transferJob = new(
+                new DataTransfer(id: transferId),
                 sourceMock.Object,
                 destinationMock.Object,
+                ServiceToServiceJobPart.CreateJobPartAsync,
+                ServiceToServiceJobPart.CreateJobPartAsync,
                 new DataTransferOptions(),
-                mockPartQueueChunkTask.Object,
                 checkpointer,
                 DataTransferErrorMode.StopOnAnyFailure,
                 ArrayPool<byte>.Shared,

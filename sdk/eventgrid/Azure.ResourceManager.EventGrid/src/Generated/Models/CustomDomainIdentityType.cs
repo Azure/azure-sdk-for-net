@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator ==(CustomDomainIdentityType left, CustomDomainIdentityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CustomDomainIdentityType"/> values are not the same. </summary>
         public static bool operator !=(CustomDomainIdentityType left, CustomDomainIdentityType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CustomDomainIdentityType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CustomDomainIdentityType"/>. </summary>
         public static implicit operator CustomDomainIdentityType(string value) => new CustomDomainIdentityType(value);
 
         /// <inheritdoc />

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static bool operator ==(EventHubsNetworkRuleIPAction left, EventHubsNetworkRuleIPAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EventHubsNetworkRuleIPAction"/> values are not the same. </summary>
         public static bool operator !=(EventHubsNetworkRuleIPAction left, EventHubsNetworkRuleIPAction right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EventHubsNetworkRuleIPAction"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EventHubsNetworkRuleIPAction"/>. </summary>
         public static implicit operator EventHubsNetworkRuleIPAction(string value) => new EventHubsNetworkRuleIPAction(value);
 
         /// <inheritdoc />

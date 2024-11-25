@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Support.Models
         public static bool operator ==(SupportSeverityLevel left, SupportSeverityLevel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SupportSeverityLevel"/> values are not the same. </summary>
         public static bool operator !=(SupportSeverityLevel left, SupportSeverityLevel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SupportSeverityLevel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SupportSeverityLevel"/>. </summary>
         public static implicit operator SupportSeverityLevel(string value) => new SupportSeverityLevel(value);
 
         /// <inheritdoc />

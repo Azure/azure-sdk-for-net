@@ -40,6 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> [Required] Relative python file path for job entry point. </summary>
+        [WirePath("file")]
         public string File { get; set; }
     }
 }

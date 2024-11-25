@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static bool operator ==(CloudExadataInfrastructureLifecycleState left, CloudExadataInfrastructureLifecycleState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CloudExadataInfrastructureLifecycleState"/> values are not the same. </summary>
         public static bool operator !=(CloudExadataInfrastructureLifecycleState left, CloudExadataInfrastructureLifecycleState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CloudExadataInfrastructureLifecycleState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CloudExadataInfrastructureLifecycleState"/>. </summary>
         public static implicit operator CloudExadataInfrastructureLifecycleState(string value) => new CloudExadataInfrastructureLifecycleState(value);
 
         /// <inheritdoc />

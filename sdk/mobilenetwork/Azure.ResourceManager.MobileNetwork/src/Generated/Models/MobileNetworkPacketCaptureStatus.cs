@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static bool operator ==(MobileNetworkPacketCaptureStatus left, MobileNetworkPacketCaptureStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MobileNetworkPacketCaptureStatus"/> values are not the same. </summary>
         public static bool operator !=(MobileNetworkPacketCaptureStatus left, MobileNetworkPacketCaptureStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MobileNetworkPacketCaptureStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MobileNetworkPacketCaptureStatus"/>. </summary>
         public static implicit operator MobileNetworkPacketCaptureStatus(string value) => new MobileNetworkPacketCaptureStatus(value);
 
         /// <inheritdoc />

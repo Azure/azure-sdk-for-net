@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public static bool operator ==(WebPubSubPrivateLinkServiceConnectionStatus left, WebPubSubPrivateLinkServiceConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WebPubSubPrivateLinkServiceConnectionStatus"/> values are not the same. </summary>
         public static bool operator !=(WebPubSubPrivateLinkServiceConnectionStatus left, WebPubSubPrivateLinkServiceConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WebPubSubPrivateLinkServiceConnectionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WebPubSubPrivateLinkServiceConnectionStatus"/>. </summary>
         public static implicit operator WebPubSubPrivateLinkServiceConnectionStatus(string value) => new WebPubSubPrivateLinkServiceConnectionStatus(value);
 
         /// <inheritdoc />

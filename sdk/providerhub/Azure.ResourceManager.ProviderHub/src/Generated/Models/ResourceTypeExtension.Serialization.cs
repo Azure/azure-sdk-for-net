@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         void IJsonModel<ResourceTypeExtension>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeExtension>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResourceTypeExtension)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(EndpointUri))
             {
                 writer.WritePropertyName("endpointUri"u8);
@@ -61,7 +69,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ResourceTypeExtension IJsonModel<ResourceTypeExtension>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

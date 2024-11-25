@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.BotService.Models
         public static bool operator ==(BotChannelName left, BotChannelName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BotChannelName"/> values are not the same. </summary>
         public static bool operator !=(BotChannelName left, BotChannelName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BotChannelName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BotChannelName"/>. </summary>
         public static implicit operator BotChannelName(string value) => new BotChannelName(value);
 
         /// <inheritdoc />

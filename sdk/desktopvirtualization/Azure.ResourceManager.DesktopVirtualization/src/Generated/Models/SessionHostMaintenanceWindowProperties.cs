@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> The update start hour of the day. (0 - 23). </summary>
+        [WirePath("hour")]
         public int? Hour { get; set; }
         /// <summary> Day of the week. </summary>
+        [WirePath("dayOfWeek")]
         public DesktopVirtualizationDayOfWeek? DayOfWeek { get; set; }
     }
 }

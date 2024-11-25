@@ -1,6 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Trigger.Model;
+using Microsoft.Azure.WebJobs.Host.Executors;
+using Microsoft.Azure.WebPubSub.Common;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,10 +14,6 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Trigger.Model;
-using Microsoft.Azure.WebJobs.Host.Executors;
-using Microsoft.Azure.WebPubSub.Common;
-using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
 {
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
                             {
                                 throw new InvalidDataException($"Event name dismatch. {context.EventName} from header but {eventName} from payload");
                             }
-                            eventRequest = new SocketIOMessageRequest(context.Namespace, context.SocketId, payload, arguments);
+                            eventRequest = new SocketIOMessageRequest(context.Namespace, context.SocketId, payload, eventName, arguments);
                             break;
                         }
                     default:
@@ -151,7 +151,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
                                 {
                                     return Utilities.BuildValidResponse(connectResponse);
                                 }
-                                else if (response is SocketIOMessageResponse messageResponse)
+                                if (response is SocketIOMessageResponse messageResponse)
                                 {
                                     return Utilities.BuildValidResponse(messageResponse, context.Namespace, ackId.Value);
                                 }
@@ -159,8 +159,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
                                 {
                                     return Utilities.BuildValidResponse(jResponse, requestType, context, ackId);
                                 }
+                                if (response is string responseAsString)
+                                {
+                                    // Python passes string here. Try to convert to JSON
+                                    var jObj = Newtonsoft.Json.Linq.JObject.Parse(responseAsString);
+                                    return Utilities.BuildValidResponse(jObj, requestType, context, ackId);
+                                }
 
-                                _logger.LogWarning($"Invalid response type {response.GetType()} regarding current request: {requestType}");
+                                _logger.LogWarning($"Invalid response type {response.GetType()} regarding current request: RequestType.{requestType}");
                             }
                         }
                     }
@@ -196,12 +202,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
                 {
                     signature = string.Join(",", val);
                 }
+                string? userId = null;
+                if (request.Headers.TryGetValues(Constants.Headers.CloudEvents.UserId, out var userIds))
+                {
+                    userId = userIds.FirstOrDefault();
+                }
                 string @namespace = request.Headers.GetValues(Constants.Headers.CloudEvents.Namespace).Single();
                 ThrowIfEmptyHeader(@namespace, Constants.Headers.CloudEvents.Namespace);
                 string socketId = request.Headers.GetValues(Constants.Headers.CloudEvents.SocketId).Single();
                 ThrowIfEmptyHeader(socketId, Constants.Headers.CloudEvents.SocketId);
 
-                context = new SocketIOSocketContext(eventType, eventName, hub, connectionId, @namespace, socketId, signature, origin, headers);
+                context = new SocketIOSocketContext(eventType, eventName, hub, connectionId, userId, @namespace, socketId, signature, origin, headers);
                 return (true, null);
             }
             catch (Exception ex)

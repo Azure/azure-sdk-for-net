@@ -40,8 +40,7 @@ namespace Azure.AI.OpenAI.Chat
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
+        internal IDictionary<string, BinaryData> SerializedAdditionalRawData { get; set; }
         /// <summary> Initializes a new instance of <see cref="InternalPineconeChatDataSourceParameters"/>. </summary>
         /// <param name="environment"> The environment name to use with Pinecone. </param>
         /// <param name="indexName"> The name of the Pinecone database index to use. </param>
@@ -60,7 +59,7 @@ namespace Azure.AI.OpenAI.Chat
         /// Note that content field mappings are required for Pinecone.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="environment"/>, <paramref name="indexName"/>, <paramref name="authentication"/>, <paramref name="vectorizationSource"/> or <paramref name="fieldMappings"/> is null. </exception>
-        internal InternalPineconeChatDataSourceParameters(string environment, string indexName, DataSourceAuthentication authentication, DataSourceVectorizer vectorizationSource, DataSourceFieldMappings fieldMappings)
+        public InternalPineconeChatDataSourceParameters(string environment, string indexName, DataSourceAuthentication authentication, DataSourceVectorizer vectorizationSource, DataSourceFieldMappings fieldMappings)
         {
             Argument.AssertNotNull(environment, nameof(environment));
             Argument.AssertNotNull(indexName, nameof(indexName));
@@ -82,11 +81,6 @@ namespace Azure.AI.OpenAI.Chat
         /// <param name="strictness">
         /// The configured strictness of the search relevance filtering.
         /// Higher strictness will increase precision but lower recall of the answer.
-        /// </param>
-        /// <param name="roleInformation">
-        /// Additional instructions for the model to inform how it should behave and any context it should reference when
-        /// generating a response. You can describe the assistant's personality and tell it how to format responses.
-        /// This is limited to 100 tokens and counts against the overall token limit.
         /// </param>
         /// <param name="maxSearchQueries">
         /// The maximum number of rewritten queries that should be sent to the search provider for a single user message.
@@ -117,12 +111,11 @@ namespace Azure.AI.OpenAI.Chat
         /// Note that content field mappings are required for Pinecone.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InternalPineconeChatDataSourceParameters(int? topNDocuments, bool? inScope, int? strictness, string roleInformation, int? maxSearchQueries, bool? allowPartialResult, IList<string> internalIncludeContexts, string environment, string indexName, DataSourceAuthentication authentication, DataSourceVectorizer vectorizationSource, DataSourceFieldMappings fieldMappings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InternalPineconeChatDataSourceParameters(int? topNDocuments, bool? inScope, int? strictness, int? maxSearchQueries, bool? allowPartialResult, IList<string> internalIncludeContexts, string environment, string indexName, DataSourceAuthentication authentication, DataSourceVectorizer vectorizationSource, DataSourceFieldMappings fieldMappings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TopNDocuments = topNDocuments;
             InScope = inScope;
             Strictness = strictness;
-            RoleInformation = roleInformation;
             MaxSearchQueries = maxSearchQueries;
             AllowPartialResult = allowPartialResult;
             _internalIncludeContexts = internalIncludeContexts;
@@ -131,7 +124,7 @@ namespace Azure.AI.OpenAI.Chat
             Authentication = authentication;
             VectorizationSource = vectorizationSource;
             FieldMappings = fieldMappings;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            SerializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalPineconeChatDataSourceParameters"/> for deserialization. </summary>
@@ -140,30 +133,24 @@ namespace Azure.AI.OpenAI.Chat
         }
 
         /// <summary> The configured number of documents to feature in the query. </summary>
-        internal int? TopNDocuments { get; set; }
+        public int? TopNDocuments { get; set; }
         /// <summary> Whether queries should be restricted to use of the indexed data. </summary>
-        internal bool? InScope { get; set; }
+        public bool? InScope { get; set; }
         /// <summary>
         /// The configured strictness of the search relevance filtering.
         /// Higher strictness will increase precision but lower recall of the answer.
         /// </summary>
-        internal int? Strictness { get; set; }
-        /// <summary>
-        /// Additional instructions for the model to inform how it should behave and any context it should reference when
-        /// generating a response. You can describe the assistant's personality and tell it how to format responses.
-        /// This is limited to 100 tokens and counts against the overall token limit.
-        /// </summary>
-        internal string RoleInformation { get; set; }
+        public int? Strictness { get; set; }
         /// <summary>
         /// The maximum number of rewritten queries that should be sent to the search provider for a single user message.
         /// By default, the system will make an automatic determination.
         /// </summary>
-        internal int? MaxSearchQueries { get; set; }
+        public int? MaxSearchQueries { get; set; }
         /// <summary>
         /// If set to true, the system will allow partial search results to be used and the request will fail if all
         /// partial queries fail. If not specified or specified as false, the request will fail if any search query fails.
         /// </summary>
-        internal bool? AllowPartialResult { get; set; }
+        public bool? AllowPartialResult { get; set; }
         /// <summary> The environment name to use with Pinecone. </summary>
         internal string Environment { get; set; }
         /// <summary> The name of the Pinecone database index to use. </summary>

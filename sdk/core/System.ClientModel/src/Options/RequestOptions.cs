@@ -31,6 +31,19 @@ public class RequestOptions
     {
     }
 
+    internal static RequestOptions? FromCancellationToken(CancellationToken cancellationToken)
+    {
+        if (cancellationToken == default)
+        {
+            return null;
+        }
+
+        return new RequestOptions()
+        {
+            CancellationToken = cancellationToken
+        };
+    }
+
     /// <summary>
     /// Gets or sets the <see cref="CancellationToken"/> used for the duration
     /// of the call to <see cref="ClientPipeline.Send(PipelineMessage)"/>.

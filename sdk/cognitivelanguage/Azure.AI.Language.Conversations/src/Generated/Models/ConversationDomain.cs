@@ -36,7 +36,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static bool operator ==(ConversationDomain left, ConversationDomain right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConversationDomain"/> values are not the same. </summary>
         public static bool operator !=(ConversationDomain left, ConversationDomain right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ConversationDomain"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConversationDomain"/>. </summary>
         public static implicit operator ConversationDomain(string value) => new ConversationDomain(value);
 
         /// <inheritdoc />

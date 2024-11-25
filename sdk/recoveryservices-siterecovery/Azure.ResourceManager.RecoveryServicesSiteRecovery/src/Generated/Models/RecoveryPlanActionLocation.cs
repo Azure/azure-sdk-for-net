@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static bool operator ==(RecoveryPlanActionLocation left, RecoveryPlanActionLocation right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecoveryPlanActionLocation"/> values are not the same. </summary>
         public static bool operator !=(RecoveryPlanActionLocation left, RecoveryPlanActionLocation right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RecoveryPlanActionLocation"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RecoveryPlanActionLocation"/>. </summary>
         public static implicit operator RecoveryPlanActionLocation(string value) => new RecoveryPlanActionLocation(value);
 
         /// <inheritdoc />

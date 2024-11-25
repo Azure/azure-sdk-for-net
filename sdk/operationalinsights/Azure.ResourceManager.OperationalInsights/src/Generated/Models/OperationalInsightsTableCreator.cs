@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public static bool operator ==(OperationalInsightsTableCreator left, OperationalInsightsTableCreator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OperationalInsightsTableCreator"/> values are not the same. </summary>
         public static bool operator !=(OperationalInsightsTableCreator left, OperationalInsightsTableCreator right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OperationalInsightsTableCreator"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OperationalInsightsTableCreator"/>. </summary>
         public static implicit operator OperationalInsightsTableCreator(string value) => new OperationalInsightsTableCreator(value);
 
         /// <inheritdoc />

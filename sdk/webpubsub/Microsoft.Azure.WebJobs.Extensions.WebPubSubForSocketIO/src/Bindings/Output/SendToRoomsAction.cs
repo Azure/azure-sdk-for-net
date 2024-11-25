@@ -16,11 +16,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
     public class SendToRoomsAction : SocketIOAction
     {
         /// <summary>
-        /// Target namespace
-        /// </summary>
-        public string Namespace { get; set; }
-
-        /// <summary>
         /// Target rooms.
         /// </summary>
         public IList<string> Rooms { get; set; } = new List<string>();

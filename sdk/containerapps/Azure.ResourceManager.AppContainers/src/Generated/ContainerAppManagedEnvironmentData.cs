@@ -118,38 +118,52 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Kind of the Environment. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
         /// <summary> Provisioning state of the Environment. </summary>
+        [WirePath("properties.provisioningState")]
         public ContainerAppEnvironmentProvisioningState? ProvisioningState { get; }
         /// <summary> Azure Monitor instrumentation key used by Dapr to export Service to Service communication telemetry. </summary>
+        [WirePath("properties.daprAIInstrumentationKey")]
         public string DaprAIInstrumentationKey { get; set; }
         /// <summary> Application Insights connection string used by Dapr to export Service to Service communication telemetry. </summary>
+        [WirePath("properties.daprAIConnectionString")]
         public string DaprAIConnectionString { get; set; }
         /// <summary> Vnet configuration for the environment. </summary>
+        [WirePath("properties.vnetConfiguration")]
         public ContainerAppVnetConfiguration VnetConfiguration { get; set; }
         /// <summary> Any errors that occurred during deployment or deployment validation. </summary>
+        [WirePath("properties.deploymentErrors")]
         public string DeploymentErrors { get; }
         /// <summary> Default Domain Name for the cluster. </summary>
+        [WirePath("properties.defaultDomain")]
         public string DefaultDomain { get; }
         /// <summary> Static IP of the Environment. </summary>
+        [WirePath("properties.staticIp")]
         public IPAddress StaticIP { get; }
         /// <summary>
         /// Cluster configuration which enables the log daemon to export
         /// app logs to a destination. Currently only "log-analytics" is
         /// supported
         /// </summary>
+        [WirePath("properties.appLogsConfiguration")]
         public ContainerAppLogsConfiguration AppLogsConfiguration { get; set; }
         /// <summary> Whether or not this Managed Environment is zone-redundant. </summary>
+        [WirePath("properties.zoneRedundant")]
         public bool? IsZoneRedundant { get; set; }
         /// <summary> Custom domain configuration for the environment. </summary>
+        [WirePath("properties.customDomainConfiguration")]
         public ContainerAppCustomDomainConfiguration CustomDomainConfiguration { get; set; }
         /// <summary> The endpoint of the eventstream of the Environment. </summary>
+        [WirePath("properties.eventStreamEndpoint")]
         public string EventStreamEndpoint { get; }
         /// <summary> Workload profiles configured for the Managed Environment. </summary>
+        [WirePath("properties.workloadProfiles")]
         public IList<ContainerAppWorkloadProfile> WorkloadProfiles { get; }
         /// <summary> The configuration of Keda component. </summary>
         internal KedaConfiguration KedaConfiguration { get; set; }
         /// <summary> The version of Keda. </summary>
+        [WirePath("properties.kedaConfiguration.version")]
         public string KedaVersion
         {
             get => KedaConfiguration is null ? default : KedaConfiguration.Version;
@@ -158,16 +172,19 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> The configuration of Dapr component. </summary>
         internal DaprConfiguration DaprConfiguration { get; set; }
         /// <summary> The version of Dapr. </summary>
+        [WirePath("properties.daprConfiguration.version")]
         public string DaprVersion
         {
             get => DaprConfiguration is null ? default : DaprConfiguration.Version;
         }
 
         /// <summary> Name of the platform-managed resource group created for the Managed Environment to host infrastructure resources. If a subnet ID is provided, this resource group will be created in the same subscription as the subnet. </summary>
+        [WirePath("properties.infrastructureResourceGroup")]
         public string InfrastructureResourceGroup { get; set; }
         /// <summary> Peer authentication settings for the Managed Environment. </summary>
         internal ManagedEnvironmentPropertiesPeerAuthentication PeerAuthentication { get; set; }
         /// <summary> Boolean indicating whether the mutual TLS authentication is enabled. </summary>
+        [WirePath("properties.peerAuthentication.mtls.enabled")]
         public bool? IsMtlsEnabled
         {
             get => PeerAuthentication is null ? default : PeerAuthentication.IsMtlsEnabled;
@@ -182,6 +199,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Peer traffic settings for the Managed Environment. </summary>
         internal ManagedEnvironmentPropertiesPeerTrafficConfiguration PeerTrafficConfiguration { get; set; }
         /// <summary> Boolean indicating whether the peer traffic encryption is enabled. </summary>
+        [WirePath("properties.peerTrafficConfiguration.encryption.enabled")]
         public bool? IsEnabled
         {
             get => PeerTrafficConfiguration is null ? default : PeerTrafficConfiguration.IsEnabled;

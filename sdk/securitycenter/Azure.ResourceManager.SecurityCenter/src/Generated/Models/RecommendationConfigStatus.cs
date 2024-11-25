@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator ==(RecommendationConfigStatus left, RecommendationConfigStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecommendationConfigStatus"/> values are not the same. </summary>
         public static bool operator !=(RecommendationConfigStatus left, RecommendationConfigStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RecommendationConfigStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RecommendationConfigStatus"/>. </summary>
         public static implicit operator RecommendationConfigStatus(string value) => new RecommendationConfigStatus(value);
 
         /// <inheritdoc />

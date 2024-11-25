@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +21,21 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         void IJsonModel<IstioComponents>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<IstioComponents>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IstioComponents)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(IngressGateways))
             {
                 writer.WritePropertyName("ingressGateways"u8);
@@ -61,7 +71,6 @@ namespace Azure.ResourceManager.ContainerService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         IstioComponents IJsonModel<IstioComponents>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -127,6 +136,67 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new IstioComponents(ingressGateways ?? new ChangeTrackingList<IstioIngressGateway>(), egressGateways ?? new ChangeTrackingList<IstioEgressGateway>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IngressGateways), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ingressGateways: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(IngressGateways))
+                {
+                    if (IngressGateways.Any())
+                    {
+                        builder.Append("  ingressGateways: ");
+                        builder.AppendLine("[");
+                        foreach (var item in IngressGateways)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  ingressGateways: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EgressGateways), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  egressGateways: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(EgressGateways))
+                {
+                    if (EgressGateways.Any())
+                    {
+                        builder.Append("  egressGateways: ");
+                        builder.AppendLine("[");
+                        foreach (var item in EgressGateways)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  egressGateways: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<IstioComponents>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<IstioComponents>)this).GetFormatFromOptions(options) : options.Format;
@@ -135,6 +205,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(IstioComponents)} does not support writing '{options.Format}' format.");
             }

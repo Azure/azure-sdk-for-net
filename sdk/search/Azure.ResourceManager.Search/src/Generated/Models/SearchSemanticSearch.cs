@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Search.Models
         public static bool operator ==(SearchSemanticSearch left, SearchSemanticSearch right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SearchSemanticSearch"/> values are not the same. </summary>
         public static bool operator !=(SearchSemanticSearch left, SearchSemanticSearch right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SearchSemanticSearch"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SearchSemanticSearch"/>. </summary>
         public static implicit operator SearchSemanticSearch(string value) => new SearchSemanticSearch(value);
 
         /// <inheritdoc />

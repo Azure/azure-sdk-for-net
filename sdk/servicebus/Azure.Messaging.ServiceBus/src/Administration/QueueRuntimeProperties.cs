@@ -66,7 +66,8 @@ namespace Azure.Messaging.ServiceBus.Administration
         public DateTimeOffset UpdatedAt { get; internal set; }
 
         /// <summary>
-        /// The <see cref="DateTimeOffset"/> when the entity was last accessed.
+        /// The <see cref="DateTimeOffset"/> of the last time a message was sent or
+        /// the last time there was a receive request to this queue.
         /// </summary>
         public DateTimeOffset AccessedAt { get; internal set; }
     }

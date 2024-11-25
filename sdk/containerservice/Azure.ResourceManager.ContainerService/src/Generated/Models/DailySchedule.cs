@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Specifies the number of days between each set of occurrences. </summary>
+        [WirePath("intervalDays")]
         public int IntervalDays { get; set; }
     }
 }

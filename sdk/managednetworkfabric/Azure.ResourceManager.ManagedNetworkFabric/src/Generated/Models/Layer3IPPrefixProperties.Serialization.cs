@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         void IJsonModel<Layer3IPPrefixProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<Layer3IPPrefixProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(Layer3IPPrefixProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(PrimaryIPv4Prefix))
             {
                 writer.WritePropertyName("primaryIpv4Prefix"u8);
@@ -61,7 +69,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         Layer3IPPrefixProperties IJsonModel<Layer3IPPrefixProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Metadata property name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Metadata property value. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
         /// <summary> Name of the Dapr Component secret from which to pull the metadata property value. </summary>
+        [WirePath("secretRef")]
         public string SecretRef { get; set; }
     }
 }

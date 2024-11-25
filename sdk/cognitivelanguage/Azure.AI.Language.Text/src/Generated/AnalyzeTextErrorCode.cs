@@ -81,7 +81,7 @@ namespace Azure.AI.Language.Text
         public static bool operator ==(AnalyzeTextErrorCode left, AnalyzeTextErrorCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnalyzeTextErrorCode"/> values are not the same. </summary>
         public static bool operator !=(AnalyzeTextErrorCode left, AnalyzeTextErrorCode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AnalyzeTextErrorCode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AnalyzeTextErrorCode"/>. </summary>
         public static implicit operator AnalyzeTextErrorCode(string value) => new AnalyzeTextErrorCode(value);
 
         /// <inheritdoc />

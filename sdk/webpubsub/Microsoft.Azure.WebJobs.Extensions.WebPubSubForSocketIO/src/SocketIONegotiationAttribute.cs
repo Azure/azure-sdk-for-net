@@ -1,9 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-
 using Microsoft.Azure.WebJobs.Description;
+using System;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
 {
@@ -24,5 +23,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
         /// </summary>
         [AutoResolve]
         public string Hub { get; set; }
+
+        /// <summary>
+        /// The user id of the connection. It will be available for all sockets sharing the same connection.
+        /// </summary>
+        [AutoResolve]
+        public string UserId { get; set; }
     }
 }

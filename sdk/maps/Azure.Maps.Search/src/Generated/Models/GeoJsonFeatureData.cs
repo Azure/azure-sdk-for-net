@@ -11,7 +11,7 @@ using Azure.Maps.Common;
 namespace Azure.Maps.Search.Models
 {
     /// <summary> The GeoJsonFeatureData. </summary>
-    public partial class GeoJsonFeatureData
+    internal partial class GeoJsonFeatureData
     {
         /// <summary> Initializes a new instance of <see cref="GeoJsonFeatureData"/>. </summary>
         /// <param name="geometry">

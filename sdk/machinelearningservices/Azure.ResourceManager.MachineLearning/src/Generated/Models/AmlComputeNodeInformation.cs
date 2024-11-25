@@ -71,16 +71,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> ID of the compute node. </summary>
+        [WirePath("nodeId")]
         public string NodeId { get; }
         /// <summary> Private IP address of the compute node. </summary>
+        [WirePath("privateIpAddress")]
         public IPAddress PrivateIPAddress { get; }
         /// <summary> Public IP address of the compute node. </summary>
+        [WirePath("publicIpAddress")]
         public IPAddress PublicIPAddress { get; }
         /// <summary> SSH port number of the node. </summary>
+        [WirePath("port")]
         public int? Port { get; }
         /// <summary> State of the compute node. Values are idle, running, preparing, unusable, leaving and preempted. </summary>
+        [WirePath("nodeState")]
         public MachineLearningNodeState? NodeState { get; }
         /// <summary> ID of the Experiment running on the node, if any else null. </summary>
+        [WirePath("runId")]
         public string RunId { get; }
     }
 }

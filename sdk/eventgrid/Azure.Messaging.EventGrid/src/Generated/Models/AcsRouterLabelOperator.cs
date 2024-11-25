@@ -45,7 +45,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public static bool operator ==(AcsRouterLabelOperator left, AcsRouterLabelOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AcsRouterLabelOperator"/> values are not the same. </summary>
         public static bool operator !=(AcsRouterLabelOperator left, AcsRouterLabelOperator right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AcsRouterLabelOperator"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AcsRouterLabelOperator"/>. </summary>
         public static implicit operator AcsRouterLabelOperator(string value) => new AcsRouterLabelOperator(value);
 
         /// <inheritdoc />

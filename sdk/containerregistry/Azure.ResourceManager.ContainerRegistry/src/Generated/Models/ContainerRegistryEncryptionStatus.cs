@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static bool operator ==(ContainerRegistryEncryptionStatus left, ContainerRegistryEncryptionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerRegistryEncryptionStatus"/> values are not the same. </summary>
         public static bool operator !=(ContainerRegistryEncryptionStatus left, ContainerRegistryEncryptionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerRegistryEncryptionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerRegistryEncryptionStatus"/>. </summary>
         public static implicit operator ContainerRegistryEncryptionStatus(string value) => new ContainerRegistryEncryptionStatus(value);
 
         /// <inheritdoc />

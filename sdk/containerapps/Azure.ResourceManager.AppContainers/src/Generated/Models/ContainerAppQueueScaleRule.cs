@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Queue name. </summary>
+        [WirePath("queueName")]
         public string QueueName { get; set; }
         /// <summary> Queue length. </summary>
+        [WirePath("queueLength")]
         public int? QueueLength { get; set; }
         /// <summary> Authentication secrets for the queue scale rule. </summary>
+        [WirePath("auth")]
         public IList<ContainerAppScaleRuleAuth> Auth { get; }
     }
 }

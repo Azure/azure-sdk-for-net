@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(ServerPortMatchConditionType left, ServerPortMatchConditionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServerPortMatchConditionType"/> values are not the same. </summary>
         public static bool operator !=(ServerPortMatchConditionType left, ServerPortMatchConditionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ServerPortMatchConditionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServerPortMatchConditionType"/>. </summary>
         public static implicit operator ServerPortMatchConditionType(string value) => new ServerPortMatchConditionType(value);
 
         /// <inheritdoc />

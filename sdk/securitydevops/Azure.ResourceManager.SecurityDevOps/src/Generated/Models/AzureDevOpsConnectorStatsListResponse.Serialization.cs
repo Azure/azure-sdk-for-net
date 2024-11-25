@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
 
         void IJsonModel<AzureDevOpsConnectorStatsListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsConnectorStatsListResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureDevOpsConnectorStatsListResponse)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
@@ -56,7 +64,6 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AzureDevOpsConnectorStatsListResponse IJsonModel<AzureDevOpsConnectorStatsListResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Service principal secret. </summary>
+        [WirePath("clientSecret")]
         public string ClientSecret { get; set; }
     }
 }

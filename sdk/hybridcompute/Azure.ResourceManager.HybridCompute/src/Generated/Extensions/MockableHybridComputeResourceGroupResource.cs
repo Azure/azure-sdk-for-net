@@ -9,17 +9,12 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.ResourceManager.HybridCompute.Models;
 
 namespace Azure.ResourceManager.HybridCompute.Mocking
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableHybridComputeResourceGroupResource : ArmResource
     {
-        private ClientDiagnostics _settingsClientDiagnostics;
-        private SettingsRestOperations _settingsRestClient;
-
         /// <summary> Initializes a new instance of the <see cref="MockableHybridComputeResourceGroupResource"/> class for mocking. </summary>
         protected MockableHybridComputeResourceGroupResource()
         {
@@ -31,9 +26,6 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         internal MockableHybridComputeResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
-
-        private ClientDiagnostics SettingsClientDiagnostics => _settingsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridCompute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private SettingsRestOperations SettingsRestClient => _settingsRestClient ??= new SettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -61,7 +53,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-20-preview</description>
+        /// <description>2024-07-10</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -92,7 +84,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-20-preview</description>
+        /// <description>2024-07-10</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -130,7 +122,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-20-preview</description>
+        /// <description>2024-07-10</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -162,7 +154,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-20-preview</description>
+        /// <description>2024-07-10</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -179,75 +171,6 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         public virtual Response<HybridComputeMachineResource> GetHybridComputeMachine(string machineName, string expand = null, CancellationToken cancellationToken = default)
         {
             return GetHybridComputeMachines().Get(machineName, expand, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of HybridComputeGatewayResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of HybridComputeGatewayResources and their operations over a HybridComputeGatewayResource. </returns>
-        public virtual HybridComputeGatewayCollection GetHybridComputeGateways()
-        {
-            return GetCachedClient(client => new HybridComputeGatewayCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieves information about the view of a gateway.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/gateways/{gatewayName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Gateways_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-20-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputeGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="gatewayName"> The name of the Gateway. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<HybridComputeGatewayResource>> GetHybridComputeGatewayAsync(string gatewayName, CancellationToken cancellationToken = default)
-        {
-            return await GetHybridComputeGateways().GetAsync(gatewayName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieves information about the view of a gateway.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/gateways/{gatewayName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Gateways_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-20-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputeGatewayResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="gatewayName"> The name of the Gateway. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<HybridComputeGatewayResource> GetHybridComputeGateway(string gatewayName, CancellationToken cancellationToken = default)
-        {
-            return GetHybridComputeGateways().Get(gatewayName, cancellationToken);
         }
 
         /// <summary> Gets a collection of HybridComputePrivateLinkScopeResources in the ResourceGroupResource. </summary>
@@ -270,7 +193,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-20-preview</description>
+        /// <description>2024-07-10</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -301,7 +224,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-20-preview</description>
+        /// <description>2024-07-10</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -317,100 +240,6 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         public virtual Response<HybridComputePrivateLinkScopeResource> GetHybridComputePrivateLinkScope(string scopeName, CancellationToken cancellationToken = default)
         {
             return GetHybridComputePrivateLinkScopes().Get(scopeName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Updates the base Settings of the target resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{baseProvider}/{baseResourceType}/{baseResourceName}/providers/Microsoft.HybridCompute/settings/{settingsResourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Settings_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-20-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="baseProvider"> The name of the base Resource Provider. </param>
-        /// <param name="baseResourceType"> The name of the base Resource Type. </param>
-        /// <param name="baseResourceName"> The name of the base resource. </param>
-        /// <param name="settingsResourceName"> The name of the settings resource. </param>
-        /// <param name="hybridComputeTargetResourceSettings"> Settings details. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="baseProvider"/>, <paramref name="baseResourceType"/>, <paramref name="baseResourceName"/> or <paramref name="settingsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="baseProvider"/>, <paramref name="baseResourceType"/>, <paramref name="baseResourceName"/>, <paramref name="settingsResourceName"/> or <paramref name="hybridComputeTargetResourceSettings"/> is null. </exception>
-        public virtual async Task<Response<HybridComputeTargetResourceSettings>> UpdateTargetResourceSettingAsync(string baseProvider, string baseResourceType, string baseResourceName, string settingsResourceName, HybridComputeTargetResourceSettings hybridComputeTargetResourceSettings, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(baseProvider, nameof(baseProvider));
-            Argument.AssertNotNullOrEmpty(baseResourceType, nameof(baseResourceType));
-            Argument.AssertNotNullOrEmpty(baseResourceName, nameof(baseResourceName));
-            Argument.AssertNotNullOrEmpty(settingsResourceName, nameof(settingsResourceName));
-            Argument.AssertNotNull(hybridComputeTargetResourceSettings, nameof(hybridComputeTargetResourceSettings));
-
-            using var scope = SettingsClientDiagnostics.CreateScope("MockableHybridComputeResourceGroupResource.UpdateTargetResourceSetting");
-            scope.Start();
-            try
-            {
-                var response = await SettingsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, baseProvider, baseResourceType, baseResourceName, settingsResourceName, hybridComputeTargetResourceSettings, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates the base Settings of the target resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{baseProvider}/{baseResourceType}/{baseResourceName}/providers/Microsoft.HybridCompute/settings/{settingsResourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Settings_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-20-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="baseProvider"> The name of the base Resource Provider. </param>
-        /// <param name="baseResourceType"> The name of the base Resource Type. </param>
-        /// <param name="baseResourceName"> The name of the base resource. </param>
-        /// <param name="settingsResourceName"> The name of the settings resource. </param>
-        /// <param name="hybridComputeTargetResourceSettings"> Settings details. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="baseProvider"/>, <paramref name="baseResourceType"/>, <paramref name="baseResourceName"/> or <paramref name="settingsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="baseProvider"/>, <paramref name="baseResourceType"/>, <paramref name="baseResourceName"/>, <paramref name="settingsResourceName"/> or <paramref name="hybridComputeTargetResourceSettings"/> is null. </exception>
-        public virtual Response<HybridComputeTargetResourceSettings> UpdateTargetResourceSetting(string baseProvider, string baseResourceType, string baseResourceName, string settingsResourceName, HybridComputeTargetResourceSettings hybridComputeTargetResourceSettings, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(baseProvider, nameof(baseProvider));
-            Argument.AssertNotNullOrEmpty(baseResourceType, nameof(baseResourceType));
-            Argument.AssertNotNullOrEmpty(baseResourceName, nameof(baseResourceName));
-            Argument.AssertNotNullOrEmpty(settingsResourceName, nameof(settingsResourceName));
-            Argument.AssertNotNull(hybridComputeTargetResourceSettings, nameof(hybridComputeTargetResourceSettings));
-
-            using var scope = SettingsClientDiagnostics.CreateScope("MockableHybridComputeResourceGroupResource.UpdateTargetResourceSetting");
-            scope.Start();
-            try
-            {
-                var response = SettingsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, baseProvider, baseResourceType, baseResourceName, settingsResourceName, hybridComputeTargetResourceSettings, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }

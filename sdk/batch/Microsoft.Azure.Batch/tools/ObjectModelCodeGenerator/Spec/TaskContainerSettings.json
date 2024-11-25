@@ -58,6 +58,18 @@
         "Type": "Models.ContainerWorkingDirectory?",
         "Name": "WorkingDirectory"
       }
+    },
+    {
+      "Key": {
+        "Type": "IList<ContainerHostBatchBindMountEntry>",
+        "Name": "ContainerHostBatchBindMounts",
+        "SummaryComment": "Gets or sets the paths you want to mounted to container task.",
+        "RemarksComment": "If this array is null or be not present, container task will mount entire temporary disk drive in windows (or AZ_BATCH_NODE_ROOT_DIR in Linux). It won't' mount any data paths into container if this array is set as empty.",
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write",
+        "ConstructorArgumentType": "Optional"
+      },
+      "Value": null
     }
   ]
 }

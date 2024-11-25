@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         public static bool operator ==(UpdatesAvailable left, UpdatesAvailable right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UpdatesAvailable"/> values are not the same. </summary>
         public static bool operator !=(UpdatesAvailable left, UpdatesAvailable right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="UpdatesAvailable"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="UpdatesAvailable"/>. </summary>
         public static implicit operator UpdatesAvailable(string value) => new UpdatesAvailable(value);
 
         /// <inheritdoc />

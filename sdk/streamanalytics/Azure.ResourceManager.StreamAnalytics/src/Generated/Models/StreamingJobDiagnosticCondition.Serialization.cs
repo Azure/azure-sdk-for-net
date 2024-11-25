@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         void IJsonModel<StreamingJobDiagnosticCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<StreamingJobDiagnosticCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StreamingJobDiagnosticCondition)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(Since))
             {
                 writer.WritePropertyName("since"u8);
@@ -56,7 +64,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         StreamingJobDiagnosticCondition IJsonModel<StreamingJobDiagnosticCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

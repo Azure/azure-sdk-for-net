@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static bool operator ==(ResourceHealthStatus left, ResourceHealthStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceHealthStatus"/> values are not the same. </summary>
         public static bool operator !=(ResourceHealthStatus left, ResourceHealthStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ResourceHealthStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceHealthStatus"/>. </summary>
         public static implicit operator ResourceHealthStatus(string value) => new ResourceHealthStatus(value);
 
         /// <inheritdoc />

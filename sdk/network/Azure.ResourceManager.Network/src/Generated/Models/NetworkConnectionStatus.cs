@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(NetworkConnectionStatus left, NetworkConnectionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkConnectionStatus"/> values are not the same. </summary>
         public static bool operator !=(NetworkConnectionStatus left, NetworkConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetworkConnectionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkConnectionStatus"/>. </summary>
         public static implicit operator NetworkConnectionStatus(string value) => new NetworkConnectionStatus(value);
 
         /// <inheritdoc />

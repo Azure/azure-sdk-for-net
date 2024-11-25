@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static bool operator ==(NetAppBackupType left, NetAppBackupType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppBackupType"/> values are not the same. </summary>
         public static bool operator !=(NetAppBackupType left, NetAppBackupType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetAppBackupType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppBackupType"/>. </summary>
         public static implicit operator NetAppBackupType(string value) => new NetAppBackupType(value);
 
         /// <inheritdoc />

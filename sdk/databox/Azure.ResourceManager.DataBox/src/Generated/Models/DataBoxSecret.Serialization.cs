@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.DataBox.Models
 
         void IJsonModel<DataBoxSecret>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxSecret>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataBoxSecret)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(DeviceSerialNumber))
             {
                 writer.WritePropertyName("deviceSerialNumber"u8);
@@ -76,7 +84,6 @@ namespace Azure.ResourceManager.DataBox.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DataBoxSecret IJsonModel<DataBoxSecret>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         void IJsonModel<HDInsightBillingResources>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightBillingResources>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HDInsightBillingResources)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
@@ -66,7 +74,6 @@ namespace Azure.ResourceManager.HDInsight.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         HDInsightBillingResources IJsonModel<HDInsightBillingResources>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

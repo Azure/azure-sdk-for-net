@@ -24,7 +24,7 @@ Install the Azure Document Intelligence client library for .NET with [NuGet][nug
 dotnet add package Azure.AI.DocumentIntelligence --prerelease
 ```
 
-> Note: This version of the client library defaults to the `2024-02-29-preview` version of the service.
+> Note: This version of the client library defaults to the `2024-07-31-preview` version of the service.
 
 ### Prerequisites
 
@@ -97,7 +97,7 @@ az cognitiveservices account keys list --name "<resource-name>" --resource-group
 
 Once you have the value for the API key, create an `AzureKeyCredential`. With the endpoint and key credential, you can create the [`DocumentIntelligenceClient`][doc_intelligence_client_class]:
 
-```C# Snippet:CreateDocumentIntelligenceClient
+```C# Snippet:CreateDocumentIntelligenceClientApiKey
 string endpoint = "<endpoint>";
 string apiKey = "<apiKey>";
 var client = new DocumentIntelligenceClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
@@ -117,9 +117,10 @@ You will also need to [register a new AAD application][register_aad_app] and [gr
 
 Set the values of the client ID, tenant ID, and client secret of the AAD application as environment variables: AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_CLIENT_SECRET.
 
-```C# Snippet:CreateDocumentIntelligenceClientTokenCredential
+```C# Snippet:CreateDocumentIntelligenceClient
 string endpoint = "<endpoint>";
-var client = new DocumentIntelligenceClient(new Uri(endpoint), new DefaultAzureCredential());
+var credential = new DefaultAzureCredential();
+var client = new DocumentIntelligenceClient(new Uri(endpoint), credential);
 ```
 
 ## Key concepts

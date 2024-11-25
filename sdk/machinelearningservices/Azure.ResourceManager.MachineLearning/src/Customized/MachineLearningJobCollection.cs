@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> An async collection of <see cref="MachineLearningJobResource" /> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<MachineLearningJobResource> GetAllAsync(string skip, string jobType, string tag, MachineLearningListViewType? listViewType, CancellationToken cancellationToken)
-            => GetAllAsync(new MachineLearningJobCollectionGetAllOptions() { Skip = skip, JobType = jobType, Tag = tag, ListViewType = listViewType, AssetName = null, Scheduled = null, ScheduleId = null }, cancellationToken);
+            => GetAllAsync(skip, jobType, tag, listViewType, null, cancellationToken);
 
         /// <summary>
         /// Lists Jobs in the workspace.
@@ -61,6 +61,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> A collection of <see cref="MachineLearningJobResource" /> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<MachineLearningJobResource> GetAll(string skip, string jobType, string tag, MachineLearningListViewType? listViewType, CancellationToken cancellationToken)
-            => GetAll(new MachineLearningJobCollectionGetAllOptions() { Skip = skip, JobType = jobType, Tag = tag, ListViewType = listViewType, AssetName = null, Scheduled = null, ScheduleId = null }, cancellationToken);
+            => GetAll(skip, jobType, tag, listViewType, null, cancellationToken);
     }
 }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static bool operator ==(PostgreSqlFlexibleServerNameUnavailableReason left, PostgreSqlFlexibleServerNameUnavailableReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerNameUnavailableReason"/> values are not the same. </summary>
         public static bool operator !=(PostgreSqlFlexibleServerNameUnavailableReason left, PostgreSqlFlexibleServerNameUnavailableReason right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerNameUnavailableReason"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServerNameUnavailableReason"/>. </summary>
         public static implicit operator PostgreSqlFlexibleServerNameUnavailableReason(string value) => new PostgreSqlFlexibleServerNameUnavailableReason(value);
 
         /// <inheritdoc />

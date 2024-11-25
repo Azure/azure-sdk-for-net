@@ -74,10 +74,13 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Minimum number of successful replica completions before overall job completion. </summary>
+        [WirePath("replicaCompletionCount")]
         public int? ReplicaCompletionCount { get; set; }
         /// <summary> Cron formatted repeating schedule ("* * * * *") of a Cron Job. </summary>
+        [WirePath("cronExpression")]
         public string CronExpression { get; set; }
         /// <summary> Number of parallel replicas of a job that can run at a given time. </summary>
+        [WirePath("parallelism")]
         public int? Parallelism { get; set; }
     }
 }

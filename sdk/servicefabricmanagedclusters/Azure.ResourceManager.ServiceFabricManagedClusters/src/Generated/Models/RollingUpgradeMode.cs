@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static bool operator ==(RollingUpgradeMode left, RollingUpgradeMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RollingUpgradeMode"/> values are not the same. </summary>
         public static bool operator !=(RollingUpgradeMode left, RollingUpgradeMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RollingUpgradeMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RollingUpgradeMode"/>. </summary>
         public static implicit operator RollingUpgradeMode(string value) => new RollingUpgradeMode(value);
 
         /// <inheritdoc />

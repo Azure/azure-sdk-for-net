@@ -48,7 +48,7 @@ namespace Azure.Maps.Search.Models
         public static bool operator ==(ReverseGeocodingResultTypeEnum left, ReverseGeocodingResultTypeEnum right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ReverseGeocodingResultTypeEnum"/> values are not the same. </summary>
         public static bool operator !=(ReverseGeocodingResultTypeEnum left, ReverseGeocodingResultTypeEnum right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ReverseGeocodingResultTypeEnum"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ReverseGeocodingResultTypeEnum"/>. </summary>
         public static implicit operator ReverseGeocodingResultTypeEnum(string value) => new ReverseGeocodingResultTypeEnum(value);
 
         /// <inheritdoc />

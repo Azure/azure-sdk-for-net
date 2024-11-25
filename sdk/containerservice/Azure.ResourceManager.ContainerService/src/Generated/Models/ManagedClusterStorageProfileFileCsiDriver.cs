@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Whether to enable AzureFile CSI Driver. The default value is true. </summary>
+        [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
     }
 }

@@ -1021,10 +1021,10 @@ namespace Azure.Core.Expressions.DataFactory.Tests
 
         private static void AssertBinaryDataDfe(DataFactoryElement<BinaryData> dfe)
         {
-            var model = dfe.Literal!.ToObjectFromJson<TestModel>();
+            TestModel? model = dfe.Literal!.ToObjectFromJson<TestModel>();
             Assert.IsNotNull(model);
-            Assert.AreEqual(1, model.A);
-            Assert.IsTrue(model.B);
+            Assert.AreEqual(1, model?.A);
+            Assert.IsTrue(model?.B);
         }
 
         [Test]

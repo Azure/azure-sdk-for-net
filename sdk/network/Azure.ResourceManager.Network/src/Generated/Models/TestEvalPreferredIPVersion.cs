@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(TestEvalPreferredIPVersion left, TestEvalPreferredIPVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TestEvalPreferredIPVersion"/> values are not the same. </summary>
         public static bool operator !=(TestEvalPreferredIPVersion left, TestEvalPreferredIPVersion right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TestEvalPreferredIPVersion"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TestEvalPreferredIPVersion"/>. </summary>
         public static implicit operator TestEvalPreferredIPVersion(string value) => new TestEvalPreferredIPVersion(value);
 
         /// <inheritdoc />

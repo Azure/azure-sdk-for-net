@@ -10,7 +10,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: https://github.com/Azure/azure-rest-api-specs/blob/4e44971c375e4dbb03b75f8c6b91d0bd225f247d/specification/compute/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/4f68529971f845e8757c2b2a746d78ceb91854cd/specification/compute/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -261,12 +261,12 @@ rename-mapping:
   VirtualMachineScaleSetUpdateNetworkConfiguration.properties.disableTcpStateTracking: IsTcpStateTrackingDisabled
   AlternativeOption: ImageAlternativeOption
   AlternativeType: ImageAlternativeType
-  VirtualMachineScaleSet.properties.constrainedMaximumCapacity : IsMaximumCapacityConstrained
+  VirtualMachineScaleSetProperties.constrainedMaximumCapacity : IsMaximumCapacityConstrained
+  VirtualMachineScaleSetUpdateProperties: VirtualMachineScaleSetPatchProperties
   RollingUpgradePolicy.maxSurge : IsMaxSurgeEnabled
   ScheduledEventsProfile: ComputeScheduledEventsProfile
   ExpandTypeForListVMs: GetVirtualMachineExpandType
   ExpandTypesForListVm: GetVirtualMachineExpandType
-  SecurityPostureReference: ComputeSecurityPostureReference
   RestorePointSourceVmStorageProfile.dataDisks: DataDiskList
   SecurityPostureReference.id: -|arm-id
   CommunityGalleryImage.properties.identifier: ImageIdentifier
@@ -277,7 +277,12 @@ rename-mapping:
   NetworkInterfaceAuxiliaryMode: ComputeNetworkInterfaceAuxiliaryMode
   CommunityGalleryInfo.publisherUri: PublisherUriString
   GalleryArtifactVersionFullSource.virtualMachineId: -|arm-id
-  
+  SecurityPostureReference: ComputeSecurityPostureReference
+  SecurityPostureReference.excludeExtensions: ExcludeExtensionNames
+  SkuProfile : ComputeSkuProfile
+  SkuProfileVMSize : ComputeSkuProfileVMSize
+  AllocationStrategy : ComputeAllocationStrategy
+
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced
   - from: common.json
@@ -386,6 +391,17 @@ directive:
       $.dummyProperty = {
         "type": "string",
         "description": "This is a dummy property to prevent flattening."
-      };      
-    
+      };
+  # add additionalproperties to a few models to support private properties supported by the service
+  - from: virtualMachineScaleSet.json
+    where: $.definitions
+    transform: >
+      $.VirtualMachineScaleSetProperties.additionalProperties = true;
+      $.VirtualMachineScaleSet.properties.properties["x-ms-client-flatten"] = false;
+      $.VirtualMachineScaleSetUpdate.properties.properties["x-ms-client-flatten"] = false;
+      $.UpgradePolicy.additionalProperties = true;
+  - from: computeRPCommon.json
+    where: $.definitions.VMSizeProperties
+    transform: >
+      $.additionalProperties = true;
 ```

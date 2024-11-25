@@ -107,8 +107,10 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Name of the topic of the event subscription. </summary>
+        [WirePath("properties.topic")]
         public string Topic { get; }
         /// <summary> Provisioning state of the event subscription. </summary>
+        [WirePath("properties.provisioningState")]
         public EventSubscriptionProvisioningState? ProvisioningState { get; }
         /// <summary>
         /// Information about the destination where events have to be delivered for the event subscription.
@@ -116,21 +118,28 @@ namespace Azure.ResourceManager.EventGrid
         /// Please note <see cref="EventSubscriptionDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureFunctionEventSubscriptionDestination"/>, <see cref="EventHubEventSubscriptionDestination"/>, <see cref="HybridConnectionEventSubscriptionDestination"/>, <see cref="MonitorAlertEventSubscriptionDestination"/>, <see cref="NamespaceTopicEventSubscriptionDestination"/>, <see cref="PartnerEventSubscriptionDestination"/>, <see cref="ServiceBusQueueEventSubscriptionDestination"/>, <see cref="ServiceBusTopicEventSubscriptionDestination"/>, <see cref="StorageQueueEventSubscriptionDestination"/> and <see cref="WebHookEventSubscriptionDestination"/>.
         /// </summary>
+        [WirePath("properties.destination")]
         public EventSubscriptionDestination Destination { get; set; }
         /// <summary>
         /// Information about the destination where events have to be delivered for the event subscription.
         /// Uses the managed identity setup on the parent resource (namely, topic or domain) to acquire the authentication tokens being used during delivery / dead-lettering.
         /// </summary>
+        [WirePath("properties.deliveryWithResourceIdentity")]
         public DeliveryWithResourceIdentity DeliveryWithResourceIdentity { get; set; }
         /// <summary> Information about the filter for the event subscription. </summary>
+        [WirePath("properties.filter")]
         public EventSubscriptionFilter Filter { get; set; }
         /// <summary> List of user defined labels. </summary>
+        [WirePath("properties.labels")]
         public IList<string> Labels { get; }
         /// <summary> Expiration time of the event subscription. </summary>
+        [WirePath("properties.expirationTimeUtc")]
         public DateTimeOffset? ExpireOn { get; set; }
         /// <summary> The event delivery schema for the event subscription. </summary>
+        [WirePath("properties.eventDeliverySchema")]
         public EventDeliverySchema? EventDeliverySchema { get; set; }
         /// <summary> The retry policy for events. This can be used to configure maximum number of delivery attempts and time to live for events. </summary>
+        [WirePath("properties.retryPolicy")]
         public EventSubscriptionRetryPolicy RetryPolicy { get; set; }
         /// <summary>
         /// The dead letter destination of the event subscription. Any event that cannot be delivered to its' destination is sent to the dead letter destination.
@@ -138,11 +147,13 @@ namespace Azure.ResourceManager.EventGrid
         /// Please note <see cref="Models.DeadLetterDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="StorageBlobDeadLetterDestination"/>.
         /// </summary>
+        [WirePath("properties.deadLetterDestination")]
         public DeadLetterDestination DeadLetterDestination { get; set; }
         /// <summary>
         /// The dead letter destination of the event subscription. Any event that cannot be delivered to its' destination is sent to the dead letter destination.
         /// Uses the managed identity setup on the parent resource (namely, topic or domain) to acquire the authentication tokens being used during delivery / dead-lettering.
         /// </summary>
+        [WirePath("properties.deadLetterWithResourceIdentity")]
         public DeadLetterWithResourceIdentity DeadLetterWithResourceIdentity { get; set; }
     }
 }

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator ==(CustomAssessmentSeverity left, CustomAssessmentSeverity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CustomAssessmentSeverity"/> values are not the same. </summary>
         public static bool operator !=(CustomAssessmentSeverity left, CustomAssessmentSeverity right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CustomAssessmentSeverity"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CustomAssessmentSeverity"/>. </summary>
         public static implicit operator CustomAssessmentSeverity(string value) => new CustomAssessmentSeverity(value);
 
         /// <inheritdoc />

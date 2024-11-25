@@ -72,14 +72,19 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Package Application Id, found in appxmanifest.xml. </summary>
+        [WirePath("appId")]
         public string AppId { get; set; }
         /// <summary> Description of Package Application. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> Used to activate Package Application. Consists of Package Name and ApplicationID. Found in appxmanifest.xml. </summary>
+        [WirePath("appUserModelID")]
         public string AppUserModelId { get; set; }
         /// <summary> User friendly name. </summary>
+        [WirePath("friendlyName")]
         public string FriendlyName { get; set; }
         /// <summary> User friendly name. </summary>
+        [WirePath("iconImageName")]
         public string IconImageName { get; set; }
         /// <summary>
         /// the icon a 64 bit string as a byte array.
@@ -111,6 +116,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("rawIcon")]
         public BinaryData RawIcon { get; set; }
         /// <summary>
         /// the icon a 64 bit string as a byte array.
@@ -142,6 +148,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("rawPng")]
         public BinaryData RawPng { get; set; }
     }
 }

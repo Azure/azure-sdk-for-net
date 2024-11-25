@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static bool operator ==(LicenseCoreType left, LicenseCoreType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LicenseCoreType"/> values are not the same. </summary>
         public static bool operator !=(LicenseCoreType left, LicenseCoreType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LicenseCoreType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LicenseCoreType"/>. </summary>
         public static implicit operator LicenseCoreType(string value) => new LicenseCoreType(value);
 
         /// <inheritdoc />

@@ -81,6 +81,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Windows agent pool names must be 6 characters or less. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
     }
 }

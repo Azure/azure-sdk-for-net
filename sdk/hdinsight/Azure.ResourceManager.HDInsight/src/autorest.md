@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: HDInsight
 namespace: Azure.ResourceManager.HDInsight
-require: https://github.com/Azure/azure-rest-api-specs/blob/de37c47a625de64c0ac5bf76cf531527ba2feb77/specification/hdinsight/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/1c47c885e90f2df94d6f2a70c9caeaf9d258e485/specification/hdinsight/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -17,6 +17,8 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+models-to-treat-empty-string-as-null:
+- HDInsightStorageAccountInfo
 use-model-reader-writer: true
 
 format-by-name-rules:
@@ -138,6 +140,7 @@ rename-mapping:
   UpdateClusterIdentityCertificateParameters: HDInsightClusterUpdateIdentityCertificateContent
   PrivateLink: HDInsightPrivateLinkState
   NetworkProperties: HDInsightClusterNetworkProperties
+  IpTag: HDInsightClusterIPTag
   LinuxOperatingSystemProfile: HDInsightLinuxOSProfile
   OsProfile.linuxOperatingSystemProfile: LinuxProfile
   HostInfo: HDInsightClusterHostInfo

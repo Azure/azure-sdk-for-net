@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static bool operator ==(ContainerAppOpenIdConnectClientCredentialMethod left, ContainerAppOpenIdConnectClientCredentialMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerAppOpenIdConnectClientCredentialMethod"/> values are not the same. </summary>
         public static bool operator !=(ContainerAppOpenIdConnectClientCredentialMethod left, ContainerAppOpenIdConnectClientCredentialMethod right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerAppOpenIdConnectClientCredentialMethod"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerAppOpenIdConnectClientCredentialMethod"/>. </summary>
         public static implicit operator ContainerAppOpenIdConnectClientCredentialMethod(string value) => new ContainerAppOpenIdConnectClientCredentialMethod(value);
 
         /// <inheritdoc />

@@ -69,8 +69,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Mode of the service mesh. </summary>
+        [WirePath("mode")]
         public ServiceMeshMode Mode { get; set; }
         /// <summary> Istio service mesh configuration. </summary>
+        [WirePath("istio")]
         public IstioServiceMesh Istio { get; set; }
     }
 }

@@ -73,7 +73,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                     Console.WriteLine();
 
                     // View the healthcare entities recognized in the input documents.
-                    foreach (HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage healthcareEntitiesDocument in healthcareLROResult.Results.Documents)
+                    foreach (HealthcareActionResult healthcareEntitiesDocument in healthcareLROResult.Results.Documents)
                     {
                         Console.WriteLine($"Result for document with Id = \"{healthcareEntitiesDocument.Id}\":");
                         Console.WriteLine($"  Recognized the following {healthcareEntitiesDocument.Entities.Count} healthcare entities:");

@@ -36,7 +36,7 @@ namespace Azure.Communication.Rooms
         public static bool operator ==(ParticipantRole left, ParticipantRole right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ParticipantRole"/> values are not the same. </summary>
         public static bool operator !=(ParticipantRole left, ParticipantRole right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ParticipantRole"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ParticipantRole"/>. </summary>
         public static implicit operator ParticipantRole(string value) => new ParticipantRole(value);
 
         /// <inheritdoc />

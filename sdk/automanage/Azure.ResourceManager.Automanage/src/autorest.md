@@ -15,6 +15,7 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+
 request-path-is-non-resource:
   - /{scope}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports/{reportName}
   - /subscriptions/{subscriptionId}/providers/Microsoft.Automanage/servicePrincipals/default

@@ -59,7 +59,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// modified time of the resource known to the client. The operation
         /// will be performed only if the resource on the service has not been
         /// modified since the specified time.</param>
-        public JobScheduleDeleteOptions(int? timeout = default(int?), System.Guid? clientRequestId = default(System.Guid?), bool? returnClientRequestId = default(bool?), System.DateTime? ocpDate = default(System.DateTime?), string ifMatch = default(string), string ifNoneMatch = default(string), System.DateTime? ifModifiedSince = default(System.DateTime?), System.DateTime? ifUnmodifiedSince = default(System.DateTime?))
+        /// <param name="force">If true, the server will delete the JobSchedule
+        /// even if the corresponding nodes have not fully processed the
+        /// deletion. The default value is false.</param>
+        public JobScheduleDeleteOptions(int? timeout = default(int?), System.Guid? clientRequestId = default(System.Guid?), bool? returnClientRequestId = default(bool?), System.DateTime? ocpDate = default(System.DateTime?), string ifMatch = default(string), string ifNoneMatch = default(string), System.DateTime? ifModifiedSince = default(System.DateTime?), System.DateTime? ifUnmodifiedSince = default(System.DateTime?), bool? force = default(bool?))
         {
             Timeout = timeout;
             ClientRequestId = clientRequestId;
@@ -69,6 +72,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             IfNoneMatch = ifNoneMatch;
             IfModifiedSince = ifModifiedSince;
             IfUnmodifiedSince = ifUnmodifiedSince;
+            Force = force;
             CustomInit();
         }
 
@@ -146,6 +150,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         [JsonConverter(typeof(DateTimeRfc1123JsonConverter))]
         [Newtonsoft.Json.JsonIgnore]
         public System.DateTime? IfUnmodifiedSince { get; set; }
+
+        /// <summary>
+        /// Gets or sets if true, the server will delete the JobSchedule even
+        /// if the corresponding nodes have not fully processed the deletion.
+        /// The default value is false.
+        /// </summary>
+        [Newtonsoft.Json.JsonIgnore]
+        public bool? Force { get; set; }
 
     }
 }

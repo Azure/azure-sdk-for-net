@@ -83,11 +83,13 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Provisioning state of the partner registration. </summary>
+        [WirePath("properties.provisioningState")]
         public PartnerRegistrationProvisioningState? ProvisioningState { get; }
         /// <summary>
         /// The immutableId of the corresponding partner registration.
         /// Note: This property is marked for deprecation and is not supported in any future GA API version
         /// </summary>
+        [WirePath("properties.partnerRegistrationImmutableId")]
         public Guid? PartnerRegistrationImmutableId { get; set; }
     }
 }

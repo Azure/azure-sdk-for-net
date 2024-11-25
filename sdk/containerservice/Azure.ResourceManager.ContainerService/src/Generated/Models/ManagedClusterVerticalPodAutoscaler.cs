@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Whether to enable VPA. Default value is false. </summary>
+        [WirePath("enabled")]
         public bool IsVpaEnabled { get; set; }
     }
 }

@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         void IJsonModel<MessageCountDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<MessageCountDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MessageCountDetails)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(ActiveMessageCount))
             {
                 writer.WritePropertyName("activeMessageCount"u8);
@@ -67,7 +75,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         MessageCountDetails IJsonModel<MessageCountDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -33,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(ODataAadServicePrincipalCredentialType left, ODataAadServicePrincipalCredentialType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ODataAadServicePrincipalCredentialType"/> values are not the same. </summary>
         public static bool operator !=(ODataAadServicePrincipalCredentialType left, ODataAadServicePrincipalCredentialType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ODataAadServicePrincipalCredentialType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ODataAadServicePrincipalCredentialType"/>. </summary>
         public static implicit operator ODataAadServicePrincipalCredentialType(string value) => new ODataAadServicePrincipalCredentialType(value);
 
         /// <inheritdoc />

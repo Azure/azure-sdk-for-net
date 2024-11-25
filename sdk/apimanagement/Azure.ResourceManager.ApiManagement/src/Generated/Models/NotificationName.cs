@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(NotificationName left, NotificationName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NotificationName"/> values are not the same. </summary>
         public static bool operator !=(NotificationName left, NotificationName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NotificationName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NotificationName"/>. </summary>
         public static implicit operator NotificationName(string value) => new NotificationName(value);
 
         /// <inheritdoc />

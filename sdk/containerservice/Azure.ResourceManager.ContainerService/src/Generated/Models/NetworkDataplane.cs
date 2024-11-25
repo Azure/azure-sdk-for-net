@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static bool operator ==(NetworkDataplane left, NetworkDataplane right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkDataplane"/> values are not the same. </summary>
         public static bool operator !=(NetworkDataplane left, NetworkDataplane right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetworkDataplane"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkDataplane"/>. </summary>
         public static implicit operator NetworkDataplane(string value) => new NetworkDataplane(value);
 
         /// <inheritdoc />

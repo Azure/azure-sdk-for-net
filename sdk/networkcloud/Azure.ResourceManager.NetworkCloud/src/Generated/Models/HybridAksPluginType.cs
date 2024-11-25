@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator ==(HybridAksPluginType left, HybridAksPluginType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HybridAksPluginType"/> values are not the same. </summary>
         public static bool operator !=(HybridAksPluginType left, HybridAksPluginType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HybridAksPluginType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HybridAksPluginType"/>. </summary>
         public static implicit operator HybridAksPluginType(string value) => new HybridAksPluginType(value);
 
         /// <inheritdoc />

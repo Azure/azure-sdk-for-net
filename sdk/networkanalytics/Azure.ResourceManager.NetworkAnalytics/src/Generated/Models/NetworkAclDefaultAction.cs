@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         public static bool operator ==(NetworkAclDefaultAction left, NetworkAclDefaultAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkAclDefaultAction"/> values are not the same. </summary>
         public static bool operator !=(NetworkAclDefaultAction left, NetworkAclDefaultAction right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetworkAclDefaultAction"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkAclDefaultAction"/>. </summary>
         public static implicit operator NetworkAclDefaultAction(string value) => new NetworkAclDefaultAction(value);
 
         /// <inheritdoc />

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(SyncAgentState left, SyncAgentState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SyncAgentState"/> values are not the same. </summary>
         public static bool operator !=(SyncAgentState left, SyncAgentState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SyncAgentState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SyncAgentState"/>. </summary>
         public static implicit operator SyncAgentState(string value) => new SyncAgentState(value);
 
         /// <inheritdoc />

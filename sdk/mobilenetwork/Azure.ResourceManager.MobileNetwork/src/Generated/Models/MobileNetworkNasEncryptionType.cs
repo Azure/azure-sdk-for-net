@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static bool operator ==(MobileNetworkNasEncryptionType left, MobileNetworkNasEncryptionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MobileNetworkNasEncryptionType"/> values are not the same. </summary>
         public static bool operator !=(MobileNetworkNasEncryptionType left, MobileNetworkNasEncryptionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MobileNetworkNasEncryptionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MobileNetworkNasEncryptionType"/>. </summary>
         public static implicit operator MobileNetworkNasEncryptionType(string value) => new MobileNetworkNasEncryptionType(value);
 
         /// <inheritdoc />

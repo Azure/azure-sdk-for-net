@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static bool operator ==(AllowEgressNatType left, AllowEgressNatType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AllowEgressNatType"/> values are not the same. </summary>
         public static bool operator !=(AllowEgressNatType left, AllowEgressNatType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AllowEgressNatType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AllowEgressNatType"/>. </summary>
         public static implicit operator AllowEgressNatType(string value) => new AllowEgressNatType(value);
 
         /// <inheritdoc />

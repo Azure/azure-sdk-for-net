@@ -64,6 +64,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <summary> Specifies that the scope of the extension is Cluster. </summary>
         internal ScopeCluster Cluster { get; set; }
         /// <summary> Namespace where the extension Release must be placed, for a Cluster scoped extension.  If this namespace does not exist, it will be created. </summary>
+        [WirePath("cluster.releaseNamespace")]
         public string ClusterReleaseNamespace
         {
             get => Cluster is null ? default : Cluster.ReleaseNamespace;
@@ -78,6 +79,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         /// <summary> Specifies that the scope of the extension is Namespace. </summary>
         internal ScopeNamespace Namespace { get; set; }
         /// <summary> Namespace where the extension will be created for an Namespace scoped extension.  If this namespace does not exist, it will be created. </summary>
+        [WirePath("namespace.targetNamespace")]
         public string TargetNamespace
         {
             get => Namespace is null ? default : Namespace.TargetNamespace;

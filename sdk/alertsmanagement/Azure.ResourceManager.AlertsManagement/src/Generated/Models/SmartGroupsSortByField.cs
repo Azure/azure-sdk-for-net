@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static bool operator ==(SmartGroupsSortByField left, SmartGroupsSortByField right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SmartGroupsSortByField"/> values are not the same. </summary>
         public static bool operator !=(SmartGroupsSortByField left, SmartGroupsSortByField right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SmartGroupsSortByField"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SmartGroupsSortByField"/>. </summary>
         public static implicit operator SmartGroupsSortByField(string value) => new SmartGroupsSortByField(value);
 
         /// <inheritdoc />

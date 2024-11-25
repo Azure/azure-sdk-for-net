@@ -42,7 +42,7 @@ namespace Azure.Communication.JobRouter
         public static bool operator ==(RouterRuleKind left, RouterRuleKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RouterRuleKind"/> values are not the same. </summary>
         public static bool operator !=(RouterRuleKind left, RouterRuleKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RouterRuleKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RouterRuleKind"/>. </summary>
         public static implicit operator RouterRuleKind(string value) => new RouterRuleKind(value);
 
         /// <inheritdoc />

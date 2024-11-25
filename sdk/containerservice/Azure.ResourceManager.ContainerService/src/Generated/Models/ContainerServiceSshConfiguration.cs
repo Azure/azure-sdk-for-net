@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> The list of SSH public keys used to authenticate with Linux-based VMs. A maximum of 1 key may be specified. </summary>
+        [WirePath("publicKeys")]
         public IList<ContainerServiceSshPublicKey> PublicKeys { get; }
     }
 }

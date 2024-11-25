@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator ==(PipelineActivityState left, PipelineActivityState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PipelineActivityState"/> values are not the same. </summary>
         public static bool operator !=(PipelineActivityState left, PipelineActivityState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PipelineActivityState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PipelineActivityState"/>. </summary>
         public static implicit operator PipelineActivityState(string value) => new PipelineActivityState(value);
 
         /// <inheritdoc />

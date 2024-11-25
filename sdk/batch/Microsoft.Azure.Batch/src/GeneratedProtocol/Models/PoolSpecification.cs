@@ -34,8 +34,6 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="vmSize">The size of the virtual machines in the Pool.
         /// All virtual machines in a Pool are the same size.</param>
         /// <param name="displayName">The display name for the Pool.</param>
-        /// <param name="cloudServiceConfiguration">The cloud service
-        /// configuration for the Pool.</param>
         /// <param name="virtualMachineConfiguration">The virtual machine
         /// configuration for the Pool.</param>
         /// <param name="taskSlotsPerNode">The number of task slots that can be
@@ -67,9 +65,6 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// installed on each Compute Node in the Pool.</param>
         /// <param name="applicationPackageReferences">The list of Packages to
         /// be installed on each Compute Node in the Pool.</param>
-        /// <param name="applicationLicenses">The list of application licenses
-        /// the Batch service will make available on each Compute Node in the
-        /// Pool.</param>
         /// <param name="userAccounts">The list of user Accounts to be created
         /// on each Compute Node in the Pool.</param>
         /// <param name="metadata">A list of name-value pairs associated with
@@ -82,11 +77,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// pool.</param>
         /// <param name="resourceTags">The user-specified tags associated with
         /// the pool.</param>
-        public PoolSpecification(string vmSize, string displayName = default(string), CloudServiceConfiguration cloudServiceConfiguration = default(CloudServiceConfiguration), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), int? taskSlotsPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), int? targetDedicatedNodes = default(int?), int? targetLowPriorityNodes = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?), bool? enableInterNodeCommunication = default(bool?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), StartTask startTask = default(StartTask), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), IList<string> applicationLicenses = default(IList<string>), IList<UserAccount> userAccounts = default(IList<UserAccount>), IList<MetadataItem> metadata = default(IList<MetadataItem>), IList<MountConfiguration> mountConfiguration = default(IList<MountConfiguration>), NodeCommunicationMode? targetNodeCommunicationMode = default(NodeCommunicationMode?), UpgradePolicy upgradePolicy = default(UpgradePolicy), IDictionary<string, string> resourceTags = default(IDictionary<string, string>))
+        public PoolSpecification(string vmSize, string displayName = default(string), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), int? taskSlotsPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), int? targetDedicatedNodes = default(int?), int? targetLowPriorityNodes = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?), bool? enableInterNodeCommunication = default(bool?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), StartTask startTask = default(StartTask), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), IList<UserAccount> userAccounts = default(IList<UserAccount>), IList<MetadataItem> metadata = default(IList<MetadataItem>), IList<MountConfiguration> mountConfiguration = default(IList<MountConfiguration>), NodeCommunicationMode? targetNodeCommunicationMode = default(NodeCommunicationMode?), UpgradePolicy upgradePolicy = default(UpgradePolicy), IDictionary<string, string> resourceTags = default(IDictionary<string, string>))
         {
             DisplayName = displayName;
             VmSize = vmSize;
-            CloudServiceConfiguration = cloudServiceConfiguration;
             VirtualMachineConfiguration = virtualMachineConfiguration;
             TaskSlotsPerNode = taskSlotsPerNode;
             TaskSchedulingPolicy = taskSchedulingPolicy;
@@ -101,7 +95,6 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             StartTask = startTask;
             CertificateReferences = certificateReferences;
             ApplicationPackageReferences = applicationPackageReferences;
-            ApplicationLicenses = applicationLicenses;
             UserAccounts = userAccounts;
             Metadata = metadata;
             MountConfiguration = mountConfiguration;
@@ -139,31 +132,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public string VmSize { get; set; }
 
         /// <summary>
-        /// Gets or sets the cloud service configuration for the Pool.
-        /// </summary>
-        /// <remarks>
-        /// This property must be specified if the Pool needs to be created
-        /// with Azure PaaS VMs. This property and virtualMachineConfiguration
-        /// are mutually exclusive and one of the properties must be specified.
-        /// If neither is specified then the Batch service returns an error; if
-        /// you are calling the REST API directly, the HTTP status code is 400
-        /// (Bad Request). This property cannot be specified if the Batch
-        /// Account was created with its poolAllocationMode property set to
-        /// 'UserSubscription'.
-        /// </remarks>
-        [JsonProperty(PropertyName = "cloudServiceConfiguration")]
-        public CloudServiceConfiguration CloudServiceConfiguration { get; set; }
-
-        /// <summary>
         /// Gets or sets the virtual machine configuration for the Pool.
         /// </summary>
         /// <remarks>
-        /// This property must be specified if the Pool needs to be created
-        /// with Azure IaaS VMs. This property and cloudServiceConfiguration
-        /// are mutually exclusive and one of the properties must be specified.
-        /// If neither is specified then the Batch service returns an error; if
-        /// you are calling the REST API directly, the HTTP status code is 400
-        /// (Bad Request).
+        /// This property must be specified.
         /// </remarks>
         [JsonProperty(PropertyName = "virtualMachineConfiguration")]
         public VirtualMachineConfiguration VirtualMachineConfiguration { get; set; }
@@ -335,21 +307,6 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [JsonProperty(PropertyName = "applicationPackageReferences")]
         public IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
-
-        /// <summary>
-        /// Gets or sets the list of application licenses the Batch service
-        /// will make available on each Compute Node in the Pool.
-        /// </summary>
-        /// <remarks>
-        /// The list of application licenses must be a subset of available
-        /// Batch service application licenses. If a license is requested which
-        /// is not supported, Pool creation will fail. The permitted licenses
-        /// available on the Pool are 'maya', 'vray', '3dsmax', 'arnold'. An
-        /// additional charge applies for each application license added to the
-        /// Pool.
-        /// </remarks>
-        [JsonProperty(PropertyName = "applicationLicenses")]
-        public IList<string> ApplicationLicenses { get; set; }
 
         /// <summary>
         /// Gets or sets the list of user Accounts to be created on each

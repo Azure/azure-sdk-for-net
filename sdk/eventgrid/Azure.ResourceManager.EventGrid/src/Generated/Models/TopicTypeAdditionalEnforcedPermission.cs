@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Gets or sets the permission name. </summary>
+        [WirePath("permissionName")]
         public string PermissionName { get; set; }
         /// <summary> Gets or sets the is data action. </summary>
+        [WirePath("isDataAction")]
         public bool? IsDataAction { get; set; }
     }
 }

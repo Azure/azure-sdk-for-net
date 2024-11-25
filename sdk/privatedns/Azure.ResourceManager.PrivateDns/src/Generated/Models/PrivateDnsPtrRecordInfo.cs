@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
         }
 
         /// <summary> The PTR target domain name for this PTR record. </summary>
+        [WirePath("ptrdname")]
         public string PtrDomainName { get; set; }
     }
 }

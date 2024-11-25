@@ -16,9 +16,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             get
             {
-                return new MachineLearningRecurrenceTrigger(RecurrenceSchedule.Frequency.Value, RecurrenceSchedule.Interval.Value);
+                return new MachineLearningRecurrenceTrigger(new MachineLearningRecurrenceFrequency(RecurrenceSchedule.Frequency.Value.ToString()), RecurrenceSchedule.Interval.Value);
             }
         }
+
         /// <summary> Required if triggerType is Cron. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public CronTrigger Cron

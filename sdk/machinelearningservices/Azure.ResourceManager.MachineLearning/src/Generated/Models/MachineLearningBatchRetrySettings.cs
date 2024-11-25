@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Maximum retry count for a mini-batch. </summary>
+        [WirePath("maxRetries")]
         public int? MaxRetries { get; set; }
         /// <summary> Invocation timeout for a mini-batch, in ISO 8601 format. </summary>
+        [WirePath("timeout")]
         public TimeSpan? Timeout { get; set; }
     }
 }

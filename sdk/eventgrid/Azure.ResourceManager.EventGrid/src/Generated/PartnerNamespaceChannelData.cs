@@ -89,25 +89,32 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> The type of the event channel which represents the direction flow of events. </summary>
+        [WirePath("properties.channelType")]
         public PartnerNamespaceChannelType? ChannelType { get; set; }
         /// <summary> This property should be populated when channelType is PartnerTopic and represents information about the partner topic resource corresponding to the channel. </summary>
+        [WirePath("properties.partnerTopicInfo")]
         public PartnerTopicInfo PartnerTopicInfo { get; set; }
         /// <summary>
         /// This property should be populated when channelType is PartnerDestination and represents information about the partner destination resource corresponding to the channel.
         /// Please note <see cref="Models.PartnerDestinationInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="WebhookPartnerDestinationInfo"/>.
         /// </summary>
+        [WirePath("properties.partnerDestinationInfo")]
         public PartnerDestinationInfo PartnerDestinationInfo { get; set; }
         /// <summary> Context or helpful message that can be used during the approval process by the subscriber. </summary>
+        [WirePath("properties.messageForActivation")]
         public string MessageForActivation { get; set; }
         /// <summary> Provisioning state of the channel. </summary>
+        [WirePath("properties.provisioningState")]
         public PartnerNamespaceChannelProvisioningState? ProvisioningState { get; set; }
         /// <summary> The readiness state of the corresponding partner topic. </summary>
+        [WirePath("properties.readinessState")]
         public PartnerTopicReadinessState? ReadinessState { get; set; }
         /// <summary>
         /// Expiration time of the channel. If this timer expires while the corresponding partner topic is never activated,
         /// the channel and corresponding partner topic are deleted.
         /// </summary>
+        [WirePath("properties.expirationTimeIfNotActivatedUtc")]
         public DateTimeOffset? ExpireOnIfNotActivated { get; set; }
     }
 }

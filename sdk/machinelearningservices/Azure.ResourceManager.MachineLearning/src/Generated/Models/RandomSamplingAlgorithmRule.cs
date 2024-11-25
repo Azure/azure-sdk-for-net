@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(RandomSamplingAlgorithmRule left, RandomSamplingAlgorithmRule right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RandomSamplingAlgorithmRule"/> values are not the same. </summary>
         public static bool operator !=(RandomSamplingAlgorithmRule left, RandomSamplingAlgorithmRule right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RandomSamplingAlgorithmRule"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RandomSamplingAlgorithmRule"/>. </summary>
         public static implicit operator RandomSamplingAlgorithmRule(string value) => new RandomSamplingAlgorithmRule(value);
 
         /// <inheritdoc />

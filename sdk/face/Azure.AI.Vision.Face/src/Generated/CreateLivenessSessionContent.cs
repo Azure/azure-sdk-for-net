@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Vision.Face
 {
-    /// <summary> Request for creating liveness session. </summary>
+    /// <summary> Request model for creating liveness session. </summary>
     public partial class CreateLivenessSessionContent
     {
         /// <summary>
@@ -56,14 +56,18 @@ namespace Azure.AI.Vision.Face
         /// <param name="livenessOperationMode"> Type of liveness mode the client should follow. </param>
         /// <param name="sendResultsToClient"> Whether or not to allow a '200 - Success' response body to be sent to the client, which may be undesirable for security reasons. Default is false, clients will receive a '204 - NoContent' empty body response. Regardless of selection, calling Session GetResult will always contain a response body enabling business logic to be implemented. </param>
         /// <param name="deviceCorrelationIdSetInClient"> Whether or not to allow client to set their own 'deviceCorrelationId' via the Vision SDK. Default is false, and 'deviceCorrelationId' must be set in this request body. </param>
+        /// <param name="enableSessionImage"> Whether or not store the session image. </param>
+        /// <param name="livenessSingleModalModel"> The model version used for liveness classification. This is an optional parameter, and if this is not specified, then the latest supported model version will be chosen. </param>
         /// <param name="deviceCorrelationId"> Unique Guid per each end-user device. This is to provide rate limiting and anti-hammering. If 'deviceCorrelationIdSetInClient' is true in this request, this 'deviceCorrelationId' must be null. </param>
         /// <param name="authTokenTimeToLiveInSeconds"> Seconds the session should last for. Range is 60 to 86400 seconds. Default value is 600. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CreateLivenessSessionContent(LivenessOperationMode livenessOperationMode, bool? sendResultsToClient, bool? deviceCorrelationIdSetInClient, string deviceCorrelationId, int? authTokenTimeToLiveInSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CreateLivenessSessionContent(LivenessOperationMode livenessOperationMode, bool? sendResultsToClient, bool? deviceCorrelationIdSetInClient, bool? enableSessionImage, LivenessModel? livenessSingleModalModel, string deviceCorrelationId, int? authTokenTimeToLiveInSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LivenessOperationMode = livenessOperationMode;
             SendResultsToClient = sendResultsToClient;
             DeviceCorrelationIdSetInClient = deviceCorrelationIdSetInClient;
+            EnableSessionImage = enableSessionImage;
+            LivenessSingleModalModel = livenessSingleModalModel;
             DeviceCorrelationId = deviceCorrelationId;
             AuthTokenTimeToLiveInSeconds = authTokenTimeToLiveInSeconds;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -80,6 +84,10 @@ namespace Azure.AI.Vision.Face
         public bool? SendResultsToClient { get; set; }
         /// <summary> Whether or not to allow client to set their own 'deviceCorrelationId' via the Vision SDK. Default is false, and 'deviceCorrelationId' must be set in this request body. </summary>
         public bool? DeviceCorrelationIdSetInClient { get; set; }
+        /// <summary> Whether or not store the session image. </summary>
+        public bool? EnableSessionImage { get; set; }
+        /// <summary> The model version used for liveness classification. This is an optional parameter, and if this is not specified, then the latest supported model version will be chosen. </summary>
+        public LivenessModel? LivenessSingleModalModel { get; set; }
         /// <summary> Unique Guid per each end-user device. This is to provide rate limiting and anti-hammering. If 'deviceCorrelationIdSetInClient' is true in this request, this 'deviceCorrelationId' must be null. </summary>
         public string DeviceCorrelationId { get; set; }
         /// <summary> Seconds the session should last for. Range is 60 to 86400 seconds. Default value is 600. </summary>

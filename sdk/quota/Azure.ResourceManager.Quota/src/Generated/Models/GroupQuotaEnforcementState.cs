@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Quota.Models
         public static bool operator ==(GroupQuotaEnforcementState left, GroupQuotaEnforcementState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="GroupQuotaEnforcementState"/> values are not the same. </summary>
         public static bool operator !=(GroupQuotaEnforcementState left, GroupQuotaEnforcementState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="GroupQuotaEnforcementState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="GroupQuotaEnforcementState"/>. </summary>
         public static implicit operator GroupQuotaEnforcementState(string value) => new GroupQuotaEnforcementState(value);
 
         /// <inheritdoc />

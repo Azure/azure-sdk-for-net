@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static bool operator ==(EdgeClusterWitnessType left, EdgeClusterWitnessType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EdgeClusterWitnessType"/> values are not the same. </summary>
         public static bool operator !=(EdgeClusterWitnessType left, EdgeClusterWitnessType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EdgeClusterWitnessType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EdgeClusterWitnessType"/>. </summary>
         public static implicit operator EdgeClusterWitnessType(string value) => new EdgeClusterWitnessType(value);
 
         /// <inheritdoc />

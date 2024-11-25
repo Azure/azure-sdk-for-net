@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> name of environment. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> version of environment. </summary>
+        [WirePath("version")]
         public string Version { get; }
     }
 }

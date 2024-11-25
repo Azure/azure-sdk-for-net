@@ -69,7 +69,7 @@ namespace Azure.AI.Language.Text
         public static bool operator ==(AnalyzeTextOperationResultsKind left, AnalyzeTextOperationResultsKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnalyzeTextOperationResultsKind"/> values are not the same. </summary>
         public static bool operator !=(AnalyzeTextOperationResultsKind left, AnalyzeTextOperationResultsKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AnalyzeTextOperationResultsKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AnalyzeTextOperationResultsKind"/>. </summary>
         public static implicit operator AnalyzeTextOperationResultsKind(string value) => new AnalyzeTextOperationResultsKind(value);
 
         /// <inheritdoc />

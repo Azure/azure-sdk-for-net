@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static bool operator ==(SiteRecoveryVmSecurityType left, SiteRecoveryVmSecurityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SiteRecoveryVmSecurityType"/> values are not the same. </summary>
         public static bool operator !=(SiteRecoveryVmSecurityType left, SiteRecoveryVmSecurityType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SiteRecoveryVmSecurityType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SiteRecoveryVmSecurityType"/>. </summary>
         public static implicit operator SiteRecoveryVmSecurityType(string value) => new SiteRecoveryVmSecurityType(value);
 
         /// <inheritdoc />

@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The operating system type required for the run. </summary>
+        [WirePath("os")]
         public ContainerRegistryOS? OS { get; set; }
         /// <summary> The OS architecture. </summary>
+        [WirePath("architecture")]
         public ContainerRegistryOSArchitecture? Architecture { get; set; }
         /// <summary> Variant of the CPU. </summary>
+        [WirePath("variant")]
         public ContainerRegistryCpuVariant? Variant { get; set; }
     }
 }

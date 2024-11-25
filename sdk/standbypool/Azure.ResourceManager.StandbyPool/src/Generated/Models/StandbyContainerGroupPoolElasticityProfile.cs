@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <param name="maxReadyCapacity"> Specifies maximum number of standby container groups in the standby pool. </param>
         /// <param name="refillPolicy"> Specifies refill policy of the pool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyContainerGroupPoolElasticityProfile(long maxReadyCapacity, StandbyPoolRefillPolicy? refillPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StandbyContainerGroupPoolElasticityProfile(long maxReadyCapacity, StandbyRefillPolicy? refillPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MaxReadyCapacity = maxReadyCapacity;
             RefillPolicy = refillPolicy;
@@ -71,6 +71,6 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <summary> Specifies maximum number of standby container groups in the standby pool. </summary>
         public long MaxReadyCapacity { get; set; }
         /// <summary> Specifies refill policy of the pool. </summary>
-        public StandbyPoolRefillPolicy? RefillPolicy { get; set; }
+        public StandbyRefillPolicy? RefillPolicy { get; set; }
     }
 }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         public static bool operator ==(InformaticaApplicationType left, InformaticaApplicationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InformaticaApplicationType"/> values are not the same. </summary>
         public static bool operator !=(InformaticaApplicationType left, InformaticaApplicationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="InformaticaApplicationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="InformaticaApplicationType"/>. </summary>
         public static implicit operator InformaticaApplicationType(string value) => new InformaticaApplicationType(value);
 
         /// <inheritdoc />

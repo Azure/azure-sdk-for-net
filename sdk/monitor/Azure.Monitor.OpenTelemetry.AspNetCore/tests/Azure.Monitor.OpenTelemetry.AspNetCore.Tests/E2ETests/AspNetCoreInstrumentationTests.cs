@@ -29,7 +29,7 @@ using Xunit.Abstractions;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
 {
-    public partial class AspNetCoreInstrumentationTests
+    public class AspNetCoreInstrumentationTests
         : IClassFixture<WebApplicationFactory<AspNetCoreTestApp.Program>>, IDisposable
     {
         private readonly WebApplicationFactory<AspNetCoreTestApp.Program> _factory;
@@ -189,12 +189,13 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             Assert.Equal(isSuccess, requestData.Success);
             Assert.Equal(expectedUrl, requestData.Url);
 
-            var expectedPropertiesCount = isException ? 5 : 3;
+            var expectedPropertiesCount = isException ? 6 : 4;
             Assert.Equal(expectedPropertiesCount, requestData.Properties.Count);
 
             Assert.Contains(requestData.Properties, kvp => kvp.Key == "enrichedOnStart" && kvp.Value == "request");
             Assert.Contains(requestData.Properties, kvp => kvp.Key == "enrichedOnStop" && kvp.Value == "response");
             Assert.Contains(requestData.Properties, kvp => kvp.Key == "_MS.ProcessedByMetricExtractors" && kvp.Value == "(Name: X,Ver:'1.1')");
+            Assert.Contains(requestData.Properties, kvp => kvp.Key == "network.protocol.version" && kvp.Value == "1.1");
 
             if (isException)
             {

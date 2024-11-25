@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static bool operator ==(DevCenterHealthStatus left, DevCenterHealthStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevCenterHealthStatus"/> values are not the same. </summary>
         public static bool operator !=(DevCenterHealthStatus left, DevCenterHealthStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DevCenterHealthStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DevCenterHealthStatus"/>. </summary>
         public static implicit operator DevCenterHealthStatus(string value) => new DevCenterHealthStatus(value);
 
         /// <inheritdoc />

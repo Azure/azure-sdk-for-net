@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Gets or sets the condition properties. </summary>
+        [WirePath("conditionProperties")]
         public AutomationRulePropertyArrayChangedValuesCondition ConditionProperties { get; set; }
     }
 }

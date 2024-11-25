@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(PrivateEndpointStatus left, PrivateEndpointStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PrivateEndpointStatus"/> values are not the same. </summary>
         public static bool operator !=(PrivateEndpointStatus left, PrivateEndpointStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PrivateEndpointStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PrivateEndpointStatus"/>. </summary>
         public static implicit operator PrivateEndpointStatus(string value) => new PrivateEndpointStatus(value);
 
         /// <inheritdoc />

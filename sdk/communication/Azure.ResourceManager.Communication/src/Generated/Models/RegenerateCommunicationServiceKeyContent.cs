@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Communication.Models
         }
 
         /// <summary> The keyType to regenerate. Must be either 'primary' or 'secondary'(case-insensitive). </summary>
+        [WirePath("keyType")]
         public CommunicationServiceKeyType? KeyType { get; set; }
     }
 }

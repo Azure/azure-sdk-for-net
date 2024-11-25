@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(PolicyName left, PolicyName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PolicyName"/> values are not the same. </summary>
         public static bool operator !=(PolicyName left, PolicyName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PolicyName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PolicyName"/>. </summary>
         public static implicit operator PolicyName(string value) => new PolicyName(value);
 
         /// <inheritdoc />

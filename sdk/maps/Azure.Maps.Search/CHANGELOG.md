@@ -1,5 +1,37 @@
 # Release History
 
+## 2.0.0-beta.5 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 2.0.0-beta.4 (2024-09-30)
+
+### Bugs Fixed
+
+- Fix the issue where `Iso` is always `null` in the `GetReverseGeocoding` response
+
+## 2.0.0-beta.3 (2024-09-23)
+
+### Breaking Changes
+
+- Hide unnecessary GeoJson interfaces and replace with `Azure.Core.GeoJson` types
+
+### Other Changes
+
+- Refine test samples
+
+## 2.0.0-beta.2 (2024-08-13)
+
+### Bugs Fixed
+
+- Fix NPE issue during client creation
+
 ## 2.0.0-beta.1 (2024-08-06)
 
 ### Features Added

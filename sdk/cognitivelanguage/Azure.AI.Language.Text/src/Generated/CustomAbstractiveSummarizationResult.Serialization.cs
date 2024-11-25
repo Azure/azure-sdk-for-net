@@ -19,13 +19,21 @@ namespace Azure.AI.Language.Text
 
         void IJsonModel<CustomAbstractiveSummarizationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CustomAbstractiveSummarizationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CustomAbstractiveSummarizationResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("documents"u8);
             writer.WriteStartArray();
             foreach (var item in Documents)
@@ -64,7 +72,6 @@ namespace Azure.AI.Language.Text
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CustomAbstractiveSummarizationResult IJsonModel<CustomAbstractiveSummarizationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -87,7 +94,7 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
-            IReadOnlyList<AbstractiveSummaryDocumentResultWithDetectedLanguage> documents = default;
+            IReadOnlyList<AbstractiveSummaryActionResult> documents = default;
             IReadOnlyList<DocumentError> errors = default;
             RequestStatistics statistics = default;
             string projectName = default;
@@ -98,10 +105,10 @@ namespace Azure.AI.Language.Text
             {
                 if (property.NameEquals("documents"u8))
                 {
-                    List<AbstractiveSummaryDocumentResultWithDetectedLanguage> array = new List<AbstractiveSummaryDocumentResultWithDetectedLanguage>();
+                    List<AbstractiveSummaryActionResult> array = new List<AbstractiveSummaryActionResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AbstractiveSummaryDocumentResultWithDetectedLanguage.DeserializeAbstractiveSummaryDocumentResultWithDetectedLanguage(item, options));
+                        array.Add(AbstractiveSummaryActionResult.DeserializeAbstractiveSummaryActionResult(item, options));
                     }
                     documents = array;
                     continue;

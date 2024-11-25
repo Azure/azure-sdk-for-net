@@ -12,17 +12,17 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.HDInsight.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.HDInsight.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {
-        // Get the subscription capabilities for specific location
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetHDInsightCapabilities_GetTheSubscriptionCapabilitiesForSpecificLocation()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/GetHDInsightCapabilities.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetHDInsightCapabilities.json
             // this example is just showing the usage of "Locations_GetCapabilities" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -43,12 +43,11 @@ namespace Azure.ResourceManager.HDInsight.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get the subscription usages for specific location
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetHDInsightUsages_GetTheSubscriptionUsagesForSpecificLocation()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/GetHDInsightUsages.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetHDInsightUsages.json
             // this example is just showing the usage of "Locations_ListUsages" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -69,15 +68,14 @@ namespace Azure.ResourceManager.HDInsight.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get the subscription billingSpecs for the specified location
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetHDInsightBillingSpecs_GetTheSubscriptionBillingSpecsForTheSpecifiedLocation()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/HDI_Locations_ListBillingSpecs.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/HDI_Locations_ListBillingSpecs.json
             // this example is just showing the usage of "Locations_ListBillingSpecs" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -98,12 +96,11 @@ namespace Azure.ResourceManager.HDInsight.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get the subscription usages for specific location
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckHDInsightNameAvailability_GetTheSubscriptionUsagesForSpecificLocation()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/HDI_Locations_CheckClusterNameAvailability.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/HDI_Locations_CheckClusterNameAvailability.json
             // this example is just showing the usage of "Locations_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -129,12 +126,11 @@ namespace Azure.ResourceManager.HDInsight.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get the subscription usages for specific location
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ValidateHDInsightClusterCreation_GetTheSubscriptionUsagesForSpecificLocation()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/HDI_Locations_ValidateClusterCreateRequest.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/HDI_Locations_ValidateClusterCreateRequest.json
             // this example is just showing the usage of "Locations_ValidateClusterCreateRequest" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -6,6 +6,7 @@ using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 
 namespace Azure.AI.DocumentIntelligence.Tests
 {
@@ -56,12 +57,12 @@ namespace Azure.AI.DocumentIntelligence.Tests
         protected override async ValueTask<bool> IsEnvironmentReadyAsync()
         {
             var endpoint = new Uri(Endpoint);
-            var keyCredential = new AzureKeyCredential(ApiKey);
-            var keyCredentialClient = new DocumentIntelligenceAdministrationClient(endpoint, keyCredential);
+            var credential = Credential;
+            var client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
             try
             {
-                await keyCredentialClient.GetResourceInfoAsync();
+                await client.GetResourceInfoAsync();
             }
             catch (RequestFailedException e) when (e.Status == 401)
             {

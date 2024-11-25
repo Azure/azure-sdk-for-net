@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static bool operator ==(AutonomousMaintenanceScheduleType left, AutonomousMaintenanceScheduleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutonomousMaintenanceScheduleType"/> values are not the same. </summary>
         public static bool operator !=(AutonomousMaintenanceScheduleType left, AutonomousMaintenanceScheduleType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AutonomousMaintenanceScheduleType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AutonomousMaintenanceScheduleType"/>. </summary>
         public static implicit operator AutonomousMaintenanceScheduleType(string value) => new AutonomousMaintenanceScheduleType(value);
 
         /// <inheritdoc />

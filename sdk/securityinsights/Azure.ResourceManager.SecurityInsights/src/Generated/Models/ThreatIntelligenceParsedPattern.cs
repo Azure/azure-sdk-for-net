@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Pattern type key. </summary>
+        [WirePath("patternTypeKey")]
         public string PatternTypeKey { get; set; }
         /// <summary> Pattern type keys. </summary>
+        [WirePath("patternTypeValues")]
         public IList<ThreatIntelligenceParsedPatternTypeValue> PatternTypeValues { get; }
     }
 }

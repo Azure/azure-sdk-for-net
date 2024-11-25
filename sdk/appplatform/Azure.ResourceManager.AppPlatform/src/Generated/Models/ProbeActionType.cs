@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static bool operator ==(ProbeActionType left, ProbeActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProbeActionType"/> values are not the same. </summary>
         public static bool operator !=(ProbeActionType left, ProbeActionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ProbeActionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ProbeActionType"/>. </summary>
         public static implicit operator ProbeActionType(string value) => new ProbeActionType(value);
 
         /// <inheritdoc />

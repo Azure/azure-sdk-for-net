@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The ARM identifier for Private Endpoint. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
     }
 }

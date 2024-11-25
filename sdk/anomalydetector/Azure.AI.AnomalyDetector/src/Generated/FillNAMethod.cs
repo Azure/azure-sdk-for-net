@@ -42,7 +42,7 @@ namespace Azure.AI.AnomalyDetector
         public static bool operator ==(FillNAMethod left, FillNAMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FillNAMethod"/> values are not the same. </summary>
         public static bool operator !=(FillNAMethod left, FillNAMethod right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FillNAMethod"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FillNAMethod"/>. </summary>
         public static implicit operator FillNAMethod(string value) => new FillNAMethod(value);
 
         /// <inheritdoc />

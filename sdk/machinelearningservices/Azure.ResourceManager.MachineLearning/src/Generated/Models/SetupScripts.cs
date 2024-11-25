@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Customized setup scripts. </summary>
+        [WirePath("scripts")]
         public MachineLearningScriptsToExecute Scripts { get; set; }
     }
 }

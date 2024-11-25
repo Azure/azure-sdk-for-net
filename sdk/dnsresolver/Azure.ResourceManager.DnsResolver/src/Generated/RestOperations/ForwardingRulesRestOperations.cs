@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-07-01";
+            _apiVersion = apiVersion ?? "2023-07-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Creates or updates a forwarding rule in a DNS forwarding ruleset. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="forwardingRuleName"> The name of the forwarding rule. </param>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Creates or updates a forwarding rule in a DNS forwarding ruleset. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="forwardingRuleName"> The name of the forwarding rule. </param>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Updates a forwarding rule in a DNS forwarding ruleset. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="forwardingRuleName"> The name of the forwarding rule. </param>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Updates a forwarding rule in a DNS forwarding ruleset. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="forwardingRuleName"> The name of the forwarding rule. </param>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Deletes a forwarding rule in a DNS forwarding ruleset. WARNING: This operation cannot be undone. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="forwardingRuleName"> The name of the forwarding rule. </param>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Deletes a forwarding rule in a DNS forwarding ruleset. WARNING: This operation cannot be undone. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="forwardingRuleName"> The name of the forwarding rule. </param>
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Gets properties of a forwarding rule in a DNS forwarding ruleset. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="forwardingRuleName"> The name of the forwarding rule. </param>
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Gets properties of a forwarding rule in a DNS forwarding ruleset. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="forwardingRuleName"> The name of the forwarding rule. </param>
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Lists forwarding rules in a DNS forwarding ruleset. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Lists forwarding rules in a DNS forwarding ruleset. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary> Lists forwarding rules in a DNS forwarding ruleset. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
@@ -634,7 +634,7 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary> Lists forwarding rules in a DNS forwarding ruleset. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>

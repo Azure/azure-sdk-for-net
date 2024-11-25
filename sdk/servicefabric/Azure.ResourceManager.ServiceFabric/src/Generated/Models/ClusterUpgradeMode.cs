@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public static bool operator ==(ClusterUpgradeMode left, ClusterUpgradeMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClusterUpgradeMode"/> values are not the same. </summary>
         public static bool operator !=(ClusterUpgradeMode left, ClusterUpgradeMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ClusterUpgradeMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ClusterUpgradeMode"/>. </summary>
         public static implicit operator ClusterUpgradeMode(string value) => new ClusterUpgradeMode(value);
 
         /// <inheritdoc />

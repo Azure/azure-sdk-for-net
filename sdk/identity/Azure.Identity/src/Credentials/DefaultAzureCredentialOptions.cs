@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using Azure.Core;
 
@@ -52,22 +53,22 @@ namespace Azure.Identity
             get => _tenantId.Value;
             set
             {
-                if (_interactiveBrowserTenantId.Updated && value != _interactiveBrowserTenantId.Value)
+                if (_interactiveBrowserTenantId.Updated && _tenantId.Value != _interactiveBrowserTenantId.Value)
                 {
                     throw new InvalidOperationException("Applications should not set both TenantId and InteractiveBrowserTenantId. TenantId is preferred, and is functionally equivalent. InteractiveBrowserTenantId exists only to provide backwards compatibility.");
                 }
 
-                if (_sharedTokenCacheTenantId.Updated && value != _sharedTokenCacheTenantId.Value)
+                if (_sharedTokenCacheTenantId.Updated && _tenantId.Value != _sharedTokenCacheTenantId.Value)
                 {
                     throw new InvalidOperationException("Applications should not set both TenantId and SharedTokenCacheTenantId. TenantId is preferred, and is functionally equivalent. SharedTokenCacheTenantId exists only to provide backwards compatibility.");
                 }
 
-                if (_visualStudioTenantId.Updated && value != _visualStudioTenantId.Value)
+                if (_visualStudioTenantId.Updated && _tenantId.Value != _visualStudioTenantId.Value)
                 {
                     throw new InvalidOperationException("Applications should not set both TenantId and VisualStudioTenantId. TenantId is preferred, and is functionally equivalent. VisualStudioTenantId exists only to provide backwards compatibility.");
                 }
 
-                if (_visualStudioCodeTenantId.Updated && value != _visualStudioCodeTenantId.Value)
+                if (_visualStudioCodeTenantId.Updated && _tenantId.Value != _visualStudioCodeTenantId.Value)
                 {
                     throw new InvalidOperationException("Applications should not set both TenantId and VisualStudioCodeTenantId. TenantId is preferred, and is functionally equivalent. VisualStudioCodeTenantId exists only to provide backwards compatibility.");
                 }
@@ -274,7 +275,7 @@ namespace Azure.Identity
 
         internal bool IsForceRefreshEnabled { get; set; }
 
-        internal override T Clone<T>()
+        internal override T Clone<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>()
         {
             var clone = base.Clone<T>();
 

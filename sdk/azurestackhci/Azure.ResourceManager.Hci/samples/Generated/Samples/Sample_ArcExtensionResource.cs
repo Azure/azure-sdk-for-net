@@ -11,17 +11,17 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Hci.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Hci.Samples
 {
     public partial class Sample_ArcExtensionResource
     {
-        // Get ArcSettings Extension
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetArcSettingsExtension()
         {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/examples/GetExtension.json
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/GetExtension.json
             // this example is just showing the usage of "Extensions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -49,12 +49,11 @@ namespace Azure.ResourceManager.Hci.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update Arc Extension
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateArcExtension()
         {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/examples/PatchExtension.json
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/PatchExtension.json
             // this example is just showing the usage of "Extensions_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -73,17 +72,23 @@ namespace Azure.ResourceManager.Hci.Samples
             ArcExtensionResource arcExtension = client.GetArcExtensionResource(arcExtensionResourceId);
 
             // invoke the operation
-            ArcExtensionData data = new ArcExtensionData()
+            ArcExtensionPatch patch = new ArcExtensionPatch()
             {
-                Publisher = "Microsoft.Compute",
-                ArcExtensionType = "MicrosoftMonitoringAgent",
-                TypeHandlerVersion = "1.10",
-                Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+                ExtensionParameters = new ArcExtensionPatchContent()
                 {
-                    ["workspaceId"] = "xx"
-                }),
+                    TypeHandlerVersion = "1.10",
+                    IsAutomaticUpgradeEnabled = false,
+                    Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+                    {
+                        ["workspaceId"] = "xx"
+                    }),
+                    ProtectedSettings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+                    {
+                        ["workspaceKey"] = "xx"
+                    }),
+                },
             };
-            ArmOperation<ArcExtensionResource> lro = await arcExtension.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<ArcExtensionResource> lro = await arcExtension.UpdateAsync(WaitUntil.Completed, patch);
             ArcExtensionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -93,12 +98,11 @@ namespace Azure.ResourceManager.Hci.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete Arc Extension
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteArcExtension()
         {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/examples/DeleteExtension.json
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/DeleteExtension.json
             // this example is just showing the usage of "Extensions_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -119,15 +123,14 @@ namespace Azure.ResourceManager.Hci.Samples
             // invoke the operation
             await arcExtension.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Upgrade Machine Extensions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Upgrade_UpgradeMachineExtensions()
         {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/examples/Extensions_Upgrade.json
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/Extensions_Upgrade.json
             // this example is just showing the usage of "Extensions_Upgrade" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -146,13 +149,13 @@ namespace Azure.ResourceManager.Hci.Samples
             ArcExtensionResource arcExtension = client.GetArcExtensionResource(arcExtensionResourceId);
 
             // invoke the operation
-            ExtensionUpgradeContent content = new ExtensionUpgradeContent()
+            ArcExtensionUpgradeContent content = new ArcExtensionUpgradeContent()
             {
                 TargetVersion = "1.0.18062.0",
             };
             await arcExtension.UpgradeAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

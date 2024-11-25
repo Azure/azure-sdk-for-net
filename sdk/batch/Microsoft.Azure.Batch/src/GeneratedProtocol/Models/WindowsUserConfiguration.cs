@@ -45,9 +45,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the login mode for the user
         /// </summary>
         /// <remarks>
-        /// The default value for VirtualMachineConfiguration Pools is 'batch'
-        /// and for CloudServiceConfiguration Pools is 'interactive'. Possible
-        /// values include: 'batch', 'interactive'
+        /// The default is 'batch'. Possible values include: 'batch',
+        /// 'interactive'
         /// </remarks>
         [JsonProperty(PropertyName = "loginMode")]
         public LoginMode? LoginMode { get; set; }

@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Collection of billing meters. </summary>
+        [WirePath("value")]
         public IReadOnlyList<ContainerAppBillingMeter> Value { get; }
     }
 }

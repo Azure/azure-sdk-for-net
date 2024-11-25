@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(VirtualNetworkPrivateLinkServiceNetworkPolicy left, VirtualNetworkPrivateLinkServiceNetworkPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualNetworkPrivateLinkServiceNetworkPolicy"/> values are not the same. </summary>
         public static bool operator !=(VirtualNetworkPrivateLinkServiceNetworkPolicy left, VirtualNetworkPrivateLinkServiceNetworkPolicy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VirtualNetworkPrivateLinkServiceNetworkPolicy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualNetworkPrivateLinkServiceNetworkPolicy"/>. </summary>
         public static implicit operator VirtualNetworkPrivateLinkServiceNetworkPolicy(string value) => new VirtualNetworkPrivateLinkServiceNetworkPolicy(value);
 
         /// <inheritdoc />

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static bool operator ==(CassandraProvisioningState left, CassandraProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CassandraProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(CassandraProvisioningState left, CassandraProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CassandraProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CassandraProvisioningState"/>. </summary>
         public static implicit operator CassandraProvisioningState(string value) => new CassandraProvisioningState(value);
 
         /// <inheritdoc />

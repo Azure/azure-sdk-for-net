@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public static bool operator ==(TagAction left, TagAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TagAction"/> values are not the same. </summary>
         public static bool operator !=(TagAction left, TagAction right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TagAction"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TagAction"/>. </summary>
         public static implicit operator TagAction(string value) => new TagAction(value);
 
         /// <inheritdoc />

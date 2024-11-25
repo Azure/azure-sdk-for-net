@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         void IJsonModel<AdhocBackupValidateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<AdhocBackupValidateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AdhocBackupValidateContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("backupInstance"u8);
             writer.WriteObjectValue(BackupInstance, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -43,7 +51,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AdhocBackupValidateContent IJsonModel<AdhocBackupValidateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Batch.Models
 
         void IJsonModel<BatchImageReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<BatchImageReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BatchImageReference)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher"u8);
@@ -51,6 +59,16 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
+            if (Optional.IsDefined(SharedGalleryImageId))
+            {
+                writer.WritePropertyName("sharedGalleryImageId"u8);
+                writer.WriteStringValue(SharedGalleryImageId);
+            }
+            if (Optional.IsDefined(CommunityGalleryImageId))
+            {
+                writer.WritePropertyName("communityGalleryImageId"u8);
+                writer.WriteStringValue(CommunityGalleryImageId);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -66,7 +84,6 @@ namespace Azure.ResourceManager.Batch.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         BatchImageReference IJsonModel<BatchImageReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -94,6 +111,8 @@ namespace Azure.ResourceManager.Batch.Models
             string sku = default;
             string version = default;
             ResourceIdentifier id = default;
+            string sharedGalleryImageId = default;
+            string communityGalleryImageId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,6 +146,16 @@ namespace Azure.ResourceManager.Batch.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("sharedGalleryImageId"u8))
+                {
+                    sharedGalleryImageId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("communityGalleryImageId"u8))
+                {
+                    communityGalleryImageId = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -139,6 +168,8 @@ namespace Azure.ResourceManager.Batch.Models
                 sku,
                 version,
                 id,
+                sharedGalleryImageId,
+                communityGalleryImageId,
                 serializedAdditionalRawData);
         }
 

@@ -16,26 +16,34 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Continuation token for pagination. </summary>
+        [WirePath("skip")]
         public string Skip { get; set; }
         /// <summary> Ordering of list. </summary>
+        [WirePath("orderBy")]
         public string OrderBy { get; set; }
         /// <summary> Maximum number of records to return. </summary>
+        [WirePath("top")]
         public int? Top { get; set; }
         /// <summary> Model version. </summary>
+        [WirePath("version")]
         public string Version { get; set; }
         /// <summary> Model description. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> Number of initial results to skip. </summary>
+        [WirePath("offset")]
         public int? Offset { get; set; }
         /// <summary> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </summary>
+        [WirePath("tags")]
         public string Tags { get; set; }
         /// <summary> Comma-separated list of property names (and optionally values). Example: prop1,prop2=value2. </summary>
+        [WirePath("properties")]
         public string Properties { get; set; }
         /// <summary> Name of the feed. </summary>
+        [WirePath("feed")]
         public string Feed { get; set; }
         /// <summary> View type for including/excluding (for example) archived entities. </summary>
+        [WirePath("listViewType")]
         public MachineLearningListViewType? ListViewType { get; set; }
-        /// <summary> Model stage. </summary>
-        public string Stage { get; set; }
     }
 }

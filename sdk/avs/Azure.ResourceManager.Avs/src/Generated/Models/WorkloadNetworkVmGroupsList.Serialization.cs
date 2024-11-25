@@ -19,27 +19,32 @@ namespace Azure.ResourceManager.Avs.Models
 
         void IJsonModel<WorkloadNetworkVmGroupsList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadNetworkVmGroupsList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WorkloadNetworkVmGroupsList)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
             {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStartArray();
-                foreach (var item in Value)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            writer.WriteEndArray();
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink);
+                writer.WriteStringValue(NextLink.AbsoluteUri);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -56,7 +61,6 @@ namespace Azure.ResourceManager.Avs.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         WorkloadNetworkVmGroupsList IJsonModel<WorkloadNetworkVmGroupsList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -80,17 +84,13 @@ namespace Azure.ResourceManager.Avs.Models
                 return null;
             }
             IReadOnlyList<WorkloadNetworkVmGroupData> value = default;
-            string nextLink = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<WorkloadNetworkVmGroupData> array = new List<WorkloadNetworkVmGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -101,7 +101,11 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 if (property.NameEquals("nextLink"u8))
                 {
-                    nextLink = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nextLink = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -110,7 +114,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new WorkloadNetworkVmGroupsList(value ?? new ChangeTrackingList<WorkloadNetworkVmGroupData>(), nextLink, serializedAdditionalRawData);
+            return new WorkloadNetworkVmGroupsList(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadNetworkVmGroupsList>.Write(ModelReaderWriterOptions options)

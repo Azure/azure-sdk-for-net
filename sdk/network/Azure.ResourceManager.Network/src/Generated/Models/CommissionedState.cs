@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(CommissionedState left, CommissionedState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CommissionedState"/> values are not the same. </summary>
         public static bool operator !=(CommissionedState left, CommissionedState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CommissionedState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CommissionedState"/>. </summary>
         public static implicit operator CommissionedState(string value) => new CommissionedState(value);
 
         /// <inheritdoc />

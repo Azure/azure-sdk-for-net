@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(ValidationStatus left, ValidationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ValidationStatus"/> values are not the same. </summary>
         public static bool operator !=(ValidationStatus left, ValidationStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ValidationStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ValidationStatus"/>. </summary>
         public static implicit operator ValidationStatus(string value) => new ValidationStatus(value);
 
         /// <inheritdoc />

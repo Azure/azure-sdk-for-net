@@ -33,7 +33,7 @@ namespace Azure.Maps.Rendering
         public static bool operator ==(MediaType left, MediaType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MediaType"/> values are not the same. </summary>
         public static bool operator !=(MediaType left, MediaType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MediaType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MediaType"/>. </summary>
         public static implicit operator MediaType(string value) => new MediaType(value);
 
         /// <inheritdoc />

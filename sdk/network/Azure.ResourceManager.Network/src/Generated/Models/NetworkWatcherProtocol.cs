@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(NetworkWatcherProtocol left, NetworkWatcherProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkWatcherProtocol"/> values are not the same. </summary>
         public static bool operator !=(NetworkWatcherProtocol left, NetworkWatcherProtocol right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetworkWatcherProtocol"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkWatcherProtocol"/>. </summary>
         public static implicit operator NetworkWatcherProtocol(string value) => new NetworkWatcherProtocol(value);
 
         /// <inheritdoc />

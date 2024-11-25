@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="schedule"> [Required] The recurrence schedule. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeStartStopRecurrenceSchedule(MachineLearningRecurrenceFrequency? frequency, int? interval, string startTime, string timeZone, MachineLearningRecurrenceSchedule schedule, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ComputeStartStopRecurrenceSchedule(MachineLearningComputeRecurrenceFrequency? frequency, int? interval, string startTime, string timeZone, MachineLearningComputeRecurrenceSchedule schedule, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Frequency = frequency;
             Interval = interval;
@@ -71,17 +71,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> [Required] The frequency to trigger schedule. </summary>
-        public MachineLearningRecurrenceFrequency? Frequency { get; set; }
+        [WirePath("frequency")]
+        public MachineLearningComputeRecurrenceFrequency? Frequency { get; set; }
         /// <summary> [Required] Specifies schedule interval in conjunction with frequency. </summary>
+        [WirePath("interval")]
         public int? Interval { get; set; }
         /// <summary> The start time in yyyy-MM-ddTHH:mm:ss format. </summary>
+        [WirePath("startTime")]
         public string StartTime { get; set; }
         /// <summary>
         /// Specifies time zone in which the schedule runs.
         /// TimeZone should follow Windows time zone format. Refer: https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/default-time-zones?view=windows-11
         /// </summary>
+        [WirePath("timeZone")]
         public string TimeZone { get; set; }
         /// <summary> [Required] The recurrence schedule. </summary>
-        public MachineLearningRecurrenceSchedule Schedule { get; set; }
+        [WirePath("schedule")]
+        public MachineLearningComputeRecurrenceSchedule Schedule { get; set; }
     }
 }

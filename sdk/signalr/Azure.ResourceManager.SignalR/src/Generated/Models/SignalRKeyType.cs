@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SignalR.Models
         public static bool operator ==(SignalRKeyType left, SignalRKeyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SignalRKeyType"/> values are not the same. </summary>
         public static bool operator !=(SignalRKeyType left, SignalRKeyType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SignalRKeyType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SignalRKeyType"/>. </summary>
         public static implicit operator SignalRKeyType(string value) => new SignalRKeyType(value);
 
         /// <inheritdoc />

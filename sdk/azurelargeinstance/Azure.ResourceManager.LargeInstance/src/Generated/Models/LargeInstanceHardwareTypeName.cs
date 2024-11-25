@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
         public static bool operator ==(LargeInstanceHardwareTypeName left, LargeInstanceHardwareTypeName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LargeInstanceHardwareTypeName"/> values are not the same. </summary>
         public static bool operator !=(LargeInstanceHardwareTypeName left, LargeInstanceHardwareTypeName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LargeInstanceHardwareTypeName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LargeInstanceHardwareTypeName"/>. </summary>
         public static implicit operator LargeInstanceHardwareTypeName(string value) => new LargeInstanceHardwareTypeName(value);
 
         /// <inheritdoc />

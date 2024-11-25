@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataShare.Models
         public static bool operator ==(DataShareTriggerStatus left, DataShareTriggerStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataShareTriggerStatus"/> values are not the same. </summary>
         public static bool operator !=(DataShareTriggerStatus left, DataShareTriggerStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataShareTriggerStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataShareTriggerStatus"/>. </summary>
         public static implicit operator DataShareTriggerStatus(string value) => new DataShareTriggerStatus(value);
 
         /// <inheritdoc />

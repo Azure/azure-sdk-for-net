@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static bool operator ==(ManagedHsmPrivateEndpointConnectionProvisioningState left, ManagedHsmPrivateEndpointConnectionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedHsmPrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(ManagedHsmPrivateEndpointConnectionProvisioningState left, ManagedHsmPrivateEndpointConnectionProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ManagedHsmPrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedHsmPrivateEndpointConnectionProvisioningState"/>. </summary>
         public static implicit operator ManagedHsmPrivateEndpointConnectionProvisioningState(string value) => new ManagedHsmPrivateEndpointConnectionProvisioningState(value);
 
         /// <inheritdoc />

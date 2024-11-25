@@ -30,7 +30,7 @@ namespace Azure.AI.OpenAI.Assistants
         public static bool operator ==(InternalAssistantFileDeletionStatusObject left, InternalAssistantFileDeletionStatusObject right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InternalAssistantFileDeletionStatusObject"/> values are not the same. </summary>
         public static bool operator !=(InternalAssistantFileDeletionStatusObject left, InternalAssistantFileDeletionStatusObject right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="InternalAssistantFileDeletionStatusObject"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="InternalAssistantFileDeletionStatusObject"/>. </summary>
         public static implicit operator InternalAssistantFileDeletionStatusObject(string value) => new InternalAssistantFileDeletionStatusObject(value);
 
         /// <inheritdoc />

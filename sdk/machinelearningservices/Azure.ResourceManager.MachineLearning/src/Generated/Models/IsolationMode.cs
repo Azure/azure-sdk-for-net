@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(IsolationMode left, IsolationMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IsolationMode"/> values are not the same. </summary>
         public static bool operator !=(IsolationMode left, IsolationMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IsolationMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IsolationMode"/>. </summary>
         public static implicit operator IsolationMode(string value) => new IsolationMode(value);
 
         /// <inheritdoc />

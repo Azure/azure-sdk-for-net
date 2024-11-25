@@ -51,27 +51,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataCollectionConfiguration"/>. </summary>
-        /// <param name="clientId"> The msi client id used to collect logging to blob storage. If it's null,backend will pick a registered endpoint identity to auth. </param>
+        /// <param name="samplingRate"> The sampling rate for collection. Sampling rate 1.0 means we collect 100% of data by default. </param>
         /// <param name="dataCollectionMode"> Enable or disable data collection. </param>
         /// <param name="dataId"> The data asset arm resource id. Client side will ensure data asset is pointing to the blob storage, and backend will collect data to the blob storage. </param>
-        /// <param name="samplingRate"> The sampling rate for collection. Sampling rate 1.0 means we collect 100% of data by default. </param>
+        /// <param name="clientId"> The msi client id used to collect logging to blob storage. If it's null,backend will pick a registered endpoint identity to auth. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataCollectionConfiguration(string clientId, DataCollectionMode? dataCollectionMode, string dataId, double? samplingRate, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataCollectionConfiguration(double? samplingRate, DataCollectionMode? dataCollectionMode, string dataId, string clientId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ClientId = clientId;
+            SamplingRate = samplingRate;
             DataCollectionMode = dataCollectionMode;
             DataId = dataId;
-            SamplingRate = samplingRate;
+            ClientId = clientId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The msi client id used to collect logging to blob storage. If it's null,backend will pick a registered endpoint identity to auth. </summary>
-        public string ClientId { get; set; }
+        /// <summary> The sampling rate for collection. Sampling rate 1.0 means we collect 100% of data by default. </summary>
+        [WirePath("samplingRate")]
+        public double? SamplingRate { get; set; }
         /// <summary> Enable or disable data collection. </summary>
+        [WirePath("dataCollectionMode")]
         public DataCollectionMode? DataCollectionMode { get; set; }
         /// <summary> The data asset arm resource id. Client side will ensure data asset is pointing to the blob storage, and backend will collect data to the blob storage. </summary>
+        [WirePath("dataId")]
         public string DataId { get; set; }
-        /// <summary> The sampling rate for collection. Sampling rate 1.0 means we collect 100% of data by default. </summary>
-        public double? SamplingRate { get; set; }
+        /// <summary> The msi client id used to collect logging to blob storage. If it's null,backend will pick a registered endpoint identity to auth. </summary>
+        [WirePath("clientId")]
+        public string ClientId { get; set; }
     }
 }

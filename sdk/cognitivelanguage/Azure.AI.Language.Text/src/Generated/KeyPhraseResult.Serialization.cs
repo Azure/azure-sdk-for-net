@@ -19,13 +19,21 @@ namespace Azure.AI.Language.Text
 
         void IJsonModel<KeyPhraseResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<KeyPhraseResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KeyPhraseResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("errors"u8);
             writer.WriteStartArray();
             foreach (var item in Errors)
@@ -62,7 +70,6 @@ namespace Azure.AI.Language.Text
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         KeyPhraseResult IJsonModel<KeyPhraseResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -88,7 +95,7 @@ namespace Azure.AI.Language.Text
             IReadOnlyList<DocumentError> errors = default;
             RequestStatistics statistics = default;
             string modelVersion = default;
-            IReadOnlyList<KeyPhrasesDocumentResultWithDetectedLanguage> documents = default;
+            IReadOnlyList<KeyPhrasesActionResult> documents = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,10 +126,10 @@ namespace Azure.AI.Language.Text
                 }
                 if (property.NameEquals("documents"u8))
                 {
-                    List<KeyPhrasesDocumentResultWithDetectedLanguage> array = new List<KeyPhrasesDocumentResultWithDetectedLanguage>();
+                    List<KeyPhrasesActionResult> array = new List<KeyPhrasesActionResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KeyPhrasesDocumentResultWithDetectedLanguage.DeserializeKeyPhrasesDocumentResultWithDetectedLanguage(item, options));
+                        array.Add(KeyPhrasesActionResult.DeserializeKeyPhrasesActionResult(item, options));
                     }
                     documents = array;
                     continue;

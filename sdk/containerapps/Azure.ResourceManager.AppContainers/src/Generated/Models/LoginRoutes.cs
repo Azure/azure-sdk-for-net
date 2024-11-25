@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> The endpoint at which a logout request should be made. </summary>
+        [WirePath("logoutEndpoint")]
         public string LogoutEndpoint { get; set; }
     }
 }

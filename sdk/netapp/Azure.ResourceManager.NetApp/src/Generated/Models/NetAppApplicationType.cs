@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static bool operator ==(NetAppApplicationType left, NetAppApplicationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppApplicationType"/> values are not the same. </summary>
         public static bool operator !=(NetAppApplicationType left, NetAppApplicationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetAppApplicationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppApplicationType"/>. </summary>
         public static implicit operator NetAppApplicationType(string value) => new NetAppApplicationType(value);
 
         /// <inheritdoc />

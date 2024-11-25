@@ -81,7 +81,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static bool operator ==(ConversationErrorCode left, ConversationErrorCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConversationErrorCode"/> values are not the same. </summary>
         public static bool operator !=(ConversationErrorCode left, ConversationErrorCode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ConversationErrorCode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConversationErrorCode"/>. </summary>
         public static implicit operator ConversationErrorCode(string value) => new ConversationErrorCode(value);
 
         /// <inheritdoc />

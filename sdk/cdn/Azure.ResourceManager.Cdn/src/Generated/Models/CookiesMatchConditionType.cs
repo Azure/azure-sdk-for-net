@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(CookiesMatchConditionType left, CookiesMatchConditionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CookiesMatchConditionType"/> values are not the same. </summary>
         public static bool operator !=(CookiesMatchConditionType left, CookiesMatchConditionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CookiesMatchConditionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CookiesMatchConditionType"/>. </summary>
         public static implicit operator CookiesMatchConditionType(string value) => new CookiesMatchConditionType(value);
 
         /// <inheritdoc />

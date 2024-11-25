@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BillingSubscriptionValidateMoveEligibilityError"/>. </summary>
-        /// <param name="code"> Error code for the billing subscription move validation. </param>
+        /// <param name="code"> Error code of the transfer validation response. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="details"> Detailed error message explaining the error. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -63,11 +63,14 @@ namespace Azure.ResourceManager.Billing.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Error code for the billing subscription move validation. </summary>
+        /// <summary> Error code of the transfer validation response. </summary>
+        [WirePath("code")]
         public SubscriptionTransferValidationErrorCode? Code { get; }
         /// <summary> The error message. </summary>
+        [WirePath("message")]
         public string Message { get; }
         /// <summary> Detailed error message explaining the error. </summary>
+        [WirePath("details")]
         public string Details { get; }
     }
 }

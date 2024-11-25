@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(MachineLearningEgressPublicNetworkAccessType left, MachineLearningEgressPublicNetworkAccessType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningEgressPublicNetworkAccessType"/> values are not the same. </summary>
         public static bool operator !=(MachineLearningEgressPublicNetworkAccessType left, MachineLearningEgressPublicNetworkAccessType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MachineLearningEgressPublicNetworkAccessType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningEgressPublicNetworkAccessType"/>. </summary>
         public static implicit operator MachineLearningEgressPublicNetworkAccessType(string value) => new MachineLearningEgressPublicNetworkAccessType(value);
 
         /// <inheritdoc />

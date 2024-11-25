@@ -13,6 +13,34 @@ namespace Azure.Messaging.EventGrid.Namespaces
     /// <summary> Model factory for models. </summary>
     public static partial class EventGridNamespacesModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Namespaces.ReceiveResult"/>. </summary>
+        /// <param name="details"> Array of receive responses, one per cloud event. </param>
+        /// <returns> A new <see cref="Namespaces.ReceiveResult"/> instance for mocking. </returns>
+        public static ReceiveResult ReceiveResult(IEnumerable<ReceiveDetails> details = null)
+        {
+            details ??= new List<ReceiveDetails>();
+
+            return new ReceiveResult(details?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Namespaces.ReceiveDetails"/>. </summary>
+        /// <param name="brokerProperties"> The Event Broker details. </param>
+        /// <param name="event"> Cloud Event details. </param>
+        /// <returns> A new <see cref="Namespaces.ReceiveDetails"/> instance for mocking. </returns>
+        public static ReceiveDetails ReceiveDetails(BrokerProperties brokerProperties = null, CloudEvent @event = null)
+        {
+            return new ReceiveDetails(brokerProperties, @event, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Namespaces.BrokerProperties"/>. </summary>
+        /// <param name="lockToken"> The token of the lock on the event. </param>
+        /// <param name="deliveryCount"> The attempt count for delivering the event. </param>
+        /// <returns> A new <see cref="Namespaces.BrokerProperties"/> instance for mocking. </returns>
+        public static BrokerProperties BrokerProperties(string lockToken = null, int deliveryCount = default)
+        {
+            return new BrokerProperties(lockToken, deliveryCount, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Namespaces.AcknowledgeResult"/>. </summary>
         /// <param name="failedLockTokens"> Array of FailedLockToken for failed cloud events. Each FailedLockToken includes the lock token along with the related error information (namely, the error code and description). </param>
         /// <param name="succeededLockTokens"> Array of lock tokens for the successfully acknowledged cloud events. </param>
@@ -68,34 +96,6 @@ namespace Azure.Messaging.EventGrid.Namespaces
             succeededLockTokens ??= new List<string>();
 
             return new RenewLocksResult(failedLockTokens?.ToList(), succeededLockTokens?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Namespaces.ReceiveResult"/>. </summary>
-        /// <param name="details"> Array of receive responses, one per cloud event. </param>
-        /// <returns> A new <see cref="Namespaces.ReceiveResult"/> instance for mocking. </returns>
-        public static ReceiveResult ReceiveResult(IEnumerable<ReceiveDetails> details = null)
-        {
-            details ??= new List<ReceiveDetails>();
-
-            return new ReceiveResult(details?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Namespaces.ReceiveDetails"/>. </summary>
-        /// <param name="brokerProperties"> The Event Broker details. </param>
-        /// <param name="event"> Cloud Event details. </param>
-        /// <returns> A new <see cref="Namespaces.ReceiveDetails"/> instance for mocking. </returns>
-        public static ReceiveDetails ReceiveDetails(BrokerProperties brokerProperties = null, CloudEvent @event = null)
-        {
-            return new ReceiveDetails(brokerProperties, @event, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Namespaces.BrokerProperties"/>. </summary>
-        /// <param name="lockToken"> The token of the lock on the event. </param>
-        /// <param name="deliveryCount"> The attempt count for delivering the event. </param>
-        /// <returns> A new <see cref="Namespaces.BrokerProperties"/> instance for mocking. </returns>
-        public static BrokerProperties BrokerProperties(string lockToken = null, int deliveryCount = default)
-        {
-            return new BrokerProperties(lockToken, deliveryCount, serializedAdditionalRawData: null);
         }
     }
 }

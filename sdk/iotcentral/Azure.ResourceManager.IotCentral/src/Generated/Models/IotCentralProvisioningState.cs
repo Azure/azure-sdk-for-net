@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.IotCentral.Models
         public static bool operator ==(IotCentralProvisioningState left, IotCentralProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IotCentralProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(IotCentralProvisioningState left, IotCentralProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IotCentralProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IotCentralProvisioningState"/>. </summary>
         public static implicit operator IotCentralProvisioningState(string value) => new IotCentralProvisioningState(value);
 
         /// <inheritdoc />

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Communication.Models
         public static bool operator ==(DomainManagement left, DomainManagement right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DomainManagement"/> values are not the same. </summary>
         public static bool operator !=(DomainManagement left, DomainManagement right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DomainManagement"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DomainManagement"/>. </summary>
         public static implicit operator DomainManagement(string value) => new DomainManagement(value);
 
         /// <inheritdoc />

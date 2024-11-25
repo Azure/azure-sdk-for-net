@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> access token for databricks account. </summary>
+        [WirePath("databricksAccessToken")]
         public string DatabricksAccessToken { get; }
     }
 }

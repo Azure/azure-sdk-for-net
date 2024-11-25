@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static bool operator ==(DBServerProvisioningState left, DBServerProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DBServerProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(DBServerProvisioningState left, DBServerProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DBServerProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DBServerProvisioningState"/>. </summary>
         public static implicit operator DBServerProvisioningState(string value) => new DBServerProvisioningState(value);
 
         /// <inheritdoc />

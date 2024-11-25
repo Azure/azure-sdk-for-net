@@ -70,11 +70,13 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Scale Rule Name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary>
         /// Type of the scale rule
         /// eg: azure-servicebus, redis etc.
         /// </summary>
+        [WirePath("type")]
         public string JobScaleRuleType { get; set; }
         /// <summary>
         /// Metadata properties to describe the scale rule.
@@ -106,8 +108,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("metadata")]
         public BinaryData Metadata { get; set; }
         /// <summary> Authentication secrets for the scale rule. </summary>
+        [WirePath("auth")]
         public IList<ContainerAppScaleRuleAuth> Auth { get; }
     }
 }

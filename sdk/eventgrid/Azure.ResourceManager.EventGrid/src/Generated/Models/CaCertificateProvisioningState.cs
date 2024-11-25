@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static bool operator ==(CaCertificateProvisioningState left, CaCertificateProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CaCertificateProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(CaCertificateProvisioningState left, CaCertificateProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CaCertificateProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CaCertificateProvisioningState"/>. </summary>
         public static implicit operator CaCertificateProvisioningState(string value) => new CaCertificateProvisioningState(value);
 
         /// <inheritdoc />

@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         void IJsonModel<PredictionMappings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<PredictionMappings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PredictionMappings)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("score"u8);
             writer.WriteStringValue(Score);
             writer.WritePropertyName("grade"u8);
@@ -47,7 +55,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         PredictionMappings IJsonModel<PredictionMappings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

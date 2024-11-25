@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator ==(NetworkFabricValidateAction left, NetworkFabricValidateAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkFabricValidateAction"/> values are not the same. </summary>
         public static bool operator !=(NetworkFabricValidateAction left, NetworkFabricValidateAction right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetworkFabricValidateAction"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkFabricValidateAction"/>. </summary>
         public static implicit operator NetworkFabricValidateAction(string value) => new NetworkFabricValidateAction(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public static bool operator ==(MetastoreDBConnectionAuthenticationMode left, MetastoreDBConnectionAuthenticationMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MetastoreDBConnectionAuthenticationMode"/> values are not the same. </summary>
         public static bool operator !=(MetastoreDBConnectionAuthenticationMode left, MetastoreDBConnectionAuthenticationMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MetastoreDBConnectionAuthenticationMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MetastoreDBConnectionAuthenticationMode"/>. </summary>
         public static implicit operator MetastoreDBConnectionAuthenticationMode(string value) => new MetastoreDBConnectionAuthenticationMode(value);
 
         /// <inheritdoc />

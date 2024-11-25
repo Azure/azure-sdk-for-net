@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         void IJsonModel<ContainerServiceFleetUpdateStage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetUpdateStage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerServiceFleetUpdateStage)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsCollectionDefined(Groups))
@@ -58,7 +66,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ContainerServiceFleetUpdateStage IJsonModel<ContainerServiceFleetUpdateStage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

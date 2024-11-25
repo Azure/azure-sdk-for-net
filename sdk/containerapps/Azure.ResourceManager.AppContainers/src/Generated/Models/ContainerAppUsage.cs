@@ -81,12 +81,16 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> An enum describing the unit of usage measurement. </summary>
+        [WirePath("unit")]
         public ContainerAppUsageUnit Unit { get; }
         /// <summary> The current usage of the resource. </summary>
+        [WirePath("currentValue")]
         public float CurrentValue { get; }
         /// <summary> The maximum permitted usage of the resource. </summary>
+        [WirePath("limit")]
         public float Limit { get; }
         /// <summary> The name of the type of usage. </summary>
+        [WirePath("name")]
         public ContainerAppUsageName Name { get; }
     }
 }

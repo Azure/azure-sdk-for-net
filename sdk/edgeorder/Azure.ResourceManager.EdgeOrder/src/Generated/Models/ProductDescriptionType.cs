@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static bool operator ==(ProductDescriptionType left, ProductDescriptionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProductDescriptionType"/> values are not the same. </summary>
         public static bool operator !=(ProductDescriptionType left, ProductDescriptionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ProductDescriptionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ProductDescriptionType"/>. </summary>
         public static implicit operator ProductDescriptionType(string value) => new ProductDescriptionType(value);
 
         /// <inheritdoc />

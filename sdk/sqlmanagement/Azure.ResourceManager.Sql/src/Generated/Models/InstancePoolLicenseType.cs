@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(InstancePoolLicenseType left, InstancePoolLicenseType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InstancePoolLicenseType"/> values are not the same. </summary>
         public static bool operator !=(InstancePoolLicenseType left, InstancePoolLicenseType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="InstancePoolLicenseType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="InstancePoolLicenseType"/>. </summary>
         public static implicit operator InstancePoolLicenseType(string value) => new InstancePoolLicenseType(value);
 
         /// <inheritdoc />

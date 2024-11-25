@@ -41,7 +41,8 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
         private const string _blobResourcePrefix = "test-blob-";
         private const string _expectedOverwriteExceptionMessage = "BlobAlreadyExists";
         private const string _defaultContentType = "text/plain";
-        private readonly string[] _defaultContentLanguage = new[] { "en-US", "en-CA" };
+        private readonly string[] _defaultContentLanguage = new[] { "en-US" };
+        private const string _defaultContentLanguageBlob = "en-US";
         private const string _defaultContentDisposition = "inline";
         private const string _defaultCacheControl = "no-cache";
         private const string _defaultPermissions = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)S:NO_ACCESS_CONTROL";
@@ -78,7 +79,8 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             bool createResource = false,
             string objectName = null,
             BlobClientOptions options = null,
-            Stream contents = null)
+            Stream contents = null,
+            CancellationToken cancellationToken = default)
         {
             objectName ??= GetNewObjectName();
             BlockBlobClient blobClient = container.GetBlockBlobClient(objectName);
@@ -114,9 +116,10 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             {
                 options = new()
                 {
-                    ContentDisposition = new("attachment"),
-                    ContentLanguage = new("en-US"),
-                    CacheControl = new("no-cache"),
+                    ContentDisposition = new(_defaultContentDisposition),
+                    ContentLanguage = new(_defaultContentLanguageBlob),
+                    CacheControl = new(_defaultCacheControl),
+                    ContentType = new(_defaultContentType),
                     Metadata = new(_defaultMetadata)
                 };
             }
@@ -127,6 +130,8 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                     ContentDisposition = new(false),
                     ContentLanguage = new(false),
                     CacheControl = new(false),
+                    ContentType = new(false),
+                    ContentEncoding = new(false),
                     Metadata = new(false),
                 };
             }
@@ -137,6 +142,8 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                     ContentDisposition = new(true),
                     ContentLanguage = new(true),
                     CacheControl = new(true),
+                    ContentType = new(true),
+                    ContentEncoding = new(true),
                     Metadata = new(true),
                 };
             }
@@ -153,7 +160,8 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             string objectName = null,
             ShareClientOptions options = null,
             Stream contents = default,
-            TransferPropertiesTestType propertiesTestType = default)
+            TransferPropertiesTestType propertiesTestType = default,
+            CancellationToken cancellationToken = default)
         {
             objectName ??= GetNewObjectName();
             ShareFileClient fileClient = container.GetRootDirectoryClient().GetFileClient(objectName);
@@ -257,7 +265,8 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             TransferPropertiesTestType transferPropertiesTestType,
             TestEventsRaised testEventsRaised,
             ShareFileClient sourceClient,
-            BlockBlobClient destinationClient)
+            BlockBlobClient destinationClient,
+            CancellationToken cancellationToken)
         {
             // Verify completion
             Assert.NotNull(transfer);
@@ -273,10 +282,10 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             {
                 BlobProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
-                Assert.IsEmpty(destinationProperties.Metadata);
                 Assert.IsNull(destinationProperties.ContentDisposition);
                 Assert.IsNull(destinationProperties.ContentLanguage);
                 Assert.IsNull(destinationProperties.CacheControl);
+                Assert.IsEmpty(destinationProperties.Metadata);
 
                 GetBlobTagResult destinationTags = await destinationClient.GetTagsAsync();
                 Assert.IsEmpty(destinationTags.Tags);
@@ -287,7 +296,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 
                 Assert.That(_defaultMetadata, Is.EqualTo(destinationProperties.Metadata));
                 Assert.AreEqual(_defaultContentDisposition, destinationProperties.ContentDisposition);
-                Assert.AreEqual(_defaultContentLanguage, destinationProperties.ContentLanguage);
+                Assert.AreEqual(_defaultContentLanguageBlob, destinationProperties.ContentLanguage);
                 Assert.AreEqual(_defaultCacheControl, destinationProperties.CacheControl);
                 Assert.AreEqual(_defaultContentType, destinationProperties.ContentType);
             }

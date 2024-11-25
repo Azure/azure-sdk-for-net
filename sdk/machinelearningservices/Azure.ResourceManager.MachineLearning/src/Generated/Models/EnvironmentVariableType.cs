@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(EnvironmentVariableType left, EnvironmentVariableType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EnvironmentVariableType"/> values are not the same. </summary>
         public static bool operator !=(EnvironmentVariableType left, EnvironmentVariableType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EnvironmentVariableType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EnvironmentVariableType"/>. </summary>
         public static implicit operator EnvironmentVariableType(string value) => new EnvironmentVariableType(value);
 
         /// <inheritdoc />

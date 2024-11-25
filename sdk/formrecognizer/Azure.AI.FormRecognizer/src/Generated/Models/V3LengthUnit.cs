@@ -33,7 +33,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public static bool operator ==(V3LengthUnit left, V3LengthUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="V3LengthUnit"/> values are not the same. </summary>
         public static bool operator !=(V3LengthUnit left, V3LengthUnit right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="V3LengthUnit"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="V3LengthUnit"/>. </summary>
         public static implicit operator V3LengthUnit(string value) => new V3LengthUnit(value);
 
         /// <inheritdoc />

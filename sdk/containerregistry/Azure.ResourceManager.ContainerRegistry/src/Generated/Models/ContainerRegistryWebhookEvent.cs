@@ -30,8 +30,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The event request message sent to the service URI. </summary>
+        [WirePath("eventRequestMessage")]
         public ContainerRegistryWebhookEventRequestMessage EventRequestMessage { get; }
         /// <summary> The event response message received from the service URI. </summary>
+        [WirePath("eventResponseMessage")]
         public ContainerRegistryWebhookEventResponseMessage EventResponseMessage { get; }
     }
 }

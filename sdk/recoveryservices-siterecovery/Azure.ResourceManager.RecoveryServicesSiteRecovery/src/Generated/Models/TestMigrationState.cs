@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static bool operator ==(TestMigrationState left, TestMigrationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TestMigrationState"/> values are not the same. </summary>
         public static bool operator !=(TestMigrationState left, TestMigrationState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TestMigrationState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TestMigrationState"/>. </summary>
         public static implicit operator TestMigrationState(string value) => new TestMigrationState(value);
 
         /// <inheritdoc />

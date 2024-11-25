@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Logic.Models
         public static bool operator ==(IntegrationServiceErrorCode left, IntegrationServiceErrorCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IntegrationServiceErrorCode"/> values are not the same. </summary>
         public static bool operator !=(IntegrationServiceErrorCode left, IntegrationServiceErrorCode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IntegrationServiceErrorCode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IntegrationServiceErrorCode"/>. </summary>
         public static implicit operator IntegrationServiceErrorCode(string value) => new IntegrationServiceErrorCode(value);
 
         /// <inheritdoc />

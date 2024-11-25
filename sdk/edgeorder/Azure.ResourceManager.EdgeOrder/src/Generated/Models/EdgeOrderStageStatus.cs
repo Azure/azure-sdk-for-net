@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static bool operator ==(EdgeOrderStageStatus left, EdgeOrderStageStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EdgeOrderStageStatus"/> values are not the same. </summary>
         public static bool operator !=(EdgeOrderStageStatus left, EdgeOrderStageStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EdgeOrderStageStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EdgeOrderStageStatus"/>. </summary>
         public static implicit operator EdgeOrderStageStatus(string value) => new EdgeOrderStageStatus(value);
 
         /// <inheritdoc />

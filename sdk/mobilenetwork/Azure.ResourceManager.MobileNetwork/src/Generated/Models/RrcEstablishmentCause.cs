@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static bool operator ==(RrcEstablishmentCause left, RrcEstablishmentCause right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RrcEstablishmentCause"/> values are not the same. </summary>
         public static bool operator !=(RrcEstablishmentCause left, RrcEstablishmentCause right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RrcEstablishmentCause"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RrcEstablishmentCause"/>. </summary>
         public static implicit operator RrcEstablishmentCause(string value) => new RrcEstablishmentCause(value);
 
         /// <inheritdoc />

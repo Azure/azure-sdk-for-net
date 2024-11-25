@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator ==(ManagedIntegrationRuntimeNodeStatus left, ManagedIntegrationRuntimeNodeStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedIntegrationRuntimeNodeStatus"/> values are not the same. </summary>
         public static bool operator !=(ManagedIntegrationRuntimeNodeStatus left, ManagedIntegrationRuntimeNodeStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ManagedIntegrationRuntimeNodeStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedIntegrationRuntimeNodeStatus"/>. </summary>
         public static implicit operator ManagedIntegrationRuntimeNodeStatus(string value) => new ManagedIntegrationRuntimeNodeStatus(value);
 
         /// <inheritdoc />

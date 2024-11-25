@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(MachineLearningEndpointAuthMode left, MachineLearningEndpointAuthMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningEndpointAuthMode"/> values are not the same. </summary>
         public static bool operator !=(MachineLearningEndpointAuthMode left, MachineLearningEndpointAuthMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MachineLearningEndpointAuthMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningEndpointAuthMode"/>. </summary>
         public static implicit operator MachineLearningEndpointAuthMode(string value) => new MachineLearningEndpointAuthMode(value);
 
         /// <inheritdoc />

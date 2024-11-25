@@ -46,7 +46,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             ActivitySource.AddActivityListener(listener);
 
             // ACT
-            using var dependencyActivity = activitySource.StartActivity(name: "HelloWorld", kind: ActivityKind.Client);
+            using var dependencyActivity = activitySource.StartActivity(name: "TestActivityName", kind: ActivityKind.Client);
             Assert.NotNull(dependencyActivity);
             dependencyActivity.SetTag("db.system", "mssql");
             dependencyActivity.SetTag("db.name", "MyDatabase");
@@ -71,7 +71,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             Assert.Equal("select * from sys.databases", dependencyDocument.CommandName);
             Assert.Equal(DocumentType.RemoteDependency, dependencyDocument.DocumentType);
             Assert.Equal(dependencyActivity.Duration.ToString("c"), dependencyDocument.Duration);
-            Assert.Equal("(localdb)\\MSSQLLocalDB | MyDatabase", dependencyDocument.Name);
+            Assert.Equal("TestActivityName", dependencyDocument.Name);
 
             VerifyCustomProperties(dependencyDocument);
 
@@ -141,7 +141,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             Assert.Equal(commandText, dependencyDocument.CommandName);
             Assert.Equal(DocumentType.RemoteDependency, dependencyDocument.DocumentType);
             Assert.Equal(dependencyActivity.Duration.ToString("c"), dependencyDocument.Duration);
-            Assert.Equal("(localdb)\\MSSQLLocalDB | MyDatabase", dependencyDocument.Name);
+            Assert.Equal("MyDatabase", dependencyDocument.Name);
 
             // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
             Assert.Equal(dependencyActivity.Duration.TotalMilliseconds, dependencyDocument.Extension_Duration);
@@ -214,7 +214,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             Assert.Equal(commandText, dependencyDocument.CommandName);
             Assert.Equal(DocumentType.RemoteDependency, dependencyDocument.DocumentType);
             Assert.Equal(dependencyActivity.Duration.ToString("c"), dependencyDocument.Duration);
-            Assert.Equal("(localdb)\\MSSQLLocalDB | MyDatabase", dependencyDocument.Name);
+            Assert.Equal("MyDatabase", dependencyDocument.Name);
 
             // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
             Assert.Equal(dependencyActivity.Duration.TotalMilliseconds, dependencyDocument.Extension_Duration);

@@ -422,6 +422,8 @@ begin {
         "office-word",
         "office-yammer",
         "passport-azure-ad",
+        "playwright",
+        "playwright-testing",
         "power-apps",
         "power-automate",
         "power-bi",

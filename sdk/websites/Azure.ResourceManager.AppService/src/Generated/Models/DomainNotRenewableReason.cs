@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
         public static bool operator ==(DomainNotRenewableReason left, DomainNotRenewableReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DomainNotRenewableReason"/> values are not the same. </summary>
         public static bool operator !=(DomainNotRenewableReason left, DomainNotRenewableReason right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DomainNotRenewableReason"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DomainNotRenewableReason"/>. </summary>
         public static implicit operator DomainNotRenewableReason(string value) => new DomainNotRenewableReason(value);
 
         /// <inheritdoc />

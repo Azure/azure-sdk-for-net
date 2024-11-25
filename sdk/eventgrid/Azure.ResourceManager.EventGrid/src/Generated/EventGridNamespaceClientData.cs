@@ -85,12 +85,16 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Description for the Client resource. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> The name presented by the client for authentication. The default value is the name of the resource. </summary>
+        [WirePath("properties.authenticationName")]
         public string AuthenticationName { get; set; }
         /// <summary> The client certificate authentication information. </summary>
+        [WirePath("properties.clientCertificateAuthentication")]
         public ClientCertificateAuthentication ClientCertificateAuthentication { get; set; }
         /// <summary> Indicates if the client is enabled or not. Default value is Enabled. </summary>
+        [WirePath("properties.state")]
         public EventGridNamespaceClientState? State { get; set; }
         /// <summary>
         /// Attributes for the client. Supported values are int, bool, string, string[].
@@ -124,8 +128,10 @@ namespace Azure.ResourceManager.EventGrid
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.attributes")]
         public IDictionary<string, BinaryData> Attributes { get; }
         /// <summary> Provisioning state of the Client resource. </summary>
+        [WirePath("properties.provisioningState")]
         public EventGridNamespaceClientProvisioningState? ProvisioningState { get; }
     }
 }

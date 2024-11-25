@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 namespace Azure.Maps.Search.Models
 {
-    public partial struct GeoJsonObjectType
+    internal partial struct GeoJsonObjectType
     {
     }
 }

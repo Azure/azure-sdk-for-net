@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static bool operator ==(BackupStorageVersion left, BackupStorageVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupStorageVersion"/> values are not the same. </summary>
         public static bool operator !=(BackupStorageVersion left, BackupStorageVersion right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BackupStorageVersion"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupStorageVersion"/>. </summary>
         public static implicit operator BackupStorageVersion(string value) => new BackupStorageVersion(value);
 
         /// <inheritdoc />

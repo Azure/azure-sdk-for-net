@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(ComputeType left, ComputeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ComputeType"/> values are not the same. </summary>
         public static bool operator !=(ComputeType left, ComputeType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ComputeType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeType"/>. </summary>
         public static implicit operator ComputeType(string value) => new ComputeType(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Nginx.Models
         public static bool operator ==(NginxPrivateIPAllocationMethod left, NginxPrivateIPAllocationMethod right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NginxPrivateIPAllocationMethod"/> values are not the same. </summary>
         public static bool operator !=(NginxPrivateIPAllocationMethod left, NginxPrivateIPAllocationMethod right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NginxPrivateIPAllocationMethod"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NginxPrivateIPAllocationMethod"/>. </summary>
         public static implicit operator NginxPrivateIPAllocationMethod(string value) => new NginxPrivateIPAllocationMethod(value);
 
         /// <inheritdoc />

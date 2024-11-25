@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(NetworkInterfaceAuxiliarySku left, NetworkInterfaceAuxiliarySku right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkInterfaceAuxiliarySku"/> values are not the same. </summary>
         public static bool operator !=(NetworkInterfaceAuxiliarySku left, NetworkInterfaceAuxiliarySku right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetworkInterfaceAuxiliarySku"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkInterfaceAuxiliarySku"/>. </summary>
         public static implicit operator NetworkInterfaceAuxiliarySku(string value) => new NetworkInterfaceAuxiliarySku(value);
 
         /// <inheritdoc />

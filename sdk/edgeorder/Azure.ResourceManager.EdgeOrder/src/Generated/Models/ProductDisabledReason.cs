@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static bool operator ==(ProductDisabledReason left, ProductDisabledReason right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProductDisabledReason"/> values are not the same. </summary>
         public static bool operator !=(ProductDisabledReason left, ProductDisabledReason right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ProductDisabledReason"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ProductDisabledReason"/>. </summary>
         public static implicit operator ProductDisabledReason(string value) => new ProductDisabledReason(value);
 
         /// <inheritdoc />

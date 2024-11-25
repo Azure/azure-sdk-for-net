@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(JobLimitsType left, JobLimitsType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JobLimitsType"/> values are not the same. </summary>
         public static bool operator !=(JobLimitsType left, JobLimitsType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="JobLimitsType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="JobLimitsType"/>. </summary>
         public static implicit operator JobLimitsType(string value) => new JobLimitsType(value);
 
         /// <inheritdoc />

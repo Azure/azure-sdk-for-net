@@ -13,6 +13,8 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Enables connectivity to Azure Batch through public DNS. </summary>
         Enabled,
         /// <summary> Disables public connectivity and enables private connectivity to Azure Batch Service through private endpoint resource. </summary>
-        Disabled
+        Disabled,
+        /// <summary> Secures connectivity to Azure Batch through NSP configuration. </summary>
+        SecuredByPerimeter
     }
 }

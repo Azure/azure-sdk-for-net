@@ -52,6 +52,20 @@ namespace Azure.AI.OpenAI
             return content;
         }
 
+        public static BinaryContent FromEnumerable<T>(ReadOnlySpan<T> span)
+        where T : notnull
+        {
+            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            content.JsonWriter.WriteStartArray();
+            for (int i = 0; i < span.Length; i++)
+            {
+                content.JsonWriter.WriteObjectValue(span[i], ModelSerializationExtensions.WireOptions);
+            }
+            content.JsonWriter.WriteEndArray();
+
+            return content;
+        }
+
         public static BinaryContent FromDictionary<TValue>(IDictionary<string, TValue> dictionary)
         where TValue : notnull
         {

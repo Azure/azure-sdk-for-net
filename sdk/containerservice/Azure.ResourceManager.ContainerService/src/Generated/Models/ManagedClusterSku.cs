@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> The name of a managed cluster SKU. </summary>
+        [WirePath("name")]
         public ManagedClusterSkuName? Name { get; set; }
         /// <summary> If not specified, the default is 'Free'. See [AKS Pricing Tier](https://learn.microsoft.com/azure/aks/free-standard-pricing-tiers) for more details. </summary>
+        [WirePath("tier")]
         public ManagedClusterSkuTier? Tier { get; set; }
     }
 }

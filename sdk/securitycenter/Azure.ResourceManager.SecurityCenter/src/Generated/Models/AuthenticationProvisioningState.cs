@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static bool operator ==(AuthenticationProvisioningState left, AuthenticationProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AuthenticationProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(AuthenticationProvisioningState left, AuthenticationProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AuthenticationProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AuthenticationProvisioningState"/>. </summary>
         public static implicit operator AuthenticationProvisioningState(string value) => new AuthenticationProvisioningState(value);
 
         /// <inheritdoc />

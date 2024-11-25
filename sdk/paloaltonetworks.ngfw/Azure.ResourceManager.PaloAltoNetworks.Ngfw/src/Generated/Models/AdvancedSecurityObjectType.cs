@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static bool operator ==(AdvancedSecurityObjectType left, AdvancedSecurityObjectType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AdvancedSecurityObjectType"/> values are not the same. </summary>
         public static bool operator !=(AdvancedSecurityObjectType left, AdvancedSecurityObjectType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AdvancedSecurityObjectType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AdvancedSecurityObjectType"/>. </summary>
         public static implicit operator AdvancedSecurityObjectType(string value) => new AdvancedSecurityObjectType(value);
 
         /// <inheritdoc />

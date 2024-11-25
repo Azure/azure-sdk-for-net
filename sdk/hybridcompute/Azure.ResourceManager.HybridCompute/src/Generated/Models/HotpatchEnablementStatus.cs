@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static bool operator ==(HotpatchEnablementStatus left, HotpatchEnablementStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HotpatchEnablementStatus"/> values are not the same. </summary>
         public static bool operator !=(HotpatchEnablementStatus left, HotpatchEnablementStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HotpatchEnablementStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HotpatchEnablementStatus"/>. </summary>
         public static implicit operator HotpatchEnablementStatus(string value) => new HotpatchEnablementStatus(value);
 
         /// <inheritdoc />

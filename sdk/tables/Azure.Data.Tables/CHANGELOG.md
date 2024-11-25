@@ -1,9 +1,24 @@
 # Release History
 
-## 12.9.1 (2024-08-06)
+## 12.10.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+- Calling `TableClient.Query`, `TableClient.QueryAsync`, or `TableClient.CreateQueryFilter` with a filter expression that uses `string.Equals` or `string.Compare` with a `StringComparison` parameter will now throw an exception. This is because the Azure Table service does not support these methods in query filters. Previously the `StringComparison` argument was silently ignored, which can lead to subtle bugs in client code.
 
 ### Bugs Fixed
-- Fixed an issue that prevented use of stored access policy based SaS Uris by adding a constructor to `TableSasBuilder` that accepts a stored access policy identifier without needing to specify the policy's permissions.
+
+### Other Changes
+
+## 12.9.1 (2024-09-17)
+
+### Bugs Fixed
+- Fixed an issue that prevented use of stored access policy based SaS Uris by adding a parameterless constructor to `TableSasBuilder`. The resulting builder can then be modified to include the stored access policy identifier or any other details.
+
+### Other Changes
+- Cosmos Table endpoints now support Entra ID authentication.
 
 ## 12.9.0 (2024-07-22)
 

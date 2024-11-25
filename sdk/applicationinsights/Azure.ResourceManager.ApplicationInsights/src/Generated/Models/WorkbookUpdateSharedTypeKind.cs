@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static bool operator ==(WorkbookUpdateSharedTypeKind left, WorkbookUpdateSharedTypeKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkbookUpdateSharedTypeKind"/> values are not the same. </summary>
         public static bool operator !=(WorkbookUpdateSharedTypeKind left, WorkbookUpdateSharedTypeKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WorkbookUpdateSharedTypeKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WorkbookUpdateSharedTypeKind"/>. </summary>
         public static implicit operator WorkbookUpdateSharedTypeKind(string value) => new WorkbookUpdateSharedTypeKind(value);
 
         /// <inheritdoc />

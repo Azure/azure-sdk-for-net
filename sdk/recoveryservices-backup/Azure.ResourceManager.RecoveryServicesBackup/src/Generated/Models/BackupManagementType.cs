@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static bool operator ==(BackupManagementType left, BackupManagementType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BackupManagementType"/> values are not the same. </summary>
         public static bool operator !=(BackupManagementType left, BackupManagementType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BackupManagementType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupManagementType"/>. </summary>
         public static implicit operator BackupManagementType(string value) => new BackupManagementType(value);
 
         /// <inheritdoc />

@@ -23,22 +23,81 @@ namespace Microsoft.Azure.Batch
     /// </summary>
     public partial class ImageReference : ITransportObjectProvider<Models.ImageReference>, IPropertyMetadata
     {
+        private class PropertyContainer : PropertyCollection
+        {
+            public readonly PropertyAccessor<string> CommunityGalleryImageIdProperty;
+            public readonly PropertyAccessor<string> ExactVersionProperty;
+            public readonly PropertyAccessor<string> OfferProperty;
+            public readonly PropertyAccessor<string> PublisherProperty;
+            public readonly PropertyAccessor<string> SharedGalleryImageIdProperty;
+            public readonly PropertyAccessor<string> SkuProperty;
+            public readonly PropertyAccessor<string> VersionProperty;
+            public readonly PropertyAccessor<string> VirtualMachineImageIdProperty;
+
+            public PropertyContainer() : base(BindingState.Unbound)
+            {
+                this.CommunityGalleryImageIdProperty = this.CreatePropertyAccessor<string>(nameof(CommunityGalleryImageId), BindingAccess.Read | BindingAccess.Write);
+                this.ExactVersionProperty = this.CreatePropertyAccessor<string>(nameof(ExactVersion), BindingAccess.Read);
+                this.OfferProperty = this.CreatePropertyAccessor<string>(nameof(Offer), BindingAccess.Read | BindingAccess.Write);
+                this.PublisherProperty = this.CreatePropertyAccessor<string>(nameof(Publisher), BindingAccess.Read | BindingAccess.Write);
+                this.SharedGalleryImageIdProperty = this.CreatePropertyAccessor<string>(nameof(SharedGalleryImageId), BindingAccess.Read | BindingAccess.Write);
+                this.SkuProperty = this.CreatePropertyAccessor<string>(nameof(Sku), BindingAccess.Read | BindingAccess.Write);
+                this.VersionProperty = this.CreatePropertyAccessor<string>(nameof(Version), BindingAccess.Read | BindingAccess.Write);
+                this.VirtualMachineImageIdProperty = this.CreatePropertyAccessor<string>(nameof(VirtualMachineImageId), BindingAccess.Read | BindingAccess.Write);
+            }
+
+            public PropertyContainer(Models.ImageReference protocolObject) : base(BindingState.Bound)
+            {
+                this.CommunityGalleryImageIdProperty = this.CreatePropertyAccessor(
+                    protocolObject.CommunityGalleryImageId,
+                    nameof(CommunityGalleryImageId),
+                    BindingAccess.Read);
+                this.ExactVersionProperty = this.CreatePropertyAccessor(
+                    protocolObject.ExactVersion,
+                    nameof(ExactVersion),
+                    BindingAccess.Read);
+                this.OfferProperty = this.CreatePropertyAccessor(
+                    protocolObject.Offer,
+                    nameof(Offer),
+                    BindingAccess.Read);
+                this.PublisherProperty = this.CreatePropertyAccessor(
+                    protocolObject.Publisher,
+                    nameof(Publisher),
+                    BindingAccess.Read);
+                this.SharedGalleryImageIdProperty = this.CreatePropertyAccessor(
+                    protocolObject.SharedGalleryImageId,
+                    nameof(SharedGalleryImageId),
+                    BindingAccess.Read);
+                this.SkuProperty = this.CreatePropertyAccessor(
+                    protocolObject.Sku,
+                    nameof(Sku),
+                    BindingAccess.Read);
+                this.VersionProperty = this.CreatePropertyAccessor(
+                    protocolObject.Version,
+                    nameof(Version),
+                    BindingAccess.Read);
+                this.VirtualMachineImageIdProperty = this.CreatePropertyAccessor(
+                    protocolObject.VirtualMachineImageId,
+                    nameof(VirtualMachineImageId),
+                    BindingAccess.Read);
+            }
+        }
+
+        private readonly PropertyContainer propertyContainer;
+
         #region Constructors
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageReference"/> class.
         /// </summary>
         public ImageReference()
         {
+            this.propertyContainer = new PropertyContainer();
         }
 
         internal ImageReference(Models.ImageReference protocolObject)
         {
-            this.ExactVersion = protocolObject.ExactVersion;
-            this.Offer = protocolObject.Offer;
-            this.Publisher = protocolObject.Publisher;
-            this.Sku = protocolObject.Sku;
-            this.Version = protocolObject.Version;
-            this.VirtualMachineImageId = protocolObject.VirtualMachineImageId;
+            this.propertyContainer = new PropertyContainer(protocolObject);
         }
 
         #endregion Constructors
@@ -46,46 +105,90 @@ namespace Microsoft.Azure.Batch
         #region ImageReference
 
         /// <summary>
+        /// Gets or sets gets or sets the community gallery image unique identifier
+        /// </summary>
+        /// <remarks>
+        /// This property is mutually exclusive with other properties and can be fetched from community gallery image GET 
+        /// call.
+        /// </remarks>
+        public string CommunityGalleryImageId
+        {
+            get { return this.propertyContainer.CommunityGalleryImageIdProperty.Value; }
+            set { this.propertyContainer.CommunityGalleryImageIdProperty.Value = value; }
+        }
+
+        /// <summary>
         /// Gets the specific version of the platform image or marketplace image used to create the node. This read-only 
         /// field differs from 'version' only if the value specified for 'version' when the pool was created was 'latest'.
         /// </summary>
-        public string ExactVersion { get; }
+        public string ExactVersion
+        {
+            get { return this.propertyContainer.ExactVersionProperty.Value; }
+        }
 
         /// <summary>
-        /// Gets the offer type of the Azure Virtual Machines Marketplace Image.
+        /// Gets or sets the offer type of the Azure Virtual Machines Marketplace Image.
         /// </summary>
         /// <remarks>
         /// For example, UbuntuServer or WindowsServer.
         /// </remarks>
-        public string Offer { get; }
+        public string Offer
+        {
+            get { return this.propertyContainer.OfferProperty.Value; }
+            set { this.propertyContainer.OfferProperty.Value = value; }
+        }
 
         /// <summary>
-        /// Gets the publisher of the Azure Virtual Machines Marketplace Image.
+        /// Gets or sets the publisher of the Azure Virtual Machines Marketplace Image.
         /// </summary>
         /// <remarks>
         /// For example, Canonical or MicrosoftWindowsServer.
         /// </remarks>
-        public string Publisher { get; }
+        public string Publisher
+        {
+            get { return this.propertyContainer.PublisherProperty.Value; }
+            set { this.propertyContainer.PublisherProperty.Value = value; }
+        }
 
         /// <summary>
-        /// Gets the SKU of the Azure Virtual Machines Marketplace Image.
+        /// Gets or sets gets or sets the shared gallery image unique identifier
+        /// </summary>
+        /// <remarks>
+        /// This property is mutually exclusive with other properties and can be fetched from shared gallery image GET call.
+        /// </remarks>
+        public string SharedGalleryImageId
+        {
+            get { return this.propertyContainer.SharedGalleryImageIdProperty.Value; }
+            set { this.propertyContainer.SharedGalleryImageIdProperty.Value = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the SKU of the Azure Virtual Machines Marketplace Image.
         /// </summary>
         /// <remarks>
         /// For example, 18.04-LTS or 2019-Datacenter.
         /// </remarks>
-        public string Sku { get; }
+        public string Sku
+        {
+            get { return this.propertyContainer.SkuProperty.Value; }
+            set { this.propertyContainer.SkuProperty.Value = value; }
+        }
 
         /// <summary>
-        /// Gets the version of the Azure Virtual Machines Marketplace Image.
+        /// Gets or sets the version of the Azure Virtual Machines Marketplace Image.
         /// </summary>
         /// <remarks>
         /// If this property is not specified, it defaults to 'latest', which is the latest version of the image.
         /// </remarks>
-        public string Version { get; }
+        public string Version
+        {
+            get { return this.propertyContainer.VersionProperty.Value; }
+            set { this.propertyContainer.VersionProperty.Value = value; }
+        }
 
         /// <summary>
-        /// Gets the ARM resource identifier of the Azure Compute Gallery Image. Compute Nodes in the Pool will be created 
-        /// using this Image Id. This is of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageDefinitionName}/versions/{VersionId} 
+        /// Gets or sets the ARM resource identifier of the Azure Compute Gallery Image. Compute Nodes in the Pool will be 
+        /// created using this Image Id. This is of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageDefinitionName}/versions/{VersionId} 
         /// or /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageDefinitionName} 
         /// for always defaulting to the latest image version.
         /// </summary>
@@ -95,7 +198,11 @@ namespace Microsoft.Azure.Batch
         /// version is not specified in the imageId, the latest version will be used. For information about the firewall 
         /// settings for the Batch Compute Node agent to communicate with the Batch service see https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration.
         /// </remarks>
-        public string VirtualMachineImageId { get; }
+        public string VirtualMachineImageId
+        {
+            get { return this.propertyContainer.VirtualMachineImageIdProperty.Value; }
+            set { this.propertyContainer.VirtualMachineImageIdProperty.Value = value; }
+        }
 
         #endregion // ImageReference
 
@@ -103,23 +210,18 @@ namespace Microsoft.Azure.Batch
 
         bool IModifiable.HasBeenModified
         {
-            //This class is compile time readonly so it cannot have been modified
-            get { return false; }
+            get { return this.propertyContainer.HasBeenModified; }
         }
 
         bool IReadOnly.IsReadOnly
         {
-            get { return true; }
-            set
-            {
-                // This class is compile time readonly already
-            }
+            get { return this.propertyContainer.IsReadOnly; }
+            set { this.propertyContainer.IsReadOnly = value; }
         }
 
-        #endregion // IPropertyMetadata
+        #endregion //IPropertyMetadata
 
         #region Internal/private methods
-
         /// <summary>
         /// Return a protocol object of the requested type.
         /// </summary>
@@ -128,8 +230,10 @@ namespace Microsoft.Azure.Batch
         {
             Models.ImageReference result = new Models.ImageReference()
             {
+                CommunityGalleryImageId = this.CommunityGalleryImageId,
                 Offer = this.Offer,
                 Publisher = this.Publisher,
+                SharedGalleryImageId = this.SharedGalleryImageId,
                 Sku = this.Sku,
                 Version = this.Version,
                 VirtualMachineImageId = this.VirtualMachineImageId,
@@ -138,46 +242,6 @@ namespace Microsoft.Azure.Batch
             return result;
         }
 
-        /// <summary>
-        /// Converts a collection of protocol layer objects to object layer collection objects.
-        /// </summary>
-        internal static IList<ImageReference> ConvertFromProtocolCollection(IEnumerable<Models.ImageReference> protoCollection)
-        {
-            ConcurrentChangeTrackedModifiableList<ImageReference> converted = UtilitiesInternal.CollectionToThreadSafeCollectionIModifiable(
-                items: protoCollection,
-                objectCreationFunc: o => new ImageReference(o));
-
-            return converted;
-        }
-
-        /// <summary>
-        /// Converts a collection of protocol layer objects to object layer collection objects, in a frozen state.
-        /// </summary>
-        internal static IList<ImageReference> ConvertFromProtocolCollectionAndFreeze(IEnumerable<Models.ImageReference> protoCollection)
-        {
-            ConcurrentChangeTrackedModifiableList<ImageReference> converted = UtilitiesInternal.CollectionToThreadSafeCollectionIModifiable(
-                items: protoCollection,
-                objectCreationFunc: o => new ImageReference(o).Freeze());
-
-            converted = UtilitiesInternal.CreateObjectWithNullCheck(converted, o => o.Freeze());
-
-            return converted;
-        }
-
-        /// <summary>
-        /// Converts a collection of protocol layer objects to object layer collection objects, with each object marked readonly
-        /// and returned as a readonly collection.
-        /// </summary>
-        internal static IReadOnlyList<ImageReference> ConvertFromProtocolCollectionReadOnly(IEnumerable<Models.ImageReference> protoCollection)
-        {
-            IReadOnlyList<ImageReference> converted =
-                UtilitiesInternal.CreateObjectWithNullCheck(
-                    UtilitiesInternal.CollectionToNonThreadSafeCollection(
-                        items: protoCollection,
-                        objectCreationFunc: o => new ImageReference(o).Freeze()), o => o.AsReadOnly());
-
-            return converted;
-        }
 
         #endregion // Internal/private methods
     }

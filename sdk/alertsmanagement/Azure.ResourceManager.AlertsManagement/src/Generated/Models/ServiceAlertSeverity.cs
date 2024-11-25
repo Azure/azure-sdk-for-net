@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static bool operator ==(ServiceAlertSeverity left, ServiceAlertSeverity right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceAlertSeverity"/> values are not the same. </summary>
         public static bool operator !=(ServiceAlertSeverity left, ServiceAlertSeverity right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ServiceAlertSeverity"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceAlertSeverity"/>. </summary>
         public static implicit operator ServiceAlertSeverity(string value) => new ServiceAlertSeverity(value);
 
         /// <inheritdoc />

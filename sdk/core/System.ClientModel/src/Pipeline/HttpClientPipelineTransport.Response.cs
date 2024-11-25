@@ -100,7 +100,7 @@ public partial class HttpClientPipelineTransport
             {
                 // Content is not buffered but there is no source stream.
                 // Our contract from Azure.Core is to return BinaryData.Empty in this case.
-                _bufferedContent = s_EmptyBinaryData;
+                _bufferedContent = BinaryData.Empty;
                 return _bufferedContent;
             }
 

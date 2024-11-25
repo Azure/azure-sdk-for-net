@@ -36,7 +36,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public static bool operator ==(StampKind left, StampKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StampKind"/> values are not the same. </summary>
         public static bool operator !=(StampKind left, StampKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StampKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StampKind"/>. </summary>
         public static implicit operator StampKind(string value) => new StampKind(value);
 
         /// <inheritdoc />

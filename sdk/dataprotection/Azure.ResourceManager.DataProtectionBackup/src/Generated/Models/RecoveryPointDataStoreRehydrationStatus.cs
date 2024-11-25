@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static bool operator ==(RecoveryPointDataStoreRehydrationStatus left, RecoveryPointDataStoreRehydrationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecoveryPointDataStoreRehydrationStatus"/> values are not the same. </summary>
         public static bool operator !=(RecoveryPointDataStoreRehydrationStatus left, RecoveryPointDataStoreRehydrationStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RecoveryPointDataStoreRehydrationStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RecoveryPointDataStoreRehydrationStatus"/>. </summary>
         public static implicit operator RecoveryPointDataStoreRehydrationStatus(string value) => new RecoveryPointDataStoreRehydrationStatus(value);
 
         /// <inheritdoc />

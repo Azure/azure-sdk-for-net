@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator ==(DataColumnDefinitionType left, DataColumnDefinitionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataColumnDefinitionType"/> values are not the same. </summary>
         public static bool operator !=(DataColumnDefinitionType left, DataColumnDefinitionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataColumnDefinitionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataColumnDefinitionType"/>. </summary>
         public static implicit operator DataColumnDefinitionType(string value) => new DataColumnDefinitionType(value);
 
         /// <inheritdoc />

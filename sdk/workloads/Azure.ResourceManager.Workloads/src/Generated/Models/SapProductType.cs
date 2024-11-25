@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public static bool operator ==(SapProductType left, SapProductType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapProductType"/> values are not the same. </summary>
         public static bool operator !=(SapProductType left, SapProductType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SapProductType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SapProductType"/>. </summary>
         public static implicit operator SapProductType(string value) => new SapProductType(value);
 
         /// <inheritdoc />

@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Column name. </summary>
+        [WirePath("itemKey")]
         public string ItemKey { get; set; }
         /// <summary> Sorting order (ascending/descending/unsorted). </summary>
+        [WirePath("sortOrder")]
         public ThreatIntelligenceSortingOrder? SortOrder { get; set; }
     }
 }

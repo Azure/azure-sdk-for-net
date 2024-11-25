@@ -1,32 +1,38 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+global using OpenAI;
+global using OpenAI.Assistants;
+global using OpenAI.Audio;
+global using OpenAI.Batch;
+global using OpenAI.Chat;
+global using OpenAI.Embeddings;
+global using OpenAI.Files;
+global using OpenAI.FineTuning;
+global using OpenAI.Images;
+global using OpenAI.Models;
+global using OpenAI.Moderations;
+global using OpenAI.RealtimeConversation;
+global using OpenAI.VectorStores;
+
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using Azure.AI.OpenAI.Assistants;
 using Azure.AI.OpenAI.Audio;
-using Azure.AI.OpenAI.Batch;
 using Azure.AI.OpenAI.Chat;
 using Azure.AI.OpenAI.Embeddings;
+using Azure.AI.OpenAI.Images;
+using Azure.Core;
+
+#if !AZURE_OPENAI_GA
+using Azure.AI.OpenAI.Assistants;
+using Azure.AI.OpenAI.Batch;
 using Azure.AI.OpenAI.Files;
 using Azure.AI.OpenAI.FineTuning;
-using Azure.AI.OpenAI.Images;
+using Azure.AI.OpenAI.RealtimeConversation;
 using Azure.AI.OpenAI.VectorStores;
-using Azure.Core;
-using OpenAI;
-using OpenAI.Assistants;
-using OpenAI.Audio;
-using OpenAI.Batch;
-using OpenAI.Chat;
-using OpenAI.Embeddings;
-using OpenAI.Files;
-using OpenAI.FineTuning;
-using OpenAI.Images;
-using OpenAI.Models;
-using OpenAI.Moderations;
-using OpenAI.VectorStores;
+#endif
 
 #pragma warning disable AZC0007
 
@@ -40,7 +46,10 @@ namespace Azure.AI.OpenAI;
 /// </remarks>
 public partial class AzureOpenAIClient : OpenAIClient
 {
+    private readonly Uri _endpoint;
     private readonly AzureOpenAIClientOptions _options;
+    private readonly ApiKeyCredential _keyCredential;
+    private readonly TokenCredential _tokenCredential;
 
     /// <summary>
     /// Creates a new instance of <see cref="AzureOpenAIClient"/> that will connect to a specified Azure OpenAI
@@ -52,64 +61,44 @@ public partial class AzureOpenAIClient : OpenAIClient
     /// <see cref="AzureOpenAIClient(Uri,TokenCredential,AzureOpenAIClientOptions)"/>
     /// </para>
     /// </remarks>
-    /// <param name="endpoint">
-    /// <para>
-    /// The Azure OpenAI resource endpoint to use. This should not include model deployment or operation information.
-    /// </para>
-    /// <para>
-    /// Example: <c>https://my-resource.openai.azure.com</c>
-    /// </para>
-    /// </param>
-    /// <param name="credential"> The API key to use when authenticating with the specified endpoint. </param>
-    /// <param name="options"> Additional options for the client. </param>
-    public AzureOpenAIClient(Uri endpoint, ApiKeyCredential credential, AzureOpenAIClientOptions options = null)
-        : this(
-            CreatePipeline(GetApiKey(credential, requireExplicitCredential: true), options),
-            GetEndpoint(endpoint, requireExplicitEndpoint: true),
-            options)
-    {}
-
-    /// <inheritdoc cref="AzureOpenAIClient(Uri,ApiKeyCredential,AzureOpenAIClientOptions)"/>
-    public AzureOpenAIClient(Uri endpoint, AzureKeyCredential credential, AzureOpenAIClientOptions options = null)
-        : this(
-              CreatePipeline(GetApiKey(new ApiKeyCredential(credential?.Key), requireExplicitCredential: true), options),
-              GetEndpoint(endpoint, requireExplicitEndpoint: true),
-              options)
-    {}
+    /// <param name="endpoint"> The Azure OpenAI resource endpoint to use. This should not include model deployment or operation information. For example: <c>https://my-resource.openai.azure.com</c>. </param>
+    /// <param name="credential"> The API key to authenticate with the service. </param>
+    public AzureOpenAIClient(Uri endpoint, ApiKeyCredential credential) : this(endpoint, credential, new AzureOpenAIClientOptions())
+    {
+    }
 
     /// <summary>
     /// Creates a new instance of <see cref="AzureOpenAIClient"/> that will connect to an Azure OpenAI service resource
-    /// using endpoint and authentication settings from available configuration information.
+    /// using token authentication, including for tokens issued via managed identity.
+    /// </summary>
+    /// <remarks>
+    /// For API-key-based authentication, please use the alternate constructor:
+    /// <see cref="AzureOpenAIClient(Uri,ApiKeyCredential,AzureOpenAIClientOptions)"/>
+    /// </remarks>
+    /// <param name="endpoint"> The Azure OpenAI resource endpoint to use. This should not include model deployment or operation information. For example: <c>https://my-resource.openai.azure.com</c>. </param>
+    /// <param name="credential"> The token credential to authenticate with the service. </param>
+    public AzureOpenAIClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AzureOpenAIClientOptions())
+    {
+    }
+
+    /// <summary>
+    /// Creates a new instance of <see cref="AzureOpenAIClient"/> that will connect to a specified Azure OpenAI
+    /// service resource endpoint using an API key.
     /// </summary>
     /// <remarks>
     /// <para>
     /// For token-based authentication, including the use of managed identity, please use the alternate constructor:
     /// <see cref="AzureOpenAIClient(Uri,TokenCredential,AzureOpenAIClientOptions)"/>
     /// </para>
-    /// <para>
-    /// The client selects its resource endpoint in the following order of precedence:
-    /// <list type="number">
-    /// <item> The <see cref="OpenAIClientOptions.Endpoint"/> property on <paramref name="options"/>, if available </item>
-    /// <item> The setting in an applicable IConfiguration instance, if available </item>
-    /// <item> The value of the <c>AZURE_OPENAI_ENDPOINT</c> environment variable, if present </item>
-    /// </list>
-    /// </para>
-    /// The client selects its API key credential in the following order of precedence:
-    /// <list type="number">
-    /// <item> The setting in an applicable IConfiguration instance, if available </item>
-    /// <item> The value of the <c>AZURE_OPENAI_API_KEY</c> environment variable, if present </item>
-    /// </list>
-    /// <para>
-    /// Note: resource endpoints should not include model deployment or operation information.
-    /// </para>
-    /// <para>
-    /// Example: <c>https://my-resource.openai.azure.com</c>
-    /// </para>
     /// </remarks>
-    /// <param name="options"> Additional options for the client. </param>
-    public AzureOpenAIClient(AzureOpenAIClientOptions options = null)
-        : this(CreatePipeline(GetApiKey(), options), GetEndpoint(), options)
-    {}
+    /// <param name="endpoint"> The Azure OpenAI resource endpoint to use. This should not include model deployment or operation information. For example: <c>https://my-resource.openai.azure.com</c>. </param>
+    /// <param name="credential"> The API key to authenticate with the service. </param>
+    /// <param name="options"> The options to configure the client. </param>
+    public AzureOpenAIClient(Uri endpoint, ApiKeyCredential credential, AzureOpenAIClientOptions options)
+        : this(CreatePipeline(credential, options), endpoint, options)
+    {
+        _keyCredential = credential;
+    }
 
     /// <summary>
     /// Creates a new instance of <see cref="AzureOpenAIClient"/> that will connect to an Azure OpenAI service resource
@@ -127,15 +116,13 @@ public partial class AzureOpenAIClient : OpenAIClient
     /// Example: <c>https://my-resource.openai.azure.com</c>
     /// </para>
     /// </param>
-    /// <param name="credential">
-    /// <para>
-    /// The API key to use when authenticating with the provided endpoint.
-    /// </para>
-    /// </param>
+    /// <param name="credential"> The API key to use when authenticating with the provided endpoint. </param>
     /// <param name="options"> The scenario-independent options to use. </param>
-    public AzureOpenAIClient(Uri endpoint, TokenCredential credential, AzureOpenAIClientOptions options = null)
-        : this(CreatePipeline(credential, options), GetEndpoint(endpoint, requireExplicitEndpoint: true), options)
-    {}
+    public AzureOpenAIClient(Uri endpoint, TokenCredential credential, AzureOpenAIClientOptions options)
+        : this(CreatePipeline(credential, options), endpoint, options)
+    {
+        _tokenCredential = credential;
+    }
 
     /// <summary>
     /// Creates a new instance of <see cref="AzureOpenAIClient"/>.
@@ -144,8 +131,13 @@ public partial class AzureOpenAIClient : OpenAIClient
     /// <param name="endpoint"> The endpoint to use. </param>
     /// <param name="options"> The additional client options to use. </param>
     protected AzureOpenAIClient(ClientPipeline pipeline, Uri endpoint, AzureOpenAIClientOptions options)
-        : base(pipeline, endpoint, options)
+        : base(pipeline, new OpenAIClientOptions() { Endpoint = endpoint })
     {
+        Argument.AssertNotNull(pipeline, nameof(pipeline));
+        Argument.AssertNotNull(endpoint, nameof(endpoint));
+        options ??= new();
+
+        _endpoint = endpoint;
         _options = options;
     }
 
@@ -159,9 +151,16 @@ public partial class AzureOpenAIClient : OpenAIClient
     /// Gets a new <see cref="AssistantClient"/> instance configured for assistant operation use with the Azure OpenAI service.
     /// </summary>
     /// <returns> A new <see cref="AssistantClient"/> instance. </returns>
+#if AZURE_OPENAI_GA
+    [EditorBrowsable(EditorBrowsableState.Never)]
+#endif
     [Experimental("OPENAI001")]
     public override AssistantClient GetAssistantClient()
-        => new AzureAssistantClient(Pipeline, Endpoint, _options);
+#if !AZURE_OPENAI_GA
+        => new AzureAssistantClient(Pipeline, _endpoint, _options);
+#else
+        => throw new InvalidOperationException($"The preview Assistants feature area is not available in this GA release of the Azure OpenAI Service. To use this capability, please use a preview version of the library.");
+#endif
 
     /// <summary>
     /// Gets a new <see cref="AudioClient"/> instance configured for audio operation use with the Azure OpenAI service.
@@ -169,21 +168,30 @@ public partial class AzureOpenAIClient : OpenAIClient
     /// <param name="deploymentName"> The model deployment name to use for the new client's audio operations. </param>
     /// <returns> A new <see cref="AudioClient"/> instance. </returns>
     public override AudioClient GetAudioClient(string deploymentName)
-        => new AzureAudioClient(Pipeline, deploymentName, Endpoint, _options);
+        => new AzureAudioClient(Pipeline, deploymentName, _endpoint, _options);
 
     /// <summary>
     /// Gets a new <see cref="BatchClient"/> instance configured for batch operation use with the Azure OpenAI service.
     /// </summary>
     /// <param name="deploymentName"> The model deployment name to use for the new client's audio operations. </param>
     /// <returns> A new <see cref="BatchClient"/> instance. </returns>
+#if AZURE_OPENAI_GA
+    [EditorBrowsable(EditorBrowsableState.Never)]
+#endif
+    [Experimental("OPENAI001")]
     public BatchClient GetBatchClient(string deploymentName)
-        => new AzureBatchClient(Pipeline, deploymentName, Endpoint, _options);
+#if !AZURE_OPENAI_GA
+        => new AzureBatchClient(Pipeline, deploymentName, _endpoint, _options);
+#else
+        => throw new InvalidOperationException($"The preview Batch feature area is not available in this GA release of the Azure OpenAI Service. To use this capability, please use a preview version of the library.");
+#endif
 
     /// <remarks>
     /// This method is unsupported for Azure OpenAI. Please use the alternate <see cref="GetBatchClient(string)"/>
     /// method that accepts a model deployment name, instead.
     /// </remarks>
     [EditorBrowsable(EditorBrowsableState.Never)]
+    [Experimental("OPENAI001")]
     public override BatchClient GetBatchClient() => GetBatchClient(deploymentName: null);
 
     /// <summary>
@@ -192,7 +200,7 @@ public partial class AzureOpenAIClient : OpenAIClient
     /// <param name="deploymentName"> The model deployment name to use for the new client's chat completion operations. </param>
     /// <returns> A new <see cref="ChatClient"/> instance. </returns>
     public override ChatClient GetChatClient(string deploymentName)
-        => new AzureChatClient(Pipeline, deploymentName, Endpoint, _options);
+        => new AzureChatClient(Pipeline, deploymentName, _endpoint, _options);
 
     /// <summary>
     /// Gets a new <see cref="EmbeddingClient"/> instance configured for embedding operation use with the Azure OpenAI service.
@@ -200,21 +208,36 @@ public partial class AzureOpenAIClient : OpenAIClient
     /// <param name="deploymentName"> The model deployment name to use for the new client's embedding operations. </param>
     /// <returns> A new <see cref="EmbeddingClient"/> instance. </returns>
     public override EmbeddingClient GetEmbeddingClient(string deploymentName)
-        => new AzureEmbeddingClient(Pipeline, deploymentName, Endpoint, _options);
+        => new AzureEmbeddingClient(Pipeline, deploymentName, _endpoint, _options);
 
     /// <summary>
-    /// Gets a new <see cref="FileClient"/> instance configured for file operation use with the Azure OpenAI service.
+    /// Gets a new <see cref="OpenAIFileClient"/> instance configured for file operation use with the Azure OpenAI service.
     /// </summary>
-    /// <returns> A new <see cref="FileClient"/> instance. </returns>
-    public override FileClient GetFileClient()
-        => new AzureFileClient(Pipeline, Endpoint, _options);
+    /// <returns> A new <see cref="OpenAIFileClient"/> instance. </returns>
+#if AZURE_OPENAI_GA
+    [EditorBrowsable(EditorBrowsableState.Never)]
+#endif
+    public override OpenAIFileClient GetOpenAIFileClient()
+#if !AZURE_OPENAI_GA
+        => new AzureFileClient(Pipeline, _endpoint, _options);
+#else
+        => throw new InvalidOperationException($"FileClient is not supported in this GA version of the library. To use Files and related capabilities, please use a preview version of the library.");
+#endif
 
     /// <summary>
     /// Gets a new <see cref="FineTuningClient"/> instance configured for fine-tuning operation use with the Azure OpenAI service.
     /// </summary>
     /// <returns> A new <see cref="FineTuningClient"/> instance. </returns>
+#if AZURE_OPENAI_GA
+    [EditorBrowsable(EditorBrowsableState.Never)]
+#endif
+    [Experimental("OPENAI001")]
     public override FineTuningClient GetFineTuningClient()
-        => new AzureFineTuningClient(Pipeline, Endpoint, _options);
+#if !AZURE_OPENAI_GA
+        => new AzureFineTuningClient(Pipeline, _endpoint, _options);
+#else
+        => throw new InvalidOperationException($"Fine-tuning is not yet supported in the GA version of the library. Please use a preview version.");
+#endif
 
     /// <summary>
     /// Gets a new <see cref="ImageClient"/> instance configured for image operation use with the Azure OpenAI service.
@@ -222,13 +245,13 @@ public partial class AzureOpenAIClient : OpenAIClient
     /// <param name="deploymentName"> The model deployment name to use for the new client's image operations. </param>
     /// <returns> A new <see cref="ImageClient"/> instance. </returns>
     public override ImageClient GetImageClient(string deploymentName)
-        => new AzureImageClient(Pipeline, deploymentName, Endpoint, _options);
+        => new AzureImageClient(Pipeline, deploymentName, _endpoint, _options);
 
     /// <remarks>
     /// Model management operations are not supported with Azure OpenAI.
     /// </remarks>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public override ModelClient GetModelClient()
+    public override OpenAIModelClient GetOpenAIModelClient()
         => throw new NotSupportedException($"Azure OpenAI does not support the OpenAI model management API. Please "
             + "use the Azure AI Services Account Management API to interact with Azure OpenAI model deployments.");
 
@@ -246,18 +269,48 @@ public partial class AzureOpenAIClient : OpenAIClient
     /// Azure OpenAI service.
     /// </summary>
     /// <returns> A new <see cref="VectorStoreClient"/> instance. </returns>
+#if AZURE_OPENAI_GA
+    [EditorBrowsable(EditorBrowsableState.Never)]
+#endif
     [Experimental("OPENAI001")]
     public override VectorStoreClient GetVectorStoreClient()
-        => new AzureVectorStoreClient(Pipeline, Endpoint, _options);
+#if !AZURE_OPENAI_GA
+    => new AzureVectorStoreClient(Pipeline, _endpoint, _options);
+#else
+        => throw new InvalidOperationException($"VectorStoreClient is not supported with this GA version of the library. Please use a preview version of the library for this functionality.");
+#endif
+
+#if AZURE_OPENAI_GA
+    [EditorBrowsable(EditorBrowsableState.Never)]
+#endif
+    [Experimental("OPENAI002")]
+    public override RealtimeConversationClient GetRealtimeConversationClient(string deploymentName)
+    {
+#if !AZURE_OPENAI_GA
+        if (_tokenCredential is not null)
+        {
+            return new AzureRealtimeConversationClient(_endpoint, deploymentName, _tokenCredential, _options);
+        }
+        else
+        {
+            return new AzureRealtimeConversationClient(_endpoint, deploymentName, _keyCredential, _options);
+        }
+#else
+        throw new InvalidOperationException($"{nameof(RealtimeConversationClient)} is not supported with this GA version of the library. Please use a preview version of the library for this functionality.");
+#endif
+    }
 
     private static ClientPipeline CreatePipeline(PipelinePolicy authenticationPolicy, AzureOpenAIClientOptions options)
         => ClientPipeline.Create(
             options ?? new(),
-            perCallPolicies: [],
+            perCallPolicies:
+            [
+                CreateAddUserAgentHeaderPolicy(options),
+                CreateAddClientRequestIdHeaderPolicy(),
+            ],
             perTryPolicies:
             [
                 authenticationPolicy,
-                CreateAddUserAgentHeaderPolicy(options),
             ],
             beforeTransportPolicies: []);
 
@@ -270,79 +323,41 @@ public partial class AzureOpenAIClient : OpenAIClient
     internal static ClientPipeline CreatePipeline(TokenCredential credential, AzureOpenAIClientOptions options = null)
     {
         Argument.AssertNotNull(credential, nameof(credential));
-        return CreatePipeline(new AzureTokenAuthenticationPolicy(credential), options);
-    }
-
-    internal static new ApiKeyCredential GetApiKey(ApiKeyCredential explicitCredential = null, bool requireExplicitCredential = false)
-    {
-        if (explicitCredential is not null)
-        {
-            return explicitCredential;
-        }
-        // To do: IConfiguration support
-        else if (requireExplicitCredential)
-        {
-            throw new ArgumentNullException(nameof(explicitCredential), $"A non-null credential value is required.");
-        }
-        else
-        {
-            string environmentApiKey = Environment.GetEnvironmentVariable(s_aoaiApiKeyEnvironmentVariable);
-            if (string.IsNullOrEmpty(environmentApiKey))
-            {
-                throw new InvalidOperationException(
-                    $"No environment variable value was found for AZURE_OPENAI_API_KEY. "
-                    + "Please either populate this environment variable or provide authentication information directly "
-                    + "to the client constructor.");
-            }
-            return new(environmentApiKey);
-        }
-    }
-
-    internal static Uri GetEndpoint(Uri explicitEndpoint = null, bool requireExplicitEndpoint = false, AzureOpenAIClientOptions options = null)
-    {
-        if (explicitEndpoint is not null)
-        {
-            return explicitEndpoint;
-        }
-        else if (options?.Endpoint is not null)
-        {
-            return options.Endpoint;
-        }
-        // To do: IConfiguration support
-        else if (requireExplicitEndpoint)
-        {
-            throw new ArgumentNullException(nameof(explicitEndpoint), $"A non-null endpoint value is required.");
-        }
-        else
-        {
-            string environmentApiKey = Environment.GetEnvironmentVariable(s_aoaiEndpointEnvironmentVariable);
-            if (string.IsNullOrEmpty(environmentApiKey))
-            {
-                throw new InvalidOperationException(
-                    $"No environment variable value was found for AZURE_OPENAI_ENDPOINT. "
-                    + "Please either populate this environment variable or provide endpoint information directly "
-                    + "to the client constructor.");
-            }
-            return new(environmentApiKey);
-        }
+        string authorizationScope = options?.Audience?.ToString()
+            ?? AzureOpenAIAudience.AzurePublicCloud.ToString();
+        return CreatePipeline(new AzureTokenAuthenticationPolicy(credential, [authorizationScope]), options);
     }
 
     private static PipelinePolicy CreateAddUserAgentHeaderPolicy(AzureOpenAIClientOptions options = null)
     {
-        Core.TelemetryDetails telemetryDetails = new(typeof(AzureOpenAIClient).Assembly);
-        return new GenericActionPipelinePolicy(message =>
-        {
-            if (message?.Request?.Headers?.TryGetValue(s_userAgentHeaderKey, out string _) == false)
+        Core.TelemetryDetails telemetryDetails = new(typeof(AzureOpenAIClient).Assembly, options?.UserAgentApplicationId);
+        return new GenericActionPipelinePolicy(
+            requestAction: request =>
             {
-                message.Request.Headers.Set(s_userAgentHeaderKey, telemetryDetails.ToString());
+                if (request?.Headers?.TryGetValue(s_userAgentHeaderKey, out string _) == false)
+                {
+                    request.Headers.Set(s_userAgentHeaderKey, telemetryDetails.ToString());
+                }
+            });
+    }
+
+    private static PipelinePolicy CreateAddClientRequestIdHeaderPolicy()
+    {
+        return new GenericActionPipelinePolicy(request =>
+        {
+            if (request?.Headers is not null)
+            {
+                string requestId = request.Headers.TryGetValue(s_clientRequestIdHeaderKey, out string existingHeader) == true
+                    ? existingHeader
+                    : Guid.NewGuid().ToString().ToLowerInvariant();
+                request.Headers.Set(s_clientRequestIdHeaderKey, requestId);
             }
         });
     }
 
-    private static readonly string s_aoaiEndpointEnvironmentVariable = "AZURE_OPENAI_ENDPOINT";
-    private static readonly string s_aoaiApiKeyEnvironmentVariable = "AZURE_OPENAI_API_KEY";
     private static readonly string s_userAgentHeaderKey = "User-Agent";
-    private static PipelineMessageClassifier _pipelineMessageClassifier;
+    private static readonly string s_clientRequestIdHeaderKey = "x-ms-client-request-id";
+    private static PipelineMessageClassifier s_pipelineMessageClassifier;
     internal static PipelineMessageClassifier PipelineMessageClassifier
-        => _pipelineMessageClassifier ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200, 201 });
+        => s_pipelineMessageClassifier ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200, 201 });
 }

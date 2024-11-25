@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The timer trigger name that caused the run. </summary>
+        [WirePath("timerTriggerName")]
         public string TimerTriggerName { get; set; }
         /// <summary> The occurrence that triggered the run. </summary>
+        [WirePath("scheduleOccurrence")]
         public string ScheduleOccurrence { get; set; }
     }
 }

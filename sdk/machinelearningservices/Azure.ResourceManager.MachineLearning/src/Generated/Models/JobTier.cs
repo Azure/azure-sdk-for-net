@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(JobTier left, JobTier right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JobTier"/> values are not the same. </summary>
         public static bool operator !=(JobTier left, JobTier right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="JobTier"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="JobTier"/>. </summary>
         public static implicit operator JobTier(string value) => new JobTier(value);
 
         /// <inheritdoc />

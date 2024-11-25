@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(MachineLearningCachingType left, MachineLearningCachingType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningCachingType"/> values are not the same. </summary>
         public static bool operator !=(MachineLearningCachingType left, MachineLearningCachingType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MachineLearningCachingType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningCachingType"/>. </summary>
         public static implicit operator MachineLearningCachingType(string value) => new MachineLearningCachingType(value);
 
         /// <inheritdoc />

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(VpnGatewayTunnelingProtocol left, VpnGatewayTunnelingProtocol right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VpnGatewayTunnelingProtocol"/> values are not the same. </summary>
         public static bool operator !=(VpnGatewayTunnelingProtocol left, VpnGatewayTunnelingProtocol right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VpnGatewayTunnelingProtocol"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VpnGatewayTunnelingProtocol"/>. </summary>
         public static implicit operator VpnGatewayTunnelingProtocol(string value) => new VpnGatewayTunnelingProtocol(value);
 
         /// <inheritdoc />

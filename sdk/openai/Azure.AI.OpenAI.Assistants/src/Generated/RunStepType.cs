@@ -33,7 +33,7 @@ namespace Azure.AI.OpenAI.Assistants
         public static bool operator ==(RunStepType left, RunStepType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RunStepType"/> values are not the same. </summary>
         public static bool operator !=(RunStepType left, RunStepType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RunStepType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RunStepType"/>. </summary>
         public static implicit operator RunStepType(string value) => new RunStepType(value);
 
         /// <inheritdoc />

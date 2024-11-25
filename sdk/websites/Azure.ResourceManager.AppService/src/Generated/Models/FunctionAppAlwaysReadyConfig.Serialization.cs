@@ -20,22 +20,30 @@ namespace Azure.ResourceManager.AppService.Models
 
         void IJsonModel<FunctionAppAlwaysReadyConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<FunctionAppAlwaysReadyConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FunctionAppAlwaysReadyConfig)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(InstanceCount))
+            if (Optional.IsDefined(AlwaysReadyInstanceCount))
             {
                 writer.WritePropertyName("instanceCount"u8);
-                writer.WriteNumberValue(InstanceCount.Value);
+                writer.WriteNumberValue(AlwaysReadyInstanceCount.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -52,7 +60,6 @@ namespace Azure.ResourceManager.AppService.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         FunctionAppAlwaysReadyConfig IJsonModel<FunctionAppAlwaysReadyConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -76,7 +83,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             string name = default;
-            float? instanceCount = default;
+            int? instanceCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +99,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    instanceCount = property.Value.GetSingle();
+                    instanceCount = property.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -138,7 +145,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InstanceCount), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AlwaysReadyInstanceCount), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  instanceCount: ");
@@ -146,10 +153,10 @@ namespace Azure.ResourceManager.AppService.Models
             }
             else
             {
-                if (Optional.IsDefined(InstanceCount))
+                if (Optional.IsDefined(AlwaysReadyInstanceCount))
                 {
                     builder.Append("  instanceCount: ");
-                    builder.AppendLine($"'{InstanceCount.Value.ToString()}'");
+                    builder.AppendLine($"{AlwaysReadyInstanceCount.Value}");
                 }
             }
 

@@ -30,7 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(CredentialReferenceType left, CredentialReferenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CredentialReferenceType"/> values are not the same. </summary>
         public static bool operator !=(CredentialReferenceType left, CredentialReferenceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CredentialReferenceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CredentialReferenceType"/>. </summary>
         public static implicit operator CredentialReferenceType(string value) => new CredentialReferenceType(value);
 
         /// <inheritdoc />

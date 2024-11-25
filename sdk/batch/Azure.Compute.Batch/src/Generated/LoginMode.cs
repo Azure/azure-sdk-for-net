@@ -33,7 +33,7 @@ namespace Azure.Compute.Batch
         public static bool operator ==(LoginMode left, LoginMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LoginMode"/> values are not the same. </summary>
         public static bool operator !=(LoginMode left, LoginMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LoginMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LoginMode"/>. </summary>
         public static implicit operator LoginMode(string value) => new LoginMode(value);
 
         /// <inheritdoc />

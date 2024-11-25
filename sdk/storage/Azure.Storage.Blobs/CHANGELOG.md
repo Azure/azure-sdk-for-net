@@ -1,6 +1,6 @@
 # Release History
 
-## 12.22.0-beta.2 (Unreleased)
+## 12.24.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,54 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.23.0 (2024-11-12)
+
+### Features Added
+- Includes all features from 12.23.0-beta.1 and 12.23.0-beta.2
+
+### Bugs Fixed
+- Fixed bug where network download streams were not properly disposed.
+- Fixed bug where DownloadToAsync() did not dispose all its network streams on error in some cases.
+
+## 12.23.0-beta.2 (2024-10-10)
+
+### Other Changes
+- Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix.
+
+## 12.22.2 (2024-10-10)
+
+### Other Changes
+- Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix.
+
+## 12.23.0-beta.1 (2024-10-08)
+
+### Features Added
+- Added support for service version 2025-01-05.
+- Added GenerateUserDelegationSasUri() to BlobBaseClient and BlobContainerClient.
+- Added BlobErrorCode.BlobAccessTierNotSupportedForAccountType enum value.
+
+### Bugs Fixed
+- Fixed bug where BlobClient.Upload(BinaryData content, ..) did not properly dispose stream after wrapping the BinaryData passed.
+
+## 12.22.1 (2024-09-25)
+
+### Other Changes
+- Integrated decryption for CSE v2.1
+
+## 12.22.0 (2024-09-18)
+
+### Features Added
+- Includes all features from 12.22.0-beta.1
+
+### Bugs Fixed
+- Fixed \[BUG\] Method overload BlobBaseClient.OpenReadAsync()/OpenRead() to correctly handle the allowBlobModifications flag #45516
+- Fixed \[BUG\] Fixed Equality failures due to implicit cast on BlobErrorCode #44213
+
+## 12.21.2 (2024-08-08)
+
+### Bugs Fixed
+- Fixed \[BUG\] WrapKeyInternal to correctly call WrapKey in sync flow #42160
 
 ## 12.22.0-beta.1 (2024-08-06)
 

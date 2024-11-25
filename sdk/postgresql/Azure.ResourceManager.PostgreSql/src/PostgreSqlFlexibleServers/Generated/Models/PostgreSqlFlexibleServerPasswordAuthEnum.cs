@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static bool operator ==(PostgreSqlFlexibleServerPasswordAuthEnum left, PostgreSqlFlexibleServerPasswordAuthEnum right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerPasswordAuthEnum"/> values are not the same. </summary>
         public static bool operator !=(PostgreSqlFlexibleServerPasswordAuthEnum left, PostgreSqlFlexibleServerPasswordAuthEnum right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PostgreSqlFlexibleServerPasswordAuthEnum"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlFlexibleServerPasswordAuthEnum"/>. </summary>
         public static implicit operator PostgreSqlFlexibleServerPasswordAuthEnum(string value) => new PostgreSqlFlexibleServerPasswordAuthEnum(value);
 
         /// <inheritdoc />

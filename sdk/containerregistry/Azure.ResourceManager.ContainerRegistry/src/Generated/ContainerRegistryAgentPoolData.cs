@@ -87,14 +87,19 @@ namespace Azure.ResourceManager.ContainerRegistry
         }
 
         /// <summary> The count of agent machine. </summary>
+        [WirePath("properties.count")]
         public int? Count { get; set; }
         /// <summary> The Tier of agent machine. </summary>
+        [WirePath("properties.tier")]
         public string Tier { get; set; }
         /// <summary> The OS of agent machine. </summary>
+        [WirePath("properties.os")]
         public ContainerRegistryOS? OS { get; set; }
         /// <summary> The Virtual Network Subnet Resource Id of the agent machine. </summary>
+        [WirePath("properties.virtualNetworkSubnetResourceId")]
         public ResourceIdentifier VirtualNetworkSubnetResourceId { get; set; }
         /// <summary> The provisioning state of this agent pool. </summary>
+        [WirePath("properties.provisioningState")]
         public ContainerRegistryProvisioningState? ProvisioningState { get; }
     }
 }

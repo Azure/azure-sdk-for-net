@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static bool operator ==(StartupBehavior left, StartupBehavior right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StartupBehavior"/> values are not the same. </summary>
         public static bool operator !=(StartupBehavior left, StartupBehavior right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StartupBehavior"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StartupBehavior"/>. </summary>
         public static implicit operator StartupBehavior(string value) => new StartupBehavior(value);
 
         /// <inheritdoc />

@@ -117,10 +117,10 @@ Azure Active Directory (AAD) authentication is an optional feature that can be u
 
 ```C#
 // Call UseAzureMonitor and set Credential to authenticate through Active Directory.
-builder.Services.AddOpenTelemetry().UseAzureMonitor(o =>
+builder.Services.AddOpenTelemetry().UseAzureMonitor(options =>
 {
-    o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
-    o.Credential = new DefaultAzureCredential();
+    options.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
+    options.Credential = new DefaultAzureCredential();
 });
 ```
 
@@ -135,9 +135,9 @@ Note that the `Credential` property is optional. If it is not set, Azure Monitor
 When using the Azure Monitor Distro, the sampling percentage for telemetry data is set to 100% (1.0F) by default. For example, let's say you want to set the sampling percentage to 50%. You can achieve this by modifying the code as follows:
 
 ``` C#
-builder.Services.AddOpenTelemetry().UseAzureMonitor(o =>
+builder.Services.AddOpenTelemetry().UseAzureMonitor(options =>
 {
-    o.SamplingRatio = 0.5F;
+    options.SamplingRatio = 0.5F;
 });
 ```
 
@@ -256,9 +256,9 @@ dotnet add package --prerelease OpenTelemetry.Instrumentation.SqlClient
 ```
 
 ```C#
-builder.Services.AddOpenTelemetry().UseAzureMonitor().WithTracing(builder =>
+builder.Services.AddOpenTelemetry().UseAzureMonitor().WithTracing(tracing =>
 {
-    builder.AddSqlClientInstrumentation(options =>
+    tracing.AddSqlClientInstrumentation(options =>
     {
         options.SetDbStatementForStoredProcedure = false;
     });
@@ -273,10 +273,10 @@ To disable Live Metrics, you can set the `EnableLiveMetrics` property to `false`
 
 ```C#
 // Disable Live Metrics by setting EnableLiveMetrics to false in the UseAzureMonitor configuration.
-builder.Services.AddOpenTelemetry().UseAzureMonitor(o =>
+builder.Services.AddOpenTelemetry().UseAzureMonitor(options =>
 {
-    o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
-    o.EnableLiveMetrics = false;
+    options.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
+    options.EnableLiveMetrics = false;
 });
 ```
 

@@ -19,56 +19,27 @@ namespace Azure.ResourceManager.Monitor.Models
 
         void IJsonModel<RuleMetricDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<RuleMetricDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RuleMetricDataSource)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(MetricName))
             {
                 writer.WritePropertyName("metricName"u8);
                 writer.WriteStringValue(MetricName);
             }
-            writer.WritePropertyName("odata.type"u8);
-            writer.WriteStringValue(OdataType);
-            if (Optional.IsDefined(ResourceId))
-            {
-                writer.WritePropertyName("resourceUri"u8);
-                writer.WriteStringValue(ResourceId);
-            }
-            if (Optional.IsDefined(LegacyResourceId))
-            {
-                writer.WritePropertyName("legacyResourceId"u8);
-                writer.WriteStringValue(LegacyResourceId);
-            }
-            if (Optional.IsDefined(ResourceLocation))
-            {
-                writer.WritePropertyName("resourceLocation"u8);
-                writer.WriteStringValue(ResourceLocation);
-            }
-            if (Optional.IsDefined(MetricNamespace))
-            {
-                writer.WritePropertyName("metricNamespace"u8);
-                writer.WriteStringValue(MetricNamespace);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         RuleMetricDataSource IJsonModel<RuleMetricDataSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

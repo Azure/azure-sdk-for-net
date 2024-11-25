@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Communication.Models
         public static bool operator ==(UserEngagementTracking left, UserEngagementTracking right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UserEngagementTracking"/> values are not the same. </summary>
         public static bool operator !=(UserEngagementTracking left, UserEngagementTracking right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="UserEngagementTracking"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="UserEngagementTracking"/>. </summary>
         public static implicit operator UserEngagementTracking(string value) => new UserEngagementTracking(value);
 
         /// <inheritdoc />

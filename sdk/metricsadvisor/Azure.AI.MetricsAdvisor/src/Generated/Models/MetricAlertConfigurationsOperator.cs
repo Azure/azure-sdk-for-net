@@ -33,7 +33,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static bool operator ==(MetricAlertConfigurationsOperator left, MetricAlertConfigurationsOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MetricAlertConfigurationsOperator"/> values are not the same. </summary>
         public static bool operator !=(MetricAlertConfigurationsOperator left, MetricAlertConfigurationsOperator right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MetricAlertConfigurationsOperator"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MetricAlertConfigurationsOperator"/>. </summary>
         public static implicit operator MetricAlertConfigurationsOperator(string value) => new MetricAlertConfigurationsOperator(value);
 
         /// <inheritdoc />

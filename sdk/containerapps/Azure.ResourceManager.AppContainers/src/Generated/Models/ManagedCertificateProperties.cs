@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Provisioning state of the certificate. </summary>
+        [WirePath("provisioningState")]
         public ContainerAppCertificateProvisioningState? ProvisioningState { get; }
         /// <summary> Subject name of the certificate. </summary>
+        [WirePath("subjectName")]
         public string SubjectName { get; set; }
         /// <summary> Any error occurred during the certificate provision. </summary>
+        [WirePath("error")]
         public string Error { get; }
         /// <summary> Selected type of domain control validation for managed certificates. </summary>
+        [WirePath("domainControlValidation")]
         public ManagedCertificateDomainControlValidation? DomainControlValidation { get; set; }
         /// <summary> A TXT token used for DNS TXT domain control validation when issuing this type of managed certificates. </summary>
+        [WirePath("validationToken")]
         public string ValidationToken { get; }
     }
 }

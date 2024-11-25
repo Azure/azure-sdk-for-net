@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
-
 using System;
 using System.Text.Json;
 using Azure.AI.OpenAI.Tests.Utils;
@@ -13,7 +11,7 @@ public class BatchObject
 {
     public static BatchObject From(BinaryData data)
     {
-        return JsonSerializer.Deserialize<BatchObject>(data, JsonHelpers.OpenAIJsonOptions)
+        return JsonSerializer.Deserialize<BatchObject>(data, JsonOptions.OpenAIJsonOptions)
             ?? throw new InvalidOperationException("Response was null JSON");
     }
 

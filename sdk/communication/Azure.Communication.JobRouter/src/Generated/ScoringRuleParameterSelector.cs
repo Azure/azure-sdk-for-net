@@ -33,7 +33,7 @@ namespace Azure.Communication.JobRouter
         public static bool operator ==(ScoringRuleParameterSelector left, ScoringRuleParameterSelector right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScoringRuleParameterSelector"/> values are not the same. </summary>
         public static bool operator !=(ScoringRuleParameterSelector left, ScoringRuleParameterSelector right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ScoringRuleParameterSelector"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ScoringRuleParameterSelector"/>. </summary>
         public static implicit operator ScoringRuleParameterSelector(string value) => new ScoringRuleParameterSelector(value);
 
         /// <inheritdoc />

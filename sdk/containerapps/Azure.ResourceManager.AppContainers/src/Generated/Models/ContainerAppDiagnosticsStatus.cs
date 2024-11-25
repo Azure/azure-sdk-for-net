@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Diagnostic message. </summary>
+        [WirePath("message")]
         public string Message { get; set; }
         /// <summary> Status. </summary>
+        [WirePath("statusId")]
         public int? StatusId { get; set; }
     }
 }

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static bool operator ==(ApiManagementResourceSkuCapacityScaleType left, ApiManagementResourceSkuCapacityScaleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApiManagementResourceSkuCapacityScaleType"/> values are not the same. </summary>
         public static bool operator !=(ApiManagementResourceSkuCapacityScaleType left, ApiManagementResourceSkuCapacityScaleType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ApiManagementResourceSkuCapacityScaleType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ApiManagementResourceSkuCapacityScaleType"/>. </summary>
         public static implicit operator ApiManagementResourceSkuCapacityScaleType(string value) => new ApiManagementResourceSkuCapacityScaleType(value);
 
         /// <inheritdoc />

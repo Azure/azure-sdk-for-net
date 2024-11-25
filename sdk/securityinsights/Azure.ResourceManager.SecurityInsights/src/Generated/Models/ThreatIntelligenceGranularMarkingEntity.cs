@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Language granular marking model. </summary>
+        [WirePath("language")]
         public string Language { get; set; }
         /// <summary> marking reference granular marking model. </summary>
+        [WirePath("markingRef")]
         public int? MarkingRef { get; set; }
         /// <summary> granular marking model selectors. </summary>
+        [WirePath("selectors")]
         public IList<string> Selectors { get; }
     }
 }

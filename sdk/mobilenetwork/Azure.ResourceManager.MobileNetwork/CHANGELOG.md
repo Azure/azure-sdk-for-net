@@ -18,6 +18,7 @@
 
 - Upgraded api-version tag from 'package-2023-09' to 'package-2024-02'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/812012235b51ef1edf0e99f6ce9741c2c4c9df9a/specification/mobilenetwork/resource-manager/readme.md.
 - Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Other Changes
 

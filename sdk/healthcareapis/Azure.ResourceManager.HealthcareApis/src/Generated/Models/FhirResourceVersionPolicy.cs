@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public static bool operator ==(FhirResourceVersionPolicy left, FhirResourceVersionPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FhirResourceVersionPolicy"/> values are not the same. </summary>
         public static bool operator !=(FhirResourceVersionPolicy left, FhirResourceVersionPolicy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FhirResourceVersionPolicy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FhirResourceVersionPolicy"/>. </summary>
         public static implicit operator FhirResourceVersionPolicy(string value) => new FhirResourceVersionPolicy(value);
 
         /// <inheritdoc />

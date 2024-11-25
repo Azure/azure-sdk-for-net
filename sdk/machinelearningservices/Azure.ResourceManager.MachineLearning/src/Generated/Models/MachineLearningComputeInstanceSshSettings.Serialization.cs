@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,13 +20,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         void IJsonModel<MachineLearningComputeInstanceSshSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningComputeInstanceSshSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineLearningComputeInstanceSshSettings)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(SshPublicAccess))
             {
                 writer.WritePropertyName("sshPublicAccess"u8);
@@ -61,7 +70,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         MachineLearningComputeInstanceSshSettings IJsonModel<MachineLearningComputeInstanceSshSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -129,6 +137,97 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningComputeInstanceSshSettings(sshPublicAccess, adminUserName, sshPort, adminPublicKey, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SshPublicAccess), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sshPublicAccess: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SshPublicAccess))
+                {
+                    builder.Append("  sshPublicAccess: ");
+                    builder.AppendLine($"'{SshPublicAccess.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdminUserName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  adminUserName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AdminUserName))
+                {
+                    builder.Append("  adminUserName: ");
+                    if (AdminUserName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AdminUserName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AdminUserName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SshPort), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sshPort: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SshPort))
+                {
+                    builder.Append("  sshPort: ");
+                    builder.AppendLine($"{SshPort.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdminPublicKey), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  adminPublicKey: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AdminPublicKey))
+                {
+                    builder.Append("  adminPublicKey: ");
+                    if (AdminPublicKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AdminPublicKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AdminPublicKey}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<MachineLearningComputeInstanceSshSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningComputeInstanceSshSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -137,6 +236,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningComputeInstanceSshSettings)} does not support writing '{options.Format}' format.");
             }

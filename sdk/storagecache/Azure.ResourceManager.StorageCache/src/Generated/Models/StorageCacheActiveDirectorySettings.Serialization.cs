@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         void IJsonModel<StorageCacheActiveDirectorySettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<StorageCacheActiveDirectorySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StorageCacheActiveDirectorySettings)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("primaryDnsIpAddress"u8);
             writer.WriteStringValue(PrimaryDnsIPAddress.ToString());
             if (Optional.IsDefined(SecondaryDnsIPAddress))
@@ -65,7 +73,6 @@ namespace Azure.ResourceManager.StorageCache.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         StorageCacheActiveDirectorySettings IJsonModel<StorageCacheActiveDirectorySettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

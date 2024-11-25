@@ -39,7 +39,7 @@ namespace Azure.Communication.PhoneNumbers
         public static bool operator ==(PhoneNumberOperationStatus left, PhoneNumberOperationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PhoneNumberOperationStatus"/> values are not the same. </summary>
         public static bool operator !=(PhoneNumberOperationStatus left, PhoneNumberOperationStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PhoneNumberOperationStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PhoneNumberOperationStatus"/>. </summary>
         public static implicit operator PhoneNumberOperationStatus(string value) => new PhoneNumberOperationStatus(value);
 
         /// <inheritdoc />

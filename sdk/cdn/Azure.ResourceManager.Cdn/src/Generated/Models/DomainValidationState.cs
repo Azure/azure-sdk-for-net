@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(DomainValidationState left, DomainValidationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DomainValidationState"/> values are not the same. </summary>
         public static bool operator !=(DomainValidationState left, DomainValidationState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DomainValidationState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DomainValidationState"/>. </summary>
         public static implicit operator DomainValidationState(string value) => new DomainValidationState(value);
 
         /// <inheritdoc />

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Storage.Models
         public static bool operator ==(PostPlannedFailoverRedundancy left, PostPlannedFailoverRedundancy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostPlannedFailoverRedundancy"/> values are not the same. </summary>
         public static bool operator !=(PostPlannedFailoverRedundancy left, PostPlannedFailoverRedundancy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PostPlannedFailoverRedundancy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PostPlannedFailoverRedundancy"/>. </summary>
         public static implicit operator PostPlannedFailoverRedundancy(string value) => new PostPlannedFailoverRedundancy(value);
 
         /// <inheritdoc />

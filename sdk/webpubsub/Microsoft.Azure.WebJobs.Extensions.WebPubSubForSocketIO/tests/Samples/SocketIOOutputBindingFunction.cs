@@ -23,8 +23,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests.Samples
             ILogger log)
         {
             string userName = Guid.NewGuid().ToString();
-            await operation.AddAsync(SocketIOAction.CreateSendToNamespaceAction("/", "new message", new[] { new { username = userName,
-                message = "Hello" } }));
+            await operation.AddAsync(SocketIOAction.CreateSendToNamespaceAction("new message", new[] { new { username = userName, message = "Hello" } }));
             log.LogInformation("Send to namespace finished.");
             return new OkObjectResult("ok");
         }

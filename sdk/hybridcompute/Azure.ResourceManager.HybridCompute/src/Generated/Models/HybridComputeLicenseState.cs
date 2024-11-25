@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static bool operator ==(HybridComputeLicenseState left, HybridComputeLicenseState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HybridComputeLicenseState"/> values are not the same. </summary>
         public static bool operator !=(HybridComputeLicenseState left, HybridComputeLicenseState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HybridComputeLicenseState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HybridComputeLicenseState"/>. </summary>
         public static implicit operator HybridComputeLicenseState(string value) => new HybridComputeLicenseState(value);
 
         /// <inheritdoc />

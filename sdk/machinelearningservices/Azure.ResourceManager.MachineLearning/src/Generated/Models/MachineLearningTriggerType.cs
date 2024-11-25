@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The MachineLearningTriggerType. </summary>
+    /// <summary> Is the trigger type recurrence or cron. </summary>
     public readonly partial struct MachineLearningTriggerType : IEquatable<MachineLearningTriggerType>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(MachineLearningTriggerType left, MachineLearningTriggerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningTriggerType"/> values are not the same. </summary>
         public static bool operator !=(MachineLearningTriggerType left, MachineLearningTriggerType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MachineLearningTriggerType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningTriggerType"/>. </summary>
         public static implicit operator MachineLearningTriggerType(string value) => new MachineLearningTriggerType(value);
 
         /// <inheritdoc />

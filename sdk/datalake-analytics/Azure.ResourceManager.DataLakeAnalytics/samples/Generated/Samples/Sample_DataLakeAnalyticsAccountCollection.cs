@@ -12,14 +12,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DataLakeAnalytics.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Samples
 {
     public partial class Sample_DataLakeAnalyticsAccountCollection
     {
-        // Gets the first page of Data Lake Analytics accounts, if any, within a specific resource group. This includes a link to the next page, if any.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetsTheFirstPageOfDataLakeAnalyticsAccountsIfAnyWithinASpecificResourceGroupThisIncludesALinkToTheNextPageIfAny()
         {
             // Generated from example definition: specification/datalake-analytics/resource-manager/Microsoft.DataLakeAnalytics/stable/2016-11-01/examples/Accounts_ListByResourceGroup.json
@@ -47,12 +47,11 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Creates the specified Data Lake Analytics account. This supplies the user with computation services for Data Lake Analytics workloads.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesTheSpecifiedDataLakeAnalyticsAccountThisSuppliesTheUserWithComputationServicesForDataLakeAnalyticsWorkloads()
         {
             // Generated from example definition: specification/datalake-analytics/resource-manager/Microsoft.DataLakeAnalytics/stable/2016-11-01/examples/Accounts_Create.json
@@ -125,9 +124,8 @@ new FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent("test_rule",IPA
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Gets details of the specified Data Lake Analytics account.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsDetailsOfTheSpecifiedDataLakeAnalyticsAccount()
         {
             // Generated from example definition: specification/datalake-analytics/resource-manager/Microsoft.DataLakeAnalytics/stable/2016-11-01/examples/Accounts_Get.json
@@ -159,9 +157,8 @@ new FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent("test_rule",IPA
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Gets details of the specified Data Lake Analytics account.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetsDetailsOfTheSpecifiedDataLakeAnalyticsAccount()
         {
             // Generated from example definition: specification/datalake-analytics/resource-manager/Microsoft.DataLakeAnalytics/stable/2016-11-01/examples/Accounts_Get.json
@@ -189,9 +186,8 @@ new FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent("test_rule",IPA
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Gets details of the specified Data Lake Analytics account.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetsDetailsOfTheSpecifiedDataLakeAnalyticsAccount()
         {
             // Generated from example definition: specification/datalake-analytics/resource-manager/Microsoft.DataLakeAnalytics/stable/2016-11-01/examples/Accounts_Get.json
@@ -219,7 +215,7 @@ new FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent("test_rule",IPA
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

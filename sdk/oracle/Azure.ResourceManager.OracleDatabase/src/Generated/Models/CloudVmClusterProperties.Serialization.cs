@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         void IJsonModel<CloudVmClusterProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CloudVmClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CloudVmClusterProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(Ocid))
             {
                 writer.WritePropertyName("ocid"u8);
@@ -297,7 +305,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CloudVmClusterProperties IJsonModel<CloudVmClusterProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

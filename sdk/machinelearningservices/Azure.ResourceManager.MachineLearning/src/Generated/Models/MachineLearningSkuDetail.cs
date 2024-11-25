@@ -51,23 +51,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningSkuDetail"/>. </summary>
-        /// <param name="capacity"> Gets or sets the Sku Capacity. </param>
         /// <param name="resourceType"> The resource type name. </param>
         /// <param name="sku"> Gets or sets the Sku. </param>
+        /// <param name="capacity"> Gets or sets the Sku Capacity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningSkuDetail(MachineLearningSkuCapacity capacity, string resourceType, MachineLearningSkuSetting sku, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningSkuDetail(string resourceType, MachineLearningSkuSetting sku, MachineLearningSkuCapacity capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Capacity = capacity;
             ResourceType = resourceType;
             Sku = sku;
+            Capacity = capacity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the Sku Capacity. </summary>
-        public MachineLearningSkuCapacity Capacity { get; }
         /// <summary> The resource type name. </summary>
+        [WirePath("resourceType")]
         public string ResourceType { get; }
         /// <summary> Gets or sets the Sku. </summary>
+        [WirePath("sku")]
         public MachineLearningSkuSetting Sku { get; }
+        /// <summary> Gets or sets the Sku Capacity. </summary>
+        [WirePath("capacity")]
+        public MachineLearningSkuCapacity Capacity { get; }
     }
 }

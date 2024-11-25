@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static bool operator ==(ManagedHsmGeoReplicatedRegionProvisioningState left, ManagedHsmGeoReplicatedRegionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedHsmGeoReplicatedRegionProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(ManagedHsmGeoReplicatedRegionProvisioningState left, ManagedHsmGeoReplicatedRegionProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ManagedHsmGeoReplicatedRegionProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedHsmGeoReplicatedRegionProvisioningState"/>. </summary>
         public static implicit operator ManagedHsmGeoReplicatedRegionProvisioningState(string value) => new ManagedHsmGeoReplicatedRegionProvisioningState(value);
 
         /// <inheritdoc />

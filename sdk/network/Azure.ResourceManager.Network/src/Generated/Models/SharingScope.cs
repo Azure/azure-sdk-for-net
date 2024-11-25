@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(SharingScope left, SharingScope right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SharingScope"/> values are not the same. </summary>
         public static bool operator !=(SharingScope left, SharingScope right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SharingScope"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SharingScope"/>. </summary>
         public static implicit operator SharingScope(string value) => new SharingScope(value);
 
         /// <inheritdoc />

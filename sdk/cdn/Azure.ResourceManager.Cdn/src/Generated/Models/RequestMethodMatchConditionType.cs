@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(RequestMethodMatchConditionType left, RequestMethodMatchConditionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RequestMethodMatchConditionType"/> values are not the same. </summary>
         public static bool operator !=(RequestMethodMatchConditionType left, RequestMethodMatchConditionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RequestMethodMatchConditionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RequestMethodMatchConditionType"/>. </summary>
         public static implicit operator RequestMethodMatchConditionType(string value) => new RequestMethodMatchConditionType(value);
 
         /// <inheritdoc />

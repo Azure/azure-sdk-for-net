@@ -29,6 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="GoogleBigQueryLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="trustedCertPath"> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. Type: string (or Expression with resultType string). </param>
         /// <param name="useSystemTrustStore"> Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false.Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal GoogleBigQueryLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> project, DataFactoryElement<string> additionalProjects, DataFactoryElement<bool> requestGoogleDriveScope, GoogleBigQueryAuthenticationType authenticationType, DataFactorySecret refreshToken, DataFactoryElement<string> clientId, DataFactorySecret clientSecret, DataFactoryElement<string> email, DataFactoryElement<string> keyFilePath, DataFactoryElement<string> trustedCertPath, DataFactoryElement<bool> useSystemTrustStore, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal GoogleBigQueryLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> project, DataFactoryElement<string> additionalProjects, DataFactoryElement<bool> requestGoogleDriveScope, GoogleBigQueryAuthenticationType authenticationType, DataFactorySecret refreshToken, DataFactoryElement<string> clientId, DataFactorySecret clientSecret, DataFactoryElement<string> email, DataFactoryElement<string> keyFilePath, DataFactoryElement<string> trustedCertPath, DataFactoryElement<bool> useSystemTrustStore, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
             Project = project;
             AdditionalProjects = additionalProjects;

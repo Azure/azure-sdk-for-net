@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         public static bool operator ==(MarketplaceAdminAction left, MarketplaceAdminAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MarketplaceAdminAction"/> values are not the same. </summary>
         public static bool operator !=(MarketplaceAdminAction left, MarketplaceAdminAction right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MarketplaceAdminAction"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MarketplaceAdminAction"/>. </summary>
         public static implicit operator MarketplaceAdminAction(string value) => new MarketplaceAdminAction(value);
 
         /// <inheritdoc />

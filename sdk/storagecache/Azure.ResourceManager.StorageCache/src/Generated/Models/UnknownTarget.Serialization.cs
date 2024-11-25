@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         void IJsonModel<UnknownTarget>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<UnknownTarget>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(UnknownTarget)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Attributes))
             {
                 writer.WritePropertyName("attributes"u8);
@@ -52,7 +60,6 @@ namespace Azure.ResourceManager.StorageCache.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         UnknownTarget IJsonModel<UnknownTarget>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

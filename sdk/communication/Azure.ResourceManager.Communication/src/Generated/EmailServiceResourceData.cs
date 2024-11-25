@@ -80,8 +80,10 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Provisioning state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public EmailServicesProvisioningState? ProvisioningState { get; }
         /// <summary> The location where the email service stores its data at rest. </summary>
+        [WirePath("properties.dataLocation")]
         public string DataLocation { get; set; }
     }
 }

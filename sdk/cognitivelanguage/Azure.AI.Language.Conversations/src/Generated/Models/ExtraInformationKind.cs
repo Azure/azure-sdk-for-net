@@ -36,7 +36,7 @@ namespace Azure.AI.Language.Conversations.Models
         public static bool operator ==(ExtraInformationKind left, ExtraInformationKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExtraInformationKind"/> values are not the same. </summary>
         public static bool operator !=(ExtraInformationKind left, ExtraInformationKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ExtraInformationKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ExtraInformationKind"/>. </summary>
         public static implicit operator ExtraInformationKind(string value) => new ExtraInformationKind(value);
 
         /// <inheritdoc />

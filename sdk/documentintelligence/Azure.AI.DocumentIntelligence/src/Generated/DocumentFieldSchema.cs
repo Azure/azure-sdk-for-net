@@ -47,7 +47,7 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> Initializes a new instance of <see cref="DocumentFieldSchema"/>. </summary>
         /// <param name="type"> Semantic data type of the field value. </param>
-        internal DocumentFieldSchema(DocumentFieldType type)
+        public DocumentFieldSchema(DocumentFieldType type)
         {
             Type = type;
             Properties = new ChangeTrackingDictionary<string, DocumentFieldSchema>();
@@ -60,7 +60,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="items"> Field type schema of each array element. </param>
         /// <param name="properties"> Named sub-fields of the object field. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentFieldSchema(DocumentFieldType type, string description, string example, DocumentFieldSchema items, IReadOnlyDictionary<string, DocumentFieldSchema> properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DocumentFieldSchema(DocumentFieldType type, string description, string example, DocumentFieldSchema items, IDictionary<string, DocumentFieldSchema> properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             Description = description;
@@ -76,14 +76,14 @@ namespace Azure.AI.DocumentIntelligence
         }
 
         /// <summary> Semantic data type of the field value. </summary>
-        public DocumentFieldType Type { get; }
+        public DocumentFieldType Type { get; set; }
         /// <summary> Field description. </summary>
-        public string Description { get; }
+        public string Description { get; set; }
         /// <summary> Example field content. </summary>
-        public string Example { get; }
+        public string Example { get; set; }
         /// <summary> Field type schema of each array element. </summary>
-        public DocumentFieldSchema Items { get; }
+        public DocumentFieldSchema Items { get; set; }
         /// <summary> Named sub-fields of the object field. </summary>
-        public IReadOnlyDictionary<string, DocumentFieldSchema> Properties { get; }
+        public IDictionary<string, DocumentFieldSchema> Properties { get; }
     }
 }

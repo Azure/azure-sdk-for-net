@@ -36,7 +36,7 @@ namespace Azure.AI.DocumentIntelligence
         public static bool operator ==(ContentFormat left, ContentFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContentFormat"/> values are not the same. </summary>
         public static bool operator !=(ContentFormat left, ContentFormat right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContentFormat"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContentFormat"/>. </summary>
         public static implicit operator ContentFormat(string value) => new ContentFormat(value);
 
         /// <inheritdoc />

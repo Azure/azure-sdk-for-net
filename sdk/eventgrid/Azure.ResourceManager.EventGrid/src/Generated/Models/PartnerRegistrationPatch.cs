@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Tags of the partner registration resource. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }
 }

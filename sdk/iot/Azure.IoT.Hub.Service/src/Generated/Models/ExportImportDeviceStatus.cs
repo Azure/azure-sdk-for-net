@@ -33,7 +33,7 @@ namespace Azure.IoT.Hub.Service.Models
         public static bool operator ==(ExportImportDeviceStatus left, ExportImportDeviceStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExportImportDeviceStatus"/> values are not the same. </summary>
         public static bool operator !=(ExportImportDeviceStatus left, ExportImportDeviceStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ExportImportDeviceStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ExportImportDeviceStatus"/>. </summary>
         public static implicit operator ExportImportDeviceStatus(string value) => new ExportImportDeviceStatus(value);
 
         /// <inheritdoc />

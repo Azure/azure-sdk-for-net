@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public static bool operator ==(DigitalTwinsManagedIdentityType left, DigitalTwinsManagedIdentityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DigitalTwinsManagedIdentityType"/> values are not the same. </summary>
         public static bool operator !=(DigitalTwinsManagedIdentityType left, DigitalTwinsManagedIdentityType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DigitalTwinsManagedIdentityType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DigitalTwinsManagedIdentityType"/>. </summary>
         public static implicit operator DigitalTwinsManagedIdentityType(string value) => new DigitalTwinsManagedIdentityType(value);
 
         /// <inheritdoc />

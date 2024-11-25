@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public static bool operator ==(SapRoutingPreference left, SapRoutingPreference right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapRoutingPreference"/> values are not the same. </summary>
         public static bool operator !=(SapRoutingPreference left, SapRoutingPreference right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SapRoutingPreference"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SapRoutingPreference"/>. </summary>
         public static implicit operator SapRoutingPreference(string value) => new SapRoutingPreference(value);
 
         /// <inheritdoc />

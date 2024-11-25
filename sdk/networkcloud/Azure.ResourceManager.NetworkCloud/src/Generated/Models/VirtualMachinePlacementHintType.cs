@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static bool operator ==(VirtualMachinePlacementHintType left, VirtualMachinePlacementHintType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualMachinePlacementHintType"/> values are not the same. </summary>
         public static bool operator !=(VirtualMachinePlacementHintType left, VirtualMachinePlacementHintType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VirtualMachinePlacementHintType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualMachinePlacementHintType"/>. </summary>
         public static implicit operator VirtualMachinePlacementHintType(string value) => new VirtualMachinePlacementHintType(value);
 
         /// <inheritdoc />

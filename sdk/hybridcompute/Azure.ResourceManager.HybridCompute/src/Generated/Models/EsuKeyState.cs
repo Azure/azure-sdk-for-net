@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static bool operator ==(EsuKeyState left, EsuKeyState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EsuKeyState"/> values are not the same. </summary>
         public static bool operator !=(EsuKeyState left, EsuKeyState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="EsuKeyState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="EsuKeyState"/>. </summary>
         public static implicit operator EsuKeyState(string value) => new EsuKeyState(value);
 
         /// <inheritdoc />

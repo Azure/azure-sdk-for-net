@@ -36,7 +36,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public static bool operator ==(SpatialAnalysisOperationFocus left, SpatialAnalysisOperationFocus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SpatialAnalysisOperationFocus"/> values are not the same. </summary>
         public static bool operator !=(SpatialAnalysisOperationFocus left, SpatialAnalysisOperationFocus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SpatialAnalysisOperationFocus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SpatialAnalysisOperationFocus"/>. </summary>
         public static implicit operator SpatialAnalysisOperationFocus(string value) => new SpatialAnalysisOperationFocus(value);
 
         /// <inheritdoc />

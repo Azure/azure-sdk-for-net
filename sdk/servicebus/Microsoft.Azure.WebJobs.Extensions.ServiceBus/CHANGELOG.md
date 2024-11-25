@@ -7,8 +7,15 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+GetProcessorCount for webjobs service bus extension does not override processor count for flex consumption. (#45970)
 
 ### Other Changes
+
+## 5.16.4 (2024-08-08)
+
+### Other Changes
+
+- Bump dependency on `Azure.Messaging.ServiceBus` to 7.18.1. Previous release still depended on 7.17.5.
 
 ## 5.16.3 (2024-08-01)
 

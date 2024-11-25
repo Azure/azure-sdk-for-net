@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MonitorComputeIdentityBase"/>. </summary>
-        /// <param name="computeIdentityType"> [Required] Monitor compute identity type enum. </param>
+        /// <param name="computeIdentityType"> [Required] Specifies the type of identity to use within the monitoring jobs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MonitorComputeIdentityBase(MonitorComputeIdentityType computeIdentityType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> [Required] Monitor compute identity type enum. </summary>
+        /// <summary> [Required] Specifies the type of identity to use within the monitoring jobs. </summary>
         internal MonitorComputeIdentityType ComputeIdentityType { get; set; }
     }
 }

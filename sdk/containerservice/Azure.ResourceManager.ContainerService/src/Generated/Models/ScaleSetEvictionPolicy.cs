@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static bool operator ==(ScaleSetEvictionPolicy left, ScaleSetEvictionPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScaleSetEvictionPolicy"/> values are not the same. </summary>
         public static bool operator !=(ScaleSetEvictionPolicy left, ScaleSetEvictionPolicy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ScaleSetEvictionPolicy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ScaleSetEvictionPolicy"/>. </summary>
         public static implicit operator ScaleSetEvictionPolicy(string value) => new ScaleSetEvictionPolicy(value);
 
         /// <inheritdoc />

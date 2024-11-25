@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(ProfileResourceState left, ProfileResourceState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProfileResourceState"/> values are not the same. </summary>
         public static bool operator !=(ProfileResourceState left, ProfileResourceState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ProfileResourceState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ProfileResourceState"/>. </summary>
         public static implicit operator ProfileResourceState(string value) => new ProfileResourceState(value);
 
         /// <inheritdoc />

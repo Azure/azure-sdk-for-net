@@ -58,10 +58,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="credentials"> Backend Credentials Contract Properties. </param>
         /// <param name="proxy"> Backend gateway Contract Properties. </param>
         /// <param name="tls"> Backend TLS Properties. </param>
+        /// <param name="circuitBreaker"> Backend Circuit Breaker Configuration. </param>
         /// <param name="uri"> Runtime Url of the Backend. </param>
         /// <param name="protocol"> Backend communication protocol. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementBackendPatch(string title, string description, Uri resourceUri, BackendProperties properties, BackendCredentialsContract credentials, BackendProxyContract proxy, BackendTlsProperties tls, Uri uri, BackendProtocol? protocol, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiManagementBackendPatch(string title, string description, Uri resourceUri, BackendProperties properties, BackendCredentialsContract credentials, BackendProxyContract proxy, BackendTlsProperties tls, BackendCircuitBreaker circuitBreaker, Uri uri, BackendProtocol? protocol, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Title = title;
             Description = description;
@@ -70,6 +71,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Credentials = credentials;
             Proxy = proxy;
             Tls = tls;
+            CircuitBreaker = circuitBreaker;
             Uri = uri;
             Protocol = protocol;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -108,6 +110,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Backend TLS Properties. </summary>
         [WirePath("properties.tls")]
         public BackendTlsProperties Tls { get; set; }
+        /// <summary> Backend Circuit Breaker Configuration. </summary>
+        internal BackendCircuitBreaker CircuitBreaker { get; set; }
+        /// <summary> The rules for tripping the backend. </summary>
+        [WirePath("properties.circuitBreaker.rules")]
+        public IList<CircuitBreakerRule> CircuitBreakerRules
+        {
+            get
+            {
+                if (CircuitBreaker is null)
+                    CircuitBreaker = new BackendCircuitBreaker();
+                return CircuitBreaker.Rules;
+            }
+        }
+
         /// <summary> Runtime Url of the Backend. </summary>
         [WirePath("properties.url")]
         public Uri Uri { get; set; }

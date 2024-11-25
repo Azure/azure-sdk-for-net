@@ -29,7 +29,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static bool operator ==(DataFeedRollupType left, DataFeedRollupType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataFeedRollupType"/> values are not the same. </summary>
         public static bool operator !=(DataFeedRollupType left, DataFeedRollupType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataFeedRollupType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataFeedRollupType"/>. </summary>
         public static implicit operator DataFeedRollupType(string value) => new DataFeedRollupType(value);
 
         /// <inheritdoc />

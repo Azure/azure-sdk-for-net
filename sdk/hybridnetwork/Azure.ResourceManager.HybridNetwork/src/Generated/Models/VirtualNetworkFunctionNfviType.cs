@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static bool operator ==(VirtualNetworkFunctionNfviType left, VirtualNetworkFunctionNfviType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualNetworkFunctionNfviType"/> values are not the same. </summary>
         public static bool operator !=(VirtualNetworkFunctionNfviType left, VirtualNetworkFunctionNfviType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VirtualNetworkFunctionNfviType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualNetworkFunctionNfviType"/>. </summary>
         public static implicit operator VirtualNetworkFunctionNfviType(string value) => new VirtualNetworkFunctionNfviType(value);
 
         /// <inheritdoc />

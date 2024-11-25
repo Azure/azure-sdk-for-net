@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Advisor.Models
         public static bool operator ==(Category left, Category right) => left.Equals(right);
         /// <summary> Determines if two <see cref="Category"/> values are not the same. </summary>
         public static bool operator !=(Category left, Category right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="Category"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="Category"/>. </summary>
         public static implicit operator Category(string value) => new Category(value);
 
         /// <inheritdoc />

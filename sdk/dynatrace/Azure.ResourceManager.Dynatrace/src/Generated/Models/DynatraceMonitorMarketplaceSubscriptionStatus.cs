@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static bool operator ==(DynatraceMonitorMarketplaceSubscriptionStatus left, DynatraceMonitorMarketplaceSubscriptionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DynatraceMonitorMarketplaceSubscriptionStatus"/> values are not the same. </summary>
         public static bool operator !=(DynatraceMonitorMarketplaceSubscriptionStatus left, DynatraceMonitorMarketplaceSubscriptionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DynatraceMonitorMarketplaceSubscriptionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DynatraceMonitorMarketplaceSubscriptionStatus"/>. </summary>
         public static implicit operator DynatraceMonitorMarketplaceSubscriptionStatus(string value) => new DynatraceMonitorMarketplaceSubscriptionStatus(value);
 
         /// <inheritdoc />

@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 
         void IJsonModel<CosmosDBForPostgreSqlServerConfigurationListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlServerConfigurationListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlServerConfigurationListResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
@@ -56,7 +64,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CosmosDBForPostgreSqlServerConfigurationListResult IJsonModel<CosmosDBForPostgreSqlServerConfigurationListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

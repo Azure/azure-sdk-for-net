@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static bool operator ==(OracleLicenseModel left, OracleLicenseModel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OracleLicenseModel"/> values are not the same. </summary>
         public static bool operator !=(OracleLicenseModel left, OracleLicenseModel right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OracleLicenseModel"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OracleLicenseModel"/>. </summary>
         public static implicit operator OracleLicenseModel(string value) => new OracleLicenseModel(value);
 
         /// <inheritdoc />

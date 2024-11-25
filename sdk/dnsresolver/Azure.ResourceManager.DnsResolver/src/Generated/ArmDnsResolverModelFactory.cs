@@ -206,5 +206,127 @@ namespace Azure.ResourceManager.DnsResolver.Models
         {
             return new VirtualNetworkDnsForwardingRuleset(id, virtualNetworkLinkId != null ? ResourceManagerModelFactory.WritableSubResource(virtualNetworkLinkId) : null, serializedAdditionalRawData: null);
         }
+
+        /// <summary> Initializes a new instance of <see cref="DnsResolver.DnsResolverPolicyData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="etag"> ETag of the DNS resolver policy. </param>
+        /// <param name="provisioningState"> The current provisioning state of the DNS resolver policy. This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="resourceGuid"> The resourceGuid property of the DNS resolver policy resource. </param>
+        /// <returns> A new <see cref="DnsResolver.DnsResolverPolicyData"/> instance for mocking. </returns>
+        public static DnsResolverPolicyData DnsResolverPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, DnsResolverProvisioningState? provisioningState = null, Guid? resourceGuid = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new DnsResolverPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                etag,
+                provisioningState,
+                resourceGuid,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DnsResolver.DnsSecurityRuleData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="etag"> ETag of the DNS security rule. </param>
+        /// <param name="priority"> The priority of the DNS security rule. </param>
+        /// <param name="action"> The action to take on DNS requests that match the DNS security rule. </param>
+        /// <param name="dnsResolverDomainLists"> DNS resolver policy domains lists that the DNS security rule applies to. </param>
+        /// <param name="dnsSecurityRuleState"> The state of DNS security rule. </param>
+        /// <param name="provisioningState"> The current provisioning state of the DNS security rule. This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <returns> A new <see cref="DnsResolver.DnsSecurityRuleData"/> instance for mocking. </returns>
+        public static DnsSecurityRuleData DnsSecurityRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, int priority = default, DnsSecurityRuleAction action = null, IEnumerable<WritableSubResource> dnsResolverDomainLists = null, DnsSecurityRuleState? dnsSecurityRuleState = null, DnsResolverProvisioningState? provisioningState = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            dnsResolverDomainLists ??= new List<WritableSubResource>();
+
+            return new DnsSecurityRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                etag,
+                priority,
+                action,
+                dnsResolverDomainLists?.ToList(),
+                dnsSecurityRuleState,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DnsResolver.DnsResolverPolicyVirtualNetworkLinkData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="etag"> ETag of the DNS resolver policy virtual network link. </param>
+        /// <param name="virtualNetworkId"> The reference to the virtual network. This cannot be changed after creation. </param>
+        /// <param name="provisioningState"> The current provisioning state of the DNS resolver policy virtual network link. This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <returns> A new <see cref="DnsResolver.DnsResolverPolicyVirtualNetworkLinkData"/> instance for mocking. </returns>
+        public static DnsResolverPolicyVirtualNetworkLinkData DnsResolverPolicyVirtualNetworkLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, ResourceIdentifier virtualNetworkId = null, DnsResolverProvisioningState? provisioningState = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new DnsResolverPolicyVirtualNetworkLinkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                etag,
+                virtualNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(virtualNetworkId) : null,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DnsResolver.DnsResolverDomainListData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="etag"> ETag of the DNS resolver domain list. </param>
+        /// <param name="domains"> The domains in the domain list. </param>
+        /// <param name="provisioningState"> The current provisioning state of the DNS resolver domain list. This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="resourceGuid"> The resourceGuid property of the DNS resolver domain list resource. </param>
+        /// <returns> A new <see cref="DnsResolver.DnsResolverDomainListData"/> instance for mocking. </returns>
+        public static DnsResolverDomainListData DnsResolverDomainListData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, IEnumerable<string> domains = null, DnsResolverProvisioningState? provisioningState = null, Guid? resourceGuid = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            domains ??= new List<string>();
+
+            return new DnsResolverDomainListData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                etag,
+                domains?.ToList(),
+                provisioningState,
+                resourceGuid,
+                serializedAdditionalRawData: null);
+        }
     }
 }

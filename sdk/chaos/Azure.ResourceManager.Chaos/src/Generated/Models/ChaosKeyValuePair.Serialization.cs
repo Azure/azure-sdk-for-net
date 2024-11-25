@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Chaos.Models
 
         void IJsonModel<ChaosKeyValuePair>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ChaosKeyValuePair>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ChaosKeyValuePair)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("key"u8);
             writer.WriteStringValue(Key);
             writer.WritePropertyName("value"u8);
@@ -45,7 +53,6 @@ namespace Azure.ResourceManager.Chaos.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ChaosKeyValuePair IJsonModel<ChaosKeyValuePair>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

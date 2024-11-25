@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public static bool operator ==(DoubleEncryptionStatus left, DoubleEncryptionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DoubleEncryptionStatus"/> values are not the same. </summary>
         public static bool operator !=(DoubleEncryptionStatus left, DoubleEncryptionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DoubleEncryptionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DoubleEncryptionStatus"/>. </summary>
         public static implicit operator DoubleEncryptionStatus(string value) => new DoubleEncryptionStatus(value);
 
         /// <inheritdoc />

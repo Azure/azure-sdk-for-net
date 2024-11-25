@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static bool operator ==(PlannedFailoverStatus left, PlannedFailoverStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PlannedFailoverStatus"/> values are not the same. </summary>
         public static bool operator !=(PlannedFailoverStatus left, PlannedFailoverStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PlannedFailoverStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PlannedFailoverStatus"/>. </summary>
         public static implicit operator PlannedFailoverStatus(string value) => new PlannedFailoverStatus(value);
 
         /// <inheritdoc />

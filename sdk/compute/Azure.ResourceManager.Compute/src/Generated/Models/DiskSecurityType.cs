@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(DiskSecurityType left, DiskSecurityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiskSecurityType"/> values are not the same. </summary>
         public static bool operator !=(DiskSecurityType left, DiskSecurityType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DiskSecurityType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DiskSecurityType"/>. </summary>
         public static implicit operator DiskSecurityType(string value) => new DiskSecurityType(value);
 
         /// <inheritdoc />

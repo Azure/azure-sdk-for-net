@@ -52,23 +52,23 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> Initializes a new instance of <see cref="OrderedProcedure"/>. </summary>
-        /// <param name="extension"> Additional Content defined by implementations. </param>
         /// <param name="code"> Procedure code. </param>
         /// <param name="description"> Procedure description. </param>
+        /// <param name="extension"> Additional Content defined by implementations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OrderedProcedure(IList<FhirR4Extension> extension, FhirR4CodeableConcept code, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OrderedProcedure(FhirR4CodeableConcept code, string description, IList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Extension = extension;
             Code = code;
             Description = description;
+            Extension = extension;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Additional Content defined by implementations. </summary>
-        public IList<FhirR4Extension> Extension { get; }
         /// <summary> Procedure code. </summary>
         public FhirR4CodeableConcept Code { get; set; }
         /// <summary> Procedure description. </summary>
         public string Description { get; set; }
+        /// <summary> Additional Content defined by implementations. </summary>
+        public IList<FhirR4Extension> Extension { get; }
     }
 }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static bool operator ==(AutomationCountType left, AutomationCountType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutomationCountType"/> values are not the same. </summary>
         public static bool operator !=(AutomationCountType left, AutomationCountType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AutomationCountType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AutomationCountType"/>. </summary>
         public static implicit operator AutomationCountType(string value) => new AutomationCountType(value);
 
         /// <inheritdoc />

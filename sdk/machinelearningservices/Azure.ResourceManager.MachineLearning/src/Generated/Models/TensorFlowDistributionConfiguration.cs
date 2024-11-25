@@ -22,18 +22,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="TensorFlowDistributionConfiguration"/>. </summary>
         /// <param name="distributionType"> [Required] Specifies the type of distribution framework. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="parameterServerCount"> Number of parameter server tasks. </param>
         /// <param name="workerCount"> Number of workers. If not specified, will default to the instance count. </param>
-        internal TensorFlowDistributionConfiguration(DistributionType distributionType, IDictionary<string, BinaryData> serializedAdditionalRawData, int? parameterServerCount, int? workerCount) : base(distributionType, serializedAdditionalRawData)
+        /// <param name="parameterServerCount"> Number of parameter server tasks. </param>
+        internal TensorFlowDistributionConfiguration(DistributionType distributionType, IDictionary<string, BinaryData> serializedAdditionalRawData, int? workerCount, int? parameterServerCount) : base(distributionType, serializedAdditionalRawData)
         {
-            ParameterServerCount = parameterServerCount;
             WorkerCount = workerCount;
+            ParameterServerCount = parameterServerCount;
             DistributionType = distributionType;
         }
 
-        /// <summary> Number of parameter server tasks. </summary>
-        public int? ParameterServerCount { get; set; }
         /// <summary> Number of workers. If not specified, will default to the instance count. </summary>
+        [WirePath("workerCount")]
         public int? WorkerCount { get; set; }
+        /// <summary> Number of parameter server tasks. </summary>
+        [WirePath("parameterServerCount")]
+        public int? ParameterServerCount { get; set; }
     }
 }

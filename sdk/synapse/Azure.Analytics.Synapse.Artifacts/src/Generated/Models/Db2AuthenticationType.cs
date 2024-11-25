@@ -30,7 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(Db2AuthenticationType left, Db2AuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="Db2AuthenticationType"/> values are not the same. </summary>
         public static bool operator !=(Db2AuthenticationType left, Db2AuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="Db2AuthenticationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="Db2AuthenticationType"/>. </summary>
         public static implicit operator Db2AuthenticationType(string value) => new Db2AuthenticationType(value);
 
         /// <inheritdoc />

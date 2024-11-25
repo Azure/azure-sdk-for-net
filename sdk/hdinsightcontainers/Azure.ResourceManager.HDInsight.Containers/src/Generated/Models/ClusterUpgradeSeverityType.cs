@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public static bool operator ==(ClusterUpgradeSeverityType left, ClusterUpgradeSeverityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ClusterUpgradeSeverityType"/> values are not the same. </summary>
         public static bool operator !=(ClusterUpgradeSeverityType left, ClusterUpgradeSeverityType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ClusterUpgradeSeverityType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ClusterUpgradeSeverityType"/>. </summary>
         public static implicit operator ClusterUpgradeSeverityType(string value) => new ClusterUpgradeSeverityType(value);
 
         /// <inheritdoc />

@@ -1,111 +1,77 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#if !AZURE_OPENAI_GA
+
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.Diagnostics.CodeAnalysis;
-using OpenAI.FineTuning;
+using System.Text.Json;
 
 namespace Azure.AI.OpenAI.FineTuning;
 
 internal partial class AzureFineTuningClient : FineTuningClient
 {
-    private readonly PipelineMessageClassifier DeleteJobClassifier = PipelineMessageClassifier.Create(stackalloc ushort[] { 204 });
-
-    public override ClientResult CreateJob(BinaryContent content, RequestOptions options = null)
+    public override async Task<FineTuningJobOperation> CreateFineTuningJobAsync(
+        BinaryContent content,
+        bool waitUntilCompleted,
+        RequestOptions options = null)
     {
-        using PipelineMessage message = CreateCreateJobRequestMessage(content, options);
-        return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-    }
+        Argument.AssertNotNull(content, nameof(content));
 
-    public override async Task<ClientResult> CreateJobAsync(BinaryContent content, RequestOptions options = null)
-    {
-        using PipelineMessage message = CreateCreateJobRequestMessage(content, options);
+        using PipelineMessage message = CreateCreateFineTuningJobRequest(content, options);
         PipelineResponse response = await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
-        return ClientResult.FromResponse(response);
+
+        using JsonDocument doc = JsonDocument.Parse(response.Content);
+        string jobId = doc.RootElement.GetProperty("id"u8).GetString();
+        string status = doc.RootElement.GetProperty("status"u8).GetString();
+
+        AzureFineTuningJobOperation operation = new(Pipeline, _endpoint, jobId, status, response, _apiVersion);
+        return await operation.WaitUntilAsync(waitUntilCompleted, options).ConfigureAwait(false);
     }
 
-    public override ClientResult GetJob(string fineTuningJobId, RequestOptions options)
+    public override FineTuningJobOperation CreateFineTuningJob(
+        BinaryContent content,
+        bool waitUntilCompleted,
+        RequestOptions options = null)
     {
-        using PipelineMessage message = CreateGetJobRequestMessage(fineTuningJobId, options);
-        return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+        Argument.AssertNotNull(content, nameof(content));
+
+        using PipelineMessage message = CreateCreateFineTuningJobRequest(content, options);
+        PipelineResponse response = Pipeline.ProcessMessage(message, options);
+
+        using JsonDocument doc = JsonDocument.Parse(response.Content);
+        string jobId = doc.RootElement.GetProperty("id"u8).GetString();
+        string status = doc.RootElement.GetProperty("status"u8).GetString();
+
+        AzureFineTuningJobOperation operation = new(Pipeline, _endpoint, jobId, status, response, _apiVersion);
+        return operation.WaitUntil(waitUntilCompleted, options);
+    }
+
+    public override AsyncCollectionResult GetJobsAsync(string after, int? limit, RequestOptions options)
+    {
+        return new AsyncFineTuningJobCollectionResult(this, Pipeline, options, limit, after);
+    }
+
+    public override CollectionResult GetJobs(string after, int? limit, RequestOptions options)
+    {
+        return new FineTuningJobCollectionResult(this, Pipeline, options, limit, after);
     }
 
     public override async Task<ClientResult> GetJobAsync(string fineTuningJobId, RequestOptions options)
     {
-        using PipelineMessage message = CreateGetJobRequestMessage(fineTuningJobId, options);
-        PipelineResponse response = await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
-        return ClientResult.FromResponse(response);
+        using PipelineMessage message = CreateRetrieveFineTuningJobRequest(fineTuningJobId, options);
+        return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
     }
 
-    public override ClientResult GetJobs(string after, int? limit, RequestOptions options)
+    public override ClientResult GetJob(string fineTuningJobId, RequestOptions options)
     {
-        using PipelineMessage message = CreateGetJobsRequestMessage(after, limit, options);
+        Argument.AssertNotNullOrEmpty(fineTuningJobId, nameof(fineTuningJobId));
+
+        using PipelineMessage message = CreateRetrieveFineTuningJobRequest(fineTuningJobId, options);
         return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
     }
 
-    public override async Task<ClientResult> GetJobsAsync(string after, int? limit, RequestOptions options)
-    {
-        using PipelineMessage message = CreateGetJobsRequestMessage(after, limit, options);
-        PipelineResponse response = await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
-        return ClientResult.FromResponse(response);
-    }
-
-    public override ClientResult GetJobEvents(string fineTuningJobId, string after, int? limit, RequestOptions options)
-    {
-        using PipelineMessage message = CreateGetJobEventsRequestMessage(fineTuningJobId, after, limit, options);
-        return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-    }
-
-    public override async Task<ClientResult> GetJobEventsAsync(string fineTuningJobId, string after, int? limit, RequestOptions options)
-    {
-        using PipelineMessage message = CreateGetJobEventsRequestMessage(fineTuningJobId, after, limit, options);
-        PipelineResponse response = await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
-        return ClientResult.FromResponse(response);
-    }
-
-    public override ClientResult GetJobCheckpoints(string fineTuningJobId, string after, int? limit, RequestOptions options)
-    {
-        using PipelineMessage message = CreateGetJobCheckpointsRequestMessage(fineTuningJobId, after, limit, options);
-        return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-    }
-
-    public override async Task<ClientResult> GetJobCheckpointsAsync(string fineTuningJobId, string after, int? limit, RequestOptions options)
-    {
-        using PipelineMessage message = CreateGetJobCheckpointsRequestMessage(fineTuningJobId, after, limit, options);
-        PipelineResponse response = await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
-        return ClientResult.FromResponse(response);
-    }
-
-    public override ClientResult CancelJob(string fineTuningJobId, RequestOptions options)
-    {
-        using PipelineMessage message = CreateCancelJobRequestMessage(fineTuningJobId, options);
-        return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-    }
-
-    public override async Task<ClientResult> CancelJobAsync(string fineTuningJobId, RequestOptions options)
-    {
-        using PipelineMessage message = CreateCancelJobRequestMessage(fineTuningJobId, options);
-        PipelineResponse response = await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
-        return ClientResult.FromResponse(response);
-    }
-
-    [Experimental("AOAI001")]
-    public virtual ClientResult DeleteJob(string jobId, RequestOptions options = null)
-    {
-        using PipelineMessage message = CreateDeleteJobRequestMessage(jobId, options);
-        return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-    }
-
-    [Experimental("AOAI001")]
-    public virtual async Task<ClientResult> DeleteJobAsync(string jobId, RequestOptions options = null)
-    {
-        using PipelineMessage message = CreateDeleteJobRequestMessage(jobId, options);
-        PipelineResponse response = await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
-        return ClientResult.FromResponse(response);
-    }
-
-    private PipelineMessage CreateCreateJobRequestMessage(BinaryContent content, RequestOptions options)
+    internal override PipelineMessage CreateCreateFineTuningJobRequest(BinaryContent content, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion)
             .WithMethod("POST")
             .WithPath("fine_tuning", "jobs")
@@ -114,7 +80,7 @@ internal partial class AzureFineTuningClient : FineTuningClient
             .WithOptions(options)
             .Build();
 
-    private PipelineMessage CreateGetJobsRequestMessage(string after, int? limit, RequestOptions options)
+    internal override PipelineMessage CreateGetPaginatedFineTuningJobsRequest(string after, int? limit, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion)
             .WithMethod("GET")
             .WithPath("fine_tuning", "jobs")
@@ -124,48 +90,35 @@ internal partial class AzureFineTuningClient : FineTuningClient
             .WithOptions(options)
             .Build();
 
-    private PipelineMessage CreateGetJobRequestMessage(string jobId, RequestOptions options)
+    internal override PipelineMessage CreateRetrieveFineTuningJobRequest(string fineTuningJobId, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion)
             .WithMethod("GET")
-            .WithPath("fine_tuning", "jobs", jobId)
+            .WithPath("fine_tuning", "jobs", fineTuningJobId)
             .WithAccept("application/json")
             .WithOptions(options)
             .Build();
 
-    private PipelineMessage CreateGetJobEventsRequestMessage(string jobId, string after, int? limit, RequestOptions options)
-        => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion)
-            .WithMethod("GET")
-            .WithPath("fine_tuning", "jobs", jobId, "events")
-            .WithOptionalQueryParameter("after", after)
-            .WithOptionalQueryParameter("limit", limit)
-            .WithAccept("application/json")
-            .WithOptions(options)
-            .Build();
+    private static bool TryGetLastId(ClientResult previous, out string lastId)
+    {
+        Argument.AssertNotNull(previous, nameof(previous));
 
-    private PipelineMessage CreateGetJobCheckpointsRequestMessage(string jobId, string after, int? limit, RequestOptions options)
-        => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion)
-            .WithMethod("GET")
-            .WithPath("fine_tuning", "jobs", jobId, "checkpoints")
-            .WithOptionalQueryParameter("after", after)
-            .WithOptionalQueryParameter("limit", limit)
-            .WithAccept("application/json")
-            .WithOptions(options)
-            .Build();
+        using JsonDocument json = JsonDocument.Parse(previous.GetRawResponse().Content);
+        if (!json.RootElement.GetProperty("has_more"u8).GetBoolean())
+        {
+            lastId = null;
+            return false;
+        }
 
-    private PipelineMessage CreateCancelJobRequestMessage(string jobId, RequestOptions options)
-        => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion)
-            .WithMethod("POST")
-            .WithPath("fine_tuning", "jobs", jobId, "cancel")
-            .WithAccept("application/json")
-            .WithOptions(options)
-            .Build();
+        if (json?.RootElement.TryGetProperty("data", out JsonElement dataElement) == true
+            && dataElement.EnumerateArray().LastOrDefault().TryGetProperty("id", out JsonElement idElement) == true)
+        {
+            lastId = idElement.GetString();
+            return true;
+        }
 
-    private PipelineMessage CreateDeleteJobRequestMessage(string jobId, RequestOptions options)
-        => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion)
-            .WithMethod("DELETE")
-            .WithPath("fine_tuning", "jobs", jobId)
-            .WithAccept("application/json")
-            .WithClassifier(DeleteJobClassifier)
-            .WithOptions(options)
-            .Build();
+        lastId = null;
+        return false;
+    }
 }
+
+#endif

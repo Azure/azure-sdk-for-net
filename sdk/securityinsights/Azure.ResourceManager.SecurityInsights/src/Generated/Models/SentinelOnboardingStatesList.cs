@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Array of Sentinel onboarding states. </summary>
+        [WirePath("value")]
         public IReadOnlyList<SecurityInsightsSentinelOnboardingStateData> Value { get; }
     }
 }

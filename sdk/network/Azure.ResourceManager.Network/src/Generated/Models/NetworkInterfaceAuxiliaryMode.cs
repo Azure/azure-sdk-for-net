@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(NetworkInterfaceAuxiliaryMode left, NetworkInterfaceAuxiliaryMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkInterfaceAuxiliaryMode"/> values are not the same. </summary>
         public static bool operator !=(NetworkInterfaceAuxiliaryMode left, NetworkInterfaceAuxiliaryMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetworkInterfaceAuxiliaryMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkInterfaceAuxiliaryMode"/>. </summary>
         public static implicit operator NetworkInterfaceAuxiliaryMode(string value) => new NetworkInterfaceAuxiliaryMode(value);
 
         /// <inheritdoc />

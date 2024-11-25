@@ -75,7 +75,7 @@ Console.WriteLine($"Message id: {result.Receipts[0].MessageId}");
 // Create the recipient list, currently only one recipient is supported 
 var recipient = new List<string> { "<RecipientPhoneNumber>" };
 var uri = new Uri("https://aka.ms/acsicon1");
-var mediaContent = new MediaNotificationContent(channelRegistrationId, recipientList, uri);
+var imageContent = new ImageNotificationContent(channelRegistrationId, recipientList, uri);
 SendMessageResult result = await notificationMessagesClient.SendAsync(mediaContent);
 Console.WriteLine($"Message id: {result.Receipts[0].MessageId}");
 ```

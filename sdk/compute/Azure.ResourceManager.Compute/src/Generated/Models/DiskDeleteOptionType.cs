@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(DiskDeleteOptionType left, DiskDeleteOptionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiskDeleteOptionType"/> values are not the same. </summary>
         public static bool operator !=(DiskDeleteOptionType left, DiskDeleteOptionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DiskDeleteOptionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DiskDeleteOptionType"/>. </summary>
         public static implicit operator DiskDeleteOptionType(string value) => new DiskDeleteOptionType(value);
 
         /// <inheritdoc />

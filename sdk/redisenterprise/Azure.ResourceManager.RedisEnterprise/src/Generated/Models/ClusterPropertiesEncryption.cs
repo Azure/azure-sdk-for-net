@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> All Customer-managed key encryption properties for the resource. Set this to an empty object to use Microsoft-managed key encryption. </summary>
+        [WirePath("customerManagedKeyEncryption")]
         public RedisEnterpriseCustomerManagedKeyEncryption CustomerManagedKeyEncryption { get; set; }
     }
 }

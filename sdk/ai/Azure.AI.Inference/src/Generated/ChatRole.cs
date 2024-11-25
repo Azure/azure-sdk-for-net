@@ -39,7 +39,7 @@ namespace Azure.AI.Inference
         public static bool operator ==(ChatRole left, ChatRole right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ChatRole"/> values are not the same. </summary>
         public static bool operator !=(ChatRole left, ChatRole right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ChatRole"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ChatRole"/>. </summary>
         public static implicit operator ChatRole(string value) => new ChatRole(value);
 
         /// <inheritdoc />

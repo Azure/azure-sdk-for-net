@@ -41,6 +41,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> [Required] The list of features to include. </summary>
+        [WirePath("features")]
         public IList<string> Features { get; }
     }
 }

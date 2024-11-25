@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         void IJsonModel<RedisEnterpriseDatabasePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseDatabasePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RedisEnterpriseDatabasePatch)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ClientProtocol))
@@ -78,6 +86,21 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 writer.WritePropertyName("geoReplication"u8);
                 writer.WriteObjectValue(GeoReplication, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(RedisVersion))
+            {
+                writer.WritePropertyName("redisVersion"u8);
+                writer.WriteStringValue(RedisVersion);
+            }
+            if (Optional.IsDefined(DeferUpgrade))
+            {
+                writer.WritePropertyName("deferUpgrade"u8);
+                writer.WriteStringValue(DeferUpgrade.Value.ToString());
+            }
+            if (Optional.IsDefined(AccessKeysAuthentication))
+            {
+                writer.WritePropertyName("accessKeysAuthentication"u8);
+                writer.WriteStringValue(AccessKeysAuthentication.Value.ToString());
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,7 +117,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         RedisEnterpriseDatabasePatch IJsonModel<RedisEnterpriseDatabasePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -126,6 +148,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             RedisPersistenceSettings persistence = default;
             IList<RedisEnterpriseModule> modules = default;
             RedisEnterpriseDatabaseGeoReplication geoReplication = default;
+            string redisVersion = default;
+            DeferUpgradeSetting? deferUpgrade = default;
+            AccessKeysAuthentication? accessKeysAuthentication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -225,6 +250,29 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                             geoReplication = RedisEnterpriseDatabaseGeoReplication.DeserializeRedisEnterpriseDatabaseGeoReplication(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("redisVersion"u8))
+                        {
+                            redisVersion = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("deferUpgrade"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            deferUpgrade = new DeferUpgradeSetting(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("accessKeysAuthentication"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            accessKeysAuthentication = new AccessKeysAuthentication(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -244,6 +292,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 persistence,
                 modules ?? new ChangeTrackingList<RedisEnterpriseModule>(),
                 geoReplication,
+                redisVersion,
+                deferUpgrade,
+                accessKeysAuthentication,
                 serializedAdditionalRawData);
         }
 

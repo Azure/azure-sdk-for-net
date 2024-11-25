@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static bool operator ==(HybridComputePublicNetworkAccessType left, HybridComputePublicNetworkAccessType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HybridComputePublicNetworkAccessType"/> values are not the same. </summary>
         public static bool operator !=(HybridComputePublicNetworkAccessType left, HybridComputePublicNetworkAccessType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HybridComputePublicNetworkAccessType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HybridComputePublicNetworkAccessType"/>. </summary>
         public static implicit operator HybridComputePublicNetworkAccessType(string value) => new HybridComputePublicNetworkAccessType(value);
 
         /// <inheritdoc />

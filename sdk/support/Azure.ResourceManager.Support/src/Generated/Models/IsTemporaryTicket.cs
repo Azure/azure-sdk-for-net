@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Support.Models
         public static bool operator ==(IsTemporaryTicket left, IsTemporaryTicket right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IsTemporaryTicket"/> values are not the same. </summary>
         public static bool operator !=(IsTemporaryTicket left, IsTemporaryTicket right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IsTemporaryTicket"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IsTemporaryTicket"/>. </summary>
         public static implicit operator IsTemporaryTicket(string value) => new IsTemporaryTicket(value);
 
         /// <inheritdoc />

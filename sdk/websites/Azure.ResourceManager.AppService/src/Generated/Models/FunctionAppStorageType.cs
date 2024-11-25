@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService.Models
         public static bool operator ==(FunctionAppStorageType left, FunctionAppStorageType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FunctionAppStorageType"/> values are not the same. </summary>
         public static bool operator !=(FunctionAppStorageType left, FunctionAppStorageType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FunctionAppStorageType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FunctionAppStorageType"/>. </summary>
         public static implicit operator FunctionAppStorageType(string value) => new FunctionAppStorageType(value);
 
         /// <inheritdoc />

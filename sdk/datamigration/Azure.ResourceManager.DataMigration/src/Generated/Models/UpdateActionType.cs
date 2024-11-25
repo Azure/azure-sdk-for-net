@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static bool operator ==(UpdateActionType left, UpdateActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="UpdateActionType"/> values are not the same. </summary>
         public static bool operator !=(UpdateActionType left, UpdateActionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="UpdateActionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="UpdateActionType"/>. </summary>
         public static implicit operator UpdateActionType(string value) => new UpdateActionType(value);
 
         /// <inheritdoc />

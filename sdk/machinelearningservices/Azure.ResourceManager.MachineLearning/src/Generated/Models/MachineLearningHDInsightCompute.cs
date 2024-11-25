@@ -40,6 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> HDInsight compute properties. </summary>
+        [WirePath("properties")]
         public MachineLearningHDInsightProperties Properties { get; set; }
     }
 }

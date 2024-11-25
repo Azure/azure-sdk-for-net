@@ -71,8 +71,10 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Description of the extension topic. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> System topic resource id which is mapped to the source. </summary>
+        [WirePath("properties.systemTopic")]
         public string SystemTopic { get; set; }
     }
 }

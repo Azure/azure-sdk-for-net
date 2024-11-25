@@ -12,7 +12,7 @@ param (
 $ErrorActionPreference = "Stop"
 . $PSScriptRoot/Helpers/PSModule-Helpers.ps1
 . $PSScriptRoot/common.ps1
-Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
+Install-ModuleIfNotInstalled "powershell-yaml" "0.4.7" | Import-Module
 
 function NpmInstallForProject([string]$workingDirectory) {
     Push-Location $workingDirectory

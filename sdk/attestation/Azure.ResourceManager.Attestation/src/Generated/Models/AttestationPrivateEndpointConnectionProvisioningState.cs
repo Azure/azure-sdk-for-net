@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Attestation.Models
         public static bool operator ==(AttestationPrivateEndpointConnectionProvisioningState left, AttestationPrivateEndpointConnectionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AttestationPrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(AttestationPrivateEndpointConnectionProvisioningState left, AttestationPrivateEndpointConnectionProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AttestationPrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AttestationPrivateEndpointConnectionProvisioningState"/>. </summary>
         public static implicit operator AttestationPrivateEndpointConnectionProvisioningState(string value) => new AttestationPrivateEndpointConnectionProvisioningState(value);
 
         /// <inheritdoc />

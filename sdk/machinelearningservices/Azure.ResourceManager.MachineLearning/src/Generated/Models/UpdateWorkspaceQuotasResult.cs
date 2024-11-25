@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The list of workspace quota update result. </summary>
+        [WirePath("value")]
         public IReadOnlyList<MachineLearningWorkspaceQuotaUpdate> Value { get; }
         /// <summary> The URI to fetch the next page of workspace quota update result. Call ListNext() with this to fetch the next page of Workspace Quota update result. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

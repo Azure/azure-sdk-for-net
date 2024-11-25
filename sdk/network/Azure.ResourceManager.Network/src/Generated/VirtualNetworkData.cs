@@ -51,7 +51,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="encryption"> Indicates if encryption is enabled on virtual network and if VM without encryption is allowed in encrypted VNet. </param>
         /// <param name="ipAllocations"> Array of IpAllocation which reference this VNET. </param>
         /// <param name="flowLogs"> A collection of references to flow log resources. </param>
-        internal VirtualNetworkData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ExtendedLocation extendedLocation, ETag? etag, AddressSpace addressSpace, DhcpOptions dhcpOptions, int? flowTimeoutInMinutes, IList<SubnetData> subnets, IList<VirtualNetworkPeeringData> virtualNetworkPeerings, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDdosProtection, bool? enableVmProtection, WritableSubResource ddosProtectionPlan, VirtualNetworkBgpCommunities bgpCommunities, VirtualNetworkEncryption encryption, IList<WritableSubResource> ipAllocations, IReadOnlyList<FlowLogData> flowLogs) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        /// <param name="privateEndpointVnetPolicy"> Private Endpoint VNet Policies. </param>
+        internal VirtualNetworkData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ExtendedLocation extendedLocation, ETag? etag, AddressSpace addressSpace, DhcpOptions dhcpOptions, int? flowTimeoutInMinutes, IList<SubnetData> subnets, IList<VirtualNetworkPeeringData> virtualNetworkPeerings, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDdosProtection, bool? enableVmProtection, WritableSubResource ddosProtectionPlan, VirtualNetworkBgpCommunities bgpCommunities, VirtualNetworkEncryption encryption, IList<WritableSubResource> ipAllocations, IReadOnlyList<FlowLogData> flowLogs, PrivateEndpointVnetPolicy? privateEndpointVnetPolicy) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ExtendedLocation = extendedLocation;
             ETag = etag;
@@ -69,6 +70,7 @@ namespace Azure.ResourceManager.Network
             Encryption = encryption;
             IPAllocations = ipAllocations;
             FlowLogs = flowLogs;
+            PrivateEndpointVnetPolicy = privateEndpointVnetPolicy;
         }
 
         /// <summary> The extended location of the virtual network. </summary>
@@ -137,5 +139,7 @@ namespace Azure.ResourceManager.Network
         public IList<WritableSubResource> IPAllocations { get; }
         /// <summary> A collection of references to flow log resources. </summary>
         public IReadOnlyList<FlowLogData> FlowLogs { get; }
+        /// <summary> Private Endpoint VNet Policies. </summary>
+        public PrivateEndpointVnetPolicy? PrivateEndpointVnetPolicy { get; set; }
     }
 }

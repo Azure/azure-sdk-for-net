@@ -7,4 +7,3 @@ extends:
     SupportedClouds: 'Public'
     TimeoutInMinutes: 90
     Location: 'westus3'
-    UseFederatedAuth: true

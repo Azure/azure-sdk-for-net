@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static bool operator ==(DevTestLabStorageType left, DevTestLabStorageType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevTestLabStorageType"/> values are not the same. </summary>
         public static bool operator !=(DevTestLabStorageType left, DevTestLabStorageType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DevTestLabStorageType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DevTestLabStorageType"/>. </summary>
         public static implicit operator DevTestLabStorageType(string value) => new DevTestLabStorageType(value);
 
         /// <inheritdoc />

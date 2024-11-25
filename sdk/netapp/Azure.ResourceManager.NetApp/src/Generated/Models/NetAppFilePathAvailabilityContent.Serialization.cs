@@ -19,17 +19,37 @@ namespace Azure.ResourceManager.NetApp.Models
 
         void IJsonModel<NetAppFilePathAvailabilityContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<NetAppFilePathAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetAppFilePathAvailabilityContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("subnetId"u8);
             writer.WriteStringValue(SubnetId);
+            if (Optional.IsDefined(AvailabilityZone))
+            {
+                if (AvailabilityZone != null)
+                {
+                    writer.WritePropertyName("availabilityZone"u8);
+                    writer.WriteStringValue(AvailabilityZone);
+                }
+                else
+                {
+                    writer.WriteNull("availabilityZone");
+                }
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -45,7 +65,6 @@ namespace Azure.ResourceManager.NetApp.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         NetAppFilePathAvailabilityContent IJsonModel<NetAppFilePathAvailabilityContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -70,6 +89,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             string name = default;
             ResourceIdentifier subnetId = default;
+            string availabilityZone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -84,13 +104,23 @@ namespace Azure.ResourceManager.NetApp.Models
                     subnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("availabilityZone"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        availabilityZone = null;
+                        continue;
+                    }
+                    availabilityZone = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetAppFilePathAvailabilityContent(name, subnetId, serializedAdditionalRawData);
+            return new NetAppFilePathAvailabilityContent(name, subnetId, availabilityZone, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppFilePathAvailabilityContent>.Write(ModelReaderWriterOptions options)

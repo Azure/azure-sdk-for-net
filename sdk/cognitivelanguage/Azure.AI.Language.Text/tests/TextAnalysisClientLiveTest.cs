@@ -85,7 +85,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             Assert.IsNotNull(AnalyzeTextSentimentResult);
             Assert.IsNotNull(AnalyzeTextSentimentResult.Results);
             Assert.IsNotNull(AnalyzeTextSentimentResult.Results.Documents);
-            foreach (SentimentDocumentResultWithDetectedLanguage sentimentResponseWithDocumentDetectedLanguage in AnalyzeTextSentimentResult.Results.Documents)
+            foreach (SentimentActionResult sentimentResponseWithDocumentDetectedLanguage in AnalyzeTextSentimentResult.Results.Documents)
             {
                 Assert.IsNotNull(sentimentResponseWithDocumentDetectedLanguage);
                 Assert.IsNotNull(sentimentResponseWithDocumentDetectedLanguage.Id);
@@ -143,7 +143,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             Assert.IsNotNull(keyPhraseTaskResult);
             Assert.IsNotNull(keyPhraseTaskResult.Results);
             Assert.IsNotNull(keyPhraseTaskResult.Results.Documents);
-            foreach (KeyPhrasesDocumentResultWithDetectedLanguage kpeResult in keyPhraseTaskResult.Results.Documents)
+            foreach (KeyPhrasesActionResult kpeResult in keyPhraseTaskResult.Results.Documents)
             {
                 Assert.IsNotNull(kpeResult);
                 Assert.IsNotNull(kpeResult.Id);
@@ -232,7 +232,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             Assert.IsNotNull(piiTaskResult);
             Assert.IsNotNull(piiTaskResult.Results);
             Assert.IsNotNull(piiTaskResult.Results.Documents);
-            foreach (PiiResultWithDetectedLanguage piiResult in piiTaskResult.Results.Documents)
+            foreach (PiiActionResult piiResult in piiTaskResult.Results.Documents)
             {
                 Assert.IsNotNull(piiResult.Id);
                 Assert.IsNotNull(piiResult.Entities);
@@ -280,7 +280,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             Assert.IsNotNull(entityLinkingTaskResult);
             Assert.IsNotNull(entityLinkingTaskResult.Results);
             Assert.IsNotNull(entityLinkingTaskResult.Results.Documents);
-            foreach (EntityLinkingResultWithDetectedLanguage entityLinkingResult in entityLinkingTaskResult.Results.Documents)
+            foreach (EntityLinkingActionResult entityLinkingResult in entityLinkingTaskResult.Results.Documents)
             {
                 Assert.IsNotNull(entityLinkingResult.Id);
                 Assert.IsNotNull(entityLinkingResult.Entities);
@@ -341,7 +341,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                     Assert.IsNotNull(healthcareLROResult.Results);
                     Assert.IsNotNull(healthcareLROResult.Results.Documents);
 
-                    foreach (HealthcareEntitiesDocumentResultWithDocumentDetectedLanguage healthcareEntitiesDocument in healthcareLROResult.Results.Documents)
+                    foreach (HealthcareActionResult healthcareEntitiesDocument in healthcareLROResult.Results.Documents)
                     {
                         Assert.IsNotNull(healthcareEntitiesDocument.Id);
                         Assert.IsNotNull(healthcareEntitiesDocument.Entities);
@@ -429,7 +429,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                     Assert.IsNotNull(customClassificationResult.Results);
                     Assert.IsNotNull(customClassificationResult.Results.Documents);
 
-                    foreach (EntitiesDocumentResultWithDetectedLanguage entitiesDocument in customClassificationResult.Results.Documents)
+                    foreach (EntityActionResult entitiesDocument in customClassificationResult.Results.Documents)
                     {
                         Assert.IsNotNull(entitiesDocument.Id);
                         Assert.IsNotNull(entitiesDocument.Entities);
@@ -494,7 +494,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                     Assert.IsNotNull(customClassificationResult.Results);
                     Assert.IsNotNull(customClassificationResult.Results.Documents);
 
-                    foreach (ClassificationDocumentResultWithDetectedLanguage customClassificationDocument in customClassificationResult.Results.Documents)
+                    foreach (ClassificationActionResult customClassificationDocument in customClassificationResult.Results.Documents)
                     {
                         Assert.IsNotNull(customClassificationDocument.Id);
                         Assert.IsNotNull(customClassificationDocument.Class);
@@ -555,7 +555,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                     Assert.IsNotNull(customClassificationResult.Results);
                     Assert.IsNotNull(customClassificationResult.Results.Documents);
 
-                    foreach (ClassificationDocumentResultWithDetectedLanguage customClassificationDocument in customClassificationResult.Results.Documents)
+                    foreach (ClassificationActionResult customClassificationDocument in customClassificationResult.Results.Documents)
                     {
                         Assert.IsNotNull(customClassificationDocument.Id);
                         Assert.IsNotNull(customClassificationDocument.Class);
@@ -647,7 +647,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                     Assert.IsNotNull(extractiveSummarizationLROResult.Results);
                     Assert.IsNotNull(extractiveSummarizationLROResult.Results.Documents);
 
-                    foreach (ExtractedSummaryDocumentResultWithDetectedLanguage extractedSummaryDocument in extractiveSummarizationLROResult.Results.Documents)
+                    foreach (ExtractedSummaryActionResult extractedSummaryDocument in extractiveSummarizationLROResult.Results.Documents)
                     {
                         Assert.IsNotNull(extractedSummaryDocument.Id);
                         Assert.IsNotNull(extractedSummaryDocument.Sentences);
@@ -740,7 +740,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                     Assert.IsNotNull(abstractiveSummarizationLROResult.Results);
                     Assert.IsNotNull(abstractiveSummarizationLROResult.Results.Documents);
 
-                    foreach (AbstractiveSummaryDocumentResultWithDetectedLanguage extractedSummaryDocument in abstractiveSummarizationLROResult.Results.Documents)
+                    foreach (AbstractiveSummaryActionResult extractedSummaryDocument in abstractiveSummarizationLROResult.Results.Documents)
                     {
                         Assert.IsNotNull(extractedSummaryDocument.Id);
                         Assert.IsNotNull(extractedSummaryDocument.Summaries);

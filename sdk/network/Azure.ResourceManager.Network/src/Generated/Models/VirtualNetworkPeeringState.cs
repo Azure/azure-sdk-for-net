@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         public static bool operator ==(VirtualNetworkPeeringState left, VirtualNetworkPeeringState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualNetworkPeeringState"/> values are not the same. </summary>
         public static bool operator !=(VirtualNetworkPeeringState left, VirtualNetworkPeeringState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VirtualNetworkPeeringState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualNetworkPeeringState"/>. </summary>
         public static implicit operator VirtualNetworkPeeringState(string value) => new VirtualNetworkPeeringState(value);
 
         /// <inheritdoc />

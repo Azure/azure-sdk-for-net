@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Definition of ARM tracked top level resource properties for update operation. </summary>
+    /// <summary> The type used for update operations of the AzureMonitorWorkspace. </summary>
     public partial class MonitorWorkspaceResourcePatch
     {
         /// <summary>
@@ -53,14 +53,18 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceResourcePatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="metrics"> Information about metrics for the Azure Monitor workspace. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitorWorkspaceResourcePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MonitorWorkspaceResourcePatch(IDictionary<string, string> tags, MonitorWorkspaceMetricProperties metrics, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
+            Metrics = metrics;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
+        /// <summary> Information about metrics for the Azure Monitor workspace. </summary>
+        public MonitorWorkspaceMetricProperties Metrics { get; set; }
     }
 }

@@ -72,18 +72,25 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         }
 
         /// <summary> The URL to sync for the flux configuration S3 bucket. </summary>
+        [WirePath("url")]
         public Uri Uri { get; set; }
         /// <summary> The bucket name to sync from the url endpoint for the flux configuration. </summary>
+        [WirePath("bucketName")]
         public string BucketName { get; set; }
         /// <summary> Specify whether to use insecure communication when puling data from the S3 bucket. </summary>
+        [WirePath("insecure")]
         public bool? UseInsecureCommunication { get; set; }
         /// <summary> The maximum time to attempt to reconcile the cluster bucket source with the remote. </summary>
+        [WirePath("timeoutInSeconds")]
         public long? TimeoutInSeconds { get; set; }
         /// <summary> The interval at which to re-reconcile the cluster bucket source with the remote. </summary>
+        [WirePath("syncIntervalInSeconds")]
         public long? SyncIntervalInSeconds { get; set; }
         /// <summary> Plaintext access key used to securely access the S3 bucket. </summary>
+        [WirePath("accessKey")]
         public string AccessKey { get; set; }
         /// <summary> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </summary>
+        [WirePath("localAuthRef")]
         public string LocalAuthRef { get; set; }
     }
 }

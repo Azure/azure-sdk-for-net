@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Hci
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-02-01";
+            _apiVersion = apiVersion ?? "2024-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> List all Update summaries under the HCI cluster. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> List all Update summaries under the HCI cluster. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> Delete Update Summaries. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> Delete Update Summaries. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Hci
             }
         }
 
-        internal RequestUriBuilder CreatePutRequestUri(string subscriptionId, string resourceGroupName, string clusterName, UpdateSummaryData data)
+        internal RequestUriBuilder CreatePutRequestUri(string subscriptionId, string resourceGroupName, string clusterName, HciClusterUpdateSummaryData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Hci
             return uri;
         }
 
-        internal HttpMessage CreatePutRequest(string subscriptionId, string resourceGroupName, string clusterName, UpdateSummaryData data)
+        internal HttpMessage CreatePutRequest(string subscriptionId, string resourceGroupName, string clusterName, HciClusterUpdateSummaryData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -259,14 +259,14 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> Put Update summaries under the HCI cluster. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="data"> Properties of the UpdateSummaries resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<UpdateSummaryData>> PutAsync(string subscriptionId, string resourceGroupName, string clusterName, UpdateSummaryData data, CancellationToken cancellationToken = default)
+        public async Task<Response<HciClusterUpdateSummaryData>> PutAsync(string subscriptionId, string resourceGroupName, string clusterName, HciClusterUpdateSummaryData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -279,9 +279,9 @@ namespace Azure.ResourceManager.Hci
             {
                 case 200:
                     {
-                        UpdateSummaryData value = default;
+                        HciClusterUpdateSummaryData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UpdateSummaryData.DeserializeUpdateSummaryData(document.RootElement);
+                        value = HciClusterUpdateSummaryData.DeserializeHciClusterUpdateSummaryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -290,14 +290,14 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> Put Update summaries under the HCI cluster. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="data"> Properties of the UpdateSummaries resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<UpdateSummaryData> Put(string subscriptionId, string resourceGroupName, string clusterName, UpdateSummaryData data, CancellationToken cancellationToken = default)
+        public Response<HciClusterUpdateSummaryData> Put(string subscriptionId, string resourceGroupName, string clusterName, HciClusterUpdateSummaryData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -310,9 +310,9 @@ namespace Azure.ResourceManager.Hci
             {
                 case 200:
                     {
-                        UpdateSummaryData value = default;
+                        HciClusterUpdateSummaryData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UpdateSummaryData.DeserializeUpdateSummaryData(document.RootElement);
+                        value = HciClusterUpdateSummaryData.DeserializeHciClusterUpdateSummaryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -357,13 +357,13 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary> Get all Update summaries under the HCI cluster. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<UpdateSummaryData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
+        public async Task<Response<HciClusterUpdateSummaryData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -375,26 +375,26 @@ namespace Azure.ResourceManager.Hci
             {
                 case 200:
                     {
-                        UpdateSummaryData value = default;
+                        HciClusterUpdateSummaryData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = UpdateSummaryData.DeserializeUpdateSummaryData(document.RootElement);
+                        value = HciClusterUpdateSummaryData.DeserializeHciClusterUpdateSummaryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((UpdateSummaryData)null, message.Response);
+                    return Response.FromValue((HciClusterUpdateSummaryData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Get all Update summaries under the HCI cluster. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<UpdateSummaryData> Get(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
+        public Response<HciClusterUpdateSummaryData> Get(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -406,13 +406,13 @@ namespace Azure.ResourceManager.Hci
             {
                 case 200:
                     {
-                        UpdateSummaryData value = default;
+                        HciClusterUpdateSummaryData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = UpdateSummaryData.DeserializeUpdateSummaryData(document.RootElement);
+                        value = HciClusterUpdateSummaryData.DeserializeHciClusterUpdateSummaryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((UpdateSummaryData)null, message.Response);
+                    return Response.FromValue((HciClusterUpdateSummaryData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary> List all Update summaries under the HCI cluster. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary> List all Update summaries under the HCI cluster. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

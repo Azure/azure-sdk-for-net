@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static bool operator ==(ContainerAppEnvironmentProvisioningState left, ContainerAppEnvironmentProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerAppEnvironmentProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(ContainerAppEnvironmentProvisioningState left, ContainerAppEnvironmentProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerAppEnvironmentProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerAppEnvironmentProvisioningState"/>. </summary>
         public static implicit operator ContainerAppEnvironmentProvisioningState(string value) => new ContainerAppEnvironmentProvisioningState(value);
 
         /// <inheritdoc />

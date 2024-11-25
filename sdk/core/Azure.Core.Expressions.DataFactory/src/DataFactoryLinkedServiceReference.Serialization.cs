@@ -54,7 +54,7 @@ namespace Azure.Core.Expressions.DataFactory
             {
                 if (property.NameEquals("type"u8))
                 {
-                    kind = new DataFactoryLinkedServiceReferenceKind(property.Value.GetString());
+                    kind = new DataFactoryLinkedServiceReferenceKind(property.Value.GetString() ?? string.Empty);
                     continue;
                 }
                 if (property.NameEquals("referenceName"u8))

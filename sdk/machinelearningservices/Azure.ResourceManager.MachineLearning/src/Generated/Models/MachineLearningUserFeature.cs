@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Specifies the feature ID. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> Specifies the feature name. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
         /// <summary> Describes the feature for user experience. </summary>
+        [WirePath("description")]
         public string Description { get; }
     }
 }

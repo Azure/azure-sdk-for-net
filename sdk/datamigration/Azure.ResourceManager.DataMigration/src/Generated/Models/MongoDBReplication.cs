@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static bool operator ==(MongoDBReplication left, MongoDBReplication right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MongoDBReplication"/> values are not the same. </summary>
         public static bool operator !=(MongoDBReplication left, MongoDBReplication right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MongoDBReplication"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MongoDBReplication"/>. </summary>
         public static implicit operator MongoDBReplication(string value) => new MongoDBReplication(value);
 
         /// <inheritdoc />

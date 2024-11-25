@@ -33,7 +33,7 @@ namespace Azure.Developer.DevCenter.Models
         public static bool operator ==(LocalAdministratorStatus left, LocalAdministratorStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LocalAdministratorStatus"/> values are not the same. </summary>
         public static bool operator !=(LocalAdministratorStatus left, LocalAdministratorStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LocalAdministratorStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LocalAdministratorStatus"/>. </summary>
         public static implicit operator LocalAdministratorStatus(string value) => new LocalAdministratorStatus(value);
 
         /// <inheritdoc />

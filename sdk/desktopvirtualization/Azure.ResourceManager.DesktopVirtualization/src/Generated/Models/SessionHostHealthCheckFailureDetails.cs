@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Failure message: hints on what is wrong and how to recover. </summary>
+        [WirePath("message")]
         public string Message { get; }
         /// <summary> Error code corresponding for the failure. </summary>
+        [WirePath("errorCode")]
         public int? ErrorCode { get; }
         /// <summary> The timestamp of the last update. </summary>
+        [WirePath("lastHealthCheckDateTime")]
         public DateTimeOffset? LastHealthCheckOn { get; }
     }
 }

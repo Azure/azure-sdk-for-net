@@ -48,7 +48,7 @@ namespace Azure.AI.Language.Text
         public static bool operator ==(TextActionState left, TextActionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TextActionState"/> values are not the same. </summary>
         public static bool operator !=(TextActionState left, TextActionState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TextActionState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TextActionState"/>. </summary>
         public static implicit operator TextActionState(string value) => new TextActionState(value);
 
         /// <inheritdoc />

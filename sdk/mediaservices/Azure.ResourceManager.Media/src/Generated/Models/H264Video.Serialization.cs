@@ -19,13 +19,22 @@ namespace Azure.ResourceManager.Media.Models
 
         void IJsonModel<H264Video>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<H264Video>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(H264Video)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Complexity))
             {
                 writer.WritePropertyName("complexity"u8);
@@ -51,44 +60,6 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("sceneChangeDetection"u8);
                 writer.WriteBooleanValue(UseSceneChangeDetection.Value);
             }
-            if (Optional.IsDefined(KeyFrameInterval))
-            {
-                writer.WritePropertyName("keyFrameInterval"u8);
-                writer.WriteStringValue(KeyFrameInterval.Value, "P");
-            }
-            if (Optional.IsDefined(StretchMode))
-            {
-                writer.WritePropertyName("stretchMode"u8);
-                writer.WriteStringValue(StretchMode.Value.ToString());
-            }
-            if (Optional.IsDefined(SyncMode))
-            {
-                writer.WritePropertyName("syncMode"u8);
-                writer.WriteStringValue(SyncMode.Value.ToString());
-            }
-            writer.WritePropertyName("@odata.type"u8);
-            writer.WriteStringValue(OdataType);
-            if (Optional.IsDefined(Label))
-            {
-                writer.WritePropertyName("label"u8);
-                writer.WriteStringValue(Label);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         H264Video IJsonModel<H264Video>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

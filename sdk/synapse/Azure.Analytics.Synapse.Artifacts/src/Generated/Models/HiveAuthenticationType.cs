@@ -39,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(HiveAuthenticationType left, HiveAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HiveAuthenticationType"/> values are not the same. </summary>
         public static bool operator !=(HiveAuthenticationType left, HiveAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HiveAuthenticationType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HiveAuthenticationType"/>. </summary>
         public static implicit operator HiveAuthenticationType(string value) => new HiveAuthenticationType(value);
 
         /// <inheritdoc />

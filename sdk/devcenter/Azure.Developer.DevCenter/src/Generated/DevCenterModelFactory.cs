@@ -72,14 +72,6 @@ namespace Azure.Developer.DevCenter.Models
             return new DevBoxHardwareProfile(skuName, vcpUs, memoryGB, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DevBoxStorageProfile"/>. </summary>
-        /// <param name="osDisk"> Settings for the operating system disk. </param>
-        /// <returns> A new <see cref="Models.DevBoxStorageProfile"/> instance for mocking. </returns>
-        public static DevBoxStorageProfile DevBoxStorageProfile(OSDisk osDisk = null)
-        {
-            return new DevBoxStorageProfile(osDisk, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.OSDisk"/>. </summary>
         /// <param name="diskSizeGB"> The size of the OS Disk in gigabytes. </param>
         /// <returns> A new <see cref="Models.OSDisk"/> instance for mocking. </returns>

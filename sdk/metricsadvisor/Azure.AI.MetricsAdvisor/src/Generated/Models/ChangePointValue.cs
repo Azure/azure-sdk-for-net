@@ -29,7 +29,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public static bool operator ==(ChangePointValue left, ChangePointValue right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ChangePointValue"/> values are not the same. </summary>
         public static bool operator !=(ChangePointValue left, ChangePointValue right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ChangePointValue"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ChangePointValue"/>. </summary>
         public static implicit operator ChangePointValue(string value) => new ChangePointValue(value);
 
         /// <inheritdoc />

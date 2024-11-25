@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static bool operator ==(AutomatedCheckResultType left, AutomatedCheckResultType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AutomatedCheckResultType"/> values are not the same. </summary>
         public static bool operator !=(AutomatedCheckResultType left, AutomatedCheckResultType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AutomatedCheckResultType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AutomatedCheckResultType"/>. </summary>
         public static implicit operator AutomatedCheckResultType(string value) => new AutomatedCheckResultType(value);
 
         /// <inheritdoc />

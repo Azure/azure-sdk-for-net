@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(RestoreDetailsName left, RestoreDetailsName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RestoreDetailsName"/> values are not the same. </summary>
         public static bool operator !=(RestoreDetailsName left, RestoreDetailsName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RestoreDetailsName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RestoreDetailsName"/>. </summary>
         public static implicit operator RestoreDetailsName(string value) => new RestoreDetailsName(value);
 
         /// <inheritdoc />

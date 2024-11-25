@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Synapse.Models
         public static bool operator ==(SynapseIntegrationRuntimeInternalChannelEncryptionMode left, SynapseIntegrationRuntimeInternalChannelEncryptionMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SynapseIntegrationRuntimeInternalChannelEncryptionMode"/> values are not the same. </summary>
         public static bool operator !=(SynapseIntegrationRuntimeInternalChannelEncryptionMode left, SynapseIntegrationRuntimeInternalChannelEncryptionMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SynapseIntegrationRuntimeInternalChannelEncryptionMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SynapseIntegrationRuntimeInternalChannelEncryptionMode"/>. </summary>
         public static implicit operator SynapseIntegrationRuntimeInternalChannelEncryptionMode(string value) => new SynapseIntegrationRuntimeInternalChannelEncryptionMode(value);
 
         /// <inheritdoc />

@@ -1,12 +1,6 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Trigger.Model;
 using Microsoft.Azure.WebJobs.Host.Triggers;
 using Microsoft.Azure.WebPubSub.Common;
@@ -14,6 +8,12 @@ using Microsoft.Extensions.Configuration;
 using Moq;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using static Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.WebPubSubForSocketIOTriggerBinding;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             _provider = new WebPubSubForSocketIOTriggerBindingProvider(mockDispater.Object, resolver, config, null);
         }
 
-        public static void ConnectObj([SocketIOTrigger("testchat","connect")] JObject req) { }
+        public static void ConnectObj([SocketIOTrigger("testchat", "connect")] JObject req) { }
 
         public static void Connect([SocketIOTrigger("testchat", "connect")] SocketIOConnectRequest req,
             string @namespace,
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             IDictionary<string, string[]> query,
             IDictionary<string, string[]> headers,
             WebPubSubClientCertificate[] clinetCertificates)
-        {}
+        { }
 
         public static void ConnectedObj([SocketIOTrigger("testchat", "connected")] JObject req) { }
 
@@ -61,13 +61,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             string @namespace,
             string socketId,
             string reason)
-        {}
+        { }
 
         public static void MessageObj([SocketIOTrigger("testchat", "target")] JObject req) { }
 
         public static void Message([SocketIOTrigger("testchat", "target")] SocketIOMessageRequest req,
-            [SocketIOParameter]string paramKey1,
-            [SocketIOParameter]int paramKey2)
+            [SocketIOParameter] string paramKey1,
+            [SocketIOParameter] int paramKey2)
         { }
 
         [TestCase]
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
 
             var triggerEvent = new SocketIOTriggerEvent
             {
-                ConnectionContext = new SocketIOSocketContext(WebPubSubEventType.System, "connect", "testchat", "conn1", "ns", "sid", "signature", "origin", null),
+                ConnectionContext = new SocketIOSocketContext(WebPubSubEventType.System, "connect", "testchat", "conn1", "uid", "ns", "sid", "signature", "origin", null),
                 Request = new SocketIOConnectRequest(
                     "ns",
                     "sid",
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
 
             var triggerEvent = new SocketIOTriggerEvent
             {
-                ConnectionContext = new SocketIOSocketContext(WebPubSubEventType.System, "connected", "testchat", "conn1", "ns", "sid", "signature", "origin", null),
+                ConnectionContext = new SocketIOSocketContext(WebPubSubEventType.System, "connected", "testchat", "conn1", "uid", "ns", "sid", "signature", "origin", null),
                 Request = new SocketIOConnectedRequest("ns", "sid")
             };
 
@@ -146,7 +146,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
 
             var triggerEvent = new SocketIOTriggerEvent
             {
-                ConnectionContext = new SocketIOSocketContext(WebPubSubEventType.System, "disconnect", "testchat", "conn1", "ns", "sid", "signature", "origin", null),
+                ConnectionContext = new SocketIOSocketContext(WebPubSubEventType.System, "disconnect", "testchat", "conn1", "uid", "ns", "sid", "signature", "origin", null),
                 Request = new SocketIODisconnectedRequest("ns", "sid", "reason")
             };
 
@@ -175,8 +175,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
 
             var triggerEvent = new SocketIOTriggerEvent
             {
-                ConnectionContext = new SocketIOSocketContext(WebPubSubEventType.User, "target", "testchat", "conn1", "ns", "sid", "signature", "origin", null),
-                Request = new SocketIOMessageRequest("ns", "sid", "payload", new object[] { "param1", 2 })
+                ConnectionContext = new SocketIOSocketContext(WebPubSubEventType.User, "target", "testchat", "conn1", "uid", "ns", "sid", "signature", "origin", null),
+                Request = new SocketIOMessageRequest("ns", "sid", "payload", "ev", new object[] { "param1", 2 })
             };
 
             var triggerData = await binding.BindAsync(triggerEvent, null);
@@ -244,7 +244,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
 
         private static SocketIOTriggerEvent NewTestEvent()
         {
-            var sioContext = new SocketIOSocketContext(WebPubSubEventType.User, "message", "testhub", "conn1", "ns", "sid", "signature", "origin", null);
+            var sioContext = new SocketIOSocketContext(WebPubSubEventType.User, "message", "testhub", "conn1", "uid", "ns", "sid", "signature", "origin", null);
             return new SocketIOTriggerEvent
             {
                 ConnectionContext = sioContext,
@@ -252,7 +252,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
                     "namespace",
                     "socketId",
                     "payload",
-                    new[] { "arg1", "arg2"}),
+                    "ev",
+                    new[] { "arg1", "arg2" }),
             };
         }
     }

@@ -14,8 +14,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
         public async Task ComposeModelAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-            var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), TestEnvironment.Credential);
 
             #region Snippet:DocumentIntelligenceSampleBuildVariousModels
             // For this sample, you can use the training documents found in the `trainingFiles` folder.
@@ -89,23 +88,32 @@ namespace Azure.AI.DocumentIntelligence.Samples
             #endregion
 
             #region Snippet:DocumentIntelligenceSampleComposeModel
+            // Note that to compose a model you must assign a classifier responsible for detecting the type of
+            // document submitted on analysis requests. This piece of information is necessary to determine which
+            // of the component models should be the one to analyze the input document.
+
 #if SNIPPET
             string purchaseOrderModelId = "<purchaseOrderModelId>";
+            string classifierId = "<classifierId>";
 #else
             string purchaseOrderModelId = Guid.NewGuid().ToString();
+            string classifierId = Guid.NewGuid().ToString();
 #endif
-            var componentModelIds = new List<ComponentDocumentModelDetails>()
+            var docTypes = new Dictionary<string, DocumentTypeDetails>()
             {
-                new ComponentDocumentModelDetails(officeSuppliesModelId),
-                new ComponentDocumentModelDetails(officeEquipmentModelId),
-                new ComponentDocumentModelDetails(furnitureModelId),
-                new ComponentDocumentModelDetails(cleaningSuppliesModelId)
+                { "officeSupplies", new DocumentTypeDetails() { ModelId = officeSuppliesModelId } },
+                { "officeEquipment", new DocumentTypeDetails() { ModelId = officeEquipmentModelId } },
+                { "furniture", new DocumentTypeDetails() { ModelId = furnitureModelId } },
+                { "cleaningSupplies", new DocumentTypeDetails() { ModelId = cleaningSuppliesModelId } }
             };
-            var purchaseOrderContent = new ComposeDocumentModelContent(purchaseOrderModelId, componentModelIds)
+            var purchaseOrderContent = new ComposeDocumentModelContent(purchaseOrderModelId, classifierId, docTypes)
             {
                 Description = "Composed Purchase order"
             };
 
+#if !SNIPPET
+            await BuildClassifierAsync(client, classifierId);
+#endif
             Operation<DocumentModelDetails> purchaseOrderOperation = await client.ComposeModelAsync(WaitUntil.Completed, purchaseOrderContent);
             DocumentModelDetails purchaseOrderModel = purchaseOrderOperation.Value;
 
@@ -120,6 +128,29 @@ namespace Azure.AI.DocumentIntelligence.Samples
             await client.DeleteModelAsync(furnitureModelId);
             await client.DeleteModelAsync(cleaningSuppliesModelId);
             await client.DeleteModelAsync(purchaseOrderModelId);
+            await client.DeleteClassifierAsync(classifierId);
+        }
+
+        /// <summary>
+        /// A helper method used by the sample above. Builds a document classifier.
+        /// </summary>
+        public async Task BuildClassifierAsync(DocumentIntelligenceAdministrationClient client, string classifierId)
+        {
+            Uri blobContainerUri = new Uri(TestEnvironment.ClassifierTrainingSasUrl);
+
+            var sourceA = new AzureBlobContentSource(blobContainerUri) { Prefix = "IRS-1040-A/train" };
+            var sourceB = new AzureBlobContentSource(blobContainerUri) { Prefix = "IRS-1040-B/train" };
+            var docTypeA = new ClassifierDocumentTypeDetails() { AzureBlobSource = sourceA };
+            var docTypeB = new ClassifierDocumentTypeDetails() { AzureBlobSource = sourceB };
+            var docTypes = new Dictionary<string, ClassifierDocumentTypeDetails>()
+            {
+                { "IRS-1040-A", docTypeA },
+                { "IRS-1040-B", docTypeB }
+            };
+
+            var buildContent = new BuildDocumentClassifierContent(classifierId, docTypes);
+
+            await client.BuildClassifierAsync(WaitUntil.Completed, buildContent);
         }
     }
 }

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator ==(ReportTimeframeType left, ReportTimeframeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ReportTimeframeType"/> values are not the same. </summary>
         public static bool operator !=(ReportTimeframeType left, ReportTimeframeType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ReportTimeframeType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ReportTimeframeType"/>. </summary>
         public static implicit operator ReportTimeframeType(string value) => new ReportTimeframeType(value);
 
         /// <inheritdoc />

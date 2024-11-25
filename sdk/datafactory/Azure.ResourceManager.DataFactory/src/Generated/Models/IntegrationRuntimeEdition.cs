@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator ==(IntegrationRuntimeEdition left, IntegrationRuntimeEdition right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IntegrationRuntimeEdition"/> values are not the same. </summary>
         public static bool operator !=(IntegrationRuntimeEdition left, IntegrationRuntimeEdition right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IntegrationRuntimeEdition"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IntegrationRuntimeEdition"/>. </summary>
         public static implicit operator IntegrationRuntimeEdition(string value) => new IntegrationRuntimeEdition(value);
 
         /// <inheritdoc />

@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Tags of the Partner Destination resource. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }
 }

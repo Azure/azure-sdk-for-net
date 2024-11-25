@@ -33,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(IntegrationRuntimeEntityReferenceType left, IntegrationRuntimeEntityReferenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IntegrationRuntimeEntityReferenceType"/> values are not the same. </summary>
         public static bool operator !=(IntegrationRuntimeEntityReferenceType left, IntegrationRuntimeEntityReferenceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="IntegrationRuntimeEntityReferenceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="IntegrationRuntimeEntityReferenceType"/>. </summary>
         public static implicit operator IntegrationRuntimeEntityReferenceType(string value) => new IntegrationRuntimeEntityReferenceType(value);
 
         /// <inheritdoc />

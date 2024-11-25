@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetApp.Models
         public static bool operator ==(NetAppAccountActiveDirectoryStatus left, NetAppAccountActiveDirectoryStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetAppAccountActiveDirectoryStatus"/> values are not the same. </summary>
         public static bool operator !=(NetAppAccountActiveDirectoryStatus left, NetAppAccountActiveDirectoryStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetAppAccountActiveDirectoryStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppAccountActiveDirectoryStatus"/>. </summary>
         public static implicit operator NetAppAccountActiveDirectoryStatus(string value) => new NetAppAccountActiveDirectoryStatus(value);
 
         /// <inheritdoc />

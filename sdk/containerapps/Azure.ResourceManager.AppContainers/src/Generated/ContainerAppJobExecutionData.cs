@@ -76,12 +76,16 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Current running State of the job. </summary>
+        [WirePath("properties.status")]
         public JobExecutionRunningState? Status { get; }
         /// <summary> Job execution start time. </summary>
+        [WirePath("properties.startTime")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> Job execution end time. </summary>
+        [WirePath("properties.endTime")]
         public DateTimeOffset? EndOn { get; }
         /// <summary> Job's execution container. </summary>
+        [WirePath("properties.template")]
         public ContainerAppJobExecutionTemplate Template { get; }
     }
 }

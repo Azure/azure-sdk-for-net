@@ -1,5 +1,16 @@
 # Release History
 
+## 1.5.0-beta.1 (Unreleased)
+
+### Features Added
+- Added support for SocketIO when generating ClientAccessURI
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.4.0 (2024-07-31)
 
 ### Features Added

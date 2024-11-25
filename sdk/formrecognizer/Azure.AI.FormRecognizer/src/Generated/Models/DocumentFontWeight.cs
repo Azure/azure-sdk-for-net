@@ -33,7 +33,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public static bool operator ==(DocumentFontWeight left, DocumentFontWeight right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DocumentFontWeight"/> values are not the same. </summary>
         public static bool operator !=(DocumentFontWeight left, DocumentFontWeight right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DocumentFontWeight"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DocumentFontWeight"/>. </summary>
         public static implicit operator DocumentFontWeight(string value) => new DocumentFontWeight(value);
 
         /// <inheritdoc />

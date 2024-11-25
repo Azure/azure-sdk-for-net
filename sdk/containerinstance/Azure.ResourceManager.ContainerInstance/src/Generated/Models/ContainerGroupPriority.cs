@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static bool operator ==(ContainerGroupPriority left, ContainerGroupPriority right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerGroupPriority"/> values are not the same. </summary>
         public static bool operator !=(ContainerGroupPriority left, ContainerGroupPriority right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ContainerGroupPriority"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerGroupPriority"/>. </summary>
         public static implicit operator ContainerGroupPriority(string value) => new ContainerGroupPriority(value);
 
         /// <inheritdoc />

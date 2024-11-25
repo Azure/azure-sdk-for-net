@@ -65,8 +65,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Name of the ACR account. </summary>
+        [WirePath("acrAccountName")]
         public string AcrAccountName { get; set; }
         /// <summary> SKU of the ACR account. </summary>
+        [WirePath("acrAccountSku")]
         public string AcrAccountSku { get; set; }
         /// <summary> This is populated once the ACR account is created. </summary>
         internal ArmResourceId ArmResourceIdentifier { get; set; }
@@ -74,6 +76,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Arm ResourceId is in the format "/subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Storage/storageAccounts/{StorageAccountName}"
         /// or "/subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{AcrName}"
         /// </summary>
+        [WirePath("armResourceId.resourceId")]
         public ResourceIdentifier ArmResourceId
         {
             get => ArmResourceIdentifier is null ? default : ArmResourceIdentifier.ResourceId;

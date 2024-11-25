@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static bool operator ==(DevTestLabCustomImageOSType left, DevTestLabCustomImageOSType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevTestLabCustomImageOSType"/> values are not the same. </summary>
         public static bool operator !=(DevTestLabCustomImageOSType left, DevTestLabCustomImageOSType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DevTestLabCustomImageOSType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DevTestLabCustomImageOSType"/>. </summary>
         public static implicit operator DevTestLabCustomImageOSType(string value) => new DevTestLabCustomImageOSType(value);
 
         /// <inheritdoc />

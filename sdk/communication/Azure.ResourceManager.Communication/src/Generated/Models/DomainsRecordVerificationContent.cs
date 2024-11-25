@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.Communication.Models
         }
 
         /// <summary> Type of verification. </summary>
+        [WirePath("verificationType")]
         public DomainRecordVerificationType VerificationType { get; }
     }
 }

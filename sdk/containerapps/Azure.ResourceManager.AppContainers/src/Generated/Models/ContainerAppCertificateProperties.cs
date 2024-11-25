@@ -81,26 +81,37 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Provisioning state of the certificate. </summary>
+        [WirePath("provisioningState")]
         public ContainerAppCertificateProvisioningState? ProvisioningState { get; }
         /// <summary> Certificate password. </summary>
+        [WirePath("password")]
         public string Password { get; set; }
         /// <summary> Subject name of the certificate. </summary>
+        [WirePath("subjectName")]
         public string SubjectName { get; }
         /// <summary> Subject alternative names the certificate applies to. </summary>
+        [WirePath("subjectAlternativeNames")]
         public IReadOnlyList<string> SubjectAlternativeNames { get; }
         /// <summary> PFX or PEM blob. </summary>
+        [WirePath("value")]
         public byte[] Value { get; set; }
         /// <summary> Certificate issuer. </summary>
+        [WirePath("issuer")]
         public string Issuer { get; }
         /// <summary> Certificate issue Date. </summary>
+        [WirePath("issueDate")]
         public DateTimeOffset? IssueOn { get; }
         /// <summary> Certificate expiration date. </summary>
+        [WirePath("expirationDate")]
         public DateTimeOffset? ExpireOn { get; }
         /// <summary> Certificate thumbprint. </summary>
+        [WirePath("thumbprint")]
         public string Thumbprint { get; }
         /// <summary> Is the certificate valid?. </summary>
+        [WirePath("valid")]
         public bool? IsValid { get; }
         /// <summary> Public key hash. </summary>
+        [WirePath("publicKeyHash")]
         public string PublicKeyHash { get; }
     }
 }

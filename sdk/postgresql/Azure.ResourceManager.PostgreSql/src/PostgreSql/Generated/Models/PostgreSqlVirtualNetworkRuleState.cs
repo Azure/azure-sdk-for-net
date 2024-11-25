@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         public static bool operator ==(PostgreSqlVirtualNetworkRuleState left, PostgreSqlVirtualNetworkRuleState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlVirtualNetworkRuleState"/> values are not the same. </summary>
         public static bool operator !=(PostgreSqlVirtualNetworkRuleState left, PostgreSqlVirtualNetworkRuleState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PostgreSqlVirtualNetworkRuleState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlVirtualNetworkRuleState"/>. </summary>
         public static implicit operator PostgreSqlVirtualNetworkRuleState(string value) => new PostgreSqlVirtualNetworkRuleState(value);
 
         /// <inheritdoc />

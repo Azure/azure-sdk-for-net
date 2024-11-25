@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="model"> The model name of the device. </param>
         /// <param name="physicalSlot"> The physical slot for this device. </param>
         /// <param name="portCount"> The number of ports on the device. </param>
-        /// <param name="portSpeed"> The maximum amount of data in GB that the line card transmits through a port at any given second. </param>
+        /// <param name="portSpeed"> The maximum amount of data in gigabits that the line card transmits through a port at any given second. </param>
         /// <param name="vendor"> The vendor name of the device. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetworkCloudNetworkInterface(string address, DeviceConnectionType? deviceConnectionType, string model, long? physicalSlot, long? portCount, long? portSpeed, string vendor, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public long? PhysicalSlot { get; }
         /// <summary> The number of ports on the device. </summary>
         public long? PortCount { get; }
-        /// <summary> The maximum amount of data in GB that the line card transmits through a port at any given second. </summary>
+        /// <summary> The maximum amount of data in gigabits that the line card transmits through a port at any given second. </summary>
         public long? PortSpeed { get; }
         /// <summary> The vendor name of the device. </summary>
         public string Vendor { get; }

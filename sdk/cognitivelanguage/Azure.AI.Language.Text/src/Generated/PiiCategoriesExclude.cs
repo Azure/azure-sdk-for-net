@@ -540,7 +540,7 @@ namespace Azure.AI.Language.Text
         public static bool operator ==(PiiCategoriesExclude left, PiiCategoriesExclude right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PiiCategoriesExclude"/> values are not the same. </summary>
         public static bool operator !=(PiiCategoriesExclude left, PiiCategoriesExclude right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PiiCategoriesExclude"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PiiCategoriesExclude"/>. </summary>
         public static implicit operator PiiCategoriesExclude(string value) => new PiiCategoriesExclude(value);
 
         /// <inheritdoc />

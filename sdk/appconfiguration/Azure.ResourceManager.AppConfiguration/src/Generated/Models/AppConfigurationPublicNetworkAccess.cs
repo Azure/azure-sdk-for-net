@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public static bool operator ==(AppConfigurationPublicNetworkAccess left, AppConfigurationPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppConfigurationPublicNetworkAccess"/> values are not the same. </summary>
         public static bool operator !=(AppConfigurationPublicNetworkAccess left, AppConfigurationPublicNetworkAccess right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AppConfigurationPublicNetworkAccess"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AppConfigurationPublicNetworkAccess"/>. </summary>
         public static implicit operator AppConfigurationPublicNetworkAccess(string value) => new AppConfigurationPublicNetworkAccess(value);
 
         /// <inheritdoc />

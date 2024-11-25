@@ -30,7 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static bool operator ==(NotebookReferenceType left, NotebookReferenceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NotebookReferenceType"/> values are not the same. </summary>
         public static bool operator !=(NotebookReferenceType left, NotebookReferenceType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NotebookReferenceType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NotebookReferenceType"/>. </summary>
         public static implicit operator NotebookReferenceType(string value) => new NotebookReferenceType(value);
 
         /// <inheritdoc />

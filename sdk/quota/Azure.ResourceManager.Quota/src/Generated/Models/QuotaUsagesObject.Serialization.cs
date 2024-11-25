@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.Quota.Models
 
         void IJsonModel<QuotaUsagesObject>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<QuotaUsagesObject>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(QuotaUsagesObject)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
             writer.WriteNumberValue(Value);
             if (Optional.IsDefined(UsagesType))
@@ -49,7 +57,6 @@ namespace Azure.ResourceManager.Quota.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         QuotaUsagesObject IJsonModel<QuotaUsagesObject>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
