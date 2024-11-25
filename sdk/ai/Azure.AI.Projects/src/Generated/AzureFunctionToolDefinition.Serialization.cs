@@ -36,7 +36,7 @@ namespace Azure.AI.Projects
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("azure_function"u8);
-            writer.WriteObjectValue(AzureFunction, options);
+            writer.WriteObjectValue<InternalAzureFunctionDefinition>(InternalAzureFunction, options);
         }
 
         AzureFunctionToolDefinition IJsonModel<AzureFunctionToolDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -59,7 +59,7 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            AzureFunctionDefinition azureFunction = default;
+            InternalAzureFunctionDefinition azureFunction = default;
             string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -67,7 +67,7 @@ namespace Azure.AI.Projects
             {
                 if (property.NameEquals("azure_function"u8))
                 {
-                    azureFunction = AzureFunctionDefinition.DeserializeAzureFunctionDefinition(property.Value, options);
+                    azureFunction = InternalAzureFunctionDefinition.DeserializeInternalAzureFunctionDefinition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

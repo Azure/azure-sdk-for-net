@@ -20,6 +20,7 @@ Use the AI Projects client library to:
       - [Retrieve messages](#retrieve-messages)
     - [File search](#file-search)
     - [Function call](#function-call)
+    - [Azure function call](#azure-function-call)
 - [Troubleshooting](#troubleshooting)
 - [Next steps](#next-steps)
 - [Contributing](#contributing)
@@ -346,6 +347,83 @@ do
 while (runResponse.Value.Status == RunStatus.Queued
     || runResponse.Value.Status == RunStatus.InProgress);
 ```
+
+#### Azure function call
+We also can use Azure Function from inside the agent. In the example below we are calling function "foo", which responds "Bar". In this example we create `AzureFunctionToolDefinition` object, with the function name, description, input and output queues, followed by function parameters.  
+```C# Snippet:AzureFunctionsDefineFunctionTools
+AzureFunctionToolDefinition azureFnTool = new(
+    name: "foo",
+    description: "Get answers from the foo bot.",
+    inputBinding: new AzureStorageQueueBinding(
+        new AzureFunctionStorageQueue(
+            queueName: "azure-function-foo-input",
+            storageQueueUri: storageQueueUri
+        )
+    ),
+    outputBinding: new AzureStorageQueueBinding(
+        new AzureFunctionStorageQueue(
+            queueName: "azure-function-tool-output",
+            storageQueueUri: storageQueueUri
+        )
+    ),
+    parameters: BinaryData.FromObjectAsJson(
+            new
+            {
+                Type = "object",
+                Properties = new
+                {
+                    query = new
+                    {
+                        Type = "string",
+                        Description = "The question to ask.",
+                    },
+                    outputqueueuri = new
+                    {
+                        Type = "string",
+                        Description = "The full output queue uri."
+                    }
+                },
+            },
+        new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }
+    )
+);
+```
+
+Note that in this scenario we are asking agent to supply storage queue URI to the azure function whenever it is called.
+```C# Snippet:AzureFunctionsCreateAgentWithFunctionTools
+Response<Agent> agentResponse = await client.CreateAgentAsync(
+    model: "gpt-4",
+    name: "azure-function-agent-foo",
+        instructions: "You are a helpful support agent. Use the provided function any "
+        + "time the prompt contains the string 'What would foo say?'. When you invoke "
+        + "the function, ALWAYS specify the output queue uri parameter as "
+        + $"'{storageQueueUri}/azure-function-tool-output'. Always responds with "
+        + "\"Foo says\" and then the response from the tool.",
+    tools: new List<ToolDefinition> { azureFnTool }
+    );
+Agent agent = agentResponse.Value;
+```
+
+After we have created a message with request to ask "What would foo say?", we need to wait while the run is in queued, in progress or requires action states.
+```C# Snippet:AzureFunctionsHandlePollingWithRequiredAction
+Response<ThreadMessage> messageResponse = await client.CreateMessageAsync(
+    thread.Id,
+    MessageRole.User,
+    "What is the most prevalent element in the universe? What would foo say?");
+ThreadMessage message = messageResponse.Value;
+
+Response<ThreadRun> runResponse = await client.CreateRunAsync(thread, agent);
+
+do
+{
+    await Task.Delay(TimeSpan.FromMilliseconds(500));
+    runResponse = await client.GetRunAsync(thread.Id, runResponse.Value.Id);
+}
+while (runResponse.Value.Status == RunStatus.Queued
+    || runResponse.Value.Status == RunStatus.InProgress
+    || runResponse.Value.Status == RunStatus.RequiresAction);
+```
+
 
 ## Troubleshooting
 

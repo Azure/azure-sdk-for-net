@@ -10,20 +10,20 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    [CodeGenSuppress("AzureFunctionDefinition", typeof(InternalFunctionDefinition))]
-    public partial class AzureFunctionDefinition
+    [CodeGenSuppress("AzureFunctionToolDefinition", typeof(InternalAzureFunctionDefinition))]
+    public partial class AzureFunctionToolDefinition
     {
         /// <inheritdoc cref="InternalFunctionDefinition.Name"/>
-        public string Name => InternalFunction.Name;
+        public string Name => InternalAzureFunction.Function.Name;
 
         /// <inheritdoc cref="InternalFunctionDefinition.Description"/>
-        public string Description => InternalFunction.Description;
+        public string Description => InternalAzureFunction.Function.Description;
 
         /// <inheritdoc cref="InternalFunctionDefinition.Parameters"/>
-        public BinaryData Parameters => InternalFunction.Parameters;
+        public BinaryData Parameters => InternalAzureFunction.Function.Parameters;
 
         /// <summary> The definition of the function that the function tool should call. </summary>
-        internal InternalFunctionDefinition InternalFunction { get; set; }
+        internal InternalAzureFunctionDefinition InternalAzureFunction { get; set; }
 
         /// <summary>
         /// Initializes a new instance of AzureFunctionDefinition.
@@ -34,16 +34,16 @@ namespace Azure.AI.Projects
         /// <param name="outputBinding">Output storage queue.</param>
         /// <param name="parameters"> The parameters the Azure functions accepts, described as a JSON Schema object. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="description"/> or <paramref name="parameters"/> is null. </exception>
-        public AzureFunctionDefinition(string name, string description, AzureStorageQueueBinding inputBinding, AzureStorageQueueBinding outputBinding, BinaryData parameters)
-            : this(new InternalFunctionDefinition(name, description, parameters, serializedAdditionalRawData: null), inputBinding: inputBinding, outputBinding: outputBinding)
+        public AzureFunctionToolDefinition(string name, string description, AzureStorageQueueBinding inputBinding, AzureStorageQueueBinding outputBinding, BinaryData parameters)
+            : this(type: "azure_function", serializedAdditionalRawData: null, new InternalAzureFunctionDefinition(new InternalFunctionDefinition(name, description, parameters, serializedAdditionalRawData: null), inputBinding: inputBinding, outputBinding: outputBinding))
         {
         }
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
-            => (obj is AzureFunctionDefinition toolDefinition && Name == toolDefinition.Name);
+            => (obj is AzureFunctionToolDefinition toolDefinition && Name == toolDefinition.Name);
 
         /// <inheritdoc/>
-        public override int GetHashCode() => InternalFunction.GetHashCode();
+        public override int GetHashCode() => InternalAzureFunction.GetHashCode();
     }
 }

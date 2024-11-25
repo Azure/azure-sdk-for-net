@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    public partial class AzureFunctionDefinition : IUtf8JsonSerializable, IJsonModel<AzureFunctionDefinition>
+    internal partial class InternalAzureFunctionDefinition : IUtf8JsonSerializable, IJsonModel<InternalAzureFunctionDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureFunctionDefinition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InternalAzureFunctionDefinition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AzureFunctionDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<InternalAzureFunctionDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,14 +28,14 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureFunctionDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InternalAzureFunctionDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureFunctionDefinition)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(InternalAzureFunctionDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("function"u8);
-            writer.WriteObjectValue<InternalFunctionDefinition>(InternalFunction, options);
+            writer.WriteObjectValue(Function, options);
             writer.WritePropertyName("input_binding"u8);
             writer.WriteObjectValue(InputBinding, options);
             writer.WritePropertyName("output_binding"u8);
@@ -57,19 +57,19 @@ namespace Azure.AI.Projects
             }
         }
 
-        AzureFunctionDefinition IJsonModel<AzureFunctionDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        InternalAzureFunctionDefinition IJsonModel<InternalAzureFunctionDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureFunctionDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InternalAzureFunctionDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureFunctionDefinition)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(InternalAzureFunctionDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureFunctionDefinition(document.RootElement, options);
+            return DeserializeInternalAzureFunctionDefinition(document.RootElement, options);
         }
 
-        internal static AzureFunctionDefinition DeserializeAzureFunctionDefinition(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static InternalAzureFunctionDefinition DeserializeInternalAzureFunctionDefinition(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -105,46 +105,46 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AzureFunctionDefinition(function, inputBinding, outputBinding, serializedAdditionalRawData);
+            return new InternalAzureFunctionDefinition(function, inputBinding, outputBinding, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AzureFunctionDefinition>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<InternalAzureFunctionDefinition>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureFunctionDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InternalAzureFunctionDefinition>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureFunctionDefinition)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InternalAzureFunctionDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AzureFunctionDefinition IPersistableModel<AzureFunctionDefinition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        InternalAzureFunctionDefinition IPersistableModel<InternalAzureFunctionDefinition>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureFunctionDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InternalAzureFunctionDefinition>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAzureFunctionDefinition(document.RootElement, options);
+                        return DeserializeInternalAzureFunctionDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureFunctionDefinition)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InternalAzureFunctionDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AzureFunctionDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<InternalAzureFunctionDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AzureFunctionDefinition FromResponse(Response response)
+        internal static InternalAzureFunctionDefinition FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAzureFunctionDefinition(document.RootElement);
+            return DeserializeInternalAzureFunctionDefinition(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

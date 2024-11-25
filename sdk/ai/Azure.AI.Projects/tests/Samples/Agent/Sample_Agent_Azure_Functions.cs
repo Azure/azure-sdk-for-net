@@ -27,43 +27,40 @@ public partial class Sample_Agent_Azure_Functions : SamplesBase<AIProjectsTestEn
         AgentsClient client = new(connectionString, new DefaultAzureCredential(), clientOptions);
 
         #region Snippet:AzureFunctionsDefineFunctionTools
-        // Example of Azure Function
         AzureFunctionToolDefinition azureFnTool = new(
-            azureFunction: new AzureFunctionDefinition(
-                name: "foo",
-                description: "Get answers from the foo bot.",
-                inputBinding: new AzureStorageQueueBinding(
-                    new AzureFunctionStorageQueue(
-                        queueName: "azure-function-foo-input",
-                        storageQueueUri: storageQueueUri
-                    )
-                ),
-                outputBinding: new AzureStorageQueueBinding(
-                    new AzureFunctionStorageQueue(
-                        queueName: "azure-function-tool-output",
-                        storageQueueUri: storageQueueUri
-                    )
-                ),
-                parameters: BinaryData.FromObjectAsJson(
-                        new
-                        {
-                            Type = "object",
-                            Properties = new
-                            {
-                                query = new
-                                {
-                                    Type = "string",
-                                    Description = "The question to ask.",
-                                },
-                                outputqueueuri = new
-                                {
-                                    Type = "string",
-                                    Description = "The full output queue uri."
-                                }
-                            },
-                        },
-                    new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }
+            name: "foo",
+            description: "Get answers from the foo bot.",
+            inputBinding: new AzureStorageQueueBinding(
+                new AzureFunctionStorageQueue(
+                    queueName: "azure-function-foo-input",
+                    storageQueueUri: storageQueueUri
                 )
+            ),
+            outputBinding: new AzureStorageQueueBinding(
+                new AzureFunctionStorageQueue(
+                    queueName: "azure-function-tool-output",
+                    storageQueueUri: storageQueueUri
+                )
+            ),
+            parameters: BinaryData.FromObjectAsJson(
+                    new
+                    {
+                        Type = "object",
+                        Properties = new
+                        {
+                            query = new
+                            {
+                                Type = "string",
+                                Description = "The question to ask.",
+                            },
+                            outputqueueuri = new
+                            {
+                                Type = "string",
+                                Description = "The full output queue uri."
+                            }
+                        },
+                    },
+                new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }
             )
         );
         #endregion
@@ -71,10 +68,12 @@ public partial class Sample_Agent_Azure_Functions : SamplesBase<AIProjectsTestEn
         #region Snippet:AzureFunctionsCreateAgentWithFunctionTools
         Response<Agent> agentResponse = await client.CreateAgentAsync(
             model: "gpt-4",
-            name: "SDK Test Agent - Functions",
-                instructions: "You are a weather bot. Use the provided functions to help answer questions. "
-                    + "Customize your responses to the user's preferences as much as possible and use friendly "
-                    + "nicknames for cities whenever possible.",
+            name: "azure-function-agent-foo",
+                instructions: "You are a helpful support agent. Use the provided function any "
+                + "time the prompt contains the string 'What would foo say?'. When you invoke "
+                + "the function, ALWAYS specify the output queue uri parameter as "
+                + $"'{storageQueueUri}/azure-function-tool-output'. Always responds with "
+                + "\"Foo says\" and then the response from the tool.",
             tools: new List<ToolDefinition> { azureFnTool }
             );
         Agent agent = agentResponse.Value;
@@ -83,6 +82,7 @@ public partial class Sample_Agent_Azure_Functions : SamplesBase<AIProjectsTestEn
         Response<AgentThread> threadResponse = await client.CreateThreadAsync();
         AgentThread thread = threadResponse.Value;
 
+        #region Snippet:AzureFunctionsHandlePollingWithRequiredAction
         Response<ThreadMessage> messageResponse = await client.CreateMessageAsync(
             thread.Id,
             MessageRole.User,
@@ -91,14 +91,14 @@ public partial class Sample_Agent_Azure_Functions : SamplesBase<AIProjectsTestEn
 
         Response<ThreadRun> runResponse = await client.CreateRunAsync(thread, agent);
 
-        #region Snippet:AzureFunctionsHandlePollingWithRequiredAction
         do
         {
             await Task.Delay(TimeSpan.FromMilliseconds(500));
             runResponse = await client.GetRunAsync(thread.Id, runResponse.Value.Id);
         }
         while (runResponse.Value.Status == RunStatus.Queued
-            || runResponse.Value.Status == RunStatus.InProgress);
+            || runResponse.Value.Status == RunStatus.InProgress
+            || runResponse.Value.Status == RunStatus.RequiresAction);
         #endregion
 
         Response<PageableList<ThreadMessage>> afterRunMessagesResponse

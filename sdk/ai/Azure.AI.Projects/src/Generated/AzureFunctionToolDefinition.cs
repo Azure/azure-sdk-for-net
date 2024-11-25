@@ -14,31 +14,17 @@ namespace Azure.AI.Projects
     public partial class AzureFunctionToolDefinition : ToolDefinition
     {
         /// <summary> Initializes a new instance of <see cref="AzureFunctionToolDefinition"/>. </summary>
-        /// <param name="azureFunction"> The definition of the concrete function that the function tool should call. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureFunction"/> is null. </exception>
-        public AzureFunctionToolDefinition(AzureFunctionDefinition azureFunction)
-        {
-            Argument.AssertNotNull(azureFunction, nameof(azureFunction));
-
-            Type = "azure_function";
-            AzureFunction = azureFunction;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AzureFunctionToolDefinition"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="azureFunction"> The definition of the concrete function that the function tool should call. </param>
-        internal AzureFunctionToolDefinition(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, AzureFunctionDefinition azureFunction) : base(type, serializedAdditionalRawData)
+        /// <param name="internalAzureFunction"> The definition of the concrete function that the function tool should call. </param>
+        internal AzureFunctionToolDefinition(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, InternalAzureFunctionDefinition internalAzureFunction) : base(type, serializedAdditionalRawData)
         {
-            AzureFunction = azureFunction;
+            InternalAzureFunction = internalAzureFunction;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureFunctionToolDefinition"/> for deserialization. </summary>
         internal AzureFunctionToolDefinition()
         {
         }
-
-        /// <summary> The definition of the concrete function that the function tool should call. </summary>
-        public AzureFunctionDefinition AzureFunction { get; set; }
     }
 }

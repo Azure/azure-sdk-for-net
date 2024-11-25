@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> The definition of Azure function. </summary>
-    public partial class AzureFunctionDefinition
+    internal partial class InternalAzureFunctionDefinition
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,39 +45,42 @@ namespace Azure.AI.Projects
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AzureFunctionDefinition"/>. </summary>
-        /// <param name="internalFunction"> The definition of azure function and its parameters. </param>
+        /// <summary> Initializes a new instance of <see cref="InternalAzureFunctionDefinition"/>. </summary>
+        /// <param name="function"> The definition of azure function and its parameters. </param>
         /// <param name="inputBinding"> Input storage queue. </param>
         /// <param name="outputBinding"> Output storage queue. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="internalFunction"/>, <paramref name="inputBinding"/> or <paramref name="outputBinding"/> is null. </exception>
-        internal AzureFunctionDefinition(InternalFunctionDefinition internalFunction, AzureStorageQueueBinding inputBinding, AzureStorageQueueBinding outputBinding)
+        /// <exception cref="ArgumentNullException"> <paramref name="function"/>, <paramref name="inputBinding"/> or <paramref name="outputBinding"/> is null. </exception>
+        public InternalAzureFunctionDefinition(InternalFunctionDefinition function, AzureStorageQueueBinding inputBinding, AzureStorageQueueBinding outputBinding)
         {
-            Argument.AssertNotNull(internalFunction, nameof(internalFunction));
+            Argument.AssertNotNull(function, nameof(function));
             Argument.AssertNotNull(inputBinding, nameof(inputBinding));
             Argument.AssertNotNull(outputBinding, nameof(outputBinding));
 
-            InternalFunction = internalFunction;
+            Function = function;
             InputBinding = inputBinding;
             OutputBinding = outputBinding;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureFunctionDefinition"/>. </summary>
-        /// <param name="internalFunction"> The definition of azure function and its parameters. </param>
+        /// <summary> Initializes a new instance of <see cref="InternalAzureFunctionDefinition"/>. </summary>
+        /// <param name="function"> The definition of azure function and its parameters. </param>
         /// <param name="inputBinding"> Input storage queue. </param>
         /// <param name="outputBinding"> Output storage queue. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureFunctionDefinition(InternalFunctionDefinition internalFunction, AzureStorageQueueBinding inputBinding, AzureStorageQueueBinding outputBinding, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InternalAzureFunctionDefinition(InternalFunctionDefinition function, AzureStorageQueueBinding inputBinding, AzureStorageQueueBinding outputBinding, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            InternalFunction = internalFunction;
+            Function = function;
             InputBinding = inputBinding;
             OutputBinding = outputBinding;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureFunctionDefinition"/> for deserialization. </summary>
-        internal AzureFunctionDefinition()
+        /// <summary> Initializes a new instance of <see cref="InternalAzureFunctionDefinition"/> for deserialization. </summary>
+        internal InternalAzureFunctionDefinition()
         {
         }
+
+        /// <summary> The definition of azure function and its parameters. </summary>
+        public InternalFunctionDefinition Function { get; set; }
         /// <summary> Input storage queue. </summary>
         public AzureStorageQueueBinding InputBinding { get; set; }
         /// <summary> Output storage queue. </summary>
