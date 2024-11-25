@@ -6,9 +6,9 @@ This sample demonstrates how to retrieve and display model evaluation results as
 
 To create an `AuthoringClient`, you will need the service endpoint and credentials of your Language resource. You can specify the service version by providing an `AuthoringClientOptions` instance.
 
-```c# Snippet:CreateAuthoringClientForSpecificApiVersion
+```C# Snippet:CreateAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
-AzureKeyCredential credential = new("your-api-key");
+AzureKeyCredential credential = new("your apikey");
 AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
 AuthoringClient client = new AuthoringClient(endpoint, credential, options);
 ConversationalAnalysisAuthoring authoringClient = client.GetConversationalAnalysisAuthoringClient();
@@ -18,11 +18,7 @@ ConversationalAnalysisAuthoring authoringClient = client.GetConversationalAnalys
 
 To retrieve model evaluation results for a project asynchronously, call GetModelEvaluationResultsAsync on the ConversationalAnalysisAuthoring client.
 
-```c#
-string projectName = "SampleProject";
-string trainedModelLabel = "SampleModel";
-StringIndexType stringIndexType = StringIndexType.Utf16CodeUnit;
-
+```C# Snippet:Sample9_ConversationsAuthoring_GetModelEvaluationResultsAsync
 AsyncPageable<UtteranceEvaluationResult> results = authoringClient.GetModelEvaluationResultsAsync(
     projectName: projectName,
     trainedModelLabel: trainedModelLabel,

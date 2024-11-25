@@ -20,7 +20,7 @@ The values of the endpoint and apiKey variables can be retrieved from: Environme
 
 To import a project synchronously, call Import on the ConversationalAnalysisAuthoring client.
 
-```C#
+```C# Snippet:Sample2_ConversationsAuthoring_Import
 string projectName = "MyImportedProject";
 
 var projectMetadata = new CreateProjectConfig(
@@ -36,10 +36,10 @@ var projectMetadata = new CreateProjectConfig(
 
 var projectAssets = new ConversationExportedProjectAssets();
 
-projectAssets.Intents.Add(new ConversationExportedIntent(category: "intent1"));
-projectAssets.Intents.Add(new ConversationExportedIntent(category: "intent2"));
+projectAssets.Intents.Add(new ConversationExportedIntent ( category : "intent1" ));
+projectAssets.Intents.Add(new ConversationExportedIntent ( category : "intent2" ));
 
-projectAssets.Entities.Add(new ConversationExportedEntity(category: "entity1"));
+projectAssets.Entities.Add(new ConversationExportedEntity ( category : "entity1" ));
 
 projectAssets.Utterances.Add(new ConversationExportedUtterance(
     text: "text1",
@@ -81,7 +81,7 @@ Operation operation = authoringClient.Import(
     exportedProjectFormat: ExportedProjectFormat.Conversation
 );
 
-// Extract the operation-location header
+ // Extract the operation-location header
 string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
 Console.WriteLine($"Operation Location: {operationLocation}");
 

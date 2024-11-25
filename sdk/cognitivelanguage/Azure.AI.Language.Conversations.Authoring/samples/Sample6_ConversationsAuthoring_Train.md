@@ -8,7 +8,7 @@ To create an `AuthoringClient`, you will need the service endpoint and credentia
 
 ```C# Snippet:CreateAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
-AzureKeyCredential credential = new("your-api-key");
+AzureKeyCredential credential = new("your apikey");
 AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
 AuthoringClient client = new AuthoringClient(endpoint, credential, options);
 ConversationalAnalysisAuthoring authoringClient = client.GetConversationalAnalysisAuthoringClient();
@@ -20,7 +20,7 @@ The values of the endpoint and apiKey variables can be retrieved from environmen
 
 To train a model, call Train on the ConversationalAnalysisAuthoring client.
 
-```C#
+```C# Snippet:Sample6_ConversationsAuthoring_Train
 string projectName = "MySampleProject";
 
 var trainingJobConfig = new TrainingJobConfig(
@@ -43,7 +43,7 @@ Operation<TrainingJobResult> operation = authoringClient.Train(
     body: trainingJobConfig
 );
 
-// Extract the operation-location header
+ // Extract the operation-location header
 string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
 Console.WriteLine($"Operation Location: {operationLocation}");
 

@@ -8,7 +8,7 @@ To create an `AuthoringClient`, you will need the service endpoint and credentia
 
 ```C# Snippet:CreateAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
-AzureKeyCredential credential = new("your-api-key");
+AzureKeyCredential credential = new("your apikey");
 AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
 AuthoringClient client = new AuthoringClient(endpoint, credential, options);
 ConversationalAnalysisAuthoring authoringClient = client.GetConversationalAnalysisAuthoringClient();
@@ -20,7 +20,7 @@ The values of the endpoint and apiKey variables can be retrieved from environmen
 
 To cancel a training job asynchronously, call CancelTrainingJobAsync on the ConversationalAnalysisAuthoring client.
 
-```C#
+```C# Snippet:Sample7_ConversationsAuthoring_CancelTrainingJobAsync
 string projectName = "MyProject";
 string jobId = "YourTrainingJobId";
 
@@ -30,7 +30,7 @@ Operation<TrainingJobResult> cancelOperation = await authoringClient.CancelTrain
     jobId: jobId
 );
 
-// Extract the operation-location header
+ // Extract the operation-location header
 string operationLocation = cancelOperation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
 Console.WriteLine($"Operation Location: {operationLocation}");
 

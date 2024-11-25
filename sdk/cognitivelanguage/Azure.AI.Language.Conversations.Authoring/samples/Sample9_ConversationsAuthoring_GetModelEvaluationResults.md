@@ -8,7 +8,7 @@ To create an `AuthoringClient`, you will need the service endpoint and credentia
 
 ```C# Snippet:CreateAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
-AzureKeyCredential credential = new("your-api-key");
+AzureKeyCredential credential = new("your apikey");
 AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
 AuthoringClient client = new AuthoringClient(endpoint, credential, options);
 ConversationalAnalysisAuthoring authoringClient = client.GetConversationalAnalysisAuthoringClient();
@@ -20,11 +20,7 @@ The values of the endpoint and apiKey variables can be retrieved from environmen
 
 To retrieve model evaluation results, call GetModelEvaluationResults on the ConversationalAnalysisAuthoring client.
 
-```C#
-string projectName = "SampleProject";
-string trainedModelLabel = "SampleModel";
-StringIndexType stringIndexType = StringIndexType.Utf16CodeUnit;
-
+```C# Snippet:Sample9_ConversationsAuthoring_GetModelEvaluationResults
 Pageable<UtteranceEvaluationResult> results = authoringClient.GetModelEvaluationResults(
     projectName: projectName,
     trainedModelLabel: trainedModelLabel,

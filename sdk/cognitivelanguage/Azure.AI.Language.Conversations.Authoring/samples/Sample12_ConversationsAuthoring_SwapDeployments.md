@@ -6,9 +6,9 @@ This sample demonstrates how to swap two deployments using the `Azure.AI.Languag
 
 To create an `AuthoringClient`, you will need the service endpoint and credentials of your Language resource. You can specify the service version by providing an `AuthoringClientOptions` instance.
 
-```c# Snippet:CreateAuthoringClientForSpecificApiVersion
+```C# Snippet:CreateAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
-AzureKeyCredential credential = new("your-api-key");
+AzureKeyCredential credential = new("your apikey");
 AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
 AuthoringClient client = new AuthoringClient(endpoint, credential, options);
 ConversationalAnalysisAuthoring authoringClient = client.GetConversationalAnalysisAuthoringClient();
@@ -18,10 +18,7 @@ ConversationalAnalysisAuthoring authoringClient = client.GetConversationalAnalys
 
 To swap two deployments, call SwapDeployments on the ConversationalAnalysisAuthoring client.
 
-```c#
-string projectName = "SampleProject";
-var swapConfig = new SwapDeploymentsConfig("production", "staging");
-
+```C# Snippet:Sample14_ConversationsAuthoring_SwapDeployments
 Operation operation = authoringClient.SwapDeployments(
     waitUntil: WaitUntil.Completed,
     projectName: projectName,

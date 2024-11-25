@@ -6,9 +6,9 @@ This sample demonstrates how to delete a deployment asynchronously in a project 
 
 To create an `AuthoringClient`, you will need the service endpoint and credentials of your Language resource. You can specify the service version by providing an `AuthoringClientOptions` instance.
 
-```c# Snippet:CreateAuthoringClientForSpecificApiVersion
+```C# Snippet:CreateAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
-AzureKeyCredential credential = new("your-api-key");
+AzureKeyCredential credential = new("your apikey");
 AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
 AuthoringClient client = new AuthoringClient(endpoint, credential, options);
 ConversationalAnalysisAuthoring authoringClient = client.GetConversationalAnalysisAuthoringClient();
@@ -18,10 +18,7 @@ ConversationalAnalysisAuthoring authoringClient = client.GetConversationalAnalys
 
 To delete a deployment, call DeleteDeploymentAsync on the ConversationalAnalysisAuthoring client.
 
-```c#
-string projectName = "SampleProject";
-string deploymentName = "SampleDeployment";
-
+```C# Snippet:Sample13_ConversationsAuthoring_DeleteDeploymentAsync
 Operation operation = await authoringClient.DeleteDeploymentAsync(
     waitUntil: WaitUntil.Completed,
     projectName: projectName,

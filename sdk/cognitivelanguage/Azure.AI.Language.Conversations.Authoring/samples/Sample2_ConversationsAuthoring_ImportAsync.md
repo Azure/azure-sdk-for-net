@@ -8,7 +8,7 @@ To create an `AuthoringClient`, you will need the service endpoint and credentia
 
 ```C# Snippet:CreateAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
-AzureKeyCredential credential = new("your-api-key");
+AzureKeyCredential credential = new("your apikey");
 AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
 AuthoringClient client = new AuthoringClient(endpoint, credential, options);
 ConversationalAnalysisAuthoring authoringClient = client.GetConversationalAnalysisAuthoringClient();
@@ -20,7 +20,7 @@ The values of the endpoint and apiKey variables can be retrieved from environmen
 
 To import a project, call ImportAsync on the ConversationalAnalysisAuthoring client.
 
-```C#
+```C# Snippet:Sample2_ConversationsAuthoring_ImportAsync
 string projectName = "MyImportedProjectAsync";
 
 var projectMetadata = new CreateProjectConfig(
@@ -36,10 +36,10 @@ var projectMetadata = new CreateProjectConfig(
 
 var projectAssets = new ConversationExportedProjectAssets();
 
-projectAssets.Intents.Add(new ConversationExportedIntent(category: "intent1"));
-projectAssets.Intents.Add(new ConversationExportedIntent(category: "intent2"));
+projectAssets.Intents.Add(new ConversationExportedIntent ( category : "intent1" ));
+projectAssets.Intents.Add(new ConversationExportedIntent ( category : "intent2" ));
 
-projectAssets.Entities.Add(new ConversationExportedEntity(category: "entity1"));
+projectAssets.Entities.Add(new ConversationExportedEntity ( category : "entity1" ));
 
 projectAssets.Utterances.Add(new ConversationExportedUtterance(
     text: "text1",
@@ -81,9 +81,10 @@ Operation operation = await authoringClient.ImportAsync(
     exportedProjectFormat: ExportedProjectFormat.Conversation
 );
 
-// Extract the operation-location header
+ // Extract the operation-location header
 string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
 Console.WriteLine($"Operation Location: {operationLocation}");
+
 Console.WriteLine($"Project import completed with status: {operation.GetRawResponse().Status}");
 ```
 

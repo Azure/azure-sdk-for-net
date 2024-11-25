@@ -80,6 +80,7 @@ Make sure you use the right namespace for `DefaultAzureCredential` at the top of
 
 ```C# Snippet:Conversations_Identity_Namespace
 using Azure.Identity;
+using Azure.Core;
 ```
 
 Then you can create an instance of `DefaultAzureCredential` and pass it to a new instance of your client:
@@ -103,10 +104,10 @@ You have the flexibility to explicitly select a supported service API version wh
 
 For example,
 
-```C# Snippet:CreateTextAnalysisClientForSpecificApiVersion
+```C# Snippet:CreateAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
-AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2023_11_15_Preview);
+AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
 AuthoringClient client = new AuthoringClient(endpoint, credential, options);
 ConversationalAnalysisAuthoring authoringClient = client.GetConversationalAnalysisAuthoringClient();
 ```
@@ -177,21 +178,21 @@ When you interact with the Cognitive Language Services Conversations Authoring c
 
 For example, if you attempt to create a project with an invalid configuration, a 400 error is returned indicating "Bad Request".
 
-```C#
+```C# Snippet:AuthoringClient_BadRequest
 try
 {
-    string projectName = "InvalidProject";
+    string invalidProjectName = "InvalidProject";
 
-    var invalidProjectConfig = new
+    var projectData = new
     {
-        projectName = projectName,
-        language = "invalid-lang", // Invalid language code triggers a bad request.
+        projectName = invalidProjectName,
+        language = "invalid-lang", // Invalid language code
         projectKind = "Conversation",
-        description = "This is an invalid configuration example."
+        description = "This is a test for invalid configuration."
     };
 
-    using RequestContent content = RequestContent.Create(invalidProjectConfig);
-    Response response = authoringClient.CreateProject(projectName, content);
+    using RequestContent content = RequestContent.Create(projectData);
+    Response response = authoringClient.CreateProject(invalidProjectName, content);
 }
 catch (RequestFailedException ex)
 {
