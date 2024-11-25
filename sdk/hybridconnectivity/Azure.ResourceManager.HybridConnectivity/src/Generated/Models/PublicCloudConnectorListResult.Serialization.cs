@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             {
                 return null;
             }
-            IReadOnlyList<PublicCloudConnectorData> value = default;
+            IReadOnlyList<HybridConnectivityPublicCloudConnectorData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<PublicCloudConnectorData> array = new List<PublicCloudConnectorData>();
+                    List<HybridConnectivityPublicCloudConnectorData> array = new List<HybridConnectivityPublicCloudConnectorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PublicCloudConnectorData.DeserializePublicCloudConnectorData(item, options));
+                        array.Add(HybridConnectivityPublicCloudConnectorData.DeserializeHybridConnectivityPublicCloudConnectorData(item, options));
                     }
                     value = array;
                     continue;

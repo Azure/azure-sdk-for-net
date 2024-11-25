@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="solutionType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="solutionType"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SolutionTypeResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string solutionType, CancellationToken cancellationToken = default)
+        public async Task<Response<HybridConnectivitySolutionTypeData>> GetAsync(string subscriptionId, string resourceGroupName, string solutionType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -253,13 +253,13 @@ namespace Azure.ResourceManager.HybridConnectivity
             {
                 case 200:
                     {
-                        SolutionTypeResourceData value = default;
+                        HybridConnectivitySolutionTypeData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SolutionTypeResourceData.DeserializeSolutionTypeResourceData(document.RootElement);
+                        value = HybridConnectivitySolutionTypeData.DeserializeHybridConnectivitySolutionTypeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SolutionTypeResourceData)null, message.Response);
+                    return Response.FromValue((HybridConnectivitySolutionTypeData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="solutionType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="solutionType"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SolutionTypeResourceData> Get(string subscriptionId, string resourceGroupName, string solutionType, CancellationToken cancellationToken = default)
+        public Response<HybridConnectivitySolutionTypeData> Get(string subscriptionId, string resourceGroupName, string solutionType, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -284,13 +284,13 @@ namespace Azure.ResourceManager.HybridConnectivity
             {
                 case 200:
                     {
-                        SolutionTypeResourceData value = default;
+                        HybridConnectivitySolutionTypeData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SolutionTypeResourceData.DeserializeSolutionTypeResourceData(document.RootElement);
+                        value = HybridConnectivitySolutionTypeData.DeserializeHybridConnectivitySolutionTypeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SolutionTypeResourceData)null, message.Response);
+                    return Response.FromValue((HybridConnectivitySolutionTypeData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

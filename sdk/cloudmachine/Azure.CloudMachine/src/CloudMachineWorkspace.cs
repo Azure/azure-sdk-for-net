@@ -18,10 +18,7 @@ namespace Azure.CloudMachine;
 /// </summary>
 public class CloudMachineWorkspace : ClientWorkspace
 {
-    private TokenCredential Credential { get; } = new ChainedTokenCredential(
-        new AzureCliCredential(),
-        new AzureDeveloperCliCredential()
-    );
+    private TokenCredential Credential { get; }
 
     /// <summary>
     /// The cloud machine ID.
@@ -42,20 +39,21 @@ public class CloudMachineWorkspace : ClientWorkspace
         {
             Credential = credential;
         }
-
-        string cmid;
-        if (configuration == default)
-        {
-            cmid = ReadOrCreateCmid();
-        }
         else
         {
-            cmid = configuration["CloudMachine:ID"];
-            if (cmid == null)
-                throw new Exception("CloudMachine:ID configuration value missing");
+            // This environment variable is set by the CloudMachine App Service feature during provisioning.
+            Credential = Environment.GetEnvironmentVariable("CLOUDMACHINE_MANAGED_IDENTITY_CLIENT_ID") switch
+            {
+                string clientId when !string.IsNullOrEmpty(clientId) => new ManagedIdentityCredential(clientId),
+                _ => new ChainedTokenCredential(new AzureCliCredential(), new AzureDeveloperCliCredential())
+            };
         }
 
-        Id = cmid!;
+        Id = configuration switch
+        {
+            null => ReadOrCreateCmid(),
+            _ => configuration["CloudMachine:ID"] ?? throw new Exception("CloudMachine:ID configuration value missing")
+        };
     }
 
     /// <summary>
@@ -69,7 +67,8 @@ public class CloudMachineWorkspace : ClientWorkspace
     public override ClientConnectionOptions GetConnectionOptions(Type clientType, string instanceId)
     {
         string clientId = clientType.FullName;
-        if (instanceId != null && instanceId.StartsWith("$")) clientId = $"{clientType.FullName}{instanceId}";
+        if (instanceId != null && instanceId.StartsWith("$"))
+            clientId = $"{clientType.FullName}{instanceId}";
 
         switch (clientId)
         {
@@ -78,13 +77,13 @@ public class CloudMachineWorkspace : ClientWorkspace
             case "Azure.Messaging.ServiceBus.ServiceBusClient":
                 return new ClientConnectionOptions(new($"https://{Id}.servicebus.windows.net"), Credential);
             case "Azure.Messaging.ServiceBus.ServiceBusSender":
-                return new ClientConnectionOptions(instanceId?? "cm_servicebus_default_topic");
+                return new ClientConnectionOptions(instanceId ?? "cm_servicebus_default_topic");
             case "Azure.Messaging.ServiceBus.ServiceBusProcessor":
                 return new ClientConnectionOptions("cm_servicebus_default_topic/cm_servicebus_subscription_default");
             case "Azure.Messaging.ServiceBus.ServiceBusProcessor$private":
                 return new ClientConnectionOptions("cm_servicebus_topic_private/cm_servicebus_subscription_private");
             case "Azure.Storage.Blobs.BlobContainerClient":
-                return new ClientConnectionOptions(new($"https://{Id}.blob.core.windows.net/{instanceId??"default"}"), Credential);
+                return new ClientConnectionOptions(new($"https://{Id}.blob.core.windows.net/{instanceId ?? "default"}"), Credential);
             case "Azure.AI.OpenAI.AzureOpenAIClient":
                 return new ClientConnectionOptions(new($"https://{Id}.openai.azure.com"), Credential);
             case "OpenAI.Chat.ChatClient":
