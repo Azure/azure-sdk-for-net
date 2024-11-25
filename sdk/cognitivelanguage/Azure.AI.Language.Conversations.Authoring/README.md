@@ -12,7 +12,7 @@ Azure Conversations Authoring is part of the Azure Cognitive Service for Languag
 * Managing project snapshots
 * Deleting trained models and deployments
 
-  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.AI.Language.Conversations.Authoring) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure)
+[Source code][source_root] | [Package (NuGet)][package]| [API reference documentation][text_refdocs] | [Product documentation][text_docs] | [Samples][source_samples]
 
 ## Getting started
 
