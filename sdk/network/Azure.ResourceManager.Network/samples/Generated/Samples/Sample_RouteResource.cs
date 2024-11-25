@@ -18,33 +18,6 @@ namespace Azure.ResourceManager.Network.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Delete_DeleteRoute()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/RouteTableRouteDelete.json
-            // this example is just showing the usage of "Routes_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this RouteResource created on azure
-            // for more information of creating RouteResource, please refer to the document of RouteResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string routeTableName = "testrt";
-            string routeName = "route1";
-            ResourceIdentifier routeResourceId = RouteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, routeTableName, routeName);
-            RouteResource route = client.GetRouteResource(routeResourceId);
-
-            // invoke the operation
-            await route.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetRoute()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/RouteTableRouteGet.json
@@ -76,6 +49,33 @@ namespace Azure.ResourceManager.Network.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteRoute()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/RouteTableRouteDelete.json
+            // this example is just showing the usage of "Routes_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this RouteResource created on azure
+            // for more information of creating RouteResource, please refer to the document of RouteResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string routeTableName = "testrt";
+            string routeName = "route1";
+            ResourceIdentifier routeResourceId = RouteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, routeTableName, routeName);
+            RouteResource route = client.GetRouteResource(routeResourceId);
+
+            // invoke the operation
+            await route.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateRoute()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/RouteTableRouteCreate.json
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network.Samples
             RouteResource route = client.GetRouteResource(routeResourceId);
 
             // invoke the operation
-            RouteData data = new RouteData()
+            RouteData data = new RouteData
             {
                 AddressPrefix = "10.0.3.0/24",
                 NextHopType = RouteNextHopType.VirtualNetworkGateway,
