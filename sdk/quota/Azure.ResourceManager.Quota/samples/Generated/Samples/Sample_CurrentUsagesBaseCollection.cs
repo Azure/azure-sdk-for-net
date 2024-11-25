@@ -27,13 +27,9 @@ namespace Azure.ResourceManager.Quota.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this CurrentUsagesBaseResource
             string scope = "subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Compute/locations/eastus";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            CurrentUsagesBaseCollection collection = client.GetCurrentUsagesBases(scopeId);
+            CurrentUsagesBaseCollection collection = client.GetCurrentUsagesBases(new ResourceIdentifier(scope));
 
             // invoke the operation
             string resourceName = "standardNDSFamily";
@@ -44,72 +40,6 @@ namespace Azure.ResourceManager.Quota.Samples
             CurrentUsagesBaseData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Exists_QuotasUsagesRequestForCompute()
-        {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/getComputeOneSkuUsages.json
-            // this example is just showing the usage of "Usages_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this CurrentUsagesBaseResource
-            string scope = "subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Compute/locations/eastus";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            CurrentUsagesBaseCollection collection = client.GetCurrentUsagesBases(scopeId);
-
-            // invoke the operation
-            string resourceName = "standardNDSFamily";
-            bool result = await collection.ExistsAsync(resourceName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_QuotasUsagesRequestForCompute()
-        {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/getComputeOneSkuUsages.json
-            // this example is just showing the usage of "Usages_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this CurrentUsagesBaseResource
-            string scope = "subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Compute/locations/eastus";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            CurrentUsagesBaseCollection collection = client.GetCurrentUsagesBases(scopeId);
-
-            // invoke the operation
-            string resourceName = "standardNDSFamily";
-            NullableResponse<CurrentUsagesBaseResource> response = await collection.GetIfExistsAsync(resourceName);
-            CurrentUsagesBaseResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine("Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                CurrentUsagesBaseData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
         }
 
         [Test]
@@ -124,13 +54,9 @@ namespace Azure.ResourceManager.Quota.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this CurrentUsagesBaseResource
             string scope = "subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Network/locations/eastus";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            CurrentUsagesBaseCollection collection = client.GetCurrentUsagesBases(scopeId);
+            CurrentUsagesBaseCollection collection = client.GetCurrentUsagesBases(new ResourceIdentifier(scope));
 
             // invoke the operation
             string resourceName = "MinPublicIpInterNetworkPrefixLength";
@@ -145,72 +71,6 @@ namespace Azure.ResourceManager.Quota.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_QuotasUsagesRequestForNetwork()
-        {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/getNetworkOneSkuUsages.json
-            // this example is just showing the usage of "Usages_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this CurrentUsagesBaseResource
-            string scope = "subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Network/locations/eastus";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            CurrentUsagesBaseCollection collection = client.GetCurrentUsagesBases(scopeId);
-
-            // invoke the operation
-            string resourceName = "MinPublicIpInterNetworkPrefixLength";
-            bool result = await collection.ExistsAsync(resourceName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_QuotasUsagesRequestForNetwork()
-        {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/getNetworkOneSkuUsages.json
-            // this example is just showing the usage of "Usages_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this CurrentUsagesBaseResource
-            string scope = "subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Network/locations/eastus";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            CurrentUsagesBaseCollection collection = client.GetCurrentUsagesBases(scopeId);
-
-            // invoke the operation
-            string resourceName = "MinPublicIpInterNetworkPrefixLength";
-            NullableResponse<CurrentUsagesBaseResource> response = await collection.GetIfExistsAsync(resourceName);
-            CurrentUsagesBaseResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine("Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                CurrentUsagesBaseData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_QuotasListUsagesForCompute()
         {
             // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/getComputeUsages.json
@@ -221,13 +81,9 @@ namespace Azure.ResourceManager.Quota.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this CurrentUsagesBaseResource
             string scope = "subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Compute/locations/eastus";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            CurrentUsagesBaseCollection collection = client.GetCurrentUsagesBases(scopeId);
+            CurrentUsagesBaseCollection collection = client.GetCurrentUsagesBases(new ResourceIdentifier(scope));
 
             // invoke the operation and iterate over the result
             await foreach (CurrentUsagesBaseResource item in collection.GetAllAsync())
@@ -254,13 +110,9 @@ namespace Azure.ResourceManager.Quota.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this CurrentUsagesBaseResource
             string scope = "subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Network/locations/eastus";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            CurrentUsagesBaseCollection collection = client.GetCurrentUsagesBases(scopeId);
+            CurrentUsagesBaseCollection collection = client.GetCurrentUsagesBases(new ResourceIdentifier(scope));
 
             // invoke the operation and iterate over the result
             await foreach (CurrentUsagesBaseResource item in collection.GetAllAsync())
@@ -287,13 +139,9 @@ namespace Azure.ResourceManager.Quota.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this CurrentUsagesBaseResource
             string scope = "subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.MachineLearningServices/locations/eastus";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            CurrentUsagesBaseCollection collection = client.GetCurrentUsagesBases(scopeId);
+            CurrentUsagesBaseCollection collection = client.GetCurrentUsagesBases(new ResourceIdentifier(scope));
 
             // invoke the operation and iterate over the result
             await foreach (CurrentUsagesBaseResource item in collection.GetAllAsync())
@@ -306,6 +154,122 @@ namespace Azure.ResourceManager.Quota.Samples
             }
 
             Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_QuotasUsagesRequestForCompute()
+        {
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/getComputeOneSkuUsages.json
+            // this example is just showing the usage of "Usages_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this CurrentUsagesBaseResource
+            string scope = "subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Compute/locations/eastus";
+            CurrentUsagesBaseCollection collection = client.GetCurrentUsagesBases(new ResourceIdentifier(scope));
+
+            // invoke the operation
+            string resourceName = "standardNDSFamily";
+            bool result = await collection.ExistsAsync(resourceName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_QuotasUsagesRequestForNetwork()
+        {
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/getNetworkOneSkuUsages.json
+            // this example is just showing the usage of "Usages_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this CurrentUsagesBaseResource
+            string scope = "subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Network/locations/eastus";
+            CurrentUsagesBaseCollection collection = client.GetCurrentUsagesBases(new ResourceIdentifier(scope));
+
+            // invoke the operation
+            string resourceName = "MinPublicIpInterNetworkPrefixLength";
+            bool result = await collection.ExistsAsync(resourceName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_QuotasUsagesRequestForCompute()
+        {
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/getComputeOneSkuUsages.json
+            // this example is just showing the usage of "Usages_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this CurrentUsagesBaseResource
+            string scope = "subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Compute/locations/eastus";
+            CurrentUsagesBaseCollection collection = client.GetCurrentUsagesBases(new ResourceIdentifier(scope));
+
+            // invoke the operation
+            string resourceName = "standardNDSFamily";
+            NullableResponse<CurrentUsagesBaseResource> response = await collection.GetIfExistsAsync(resourceName);
+            CurrentUsagesBaseResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                CurrentUsagesBaseData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_QuotasUsagesRequestForNetwork()
+        {
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/getNetworkOneSkuUsages.json
+            // this example is just showing the usage of "Usages_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this CurrentUsagesBaseResource
+            string scope = "subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Network/locations/eastus";
+            CurrentUsagesBaseCollection collection = client.GetCurrentUsagesBases(new ResourceIdentifier(scope));
+
+            // invoke the operation
+            string resourceName = "MinPublicIpInterNetworkPrefixLength";
+            NullableResponse<CurrentUsagesBaseResource> response = await collection.GetIfExistsAsync(resourceName);
+            CurrentUsagesBaseResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                CurrentUsagesBaseData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

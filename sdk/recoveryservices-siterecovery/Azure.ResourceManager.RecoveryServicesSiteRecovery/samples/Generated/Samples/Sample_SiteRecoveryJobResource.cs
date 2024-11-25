@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             SiteRecoveryJobResource siteRecoveryJob = client.GetSiteRecoveryJobResource(siteRecoveryJobResourceId);
 
             // invoke the operation
-            ReplicationResumeJobContent content = new ReplicationResumeJobContent()
+            ReplicationResumeJobContent content = new ReplicationResumeJobContent
             {
                 ReplicationResumeJobComments = " ",
             };
