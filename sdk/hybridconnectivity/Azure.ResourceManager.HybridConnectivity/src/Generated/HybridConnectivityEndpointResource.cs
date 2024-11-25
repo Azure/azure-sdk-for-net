@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
+        /// <description>2023-03-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
+        /// <description>2023-03-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
+        /// <description>2023-03-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
+        /// <description>2023-03-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
+        /// <description>2023-03-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
+        /// <description>2023-03-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
+        /// <description>2023-03-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
+        /// <description>2023-03-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
+        /// <description>2023-03-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
+        /// <description>2023-03-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
+        /// <description>2023-03-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -507,16 +507,15 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Object of type ListIngressGatewayCredentialsRequest. </param>
         /// <param name="expiresin"> The is how long the endpoint access token is valid (in seconds). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IngressGatewayAsset>> GetIngressGatewayCredentialsAsync(ListIngressGatewayCredentialsContent content = null, long? expiresin = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IngressGatewayAsset>> GetIngressGatewayCredentialsAsync(long? expiresin = null, CancellationToken cancellationToken = default)
         {
             using var scope = _hybridConnectivityEndpointEndpointsClientDiagnostics.CreateScope("HybridConnectivityEndpointResource.GetIngressGatewayCredentials");
             scope.Start();
             try
             {
-                var response = await _hybridConnectivityEndpointEndpointsRestClient.ListIngressGatewayCredentialsAsync(Id.Parent, Id.Name, content, expiresin, cancellationToken).ConfigureAwait(false);
+                var response = await _hybridConnectivityEndpointEndpointsRestClient.ListIngressGatewayCredentialsAsync(Id.Parent, Id.Name, expiresin, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -539,7 +538,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
+        /// <description>2023-03-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -547,16 +546,15 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Object of type ListIngressGatewayCredentialsRequest. </param>
         /// <param name="expiresin"> The is how long the endpoint access token is valid (in seconds). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IngressGatewayAsset> GetIngressGatewayCredentials(ListIngressGatewayCredentialsContent content = null, long? expiresin = null, CancellationToken cancellationToken = default)
+        public virtual Response<IngressGatewayAsset> GetIngressGatewayCredentials(long? expiresin = null, CancellationToken cancellationToken = default)
         {
             using var scope = _hybridConnectivityEndpointEndpointsClientDiagnostics.CreateScope("HybridConnectivityEndpointResource.GetIngressGatewayCredentials");
             scope.Start();
             try
             {
-                var response = _hybridConnectivityEndpointEndpointsRestClient.ListIngressGatewayCredentials(Id.Parent, Id.Name, content, expiresin, cancellationToken);
+                var response = _hybridConnectivityEndpointEndpointsRestClient.ListIngressGatewayCredentials(Id.Parent, Id.Name, expiresin, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -579,7 +577,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
+        /// <description>2023-03-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -621,7 +619,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-12-01</description>
+        /// <description>2023-03-15</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
