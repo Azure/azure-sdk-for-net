@@ -1,11 +1,11 @@
 trigger: none
 
 parameters:
-- name: SkipMainUpdate
+- name: UpdateMain
   displayName: |
-    Skip updating main.
+    Updating main branch.
   type: boolean
-  default: false
+  default: true
 
 - name: ForceDailyUpdate
   displayName: |
@@ -63,7 +63,7 @@ jobs:
       # made. These updates include new libraries and CSV updates in azure-sdk which, depending
       # on the column(s) updated can cause anything from package deprecation to service level
       # readme or ToC updates.
-      - ${{ if or(eq(variables['Build.Reason'], 'Schedule'), ne(parameters.SkipMainUpdate, 'true')) }}:
+      - ${{ if or(eq(variables['Build.Reason'], 'Schedule'), parameters.UpdateMain) }}:
         - task: Powershell@2
           inputs:
             pwsh: true
@@ -117,7 +117,7 @@ jobs:
 
       # The scenario for running a Manual build is normally only for the main updates. The daily build
       # should really only get kicked off for scheduled runs.
-      - ${{ if or(eq(variables['Build.Reason'], 'Schedule'), eq(parameters.ForceDailyUpdate, 'true')) }}:
+      - ${{ if or(eq(variables['Build.Reason'], 'Schedule'), parameters.ForceDailyUpdate) }}:
         - template: /eng/common/pipelines/templates/steps/set-daily-docs-branch-name.yml
           parameters:
             DailyBranchVariableName: DailyDocsBranchName
