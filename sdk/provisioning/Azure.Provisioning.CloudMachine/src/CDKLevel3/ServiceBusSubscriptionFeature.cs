@@ -15,7 +15,7 @@ public class ServiceBusSubscriptionFeature(string name, ServiceBusTopicFeature p
         var subscription = new ServiceBusSubscription(name, "2021-11-01")
         {
             Name = name,
-            Parent = ValidateIsOfType<ServiceBusTopic>(parent),
+            Parent = EnsureEmits<ServiceBusTopic>(parent),
             IsClientAffine = false,
             LockDuration = TimeSpan.FromSeconds(30),
             RequiresSession = false,

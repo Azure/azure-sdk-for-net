@@ -20,6 +20,8 @@ public class FeatureCollection
         .SelectMany(d => d)
         .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
+    internal FeatureCollection() { }
+
     public IEnumerable<T> FindAll<T>() where T : CloudMachineFeature
     {
         for (int i = 0; i < _count; i++)

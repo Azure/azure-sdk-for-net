@@ -52,26 +52,26 @@ public readonly struct StorageServices
     /// <summary>
     /// Uploads a JSON object to the storage account.
     /// </summary>
-    /// <param name="json"></param>
+    /// <param name="serializable"></param>
     /// <param name="name"></param>
     /// <param name="overwrite"></param>
     /// <returns></returns>
-    public string UploadJson(object json, string name = default, bool overwrite = false)
+    public string UploadJson(object serializable, string name = default, bool overwrite = false)
     {
-        BinaryData data = BinaryData.FromObjectAsJson(json);
+        BinaryData data = BinaryData.FromObjectAsJson(serializable);
         return Upload(data, name, overwrite);
     }
 
     /// <summary>
     /// Uploads a JSON object to the storage account.
     /// </summary>
-    /// <param name="json"></param>
+    /// <param name="serializable"></param>
     /// <param name="name"></param>
     /// <param name="overwrite"></param>
     /// <returns></returns>
-    public async Task<string> UploadJsonAsync(object json, string name = default, bool overwrite = false)
+    public async Task<string> UploadJsonAsync(object serializable, string name = default, bool overwrite = false)
     {
-        BinaryData data = BinaryData.FromObjectAsJson(json);
+        BinaryData data = BinaryData.FromObjectAsJson(serializable);
         return await UploadAsync(data, name, overwrite).ConfigureAwait(false);
     }
 

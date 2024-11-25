@@ -10,20 +10,20 @@ using Azure.Provisioning.Storage;
 
 namespace Azure.CloudMachine;
 
-public class EventGridSystemTopicFeature(string name, CloudMachineFeature source) : CloudMachineFeature
+public class EventGridSystemTopicFeature(string topicName, CloudMachineFeature source) : CloudMachineFeature
 {
     protected override ProvisionableResource EmitCore(CloudMachineInfrastructure infrastructure)
     {
         var topic = new SystemTopic("cm_eventgrid_topic", "2022-06-15")
         {
             TopicType = "Microsoft.Storage.StorageAccounts",
-            Source = ValidateIsOfType<StorageAccount>(source).Id,
+            Source = EnsureEmits<StorageAccount>(source).Id,
             Identity = new()
             {
                 ManagedServiceIdentityType = ManagedServiceIdentityType.UserAssigned,
                 UserAssignedIdentities = { { BicepFunction.Interpolate($"{infrastructure.Identity.Id}").Compile().ToString(), new UserAssignedIdentityDetails() } }
             },
-            Name = name
+            Name = topicName
         };
 
         infrastructure.AddResource(topic);

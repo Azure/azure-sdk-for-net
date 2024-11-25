@@ -30,10 +30,10 @@ public abstract class CloudMachineFeature
 
     protected internal Dictionary<Provisionable, (string RoleName, string RoleId)[]> RequiredSystemRoles { get; } = [];
 
-    protected static T ValidateIsOfType<T>(CloudMachineFeature resource)
+    protected static T EnsureEmits<T>(CloudMachineFeature feature)
     {
-        if (resource.Emitted is T typed)
+        if (feature.Emitted is T typed)
             return typed;
-        throw new ArgumentException($"Expected resource of type {typeof(T).Name}, but got {resource.GetType().Name}");
+        throw new ArgumentException($"Expected resource of type {typeof(T).Name}, but got {feature.GetType().Name}");
     }
 }

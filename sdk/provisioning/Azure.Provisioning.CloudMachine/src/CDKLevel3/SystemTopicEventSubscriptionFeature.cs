@@ -14,10 +14,10 @@ public class SystemTopicEventSubscriptionFeature(string name, EventGridSystemTop
 {
     protected override ProvisionableResource EmitCore(CloudMachineInfrastructure infrastructure)
     {
-        ServiceBusNamespace serviceBusNamespace = ValidateIsOfType<ServiceBusNamespace>(parentNamespace);
+        ServiceBusNamespace serviceBusNamespace = EnsureEmits<ServiceBusNamespace>(parentNamespace);
 
         ServiceBusBuiltInRole role = ServiceBusBuiltInRole.AzureServiceBusDataSender;
-        var roleAssignment = new RoleAssignment($"cm_servicebus_{ValidateIsOfType<SystemTopic>(parent).Name.Value}_role")
+        var roleAssignment = new RoleAssignment($"cm_servicebus_{EnsureEmits<SystemTopic>(parent).Name.Value}_role")
         {
             Name = BicepFunction.CreateGuid(serviceBusNamespace.Id, infrastructure.Identity.Id, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
             Scope = new IdentifierExpression(serviceBusNamespace.BicepIdentifier),
@@ -26,7 +26,7 @@ public class SystemTopicEventSubscriptionFeature(string name, EventGridSystemTop
             PrincipalId = infrastructure.Identity.PrincipalId,
         };
 
-        SystemTopic systemTopic = ValidateIsOfType<SystemTopic>(parent);
+        SystemTopic systemTopic = EnsureEmits<SystemTopic>(parent);
         var subscription = new SystemTopicEventSubscription("cm_eventgrid_subscription_blob", "2022-06-15")
         {
             Name = name,
@@ -40,7 +40,7 @@ public class SystemTopicEventSubscriptionFeature(string name, EventGridSystemTop
                 },
                 Destination = new ServiceBusTopicEventSubscriptionDestination
                 {
-                    ResourceId = ValidateIsOfType<ServiceBusTopic>(destination).Id
+                    ResourceId = EnsureEmits<ServiceBusTopic>(destination).Id
                 }
             },
             Filter = new EventSubscriptionFilter

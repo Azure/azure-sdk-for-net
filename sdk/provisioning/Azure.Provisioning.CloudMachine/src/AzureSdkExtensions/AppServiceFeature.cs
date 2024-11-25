@@ -13,13 +13,9 @@ public class AppServiceFeature : CloudMachineFeature
 {
     public AppServiceSkuDescription Sku { get; set; }
 
-    public AppServiceFeature(AppServiceSkuDescription? sku = default)
+    public AppServiceFeature()
     {
-        if (sku == default)
-        {
-            sku = new AppServiceSkuDescription { Tier = "Free", Name = "F1" };
-        }
-        Sku = sku;
+        Sku = new AppServiceSkuDescription { Tier = "Free", Name = "F1" };
     }
 
     protected override ProvisionableResource EmitCore(CloudMachineInfrastructure infrastructure)

@@ -15,7 +15,7 @@ public class ServiceBusTopicFeature(string name, ServiceBusNamespaceFeature pare
         var topic = new ServiceBusTopic(name, "2021-11-01")
         {
             Name = name,
-            Parent = ValidateIsOfType<ServiceBusNamespace>(parent),
+            Parent = EnsureEmits<ServiceBusNamespace>(parent),
             MaxMessageSizeInKilobytes = 256,
             DefaultMessageTimeToLive = TimeSpan.FromDays(14),
             RequiresDuplicateDetection = false,

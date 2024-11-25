@@ -10,7 +10,7 @@ namespace Azure.CloudMachine.OpenAI;
 
 internal class OpenAIFeature : CloudMachineFeature
 {
-    private readonly List<OpenAIModel> _models = [];
+    private readonly List<OpenAIModelFeature> _models = [];
 
     public OpenAIFeature()
     { }
@@ -24,8 +24,8 @@ internal class OpenAIFeature : CloudMachineFeature
 
         Emitted = cognitiveServices;
 
-        OpenAIModel? previous = null;
-        foreach (OpenAIModel model in _models)
+        OpenAIModelFeature? previous = null;
+        foreach (OpenAIModelFeature model in _models)
         {
             model.Emit(cloudMachine);
             if (previous != null)
@@ -38,7 +38,7 @@ internal class OpenAIFeature : CloudMachineFeature
         return cognitiveServices;
     }
 
-    internal void AddModel(OpenAIModel model)
+    internal void AddModel(OpenAIModelFeature model)
     {
         if (model.Account != null)
         {

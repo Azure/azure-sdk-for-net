@@ -60,12 +60,12 @@ public static class AzureOpenAIExtensions
     /// <summary>
     /// returns full text of all parts.
     /// </summary>
-    /// <param name="completion"></param>
+    /// <param name="content"></param>
     /// <returns></returns>
-    public static string AsText(this ChatMessageContent completion)
+    public static string AsText(this ChatMessageContent content)
     {
         StringBuilder sb = new();
-        foreach (ChatMessageContentPart part in completion)
+        foreach (ChatMessageContentPart part in content)
         {
             switch (part.Kind)
             {

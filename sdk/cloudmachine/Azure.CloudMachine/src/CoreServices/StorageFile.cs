@@ -46,6 +46,13 @@ public class StorageFile
     public BinaryData Download()
         => _storage.Download(Path);
 
+    /// <summary>
+    /// Downloads the file from the storage account.
+    /// </summary>
+    /// <returns></returns>
+    public async Task<BinaryData> DownloadAsync()
+        => await _storage.DownloadAsync(Path).ConfigureAwait(false);
+
     // public async Task<BinaryData> DownloadAsync()
     //     => await _storage.DownloadBlobAsync(Path).ConfigureAwait(false);
 

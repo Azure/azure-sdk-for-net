@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.CognitiveServices;
@@ -10,9 +9,9 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.CloudMachine.OpenAI;
 
-public class OpenAIModel : CloudMachineFeature
+public class OpenAIModelFeature : CloudMachineFeature
 {
-    public OpenAIModel(string model, string modelVersion, AIModelKind kind = AIModelKind.Chat) {
+    public OpenAIModelFeature(string model, string modelVersion, AIModelKind kind = AIModelKind.Chat) {
         Kind = kind;
         Model = model;
         ModelVersion = modelVersion;
@@ -37,7 +36,7 @@ public class OpenAIModel : CloudMachineFeature
 
     public override void AddTo(CloudMachineInfrastructure cm)
     {
-        OpenAIFeature openAI = OpenAIModel.GetOrCreateOpenAI(cm);
+        OpenAIFeature openAI = OpenAIModelFeature.GetOrCreateOpenAI(cm);
         openAI.AddModel(this);
     }
 
