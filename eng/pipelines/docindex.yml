@@ -3,7 +3,7 @@ trigger: none
 parameters:
 - name: UpdateMain
   displayName: |
-    Updating main branch.
+    Update main branch.
   type: boolean
   default: true
 
