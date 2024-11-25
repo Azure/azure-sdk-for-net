@@ -40,10 +40,49 @@ namespace Azure.CloudMachine
         public void AddResource(Azure.Provisioning.Primitives.NamedProvisionableConstruct resource) { }
         public Azure.Provisioning.ProvisioningPlan Build(Azure.Provisioning.ProvisioningBuildOptions? context = null) { throw null; }
     }
+    public partial class EventGridSystemTopicFeature : Azure.Provisioning.CloudMachine.CloudMachineFeature
+    {
+        public EventGridSystemTopicFeature(string name, Azure.Provisioning.CloudMachine.CloudMachineFeature source) { }
+        protected override Azure.Provisioning.Primitives.ProvisionableResource EmitCore(Azure.CloudMachine.CloudMachineInfrastructure infrastructure) { throw null; }
+    }
     public partial class FeatureCollection
     {
         public FeatureCollection() { }
         public System.Collections.Generic.IEnumerable<T> FindAll<T>() where T : Azure.Provisioning.CloudMachine.CloudMachineFeature { throw null; }
+    }
+    public partial class ServiceBusNamespaceFeature : Azure.Provisioning.CloudMachine.CloudMachineFeature
+    {
+        public ServiceBusNamespaceFeature(string name, Azure.Provisioning.ServiceBus.ServiceBusSkuName sku = Azure.Provisioning.ServiceBus.ServiceBusSkuName.Standard, Azure.Provisioning.ServiceBus.ServiceBusSkuTier tier = Azure.Provisioning.ServiceBus.ServiceBusSkuTier.Standard) { }
+        protected override Azure.Provisioning.Primitives.ProvisionableResource EmitCore(Azure.CloudMachine.CloudMachineInfrastructure infrastructure) { throw null; }
+    }
+    public partial class ServiceBusSubscriptionFeature : Azure.Provisioning.CloudMachine.CloudMachineFeature
+    {
+        public ServiceBusSubscriptionFeature(string name, Azure.CloudMachine.ServiceBusTopicFeature parent) { }
+        protected override Azure.Provisioning.Primitives.ProvisionableResource EmitCore(Azure.CloudMachine.CloudMachineInfrastructure infrastructure) { throw null; }
+    }
+    public partial class ServiceBusTopicFeature : Azure.Provisioning.CloudMachine.CloudMachineFeature
+    {
+        public ServiceBusTopicFeature(string name, Azure.CloudMachine.ServiceBusNamespaceFeature parent) { }
+        protected override Azure.Provisioning.Primitives.ProvisionableResource EmitCore(Azure.CloudMachine.CloudMachineInfrastructure infrastructure) { throw null; }
+    }
+    public partial class StorageFeature : Azure.Provisioning.CloudMachine.CloudMachineFeature
+    {
+        public StorageFeature(string accountName, Azure.Provisioning.Storage.StorageSkuName sku = Azure.Provisioning.Storage.StorageSkuName.StandardLrs, System.Collections.Generic.IEnumerable<string>? containerNames = null) { }
+        protected override Azure.Provisioning.Primitives.ProvisionableResource EmitCore(Azure.CloudMachine.CloudMachineInfrastructure infrastructure) { throw null; }
+    }
+    public partial class SystemTopicEventSubscriptionFeature : Azure.Provisioning.CloudMachine.CloudMachineFeature
+    {
+        public SystemTopicEventSubscriptionFeature(string name, Azure.CloudMachine.EventGridSystemTopicFeature parent, Azure.CloudMachine.ServiceBusTopicFeature destination, Azure.CloudMachine.ServiceBusNamespaceFeature parentNamespace) { }
+        protected override Azure.Provisioning.Primitives.ProvisionableResource EmitCore(Azure.CloudMachine.CloudMachineInfrastructure infrastructure) { throw null; }
+    }
+}
+namespace Azure.CloudMachine.AppService
+{
+    public partial class AppServiceFeature : Azure.Provisioning.CloudMachine.CloudMachineFeature
+    {
+        public AppServiceFeature(Azure.Provisioning.AppService.AppServiceSkuDescription? sku = null) { }
+        public Azure.Provisioning.AppService.AppServiceSkuDescription Sku { get { throw null; } set { } }
+        protected override Azure.Provisioning.Primitives.ProvisionableResource EmitCore(Azure.CloudMachine.CloudMachineInfrastructure infrastructure) { throw null; }
     }
 }
 namespace Azure.CloudMachine.KeyVault
@@ -78,11 +117,13 @@ namespace Azure.Provisioning.CloudMachine
         protected CloudMachineFeature() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Provisioning.Primitives.ProvisionableResource Emitted { get { throw null; } protected set { } }
+        protected internal System.Collections.Generic.Dictionary<Azure.Provisioning.Primitives.Provisionable, (string RoleName, string RoleId)[]> RequiredSystemRoles { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual void AddTo(Azure.CloudMachine.CloudMachineInfrastructure cm) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void Emit(Azure.CloudMachine.CloudMachineInfrastructure cm) { }
         protected abstract Azure.Provisioning.Primitives.ProvisionableResource EmitCore(Azure.CloudMachine.CloudMachineInfrastructure cm);
+        protected static T ValidateIsOfType<T>(Azure.Provisioning.CloudMachine.CloudMachineFeature resource) { throw null; }
     }
 }
 namespace System.ClientModel.TypeSpec
