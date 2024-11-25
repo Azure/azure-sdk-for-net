@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    internal partial class CredentialsApiKeyAuth : IUtf8JsonSerializable, IJsonModel<CredentialsApiKeyAuth>
+    public partial class CredentialsApiKeyAuth : IUtf8JsonSerializable, IJsonModel<CredentialsApiKeyAuth>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CredentialsApiKeyAuth>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

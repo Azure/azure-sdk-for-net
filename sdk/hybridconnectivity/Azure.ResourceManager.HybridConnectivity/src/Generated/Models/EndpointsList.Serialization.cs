@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 return null;
             }
             string nextLink = default;
-            IReadOnlyList<EndpointResourceData> value = default;
+            IReadOnlyList<HybridConnectivityEndpointData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,10 +103,10 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                     {
                         continue;
                     }
-                    List<EndpointResourceData> array = new List<EndpointResourceData>();
+                    List<HybridConnectivityEndpointData> array = new List<HybridConnectivityEndpointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EndpointResourceData.DeserializeEndpointResourceData(item, options));
+                        array.Add(HybridConnectivityEndpointData.DeserializeHybridConnectivityEndpointData(item, options));
                     }
                     value = array;
                     continue;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new EndpointsList(nextLink, value ?? new ChangeTrackingList<EndpointResourceData>(), serializedAdditionalRawData);
+            return new EndpointsList(nextLink, value ?? new ChangeTrackingList<HybridConnectivityEndpointData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EndpointsList>.Write(ModelReaderWriterOptions options)

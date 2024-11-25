@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Connection properties for connections with AAD authentication (aka `Entra ID passthrough`). </summary>
-    internal partial class InternalConnectionPropertiesAADAuth : InternalConnectionProperties
+    internal partial class InternalConnectionPropertiesAADAuth : ConnectionProperties
     {
         /// <summary> Initializes a new instance of <see cref="InternalConnectionPropertiesAADAuth"/>. </summary>
         /// <param name="category"> Category of the connection. </param>

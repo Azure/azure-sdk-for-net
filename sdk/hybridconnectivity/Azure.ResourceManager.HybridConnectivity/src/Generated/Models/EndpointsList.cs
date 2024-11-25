@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <summary> Initializes a new instance of <see cref="EndpointsList"/>. </summary>
         internal EndpointsList()
         {
-            Value = new ChangeTrackingList<EndpointResourceData>();
+            Value = new ChangeTrackingList<HybridConnectivityEndpointData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EndpointsList"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of endpoints list. </param>
         /// <param name="value"> The list of endpoint. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EndpointsList(string nextLink, IReadOnlyList<EndpointResourceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EndpointsList(string nextLink, IReadOnlyList<HybridConnectivityEndpointData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <summary> The link used to get the next page of endpoints list. </summary>
         public string NextLink { get; }
         /// <summary> The list of endpoint. </summary>
-        public IReadOnlyList<EndpointResourceData> Value { get; }
+        public IReadOnlyList<HybridConnectivityEndpointData> Value { get; }
     }
 }

@@ -520,23 +520,44 @@ internal static partial class MockExtensions
         items.Destination.SetupGet(r => r.MaxSupportedChunkSize).Returns(Constants.GB);
 
         items.Source.Setup(r => r.GetPropertiesAsync(It.IsAny<CancellationToken>()))
-            .Returns(Task.FromResult(new StorageResourceItemProperties(resourceLength: itemSize, default, default, default)));
+            .Returns((CancellationToken cancellationToken) =>
+            {
+                CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+                return Task.FromResult(new StorageResourceItemProperties(
+                    resourceLength: itemSize,
+                    default,
+                    default,
+                    default));
+            });
 
         items.Source.Setup(r => r.ReadStreamAsync(It.IsAny<long>(), It.IsAny<long?>(), It.IsAny<CancellationToken>()))
-            .Returns<long, long?, CancellationToken>((position, length, cancellation)
-                => Task.FromResult(new StorageResourceReadStreamResult(
+            .Returns<long, long?, CancellationToken>((position, length, cancellationToken) =>
+            {
+                CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+                return Task.FromResult(new StorageResourceReadStreamResult(
                     new Mock<Stream>().Object,
                     new HttpRange(position, length),
-                    new(itemSize, default, default, new()))));
+                    new(itemSize, default, default, new())));
+            });
+
         items.Destination.Setup(r => r.CopyFromStreamAsync(
             It.IsAny<Stream>(), It.IsAny<long>(), It.IsAny<bool>(), It.IsAny<long>(),
             It.IsAny<StorageResourceWriteToOffsetOptions>(), It.IsAny<CancellationToken>()))
-            .Returns(Task.CompletedTask);
+            .Returns<Stream, long, bool, long, StorageResourceWriteToOffsetOptions, CancellationToken>((stream, length, overwrite, offset, options, cancellationToken) =>
+            {
+                CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+                return Task.CompletedTask;
+            });
+
         items.Destination.Setup(r => r.CompleteTransferAsync(
             It.IsAny<bool>(),
             It.IsAny<StorageResourceCompleteTransferOptions>(),
             It.IsAny<CancellationToken>()))
-            .Returns(Task.CompletedTask);
+            .Returns<bool, StorageResourceCompleteTransferOptions, CancellationToken>((isFinal, options, cancellationToken) =>
+            {
+                CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+                return Task.CompletedTask;
+            });
     }
 
     public static void BasicSetup(

@@ -78,17 +78,17 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            IReadOnlyList<GetConnectionResponse> value = default;
+            IReadOnlyList<ConnectionResponse> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<GetConnectionResponse> array = new List<GetConnectionResponse>();
+                    List<ConnectionResponse> array = new List<ConnectionResponse>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GetConnectionResponse.DeserializeGetConnectionResponse(item, options));
+                        array.Add(ConnectionResponse.DeserializeConnectionResponse(item, options));
                     }
                     value = array;
                     continue;
