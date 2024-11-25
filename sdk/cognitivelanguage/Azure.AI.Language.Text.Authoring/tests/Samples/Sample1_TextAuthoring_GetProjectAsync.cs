@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.Text.Authoring.Tests.Samples
 {
-    public partial class Sample3_TextAuthoring_GetProjectAsync : SamplesBase<AuthoringClientTestEnvironment>
+    public partial class Sample1_TextAuthoring_GetProjectAsync : SamplesBase<AuthoringClientTestEnvironment>
     {
         [Test]
         [AsyncOnly]
