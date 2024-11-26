@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 
 namespace Azure.Core;
 
@@ -11,6 +12,12 @@ namespace Azure.Core;
 public readonly struct ClientConnectionOptions
 {
     /// <summary>
+    /// Do not use this constructor. It is only for the JSON serializer.
+    /// </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public ClientConnectionOptions() { }
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="ClientConnectionOptions"/> struct with the specified endpoint and API key.
     /// </summary>
     /// <param name="endpoint">The endpoint URI.</param>
@@ -19,19 +26,17 @@ public readonly struct ClientConnectionOptions
     {
         Endpoint = endpoint;
         ApiKeyCredential = apiKey;
-        ConnectionKind = ClientConnectionKind.ApiKey;
+        Authentication = ClientAuthenticationMethod.ApiKey;
     }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ClientConnectionOptions"/> struct with the specified endpoint and token credential.
     /// </summary>
     /// <param name="endpoint">The endpoint URI.</param>
-    /// <param name="credential">The token credential.</param>
-    public ClientConnectionOptions(Uri endpoint, TokenCredential credential)
+    public ClientConnectionOptions(Uri endpoint)
     {
         Endpoint = endpoint;
-        TokenCredential = credential;
-        ConnectionKind = ClientConnectionKind.EntraId;
+        Authentication = ClientAuthenticationMethod.EntraId;
     }
 
     /// <summary>
@@ -40,14 +45,14 @@ public readonly struct ClientConnectionOptions
     /// <param name="subclientId">The subclient ID.</param>
     public ClientConnectionOptions(string subclientId)
     {
-        Id = subclientId;
-        ConnectionKind = ClientConnectionKind.OutOfBand;
+        SubclientId = subclientId;
+        Authentication = ClientAuthenticationMethod.Subclient;
     }
 
     /// <summary>
     /// Gets the kind of connection used by the client.
     /// </summary>
-    public ClientConnectionKind ConnectionKind { get; }
+    public ClientAuthenticationMethod Authentication { get; }
 
     /// <summary>
     /// Gets the endpoint URI.
@@ -57,23 +62,18 @@ public readonly struct ClientConnectionOptions
     /// <summary>
     /// Gets the subclient ID.
     /// </summary>
-    public string Id { get; }
+    public string SubclientId { get; }
 
     /// <summary>
     /// Gets the API key credential.
     /// </summary>
     public string ApiKeyCredential { get; }
-
-    /// <summary>
-    /// Gets the token credential.
-    /// </summary>
-    public TokenCredential TokenCredential { get; }
 }
 
 /// <summary>
 /// Specifies the kind of connection used by the client.
 /// </summary>
-public enum ClientConnectionKind
+public enum ClientAuthenticationMethod
 {
     /// <summary>
     /// Represents a connection using Entra ID.
@@ -88,5 +88,5 @@ public enum ClientConnectionKind
     /// <summary>
     /// Represents a connection using an out-of-band method.
     /// </summary>
-    OutOfBand
+    Subclient
 }

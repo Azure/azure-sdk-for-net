@@ -30,7 +30,7 @@ public readonly struct StorageServices
         BlobContainerClient container = _cm.Subclients.Get(() =>
         {
             ClientConnectionOptions connection = cm.GetConnectionOptions(typeof(BlobContainerClient), default);
-            BlobContainerClient container = new(connection.Endpoint, connection.TokenCredential);
+            BlobContainerClient container = new(connection.Endpoint, cm.Credential);
             return container;
         });
         return container;
@@ -43,7 +43,7 @@ public readonly struct StorageServices
         BlobContainerClient container = cm.Subclients.Get(() =>
         {
             ClientConnectionOptions connection = cm.GetConnectionOptions(typeof(BlobContainerClient), containerName);
-            BlobContainerClient container = new(connection.Endpoint, connection.TokenCredential);
+            BlobContainerClient container = new(connection.Endpoint, cm.Credential);
             return container;
         });
         return container;

@@ -21,9 +21,9 @@ public static class KeyVaultExtensions
     public static SecretClient GetKeyVaultSecretsClient(this ClientWorkspace workspace)
     {
         ClientConnectionOptions connection = workspace.GetConnectionOptions(typeof(SecretClient));
-        if (connection.ConnectionKind == ClientConnectionKind.EntraId)
+        if (connection.Authentication == ClientAuthenticationMethod.EntraId)
         {
-            return new(connection.Endpoint, connection.TokenCredential);
+            return new(connection.Endpoint, workspace.Credential);
         }
         throw new Exception("API key not supported");
     }

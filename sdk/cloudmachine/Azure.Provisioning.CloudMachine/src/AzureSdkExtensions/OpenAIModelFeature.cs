@@ -4,6 +4,7 @@
 using System;
 using System.Diagnostics;
 using System.Linq;
+using Azure.Core;
 using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.CognitiveServices;
 using Azure.Provisioning.Primitives;
@@ -46,10 +47,10 @@ public class OpenAIModelFeature : CloudMachineFeature
         switch (Kind)
         {
             case AIModelKind.Chat:
-                cm.Connections.Add("OpenAI.Chat.ChatClient", $"{cm.Id}_chat");
+                cm.Connections.Add("OpenAI.Chat.ChatClient", new($"{cm.Id}_chat"));
                 break;
             case AIModelKind.Embedding:
-                cm.Connections.Add("OpenAI.Embeddings.EmbeddingClient", $"{cm.Id}_embedding");
+                cm.Connections.Add("OpenAI.Embeddings.EmbeddingClient", new($"{cm.Id}_embedding"));
                 break;
             default:
                 throw new NotImplementedException();

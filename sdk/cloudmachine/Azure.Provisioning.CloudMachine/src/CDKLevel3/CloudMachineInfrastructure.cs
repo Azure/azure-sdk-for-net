@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Authorization;
 using Azure.Provisioning.CloudMachine;
@@ -25,7 +26,7 @@ public class CloudMachineInfrastructure
     public FeatureCollection Features { get; } = new();
 
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public Dictionary<string, object> Connections { get; } = [];
+    public Dictionary<string, ClientConnectionOptions> Connections { get; } = [];
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public UserAssignedIdentity Identity { get; private set; }

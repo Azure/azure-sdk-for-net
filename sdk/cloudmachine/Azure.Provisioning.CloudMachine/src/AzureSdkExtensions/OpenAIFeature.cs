@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.CognitiveServices;
 using Azure.Provisioning.Primitives;
@@ -18,7 +19,9 @@ internal class OpenAIFeature : CloudMachineFeature
     protected internal override void AddTo(CloudMachineInfrastructure cm)
     {
         cm.Features.Add(this);
-        cm.Connections.Add("Azure.AI.OpenAI.AzureOpenAIClient", new Uri($"https://{cm.Id}.openai.azure.com"));
+
+        ClientConnectionOptions connection = new(new Uri($"https://{cm.Id}.openai.azure.com"));
+        cm.Connections.Add("Azure.AI.OpenAI.AzureOpenAIClient", connection);
     }
     protected override ProvisionableResource EmitCore(CloudMachineInfrastructure cloudMachine)
     {

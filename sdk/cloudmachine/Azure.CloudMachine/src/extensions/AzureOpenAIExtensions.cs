@@ -83,9 +83,9 @@ public static class AzureOpenAIExtensions
     private static AzureOpenAIClient CreateAzureOpenAIClient(this ClientWorkspace workspace)
     {
         ClientConnectionOptions connection = workspace.GetConnectionOptions(typeof(AzureOpenAIClient));
-        if (connection.ConnectionKind == ClientConnectionKind.EntraId)
+        if (connection.Authentication == ClientAuthenticationMethod.EntraId)
         {
-            return new(connection.Endpoint, connection.TokenCredential);
+            return new(connection.Endpoint, workspace.Credential);
         }
         else
         {
@@ -96,14 +96,14 @@ public static class AzureOpenAIExtensions
     private static ChatClient CreateChatClient(this ClientWorkspace workspace, AzureOpenAIClient client)
     {
         ClientConnectionOptions connection = workspace.GetConnectionOptions(typeof(ChatClient));
-        ChatClient chat = client.GetChatClient(connection.Id);
+        ChatClient chat = client.GetChatClient(connection.SubclientId);
         return chat;
     }
 
     private static EmbeddingClient CreateEmbeddingsClient(this ClientWorkspace workspace, AzureOpenAIClient client)
     {
         ClientConnectionOptions connection = workspace.GetConnectionOptions(typeof(EmbeddingClient));
-        EmbeddingClient embeddings = client.GetEmbeddingClient(connection.Id);
+        EmbeddingClient embeddings = client.GetEmbeddingClient(connection.SubclientId);
         return embeddings;
     }
 

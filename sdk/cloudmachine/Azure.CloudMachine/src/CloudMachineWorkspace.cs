@@ -19,8 +19,7 @@ namespace Azure.CloudMachine;
 /// </summary>
 public class CloudMachineWorkspace : ClientWorkspace
 {
-    private TokenCredential Credential { get; }
-    private Dictionary<string, object> Connections { get; }
+    private Dictionary<string, ClientConnectionOptions> Connections { get; }
 
     /// <summary>
     /// The cloud machine ID.
@@ -36,22 +35,9 @@ public class CloudMachineWorkspace : ClientWorkspace
     /// <param name="connections"></param>
     /// <exception cref="Exception"></exception>
     [SuppressMessage("Usage", "AZC0007:DO provide a minimal constructor that takes only the parameters required to connect to the service.", Justification = "<Pending>")]
-    public CloudMachineWorkspace(TokenCredential credential = default, IConfiguration configuration = default, Dictionary<string, object> connections = default)
+    public CloudMachineWorkspace(TokenCredential credential = default, IConfiguration configuration = default, Dictionary<string, ClientConnectionOptions> connections = default)
+        : base(BuildCredentail(credential))
     {
-        if (credential != default)
-        {
-            Credential = credential;
-        }
-        else
-        {
-            // This environment variable is set by the CloudMachine App Service feature during provisioning.
-            Credential = Environment.GetEnvironmentVariable("CLOUDMACHINE_MANAGED_IDENTITY_CLIENT_ID") switch
-            {
-                string clientId when !string.IsNullOrEmpty(clientId) => new ManagedIdentityCredential(clientId),
-                _ => new ChainedTokenCredential(new AzureCliCredential(), new AzureDeveloperCliCredential())
-            };
-        }
-
         if (connections != default)
         {
             Connections = connections;
@@ -68,6 +54,20 @@ public class CloudMachineWorkspace : ClientWorkspace
         };
     }
 
+    private static TokenCredential BuildCredentail(TokenCredential credential)
+    {
+        if (credential == default)
+        {
+            // This environment variable is set by the CloudMachine App Service feature during provisioning.
+            credential = Environment.GetEnvironmentVariable("CLOUDMACHINE_MANAGED_IDENTITY_CLIENT_ID") switch
+            {
+                string clientId when !string.IsNullOrEmpty(clientId) => new ManagedIdentityCredential(clientId),
+                _ => new ChainedTokenCredential(new AzureCliCredential(), new AzureDeveloperCliCredential())
+            };
+        }
+
+        return credential;
+    }
     /// <summary>
     /// Retrieves the connection options for a specified client type and instance ID.
     /// </summary>
@@ -84,29 +84,18 @@ public class CloudMachineWorkspace : ClientWorkspace
 
         return clientId switch
         {
-            "Azure.Security.KeyVault.Secrets.SecretClient" => new ClientConnectionOptions(new($"https://{Id}.vault.azure.net/"), Credential),
-            "Azure.Messaging.ServiceBus.ServiceBusClient" => new ClientConnectionOptions(new($"https://{Id}.servicebus.windows.net"), Credential),
+            "Azure.Storage.Blobs.BlobContainerClient" => new ClientConnectionOptions(new Uri($"https://{Id}.blob.core.windows.net/{instanceId ?? "default"}")),
+            "Azure.Security.KeyVault.Secrets.SecretClient" => new ClientConnectionOptions(new Uri($"https://{Id}.vault.azure.net/")),
+            "Azure.Messaging.ServiceBus.ServiceBusClient" => new ClientConnectionOptions(new Uri($"https://{Id}.servicebus.windows.net")),
             "Azure.Messaging.ServiceBus.ServiceBusSender" => new ClientConnectionOptions(instanceId ?? "cm_servicebus_default_topic"),
             "Azure.Messaging.ServiceBus.ServiceBusProcessor" => new ClientConnectionOptions("cm_servicebus_default_topic/cm_servicebus_subscription_default"),
             "Azure.Messaging.ServiceBus.ServiceBusProcessor$private" => new ClientConnectionOptions("cm_servicebus_topic_private/cm_servicebus_subscription_private"),
-            "Azure.Storage.Blobs.BlobContainerClient" => new ClientConnectionOptions(new($"https://{Id}.blob.core.windows.net/{instanceId ?? "default"}"), Credential),
             _ => GetExtensionConnection(clientId)
         };
 
         ClientConnectionOptions GetExtensionConnection(string clientId)
         {
-            if (Connections.TryGetValue(clientId, out object connection))
-            {
-                if (connection is Uri uri)
-                {
-                    return new ClientConnectionOptions(uri, Credential);
-                }
-                if (connection is string str)
-                {
-                    return new ClientConnectionOptions(str);
-                }
-                throw new NotImplementedException();
-            }
+            if (Connections.TryGetValue(clientId, out ClientConnectionOptions connection)) return connection;
             throw new Exception($"unknown client {clientId}");
         };
     }

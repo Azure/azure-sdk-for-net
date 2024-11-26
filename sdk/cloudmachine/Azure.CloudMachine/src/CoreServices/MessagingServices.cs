@@ -88,13 +88,13 @@ public readonly struct MessagingServices
         ServiceBusClient client = GetServiceBusClient();
 
         ClientConnectionOptions connection = _cm.GetConnectionOptions(typeof(ServiceBusSender), default);
-        ServiceBusSender sender = client.CreateSender(connection.Id);
+        ServiceBusSender sender = client.CreateSender(connection.SubclientId);
         return sender;
     }
     private ServiceBusClient CreateClient()
     {
         ClientConnectionOptions connection = _cm.GetConnectionOptions(typeof(ServiceBusClient), default);
-        ServiceBusClient client = new(connection.Endpoint!.AbsoluteUri, connection.TokenCredential);
+        ServiceBusClient client = new(connection.Endpoint!.AbsoluteUri, _cm.Credential);
         return client;
     }
     private ServiceBusProcessor CreateProcessor(string id)
@@ -102,7 +102,7 @@ public readonly struct MessagingServices
         ServiceBusClient client = GetServiceBusClient();
 
         ClientConnectionOptions connection = _cm.GetConnectionOptions(typeof(ServiceBusProcessor), id);
-        string[] topicAndSubscription = connection.Id.Split('/');
+        string[] topicAndSubscription = connection.SubclientId.Split('/');
         ServiceBusProcessor processor = client.CreateProcessor(topicAndSubscription[0], topicAndSubscription[1], new() { MaxConcurrentCalls = 5 });
         processor.ProcessErrorAsync += (args) => throw new Exception("error processing event", args.Exception);
         return processor;
