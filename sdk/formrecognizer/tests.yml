@@ -10,11 +10,16 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: formrecognizer
-    TimeoutInMinutes: 180
+    TimeoutInMinutes: 200
     CloudConfig:
       Public:
         Location: '${{ parameters.Location }}'
       # Canary regions are currently not supported in TME so disabling for now
       # Canary:
       #   Location: 'centraluseuap'
-    SupportedClouds: 'Public, Canary'
+      UsGov:
+        Location: 'usgovvirginia'
+      China:
+        Location: 'chinaeast2'
+    Clouds: 'Public'
+    SupportedClouds: 'Public,UsGov,China'
