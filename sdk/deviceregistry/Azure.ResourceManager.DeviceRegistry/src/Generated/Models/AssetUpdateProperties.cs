@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="datasets"> Array of datasets that are part of the asset. Each dataset describes the data points that make up the set. </param>
         /// <param name="events"> Array of events that are part of the asset. Each event can have per-event configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssetUpdateProperties(bool? enabled, string displayName, string description, string manufacturer, string manufacturerUri, string model, string productCode, string hardwareRevision, string softwareRevision, string documentationUri, string serialNumber, IDictionary<string, BinaryData> attributes, string defaultDatasetsConfiguration, string defaultEventsConfiguration, TopicUpdate defaultTopic, IList<Dataset> datasets, IList<Event> events, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AssetUpdateProperties(bool? enabled, string displayName, string description, string manufacturer, Uri manufacturerUri, string model, string productCode, string hardwareRevision, string softwareRevision, Uri documentationUri, string serialNumber, IDictionary<string, BinaryData> attributes, string defaultDatasetsConfiguration, string defaultEventsConfiguration, TopicUpdate defaultTopic, IList<Dataset> datasets, IList<Event> events, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Enabled = enabled;
             DisplayName = displayName;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <summary> Asset manufacturer name. </summary>
         public string Manufacturer { get; set; }
         /// <summary> Asset manufacturer URI. </summary>
-        public string ManufacturerUri { get; set; }
+        public Uri ManufacturerUri { get; set; }
         /// <summary> Asset model name. </summary>
         public string Model { get; set; }
         /// <summary> Asset product code. </summary>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <summary> Revision number of the software. </summary>
         public string SoftwareRevision { get; set; }
         /// <summary> Reference to the documentation. </summary>
-        public string DocumentationUri { get; set; }
+        public Uri DocumentationUri { get; set; }
         /// <summary> Asset serial number. </summary>
         public string SerialNumber { get; set; }
         /// <summary>

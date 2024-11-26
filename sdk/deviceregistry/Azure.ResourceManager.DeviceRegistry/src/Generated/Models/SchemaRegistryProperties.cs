@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="namespace"> Schema registry namespace. Uniquely identifies a schema registry within a tenant. </param>
         /// <param name="storageAccountContainerUri"> The Storage Account's Container URL where schemas will be stored. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="namespace"/> or <paramref name="storageAccountContainerUri"/> is null. </exception>
-        public SchemaRegistryProperties(string @namespace, string storageAccountContainerUri)
+        public SchemaRegistryProperties(string @namespace, Uri storageAccountContainerUri)
         {
             Argument.AssertNotNull(@namespace, nameof(@namespace));
             Argument.AssertNotNull(storageAccountContainerUri, nameof(storageAccountContainerUri));
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="storageAccountContainerUri"> The Storage Account's Container URL where schemas will be stored. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SchemaRegistryProperties(string uuid, string @namespace, string displayName, string description, string storageAccountContainerUri, DeviceRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SchemaRegistryProperties(string uuid, string @namespace, string displayName, string description, Uri storageAccountContainerUri, DeviceRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Uuid = uuid;
             Namespace = @namespace;
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <summary> Human-readable description of the schema registry. </summary>
         public string Description { get; set; }
         /// <summary> The Storage Account's Container URL where schemas will be stored. </summary>
-        public string StorageAccountContainerUri { get; set; }
+        public Uri StorageAccountContainerUri { get; set; }
         /// <summary> Provisioning state of the resource. </summary>
         public DeviceRegistryProvisioningState? ProvisioningState { get; }
     }

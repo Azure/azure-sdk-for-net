@@ -184,12 +184,12 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
                 Properties = new DiscoveredAssetProperties("myAssetEndpointProfile", "11111111-1111-1111-1111-111111111111", 73766L)
                 {
                     Manufacturer = "Contoso",
-                    ManufacturerUri = "https://www.contoso.com/manufacturerUri",
+                    ManufacturerUri = new Uri("https://www.contoso.com/manufacturerUri"),
                     Model = "ContosoModel",
                     ProductCode = "SA34VDG",
                     HardwareRevision = "1.0",
                     SoftwareRevision = "2.0",
-                    DocumentationUri = "https://www.example.com/manual",
+                    DocumentationUri = new Uri("https://www.example.com/manual"),
                     SerialNumber = "64-103816-519918-8",
                     DefaultDatasetsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
                     DefaultEventsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",

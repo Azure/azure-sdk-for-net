@@ -39,9 +39,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             var discoveredAssetData = new DeviceRegistryDiscoveredAssetData(AzureLocation.WestUS, extendedLocation)
             {
                 Properties = new("assetEndpointProfileReference", "discoveryIdSample", 1)
+                {
+                    Manufacturer = "Contoso",
+                    ManufacturerUri = new Uri("http://contoso.com")
+                }
             };
-            discoveredAssetData.Properties.Manufacturer = "Contoso";
-            discoveredAssetData.Properties.ManufacturerUri = "http://contoso.com";
             var discoveredAssetCreateOrUpdateResponse = await discoveredAssetsCollection.CreateOrUpdateAsync(WaitUntil.Completed, discoveredAssetName, discoveredAssetData, CancellationToken.None);
             Assert.IsNotNull(discoveredAssetCreateOrUpdateResponse.Value);
             Assert.AreEqual(discoveredAssetCreateOrUpdateResponse.Value.Data.Properties.AssetEndpointProfileRef, discoveredAssetData.Properties.AssetEndpointProfileRef);
@@ -54,37 +56,23 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.AreEqual(discoveredAssetReadResponse.Value.Data.Properties.Manufacturer, discoveredAssetData.Properties.Manufacturer);
 
             // List DeviceRegistry DiscoveredAsset by Resource Group
-            int resourcesToFetchByResourceGroup = 10;
-            int fetchedResourcesByResourceGroup = 0;
             var discoveredAssetResourcesListByResourceGroup = new List<DeviceRegistryDiscoveredAssetResource>();
-            var discoveredAssetResourceListByResourceGroupAsyncIterator = discoveredAssetsCollection.GetAllAsync(CancellationToken.None);
-            await foreach (var discoveredAssetEntry in discoveredAssetResourceListByResourceGroupAsyncIterator)
+            var discoveredAssetResourceListByResourceGroupAsyncIteratorPage = discoveredAssetsCollection.GetAllAsync(CancellationToken.None).AsPages(null, 5);
+            await foreach (var discoveredAssetEntryPage in discoveredAssetResourceListByResourceGroupAsyncIteratorPage)
             {
-                fetchedResourcesByResourceGroup++;
-                discoveredAssetResourcesListByResourceGroup.Add(discoveredAssetEntry);
-                // limit the test to at most the first 10 entries
-                if (fetchedResourcesByResourceGroup == resourcesToFetchByResourceGroup)
-                {
-                    break;
-                }
+                discoveredAssetResourcesListByResourceGroup.AddRange(discoveredAssetEntryPage.Values);
+                break; // limit to the the first page of results
             }
             Assert.IsNotEmpty(discoveredAssetResourcesListByResourceGroup);
             Assert.AreEqual(discoveredAssetResourcesListByResourceGroup.Count, 1);
 
             // List DeviceRegistry Asset by Subscription
-            int resourcesToFetchBySubscription = 10;
-            int fetchedResourcesBySubscription = 0;
             var discoveredAssetResourcesListBySubscription = new List<DeviceRegistryDiscoveredAssetResource>();
-            var discoveredAssetResourceListBySubscriptionAsyncIterator = subscription.GetDeviceRegistryDiscoveredAssetsAsync(CancellationToken.None);
-            await foreach (var discoveredAssetEntry in discoveredAssetResourceListBySubscriptionAsyncIterator)
+            var discoveredAssetResourceListBySubscriptionAsyncIteratorPage = subscription.GetDeviceRegistryDiscoveredAssetsAsync(CancellationToken.None).AsPages(null, 5);
+            await foreach (var discoveredAssetEntryPage in discoveredAssetResourceListBySubscriptionAsyncIteratorPage)
             {
-                fetchedResourcesBySubscription++;
-                discoveredAssetResourcesListBySubscription.Add(discoveredAssetEntry);
-                // limit the test to at most the first 10 entries
-                if (fetchedResourcesBySubscription == resourcesToFetchBySubscription)
-                {
-                    break;
-                }
+                discoveredAssetResourcesListBySubscription.AddRange(discoveredAssetEntryPage.Values);
+                break; // limit to the the first page of results
             }
             Assert.IsNotEmpty(discoveredAssetResourcesListBySubscription);
             Assert.GreaterOrEqual(discoveredAssetResourcesListBySubscription.Count, 1);

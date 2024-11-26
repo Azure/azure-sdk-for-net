@@ -64,37 +64,23 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.AreEqual(assetReadResponse.Value.Data.Properties.Enabled, true);
 
             // List DeviceRegistry Asset by Resource Group
-            int resourcesToFetchByResourceGroup = 10;
-            int fetchedResourcesByResourceGroup = 0;
             var assetResourcesListByResourceGroup = new List<DeviceRegistryAssetResource>();
-            var assetResourceListByResourceGroupAsyncIterator = assetsCollection.GetAllAsync(CancellationToken.None);
-            await foreach (var assetEntry in assetResourceListByResourceGroupAsyncIterator)
+            var assetResourceListByResourceGroupAsyncIteratorPage = assetsCollection.GetAllAsync(CancellationToken.None).AsPages(null, 5);
+            await foreach (var assetEntryPage in assetResourceListByResourceGroupAsyncIteratorPage)
             {
-                fetchedResourcesByResourceGroup++;
-                assetResourcesListByResourceGroup.Add(assetEntry);
-                // limit the test to at most the first 10 entries
-                if (fetchedResourcesByResourceGroup == resourcesToFetchByResourceGroup)
-                {
-                    break;
-                }
+                assetResourcesListByResourceGroup.AddRange(assetEntryPage.Values);
+                break; // limit to the the first page of results
             }
             Assert.IsNotEmpty(assetResourcesListByResourceGroup);
             Assert.GreaterOrEqual(assetResourcesListByResourceGroup.Count, 1);
 
             // List DeviceRegistry Asset by Subscription
-            int resourcesToFetchBySubscription = 10;
-            int fetchedResourcesBySubscription = 0;
             var assetResourcesListBySubscription = new List<DeviceRegistryAssetResource>();
-            var assetResourceListBySubscriptionAsyncIterator = subscription.GetDeviceRegistryAssetsAsync(CancellationToken.None);
-            await foreach (var assetEntry in assetResourceListBySubscriptionAsyncIterator)
+            var assetResourceListBySubscriptionAsyncIteratorPage = subscription.GetDeviceRegistryAssetsAsync(CancellationToken.None).AsPages(null, 5);
+            await foreach (var assetEntryPage in assetResourceListBySubscriptionAsyncIteratorPage)
             {
-                fetchedResourcesBySubscription++;
-                assetResourcesListBySubscription.Add(assetEntry);
-                // limit the test to at most the first 10 entries
-                if (fetchedResourcesBySubscription == resourcesToFetchBySubscription)
-                {
-                    break;
-                }
+                assetResourcesListBySubscription.AddRange(assetEntryPage.Values);
+                break; // limit to the the first page of results
             }
             Assert.IsNotEmpty(assetResourcesListBySubscription);
             Assert.GreaterOrEqual(assetResourcesListBySubscription.Count, 1);

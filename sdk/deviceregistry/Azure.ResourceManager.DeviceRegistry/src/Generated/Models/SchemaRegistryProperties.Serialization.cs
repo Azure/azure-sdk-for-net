@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("storageAccountContainerUrl"u8);
-            writer.WriteStringValue(StorageAccountContainerUri);
+            writer.WriteStringValue(StorageAccountContainerUri.AbsoluteUri);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             string @namespace = default;
             string displayName = default;
             string description = default;
-            string storageAccountContainerUrl = default;
+            Uri storageAccountContainerUrl = default;
             DeviceRegistryProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 }
                 if (property.NameEquals("storageAccountContainerUrl"u8))
                 {
-                    storageAccountContainerUrl = property.Value.GetString();
+                    storageAccountContainerUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

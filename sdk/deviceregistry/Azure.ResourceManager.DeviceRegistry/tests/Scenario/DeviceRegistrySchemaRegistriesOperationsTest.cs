@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
         private readonly string _rgNamePrefix = "adr-test-sdk-rg";
         private readonly string _assetSchemaRegistryNamePrefix = "deviceregistry-test-schemaregistry-sdk";
         private readonly string _assetSchemaRegistrySchemaNamePrefix = "deviceregistry-test-schemaregistryschema-sdk";
-        private readonly string _assetSchemaRegistrySchemaVersionNamePrefix = "deviceregistry-test-schemaregistryschemaversion-sdk";
+        private readonly string _assetSchemaRegistrySchemaVersionNamePrefix = "1";
 
         public DeviceRegistrySchemaRegistriesOperationsTest(bool isAsync) : base(isAsync)
         {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                     Namespace = "sdktest",
                     Description = "This is a Schema Registry instance.",
                     DisplayName = "Schema Registry SDK test",
-                    StorageAccountContainerUri = "https://storageaccount.blob.core.windows.net/container"
+                    StorageAccountContainerUri = new Uri("https://storageaccount.blob.core.windows.net/container")
                 },
                 Identity = new(ManagedServiceIdentityType.SystemAssigned)
             };
@@ -145,10 +145,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             // Create DeviceRegistry SchemaRegistry Schema
             var schemaRegistrySchemaData = new DeviceRegistrySchemaData()
             {
-                Properties = new()
+                Properties = new(Format.JsonSchemaDraft7, SchemaType.MessageSchema)
                 {
-                    SchemaType = SchemaType.MessageSchema,
-                    Format = Format.JsonSchemaDraft7,
                     Description = "This is a Schema instance.",
                     DisplayName = "Schema SDK test"
                 }

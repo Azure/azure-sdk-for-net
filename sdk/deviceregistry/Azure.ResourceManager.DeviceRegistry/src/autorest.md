@@ -38,6 +38,8 @@ format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
 
 acronym-mapping:
   CPU: Cpu

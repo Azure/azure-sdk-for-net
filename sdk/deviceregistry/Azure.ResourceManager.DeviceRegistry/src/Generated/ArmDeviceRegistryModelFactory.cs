@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="status"> Read only object to reflect changes that have occurred on the Edge. Similar to Kubernetes status property for custom resources. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.AssetProperties"/> instance for mocking. </returns>
-        public static AssetProperties AssetProperties(string uuid = null, bool? enabled = null, string externalAssetId = null, string displayName = null, string description = null, string assetEndpointProfileRef = null, long? version = null, string manufacturer = null, string manufacturerUri = null, string model = null, string productCode = null, string hardwareRevision = null, string softwareRevision = null, string documentationUri = null, string serialNumber = null, IDictionary<string, BinaryData> attributes = null, IEnumerable<string> discoveredAssetRefs = null, string defaultDatasetsConfiguration = null, string defaultEventsConfiguration = null, Topic defaultTopic = null, IEnumerable<Dataset> datasets = null, IEnumerable<Event> events = null, AssetStatus status = null, DeviceRegistryProvisioningState? provisioningState = null)
+        public static AssetProperties AssetProperties(string uuid = null, bool? enabled = null, string externalAssetId = null, string displayName = null, string description = null, string assetEndpointProfileRef = null, long? version = null, string manufacturer = null, Uri manufacturerUri = null, string model = null, string productCode = null, string hardwareRevision = null, string softwareRevision = null, Uri documentationUri = null, string serialNumber = null, IDictionary<string, BinaryData> attributes = null, IEnumerable<string> discoveredAssetRefs = null, string defaultDatasetsConfiguration = null, string defaultEventsConfiguration = null, Topic defaultTopic = null, IEnumerable<Dataset> datasets = null, IEnumerable<Event> events = null, AssetStatus status = null, DeviceRegistryProvisioningState? provisioningState = null)
         {
             attributes ??= new Dictionary<string, BinaryData>();
             discoveredAssetRefs ??= new List<string>();
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="events"> Array of events that are part of the asset. Each event can have per-event configuration. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.DiscoveredAssetProperties"/> instance for mocking. </returns>
-        public static DiscoveredAssetProperties DiscoveredAssetProperties(string assetEndpointProfileRef = null, string discoveryId = null, long version = default, string manufacturer = null, string manufacturerUri = null, string model = null, string productCode = null, string hardwareRevision = null, string softwareRevision = null, string documentationUri = null, string serialNumber = null, string defaultDatasetsConfiguration = null, string defaultEventsConfiguration = null, Topic defaultTopic = null, IEnumerable<DiscoveredDataset> datasets = null, IEnumerable<DiscoveredEvent> events = null, DeviceRegistryProvisioningState? provisioningState = null)
+        public static DiscoveredAssetProperties DiscoveredAssetProperties(string assetEndpointProfileRef = null, string discoveryId = null, long version = default, string manufacturer = null, Uri manufacturerUri = null, string model = null, string productCode = null, string hardwareRevision = null, string softwareRevision = null, Uri documentationUri = null, string serialNumber = null, string defaultDatasetsConfiguration = null, string defaultEventsConfiguration = null, Topic defaultTopic = null, IEnumerable<DiscoveredDataset> datasets = null, IEnumerable<DiscoveredEvent> events = null, DeviceRegistryProvisioningState? provisioningState = null)
         {
             datasets ??= new List<DiscoveredDataset>();
             events ??= new List<DiscoveredEvent>();
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="storageAccountContainerUri"> The Storage Account's Container URL where schemas will be stored. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.SchemaRegistryProperties"/> instance for mocking. </returns>
-        public static SchemaRegistryProperties SchemaRegistryProperties(string uuid = null, string @namespace = null, string displayName = null, string description = null, string storageAccountContainerUri = null, DeviceRegistryProvisioningState? provisioningState = null)
+        public static SchemaRegistryProperties SchemaRegistryProperties(string uuid = null, string @namespace = null, string displayName = null, string description = null, Uri storageAccountContainerUri = null, DeviceRegistryProvisioningState? provisioningState = null)
         {
             return new SchemaRegistryProperties(
                 uuid,

@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             {
                 Properties = new DiscoveredAssetUpdateProperties()
                 {
-                    DocumentationUri = "https://www.example.com/manual-2",
+                    DocumentationUri = new Uri("https://www.example.com/manual-2"),
                     DefaultTopic = new TopicUpdate()
                     {
                         Path = "/path/defaultTopic",

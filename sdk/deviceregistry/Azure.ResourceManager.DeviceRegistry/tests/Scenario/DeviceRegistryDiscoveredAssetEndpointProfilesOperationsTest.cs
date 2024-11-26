@@ -59,37 +59,23 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.AreEqual(discoveredAssetEndpointProfileReadResponse.Value.Data.Properties.SupportedAuthenticationMethods[1], discoveredAssetEndpointProfileData.Properties.SupportedAuthenticationMethods[1]);
 
             // List DeviceRegistry DiscoveredAssetEndpointProfile by Resource Group
-            int resourcesToFetchByResourceGroup = 10;
-            int fetchedResourcesByResourceGroup = 0;
             var discoveredAssetEndpointProfileResourcesListByResourceGroup = new List<DeviceRegistryDiscoveredAssetEndpointProfileResource>();
-            var discoveredAssetEndpointProfileResourceListByResourceGroupAsyncIterator = discoveredAssetEndpointProfilesCollection.GetAllAsync(CancellationToken.None);
-            await foreach (var discoveredAssetEndpointProfileEntry in discoveredAssetEndpointProfileResourceListByResourceGroupAsyncIterator)
+            var discoveredAssetEndpointProfileResourceListByResourceGroupAsyncIteratorPage = discoveredAssetEndpointProfilesCollection.GetAllAsync(CancellationToken.None).AsPages(null, 5);
+            await foreach (var discoveredAssetEndpointProfileEntryPage in discoveredAssetEndpointProfileResourceListByResourceGroupAsyncIteratorPage)
             {
-                fetchedResourcesByResourceGroup++;
-                discoveredAssetEndpointProfileResourcesListByResourceGroup.Add(discoveredAssetEndpointProfileEntry);
-                // limit the test to at most the first 10 entries
-                if (fetchedResourcesByResourceGroup == resourcesToFetchByResourceGroup)
-                {
-                    break;
-                }
+                discoveredAssetEndpointProfileResourcesListByResourceGroup.AddRange(discoveredAssetEndpointProfileEntryPage.Values);
+                break; // limit to the the first page of results
             }
             Assert.IsNotEmpty(discoveredAssetEndpointProfileResourcesListByResourceGroup);
             Assert.GreaterOrEqual(discoveredAssetEndpointProfileResourcesListByResourceGroup.Count, 1);
 
             // List DeviceRegistry DiscoveredAssetEndpointProfile by Subscription
-            int resourcesToFetchBySubscription = 10;
-            int fetchedResourcesBySubscription = 0;
             var discoveredAssetEndpointProfileResourcesListBySubscription = new List<DeviceRegistryDiscoveredAssetEndpointProfileResource>();
-            var discoveredAssetEndpointProfileResourceListBySubscriptionAsyncIterator = subscription.GetDeviceRegistryDiscoveredAssetEndpointProfilesAsync(CancellationToken.None);
-            await foreach (var discoveredAssetEndpointProfileEntry in discoveredAssetEndpointProfileResourceListBySubscriptionAsyncIterator)
+            var discoveredAssetEndpointProfileResourceListBySubscriptionAsyncIteratorPage = subscription.GetDeviceRegistryDiscoveredAssetEndpointProfilesAsync(CancellationToken.None).AsPages(null, 5);
+            await foreach (var discoveredAssetEndpointProfileEntryPage in discoveredAssetEndpointProfileResourceListBySubscriptionAsyncIteratorPage)
             {
-                fetchedResourcesBySubscription++;
-                discoveredAssetEndpointProfileResourcesListBySubscription.Add(discoveredAssetEndpointProfileEntry);
-                // limit the test to at most the first 10 entries
-                if (fetchedResourcesBySubscription == resourcesToFetchBySubscription)
-                {
-                    break;
-                }
+                discoveredAssetEndpointProfileResourcesListBySubscription.AddRange(discoveredAssetEndpointProfileEntryPage.Values);
+                break; // limit to the the first page of results
             }
             Assert.IsNotEmpty(discoveredAssetEndpointProfileResourcesListBySubscription);
             Assert.GreaterOrEqual(discoveredAssetEndpointProfileResourcesListBySubscription.Count, 1);
