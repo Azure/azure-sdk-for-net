@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
 {
     public partial class Sample_FederatedIdentityCredentialResource
     {
-        // FederatedIdentityCredentialCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_FederatedIdentityCredentialCreate()
         {
             // Generated from example definition: specification/msi/resource-manager/Microsoft.ManagedIdentity/stable/2023-01-31/examples/FederatedIdentityCredentialCreate.json
@@ -56,9 +56,8 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // FederatedIdentityCredentialGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_FederatedIdentityCredentialGet()
         {
             // Generated from example definition: specification/msi/resource-manager/Microsoft.ManagedIdentity/stable/2023-01-31/examples/FederatedIdentityCredentialGet.json
@@ -88,9 +87,8 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // FederatedIdentityCredentialDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_FederatedIdentityCredentialDelete()
         {
             // Generated from example definition: specification/msi/resource-manager/Microsoft.ManagedIdentity/stable/2023-01-31/examples/FederatedIdentityCredentialDelete.json
@@ -113,7 +111,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
             // invoke the operation
             await federatedIdentityCredential.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

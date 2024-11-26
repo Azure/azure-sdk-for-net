@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Fabric.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Fabric.Samples
 {
     public partial class Sample_FabricCapacityResource
     {
-        // Get a capacity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetACapacity()
         {
             // Generated from example definition: 2023-11-01/FabricCapacities_Get.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.Fabric.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update capacity properties
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateCapacityProperties()
         {
             // Generated from example definition: 2023-11-01/FabricCapacities_Update.json
@@ -91,9 +90,8 @@ namespace Azure.ResourceManager.Fabric.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete a capacity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteACapacity()
         {
             // Generated from example definition: 2023-11-01/FabricCapacities_Delete.json
@@ -115,12 +113,11 @@ namespace Azure.ResourceManager.Fabric.Samples
             // invoke the operation
             await fabricCapacity.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List capacities by subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetFabricCapacities_ListCapacitiesBySubscription()
         {
             // Generated from example definition: 2023-11-01/FabricCapacities_ListBySubscription.json
@@ -147,12 +144,11 @@ namespace Azure.ResourceManager.Fabric.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Resume capacity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Resume_ResumeCapacity()
         {
             // Generated from example definition: 2023-11-01/FabricCapacities_Resume.json
@@ -174,12 +170,11 @@ namespace Azure.ResourceManager.Fabric.Samples
             // invoke the operation
             await fabricCapacity.ResumeAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Suspend capacity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Suspend_SuspendCapacity()
         {
             // Generated from example definition: 2023-11-01/FabricCapacities_Suspend.json
@@ -201,12 +196,11 @@ namespace Azure.ResourceManager.Fabric.Samples
             // invoke the operation
             await fabricCapacity.SuspendAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Check name availability of a capacity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckFabricCapacityNameAvailability_CheckNameAvailabilityOfACapacity()
         {
             // Generated from example definition: 2023-11-01/FabricCapacities_CheckNameAvailability.json
@@ -235,9 +229,8 @@ namespace Azure.ResourceManager.Fabric.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // List eligible SKUs for an existing capacity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSkusForCapacity_ListEligibleSKUsForAnExistingCapacity()
         {
             // Generated from example definition: 2023-11-01/FabricCapacities_ListSkusForCapacity.json
@@ -262,12 +255,11 @@ namespace Azure.ResourceManager.Fabric.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List eligible SKUs for a new capacity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSkusFabricCapacities_ListEligibleSKUsForANewCapacity()
         {
             // Generated from example definition: 2023-11-01/FabricCapacities_ListSkus.json
@@ -290,7 +282,7 @@ namespace Azure.ResourceManager.Fabric.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

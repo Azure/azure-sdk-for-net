@@ -13,14 +13,14 @@ using Azure.Identity;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Samples
 {
     public partial class Sample_VirtualMachineScaleSetCollection
     {
-        // Create a VMSS with an extension that has suppressFailures enabled
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVMSSWithAnExtensionThatHasSuppressFailuresEnabled()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithExtensionsSuppressFailuresEnabled.json
@@ -51,39 +51,41 @@ namespace Azure.ResourceManager.Compute.Samples
                     Tier = "Standard",
                     Capacity = 3L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Publisher = "MicrosoftWindowsServer",
-                            Offer = "WindowsServer",
-                            Sku = "2016-Datacenter",
-                            Version = "latest",
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadWrite,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.StandardLrs,
+                                Publisher = "MicrosoftWindowsServer",
+                                Offer = "WindowsServer",
+                                Sku = "2016-Datacenter",
+                                Version = "latest",
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadWrite,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                },
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -98,15 +100,15 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
-                    },
-                    BootDiagnostics = new BootDiagnostics()
-                    {
-                        Enabled = true,
-                        StorageUri = new Uri("http://{existing-storage-account-name}.blob.core.windows.net"),
-                    },
-                    ExtensionProfile = new VirtualMachineScaleSetExtensionProfile()
-                    {
-                        Extensions =
+                        },
+                        BootDiagnostics = new BootDiagnostics()
+                        {
+                            Enabled = true,
+                            StorageUri = new Uri("http://{existing-storage-account-name}.blob.core.windows.net"),
+                        },
+                        ExtensionProfile = new VirtualMachineScaleSetExtensionProfile()
+                        {
+                            Extensions =
 {
 new VirtualMachineScaleSetExtensionData()
 {
@@ -120,9 +122,10 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
 SuppressFailures = true,
 }
 },
+                        },
                     },
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -134,9 +137,8 @@ SuppressFailures = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a VMSS with an extension with protectedSettingsFromKeyVault
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVMSSWithAnExtensionWithProtectedSettingsFromKeyVault()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithProtectedSettingsFromKeyVault.json
@@ -167,39 +169,41 @@ SuppressFailures = true,
                     Tier = "Standard",
                     Capacity = 3L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Publisher = "MicrosoftWindowsServer",
-                            Offer = "WindowsServer",
-                            Sku = "2016-Datacenter",
-                            Version = "latest",
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadWrite,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.StandardLrs,
+                                Publisher = "MicrosoftWindowsServer",
+                                Offer = "WindowsServer",
+                                Sku = "2016-Datacenter",
+                                Version = "latest",
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadWrite,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                },
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -214,15 +218,15 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
-                    },
-                    BootDiagnostics = new BootDiagnostics()
-                    {
-                        Enabled = true,
-                        StorageUri = new Uri("http://{existing-storage-account-name}.blob.core.windows.net"),
-                    },
-                    ExtensionProfile = new VirtualMachineScaleSetExtensionProfile()
-                    {
-                        Extensions =
+                        },
+                        BootDiagnostics = new BootDiagnostics()
+                        {
+                            Enabled = true,
+                            StorageUri = new Uri("http://{existing-storage-account-name}.blob.core.windows.net"),
+                        },
+                        ExtensionProfile = new VirtualMachineScaleSetExtensionProfile()
+                        {
+                            Extensions =
 {
 new VirtualMachineScaleSetExtensionData()
 {
@@ -239,9 +243,10 @@ Id = new ResourceIdentifier("/subscriptions/a53f7094-a16c-47af-abe4-b05c05d0d79a
 }),
 }
 },
+                        },
                     },
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -253,9 +258,8 @@ Id = new ResourceIdentifier("/subscriptions/a53f7094-a16c-47af-abe4-b05c05d0d79a
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a custom-image scale set from an unmanaged generalized os image.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateACustomImageScaleSetFromAnUnmanagedGeneralizedOsImage()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_CustomImageFromAnUnmanagedGeneralizedOsImage.json
@@ -286,30 +290,32 @@ Id = new ResourceIdentifier("/subscriptions/a53f7094-a16c-47af-abe4-b05c05d0d79a
                     Tier = "Standard",
                     Capacity = 3L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Name = "osDisk",
-                            Caching = CachingType.ReadWrite,
-                            ImageUri = new Uri("http://{existing-storage-account-name}.blob.core.windows.net/{existing-container-name}/{existing-generalized-os-image-blob-name}.vhd"),
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                        {
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Name = "osDisk",
+                                Caching = CachingType.ReadWrite,
+                                ImageUri = new Uri("http://{existing-storage-account-name}.blob.core.windows.net/{existing-container-name}/{existing-generalized-os-image-blob-name}.vhd"),
+                            },
+                        },
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -324,9 +330,10 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
+                        },
                     },
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -338,9 +345,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a platform-image scale set with unmanaged os disks.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAPlatformImageScaleSetWithUnmanagedOsDisks()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_PlatformImageWithUnmanagedOsDisks.json
@@ -371,40 +377,42 @@ EnableIPForwarding = true,
                     Tier = "Standard",
                     Capacity = 3L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Publisher = "MicrosoftWindowsServer",
-                            Offer = "WindowsServer",
-                            Sku = "2016-Datacenter",
-                            Version = "latest",
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Name = "osDisk",
-                            Caching = CachingType.ReadWrite,
-                            VhdContainers =
+                            ImageReference = new ImageReference()
+                            {
+                                Publisher = "MicrosoftWindowsServer",
+                                Offer = "WindowsServer",
+                                Sku = "2016-Datacenter",
+                                Version = "latest",
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Name = "osDisk",
+                                Caching = CachingType.ReadWrite,
+                                VhdContainers =
 {
 "http://{existing-storage-account-name-0}.blob.core.windows.net/vhdContainer","http://{existing-storage-account-name-1}.blob.core.windows.net/vhdContainer","http://{existing-storage-account-name-2}.blob.core.windows.net/vhdContainer","http://{existing-storage-account-name-3}.blob.core.windows.net/vhdContainer","http://{existing-storage-account-name-4}.blob.core.windows.net/vhdContainer"
 },
+                            },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -419,9 +427,10 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
+                        },
                     },
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -433,9 +442,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set from a custom image.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetFromACustomImage()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_FromACustomImage.json
@@ -466,36 +474,38 @@ EnableIPForwarding = true,
                     Tier = "Standard",
                     Capacity = 3L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/{existing-custom-image-name}"),
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadWrite,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.StandardLrs,
+                                Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/{existing-custom-image-name}"),
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadWrite,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                },
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -510,9 +520,10 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
+                        },
                     },
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -524,9 +535,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set from a generalized shared image.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetFromAGeneralizedSharedImage()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_FromAGeneralizedSharedImage.json
@@ -557,36 +567,38 @@ EnableIPForwarding = true,
                     Tier = "Standard",
                     Capacity = 3L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/mySharedGallery/images/mySharedImage"),
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadWrite,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.StandardLrs,
+                                Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/mySharedGallery/images/mySharedImage"),
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadWrite,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                },
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -601,9 +613,10 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
+                        },
                     },
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -615,9 +628,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set from a specialized shared image.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetFromASpecializedSharedImage()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_FromASpecializedSharedImage.json
@@ -648,30 +660,32 @@ EnableIPForwarding = true,
                     Tier = "Standard",
                     Capacity = 3L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ImageReference = new ImageReference()
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
+                    },
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
+                    {
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/mySharedGallery/images/mySharedImage"),
-                        },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
-                        {
-                            Caching = CachingType.ReadWrite,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.StandardLrs,
+                                Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/mySharedGallery/images/mySharedImage"),
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadWrite,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                },
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -686,9 +700,10 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
+                        },
                     },
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -700,9 +715,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set where nic config has DisableTcpStateTracking property
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWhereNicConfigHasDisableTcpStateTrackingProperty()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_FromWithDisableTcpStateTrackingNetworkInterface.json
@@ -733,36 +747,38 @@ EnableIPForwarding = true,
                     Tier = "Standard",
                     Capacity = 3L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/{existing-custom-image-name}"),
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadWrite,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.StandardLrs,
+                                Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/{existing-custom-image-name}"),
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadWrite,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                },
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{nicConfig1-name}")
 {
@@ -794,9 +810,10 @@ PrivateIPAddressVersion = IPVersion.IPv4,
 EnableIPForwarding = false,
 }
 },
+                        },
                     },
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -808,9 +825,8 @@ EnableIPForwarding = false,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with Application Profile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithApplicationProfile()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithApplicationProfile.json
@@ -841,39 +857,41 @@ EnableIPForwarding = false,
                     Tier = "Standard",
                     Capacity = 3L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Publisher = "MicrosoftWindowsServer",
-                            Offer = "WindowsServer",
-                            Sku = "2016-Datacenter",
-                            Version = "latest",
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadWrite,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.StandardLrs,
+                                Publisher = "MicrosoftWindowsServer",
+                                Offer = "WindowsServer",
+                                Sku = "2016-Datacenter",
+                                Version = "latest",
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadWrite,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                },
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -888,8 +906,8 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
-                    },
-                    GalleryApplications =
+                        },
+                        GalleryApplications =
 {
 new VirtualMachineGalleryApplication("/subscriptions/32c17a9e-aa7b-4ba5-a45b-e324116b6fdb/resourceGroups/myresourceGroupName2/providers/Microsoft.Compute/galleries/myGallery1/applications/MyApplication1/versions/1.0")
 {
@@ -900,8 +918,9 @@ TreatFailureAsDeploymentFailure = true,
 EnableAutomaticUpgrade = false,
 },new VirtualMachineGalleryApplication("/subscriptions/32c17a9e-aa7b-4ba5-a45b-e324116b6fdg/resourceGroups/myresourceGroupName3/providers/Microsoft.Compute/galleries/myGallery2/applications/MyApplication2/versions/1.1")
 },
+                    },
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -913,9 +932,8 @@ EnableAutomaticUpgrade = false,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with Disk Controller Type
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithDiskControllerType()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithDiskControllerType.json
@@ -946,49 +964,51 @@ EnableAutomaticUpgrade = false,
                     Tier = "Standard",
                     Capacity = 3L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                ScheduledEventsPolicy = new ScheduledEventsPolicy()
-                {
-                    UserInitiatedRedeploy = new UserInitiatedRedeploy()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
+                    },
+                    ScheduledEventsPolicy = new ScheduledEventsPolicy()
+                    {
+                        UserInitiatedRedeploy = new UserInitiatedRedeploy()
+                        {
+                            AutomaticallyApprove = true,
+                        },
                         AutomaticallyApprove = true,
+                        Enable = true,
                     },
-                    AutomaticallyApprove = true,
-                    Enable = true,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
-                    },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
-                    {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Publisher = "MicrosoftWindowsServer",
-                            Offer = "WindowsServer",
-                            Sku = "2016-Datacenter",
-                            Version = "latest",
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadWrite,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.StandardLrs,
+                                Publisher = "MicrosoftWindowsServer",
+                                Offer = "WindowsServer",
+                                Sku = "2016-Datacenter",
+                                Version = "latest",
                             },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadWrite,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                },
+                            },
+                            DiskControllerType = "NVMe",
                         },
-                        DiskControllerType = "NVMe",
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -1003,15 +1023,16 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
+                        },
+                        UserData = "RXhhbXBsZSBVc2VyRGF0YQ==",
+                        HardwareVmSizeProperties = new VirtualMachineSizeProperties()
+                        {
+                            VCpusAvailable = 1,
+                            VCpusPerCore = 1,
+                        },
                     },
-                    UserData = "RXhhbXBsZSBVc2VyRGF0YQ==",
-                    HardwareVmSizeProperties = new VirtualMachineSizeProperties()
-                    {
-                        VCpusAvailable = 1,
-                        VCpusPerCore = 1,
-                    },
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -1023,9 +1044,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with DiskEncryptionSet resource in os disk and data disk.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithDiskEncryptionSetResourceInOsDiskAndDataDisk()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithDiskEncryptionSetResource.json
@@ -1056,34 +1076,36 @@ EnableIPForwarding = true,
                     Tier = "Standard",
                     Capacity = 3L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/{existing-custom-image-name}"),
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadWrite,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.StandardLrs,
-                                DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"),
+                                Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/{existing-custom-image-name}"),
                             },
-                        },
-                        DataDisks =
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadWrite,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                    DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"),
+                                },
+                            },
+                            DataDisks =
 {
 new VirtualMachineScaleSetDataDisk(0,DiskCreateOptionType.Empty)
 {
@@ -1096,10 +1118,10 @@ DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscription-id}/r
 },
 }
 },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        },
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -1114,9 +1136,10 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
+                        },
                     },
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -1128,9 +1151,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with Fpga Network Interfaces.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithFpgaNetworkInterfaces()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_FromWithFpgaNetworkInterface.json
@@ -1161,36 +1183,38 @@ EnableIPForwarding = true,
                     Tier = "Standard",
                     Capacity = 3L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/{existing-custom-image-name}"),
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadWrite,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.StandardLrs,
+                                Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/{existing-custom-image-name}"),
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadWrite,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                },
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -1220,9 +1244,10 @@ PrivateIPAddressVersion = IPVersion.IPv4,
 EnableIPForwarding = false,
 }
 },
+                        },
                     },
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -1234,9 +1259,8 @@ EnableIPForwarding = false,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with Host Encryption using encryptionAtHost property.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithHostEncryptionUsingEncryptionAtHostProperty()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithEncryptionAtHost.json
@@ -1273,39 +1297,41 @@ EnableIPForwarding = false,
                     Publisher = "microsoft-ads",
                     Product = "windows-data-science-vm",
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Publisher = "microsoft-ads",
-                            Offer = "windows-data-science-vm",
-                            Sku = "windows2016",
-                            Version = "latest",
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadOnly,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.StandardLrs,
+                                Publisher = "microsoft-ads",
+                                Offer = "windows-data-science-vm",
+                                Sku = "windows2016",
+                                Version = "latest",
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadOnly,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                },
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -1320,13 +1346,14 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
+                        },
+                        SecurityProfile = new SecurityProfile()
+                        {
+                            EncryptionAtHost = true,
+                        },
                     },
-                    SecurityProfile = new SecurityProfile()
-                    {
-                        EncryptionAtHost = true,
-                    },
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -1338,9 +1365,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with Network Interfaces with public ip address dns settings.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithNetworkInterfacesWithPublicIpAddressDnsSettings()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_FromWithNetworkInterfaceWithDnsSettings.json
@@ -1371,36 +1397,38 @@ EnableIPForwarding = true,
                     Tier = "Standard",
                     Capacity = 3L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/{existing-custom-image-name}"),
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadWrite,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.StandardLrs,
+                                Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/images/{existing-custom-image-name}"),
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadWrite,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                },
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{nicConfig1-name}")
 {
@@ -1442,9 +1470,10 @@ PrivateIPAddressVersion = IPVersion.IPv4,
 EnableIPForwarding = false,
 }
 },
+                        },
                     },
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -1456,9 +1485,8 @@ EnableIPForwarding = false,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with OS image scheduled events enabled.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithOSImageScheduledEventsEnabled()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithOSImageScheduledEventEnabled.json
@@ -1489,39 +1517,41 @@ EnableIPForwarding = false,
                     Tier = "Standard",
                     Capacity = 3L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Publisher = "MicrosoftWindowsServer",
-                            Offer = "WindowsServer",
-                            Sku = "2016-Datacenter",
-                            Version = "latest",
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadWrite,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.StandardLrs,
+                                Publisher = "MicrosoftWindowsServer",
+                                Offer = "WindowsServer",
+                                Sku = "2016-Datacenter",
+                                Version = "latest",
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadWrite,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                },
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -1536,17 +1566,18 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
-                    },
-                    ScheduledEventsProfile = new ComputeScheduledEventsProfile()
-                    {
-                        OSImageNotificationProfile = new OSImageNotificationProfile()
+                        },
+                        ScheduledEventsProfile = new ComputeScheduledEventsProfile()
                         {
-                            NotBeforeTimeout = "PT15M",
-                            Enable = true,
+                            OSImageNotificationProfile = new OSImageNotificationProfile()
+                            {
+                                NotBeforeTimeout = "PT15M",
+                                Enable = true,
+                            },
                         },
                     },
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -1558,9 +1589,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with ProxyAgent Settings of enabled and mode.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithProxyAgentSettingsOfEnabledAndMode()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithProxyAgentSettings.json
@@ -1591,39 +1621,41 @@ EnableIPForwarding = true,
                     Tier = "Standard",
                     Capacity = 3L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Publisher = "MicrosoftWindowsServer",
-                            Offer = "WindowsServer",
-                            Sku = "2019-Datacenter",
-                            Version = "latest",
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadOnly,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.StandardSsdLrs,
+                                Publisher = "MicrosoftWindowsServer",
+                                Offer = "WindowsServer",
+                                Sku = "2019-Datacenter",
+                                Version = "latest",
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadOnly,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardSsdLrs,
+                                },
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -1638,17 +1670,18 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
-                    },
-                    SecurityProfile = new SecurityProfile()
-                    {
-                        ProxyAgentSettings = new ProxyAgentSettings()
+                        },
+                        SecurityProfile = new SecurityProfile()
                         {
-                            Enabled = true,
-                            Mode = Mode.Enforce,
+                            ProxyAgentSettings = new ProxyAgentSettings()
+                            {
+                                Enabled = true,
+                                Mode = Mode.Enforce,
+                            },
                         },
                     },
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -1660,9 +1693,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with Resilient VM Creation enabled
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithResilientVMCreationEnabled()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithResilientVMCreationPolicy.json
@@ -1693,39 +1725,41 @@ EnableIPForwarding = true,
                     Tier = "Standard",
                     Capacity = 3L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Publisher = "MicrosoftWindowsServer",
-                            Offer = "WindowsServer",
-                            Sku = "2016-Datacenter",
-                            Version = "latest",
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadWrite,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.StandardLrs,
+                                Publisher = "MicrosoftWindowsServer",
+                                Offer = "WindowsServer",
+                                Sku = "2016-Datacenter",
+                                Version = "latest",
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadWrite,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                },
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -1740,12 +1774,13 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
+                        },
                     },
-                },
-                Overprovision = false,
-                ResiliencyPolicy = new ResiliencyPolicy()
-                {
-                    ResilientVmCreationPolicyEnabled = true,
+                    Overprovision = false,
+                    ResiliencyPolicy = new ResiliencyPolicy()
+                    {
+                        ResilientVmCreationPolicyEnabled = true,
+                    },
                 },
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
@@ -1758,9 +1793,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with Resilient VM Deletion enabled
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithResilientVMDeletionEnabled()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithResilientVMDeletionPolicy.json
@@ -1791,39 +1825,41 @@ EnableIPForwarding = true,
                     Tier = "Standard",
                     Capacity = 3L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Publisher = "MicrosoftWindowsServer",
-                            Offer = "WindowsServer",
-                            Sku = "2016-Datacenter",
-                            Version = "latest",
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadWrite,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.StandardLrs,
+                                Publisher = "MicrosoftWindowsServer",
+                                Offer = "WindowsServer",
+                                Sku = "2016-Datacenter",
+                                Version = "latest",
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadWrite,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                },
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -1838,12 +1874,13 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
+                        },
                     },
-                },
-                Overprovision = false,
-                ResiliencyPolicy = new ResiliencyPolicy()
-                {
-                    ResilientVmDeletionPolicyEnabled = true,
+                    Overprovision = false,
+                    ResiliencyPolicy = new ResiliencyPolicy()
+                    {
+                        ResilientVmDeletionPolicyEnabled = true,
+                    },
                 },
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
@@ -1856,9 +1893,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with Security Posture Reference
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithSecurityPostureReference()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithSecurityPostureReference.json
@@ -1889,40 +1925,42 @@ EnableIPForwarding = true,
                     Tier = "Standard",
                     Capacity = 3L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Automatic,
-                    AutomaticOSUpgradePolicy = new AutomaticOSUpgradePolicy()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        EnableAutomaticOSUpgrade = true,
-                    },
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
-                    {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
-                    },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
-                    {
-                        ImageReference = new ImageReference()
+                        Mode = VirtualMachineScaleSetUpgradeMode.Automatic,
+                        AutomaticOSUpgradePolicy = new AutomaticOSUpgradePolicy()
                         {
-                            Publisher = "MicrosoftWindowsServer",
-                            Offer = "WindowsServer",
-                            Sku = "2022-Datacenter",
-                            Version = "latest",
-                        },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
-                        {
-                            Name = "osDisk",
-                            Caching = CachingType.ReadWrite,
+                            EnableAutomaticOSUpgrade = true,
                         },
                     },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        NetworkInterfaceConfigurations =
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
+                        {
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
+                        },
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                        {
+                            ImageReference = new ImageReference()
+                            {
+                                Publisher = "MicrosoftWindowsServer",
+                                Offer = "WindowsServer",
+                                Sku = "2022-Datacenter",
+                                Version = "latest",
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Name = "osDisk",
+                                Caching = CachingType.ReadWrite,
+                            },
+                        },
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -1937,10 +1975,11 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
+                        },
+                        SecurityPostureReference = new ComputeSecurityPostureReference(new ResourceIdentifier("/CommunityGalleries/{communityGalleryName}/securityPostures/{securityPostureName}/versions/{major.minor.patch}|{major.*}|latest")),
                     },
-                    SecurityPostureReference = new ComputeSecurityPostureReference(new ResourceIdentifier("/CommunityGalleries/{communityGalleryName}/securityPostures/{securityPostureName}/versions/{major.minor.patch}|{major.*}|latest")),
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -1952,9 +1991,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with SecurityType as ConfidentialVM
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithSecurityTypeAsConfidentialVM()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithSecurityTypeConfidentialVM.json
@@ -1985,43 +2023,45 @@ EnableIPForwarding = true,
                     Tier = "Standard",
                     Capacity = 3L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Publisher = "MicrosoftWindowsServer",
-                            Offer = "2019-datacenter-cvm",
-                            Sku = "windows-cvm",
-                            Version = "17763.2183.2109130127",
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadOnly,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.StandardSsdLrs,
-                                SecurityProfile = new VirtualMachineDiskSecurityProfile()
+                                Publisher = "MicrosoftWindowsServer",
+                                Offer = "2019-datacenter-cvm",
+                                Sku = "windows-cvm",
+                                Version = "17763.2183.2109130127",
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadOnly,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
                                 {
-                                    SecurityEncryptionType = SecurityEncryptionType.VmGuestStateOnly,
+                                    StorageAccountType = StorageAccountType.StandardSsdLrs,
+                                    SecurityProfile = new VirtualMachineDiskSecurityProfile()
+                                    {
+                                        SecurityEncryptionType = SecurityEncryptionType.VmGuestStateOnly,
+                                    },
                                 },
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -2036,18 +2076,19 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
-                    },
-                    SecurityProfile = new SecurityProfile()
-                    {
-                        UefiSettings = new UefiSettings()
-                        {
-                            IsSecureBootEnabled = true,
-                            IsVirtualTpmEnabled = true,
                         },
-                        SecurityType = SecurityType.ConfidentialVm,
+                        SecurityProfile = new SecurityProfile()
+                        {
+                            UefiSettings = new UefiSettings()
+                            {
+                                IsSecureBootEnabled = true,
+                                IsVirtualTpmEnabled = true,
+                            },
+                            SecurityType = SecurityType.ConfidentialVm,
+                        },
                     },
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -2059,9 +2100,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with SecurityType as ConfidentialVM and NonPersistedTPM securityEncryptionType
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithSecurityTypeAsConfidentialVMAndNonPersistedTPMSecurityEncryptionType()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithSecurityTypeConfidentialVMWithNonPersistedTPM.json
@@ -2092,43 +2132,45 @@ EnableIPForwarding = true,
                     Tier = "Standard",
                     Capacity = 3L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Publisher = "UbuntuServer",
-                            Offer = "2022-datacenter-cvm",
-                            Sku = "linux-cvm",
-                            Version = "17763.2183.2109130127",
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadOnly,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.StandardSsdLrs,
-                                SecurityProfile = new VirtualMachineDiskSecurityProfile()
+                                Publisher = "UbuntuServer",
+                                Offer = "2022-datacenter-cvm",
+                                Sku = "linux-cvm",
+                                Version = "17763.2183.2109130127",
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadOnly,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
                                 {
-                                    SecurityEncryptionType = SecurityEncryptionType.NonPersistedTPM,
+                                    StorageAccountType = StorageAccountType.StandardSsdLrs,
+                                    SecurityProfile = new VirtualMachineDiskSecurityProfile()
+                                    {
+                                        SecurityEncryptionType = SecurityEncryptionType.NonPersistedTPM,
+                                    },
                                 },
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -2143,18 +2185,19 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
-                    },
-                    SecurityProfile = new SecurityProfile()
-                    {
-                        UefiSettings = new UefiSettings()
-                        {
-                            IsSecureBootEnabled = false,
-                            IsVirtualTpmEnabled = true,
                         },
-                        SecurityType = SecurityType.ConfidentialVm,
+                        SecurityProfile = new SecurityProfile()
+                        {
+                            UefiSettings = new UefiSettings()
+                            {
+                                IsSecureBootEnabled = false,
+                                IsVirtualTpmEnabled = true,
+                            },
+                            SecurityType = SecurityType.ConfidentialVm,
+                        },
                     },
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -2166,9 +2209,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with Service Artifact Reference
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithServiceArtifactReference()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithServiceArtifactReference.json
@@ -2199,40 +2241,42 @@ EnableIPForwarding = true,
                     Tier = "Standard",
                     Capacity = 3L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Automatic,
-                    AutomaticOSUpgradePolicy = new AutomaticOSUpgradePolicy()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        EnableAutomaticOSUpgrade = true,
-                    },
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
-                    {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
-                    },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
-                    {
-                        ImageReference = new ImageReference()
+                        Mode = VirtualMachineScaleSetUpgradeMode.Automatic,
+                        AutomaticOSUpgradePolicy = new AutomaticOSUpgradePolicy()
                         {
-                            Publisher = "MicrosoftWindowsServer",
-                            Offer = "WindowsServer",
-                            Sku = "2022-Datacenter",
-                            Version = "latest",
-                        },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
-                        {
-                            Name = "osDisk",
-                            Caching = CachingType.ReadWrite,
+                            EnableAutomaticOSUpgrade = true,
                         },
                     },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        NetworkInterfaceConfigurations =
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
+                        {
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
+                        },
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                        {
+                            ImageReference = new ImageReference()
+                            {
+                                Publisher = "MicrosoftWindowsServer",
+                                Offer = "WindowsServer",
+                                Sku = "2022-Datacenter",
+                                Version = "latest",
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Name = "osDisk",
+                                Caching = CachingType.ReadWrite,
+                            },
+                        },
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -2247,10 +2291,11 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
+                        },
+                        ServiceArtifactReferenceId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/myGalleryName/serviceArtifacts/serviceArtifactName/vmArtifactsProfiles/vmArtifactsProfilesName"),
                     },
-                    ServiceArtifactReferenceId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/galleries/myGalleryName/serviceArtifacts/serviceArtifactName/vmArtifactsProfiles/vmArtifactsProfilesName"),
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -2262,9 +2307,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with Uefi Settings of secureBoot and vTPM.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithUefiSettingsOfSecureBootAndVTPM()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithUefiSettings.json
@@ -2295,39 +2339,41 @@ EnableIPForwarding = true,
                     Tier = "Standard",
                     Capacity = 3L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Publisher = "MicrosoftWindowsServer",
-                            Offer = "windowsserver-gen2preview-preview",
-                            Sku = "windows10-tvm",
-                            Version = "18363.592.2001092016",
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadOnly,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.StandardSsdLrs,
+                                Publisher = "MicrosoftWindowsServer",
+                                Offer = "windowsserver-gen2preview-preview",
+                                Sku = "windows10-tvm",
+                                Version = "18363.592.2001092016",
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadOnly,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardSsdLrs,
+                                },
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -2342,18 +2388,19 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
-                    },
-                    SecurityProfile = new SecurityProfile()
-                    {
-                        UefiSettings = new UefiSettings()
-                        {
-                            IsSecureBootEnabled = true,
-                            IsVirtualTpmEnabled = true,
                         },
-                        SecurityType = SecurityType.TrustedLaunch,
+                        SecurityProfile = new SecurityProfile()
+                        {
+                            UefiSettings = new UefiSettings()
+                            {
+                                IsSecureBootEnabled = true,
+                                IsVirtualTpmEnabled = true,
+                            },
+                            SecurityType = SecurityType.TrustedLaunch,
+                        },
                     },
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -2365,9 +2412,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with a marketplace image plan.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithAMarketplaceImagePlan()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithAMarketplaceImagePlan.json
@@ -2404,39 +2450,41 @@ EnableIPForwarding = true,
                     Publisher = "microsoft-ads",
                     Product = "windows-data-science-vm",
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Publisher = "microsoft-ads",
-                            Offer = "windows-data-science-vm",
-                            Sku = "windows2016",
-                            Version = "latest",
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadWrite,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.StandardLrs,
+                                Publisher = "microsoft-ads",
+                                Offer = "windows-data-science-vm",
+                                Sku = "windows2016",
+                                Version = "latest",
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadWrite,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                },
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -2451,9 +2499,10 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
+                        },
                     },
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -2465,9 +2514,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with an azure application gateway.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithAnAzureApplicationGateway()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithAzureApplicationGateway.json
@@ -2498,39 +2546,41 @@ EnableIPForwarding = true,
                     Tier = "Standard",
                     Capacity = 3L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Publisher = "MicrosoftWindowsServer",
-                            Offer = "WindowsServer",
-                            Sku = "2016-Datacenter",
-                            Version = "latest",
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadWrite,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.StandardLrs,
+                                Publisher = "MicrosoftWindowsServer",
+                                Offer = "WindowsServer",
+                                Sku = "2016-Datacenter",
+                                Version = "latest",
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadWrite,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                },
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -2552,9 +2602,10 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 EnableIPForwarding = true,
 }
 },
+                        },
                     },
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -2566,9 +2617,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with an azure load balancer.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithAnAzureLoadBalancer()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithAzureLoadBalancer.json
@@ -2599,39 +2649,41 @@ EnableIPForwarding = true,
                     Tier = "Standard",
                     Capacity = 3L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Publisher = "MicrosoftWindowsServer",
-                            Offer = "WindowsServer",
-                            Sku = "2016-Datacenter",
-                            Version = "latest",
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadWrite,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.StandardLrs,
+                                Publisher = "MicrosoftWindowsServer",
+                                Offer = "WindowsServer",
+                                Sku = "2016-Datacenter",
+                                Version = "latest",
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadWrite,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                },
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -2664,9 +2716,10 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 EnableIPForwarding = true,
 }
 },
+                        },
                     },
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -2678,9 +2731,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with automatic repairs enabled
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithAutomaticRepairsEnabled()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithAutomaticRepairs.json
@@ -2711,53 +2763,55 @@ EnableIPForwarding = true,
                     Tier = "Standard",
                     Capacity = 3L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                ScheduledEventsPolicy = new ScheduledEventsPolicy()
-                {
-                    UserInitiatedRedeploy = new UserInitiatedRedeploy()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        AutomaticallyApprove = true,
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    AutomaticallyApprove = true,
-                    Enable = true,
-                },
-                AutomaticRepairsPolicy = new AutomaticRepairsPolicy()
-                {
-                    Enabled = true,
-                    GracePeriod = "PT10M",
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    ScheduledEventsPolicy = new ScheduledEventsPolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
-                    },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
-                    {
-                        ImageReference = new ImageReference()
+                        UserInitiatedRedeploy = new UserInitiatedRedeploy()
                         {
-                            Publisher = "MicrosoftWindowsServer",
-                            Offer = "WindowsServer",
-                            Sku = "2016-Datacenter",
-                            Version = "latest",
+                            AutomaticallyApprove = true,
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        AutomaticallyApprove = true,
+                        Enable = true,
+                    },
+                    AutomaticRepairsPolicy = new AutomaticRepairsPolicy()
+                    {
+                        Enabled = true,
+                        GracePeriod = "PT10M",
+                    },
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
+                    {
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Caching = CachingType.ReadWrite,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
+                        },
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                        {
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.StandardLrs,
+                                Publisher = "MicrosoftWindowsServer",
+                                Offer = "WindowsServer",
+                                Sku = "2016-Datacenter",
+                                Version = "latest",
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadWrite,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                },
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -2772,9 +2826,10 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
+                        },
                     },
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -2786,9 +2841,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with boot diagnostics.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithBootDiagnostics()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithBootDiagnostics.json
@@ -2819,39 +2873,41 @@ EnableIPForwarding = true,
                     Tier = "Standard",
                     Capacity = 3L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Publisher = "MicrosoftWindowsServer",
-                            Offer = "WindowsServer",
-                            Sku = "2016-Datacenter",
-                            Version = "latest",
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadWrite,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.StandardLrs,
+                                Publisher = "MicrosoftWindowsServer",
+                                Offer = "WindowsServer",
+                                Sku = "2016-Datacenter",
+                                Version = "latest",
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadWrite,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                },
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -2866,14 +2922,15 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
+                        },
+                        BootDiagnostics = new BootDiagnostics()
+                        {
+                            Enabled = true,
+                            StorageUri = new Uri("http://{existing-storage-account-name}.blob.core.windows.net"),
+                        },
                     },
-                    BootDiagnostics = new BootDiagnostics()
-                    {
-                        Enabled = true,
-                        StorageUri = new Uri("http://{existing-storage-account-name}.blob.core.windows.net"),
-                    },
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -2885,9 +2942,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with empty data disks on each vm.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithEmptyDataDisksOnEachVm()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithEmptyDataDisksOnEachVm.json
@@ -2918,37 +2974,39 @@ EnableIPForwarding = true,
                     Tier = "Standard",
                     Capacity = 3L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Publisher = "MicrosoftWindowsServer",
-                            Offer = "WindowsServer",
-                            Sku = "2016-Datacenter",
-                            Version = "latest",
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadWrite,
-                            DiskSizeGB = 512,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.StandardLrs,
+                                Publisher = "MicrosoftWindowsServer",
+                                Offer = "WindowsServer",
+                                Sku = "2016-Datacenter",
+                                Version = "latest",
                             },
-                        },
-                        DataDisks =
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadWrite,
+                                DiskSizeGB = 512,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                },
+                            },
+                            DataDisks =
 {
 new VirtualMachineScaleSetDataDisk(0,DiskCreateOptionType.Empty)
 {
@@ -2958,10 +3016,10 @@ DiskSizeGB = 1023,
 DiskSizeGB = 1023,
 }
 },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        },
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -2976,9 +3034,10 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
+                        },
                     },
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -2990,9 +3049,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with ephemeral os disk provisioning in Nvme disk using placement property.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithEphemeralOsDiskProvisioningInNvmeDiskUsingPlacementProperty()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_CreateA_WithDiffOsDiskUsingDiffDiskPlacementAsNvmeDisk.json
@@ -3029,44 +3087,46 @@ EnableIPForwarding = true,
                     Publisher = "microsoft-ads",
                     Product = "windows-data-science-vm",
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Publisher = "microsoft-ads",
-                            Offer = "windows-data-science-vm",
-                            Sku = "windows2016",
-                            Version = "latest",
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadOnly,
-                            DiffDiskSettings = new DiffDiskSettings()
+                            ImageReference = new ImageReference()
                             {
-                                Option = DiffDiskOption.Local,
-                                Placement = DiffDiskPlacement.NvmeDisk,
+                                Publisher = "microsoft-ads",
+                                Offer = "windows-data-science-vm",
+                                Sku = "windows2016",
+                                Version = "latest",
                             },
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
                             {
-                                StorageAccountType = StorageAccountType.StandardLrs,
+                                Caching = CachingType.ReadOnly,
+                                DiffDiskSettings = new DiffDiskSettings()
+                                {
+                                    Option = DiffDiskOption.Local,
+                                    Placement = DiffDiskPlacement.NvmeDisk,
+                                },
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                },
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -3081,9 +3141,10 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
+                        },
                     },
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -3095,9 +3156,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with ephemeral os disks using placement property.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithEphemeralOsDisksUsingPlacementProperty()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_CreateA_WithDiffOsDiskUsingDiffDiskPlacement.json
@@ -3134,44 +3194,46 @@ EnableIPForwarding = true,
                     Publisher = "microsoft-ads",
                     Product = "windows-data-science-vm",
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Publisher = "microsoft-ads",
-                            Offer = "windows-data-science-vm",
-                            Sku = "windows2016",
-                            Version = "latest",
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadOnly,
-                            DiffDiskSettings = new DiffDiskSettings()
+                            ImageReference = new ImageReference()
                             {
-                                Option = DiffDiskOption.Local,
-                                Placement = DiffDiskPlacement.ResourceDisk,
+                                Publisher = "microsoft-ads",
+                                Offer = "windows-data-science-vm",
+                                Sku = "windows2016",
+                                Version = "latest",
                             },
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
                             {
-                                StorageAccountType = StorageAccountType.StandardLrs,
+                                Caching = CachingType.ReadOnly,
+                                DiffDiskSettings = new DiffDiskSettings()
+                                {
+                                    Option = DiffDiskOption.Local,
+                                    Placement = DiffDiskPlacement.ResourceDisk,
+                                },
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                },
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -3186,9 +3248,10 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
+                        },
                     },
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -3200,9 +3263,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with ephemeral os disks.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithEphemeralOsDisks()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithDiffOsDisk.json
@@ -3239,43 +3301,45 @@ EnableIPForwarding = true,
                     Publisher = "microsoft-ads",
                     Product = "windows-data-science-vm",
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Publisher = "microsoft-ads",
-                            Offer = "windows-data-science-vm",
-                            Sku = "windows2016",
-                            Version = "latest",
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadOnly,
-                            DiffDiskSettings = new DiffDiskSettings()
+                            ImageReference = new ImageReference()
                             {
-                                Option = DiffDiskOption.Local,
+                                Publisher = "microsoft-ads",
+                                Offer = "windows-data-science-vm",
+                                Sku = "windows2016",
+                                Version = "latest",
                             },
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
                             {
-                                StorageAccountType = StorageAccountType.StandardLrs,
+                                Caching = CachingType.ReadOnly,
+                                DiffDiskSettings = new DiffDiskSettings()
+                                {
+                                    Option = DiffDiskOption.Local,
+                                },
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                },
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -3290,9 +3354,10 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
+                        },
                     },
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -3304,9 +3369,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with extension time budget.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithExtensionTimeBudget()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithExtensionsTimeBudget.json
@@ -3337,39 +3401,41 @@ EnableIPForwarding = true,
                     Tier = "Standard",
                     Capacity = 3L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Publisher = "MicrosoftWindowsServer",
-                            Offer = "WindowsServer",
-                            Sku = "2016-Datacenter",
-                            Version = "latest",
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadWrite,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.StandardLrs,
+                                Publisher = "MicrosoftWindowsServer",
+                                Offer = "WindowsServer",
+                                Sku = "2016-Datacenter",
+                                Version = "latest",
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadWrite,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                },
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -3384,15 +3450,15 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
-                    },
-                    BootDiagnostics = new BootDiagnostics()
-                    {
-                        Enabled = true,
-                        StorageUri = new Uri("http://{existing-storage-account-name}.blob.core.windows.net"),
-                    },
-                    ExtensionProfile = new VirtualMachineScaleSetExtensionProfile()
-                    {
-                        Extensions =
+                        },
+                        BootDiagnostics = new BootDiagnostics()
+                        {
+                            Enabled = true,
+                            StorageUri = new Uri("http://{existing-storage-account-name}.blob.core.windows.net"),
+                        },
+                        ExtensionProfile = new VirtualMachineScaleSetExtensionProfile()
+                        {
+                            Extensions =
 {
 new VirtualMachineScaleSetExtensionData()
 {
@@ -3405,10 +3471,11 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
 }),
 }
 },
-                        ExtensionsTimeBudget = "PT1H20M",
+                            ExtensionsTimeBudget = "PT1H20M",
+                        },
                     },
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -3420,9 +3487,8 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with managed boot diagnostics.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithManagedBootDiagnostics()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithManagedBootDiagnostics.json
@@ -3453,39 +3519,41 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                     Tier = "Standard",
                     Capacity = 3L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Publisher = "MicrosoftWindowsServer",
-                            Offer = "WindowsServer",
-                            Sku = "2016-Datacenter",
-                            Version = "latest",
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadWrite,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.StandardLrs,
+                                Publisher = "MicrosoftWindowsServer",
+                                Offer = "WindowsServer",
+                                Sku = "2016-Datacenter",
+                                Version = "latest",
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadWrite,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                },
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -3500,13 +3568,14 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
+                        },
+                        BootDiagnostics = new BootDiagnostics()
+                        {
+                            Enabled = true,
+                        },
                     },
-                    BootDiagnostics = new BootDiagnostics()
-                    {
-                        Enabled = true,
-                    },
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -3518,9 +3587,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with password authentication.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithPasswordAuthentication()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithPasswordAuthentication.json
@@ -3551,39 +3619,41 @@ EnableIPForwarding = true,
                     Tier = "Standard",
                     Capacity = 3L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Publisher = "MicrosoftWindowsServer",
-                            Offer = "WindowsServer",
-                            Sku = "2016-Datacenter",
-                            Version = "latest",
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadWrite,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.StandardLrs,
+                                Publisher = "MicrosoftWindowsServer",
+                                Offer = "WindowsServer",
+                                Sku = "2016-Datacenter",
+                                Version = "latest",
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadWrite,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                },
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -3598,9 +3668,10 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
+                        },
                     },
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -3612,9 +3683,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with premium storage.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithPremiumStorage()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithPremiumStorage.json
@@ -3645,39 +3715,41 @@ EnableIPForwarding = true,
                     Tier = "Standard",
                     Capacity = 3L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Publisher = "MicrosoftWindowsServer",
-                            Offer = "WindowsServer",
-                            Sku = "2016-Datacenter",
-                            Version = "latest",
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadWrite,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.PremiumLrs,
+                                Publisher = "MicrosoftWindowsServer",
+                                Offer = "WindowsServer",
+                                Sku = "2016-Datacenter",
+                                Version = "latest",
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadWrite,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.PremiumLrs,
+                                },
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -3692,9 +3764,10 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
+                        },
                     },
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -3706,9 +3779,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with priority mix policy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithPriorityMixPolicy()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithPriorityMixPolicy.json
@@ -3739,35 +3811,37 @@ EnableIPForwarding = true,
                     Tier = "Standard",
                     Capacity = 10L,
                 },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
-                    },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
-                    {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Publisher = "MicrosoftWindowsServer",
-                            Offer = "WindowsServer",
-                            Sku = "2016-Datacenter",
-                            Version = "latest",
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadWrite,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.StandardLrs,
+                                Publisher = "MicrosoftWindowsServer",
+                                Offer = "WindowsServer",
+                                Sku = "2016-Datacenter",
+                                Version = "latest",
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadWrite,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                },
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -3782,17 +3856,18 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
+                        },
+                        Priority = VirtualMachinePriorityType.Spot,
+                        EvictionPolicy = VirtualMachineEvictionPolicyType.Deallocate,
+                        BillingMaxPrice = -1,
                     },
-                    Priority = VirtualMachinePriorityType.Spot,
-                    EvictionPolicy = VirtualMachineEvictionPolicyType.Deallocate,
-                    BillingMaxPrice = -1,
-                },
-                SinglePlacementGroup = false,
-                OrchestrationMode = OrchestrationMode.Flexible,
-                PriorityMixPolicy = new VirtualMachineScaleSetPriorityMixPolicy()
-                {
-                    BaseRegularPriorityCount = 4,
-                    RegularPriorityPercentageAboveBase = 50,
+                    SinglePlacementGroup = false,
+                    OrchestrationMode = OrchestrationMode.Flexible,
+                    PriorityMixPolicy = new VirtualMachineScaleSetPriorityMixPolicy()
+                    {
+                        BaseRegularPriorityCount = 4,
+                        RegularPriorityPercentageAboveBase = 50,
+                    },
                 },
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
@@ -3805,9 +3880,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with scaleInPolicy.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithScaleInPolicy()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithScaleInPolicy.json
@@ -3838,39 +3912,41 @@ EnableIPForwarding = true,
                     Tier = "Standard",
                     Capacity = 3L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Publisher = "MicrosoftWindowsServer",
-                            Offer = "WindowsServer",
-                            Sku = "2016-Datacenter",
-                            Version = "latest",
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadWrite,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.StandardLrs,
+                                Publisher = "MicrosoftWindowsServer",
+                                Offer = "WindowsServer",
+                                Sku = "2016-Datacenter",
+                                Version = "latest",
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadWrite,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                },
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -3885,16 +3961,17 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
+                        },
                     },
-                },
-                Overprovision = true,
-                ScaleInPolicy = new ScaleInPolicy()
-                {
-                    Rules =
+                    Overprovision = true,
+                    ScaleInPolicy = new ScaleInPolicy()
+                    {
+                        Rules =
 {
 VirtualMachineScaleSetScaleInRule.OldestVm
 },
-                    ForceDeletion = true,
+                        ForceDeletion = true,
+                    },
                 },
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
@@ -3907,9 +3984,8 @@ VirtualMachineScaleSetScaleInRule.OldestVm
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with sku profile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithSkuProfile()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithSkuProfile.json
@@ -3939,35 +4015,37 @@ VirtualMachineScaleSetScaleInRule.OldestVm
                     Name = "Mix",
                     Capacity = 10L,
                 },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
-                    },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
-                    {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Publisher = "MicrosoftWindowsServer",
-                            Offer = "WindowsServer",
-                            Sku = "2016-Datacenter",
-                            Version = "latest",
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadWrite,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.StandardLrs,
+                                Publisher = "MicrosoftWindowsServer",
+                                Offer = "WindowsServer",
+                                Sku = "2016-Datacenter",
+                                Version = "latest",
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadWrite,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                },
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -3982,21 +4060,21 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
+                        },
+                        Priority = VirtualMachinePriorityType.Spot,
+                        EvictionPolicy = VirtualMachineEvictionPolicyType.Deallocate,
+                        BillingMaxPrice = -1,
                     },
-                    Priority = VirtualMachinePriorityType.Spot,
-                    EvictionPolicy = VirtualMachineEvictionPolicyType.Deallocate,
-                    BillingMaxPrice = -1,
-                },
-                SinglePlacementGroup = false,
-                OrchestrationMode = OrchestrationMode.Flexible,
-                PriorityMixPolicy = new VirtualMachineScaleSetPriorityMixPolicy()
-                {
-                    BaseRegularPriorityCount = 4,
-                    RegularPriorityPercentageAboveBase = 50,
-                },
-                SkuProfile = new ComputeSkuProfile()
-                {
-                    VmSizes =
+                    SinglePlacementGroup = false,
+                    OrchestrationMode = OrchestrationMode.Flexible,
+                    PriorityMixPolicy = new VirtualMachineScaleSetPriorityMixPolicy()
+                    {
+                        BaseRegularPriorityCount = 4,
+                        RegularPriorityPercentageAboveBase = 50,
+                    },
+                    SkuProfile = new ComputeSkuProfile()
+                    {
+                        VmSizes =
 {
 new ComputeSkuProfileVmSize()
 {
@@ -4009,7 +4087,8 @@ Name = "Standard_E16s_v5",
 Name = "Standard_D2s_v5",
 }
 },
-                    AllocationStrategy = ComputeAllocationStrategy.CapacityOptimized,
+                        AllocationStrategy = ComputeAllocationStrategy.CapacityOptimized,
+                    },
                 },
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
@@ -4022,9 +4101,8 @@ Name = "Standard_D2s_v5",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with spot restore policy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithSpotRestorePolicy()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithSpotRestorePolicy.json
@@ -4055,39 +4133,41 @@ Name = "Standard_D2s_v5",
                     Tier = "Standard",
                     Capacity = 2L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Publisher = "MicrosoftWindowsServer",
-                            Offer = "WindowsServer",
-                            Sku = "2016-Datacenter",
-                            Version = "latest",
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadWrite,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.StandardLrs,
+                                Publisher = "MicrosoftWindowsServer",
+                                Offer = "WindowsServer",
+                                Sku = "2016-Datacenter",
+                                Version = "latest",
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadWrite,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                },
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -4102,16 +4182,17 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
+                        },
+                        Priority = VirtualMachinePriorityType.Spot,
+                        EvictionPolicy = VirtualMachineEvictionPolicyType.Deallocate,
+                        BillingMaxPrice = -1,
                     },
-                    Priority = VirtualMachinePriorityType.Spot,
-                    EvictionPolicy = VirtualMachineEvictionPolicyType.Deallocate,
-                    BillingMaxPrice = -1,
-                },
-                Overprovision = true,
-                SpotRestorePolicy = new SpotRestorePolicy()
-                {
-                    Enabled = true,
-                    RestoreTimeout = "PT1H",
+                    Overprovision = true,
+                    SpotRestorePolicy = new SpotRestorePolicy()
+                    {
+                        Enabled = true,
+                        RestoreTimeout = "PT1H",
+                    },
                 },
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
@@ -4124,9 +4205,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with ssh authentication.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithSshAuthentication()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithSshAuthentication.json
@@ -4157,20 +4237,22 @@ EnableIPForwarding = true,
                     Tier = "Standard",
                     Capacity = 3L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        LinuxConfiguration = new LinuxConfiguration()
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
+                    },
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
+                    {
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            IsPasswordAuthenticationDisabled = true,
-                            SshPublicKeys =
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            LinuxConfiguration = new LinuxConfiguration()
+                            {
+                                IsPasswordAuthenticationDisabled = true,
+                                SshPublicKeys =
 {
 new SshPublicKeyConfiguration()
 {
@@ -4178,29 +4260,29 @@ Path = "/home/{your-username}/.ssh/authorized_keys",
 KeyData = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCeClRAk2ipUs/l5voIsDC5q9RI+YSRd1Bvd/O+axgY4WiBzG+4FwJWZm/mLLe5DoOdHQwmU2FrKXZSW4w2sYE70KeWnrFViCOX5MTVvJgPE8ClugNl8RWth/tU849DvM9sT7vFgfVSHcAS2yDRyDlueii+8nF2ym8XWAPltFVCyLHRsyBp5YPqK8JFYIa1eybKsY3hEAxRCA+/7bq8et+Gj3coOsuRmrehav7rE6N12Pb80I6ofa6SM5XNYq4Xk0iYNx7R3kdz0Jj9XgZYWjAHjJmT0gTRoOnt6upOuxK7xI/ykWrllgpXrCPu3Ymz+c+ujaqcxDopnAl2lmf69/J1",
 }
 },
-                        },
-                    },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
-                    {
-                        ImageReference = new ImageReference()
-                        {
-                            Publisher = "MicrosoftWindowsServer",
-                            Offer = "WindowsServer",
-                            Sku = "2016-Datacenter",
-                            Version = "latest",
-                        },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
-                        {
-                            Caching = CachingType.ReadWrite,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
-                            {
-                                StorageAccountType = StorageAccountType.StandardLrs,
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                        {
+                            ImageReference = new ImageReference()
+                            {
+                                Publisher = "MicrosoftWindowsServer",
+                                Offer = "WindowsServer",
+                                Sku = "2016-Datacenter",
+                                Version = "latest",
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadWrite,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                },
+                            },
+                        },
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -4215,9 +4297,10 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
+                        },
                     },
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -4229,9 +4312,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with terminate scheduled events enabled.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithTerminateScheduledEventsEnabled()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithTerminateScheduledEventEnabled.json
@@ -4262,39 +4344,41 @@ EnableIPForwarding = true,
                     Tier = "Standard",
                     Capacity = 3L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Publisher = "MicrosoftWindowsServer",
-                            Offer = "WindowsServer",
-                            Sku = "2016-Datacenter",
-                            Version = "latest",
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadWrite,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.StandardLrs,
+                                Publisher = "MicrosoftWindowsServer",
+                                Offer = "WindowsServer",
+                                Sku = "2016-Datacenter",
+                                Version = "latest",
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadWrite,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                },
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -4309,17 +4393,18 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
-                    },
-                    ScheduledEventsProfile = new ComputeScheduledEventsProfile()
-                    {
-                        TerminateNotificationProfile = new TerminateNotificationProfile()
+                        },
+                        ScheduledEventsProfile = new ComputeScheduledEventsProfile()
                         {
-                            NotBeforeTimeout = "PT5M",
-                            Enable = true,
+                            TerminateNotificationProfile = new TerminateNotificationProfile()
+                            {
+                                NotBeforeTimeout = "PT5M",
+                                Enable = true,
+                            },
                         },
                     },
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -4331,9 +4416,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with userData.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithUserData()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithUserData.json
@@ -4364,39 +4448,41 @@ EnableIPForwarding = true,
                     Tier = "Standard",
                     Capacity = 3L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Publisher = "MicrosoftWindowsServer",
-                            Offer = "WindowsServer",
-                            Sku = "2016-Datacenter",
-                            Version = "latest",
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadWrite,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.StandardLrs,
+                                Publisher = "MicrosoftWindowsServer",
+                                Offer = "WindowsServer",
+                                Sku = "2016-Datacenter",
+                                Version = "latest",
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadWrite,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                },
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -4411,10 +4497,11 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
+                        },
+                        UserData = "RXhhbXBsZSBVc2VyRGF0YQ==",
                     },
-                    UserData = "RXhhbXBsZSBVc2VyRGF0YQ==",
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -4426,9 +4513,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with virtual machines in different zones.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithVirtualMachinesInDifferentZones()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithVMsInDifferentZones.json
@@ -4459,41 +4545,39 @@ EnableIPForwarding = true,
                     Tier = "Standard",
                     Capacity = 2L,
                 },
-                Zones =
-{
-"1","3"
-},
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Automatic,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
+                        Mode = VirtualMachineScaleSetUpgradeMode.Automatic,
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Publisher = "MicrosoftWindowsServer",
-                            Offer = "WindowsServer",
-                            Sku = "2016-Datacenter",
-                            Version = "latest",
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadWrite,
-                            DiskSizeGB = 512,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.StandardLrs,
+                                Publisher = "MicrosoftWindowsServer",
+                                Offer = "WindowsServer",
+                                Sku = "2016-Datacenter",
+                                Version = "latest",
                             },
-                        },
-                        DataDisks =
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadWrite,
+                                DiskSizeGB = 512,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                },
+                            },
+                            DataDisks =
 {
 new VirtualMachineScaleSetDataDisk(0,DiskCreateOptionType.Empty)
 {
@@ -4503,10 +4587,10 @@ DiskSizeGB = 1023,
 DiskSizeGB = 1023,
 }
 },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        },
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -4521,9 +4605,14 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
+                        },
                     },
+                    Overprovision = true,
                 },
-                Overprovision = true,
+                Zones =
+{
+"1","3"
+},
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -4535,9 +4624,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with vm size properties
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithVmSizeProperties()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithVMSizeProperties.json
@@ -4568,39 +4656,41 @@ EnableIPForwarding = true,
                     Tier = "Standard",
                     Capacity = 3L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Publisher = "MicrosoftWindowsServer",
-                            Offer = "WindowsServer",
-                            Sku = "2016-Datacenter",
-                            Version = "latest",
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadWrite,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.StandardLrs,
+                                Publisher = "MicrosoftWindowsServer",
+                                Offer = "WindowsServer",
+                                Sku = "2016-Datacenter",
+                                Version = "latest",
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadWrite,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                },
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -4615,15 +4705,16 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
+                        },
+                        UserData = "RXhhbXBsZSBVc2VyRGF0YQ==",
+                        HardwareVmSizeProperties = new VirtualMachineSizeProperties()
+                        {
+                            VCpusAvailable = 1,
+                            VCpusPerCore = 1,
+                        },
                     },
-                    UserData = "RXhhbXBsZSBVc2VyRGF0YQ==",
-                    HardwareVmSizeProperties = new VirtualMachineSizeProperties()
-                    {
-                        VCpusAvailable = 1,
-                        VCpusPerCore = 1,
-                    },
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -4635,9 +4726,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a scale set with zonalPlatformFaultDomainAlignMode as Aligned
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAScaleSetWithZonalPlatformFaultDomainAlignModeAsAligned()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithZonalPlatformFaultDomainAlignMode.json
@@ -4668,48 +4758,50 @@ EnableIPForwarding = true,
                     Tier = "Standard",
                     Capacity = 3L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                ScheduledEventsPolicy = new ScheduledEventsPolicy()
-                {
-                    UserInitiatedRedeploy = new UserInitiatedRedeploy()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        AutomaticallyApprove = true,
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    AutomaticallyApprove = true,
-                    Enable = true,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    ScheduledEventsPolicy = new ScheduledEventsPolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
-                    },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
-                    {
-                        ImageReference = new ImageReference()
+                        UserInitiatedRedeploy = new UserInitiatedRedeploy()
                         {
-                            Publisher = "MicrosoftWindowsServer",
-                            Offer = "WindowsServer",
-                            Sku = "2016-Datacenter",
-                            Version = "latest",
+                            AutomaticallyApprove = true,
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        AutomaticallyApprove = true,
+                        Enable = true,
+                    },
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
+                    {
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Caching = CachingType.ReadWrite,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
+                        },
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                        {
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.StandardLrs,
+                                Publisher = "MicrosoftWindowsServer",
+                                Offer = "WindowsServer",
+                                Sku = "2016-Datacenter",
+                                Version = "latest",
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadWrite,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                },
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -4724,10 +4816,11 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
+                        },
                     },
+                    Overprovision = true,
+                    ZonalPlatformFaultDomainAlignMode = ZonalPlatformFaultDomainAlignMode.Aligned,
                 },
-                Overprovision = true,
-                ZonalPlatformFaultDomainAlignMode = ZonalPlatformFaultDomainAlignMode.Aligned,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -4739,9 +4832,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or update a scale set with capacity reservation.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAScaleSetWithCapacityReservation()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Create_WithCapacityReservation.json
@@ -4772,39 +4864,41 @@ EnableIPForwarding = true,
                     Tier = "Standard",
                     Capacity = 3L,
                 },
-                UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
+                Properties = new VirtualMachineScaleSetProperties()
                 {
-                    Mode = VirtualMachineScaleSetUpgradeMode.Manual,
-                },
-                VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
-                {
-                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    UpgradePolicy = new VirtualMachineScaleSetUpgradePolicy()
                     {
-                        ComputerNamePrefix = "{vmss-name}",
-                        AdminUsername = "{your-username}",
-                        AdminPassword = "{your-password}",
+                        Mode = VirtualMachineScaleSetUpgradeMode.Manual,
                     },
-                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    VirtualMachineProfile = new VirtualMachineScaleSetVmProfile()
                     {
-                        ImageReference = new ImageReference()
+                        OSProfile = new VirtualMachineScaleSetOSProfile()
                         {
-                            Publisher = "MicrosoftWindowsServer",
-                            Offer = "WindowsServer",
-                            Sku = "2016-Datacenter",
-                            Version = "latest",
+                            ComputerNamePrefix = "{vmss-name}",
+                            AdminUsername = "{your-username}",
+                            AdminPassword = "{your-password}",
                         },
-                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        StorageProfile = new VirtualMachineScaleSetStorageProfile()
                         {
-                            Caching = CachingType.ReadWrite,
-                            ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                            ImageReference = new ImageReference()
                             {
-                                StorageAccountType = StorageAccountType.StandardLrs,
+                                Publisher = "MicrosoftWindowsServer",
+                                Offer = "WindowsServer",
+                                Sku = "2016-Datacenter",
+                                Version = "latest",
+                            },
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                            {
+                                Caching = CachingType.ReadWrite,
+                                ManagedDisk = new VirtualMachineScaleSetManagedDisk()
+                                {
+                                    StorageAccountType = StorageAccountType.StandardLrs,
+                                },
                             },
                         },
-                    },
-                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
-                    {
-                        NetworkInterfaceConfigurations =
+                        NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                        {
+                            NetworkInterfaceConfigurations =
 {
 new VirtualMachineScaleSetNetworkConfiguration("{vmss-name}")
 {
@@ -4819,10 +4913,11 @@ SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGrou
 EnableIPForwarding = true,
 }
 },
+                        },
+                        CapacityReservationGroupId = new ResourceIdentifier("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/CapacityReservationGroups/{crgName}"),
                     },
-                    CapacityReservationGroupId = new ResourceIdentifier("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/CapacityReservationGroups/{crgName}"),
+                    Overprovision = true,
                 },
-                Overprovision = true,
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);
             VirtualMachineScaleSetResource result = lro.Value;
@@ -4834,9 +4929,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get VM scale set VM with Disk Controller Type
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetVMScaleSetVMWithDiskControllerType()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get_WithDiskControllerType.json
@@ -4869,9 +4963,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get VM scale set VM with Disk Controller Type
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetVMScaleSetVMWithDiskControllerType()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get_WithDiskControllerType.json
@@ -4900,9 +4993,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get VM scale set VM with Disk Controller Type
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetVMScaleSetVMWithDiskControllerType()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get_WithDiskControllerType.json
@@ -4931,7 +5023,7 @@ EnableIPForwarding = true,
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -4943,9 +5035,8 @@ EnableIPForwarding = true,
             }
         }
 
-        // Get a virtual machine scale set
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAVirtualMachineScaleSet()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get.json
@@ -4977,9 +5068,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a virtual machine scale set
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAVirtualMachineScaleSet()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get.json
@@ -5007,9 +5097,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a virtual machine scale set
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAVirtualMachineScaleSet()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get.json
@@ -5037,7 +5126,7 @@ EnableIPForwarding = true,
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -5049,9 +5138,8 @@ EnableIPForwarding = true,
             }
         }
 
-        // Get a virtual machine scale set placed on a dedicated host group through automatic placement.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAVirtualMachineScaleSetPlacedOnADedicatedHostGroupThroughAutomaticPlacement()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get_AutoPlacedOnDedicatedHostGroup.json
@@ -5083,9 +5171,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a virtual machine scale set placed on a dedicated host group through automatic placement.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAVirtualMachineScaleSetPlacedOnADedicatedHostGroupThroughAutomaticPlacement()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get_AutoPlacedOnDedicatedHostGroup.json
@@ -5113,9 +5200,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a virtual machine scale set placed on a dedicated host group through automatic placement.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAVirtualMachineScaleSetPlacedOnADedicatedHostGroupThroughAutomaticPlacement()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get_AutoPlacedOnDedicatedHostGroup.json
@@ -5143,7 +5229,7 @@ EnableIPForwarding = true,
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -5155,9 +5241,8 @@ EnableIPForwarding = true,
             }
         }
 
-        // Get a virtual machine scale set with UserData
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAVirtualMachineScaleSetWithUserData()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get_WithUserData.json
@@ -5190,9 +5275,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a virtual machine scale set with UserData
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAVirtualMachineScaleSetWithUserData()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get_WithUserData.json
@@ -5221,9 +5305,8 @@ EnableIPForwarding = true,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get a virtual machine scale set with UserData
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAVirtualMachineScaleSetWithUserData()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_Get_WithUserData.json
@@ -5252,7 +5335,7 @@ EnableIPForwarding = true,
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -5264,9 +5347,8 @@ EnableIPForwarding = true,
             }
         }
 
-        // VirtualMachineScaleSet_List_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_VirtualMachineScaleSetListMaximumSetGen()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_List_MaximumSet_Gen.json
@@ -5297,12 +5379,11 @@ EnableIPForwarding = true,
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VirtualMachineScaleSet_List_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_VirtualMachineScaleSetListMinimumSetGen()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSet_List_MinimumSet_Gen.json
@@ -5333,7 +5414,7 @@ EnableIPForwarding = true,
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

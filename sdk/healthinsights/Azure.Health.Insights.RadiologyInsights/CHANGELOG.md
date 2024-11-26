@@ -5,6 +5,8 @@
 
 ### Features Added
 
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
 ### Breaking Changes
 - Client Changes
     - POST call replaced with PUT

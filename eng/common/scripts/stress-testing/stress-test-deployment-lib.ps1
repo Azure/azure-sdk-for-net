@@ -121,7 +121,7 @@ function DeployStressTests(
             Write-Warning "Overriding cluster group and subscription with defaults for 'prod' environment."
         }
         $clusterGroup = 'rg-stress-cluster-prod'
-        $subscription = 'Azure SDK Test Resources'
+        $subscription = 'Azure SDK Test Resources - TME'
     } elseif ($environment -eq 'storage') {
         if ($clusterGroup -or $subscription) {
             Write-Warning "Overriding cluster group and subscription with defaults for 'storage' environment."
@@ -155,8 +155,9 @@ function DeployStressTests(
                 -filters $filters `
                 -CI:$CI `
                 -namespaceOverride $Namespace `
-                -MatrixSelection $MatrixSelection `
                 -MatrixFileName $MatrixFileName `
+                -MatrixSelection $MatrixSelection `
+                -MatrixDisplayNameFilter $MatrixDisplayNameFilter `
                 -MatrixFilters $MatrixFilters `
                 -MatrixReplace $MatrixReplace `
                 -MatrixNonSparseParameters $MatrixNonSparseParameters)
@@ -413,7 +414,7 @@ function CheckDependencies()
         }
     )
 
-    Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
+    Install-ModuleIfNotInstalled "powershell-yaml" "0.4.7" | Import-Module
 
     $shouldError = $false
     foreach ($dep in $deps) {

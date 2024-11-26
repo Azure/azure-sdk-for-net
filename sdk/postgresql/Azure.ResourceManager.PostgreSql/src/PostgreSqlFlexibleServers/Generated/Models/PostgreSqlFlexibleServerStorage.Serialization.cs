@@ -50,10 +50,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Iops))
+            if (Optional.IsDefined(Iops))
             {
                 writer.WritePropertyName("iops"u8);
                 writer.WriteNumberValue(Iops.Value);
+            }
+            if (Optional.IsDefined(Throughput))
+            {
+                writer.WritePropertyName("throughput"u8);
+                writer.WriteNumberValue(Throughput.Value);
+            }
+            if (Optional.IsDefined(StorageType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(StorageType.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -96,6 +106,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             StorageAutoGrow? autoGrow = default;
             PostgreSqlManagedDiskPerformanceTier? tier = default;
             int? iops = default;
+            int? throughput = default;
+            PostgreSqlFlexibleServersStorageType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,13 +148,38 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     iops = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("throughput"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    throughput = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    type = new PostgreSqlFlexibleServersStorageType(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PostgreSqlFlexibleServerStorage(storageSizeGB, autoGrow, tier, iops, serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerStorage(
+                storageSizeGB,
+                autoGrow,
+                tier,
+                iops,
+                throughput,
+                type,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -213,6 +250,36 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 {
                     builder.Append("  iops: ");
                     builder.AppendLine($"{Iops.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Throughput), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  throughput: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Throughput))
+                {
+                    builder.Append("  throughput: ");
+                    builder.AppendLine($"{Throughput.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageType))
+                {
+                    builder.Append("  type: ");
+                    builder.AppendLine($"'{StorageType.Value.ToString()}'");
                 }
             }
 

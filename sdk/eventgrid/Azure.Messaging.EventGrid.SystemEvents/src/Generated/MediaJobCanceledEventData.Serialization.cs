@@ -19,13 +19,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         void IJsonModel<MediaJobCanceledEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<MediaJobCanceledEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MediaJobCanceledEventData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("outputs"u8);
             writer.WriteStartArray();
             foreach (var item in Outputs)
@@ -33,34 +42,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("previousState"u8);
-            writer.WriteStringValue(PreviousState.ToString());
-            writer.WritePropertyName("state"u8);
-            writer.WriteStringValue(State.ToString());
-            writer.WritePropertyName("correlationData"u8);
-            writer.WriteStartObject();
-            foreach (var item in CorrelationData)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
-            }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         MediaJobCanceledEventData IJsonModel<MediaJobCanceledEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

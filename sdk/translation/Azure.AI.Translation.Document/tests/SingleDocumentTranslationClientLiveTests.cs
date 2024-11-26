@@ -62,7 +62,7 @@ namespace Azure.AI.Translation.Document.Tests
 
             var sourceDocument = new MultipartFormFileData(Path.GetFileName(filePath), fileStream, "text/html");
             DocumentTranslateContent content = new DocumentTranslateContent(sourceDocument);
-            var response = await client.DocumentTranslateAsync("hi", content).ConfigureAwait(false);
+            var response = await client.TranslateAsync("hi", content).ConfigureAwait(false);
             var requestString = File.ReadAllText(filePath);
             var responseString = Encoding.UTF8.GetString(response.Value.ToArray());
             Assert.AreNotEqual(requestString, responseString);
@@ -87,7 +87,7 @@ namespace Azure.AI.Translation.Document.Tests
             };
             DocumentTranslateContent content = new DocumentTranslateContent(sourceDocument, sourceGlossaries);
 
-            var response = await client.DocumentTranslateAsync("hi", content).ConfigureAwait(false);
+            var response = await client.TranslateAsync("hi", content).ConfigureAwait(false);
 
             var outputString = Encoding.UTF8.GetString(response.Value.ToArray());
 
@@ -116,7 +116,7 @@ namespace Azure.AI.Translation.Document.Tests
 
             try
             {
-                var response = await client.DocumentTranslateAsync("hi", content).ConfigureAwait(false);
+                var response = await client.TranslateAsync("hi", content).ConfigureAwait(false);
             }
             catch (RequestFailedException ex)
             {

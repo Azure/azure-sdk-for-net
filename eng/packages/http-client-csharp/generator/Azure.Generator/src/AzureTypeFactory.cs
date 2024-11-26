@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
 using Azure.Generator.Primitives;
 using Azure.Generator.Providers;
 using Azure.Generator.Providers.Abstraction;
@@ -16,7 +15,7 @@ namespace Azure.Generator
     public class AzureTypeFactory : ScmTypeFactory
     {
         /// <inheritdoc/>
-        public override CSharpType ClientUriBuilderBaseType => typeof(RequestUriBuilder);
+        public override CSharpType KeyCredentialType => typeof(AzureKeyCredential);
 
         /// <inheritdoc/>
         public override IClientResponseApi ClientResponseApi => AzureClientResponseProvider.Instance;

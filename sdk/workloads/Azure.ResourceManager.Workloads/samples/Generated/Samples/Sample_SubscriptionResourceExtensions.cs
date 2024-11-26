@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Workloads.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Workloads.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {
-        // SAPSizingRecommendations_S4HANA_Distributed
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SapSizingRecommendations_SAPSizingRecommendationsS4HANADistributed()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPSizingRecommendations_S4HANA_Distributed.json
@@ -42,9 +42,8 @@ namespace Azure.ResourceManager.Workloads.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // SAPSizingRecommendations_S4HANA_DistributedHA_AvSet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SapSizingRecommendations_SAPSizingRecommendationsS4HANADistributedHAAvSet()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPSizingRecommendations_S4HANA_HA_AvSet.json
@@ -68,9 +67,8 @@ namespace Azure.ResourceManager.Workloads.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // SAPSizingRecommendations_S4HANA_DistributedHA_AvZone
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SapSizingRecommendations_SAPSizingRecommendationsS4HANADistributedHAAvZone()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPSizingRecommendations_S4HANA_HA_AvZone.json
@@ -94,9 +92,8 @@ namespace Azure.ResourceManager.Workloads.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // SAPSizingRecommendations_S4HANA_SingleServer
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SapSizingRecommendations_SAPSizingRecommendationsS4HANASingleServer()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPSizingRecommendations_S4HANA_SingleServer.json
@@ -120,9 +117,8 @@ namespace Azure.ResourceManager.Workloads.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // SAPSupportedSkus_Distributed
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SapSupportedSku_SAPSupportedSkusDistributed()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPSupportedSkus_Distributed.json
@@ -146,9 +142,8 @@ namespace Azure.ResourceManager.Workloads.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // SAPSupportedSkus_DistributedHA_AvSet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SapSupportedSku_SAPSupportedSkusDistributedHAAvSet()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPSupportedSkus_DistributedHA_AvSet.json
@@ -172,9 +167,8 @@ namespace Azure.ResourceManager.Workloads.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // SAPSupportedSkus_DistributedHA_AvZone
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SapSupportedSku_SAPSupportedSkusDistributedHAAvZone()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPSupportedSkus_DistributedHA_AvZone.json
@@ -198,9 +192,8 @@ namespace Azure.ResourceManager.Workloads.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // SAPSupportedSkus_SingleServer
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SapSupportedSku_SAPSupportedSkusSingleServer()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPSupportedSkus_SingleServer.json
@@ -224,9 +217,8 @@ namespace Azure.ResourceManager.Workloads.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // SAPDiskConfigurations_NonProd
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SapDiskConfigurations_SAPDiskConfigurationsNonProd()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPDiskConfigurations_NonProd.json
@@ -250,9 +242,8 @@ namespace Azure.ResourceManager.Workloads.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // SAPDiskConfigurations_Prod
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SapDiskConfigurations_SAPDiskConfigurationsProd()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPDiskConfigurations_Prod.json
@@ -276,9 +267,8 @@ namespace Azure.ResourceManager.Workloads.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // SAPAvailabilityZoneDetails_eastus
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SapAvailabilityZoneDetails_SAPAvailabilityZoneDetailsEastus()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPAvailabilityZoneDetails_eastus.json
@@ -302,9 +292,8 @@ namespace Azure.ResourceManager.Workloads.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // SAPAvailabilityZoneDetails_northeurope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SapAvailabilityZoneDetails_SAPAvailabilityZoneDetailsNortheurope()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/sapvirtualinstances/SAPAvailabilityZoneDetails_northeurope.json

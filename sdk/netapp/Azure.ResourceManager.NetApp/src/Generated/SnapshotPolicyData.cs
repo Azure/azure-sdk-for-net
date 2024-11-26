@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.NetApp
     /// <summary>
     /// A class representing the SnapshotPolicy data model.
     /// Snapshot policy information
-    /// Serialized Name: SnapshotPolicy
     /// </summary>
     public partial class SnapshotPolicyData : TrackedResourceData
     {
@@ -65,34 +64,13 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag">
-        /// A unique read-only string that changes whenever the resource is updated.
-        /// Serialized Name: SnapshotPolicy.etag
-        /// </param>
-        /// <param name="hourlySchedule">
-        /// Schedule for hourly snapshots
-        /// Serialized Name: SnapshotPolicy.properties.hourlySchedule
-        /// </param>
-        /// <param name="dailySchedule">
-        /// Schedule for daily snapshots
-        /// Serialized Name: SnapshotPolicy.properties.dailySchedule
-        /// </param>
-        /// <param name="weeklySchedule">
-        /// Schedule for weekly snapshots
-        /// Serialized Name: SnapshotPolicy.properties.weeklySchedule
-        /// </param>
-        /// <param name="monthlySchedule">
-        /// Schedule for monthly snapshots
-        /// Serialized Name: SnapshotPolicy.properties.monthlySchedule
-        /// </param>
-        /// <param name="isEnabled">
-        /// The property to decide policy is enabled or not
-        /// Serialized Name: SnapshotPolicy.properties.enabled
-        /// </param>
-        /// <param name="provisioningState">
-        /// Azure lifecycle management
-        /// Serialized Name: SnapshotPolicy.properties.provisioningState
-        /// </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="hourlySchedule"> Schedule for hourly snapshots. </param>
+        /// <param name="dailySchedule"> Schedule for daily snapshots. </param>
+        /// <param name="weeklySchedule"> Schedule for weekly snapshots. </param>
+        /// <param name="monthlySchedule"> Schedule for monthly snapshots. </param>
+        /// <param name="isEnabled"> The property to decide policy is enabled or not. </param>
+        /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SnapshotPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, SnapshotPolicyHourlySchedule hourlySchedule, SnapshotPolicyDailySchedule dailySchedule, SnapshotPolicyWeeklySchedule weeklySchedule, SnapshotPolicyMonthlySchedule monthlySchedule, bool? isEnabled, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -111,40 +89,19 @@ namespace Azure.ResourceManager.NetApp
         {
         }
 
-        /// <summary>
-        /// A unique read-only string that changes whenever the resource is updated.
-        /// Serialized Name: SnapshotPolicy.etag
-        /// </summary>
+        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? ETag { get; }
-        /// <summary>
-        /// Schedule for hourly snapshots
-        /// Serialized Name: SnapshotPolicy.properties.hourlySchedule
-        /// </summary>
+        /// <summary> Schedule for hourly snapshots. </summary>
         public SnapshotPolicyHourlySchedule HourlySchedule { get; set; }
-        /// <summary>
-        /// Schedule for daily snapshots
-        /// Serialized Name: SnapshotPolicy.properties.dailySchedule
-        /// </summary>
+        /// <summary> Schedule for daily snapshots. </summary>
         public SnapshotPolicyDailySchedule DailySchedule { get; set; }
-        /// <summary>
-        /// Schedule for weekly snapshots
-        /// Serialized Name: SnapshotPolicy.properties.weeklySchedule
-        /// </summary>
+        /// <summary> Schedule for weekly snapshots. </summary>
         public SnapshotPolicyWeeklySchedule WeeklySchedule { get; set; }
-        /// <summary>
-        /// Schedule for monthly snapshots
-        /// Serialized Name: SnapshotPolicy.properties.monthlySchedule
-        /// </summary>
+        /// <summary> Schedule for monthly snapshots. </summary>
         public SnapshotPolicyMonthlySchedule MonthlySchedule { get; set; }
-        /// <summary>
-        /// The property to decide policy is enabled or not
-        /// Serialized Name: SnapshotPolicy.properties.enabled
-        /// </summary>
+        /// <summary> The property to decide policy is enabled or not. </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary>
-        /// Azure lifecycle management
-        /// Serialized Name: SnapshotPolicy.properties.provisioningState
-        /// </summary>
+        /// <summary> Azure lifecycle management. </summary>
         public string ProvisioningState { get; }
     }
 }

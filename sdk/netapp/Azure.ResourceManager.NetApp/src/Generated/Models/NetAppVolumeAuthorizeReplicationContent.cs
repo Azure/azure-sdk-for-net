@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Authorize request
-    /// Serialized Name: AuthorizeRequest
-    /// </summary>
+    /// <summary> Authorize request. </summary>
     public partial class NetAppVolumeAuthorizeReplicationContent
     {
         /// <summary>
@@ -55,10 +52,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeAuthorizeReplicationContent"/>. </summary>
-        /// <param name="remoteVolumeResourceId">
-        /// Resource id of the remote volume
-        /// Serialized Name: AuthorizeRequest.remoteVolumeResourceId
-        /// </param>
+        /// <param name="remoteVolumeResourceId"> Resource id of the remote volume. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppVolumeAuthorizeReplicationContent(ResourceIdentifier remoteVolumeResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,10 +60,7 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Resource id of the remote volume
-        /// Serialized Name: AuthorizeRequest.remoteVolumeResourceId
-        /// </summary>
+        /// <summary> Resource id of the remote volume. </summary>
         public ResourceIdentifier RemoteVolumeResourceId { get; set; }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Resource type used for verification.
-    /// Serialized Name: CheckQuotaNameResourceTypes
-    /// </summary>
+    /// <summary> Resource type used for verification. </summary>
     public readonly partial struct NetAppQuotaAvailabilityResourceType : IEquatable<NetAppQuotaAvailabilityResourceType>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string MicrosoftNetAppNetAppAccountsCapacityPoolsVolumesValue = "Microsoft.NetApp/netAppAccounts/capacityPools/volumes";
         private const string MicrosoftNetAppNetAppAccountsCapacityPoolsVolumesSnapshotsValue = "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots";
 
-        /// <summary>
-        /// Microsoft.NetApp/netAppAccounts
-        /// Serialized Name: CheckQuotaNameResourceTypes.Microsoft.NetApp/netAppAccounts
-        /// </summary>
+        /// <summary> Microsoft.NetApp/netAppAccounts. </summary>
         public static NetAppQuotaAvailabilityResourceType MicrosoftNetAppNetAppAccounts { get; } = new NetAppQuotaAvailabilityResourceType(MicrosoftNetAppNetAppAccountsValue);
-        /// <summary>
-        /// Microsoft.NetApp/netAppAccounts/capacityPools
-        /// Serialized Name: CheckQuotaNameResourceTypes.Microsoft.NetApp/netAppAccounts/capacityPools
-        /// </summary>
+        /// <summary> Microsoft.NetApp/netAppAccounts/capacityPools. </summary>
         public static NetAppQuotaAvailabilityResourceType MicrosoftNetAppNetAppAccountsCapacityPools { get; } = new NetAppQuotaAvailabilityResourceType(MicrosoftNetAppNetAppAccountsCapacityPoolsValue);
-        /// <summary>
-        /// Microsoft.NetApp/netAppAccounts/capacityPools/volumes
-        /// Serialized Name: CheckQuotaNameResourceTypes.Microsoft.NetApp/netAppAccounts/capacityPools/volumes
-        /// </summary>
+        /// <summary> Microsoft.NetApp/netAppAccounts/capacityPools/volumes. </summary>
         public static NetAppQuotaAvailabilityResourceType MicrosoftNetAppNetAppAccountsCapacityPoolsVolumes { get; } = new NetAppQuotaAvailabilityResourceType(MicrosoftNetAppNetAppAccountsCapacityPoolsVolumesValue);
-        /// <summary>
-        /// Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots
-        /// Serialized Name: CheckQuotaNameResourceTypes.Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots
-        /// </summary>
+        /// <summary> Microsoft.NetApp/netAppAccounts/capacityPools/volumes/snapshots. </summary>
         public static NetAppQuotaAvailabilityResourceType MicrosoftNetAppNetAppAccountsCapacityPoolsVolumesSnapshots { get; } = new NetAppQuotaAvailabilityResourceType(MicrosoftNetAppNetAppAccountsCapacityPoolsVolumesSnapshotsValue);
         /// <summary> Determines if two <see cref="NetAppQuotaAvailabilityResourceType"/> values are the same. </summary>
         public static bool operator ==(NetAppQuotaAvailabilityResourceType left, NetAppQuotaAvailabilityResourceType right) => left.Equals(right);

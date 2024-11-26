@@ -4,148 +4,43 @@
 #nullable enable
 
 using System;
-using System.Threading;
-using Azure.Provisioning.CloudMachine;
-using Azure.Provisioning.CloudMachine.KeyVault;
-using Azure.Provisioning.CloudMachine.OpenAI;
-using Azure.Security.KeyVault.Secrets;
+using System.IO;
+using System.Linq;
+using Azure.CloudMachine.AppService;
+using Azure.CloudMachine.KeyVault;
+using Azure.CloudMachine.OpenAI;
 using NUnit.Framework;
-using OpenAI.Chat;
 
 namespace Azure.CloudMachine.Tests;
 
 public class CloudMachineTests
 {
-    [Theory]
-    [TestCase([new string[] { "--init" }])]
-    [TestCase([new string[] { "" }])]
-    public void Provisioning(string[] args)
+    [Test]
+    public void GenerateBicep()
     {
-        if (CloudMachineInfrastructure.Configure(args, (cm) =>
+        CloudMachineCommands.Execute(["-bicep"], (CloudMachineInfrastructure infrastructure) =>
         {
-            cm.AddFeature(new KeyVaultFeature());
-            cm.AddFeature(new OpenAIFeature("gpt-35-turbo", "0125"));
-        }))
-            return;
+            infrastructure.AddFeature(new KeyVaultFeature());
+            infrastructure.AddFeature(new OpenAIModel("gpt-35-turbo", "0125"));
+            infrastructure.AddFeature(new OpenAIModel("text-embedding-ada-002", "2", AIModelKind.Embedding));
+            infrastructure.AddFeature(new AppServiceFeature());
+        }, exitProcessIfHandled: false);
 
-        CloudMachineWorkspace cm = new();
-        Console.WriteLine(cm.Id);
+        CloudMachineInfrastructure infra = new("cm0c420d2f21084cd");
+        infra.AddFeature(new KeyVaultFeature());
+        infra.AddFeature(new OpenAIModel("gpt-35-turbo", "0125"));
+        infra.AddFeature(new OpenAIModel("text-embedding-ada-002", "2", AIModelKind.Embedding));
+        infra.AddFeature(new AppServiceFeature());
+
+        string actualBicep = infra!.Build().Compile().FirstOrDefault().Value;
+        string expectedBicep = File.ReadAllText(Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "GenerateBicep.bicep")).Replace("\r\n", Environment.NewLine);
+        Assert.AreEqual(expectedBicep, actualBicep);
     }
 
     [Ignore("no recordings yet")]
-    [Theory]
-    [TestCase([new string[] { "--init" }])]
-    [TestCase([new string[] { "" }])]
-    public void Storage(string[] args)
+    [Test]
+    public void ListModels()
     {
-        ManualResetEventSlim eventSlim = new(false);
-        if (CloudMachineInfrastructure.Configure(args, (cm) =>
-        {
-        }))
-            return;
-
-        CloudMachineClient cm = new();
-
-        cm.Storage.WhenBlobUploaded((StorageFile file) =>
-        {
-            var data = file.Download();
-            Console.WriteLine(data.ToString());
-            Assert.AreEqual("{\"Foo\":5,\"Bar\":true}", data.ToString());
-            eventSlim.Set();
-        });
-        var uploaded = cm.Storage.UploadBlob(new
-        {
-            Foo = 5,
-            Bar = true
-        });
-        BinaryData downloaded = cm.Storage.DownloadBlob(uploaded);
-        Console.WriteLine(downloaded.ToString());
-        eventSlim.Wait();
-    }
-
-    [Ignore("no recordings yet")]
-    [Theory]
-    [TestCase([new string[] { "--init" }])]
-    [TestCase([new string[] { "" }])]
-    public void OpenAI(string[] args)
-    {
-        if (CloudMachineInfrastructure.Configure(args, (cm) =>
-        {
-            cm.AddFeature(new OpenAIFeature("gpt-35-turbo", "0125"));
-        }))
-            return;
-
-        CloudMachineWorkspace cm = new();
-        ChatClient chat = cm.GetOpenAIChatClient();
-        ChatCompletion completion = chat.CompleteChat("Is Azure programming easy?");
-
-        ChatMessageContent content = completion.Content;
-        foreach (ChatMessageContentPart part in content)
-        {
-            Console.WriteLine(part.Text);
-        }
-    }
-
-    [Ignore("no recordings yet")]
-    [Theory]
-    [TestCase([new string[] { "--init" }])]
-    [TestCase([new string[] { "" }])]
-    public void KeyVault(string[] args)
-    {
-        if (CloudMachineInfrastructure.Configure(args, (cm) =>
-        {
-            cm.AddFeature(new KeyVaultFeature());
-        }))
-            return;
-
-        CloudMachineWorkspace cm = new();
-        SecretClient secrets = cm.GetKeyVaultSecretsClient();
-        secrets.SetSecret("testsecret", "don't tell anybody");
-    }
-
-    [Ignore("no recordings yet")]
-    [Theory]
-    [TestCase([new string[] { "--init" }])]
-    [TestCase([new string[] { "" }])]
-    public void Messaging(string[] args)
-    {
-        if (CloudMachineInfrastructure.Configure(args))
-            return;
-
-        CloudMachineClient cm = new();
-        cm.Messaging.WhenMessageReceived(message =>
-        {
-            Console.WriteLine(message);
-            Assert.True(message != null);
-        });
-        cm.Messaging.SendMessage(new
-        {
-            Foo = 5,
-            Bar = true
-        });
-    }
-
-    [Ignore("no recordings yet")]
-    [Theory]
-    [TestCase([new string[] { "--init" }])]
-    [TestCase([new string[] { "" }])]
-    public void Demo(string[] args)
-    {
-        if (CloudMachineInfrastructure.Configure(args))
-            return;
-
-        CloudMachineClient cm = new();
-
-        // setup
-        cm.Messaging.WhenMessageReceived((string message) => cm.Storage.UploadBlob(message));
-        cm.Storage.WhenBlobUploaded((StorageFile file) =>
-        {
-            var content = file.Download();
-            ChatCompletion completion = cm.GetOpenAIChatClient().CompleteChat(content.ToString());
-            Console.WriteLine(completion.Content[0].Text);
-        });
-
-        // go!
-        cm.Messaging.SendMessage("Tell me something about Redmond, WA.");
+        CloudMachineCommands.Execute(["-ai", "chat"], exitProcessIfHandled: false);
     }
 }
