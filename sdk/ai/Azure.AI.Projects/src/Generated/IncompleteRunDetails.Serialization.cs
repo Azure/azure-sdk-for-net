@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    public partial class VectorStoreDataSource : IUtf8JsonSerializable, IJsonModel<VectorStoreDataSource>
+    public partial class IncompleteRunDetails : IUtf8JsonSerializable, IJsonModel<IncompleteRunDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VectorStoreDataSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IncompleteRunDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<VectorStoreDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IncompleteRunDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,16 +28,14 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VectorStoreDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IncompleteRunDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VectorStoreDataSource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IncompleteRunDetails)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("uri"u8);
-            writer.WriteStringValue(AssetIdentifier);
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(AssetType.ToString());
+            writer.WritePropertyName("reason"u8);
+            writer.WriteStringValue(Reason.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -55,19 +53,19 @@ namespace Azure.AI.Projects
             }
         }
 
-        VectorStoreDataSource IJsonModel<VectorStoreDataSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        IncompleteRunDetails IJsonModel<IncompleteRunDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VectorStoreDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IncompleteRunDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VectorStoreDataSource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IncompleteRunDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVectorStoreDataSource(document.RootElement, options);
+            return DeserializeIncompleteRunDetails(document.RootElement, options);
         }
 
-        internal static VectorStoreDataSource DeserializeVectorStoreDataSource(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static IncompleteRunDetails DeserializeIncompleteRunDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -75,20 +73,14 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            string uri = default;
-            VectorStoreDataSourceAssetType type = default;
+            IncompleteDetailsReason reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("uri"u8))
+                if (property.NameEquals("reason"u8))
                 {
-                    uri = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new VectorStoreDataSourceAssetType(property.Value.GetString());
+                    reason = new IncompleteDetailsReason(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -97,46 +89,46 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new VectorStoreDataSource(uri, type, serializedAdditionalRawData);
+            return new IncompleteRunDetails(reason, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<VectorStoreDataSource>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<IncompleteRunDetails>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VectorStoreDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IncompleteRunDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VectorStoreDataSource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IncompleteRunDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
-        VectorStoreDataSource IPersistableModel<VectorStoreDataSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        IncompleteRunDetails IPersistableModel<IncompleteRunDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VectorStoreDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IncompleteRunDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeVectorStoreDataSource(document.RootElement, options);
+                        return DeserializeIncompleteRunDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VectorStoreDataSource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IncompleteRunDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<VectorStoreDataSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IncompleteRunDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static VectorStoreDataSource FromResponse(Response response)
+        internal static IncompleteRunDetails FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeVectorStoreDataSource(document.RootElement);
+            return DeserializeIncompleteRunDetails(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
