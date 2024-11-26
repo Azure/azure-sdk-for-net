@@ -16,7 +16,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
     public class DeviceRegistrySchemaRegistriesOperationsTest : DeviceRegistryManagementTestBase
     {
         private readonly string _subscriptionId = "8c64812d-6e59-4e65-96b3-14a7cdb1a4e4";
-        private readonly string _rgNamePrefix = "adr-test-sdk-rg";
+        private readonly string _rgNamePrefix = "adr-test-sdk-rg-schemaregistries";
+        private readonly string _assetschemaRegistryNamespacePrefix = "namespace-sdk-test";
         private readonly string _assetSchemaRegistryNamePrefix = "deviceregistry-test-schemaregistry-sdk";
         private readonly string _assetSchemaRegistrySchemaNamePrefix = "deviceregistry-test-schemaregistryschema-sdk";
         private readonly string _assetSchemaRegistrySchemaVersionNamePrefix = "1";
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             var schemaRegistryName = Recording.GenerateAssetName(_assetSchemaRegistryNamePrefix);
             var schemaRegistrySchemaName = Recording.GenerateAssetName(_assetSchemaRegistrySchemaNamePrefix);
             var schemaRegistrySchemaVersionName = Recording.GenerateAssetName(_assetSchemaRegistrySchemaVersionNamePrefix);
+            var schemaRegistryNamespace = Recording.GenerateAssetName(_assetschemaRegistryNamespacePrefix);
 
             var subscription = Client.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{_subscriptionId}"));
             var rg = await CreateResourceGroup(subscription, _rgNamePrefix, AzureLocation.WestUS);
@@ -47,10 +49,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             {
                 Properties = new()
                 {
-                    Namespace = "sdktest",
+                    Namespace = schemaRegistryNamespace,
                     Description = "This is a Schema Registry instance.",
                     DisplayName = "Schema Registry SDK test",
-                    StorageAccountContainerUri = new Uri("https://storageaccount.blob.core.windows.net/container")
+                    StorageAccountContainerUri = new Uri("https://schemaregistrysdktest.blob.core.windows.net/schemaregistrysdkcontainertest")
                 },
                 Identity = new(ManagedServiceIdentityType.SystemAssigned)
             };
@@ -58,7 +60,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.IsNotNull(schemaRegistryCreateOrUpdateResponse.Value);
             Assert.IsNotNull(schemaRegistryCreateOrUpdateResponse.Value.Data.Identity.TenantId);
             Assert.IsNotNull(schemaRegistryCreateOrUpdateResponse.Value.Data.Identity.PrincipalId);
-            Assert.AreEqual(schemaRegistryCreateOrUpdateResponse.Value.Data.Identity.ManagedServiceIdentityType, ResourceManager.Models.ManagedServiceIdentityType.SystemAssigned);
+            Assert.AreEqual(schemaRegistryCreateOrUpdateResponse.Value.Data.Identity.ManagedServiceIdentityType, ManagedServiceIdentityType.SystemAssigned);
             Assert.IsTrue(Guid.TryParse(schemaRegistryCreateOrUpdateResponse.Value.Data.Properties.Uuid, out _));
             Assert.AreEqual(schemaRegistryCreateOrUpdateResponse.Value.Data.Properties.Namespace, schemaRegistryData.Properties.Namespace);
             Assert.AreEqual(schemaRegistryCreateOrUpdateResponse.Value.Data.Properties.Description, schemaRegistryData.Properties.Description);
@@ -70,7 +72,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.IsNotNull(schemaRegistryReadResponse.Value);
             Assert.IsNotNull(schemaRegistryReadResponse.Value.Data.Identity.TenantId);
             Assert.IsNotNull(schemaRegistryReadResponse.Value.Data.Identity.PrincipalId);
-            Assert.AreEqual(schemaRegistryReadResponse.Value.Data.Identity.ManagedServiceIdentityType, ResourceManager.Models.ManagedServiceIdentityType.SystemAssigned);
+            Assert.AreEqual(schemaRegistryReadResponse.Value.Data.Identity.ManagedServiceIdentityType, ManagedServiceIdentityType.SystemAssigned);
             Assert.IsTrue(Guid.TryParse(schemaRegistryReadResponse.Value.Data.Properties.Uuid, out _));
             Assert.AreEqual(schemaRegistryReadResponse.Value.Data.Properties.Namespace, schemaRegistryData.Properties.Namespace);
             Assert.AreEqual(schemaRegistryReadResponse.Value.Data.Properties.Description, schemaRegistryData.Properties.Description);
@@ -78,40 +80,24 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.AreEqual(schemaRegistryReadResponse.Value.Data.Properties.StorageAccountContainerUri, schemaRegistryData.Properties.StorageAccountContainerUri);
 
             // List DeviceRegistry SchemaRegistry by Resource Group
-            //var schemaRegistryResourcesListByResourceGroup = new List<SchemaRegistryResource>();
-            //var schemaRegistryResourceListByResourceGroupAsyncIterator = schemaRegistriesCollection.GetAllAsync(CancellationToken.None);
-            //await foreach (var schemaRegistryEntry in schemaRegistryResourceListByResourceGroupAsyncIterator)
-            //{
-            //    schemaRegistryResourcesListByResourceGroup.Add(schemaRegistryEntry);
-            //}
-            //Assert.IsNotEmpty(schemaRegistryResourcesListByResourceGroup);
-            //Assert.AreEqual(schemaRegistryResourcesListByResourceGroup.Count, 1);
-            //Assert.IsNotNull(schemaRegistryResourcesListByResourceGroup[0].Data.Identity.TenantId);
-            //Assert.IsNotNull(schemaRegistryResourcesListByResourceGroup[0].Data.Identity.PrincipalId);
-            //Assert.AreEqual(schemaRegistryResourcesListByResourceGroup[0].Data.Identity.ManagedServiceIdentityType, ResourceManager.Models.ManagedServiceIdentityType.SystemAssigned);
-            //Assert.IsTrue(Guid.TryParse(schemaRegistryResourcesListByResourceGroup[0].Data.Properties.Uuid, out _));
-            //Assert.AreEqual(schemaRegistryResourcesListByResourceGroup[0].Data.Properties.Namespace, schemaRegistryData.Properties.Namespace);
-            //Assert.AreEqual(schemaRegistryResourcesListByResourceGroup[0].Data.Properties.Description, schemaRegistryData.Properties.Description);
-            //Assert.AreEqual(schemaRegistryResourcesListByResourceGroup[0].Data.Properties.DisplayName, schemaRegistryData.Properties.DisplayName);
-            //Assert.AreEqual(schemaRegistryResourcesListByResourceGroup[0].Data.Properties.StorageAccountContainerUri, schemaRegistryData.Properties.StorageAccountContainerUri);
+            var schemaRegistryResourcesListByResourceGroup = new List<DeviceRegistrySchemaRegistryResource>();
+            var schemaRegistryResourceListByResourceGroupAsyncIteratorPage = schemaRegistriesCollection.GetAllAsync(CancellationToken.None).AsPages(null, 5);
+            await foreach (var schemaRegistryEntryPage in schemaRegistryResourceListByResourceGroupAsyncIteratorPage)
+            {
+                schemaRegistryResourcesListByResourceGroup.AddRange(schemaRegistryEntryPage.Values);
+            }
+            Assert.IsNotEmpty(schemaRegistryResourcesListByResourceGroup);
+            Assert.GreaterOrEqual(schemaRegistryResourcesListByResourceGroup.Count, 1);
 
-            //// List DeviceRegistry SchemaRegistry by Subscription
-            //var schemaRegistryResourcesListBySubscription = new List<SchemaRegistryResource>();
-            //var schemaRegistryResourceListBySubscriptionAsyncIterator = subscription.GetSchemaRegistriesAsync(CancellationToken.None);
-            //await foreach (var schemaRegistryEntry in schemaRegistryResourceListBySubscriptionAsyncIterator)
-            //{
-            //    schemaRegistryResourcesListBySubscription.Add(schemaRegistryEntry);
-            //}
-            //Assert.IsNotEmpty(schemaRegistryResourcesListBySubscription);
-            //Assert.AreEqual(schemaRegistryResourcesListBySubscription.Count, 1);
-            //Assert.IsNotNull(schemaRegistryResourcesListBySubscription[0].Data.Identity.TenantId);
-            //Assert.IsNotNull(schemaRegistryResourcesListBySubscription[0].Data.Identity.PrincipalId);
-            //Assert.AreEqual(schemaRegistryResourcesListBySubscription[0].Data.Identity.ManagedServiceIdentityType, ResourceManager.Models.ManagedServiceIdentityType.SystemAssigned);
-            //Assert.IsTrue(Guid.TryParse(schemaRegistryResourcesListBySubscription[0].Data.Properties.Uuid, out _));
-            //Assert.AreEqual(schemaRegistryResourcesListBySubscription[0].Data.Properties.Namespace, schemaRegistryData.Properties.Namespace);
-            //Assert.AreEqual(schemaRegistryResourcesListBySubscription[0].Data.Properties.Description, schemaRegistryData.Properties.Description);
-            //Assert.AreEqual(schemaRegistryResourcesListBySubscription[0].Data.Properties.DisplayName, schemaRegistryData.Properties.DisplayName);
-            //Assert.AreEqual(schemaRegistryResourcesListBySubscription[0].Data.Properties.StorageAccountContainerUri, schemaRegistryData.Properties.StorageAccountContainerUri);
+            // List DeviceRegistry SchemaRegistry by Subscription
+            var schemaRegistryResourcesListBySubscription = new List<DeviceRegistrySchemaRegistryResource>();
+            var schemaRegistryResourceListBySubscriptionAsyncIteratorPage = subscription.GetDeviceRegistrySchemaRegistriesAsync(CancellationToken.None).AsPages(null, 5);
+            await foreach (var schemaRegistryEntryPage in schemaRegistryResourceListBySubscriptionAsyncIteratorPage)
+            {
+                schemaRegistryResourcesListBySubscription.AddRange(schemaRegistryEntryPage.Values);
+            }
+            Assert.IsNotEmpty(schemaRegistryResourcesListBySubscription);
+            Assert.GreaterOrEqual(schemaRegistryResourcesListBySubscription.Count, 1);
 
             // Update DeviceRegistry SchemaRegistry
             var schemaRegistry = schemaRegistryReadResponse.Value;
@@ -126,7 +112,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.IsNotNull(schemaRegistryUpdateResponse.Value);
             Assert.IsNotNull(schemaRegistryUpdateResponse.Value.Data.Identity.TenantId);
             Assert.IsNotNull(schemaRegistryUpdateResponse.Value.Data.Identity.PrincipalId);
-            Assert.AreEqual(schemaRegistryUpdateResponse.Value.Data.Identity.ManagedServiceIdentityType, ResourceManager.Models.ManagedServiceIdentityType.SystemAssigned);
+            Assert.AreEqual(schemaRegistryUpdateResponse.Value.Data.Identity.ManagedServiceIdentityType, ManagedServiceIdentityType.SystemAssigned);
             Assert.IsTrue(Guid.TryParse(schemaRegistryUpdateResponse.Value.Data.Properties.Uuid, out _));
             Assert.AreEqual(schemaRegistryUpdateResponse.Value.Data.Properties.Namespace, schemaRegistryData.Properties.Namespace);
             Assert.AreEqual(schemaRegistryUpdateResponse.Value.Data.Properties.Description, schemaRegistryPatchData.Properties.Description);
@@ -194,6 +180,12 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
 
             var schemaRegistriesSchemaVersionsCollection = schemaRegistrySchema.GetDeviceRegistrySchemaVersions();
 
+            // ** Uncomment during recording **
+            // Manually add the Role Assignment to the target storage container
+            //int delayMs = 120000;
+            //Console.Error.WriteLine($"Waiting {delayMs/1000}s. Please add MI \"{schemaRegistryName}\" as \"Storage Blob Data Contributor\" Role to storage account container \"{schemaRegistryData.Properties.StorageAccountContainerUri}\".");
+            //await Task.Delay(delayMs);
+
             // Create DeviceRegistry SchemaRegistry Schema Version
             var schemaRegistrySchemaVersionData = new DeviceRegistrySchemaVersionData()
             {
@@ -227,7 +219,18 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             await schemaRegistrySchema.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
 
             // Delete DeviceRegistry SchemaRegistry
-            await schemaRegistry.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
+            try
+            {
+                await schemaRegistry.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
+            }
+            catch (RequestFailedException ex)
+            {
+                // Delete temporary returns 200 since async operation is defined for the resource but not implemented in RP
+                if (ex.Status != 200)
+                {
+                    throw;
+                }
+            }
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
     public class DeviceRegistryDiscoveredAssetEndpointProfilesOperationsTest : DeviceRegistryManagementTestBase
     {
         private readonly string _subscriptionId = "8c64812d-6e59-4e65-96b3-14a7cdb1a4e4";
-        private readonly string _rgNamePrefix = "adr-test-sdk-rg";
+        private readonly string _rgNamePrefix = "adr-test-sdk-rg-discoveredassetendpointprofiles";
         private readonly string _discoveredAssetEndpointProfileNamePrefix = "deviceregistry-test-discoveredassetendpointprofile-sdk";
         private readonly string _extendedLocationName = "/subscriptions/8c64812d-6e59-4e65-96b3-14a7cdb1a4e4/resourceGroups/adr-sdk-test-rg/providers/Microsoft.ExtendedLocation/customLocations/adr-sdk-test-cluster-cl";
 
@@ -104,6 +104,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             }
             catch (RequestFailedException ex)
             {
+                // Delete returns 200 if the Arc-enabled resource is not available on the Edge
                 if (ex.Status != 200)
                 {
                     throw;
