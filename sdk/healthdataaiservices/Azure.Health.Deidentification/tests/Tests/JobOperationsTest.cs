@@ -51,7 +51,7 @@ namespace Azure.Health.Deidentification.Tests
             Assert.IsNotNull(job.CreatedAt);
             Assert.IsNotNull(job.LastUpdatedAt);
             Assert.IsNull(job.StartedAt);
-            Assert.AreEqual(DeidentificationJobStatus.NotStarted, job.Status);
+            Assert.AreEqual(OperationState.NotStarted, job.Status);
             Assert.IsNull(job.Error);
             Assert.AreEqual("en-US", job.Customizations.SurrogateLocale);
             Assert.AreEqual(inputPrefix, job.SourceLocation.Prefix);
@@ -89,7 +89,7 @@ namespace Azure.Health.Deidentification.Tests
                     Assert.IsNotNull(jobs.Current.CreatedAt);
                     Assert.IsNotNull(jobs.Current.LastUpdatedAt);
                     Assert.IsNull(jobs.Current.StartedAt);
-                    Assert.AreEqual(DeidentificationJobStatus.NotStarted, jobs.Current.Status);
+                    Assert.AreEqual(OperationState.NotStarted, jobs.Current.Status);
                     Assert.IsNull(jobs.Current.Error);
                     Assert.AreEqual("en-US", job.Customizations.SurrogateLocale);
                     Assert.IsNull(jobs.Current.Summary);
@@ -128,7 +128,7 @@ namespace Azure.Health.Deidentification.Tests
             job = (await client.DeidentifyDocumentsAsync(WaitUntil.Completed, jobName, job)).Value;
             job = await client.GetJobAsync(jobName);
 
-            Assert.AreEqual(DeidentificationJobStatus.Succeeded, job.Status);
+            Assert.AreEqual(OperationState.Succeeded, job.Status);
             Assert.IsNotNull(job.StartedAt);
             Assert.IsNotNull(job.Summary);
             Assert.AreEqual(expectedReportCount, job.Summary.Total);
@@ -193,13 +193,13 @@ namespace Azure.Health.Deidentification.Tests
                     await Task.Delay(1000);
                 }
             }
-            while (job.Status == DeidentificationJobStatus.NotStarted);
+            while (job.Status == OperationState.NotStarted);
 
             string errorMessage = job.Error is not null ? job.Error.Message : "No Error Message Available.";
-            Assert.AreEqual(DeidentificationJobStatus.Running, job.Status, $"Job should be running. Error: {errorMessage}");
+            Assert.AreEqual(OperationState.Running, job.Status, $"Job should be running. Error: {errorMessage}");
 
             job = await client.CancelJobAsync(jobName);
-            Assert.AreEqual(DeidentificationJobStatus.Canceled, job.Status);
+            Assert.AreEqual(OperationState.Canceled, job.Status);
 
             await client.DeleteJobAsync(jobName);
 
@@ -227,7 +227,7 @@ namespace Azure.Health.Deidentification.Tests
             Assert.ThrowsAsync(expectedExceptionType, async () => await client.DeidentifyDocumentsAsync(WaitUntil.Completed, jobName, job));
             job = await client.GetJobAsync(jobName);
 
-            Assert.AreEqual(DeidentificationJobStatus.Failed, job.Status);
+            Assert.AreEqual(OperationState.Failed, job.Status);
             Assert.IsNotNull(job.Error);
             Assert.AreEqual("StorageAccessDenied", job.Error.Code);
             Assert.IsTrue(job.Error.Message.Length > 10); // Arbitrary length choice.
