@@ -47,32 +47,23 @@ namespace Azure.ResourceManager.Compute.Samples
                 PublishingProfile = new GalleryApplicationVersionPublishingProfile(new UserArtifactSource("https://mystorageaccount.blob.core.windows.net/mycontainer/package.zip?{sasKey}"))
                 {
                     ManageActions = new UserArtifactManagement("powershell -command \"Expand-Archive -Path package.zip -DestinationPath C:\\package\"", "del C:\\package "),
-                    CustomActions =
-{
-new GalleryApplicationCustomAction("myCustomAction","myCustomActionScript")
+                    CustomActions = {new GalleryApplicationCustomAction("myCustomAction", "myCustomActionScript")
 {
 Description = "This is the custom action description.",
-Parameters =
-{
-new GalleryApplicationCustomActionParameter("myCustomActionParameter")
+Parameters = {new GalleryApplicationCustomActionParameter("myCustomActionParameter")
 {
 IsRequired = false,
 ParameterType = GalleryApplicationCustomActionParameterType.String,
 DefaultValue = "default value of parameter.",
 Description = "This is the description of the parameter",
-}
-},
-}
-},
-                    TargetRegions =
-{
-new TargetRegion("West US")
+}},
+}},
+                    TargetRegions = {new TargetRegion("West US")
 {
 RegionalReplicaCount = 1,
 StorageAccountType = ImageStorageAccountType.StandardLrs,
 IsExcludedFromLatest = false,
-}
-},
+}},
                     ReplicaCount = 1,
                     EndOfLifeOn = DateTimeOffset.Parse("2019-07-01T07:00:00Z"),
                     StorageAccountType = ImageStorageAccountType.StandardLrs,
@@ -127,6 +118,78 @@ IsExcludedFromLatest = false,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetAGalleryApplicationVersion()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2023-07-03/examples/galleryExamples/GalleryApplicationVersion_Get.json
+            // this example is just showing the usage of "GalleryApplicationVersions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this GalleryApplicationResource created on azure
+            // for more information of creating GalleryApplicationResource, please refer to the document of GalleryApplicationResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string galleryName = "myGalleryName";
+            string galleryApplicationName = "myGalleryApplicationName";
+            ResourceIdentifier galleryApplicationResourceId = GalleryApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryApplicationName);
+            GalleryApplicationResource galleryApplication = client.GetGalleryApplicationResource(galleryApplicationResourceId);
+
+            // get the collection of this GalleryApplicationVersionResource
+            GalleryApplicationVersionCollection collection = galleryApplication.GetGalleryApplicationVersions();
+
+            // invoke the operation
+            string galleryApplicationVersionName = "1.0.0";
+            GalleryApplicationVersionResource result = await collection.GetAsync(galleryApplicationVersionName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            GalleryApplicationVersionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListGalleryApplicationVersionsInAGalleryApplicationDefinition()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2023-07-03/examples/galleryExamples/GalleryApplicationVersion_ListByGalleryApplication.json
+            // this example is just showing the usage of "GalleryApplicationVersions_ListByGalleryApplication" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this GalleryApplicationResource created on azure
+            // for more information of creating GalleryApplicationResource, please refer to the document of GalleryApplicationResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string galleryName = "myGalleryName";
+            string galleryApplicationName = "myGalleryApplicationName";
+            ResourceIdentifier galleryApplicationResourceId = GalleryApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryApplicationName);
+            GalleryApplicationResource galleryApplication = client.GetGalleryApplicationResource(galleryApplicationResourceId);
+
+            // get the collection of this GalleryApplicationVersionResource
+            GalleryApplicationVersionCollection collection = galleryApplication.GetGalleryApplicationVersions();
+
+            // invoke the operation and iterate over the result
+            await foreach (GalleryApplicationVersionResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                GalleryApplicationVersionData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAGalleryApplicationVersionWithReplicationStatus()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2023-07-03/examples/galleryExamples/GalleryApplicationVersion_Get_WithReplicationStatus.json
@@ -153,6 +216,37 @@ IsExcludedFromLatest = false,
             string galleryApplicationVersionName = "1.0.0";
             ReplicationStatusType? expand = ReplicationStatusType.ReplicationStatus;
             bool result = await collection.ExistsAsync(galleryApplicationVersionName, expand: expand);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetAGalleryApplicationVersion()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2023-07-03/examples/galleryExamples/GalleryApplicationVersion_Get.json
+            // this example is just showing the usage of "GalleryApplicationVersions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this GalleryApplicationResource created on azure
+            // for more information of creating GalleryApplicationResource, please refer to the document of GalleryApplicationResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string galleryName = "myGalleryName";
+            string galleryApplicationName = "myGalleryApplicationName";
+            ResourceIdentifier galleryApplicationResourceId = GalleryApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryApplicationName);
+            GalleryApplicationResource galleryApplication = client.GetGalleryApplicationResource(galleryApplicationResourceId);
+
+            // get the collection of this GalleryApplicationVersionResource
+            GalleryApplicationVersionCollection collection = galleryApplication.GetGalleryApplicationVersions();
+
+            // invoke the operation
+            string galleryApplicationVersionName = "1.0.0";
+            bool result = await collection.ExistsAsync(galleryApplicationVersionName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -203,72 +297,6 @@ IsExcludedFromLatest = false,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_GetAGalleryApplicationVersion()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2023-07-03/examples/galleryExamples/GalleryApplicationVersion_Get.json
-            // this example is just showing the usage of "GalleryApplicationVersions_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this GalleryApplicationResource created on azure
-            // for more information of creating GalleryApplicationResource, please refer to the document of GalleryApplicationResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            string galleryName = "myGalleryName";
-            string galleryApplicationName = "myGalleryApplicationName";
-            ResourceIdentifier galleryApplicationResourceId = GalleryApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryApplicationName);
-            GalleryApplicationResource galleryApplication = client.GetGalleryApplicationResource(galleryApplicationResourceId);
-
-            // get the collection of this GalleryApplicationVersionResource
-            GalleryApplicationVersionCollection collection = galleryApplication.GetGalleryApplicationVersions();
-
-            // invoke the operation
-            string galleryApplicationVersionName = "1.0.0";
-            GalleryApplicationVersionResource result = await collection.GetAsync(galleryApplicationVersionName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            GalleryApplicationVersionData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Exists_GetAGalleryApplicationVersion()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2023-07-03/examples/galleryExamples/GalleryApplicationVersion_Get.json
-            // this example is just showing the usage of "GalleryApplicationVersions_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this GalleryApplicationResource created on azure
-            // for more information of creating GalleryApplicationResource, please refer to the document of GalleryApplicationResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            string galleryName = "myGalleryName";
-            string galleryApplicationName = "myGalleryApplicationName";
-            ResourceIdentifier galleryApplicationResourceId = GalleryApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryApplicationName);
-            GalleryApplicationResource galleryApplication = client.GetGalleryApplicationResource(galleryApplicationResourceId);
-
-            // get the collection of this GalleryApplicationVersionResource
-            GalleryApplicationVersionCollection collection = galleryApplication.GetGalleryApplicationVersions();
-
-            // invoke the operation
-            string galleryApplicationVersionName = "1.0.0";
-            bool result = await collection.ExistsAsync(galleryApplicationVersionName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAGalleryApplicationVersion()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2023-07-03/examples/galleryExamples/GalleryApplicationVersion_Get.json
@@ -308,43 +336,6 @@ IsExcludedFromLatest = false,
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ListGalleryApplicationVersionsInAGalleryApplicationDefinition()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2023-07-03/examples/galleryExamples/GalleryApplicationVersion_ListByGalleryApplication.json
-            // this example is just showing the usage of "GalleryApplicationVersions_ListByGalleryApplication" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this GalleryApplicationResource created on azure
-            // for more information of creating GalleryApplicationResource, please refer to the document of GalleryApplicationResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            string galleryName = "myGalleryName";
-            string galleryApplicationName = "myGalleryApplicationName";
-            ResourceIdentifier galleryApplicationResourceId = GalleryApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryApplicationName);
-            GalleryApplicationResource galleryApplication = client.GetGalleryApplicationResource(galleryApplicationResourceId);
-
-            // get the collection of this GalleryApplicationVersionResource
-            GalleryApplicationVersionCollection collection = galleryApplication.GetGalleryApplicationVersions();
-
-            // invoke the operation and iterate over the result
-            await foreach (GalleryApplicationVersionResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                GalleryApplicationVersionData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
         }
     }
 }

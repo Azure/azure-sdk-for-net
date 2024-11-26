@@ -27,6 +27,8 @@ namespace Azure.Search.Documents.Models
             string odataNextLink = default;
             SemanticErrorReason? searchSemanticPartialResponseReason = default;
             SemanticSearchResultsType? searchSemanticPartialResponseType = default;
+            SemanticQueryRewritesResultType? searchSemanticQueryRewritesResultType = default;
+            DebugInfo searchDebug = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.count"u8))
@@ -130,6 +132,25 @@ namespace Azure.Search.Documents.Models
                     searchSemanticPartialResponseType = new SemanticSearchResultsType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("@search.semanticQueryRewritesResultType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    searchSemanticQueryRewritesResultType = new SemanticQueryRewritesResultType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("@search.debug"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        searchDebug = null;
+                        continue;
+                    }
+                    searchDebug = DebugInfo.DeserializeDebugInfo(property.Value);
+                    continue;
+                }
             }
             return new SearchDocumentsResult(
                 odataCount,
@@ -140,7 +161,9 @@ namespace Azure.Search.Documents.Models
                 value,
                 odataNextLink,
                 searchSemanticPartialResponseReason,
-                searchSemanticPartialResponseType);
+                searchSemanticPartialResponseType,
+                searchSemanticQueryRewritesResultType,
+                searchDebug);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

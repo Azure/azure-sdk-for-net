@@ -25,6 +25,11 @@ namespace Azure.Storage.DataMovement
         public long? Position { get; set; }
 
         /// <summary>
+        /// Optional. Specifies whether this write is for the initial chunk.
+        /// </summary>
+        public bool Initial { get; set; }
+
+        /// <summary>
         /// Optional. Specifies the source properties to set in the destination.
         /// </summary>
         public StorageResourceItemProperties SourceProperties { get; set; }
