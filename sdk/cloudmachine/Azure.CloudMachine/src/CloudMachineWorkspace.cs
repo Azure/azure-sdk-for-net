@@ -20,7 +20,11 @@ namespace Azure.CloudMachine;
 /// </summary>
 public class CloudMachineWorkspace : ClientWorkspace
 {
-    private ConnectionCollection Connections { get; } = [];
+    /// <summary>
+    /// subclient connections.
+    /// </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public ConnectionCollection Connections { get; } = [];
 
     /// <summary>
     /// The cloud machine ID.

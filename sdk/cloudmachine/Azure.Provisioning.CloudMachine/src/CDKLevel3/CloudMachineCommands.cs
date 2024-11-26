@@ -9,11 +9,37 @@ using System.Text.Json;
 using Azure.AI.OpenAI;
 using Azure.Core;
 using Azure.Identity;
+using Azure.Provisioning.CloudMachine;
 
 namespace Azure.CloudMachine;
 
-public class CloudMachineCommands
+public static class CloudMachineCommands
 {
+    public static T AddFeature<T>(this CloudMachineClient client, T feature) where T : CloudMachineFeature
+    {
+        CloudMachineInfrastructure infra = client.Subclients.Get(() =>
+        {
+            CloudMachineInfrastructure infra = new CloudMachineInfrastructure();
+            return infra;
+        });
+        infra.AddFeature(feature);
+        return feature;
+    }
+
+    public static void Configure(this CloudMachineClient client, Action<CloudMachineInfrastructure>? configure = default)
+    {
+        CloudMachineInfrastructure cmi = new(client.Id);
+        if (configure != default)
+        {
+            configure(cmi);
+        }
+        foreach (ClientConnection clientConnection in cmi.Connections)
+        {
+            client.Connections.Add(clientConnection);
+        }
+        Azd.Init(cmi);
+    }
+
     public static bool Execute(string[] args, Action<CloudMachineInfrastructure>? configure = default, bool exitProcessIfHandled = true)
     {
         if (args.Length < 1)

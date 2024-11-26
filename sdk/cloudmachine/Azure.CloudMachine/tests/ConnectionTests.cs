@@ -15,6 +15,14 @@ namespace Azure.CloudMachine.Tests;
 
 public class ConnectionTests
 {
+    private static void ValidateClient(CloudMachineClient client)
+    {
+        ChatClient chat = client.GetOpenAIChatClient();
+        StorageServices storage = client.Storage;
+        BlobContainerClient container = storage.GetContainer(default);
+        MessagingServices messaging = client.Messaging;
+    }
+
     [Test]
     public void TwoApps()
     {
@@ -28,10 +36,7 @@ public class ConnectionTests
         ConnectionCollection deserializedConnections = JsonSerializer.Deserialize<ConnectionCollection>(serializedConnections)!;
         CloudMachineClient client = new(connections: deserializedConnections);
 
-        ChatClient chat = client.GetOpenAIChatClient();
-        StorageServices storage = client.Storage;
-        BlobContainerClient container = storage.GetContainer(default);
-        MessagingServices messaging = client.Messaging;
+        ValidateClient(client);
     }
 
     [Test]
@@ -42,22 +47,29 @@ public class ConnectionTests
 
         CloudMachineClient client = infra.GetClient();
 
-        ChatClient chat = client.GetOpenAIChatClient();
-        StorageServices storage = client.Storage;
-        BlobContainerClient container = storage.GetContainer(default);
-        MessagingServices messaging = client.Messaging;
+        ValidateClient(client);
     }
 
-    //[Test]
-    //public void SingleAppOpenAI(string[] args)
-    //{
-    //    CloudMachineClient client = new();
-    //    client.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
-    //    if (args.Contains("-azd"))
-    //        Azd.Init(client);
+    [Test]
+    public void SingleClientAdd()
+    {
+        CloudMachineClient client = new();
+        client.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
+        //if (args.Contains("-azd")) Azd.Init(client);
 
-    //    ChatClient chat = client.GetOpenAIChatClient();
-    //}
+        ChatClient chat = client.GetOpenAIChatClient();
+    }
+
+    [Test]
+    public void SingleClientConfigure()
+    {
+        CloudMachineClient client = new();
+        client.Configure((infrastructure) =>
+        {
+            infrastructure.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
+        });
+        ValidateClient(client);
+    }
 
     [Test]
     public void Configuration()
@@ -69,7 +81,7 @@ public class ConnectionTests
             infrastructure.AddFeature(new OpenAIModelFeature("text-embedding-ada-002", "2", AIModelKind.Embedding));
         }, exitProcessIfHandled: false);
 
-        CloudMachineWorkspace cm = new CloudMachineClient();
+        CloudMachineClient cm = new();
         Console.WriteLine(cm.Id);
         var embeddings = cm.GetOpenAIEmbeddingsClient();
     }
