@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -19,7 +20,7 @@ namespace Azure.CloudMachine;
 /// </summary>
 public class CloudMachineWorkspace : ClientWorkspace
 {
-    private Dictionary<string, ClientConnectionOptions> Connections { get; }
+    private ConnectionCollection Connections { get; } = [];
 
     /// <summary>
     /// The cloud machine ID.
@@ -35,16 +36,12 @@ public class CloudMachineWorkspace : ClientWorkspace
     /// <param name="connections"></param>
     /// <exception cref="Exception"></exception>
     [SuppressMessage("Usage", "AZC0007:DO provide a minimal constructor that takes only the parameters required to connect to the service.", Justification = "<Pending>")]
-    public CloudMachineWorkspace(TokenCredential credential = default, IConfiguration configuration = default, Dictionary<string, ClientConnectionOptions> connections = default)
+    public CloudMachineWorkspace(TokenCredential credential = default, IConfiguration configuration = default, IEnumerable<ClientConnection> connections = default)
         : base(BuildCredentail(credential))
     {
         if (connections != default)
         {
-            Connections = connections;
-        }
-        else
-        {
-            Connections = new();
+            Connections.AddRange(connections);
         }
 
         Id = configuration switch
@@ -68,36 +65,17 @@ public class CloudMachineWorkspace : ClientWorkspace
 
         return credential;
     }
+
     /// <summary>
     /// Retrieves the connection options for a specified client type and instance ID.
     /// </summary>
-    /// <param name="clientType"></param>
-    /// <param name="instanceId"></param>
+    /// <param name="connectionId"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public override ClientConnectionOptions GetConnectionOptions(Type clientType, string instanceId)
+    public override ClientConnection GetConnectionOptions(string connectionId)
     {
-        string clientId = clientType.FullName;
-        if (instanceId != null && instanceId.StartsWith("$"))
-            clientId = $"{clientType.FullName}{instanceId}";
-
-        return clientId switch
-        {
-            "Azure.Storage.Blobs.BlobContainerClient" => new ClientConnectionOptions(new Uri($"https://{Id}.blob.core.windows.net/{instanceId ?? "default"}")),
-            "Azure.Security.KeyVault.Secrets.SecretClient" => new ClientConnectionOptions(new Uri($"https://{Id}.vault.azure.net/")),
-            "Azure.Messaging.ServiceBus.ServiceBusClient" => new ClientConnectionOptions(new Uri($"https://{Id}.servicebus.windows.net")),
-            "Azure.Messaging.ServiceBus.ServiceBusSender" => new ClientConnectionOptions(instanceId ?? "cm_servicebus_default_topic"),
-            "Azure.Messaging.ServiceBus.ServiceBusProcessor" => new ClientConnectionOptions("cm_servicebus_default_topic/cm_servicebus_subscription_default"),
-            "Azure.Messaging.ServiceBus.ServiceBusProcessor$private" => new ClientConnectionOptions("cm_servicebus_topic_private/cm_servicebus_subscription_private"),
-            _ => GetExtensionConnection(clientId)
-        };
-
-        ClientConnectionOptions GetExtensionConnection(string clientId)
-        {
-            if (Connections.TryGetValue(clientId, out ClientConnectionOptions connection)) return connection;
-            throw new Exception($"unknown client {clientId}");
-        };
+        return Connections[connectionId];
     }
 
     /// <inheritdoc/>

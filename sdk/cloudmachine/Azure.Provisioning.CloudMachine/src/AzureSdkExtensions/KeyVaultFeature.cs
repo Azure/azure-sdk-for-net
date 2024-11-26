@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
-using Azure.Provisioning.Authorization;
+using System;
+using Azure.Core;
 using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.KeyVault;
@@ -18,6 +18,12 @@ public class KeyVaultFeature : CloudMachineFeature
     {
         sku ??= new KeyVaultSku { Name = KeyVaultSkuName.Standard, Family = KeyVaultSkuFamily.A, };
         Sku = sku;
+    }
+
+    protected internal override void AddTo(CloudMachineInfrastructure cm)
+    {
+        base.AddTo(cm);
+        cm.Connections.Add(new ClientConnection("Azure.Security.KeyVault.Secrets.SecretClient", $"https://{cm.Id}.vault.azure.net/"));
     }
     protected override ProvisionableResource EmitCore(CloudMachineInfrastructure infrastructure)
     {

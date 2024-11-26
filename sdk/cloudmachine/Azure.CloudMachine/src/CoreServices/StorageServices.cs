@@ -29,8 +29,8 @@ public readonly struct StorageServices
         CloudMachineClient cm = _cm;
         BlobContainerClient container = _cm.Subclients.Get(() =>
         {
-            ClientConnectionOptions connection = cm.GetConnectionOptions(typeof(BlobContainerClient), default);
-            BlobContainerClient container = new(connection.Endpoint, cm.Credential);
+            ClientConnection connection = cm.GetConnectionOptions("Azure.Storage.Blobs.BlobContainerClient");
+            BlobContainerClient container = new(connection.ToUri(), cm.Credential);
             return container;
         });
         return container;
@@ -42,8 +42,8 @@ public readonly struct StorageServices
         CloudMachineClient cm = _cm;
         BlobContainerClient container = cm.Subclients.Get(() =>
         {
-            ClientConnectionOptions connection = cm.GetConnectionOptions(typeof(BlobContainerClient), containerName);
-            BlobContainerClient container = new(connection.Endpoint, cm.Credential);
+            ClientConnection connection = cm.GetConnectionOptions($"{typeof(BlobContainerClient).FullName}@{containerName}");
+            BlobContainerClient container = new(connection.ToUri(), cm.Credential);
             return container;
         });
         return container;
@@ -242,7 +242,7 @@ public readonly struct StorageServices
     {
         CloudMachineClient cm = _cm;
         // TODO (Pri 0): once the cache gets GCed, we will stop receiving events
-        ServiceBusProcessor processor = cm.Messaging.GetServiceBusProcessor("$private");
+        ServiceBusProcessor processor = cm.Messaging.GetServiceBusProcessor("cm_servicebus_subscription_private");
         // TODO: How to unsubscribe?
         processor.ProcessMessageAsync += async (args) =>
         {

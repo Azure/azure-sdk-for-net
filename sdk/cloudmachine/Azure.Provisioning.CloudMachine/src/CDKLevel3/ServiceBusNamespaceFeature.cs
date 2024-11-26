@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.ServiceBus;
@@ -37,5 +38,11 @@ public class ServiceBusNamespaceFeature(string name, ServiceBusSkuName sku = Ser
 
         Emitted = _serviceBusNamespace;
         return _serviceBusNamespace;
+    }
+
+    protected internal override void AddTo(CloudMachineInfrastructure cm)
+    {
+        base.AddTo(cm);
+        cm.Connections.Add(new ClientConnection("Azure.Messaging.ServiceBus.ServiceBusClient", $"https://{cm.Id}.servicebus.windows.net/"));
     }
 }

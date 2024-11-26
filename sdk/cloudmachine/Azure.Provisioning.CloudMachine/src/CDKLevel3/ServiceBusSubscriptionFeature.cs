@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.ServiceBus;
@@ -30,5 +31,15 @@ public class ServiceBusSubscriptionFeature(string name, ServiceBusTopicFeature p
         infrastructure.AddConstruct(subscription);
         Emitted = subscription;
         return subscription;
+    }
+
+    protected internal override void AddTo(CloudMachineInfrastructure cm)
+    {
+        base.AddTo(cm);
+        ClientConnection connection = new(
+            $"{name}",
+            $"{parent.Name}/{name}"
+        );
+        cm.Connections.Add(connection);
     }
 }

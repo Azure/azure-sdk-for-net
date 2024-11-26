@@ -26,7 +26,7 @@ public class CloudMachineInfrastructure
     public FeatureCollection Features { get; } = new();
 
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public Dictionary<string, ClientConnectionOptions> Connections { get; } = [];
+    public ConnectionCollection Connections { get; } = [];
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public UserAssignedIdentity Identity { get; private set; }
@@ -52,22 +52,21 @@ public class CloudMachineInfrastructure
         _infrastructure.Add(new ProvisioningOutput("cm_managed_identity_id", typeof(string)) { Value = Identity.Id });
 
         // Add core features
-        var storage = new StorageFeature(Id);
-        Features.Add(storage);
-        var sbNamespace = new ServiceBusNamespaceFeature(Id);
-        Features.Add(sbNamespace);
-        var sbTopicPrivate = new ServiceBusTopicFeature("cm_servicebus_topic_private", sbNamespace);
-        Features.Add(sbTopicPrivate);
-        var sbTopicDefault = new ServiceBusTopicFeature("cm_servicebus_default_topic", sbNamespace);
-        Features.Add(sbTopicDefault);
-        Features.Add(new ServiceBusSubscriptionFeature("cm_servicebus_subscription_private", sbTopicPrivate));
-        Features.Add(new ServiceBusSubscriptionFeature("cm_servicebus_subscription_default", sbTopicDefault));
-        var systemTopic = new EventGridSystemTopicFeature(Id, storage);
-        Features.Add(systemTopic);
-        Features.Add(new SystemTopicEventSubscriptionFeature("cm_eventgrid_subscription_blob", systemTopic, sbTopicPrivate, sbNamespace));
+        var storage = AddFeature(new StorageFeature(Id));
+        var sbNamespace = AddFeature(new ServiceBusNamespaceFeature(Id));
+        var sbTopicPrivate = AddFeature(new ServiceBusTopicFeature("cm_servicebus_topic_private", sbNamespace));
+        var sbTopicDefault = AddFeature(new ServiceBusTopicFeature("cm_servicebus_default_topic", sbNamespace));
+        AddFeature(new ServiceBusSubscriptionFeature("cm_servicebus_subscription_private", sbTopicPrivate)); // TODO: should private connections not be in the Connections collection?
+        AddFeature(new ServiceBusSubscriptionFeature("cm_servicebus_subscription_default", sbTopicDefault));
+        var systemTopic = AddFeature(new EventGridSystemTopicFeature(Id, storage));
+        AddFeature(new SystemTopicEventSubscriptionFeature("cm_eventgrid_subscription_blob", systemTopic, sbTopicPrivate, sbNamespace));
     }
 
-    public void AddFeature(CloudMachineFeature feature) => feature.AddTo(this);
+    public T AddFeature<T>(T feature) where T: CloudMachineFeature
+    {
+        feature.AddTo(this);
+        return feature;
+    }
 
     public void AddEndpoints<T>()
     {

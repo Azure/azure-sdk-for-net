@@ -20,8 +20,8 @@ internal class OpenAIFeature : CloudMachineFeature
     {
         cm.Features.Add(this);
 
-        ClientConnectionOptions connection = new(new Uri($"https://{cm.Id}.openai.azure.com"));
-        cm.Connections.Add("Azure.AI.OpenAI.AzureOpenAIClient", connection);
+        ClientConnection connection = new("Azure.AI.OpenAI.AzureOpenAIClient", $"https://{cm.Id}.openai.azure.com");
+        cm.Connections.Add(connection);
     }
     protected override ProvisionableResource EmitCore(CloudMachineInfrastructure cloudMachine)
     {

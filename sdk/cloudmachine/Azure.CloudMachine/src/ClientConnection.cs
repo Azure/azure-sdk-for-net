@@ -9,44 +9,38 @@ namespace Azure.Core;
 /// <summary>
 /// Represents the connection options for a client.
 /// </summary>
-public readonly struct ClientConnectionOptions
+public readonly struct ClientConnection
 {
     /// <summary>
     /// Do not use this constructor. It is only for the JSON serializer.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public ClientConnectionOptions() { }
+    public ClientConnection() { }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ClientConnectionOptions"/> struct with the specified endpoint and API key.
+    /// Initializes a new instance of the <see cref="ClientConnection"/> struct with the specified endpoint and API key.
     /// </summary>
-    /// <param name="endpoint">The endpoint URI.</param>
+    /// <param name="id"></param>
+    /// <param name="locator"></param>
     /// <param name="apiKey">The API key credential.</param>
-    public ClientConnectionOptions(Uri endpoint, string apiKey)
+    public ClientConnection(string id, string locator, string apiKey)
     {
-        Endpoint = endpoint;
+        Id = id;
+        Locator = locator;
         ApiKeyCredential = apiKey;
         Authentication = ClientAuthenticationMethod.ApiKey;
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ClientConnectionOptions"/> struct with the specified endpoint and token credential.
+    /// Initializes a new instance of the <see cref="ClientConnection"/> struct with the specified subclient ID.
     /// </summary>
-    /// <param name="endpoint">The endpoint URI.</param>
-    public ClientConnectionOptions(Uri endpoint)
+    /// <param name="id"></param>
+    /// <param name="locator">The subclient ID.</param>
+    /// <param name="auth"></param>
+    public ClientConnection(string id, string locator, ClientAuthenticationMethod auth = ClientAuthenticationMethod.EntraId)
     {
-        Endpoint = endpoint;
-        Authentication = ClientAuthenticationMethod.EntraId;
-    }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="ClientConnectionOptions"/> struct with the specified subclient ID.
-    /// </summary>
-    /// <param name="subclientId">The subclient ID.</param>
-    public ClientConnectionOptions(string subclientId)
-    {
-        SubclientId = subclientId;
-        Authentication = ClientAuthenticationMethod.Subclient;
+        Locator = locator;
+        Authentication = auth;
     }
 
     /// <summary>
@@ -55,19 +49,25 @@ public readonly struct ClientConnectionOptions
     public ClientAuthenticationMethod Authentication { get; }
 
     /// <summary>
-    /// Gets the endpoint URI.
+    /// Gets the key.
     /// </summary>
-    public Uri Endpoint { get; }
+    public string Id { get; }
 
     /// <summary>
-    /// Gets the subclient ID.
+    /// This is either URI or name, or something like that.
     /// </summary>
-    public string SubclientId { get; }
+    public string Locator { get; }
 
     /// <summary>
     /// Gets the API key credential.
     /// </summary>
     public string ApiKeyCredential { get; }
+
+    /// <summary>
+    /// Converts the connection to a URI.
+    /// </summary>
+    /// <returns></returns>
+    public Uri ToUri() => new(Locator);
 }
 
 /// <summary>

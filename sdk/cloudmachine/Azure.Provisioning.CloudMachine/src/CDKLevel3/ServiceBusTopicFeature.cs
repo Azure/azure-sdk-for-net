@@ -2,20 +2,27 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.ServiceBus;
 
 namespace Azure.CloudMachine;
 
-public class ServiceBusTopicFeature(string name, ServiceBusNamespaceFeature parent) : CloudMachineFeature
+public class ServiceBusTopicFeature : CloudMachineFeature
 {
+    public ServiceBusTopicFeature(string name, ServiceBusNamespaceFeature parent)
+    {
+        Name = name;
+        _parent = parent;
+    }
+
     protected override ProvisionableResource EmitCore(CloudMachineInfrastructure infrastructure)
     {
-        var topic = new ServiceBusTopic(name, "2021-11-01")
+        var topic = new ServiceBusTopic(Name, "2021-11-01")
         {
-            Name = name,
-            Parent = EnsureEmits<ServiceBusNamespace>(parent),
+            Name = Name,
+            Parent = EnsureEmits<ServiceBusNamespace>(_parent),
             MaxMessageSizeInKilobytes = 256,
             DefaultMessageTimeToLive = TimeSpan.FromDays(14),
             RequiresDuplicateDetection = false,
@@ -28,4 +35,17 @@ public class ServiceBusTopicFeature(string name, ServiceBusNamespaceFeature pare
         Emitted = topic;
         return topic;
     }
+
+    protected internal override void AddTo(CloudMachineInfrastructure cm)
+    {
+        base.AddTo(cm);
+        cm.Connections.Add(new ClientConnection(Name, Name));
+    }
+
+    /// <summary>
+    /// The name of the topic.
+    /// </summary>
+    public string Name { get; }
+
+    private ServiceBusNamespaceFeature _parent;
 }

@@ -3,7 +3,6 @@
 
 using System.ClientModel;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Text;
 using Azure.AI.OpenAI;
 using Azure.Core;
@@ -82,28 +81,28 @@ public static class AzureOpenAIExtensions
 
     private static AzureOpenAIClient CreateAzureOpenAIClient(this ClientWorkspace workspace)
     {
-        ClientConnectionOptions connection = workspace.GetConnectionOptions(typeof(AzureOpenAIClient));
+        ClientConnection connection = workspace.GetConnectionOptions(typeof(AzureOpenAIClient).FullName);
         if (connection.Authentication == ClientAuthenticationMethod.EntraId)
         {
-            return new(connection.Endpoint, workspace.Credential);
+            return new(connection.ToUri(), workspace.Credential);
         }
         else
         {
-            return new(connection.Endpoint, new ApiKeyCredential(connection.ApiKeyCredential!));
+            return new(connection.ToUri(), new ApiKeyCredential(connection.ApiKeyCredential!));
         }
     }
 
     private static ChatClient CreateChatClient(this ClientWorkspace workspace, AzureOpenAIClient client)
     {
-        ClientConnectionOptions connection = workspace.GetConnectionOptions(typeof(ChatClient));
-        ChatClient chat = client.GetChatClient(connection.SubclientId);
+        ClientConnection connection = workspace.GetConnectionOptions(typeof(ChatClient).FullName);
+        ChatClient chat = client.GetChatClient(connection.Locator);
         return chat;
     }
 
     private static EmbeddingClient CreateEmbeddingsClient(this ClientWorkspace workspace, AzureOpenAIClient client)
     {
-        ClientConnectionOptions connection = workspace.GetConnectionOptions(typeof(EmbeddingClient));
-        EmbeddingClient embeddings = client.GetEmbeddingClient(connection.SubclientId);
+        ClientConnection connection = workspace.GetConnectionOptions(typeof(EmbeddingClient).FullName);
+        EmbeddingClient embeddings = client.GetEmbeddingClient(connection.Locator);
         return embeddings;
     }
 
