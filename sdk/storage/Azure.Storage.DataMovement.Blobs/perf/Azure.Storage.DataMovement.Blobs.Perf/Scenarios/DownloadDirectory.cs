@@ -49,6 +49,9 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
             StorageResource destination = LocalFileResourceProvider.FromDirectory(_destinationDirectory);
 
             await RunAndVerifyTransferAsync(source, destination, cancellationToken);
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
     }
 }
