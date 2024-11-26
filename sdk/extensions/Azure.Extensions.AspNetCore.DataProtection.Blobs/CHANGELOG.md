@@ -1,14 +1,11 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.4.0 (2024-11-26)
 
 ### Other Changes
+
+- Updated dependency `Microsoft.Extensions.DependencyInjection` to version `8.0.11`
+- Updated dependency `Microsoft.Bcl.AsyncInterfaces` to version `8.0.0`
 
 ## 1.3.4 (2024-04-16)
 
