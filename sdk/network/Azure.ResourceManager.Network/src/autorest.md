@@ -603,6 +603,8 @@ directive:
   - from: loadBalancer.json
     where: $.definitions
     transform: >
+      $.LoadBalancingRule.properties.properties["x-ms-client-flatten"] = false;
+      $.LoadBalancingRulePropertiesFormat.additionalProperties = true;
       $.InboundNatPool.properties.properties["x-ms-client-flatten"] = false;
       $.InboundNatPoolPropertiesFormat.additionalProperties = true;
   # - from: vmssPublicIpAddress.json
