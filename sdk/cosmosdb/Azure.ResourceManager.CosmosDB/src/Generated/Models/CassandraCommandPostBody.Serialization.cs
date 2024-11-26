@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("cassandra-stop-start"u8);
                 writer.WriteBooleanValue(CassandraStopStart.Value);
             }
-            if (Optional.IsDefined(Readwrite))
+            if (Optional.IsDefined(AllowWrite))
             {
                 writer.WritePropertyName("readwrite"u8);
-                writer.WriteBooleanValue(Readwrite.Value);
+                writer.WriteBooleanValue(AllowWrite.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

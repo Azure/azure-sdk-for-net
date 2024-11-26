@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                                     {
                                         new CosmosDBSpatialType("Point")
                                     }, null),
-                        }, null)
+                        }, null, serializedAdditionalRawData: null)
                 })
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),

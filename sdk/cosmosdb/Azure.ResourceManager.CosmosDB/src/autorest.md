@@ -234,7 +234,7 @@ rename-mapping:
   ClusterResourceProperties.deallocated : IsDeallocated
   ClusterResourceProperties.repairEnabled: IsRepairEnabled
   ClusterResourceProperties.privateLinkResourceId: -|arm-id
-  CommandPostBody.readWrite: AllowWrite
+  CommandPostBody.readwrite: AllowWrite
   IndexingPolicy.automatic: IsAutomatic
   ManagedCassandraReaperStatus.healthy: IsHealthy
   MongoIndexOptions.unique: IsUnique

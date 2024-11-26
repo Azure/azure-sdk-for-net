@@ -2318,9 +2318,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="arguments"> The arguments for the command to be run. </param>
         /// <param name="host"> IP address of the cassandra host to run the command on. </param>
         /// <param name="cassandraStopStart"> If true, stops cassandra before executing the command and then start it again. </param>
-        /// <param name="readwrite"> If true, allows the command to *write* to the cassandra directory, otherwise read-only. </param>
+        /// <param name="allowWrite"> If true, allows the command to *write* to the cassandra directory, otherwise read-only. </param>
         /// <returns> A new <see cref="Models.CassandraCommandPostBody"/> instance for mocking. </returns>
-        public static CassandraCommandPostBody CassandraCommandPostBody(string command = null, IDictionary<string, string> arguments = null, string host = null, bool? cassandraStopStart = null, bool? readwrite = null)
+        public static CassandraCommandPostBody CassandraCommandPostBody(string command = null, IDictionary<string, string> arguments = null, string host = null, bool? cassandraStopStart = null, bool? allowWrite = null)
         {
             arguments ??= new Dictionary<string, string>();
 
@@ -2329,7 +2329,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 arguments,
                 host,
                 cassandraStopStart,
-                readwrite,
+                allowWrite,
                 serializedAdditionalRawData: null);
         }
 
