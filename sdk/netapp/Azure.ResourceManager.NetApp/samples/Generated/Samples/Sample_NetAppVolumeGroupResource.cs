@@ -80,6 +80,33 @@ namespace Azure.ResourceManager.NetApp.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_VolumeGroupsDelete()
+        {
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2024-07-01-preview/examples/VolumeGroups_Delete.json
+            // this example is just showing the usage of "VolumeGroups_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetAppVolumeGroupResource created on azure
+            // for more information of creating NetAppVolumeGroupResource, please refer to the document of NetAppVolumeGroupResource
+            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
+            string resourceGroupName = "myRG";
+            string accountName = "account1";
+            string volumeGroupName = "group1";
+            ResourceIdentifier netAppVolumeGroupResourceId = NetAppVolumeGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, volumeGroupName);
+            NetAppVolumeGroupResource netAppVolumeGroup = client.GetNetAppVolumeGroupResource(netAppVolumeGroupResourceId);
+
+            // invoke the operation
+            await netAppVolumeGroup.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_VolumeGroupsCreateOracle()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2024-07-01-preview/examples/VolumeGroups_Create_Oracle.json
@@ -100,28 +127,21 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppVolumeGroupResource netAppVolumeGroup = client.GetNetAppVolumeGroupResource(netAppVolumeGroupResourceId);
 
             // invoke the operation
-            NetAppVolumeGroupData data = new NetAppVolumeGroupData()
+            NetAppVolumeGroupData data = new NetAppVolumeGroupData
             {
                 Location = new AzureLocation("westus"),
-                GroupMetaData = new NetAppVolumeGroupMetadata()
+                GroupMetaData = new NetAppVolumeGroupMetadata
                 {
                     GroupDescription = "Volume group",
                     ApplicationType = NetAppApplicationType.Oracle,
                     ApplicationIdentifier = "OR2",
                 },
-                Volumes =
-{
-new NetAppVolumeGroupVolume("test-ora-data1",107374182400L,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+                Volumes = {new NetAppVolumeGroupVolume("test-ora-data1", 107374182400L, new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
 {
 Name = "test-ora-data1",
-Zones =
-{
-"1"
-},
+Zones = {"1"},
 ServiceLevel = NetAppFileServiceLevel.Premium,
-ExportRules =
-{
-new NetAppVolumeExportPolicyRule()
+ExportRules = {new NetAppVolumeExportPolicyRule
 {
 RuleIndex = 1,
 IsUnixReadOnly = true,
@@ -137,26 +157,17 @@ AllowNfsV3Protocol = false,
 AllowNfsV41Protocol = true,
 AllowedClients = "0.0.0.0/0",
 HasRootAccess = true,
-}
-},
-ProtocolTypes =
-{
-"NFSv4.1"
-},
+}},
+ProtocolTypes = {"NFSv4.1"},
 ThroughputMibps = 10,
 CapacityPoolResourceId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1"),
 VolumeSpecName = "ora-data1",
-},new NetAppVolumeGroupVolume("test-ora-data2",107374182400L,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+}, new NetAppVolumeGroupVolume("test-ora-data2", 107374182400L, new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
 {
 Name = "test-ora-data2",
-Zones =
-{
-"1"
-},
+Zones = {"1"},
 ServiceLevel = NetAppFileServiceLevel.Premium,
-ExportRules =
-{
-new NetAppVolumeExportPolicyRule()
+ExportRules = {new NetAppVolumeExportPolicyRule
 {
 RuleIndex = 1,
 IsUnixReadOnly = true,
@@ -172,26 +183,17 @@ AllowNfsV3Protocol = false,
 AllowNfsV41Protocol = true,
 AllowedClients = "0.0.0.0/0",
 HasRootAccess = true,
-}
-},
-ProtocolTypes =
-{
-"NFSv4.1"
-},
+}},
+ProtocolTypes = {"NFSv4.1"},
 ThroughputMibps = 10,
 CapacityPoolResourceId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1"),
 VolumeSpecName = "ora-data2",
-},new NetAppVolumeGroupVolume("test-ora-data3",107374182400L,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+}, new NetAppVolumeGroupVolume("test-ora-data3", 107374182400L, new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
 {
 Name = "test-ora-data3",
-Zones =
-{
-"1"
-},
+Zones = {"1"},
 ServiceLevel = NetAppFileServiceLevel.Premium,
-ExportRules =
-{
-new NetAppVolumeExportPolicyRule()
+ExportRules = {new NetAppVolumeExportPolicyRule
 {
 RuleIndex = 1,
 IsUnixReadOnly = true,
@@ -207,26 +209,17 @@ AllowNfsV3Protocol = false,
 AllowNfsV41Protocol = true,
 AllowedClients = "0.0.0.0/0",
 HasRootAccess = true,
-}
-},
-ProtocolTypes =
-{
-"NFSv4.1"
-},
+}},
+ProtocolTypes = {"NFSv4.1"},
 ThroughputMibps = 10,
 CapacityPoolResourceId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1"),
 VolumeSpecName = "ora-data3",
-},new NetAppVolumeGroupVolume("test-ora-data4",107374182400L,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+}, new NetAppVolumeGroupVolume("test-ora-data4", 107374182400L, new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
 {
 Name = "test-ora-data4",
-Zones =
-{
-"1"
-},
+Zones = {"1"},
 ServiceLevel = NetAppFileServiceLevel.Premium,
-ExportRules =
-{
-new NetAppVolumeExportPolicyRule()
+ExportRules = {new NetAppVolumeExportPolicyRule
 {
 RuleIndex = 1,
 IsUnixReadOnly = true,
@@ -242,26 +235,17 @@ AllowNfsV3Protocol = false,
 AllowNfsV41Protocol = true,
 AllowedClients = "0.0.0.0/0",
 HasRootAccess = true,
-}
-},
-ProtocolTypes =
-{
-"NFSv4.1"
-},
+}},
+ProtocolTypes = {"NFSv4.1"},
 ThroughputMibps = 10,
 CapacityPoolResourceId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1"),
 VolumeSpecName = "ora-data4",
-},new NetAppVolumeGroupVolume("test-ora-data5",107374182400L,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+}, new NetAppVolumeGroupVolume("test-ora-data5", 107374182400L, new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
 {
 Name = "test-ora-data5",
-Zones =
-{
-"1"
-},
+Zones = {"1"},
 ServiceLevel = NetAppFileServiceLevel.Premium,
-ExportRules =
-{
-new NetAppVolumeExportPolicyRule()
+ExportRules = {new NetAppVolumeExportPolicyRule
 {
 RuleIndex = 1,
 IsUnixReadOnly = true,
@@ -277,26 +261,17 @@ AllowNfsV3Protocol = false,
 AllowNfsV41Protocol = true,
 AllowedClients = "0.0.0.0/0",
 HasRootAccess = true,
-}
-},
-ProtocolTypes =
-{
-"NFSv4.1"
-},
+}},
+ProtocolTypes = {"NFSv4.1"},
 ThroughputMibps = 10,
 CapacityPoolResourceId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1"),
 VolumeSpecName = "ora-data5",
-},new NetAppVolumeGroupVolume("test-ora-data6",107374182400L,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+}, new NetAppVolumeGroupVolume("test-ora-data6", 107374182400L, new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
 {
 Name = "test-ora-data6",
-Zones =
-{
-"1"
-},
+Zones = {"1"},
 ServiceLevel = NetAppFileServiceLevel.Premium,
-ExportRules =
-{
-new NetAppVolumeExportPolicyRule()
+ExportRules = {new NetAppVolumeExportPolicyRule
 {
 RuleIndex = 1,
 IsUnixReadOnly = true,
@@ -312,26 +287,17 @@ AllowNfsV3Protocol = false,
 AllowNfsV41Protocol = true,
 AllowedClients = "0.0.0.0/0",
 HasRootAccess = true,
-}
-},
-ProtocolTypes =
-{
-"NFSv4.1"
-},
+}},
+ProtocolTypes = {"NFSv4.1"},
 ThroughputMibps = 10,
 CapacityPoolResourceId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1"),
 VolumeSpecName = "ora-data6",
-},new NetAppVolumeGroupVolume("test-ora-data7",107374182400L,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+}, new NetAppVolumeGroupVolume("test-ora-data7", 107374182400L, new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
 {
 Name = "test-ora-data7",
-Zones =
-{
-"1"
-},
+Zones = {"1"},
 ServiceLevel = NetAppFileServiceLevel.Premium,
-ExportRules =
-{
-new NetAppVolumeExportPolicyRule()
+ExportRules = {new NetAppVolumeExportPolicyRule
 {
 RuleIndex = 1,
 IsUnixReadOnly = true,
@@ -347,26 +313,17 @@ AllowNfsV3Protocol = false,
 AllowNfsV41Protocol = true,
 AllowedClients = "0.0.0.0/0",
 HasRootAccess = true,
-}
-},
-ProtocolTypes =
-{
-"NFSv4.1"
-},
+}},
+ProtocolTypes = {"NFSv4.1"},
 ThroughputMibps = 10,
 CapacityPoolResourceId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1"),
 VolumeSpecName = "ora-data7",
-},new NetAppVolumeGroupVolume("test-ora-data8",107374182400L,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+}, new NetAppVolumeGroupVolume("test-ora-data8", 107374182400L, new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
 {
 Name = "test-ora-data8",
-Zones =
-{
-"1"
-},
+Zones = {"1"},
 ServiceLevel = NetAppFileServiceLevel.Premium,
-ExportRules =
-{
-new NetAppVolumeExportPolicyRule()
+ExportRules = {new NetAppVolumeExportPolicyRule
 {
 RuleIndex = 1,
 IsUnixReadOnly = true,
@@ -382,26 +339,17 @@ AllowNfsV3Protocol = false,
 AllowNfsV41Protocol = true,
 AllowedClients = "0.0.0.0/0",
 HasRootAccess = true,
-}
-},
-ProtocolTypes =
-{
-"NFSv4.1"
-},
+}},
+ProtocolTypes = {"NFSv4.1"},
 ThroughputMibps = 10,
 CapacityPoolResourceId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1"),
 VolumeSpecName = "ora-data8",
-},new NetAppVolumeGroupVolume("test-ora-log",107374182400L,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+}, new NetAppVolumeGroupVolume("test-ora-log", 107374182400L, new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
 {
 Name = "test-ora-log",
-Zones =
-{
-"1"
-},
+Zones = {"1"},
 ServiceLevel = NetAppFileServiceLevel.Premium,
-ExportRules =
-{
-new NetAppVolumeExportPolicyRule()
+ExportRules = {new NetAppVolumeExportPolicyRule
 {
 RuleIndex = 1,
 IsUnixReadOnly = true,
@@ -417,26 +365,17 @@ AllowNfsV3Protocol = false,
 AllowNfsV41Protocol = true,
 AllowedClients = "0.0.0.0/0",
 HasRootAccess = true,
-}
-},
-ProtocolTypes =
-{
-"NFSv4.1"
-},
+}},
+ProtocolTypes = {"NFSv4.1"},
 ThroughputMibps = 10,
 CapacityPoolResourceId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1"),
 VolumeSpecName = "ora-log",
-},new NetAppVolumeGroupVolume("test-ora-log-mirror",107374182400L,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+}, new NetAppVolumeGroupVolume("test-ora-log-mirror", 107374182400L, new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
 {
 Name = "test-ora-log-mirror",
-Zones =
-{
-"1"
-},
+Zones = {"1"},
 ServiceLevel = NetAppFileServiceLevel.Premium,
-ExportRules =
-{
-new NetAppVolumeExportPolicyRule()
+ExportRules = {new NetAppVolumeExportPolicyRule
 {
 RuleIndex = 1,
 IsUnixReadOnly = true,
@@ -452,26 +391,17 @@ AllowNfsV3Protocol = false,
 AllowNfsV41Protocol = true,
 AllowedClients = "0.0.0.0/0",
 HasRootAccess = true,
-}
-},
-ProtocolTypes =
-{
-"NFSv4.1"
-},
+}},
+ProtocolTypes = {"NFSv4.1"},
 ThroughputMibps = 10,
 CapacityPoolResourceId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1"),
 VolumeSpecName = "ora-log-mirror",
-},new NetAppVolumeGroupVolume("test-ora-binary",107374182400L,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+}, new NetAppVolumeGroupVolume("test-ora-binary", 107374182400L, new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
 {
 Name = "test-ora-binary",
-Zones =
-{
-"1"
-},
+Zones = {"1"},
 ServiceLevel = NetAppFileServiceLevel.Premium,
-ExportRules =
-{
-new NetAppVolumeExportPolicyRule()
+ExportRules = {new NetAppVolumeExportPolicyRule
 {
 RuleIndex = 1,
 IsUnixReadOnly = true,
@@ -487,26 +417,17 @@ AllowNfsV3Protocol = false,
 AllowNfsV41Protocol = true,
 AllowedClients = "0.0.0.0/0",
 HasRootAccess = true,
-}
-},
-ProtocolTypes =
-{
-"NFSv4.1"
-},
+}},
+ProtocolTypes = {"NFSv4.1"},
 ThroughputMibps = 10,
 CapacityPoolResourceId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1"),
 VolumeSpecName = "ora-binary",
-},new NetAppVolumeGroupVolume("test-ora-backup",107374182400L,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+}, new NetAppVolumeGroupVolume("test-ora-backup", 107374182400L, new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
 {
 Name = "test-ora-backup",
-Zones =
-{
-"1"
-},
+Zones = {"1"},
 ServiceLevel = NetAppFileServiceLevel.Premium,
-ExportRules =
-{
-new NetAppVolumeExportPolicyRule()
+ExportRules = {new NetAppVolumeExportPolicyRule
 {
 RuleIndex = 1,
 IsUnixReadOnly = true,
@@ -522,17 +443,12 @@ AllowNfsV3Protocol = false,
 AllowNfsV41Protocol = true,
 AllowedClients = "0.0.0.0/0",
 HasRootAccess = true,
-}
-},
-ProtocolTypes =
-{
-"NFSv4.1"
-},
+}},
+ProtocolTypes = {"NFSv4.1"},
 ThroughputMibps = 10,
 CapacityPoolResourceId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1"),
 VolumeSpecName = "ora-backup",
-}
-},
+}},
             };
             ArmOperation<NetAppVolumeGroupResource> lro = await netAppVolumeGroup.UpdateAsync(WaitUntil.Completed, data);
             NetAppVolumeGroupResource result = lro.Value;
@@ -566,24 +482,20 @@ VolumeSpecName = "ora-backup",
             NetAppVolumeGroupResource netAppVolumeGroup = client.GetNetAppVolumeGroupResource(netAppVolumeGroupResourceId);
 
             // invoke the operation
-            NetAppVolumeGroupData data = new NetAppVolumeGroupData()
+            NetAppVolumeGroupData data = new NetAppVolumeGroupData
             {
                 Location = new AzureLocation("westus"),
-                GroupMetaData = new NetAppVolumeGroupMetadata()
+                GroupMetaData = new NetAppVolumeGroupMetadata
                 {
                     GroupDescription = "Volume group",
                     ApplicationType = NetAppApplicationType.SapHana,
                     ApplicationIdentifier = "SH9",
                 },
-                Volumes =
-{
-new NetAppVolumeGroupVolume("test-data-mnt00001",107374182400L,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+                Volumes = {new NetAppVolumeGroupVolume("test-data-mnt00001", 107374182400L, new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
 {
 Name = "test-data-mnt00001",
 ServiceLevel = NetAppFileServiceLevel.Premium,
-ExportRules =
-{
-new NetAppVolumeExportPolicyRule()
+ExportRules = {new NetAppVolumeExportPolicyRule
 {
 RuleIndex = 1,
 IsUnixReadOnly = true,
@@ -599,23 +511,17 @@ AllowNfsV3Protocol = false,
 AllowNfsV41Protocol = true,
 AllowedClients = "0.0.0.0/0",
 HasRootAccess = true,
-}
-},
-ProtocolTypes =
-{
-"NFSv4.1"
-},
+}},
+ProtocolTypes = {"NFSv4.1"},
 ThroughputMibps = 10,
 CapacityPoolResourceId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1"),
 ProximityPlacementGroupId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/cys_sjain_fcp_rg/providers/Microsoft.Compute/proximityPlacementGroups/svlqa_sjain_multivolume_ppg"),
 VolumeSpecName = "data",
-},new NetAppVolumeGroupVolume("test-log-mnt00001",107374182400L,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+}, new NetAppVolumeGroupVolume("test-log-mnt00001", 107374182400L, new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
 {
 Name = "test-log-mnt00001",
 ServiceLevel = NetAppFileServiceLevel.Premium,
-ExportRules =
-{
-new NetAppVolumeExportPolicyRule()
+ExportRules = {new NetAppVolumeExportPolicyRule
 {
 RuleIndex = 1,
 IsUnixReadOnly = true,
@@ -631,23 +537,17 @@ AllowNfsV3Protocol = false,
 AllowNfsV41Protocol = true,
 AllowedClients = "0.0.0.0/0",
 HasRootAccess = true,
-}
-},
-ProtocolTypes =
-{
-"NFSv4.1"
-},
+}},
+ProtocolTypes = {"NFSv4.1"},
 ThroughputMibps = 10,
 CapacityPoolResourceId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1"),
 ProximityPlacementGroupId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/cys_sjain_fcp_rg/providers/Microsoft.Compute/proximityPlacementGroups/svlqa_sjain_multivolume_ppg"),
 VolumeSpecName = "log",
-},new NetAppVolumeGroupVolume("test-shared",107374182400L,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+}, new NetAppVolumeGroupVolume("test-shared", 107374182400L, new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
 {
 Name = "test-shared",
 ServiceLevel = NetAppFileServiceLevel.Premium,
-ExportRules =
-{
-new NetAppVolumeExportPolicyRule()
+ExportRules = {new NetAppVolumeExportPolicyRule
 {
 RuleIndex = 1,
 IsUnixReadOnly = true,
@@ -663,23 +563,17 @@ AllowNfsV3Protocol = false,
 AllowNfsV41Protocol = true,
 AllowedClients = "0.0.0.0/0",
 HasRootAccess = true,
-}
-},
-ProtocolTypes =
-{
-"NFSv4.1"
-},
+}},
+ProtocolTypes = {"NFSv4.1"},
 ThroughputMibps = 10,
 CapacityPoolResourceId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1"),
 ProximityPlacementGroupId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/cys_sjain_fcp_rg/providers/Microsoft.Compute/proximityPlacementGroups/svlqa_sjain_multivolume_ppg"),
 VolumeSpecName = "shared",
-},new NetAppVolumeGroupVolume("test-data-backup",107374182400L,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+}, new NetAppVolumeGroupVolume("test-data-backup", 107374182400L, new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
 {
 Name = "test-data-backup",
 ServiceLevel = NetAppFileServiceLevel.Premium,
-ExportRules =
-{
-new NetAppVolumeExportPolicyRule()
+ExportRules = {new NetAppVolumeExportPolicyRule
 {
 RuleIndex = 1,
 IsUnixReadOnly = true,
@@ -695,23 +589,17 @@ AllowNfsV3Protocol = false,
 AllowNfsV41Protocol = true,
 AllowedClients = "0.0.0.0/0",
 HasRootAccess = true,
-}
-},
-ProtocolTypes =
-{
-"NFSv4.1"
-},
+}},
+ProtocolTypes = {"NFSv4.1"},
 ThroughputMibps = 10,
 CapacityPoolResourceId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1"),
 ProximityPlacementGroupId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/cys_sjain_fcp_rg/providers/Microsoft.Compute/proximityPlacementGroups/svlqa_sjain_multivolume_ppg"),
 VolumeSpecName = "data-backup",
-},new NetAppVolumeGroupVolume("test-log-backup",107374182400L,new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
+}, new NetAppVolumeGroupVolume("test-log-backup", 107374182400L, new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testvnet3/subnets/testsubnet3"))
 {
 Name = "test-log-backup",
 ServiceLevel = NetAppFileServiceLevel.Premium,
-ExportRules =
-{
-new NetAppVolumeExportPolicyRule()
+ExportRules = {new NetAppVolumeExportPolicyRule
 {
 RuleIndex = 1,
 IsUnixReadOnly = true,
@@ -727,18 +615,13 @@ AllowNfsV3Protocol = false,
 AllowNfsV41Protocol = true,
 AllowedClients = "0.0.0.0/0",
 HasRootAccess = true,
-}
-},
-ProtocolTypes =
-{
-"NFSv4.1"
-},
+}},
+ProtocolTypes = {"NFSv4.1"},
 ThroughputMibps = 10,
 CapacityPoolResourceId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1"),
 ProximityPlacementGroupId = new ResourceIdentifier("/subscriptions/d633cc2e-722b-4ae1-b636-bbd9e4c60ed9/resourceGroups/cys_sjain_fcp_rg/providers/Microsoft.Compute/proximityPlacementGroups/svlqa_sjain_multivolume_ppg"),
 VolumeSpecName = "log-backup",
-}
-},
+}},
             };
             ArmOperation<NetAppVolumeGroupResource> lro = await netAppVolumeGroup.UpdateAsync(WaitUntil.Completed, data);
             NetAppVolumeGroupResource result = lro.Value;
@@ -748,33 +631,6 @@ VolumeSpecName = "log-backup",
             NetAppVolumeGroupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_VolumeGroupsDelete()
-        {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2024-07-01-preview/examples/VolumeGroups_Delete.json
-            // this example is just showing the usage of "VolumeGroups_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this NetAppVolumeGroupResource created on azure
-            // for more information of creating NetAppVolumeGroupResource, please refer to the document of NetAppVolumeGroupResource
-            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
-            string resourceGroupName = "myRG";
-            string accountName = "account1";
-            string volumeGroupName = "group1";
-            ResourceIdentifier netAppVolumeGroupResourceId = NetAppVolumeGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, volumeGroupName);
-            NetAppVolumeGroupResource netAppVolumeGroup = client.GetNetAppVolumeGroupResource(netAppVolumeGroupResourceId);
-
-            // invoke the operation
-            await netAppVolumeGroup.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
         }
     }
 }

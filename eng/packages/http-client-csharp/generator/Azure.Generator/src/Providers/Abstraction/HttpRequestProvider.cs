@@ -21,6 +21,8 @@ namespace Azure.Generator.Providers
         {
         }
 
+        public override Type UriBuilderType => typeof(RawRequestUriBuilder);
+
         public override ValueExpression Content()
             => Original.Property(nameof(Request.Content));
 

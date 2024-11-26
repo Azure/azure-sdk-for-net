@@ -51,40 +51,6 @@ namespace Azure.ResourceManager.NetApp.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_VolumesUpdate()
-        {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2024-07-01-preview/examples/Volumes_Update.json
-            // this example is just showing the usage of "Volumes_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this NetAppVolumeResource created on azure
-            // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
-            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
-            string resourceGroupName = "myRG";
-            string accountName = "account1";
-            string poolName = "pool1";
-            string volumeName = "volume1";
-            ResourceIdentifier netAppVolumeResourceId = NetAppVolumeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
-            NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
-
-            // invoke the operation
-            NetAppVolumePatch patch = new NetAppVolumePatch(new AzureLocation("placeholder"));
-            ArmOperation<NetAppVolumeResource> lro = await netAppVolume.UpdateAsync(WaitUntil.Completed, patch);
-            NetAppVolumeResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            NetAppVolumeData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Delete_VolumesDelete()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2024-07-01-preview/examples/Volumes_Delete.json
@@ -109,6 +75,40 @@ namespace Azure.ResourceManager.NetApp.Samples
             await netAppVolume.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_VolumesUpdate()
+        {
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2024-07-01-preview/examples/Volumes_Update.json
+            // this example is just showing the usage of "Volumes_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetAppVolumeResource created on azure
+            // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
+            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
+            string resourceGroupName = "myRG";
+            string accountName = "account1";
+            string poolName = "pool1";
+            string volumeName = "volume1";
+            ResourceIdentifier netAppVolumeResourceId = NetAppVolumeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
+            NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
+
+            // invoke the operation
+            NetAppVolumePatch patch = new NetAppVolumePatch(default);
+            ArmOperation<NetAppVolumeResource> lro = await netAppVolume.UpdateAsync(WaitUntil.Completed, patch);
+            NetAppVolumeResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            NetAppVolumeData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
 
             // invoke the operation
-            NetAppVolumeRevertContent content = new NetAppVolumeRevertContent()
+            NetAppVolumeRevertContent content = new NetAppVolumeRevertContent
             {
                 SnapshotId = "/subscriptions/D633CC2E-722B-4AE1-B636-BBD9E4C60ED9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1/volumes/volume1/snapshots/snapshot1",
             };
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
 
             // invoke the operation
-            NetAppVolumeBreakFileLocksContent content = new NetAppVolumeBreakFileLocksContent()
+            NetAppVolumeBreakFileLocksContent content = new NetAppVolumeBreakFileLocksContent
             {
                 ClientIP = IPAddress.Parse("101.102.103.104"),
                 ConfirmRunningDisruptiveOperation = true,
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
 
             // invoke the operation
-            NetAppVolumeBreakReplicationContent content = new NetAppVolumeBreakReplicationContent()
+            NetAppVolumeBreakReplicationContent content = new NetAppVolumeBreakReplicationContent
             {
                 ForceBreakReplication = false,
             };
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
 
             // invoke the operation
-            NetAppVolumeReestablishReplicationContent content = new NetAppVolumeReestablishReplicationContent()
+            NetAppVolumeReestablishReplicationContent content = new NetAppVolumeReestablishReplicationContent
             {
                 SourceVolumeId = new ResourceIdentifier("/subscriptions/D633CC2E-722B-4AE1-B636-BBD9E4C60ED9/resourceGroups/mySourceRG/providers/Microsoft.NetApp/netAppAccounts/sourceAccount1/capacityPools/sourcePool1/volumes/sourceVolume1"),
             };
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
 
             // invoke the operation
-            NetAppVolumeAuthorizeReplicationContent content = new NetAppVolumeAuthorizeReplicationContent()
+            NetAppVolumeAuthorizeReplicationContent content = new NetAppVolumeAuthorizeReplicationContent
             {
                 RemoteVolumeResourceId = new ResourceIdentifier("/subscriptions/D633CC2E-722B-4AE1-B636-BBD9E4C60ED9/resourceGroups/myRemoteRG/providers/Microsoft.NetApp/netAppAccounts/remoteAccount1/capacityPools/remotePool1/volumes/remoteVolume1"),
             };
@@ -586,10 +586,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
 
             // invoke the operation
-            PeerClusterForVolumeMigrationContent content = new PeerClusterForVolumeMigrationContent(new string[]
-            {
-"0.0.0.1","0.0.0.2","0.0.0.3","0.0.0.4","0.0.0.5","0.0.0.6"
-            });
+            PeerClusterForVolumeMigrationContent content = new PeerClusterForVolumeMigrationContent(new string[] { "0.0.0.1", "0.0.0.2", "0.0.0.3", "0.0.0.4", "0.0.0.5", "0.0.0.6" });
             ArmOperation<ClusterPeerCommandResult> lro = await netAppVolume.PeerExternalClusterAsync(WaitUntil.Completed, content);
             ClusterPeerCommandResult result = lro.Value;
 

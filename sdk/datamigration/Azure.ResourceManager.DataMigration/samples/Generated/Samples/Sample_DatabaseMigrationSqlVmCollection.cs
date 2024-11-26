@@ -19,6 +19,151 @@ namespace Azure.ResourceManager.DataMigration.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateOrUpdateDatabaseMigrationResourceWithMaximumParameters()
+        {
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/SqlVmCreateOrUpdateDatabaseMigrationMAX.json
+            // this example is just showing the usage of "DatabaseMigrationsSqlVm_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "testrg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this DatabaseMigrationSqlVmResource
+            DatabaseMigrationSqlVmCollection collection = resourceGroupResource.GetDatabaseMigrationSqlVms();
+
+            // invoke the operation
+            string sqlVirtualMachineName = "testvm";
+            string targetDBName = "db1";
+            DatabaseMigrationSqlVmData data = new DatabaseMigrationSqlVmData
+            {
+                Properties = new DatabaseMigrationSqlVmProperties
+                {
+                    BackupConfiguration = new BackupConfiguration
+                    {
+                        SourceLocation = new SourceLocation
+                        {
+                            FileShare = new SqlFileShare
+                            {
+                                Path = "C:\\aaa\\bbb\\ccc",
+                                Username = "name",
+                                Password = "placeholder",
+                            },
+                        },
+                        TargetLocation = new TargetLocation
+                        {
+                            StorageAccountResourceId = "account.database.windows.net",
+                            AccountKey = "abcd",
+                        },
+                    },
+                    OfflineConfiguration = new OfflineConfiguration
+                    {
+                        Offline = true,
+                        LastBackupName = "last_backup_file_name",
+                    },
+                    Scope = "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/testvm",
+                    SourceSqlConnection = new SqlConnectionInformation
+                    {
+                        DataSource = "aaa",
+                        Authentication = "WindowsAuthentication",
+                        UserName = "bbb",
+                        Password = "placeholder",
+                        EncryptConnection = true,
+                        TrustServerCertificate = true,
+                    },
+                    SourceDatabaseName = "aaa",
+                    MigrationService = "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.DataMigration/sqlMigrationServices/testagent",
+                },
+            };
+            ArmOperation<DatabaseMigrationSqlVmResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, sqlVirtualMachineName, targetDBName, data);
+            DatabaseMigrationSqlVmResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DatabaseMigrationSqlVmData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateOrUpdateDatabaseMigrationResourceWithMinimumParameters()
+        {
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/SqlVmCreateOrUpdateDatabaseMigrationMIN.json
+            // this example is just showing the usage of "DatabaseMigrationsSqlVm_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "testrg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this DatabaseMigrationSqlVmResource
+            DatabaseMigrationSqlVmCollection collection = resourceGroupResource.GetDatabaseMigrationSqlVms();
+
+            // invoke the operation
+            string sqlVirtualMachineName = "testvm";
+            string targetDBName = "db1";
+            DatabaseMigrationSqlVmData data = new DatabaseMigrationSqlVmData
+            {
+                Properties = new DatabaseMigrationSqlVmProperties
+                {
+                    BackupConfiguration = new BackupConfiguration
+                    {
+                        SourceLocation = new SourceLocation
+                        {
+                            FileShare = new SqlFileShare
+                            {
+                                Path = "C:\\aaa\\bbb\\ccc",
+                                Username = "name",
+                                Password = "placeholder",
+                            },
+                        },
+                        TargetLocation = new TargetLocation
+                        {
+                            StorageAccountResourceId = "account.database.windows.net",
+                            AccountKey = "abcd",
+                        },
+                    },
+                    Scope = "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/testvm",
+                    SourceSqlConnection = new SqlConnectionInformation
+                    {
+                        DataSource = "aaa",
+                        Authentication = "WindowsAuthentication",
+                        UserName = "bbb",
+                        Password = "placeholder",
+                        EncryptConnection = true,
+                        TrustServerCertificate = true,
+                    },
+                    SourceDatabaseName = "aaa",
+                    MigrationService = "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.DataMigration/sqlMigrationServices/testagent",
+                },
+            };
+            ArmOperation<DatabaseMigrationSqlVmResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, sqlVirtualMachineName, targetDBName, data);
+            DatabaseMigrationSqlVmResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DatabaseMigrationSqlVmData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSqlVMDatabaseMigrationWithTheExpandParameter()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/SqlVmGetDatabaseMigrationExpanded.json
@@ -54,6 +199,40 @@ namespace Azure.ResourceManager.DataMigration.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetSqlVMDatabaseMigrationWithoutTheExpandParameter()
+        {
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/SqlVmGetDatabaseMigration.json
+            // this example is just showing the usage of "DatabaseMigrationsSqlVm_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "testrg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this DatabaseMigrationSqlVmResource
+            DatabaseMigrationSqlVmCollection collection = resourceGroupResource.GetDatabaseMigrationSqlVms();
+
+            // invoke the operation
+            string sqlVirtualMachineName = "testvm";
+            string targetDBName = "db1";
+            DatabaseMigrationSqlVmResource result = await collection.GetAsync(sqlVirtualMachineName, targetDBName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DatabaseMigrationSqlVmData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetSqlVMDatabaseMigrationWithTheExpandParameter()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/SqlVmGetDatabaseMigrationExpanded.json
@@ -79,6 +258,36 @@ namespace Azure.ResourceManager.DataMigration.Samples
             string targetDBName = "db1";
             string expand = "MigrationStatusDetails";
             bool result = await collection.ExistsAsync(sqlVirtualMachineName, targetDBName, expand: expand);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetSqlVMDatabaseMigrationWithoutTheExpandParameter()
+        {
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/SqlVmGetDatabaseMigration.json
+            // this example is just showing the usage of "DatabaseMigrationsSqlVm_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "testrg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this DatabaseMigrationSqlVmResource
+            DatabaseMigrationSqlVmCollection collection = resourceGroupResource.GetDatabaseMigrationSqlVms();
+
+            // invoke the operation
+            string sqlVirtualMachineName = "testvm";
+            string targetDBName = "db1";
+            bool result = await collection.ExistsAsync(sqlVirtualMachineName, targetDBName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -128,70 +337,6 @@ namespace Azure.ResourceManager.DataMigration.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_GetSqlVMDatabaseMigrationWithoutTheExpandParameter()
-        {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/SqlVmGetDatabaseMigration.json
-            // this example is just showing the usage of "DatabaseMigrationsSqlVm_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "testrg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this DatabaseMigrationSqlVmResource
-            DatabaseMigrationSqlVmCollection collection = resourceGroupResource.GetDatabaseMigrationSqlVms();
-
-            // invoke the operation
-            string sqlVirtualMachineName = "testvm";
-            string targetDBName = "db1";
-            DatabaseMigrationSqlVmResource result = await collection.GetAsync(sqlVirtualMachineName, targetDBName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            DatabaseMigrationSqlVmData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Exists_GetSqlVMDatabaseMigrationWithoutTheExpandParameter()
-        {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/SqlVmGetDatabaseMigration.json
-            // this example is just showing the usage of "DatabaseMigrationsSqlVm_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "testrg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this DatabaseMigrationSqlVmResource
-            DatabaseMigrationSqlVmCollection collection = resourceGroupResource.GetDatabaseMigrationSqlVms();
-
-            // invoke the operation
-            string sqlVirtualMachineName = "testvm";
-            string targetDBName = "db1";
-            bool result = await collection.ExistsAsync(sqlVirtualMachineName, targetDBName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetSqlVMDatabaseMigrationWithoutTheExpandParameter()
         {
             // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/SqlVmGetDatabaseMigration.json
@@ -230,151 +375,6 @@ namespace Azure.ResourceManager.DataMigration.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_CreateOrUpdateDatabaseMigrationResourceWithMaximumParameters()
-        {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/SqlVmCreateOrUpdateDatabaseMigrationMAX.json
-            // this example is just showing the usage of "DatabaseMigrationsSqlVm_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "testrg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this DatabaseMigrationSqlVmResource
-            DatabaseMigrationSqlVmCollection collection = resourceGroupResource.GetDatabaseMigrationSqlVms();
-
-            // invoke the operation
-            string sqlVirtualMachineName = "testvm";
-            string targetDBName = "db1";
-            DatabaseMigrationSqlVmData data = new DatabaseMigrationSqlVmData()
-            {
-                Properties = new DatabaseMigrationSqlVmProperties()
-                {
-                    BackupConfiguration = new BackupConfiguration()
-                    {
-                        SourceLocation = new SourceLocation()
-                        {
-                            FileShare = new SqlFileShare()
-                            {
-                                Path = "C:\\aaa\\bbb\\ccc",
-                                Username = "name",
-                                Password = "placeholder",
-                            },
-                        },
-                        TargetLocation = new TargetLocation()
-                        {
-                            StorageAccountResourceId = "account.database.windows.net",
-                            AccountKey = "abcd",
-                        },
-                    },
-                    OfflineConfiguration = new OfflineConfiguration()
-                    {
-                        Offline = true,
-                        LastBackupName = "last_backup_file_name",
-                    },
-                    Scope = "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/testvm",
-                    SourceSqlConnection = new SqlConnectionInformation()
-                    {
-                        DataSource = "aaa",
-                        Authentication = "WindowsAuthentication",
-                        UserName = "bbb",
-                        Password = "placeholder",
-                        EncryptConnection = true,
-                        TrustServerCertificate = true,
-                    },
-                    SourceDatabaseName = "aaa",
-                    MigrationService = "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.DataMigration/sqlMigrationServices/testagent",
-                },
-            };
-            ArmOperation<DatabaseMigrationSqlVmResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, sqlVirtualMachineName, targetDBName, data);
-            DatabaseMigrationSqlVmResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            DatabaseMigrationSqlVmData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_CreateOrUpdateDatabaseMigrationResourceWithMinimumParameters()
-        {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/SqlVmCreateOrUpdateDatabaseMigrationMIN.json
-            // this example is just showing the usage of "DatabaseMigrationsSqlVm_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "testrg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this DatabaseMigrationSqlVmResource
-            DatabaseMigrationSqlVmCollection collection = resourceGroupResource.GetDatabaseMigrationSqlVms();
-
-            // invoke the operation
-            string sqlVirtualMachineName = "testvm";
-            string targetDBName = "db1";
-            DatabaseMigrationSqlVmData data = new DatabaseMigrationSqlVmData()
-            {
-                Properties = new DatabaseMigrationSqlVmProperties()
-                {
-                    BackupConfiguration = new BackupConfiguration()
-                    {
-                        SourceLocation = new SourceLocation()
-                        {
-                            FileShare = new SqlFileShare()
-                            {
-                                Path = "C:\\aaa\\bbb\\ccc",
-                                Username = "name",
-                                Password = "placeholder",
-                            },
-                        },
-                        TargetLocation = new TargetLocation()
-                        {
-                            StorageAccountResourceId = "account.database.windows.net",
-                            AccountKey = "abcd",
-                        },
-                    },
-                    Scope = "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/testvm",
-                    SourceSqlConnection = new SqlConnectionInformation()
-                    {
-                        DataSource = "aaa",
-                        Authentication = "WindowsAuthentication",
-                        UserName = "bbb",
-                        Password = "placeholder",
-                        EncryptConnection = true,
-                        TrustServerCertificate = true,
-                    },
-                    SourceDatabaseName = "aaa",
-                    MigrationService = "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.DataMigration/sqlMigrationServices/testagent",
-                },
-            };
-            ArmOperation<DatabaseMigrationSqlVmResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, sqlVirtualMachineName, targetDBName, data);
-            DatabaseMigrationSqlVmResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            DatabaseMigrationSqlVmData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

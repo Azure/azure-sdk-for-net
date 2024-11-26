@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             DevOpsProjectResource devOpsProject = client.GetDevOpsProjectResource(devOpsProjectResourceId);
 
             // invoke the operation
-            DevOpsProjectData data = new DevOpsProjectData()
+            DevOpsProjectData data = new DevOpsProjectData
             {
-                Properties = new DevOpsProjectProperties()
+                Properties = new DevOpsProjectProperties
                 {
                     OnboardingState = ResourceOnboardingState.NotApplicable,
-                    ActionableRemediation = new ActionableRemediation()
+                    ActionableRemediation = new ActionableRemediation
                     {
                         State = ActionableRemediationState.Enabled,
                     },

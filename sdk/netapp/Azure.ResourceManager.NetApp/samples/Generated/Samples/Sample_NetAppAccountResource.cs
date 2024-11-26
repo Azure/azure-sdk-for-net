@@ -10,44 +10,12 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.NetApp.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetApp.Samples
 {
     public partial class Sample_NetAppAccountResource
     {
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetNetAppAccounts_AccountsList()
-        {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2024-07-01-preview/examples/Accounts_List.json
-            // this example is just showing the usage of "Accounts_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (NetAppAccountResource item in subscriptionResource.GetNetAppAccountsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                NetAppAccountData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Get_AccountsGet()
@@ -125,11 +93,11 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppAccountResource netAppAccount = client.GetNetAppAccountResource(netAppAccountResourceId);
 
             // invoke the operation
-            NetAppAccountPatch patch = new NetAppAccountPatch(new AzureLocation("placeholder"))
+            NetAppAccountPatch patch = new NetAppAccountPatch(default)
             {
                 Tags =
 {
-["Tag1"] = "Value1",
+["Tag1"] = "Value1"
 },
             };
             ArmOperation<NetAppAccountResource> lro = await netAppAccount.UpdateAsync(WaitUntil.Completed, patch);
@@ -244,7 +212,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             // invoke the operation
             ChangeKeyVault body = new ChangeKeyVault(new Uri("https://my-key-vault.managedhsm.azure.net"), "rsakey", new KeyVaultPrivateEndpoint[]
             {
-new KeyVaultPrivateEndpoint()
+new KeyVaultPrivateEndpoint
 {
 VirtualNetworkId = "/subscriptions/D633CC2E-722B-4AE1-B636-BBD9E4C60ED9/resourceGroups/myRG/providers/Microsoft.Network/virtualNetworks/vnet1",
 PrivateEndpointId = "/subscriptions/D633CC2E-722B-4AE1-B636-BBD9E4C60ED9/resourceGroups/myRG/providers/Microsoft.Network/privateEndpoints/privip1",

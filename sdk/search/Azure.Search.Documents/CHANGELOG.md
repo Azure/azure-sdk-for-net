@@ -1,6 +1,6 @@
 # Release History
 
-## 11.7.0-beta.2 (Unreleased)
+## 11.7.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,22 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 11.7.0-beta.2 (2024-11-25)
+
+### Features Added
+- `FacetResults` is now a recursive data structure to support hierarchical aggregation and facet filtering.
+- `QueryAnswer` now supports a `MaxCharLength` option to limit the character length of the answer.
+- `QueryCaption` now supports a `MaxCharLength` option to limit the character length of the caption.
+- `VectorizableTextQuery` now supports a `QueryRewrites` option to specify the number query rewrites the service will generate.
+- `SemanticSearchOptions` now supports a `QueryRewrites` option to specify the number query rewrites the service will generate.
+- `VectorSearchCompression` now supports configuring the `RescoringOptions`.
+- `IndexingParametersConfiguration` now supports two additional options for `MarkdownParsingSubmode` and `MarkdownHeaderDepth`.
+- Added a new skill: `DocumentIntelligenceLayoutSkill` that extracts content and layout information (as markdown), via Azure AI Services, from files within the enrichment pipeline.
+- Added 2 subtypes of `CognitiveServiceAccounts`: `AzureCognitiveServiceAccount` and `AzureCognitiveServiceAccountKey`.
+
+### Bugs Fixed
+- Fixed a bug in the `SearchResult.DocumentDebugInfo` property by changing its type from `IReadOnlyList<DocumentDebugInfo>` to `DocumentDebugInfo`. ([#46958](https://github.com/Azure/azure-sdk-for-net/issues/46958))
 
 ## 11.7.0-beta.1 (2024-09-24)
 

@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.NetworkFunction.Samples
             CollectorPolicyResource collectorPolicy = client.GetCollectorPolicyResource(collectorPolicyResourceId);
 
             // invoke the operation
-            TagsObject tagsObject = new TagsObject()
+            TagsObject tagsObject = new TagsObject
             {
                 Tags =
 {
 ["key1"] = "value1",
-["key2"] = "value2",
+["key2"] = "value2"
 },
             };
             CollectorPolicyResource result = await collectorPolicy.UpdateAsync(tagsObject);

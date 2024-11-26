@@ -49,6 +49,33 @@ namespace Azure.ResourceManager.NetApp.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_BackupPoliciesDelete()
+        {
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2024-07-01-preview/examples/BackupPolicies_Delete.json
+            // this example is just showing the usage of "BackupPolicies_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetAppBackupPolicyResource created on azure
+            // for more information of creating NetAppBackupPolicyResource, please refer to the document of NetAppBackupPolicyResource
+            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
+            string resourceGroupName = "resourceGroup";
+            string accountName = "accountName";
+            string backupPolicyName = "backupPolicyName";
+            ResourceIdentifier netAppBackupPolicyResourceId = NetAppBackupPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, backupPolicyName);
+            NetAppBackupPolicyResource netAppBackupPolicy = client.GetNetAppBackupPolicyResource(netAppBackupPolicyResourceId);
+
+            // invoke the operation
+            await netAppBackupPolicy.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_BackupPoliciesUpdate()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2024-07-01-preview/examples/BackupPolicies_Update.json
@@ -84,33 +111,6 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppBackupPolicyData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_BackupPoliciesDelete()
-        {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2024-07-01-preview/examples/BackupPolicies_Delete.json
-            // this example is just showing the usage of "BackupPolicies_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this NetAppBackupPolicyResource created on azure
-            // for more information of creating NetAppBackupPolicyResource, please refer to the document of NetAppBackupPolicyResource
-            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
-            string resourceGroupName = "resourceGroup";
-            string accountName = "accountName";
-            string backupPolicyName = "backupPolicyName";
-            ResourceIdentifier netAppBackupPolicyResourceId = NetAppBackupPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, backupPolicyName);
-            NetAppBackupPolicyResource netAppBackupPolicy = client.GetNetAppBackupPolicyResource(netAppBackupPolicyResourceId);
-
-            // invoke the operation
-            await netAppBackupPolicy.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
         }
     }
 }

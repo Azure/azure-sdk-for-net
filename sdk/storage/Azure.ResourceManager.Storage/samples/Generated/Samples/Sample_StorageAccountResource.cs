@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Storage.Models;
 using NUnit.Framework;
 
@@ -18,57 +17,6 @@ namespace Azure.ResourceManager.Storage.Samples
 {
     public partial class Sample_StorageAccountResource
     {
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CheckStorageAccountNameAvailability_StorageAccountCheckNameAvailability()
-        {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountCheckNameAvailability.json
-            // this example is just showing the usage of "StorageAccounts_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation
-            StorageAccountNameAvailabilityContent content = new StorageAccountNameAvailabilityContent("sto3363");
-            StorageAccountNameAvailabilityResult result = await subscriptionResource.CheckStorageAccountNameAvailabilityAsync(content);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_StorageAccountDelete()
-        {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountDelete.json
-            // this example is just showing the usage of "StorageAccounts_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this StorageAccountResource created on azure
-            // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "res4228";
-            string accountName = "sto2434";
-            ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
-
-            // invoke the operation
-            await storageAccount.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
-        }
-
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Get_StorageAccountGetAsyncSkuConversionStatus()
@@ -253,6 +201,32 @@ namespace Azure.ResourceManager.Storage.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_StorageAccountDelete()
+        {
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountDelete.json
+            // this example is just showing the usage of "StorageAccounts_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StorageAccountResource created on azure
+            // for more information of creating StorageAccountResource, please refer to the document of StorageAccountResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "res4228";
+            string accountName = "sto2434";
+            ResourceIdentifier storageAccountResourceId = StorageAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
+
+            // invoke the operation
+            await storageAccount.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_StorageAccountEnableAD()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountEnableAD.json
@@ -272,7 +246,7 @@ namespace Azure.ResourceManager.Storage.Samples
             StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
 
             // invoke the operation
-            StorageAccountPatch patch = new StorageAccountPatch()
+            StorageAccountPatch patch = new StorageAccountPatch
             {
                 AzureFilesIdentityBasedAuthentication = new FilesIdentityBasedAuthentication(DirectoryServiceOption.AD)
                 {
@@ -317,25 +291,25 @@ namespace Azure.ResourceManager.Storage.Samples
             StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
 
             // invoke the operation
-            StorageAccountPatch patch = new StorageAccountPatch()
+            StorageAccountPatch patch = new StorageAccountPatch
             {
-                Encryption = new StorageAccountEncryption()
+                Encryption = new StorageAccountEncryption
                 {
-                    Services = new StorageAccountEncryptionServices()
+                    Services = new StorageAccountEncryptionServices
                     {
-                        Blob = new StorageEncryptionService()
+                        Blob = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
-                        File = new StorageEncryptionService()
+                        File = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
                     },
                     KeySource = StorageAccountKeySource.KeyVault,
-                    KeyVaultProperties = new StorageAccountKeyVaultProperties()
+                    KeyVaultProperties = new StorageAccountKeyVaultProperties
                     {
                         KeyName = "wrappingKey",
                         KeyVersion = "",
@@ -373,18 +347,18 @@ namespace Azure.ResourceManager.Storage.Samples
             StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
 
             // invoke the operation
-            StorageAccountPatch patch = new StorageAccountPatch()
+            StorageAccountPatch patch = new StorageAccountPatch
             {
-                Encryption = new StorageAccountEncryption()
+                Encryption = new StorageAccountEncryption
                 {
-                    Services = new StorageAccountEncryptionServices()
+                    Services = new StorageAccountEncryptionServices
                     {
-                        Blob = new StorageEncryptionService()
+                        Blob = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
-                        File = new StorageEncryptionService()
+                        File = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
@@ -399,16 +373,13 @@ namespace Azure.ResourceManager.Storage.Samples
                 IsExtendedGroupEnabled = true,
                 NetworkRuleSet = new StorageAccountNetworkRuleSet(StorageNetworkDefaultAction.Allow)
                 {
-                    ResourceAccessRules =
-{
-new StorageAccountResourceAccessRule()
+                    ResourceAccessRules = {new StorageAccountResourceAccessRule
 {
 TenantId = Guid.Parse("72f988bf-86f1-41af-91ab-2d7cd011db47"),
 ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c809a96a8bc/resourceGroups/res9407/providers/Microsoft.Synapse/workspaces/testworkspace"),
-}
-},
+}},
                 },
-                RoutingPreference = new StorageRoutingPreference()
+                RoutingPreference = new StorageRoutingPreference
                 {
                     RoutingChoice = StorageRoutingChoice.MicrosoftRouting,
                     IsMicrosoftEndpointsPublished = true,
@@ -449,18 +420,18 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
 
             // invoke the operation
-            StorageAccountPatch patch = new StorageAccountPatch()
+            StorageAccountPatch patch = new StorageAccountPatch
             {
-                Encryption = new StorageAccountEncryption()
+                Encryption = new StorageAccountEncryption
                 {
-                    Services = new StorageAccountEncryptionServices()
+                    Services = new StorageAccountEncryptionServices
                     {
-                        Blob = new StorageEncryptionService()
+                        Blob = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
-                        File = new StorageEncryptionService()
+                        File = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
@@ -472,16 +443,13 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
                 KeyExpirationPeriodInDays = 20,
                 NetworkRuleSet = new StorageAccountNetworkRuleSet(StorageNetworkDefaultAction.Allow)
                 {
-                    ResourceAccessRules =
-{
-new StorageAccountResourceAccessRule()
+                    ResourceAccessRules = {new StorageAccountResourceAccessRule
 {
 TenantId = Guid.Parse("72f988bf-86f1-41af-91ab-2d7cd011db47"),
 ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c809a96a8bc/resourceGroups/res9407/providers/Microsoft.Synapse/workspaces/testworkspace"),
-}
-},
+}},
                 },
-                RoutingPreference = new StorageRoutingPreference()
+                RoutingPreference = new StorageRoutingPreference
                 {
                     RoutingChoice = StorageRoutingChoice.MicrosoftRouting,
                     IsMicrosoftEndpointsPublished = true,
@@ -522,18 +490,18 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
 
             // invoke the operation
-            StorageAccountPatch patch = new StorageAccountPatch()
+            StorageAccountPatch patch = new StorageAccountPatch
             {
-                Encryption = new StorageAccountEncryption()
+                Encryption = new StorageAccountEncryption
                 {
-                    Services = new StorageAccountEncryptionServices()
+                    Services = new StorageAccountEncryptionServices
                     {
-                        Blob = new StorageEncryptionService()
+                        Blob = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
-                        File = new StorageEncryptionService()
+                        File = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
@@ -545,16 +513,13 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
                 KeyExpirationPeriodInDays = 20,
                 NetworkRuleSet = new StorageAccountNetworkRuleSet(StorageNetworkDefaultAction.Allow)
                 {
-                    ResourceAccessRules =
-{
-new StorageAccountResourceAccessRule()
+                    ResourceAccessRules = {new StorageAccountResourceAccessRule
 {
 TenantId = Guid.Parse("72f988bf-86f1-41af-91ab-2d7cd011db47"),
 ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c809a96a8bc/resourceGroups/res9407/providers/Microsoft.Synapse/workspaces/testworkspace"),
-}
-},
+}},
                 },
-                RoutingPreference = new StorageRoutingPreference()
+                RoutingPreference = new StorageRoutingPreference
                 {
                     RoutingChoice = StorageRoutingChoice.MicrosoftRouting,
                     IsMicrosoftEndpointsPublished = true,
@@ -595,40 +560,40 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
 
             // invoke the operation
-            StorageAccountPatch patch = new StorageAccountPatch()
+            StorageAccountPatch patch = new StorageAccountPatch
             {
                 Sku = new StorageSku(StorageSkuName.StandardLrs),
                 Identity = new ManagedServiceIdentity("UserAssigned")
                 {
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/res9101/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{managed-identity-name}")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/res9101/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{managed-identity-name}")] = new UserAssignedIdentity()
 },
                 },
                 Kind = StorageKind.Storage,
-                Encryption = new StorageAccountEncryption()
+                Encryption = new StorageAccountEncryption
                 {
-                    Services = new StorageAccountEncryptionServices()
+                    Services = new StorageAccountEncryptionServices
                     {
-                        Blob = new StorageEncryptionService()
+                        Blob = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
-                        File = new StorageEncryptionService()
+                        File = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
                     },
                     KeySource = StorageAccountKeySource.KeyVault,
-                    KeyVaultProperties = new StorageAccountKeyVaultProperties()
+                    KeyVaultProperties = new StorageAccountKeyVaultProperties
                     {
                         KeyName = "wrappingKey",
                         KeyVersion = "",
                         KeyVaultUri = new Uri("https://myvault8569.vault.azure.net"),
                     },
-                    EncryptionIdentity = new StorageAccountEncryptionIdentity()
+                    EncryptionIdentity = new StorageAccountEncryptionIdentity
                     {
                         EncryptionUserAssignedIdentity = "/subscriptions/{subscription-id}/resourceGroups/res9101/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{managed-identity-name}",
                     },
@@ -664,40 +629,40 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
 
             // invoke the operation
-            StorageAccountPatch patch = new StorageAccountPatch()
+            StorageAccountPatch patch = new StorageAccountPatch
             {
                 Sku = new StorageSku(StorageSkuName.StandardLrs),
                 Identity = new ManagedServiceIdentity("UserAssigned")
                 {
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/res9101/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{managed-identity-name}")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/res9101/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{managed-identity-name}")] = new UserAssignedIdentity()
 },
                 },
                 Kind = StorageKind.Storage,
-                Encryption = new StorageAccountEncryption()
+                Encryption = new StorageAccountEncryption
                 {
-                    Services = new StorageAccountEncryptionServices()
+                    Services = new StorageAccountEncryptionServices
                     {
-                        Blob = new StorageEncryptionService()
+                        Blob = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
-                        File = new StorageEncryptionService()
+                        File = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
                     },
                     KeySource = StorageAccountKeySource.KeyVault,
-                    KeyVaultProperties = new StorageAccountKeyVaultProperties()
+                    KeyVaultProperties = new StorageAccountKeyVaultProperties
                     {
                         KeyName = "wrappingKey",
                         KeyVersion = "",
                         KeyVaultUri = new Uri("https://myvault8569.vault.azure.net"),
                     },
-                    EncryptionIdentity = new StorageAccountEncryptionIdentity()
+                    EncryptionIdentity = new StorageAccountEncryptionIdentity
                     {
                         EncryptionUserAssignedIdentity = "/subscriptions/{subscription-id}/resourceGroups/res9101/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{managed-identity-name}",
                         EncryptionFederatedIdentityClientId = "3109d1c4-a5de-4d84-8832-feabb916a4b6",
@@ -734,12 +699,12 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
 
             // invoke the operation
-            StorageAccountPatch patch = new StorageAccountPatch()
+            StorageAccountPatch patch = new StorageAccountPatch
             {
-                ImmutableStorageWithVersioning = new ImmutableStorageAccount()
+                ImmutableStorageWithVersioning = new ImmutableStorageAccount
                 {
                     IsEnabled = true,
-                    ImmutabilityPolicy = new AccountImmutabilityPolicy()
+                    ImmutabilityPolicy = new AccountImmutabilityPolicy
                     {
                         ImmutabilityPeriodSinceCreationInDays = 15,
                         State = AccountImmutabilityPolicyState.Locked,
@@ -754,37 +719,6 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             StorageAccountData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetStorageAccounts_StorageAccountList()
-        {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountList.json
-            // this example is just showing the usage of "StorageAccounts_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (StorageAccountResource item in subscriptionResource.GetStorageAccountsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                StorageAccountData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -1094,9 +1028,10 @@ ResourceId = new ResourceIdentifier("/subscriptions/a7e99807-abbf-4642-bdec-2c80
             StorageAccountResource storageAccount = client.GetStorageAccountResource(storageAccountResourceId);
 
             // invoke the operation
-            BlobRestoreContent content = new BlobRestoreContent(DateTimeOffset.Parse("placeholder"), new BlobRestoreRange[]
+            BlobRestoreContent content = new BlobRestoreContent(default, new BlobRestoreRange[]
             {
-new BlobRestoreRange("container/blobpath1","container/blobpath2"),new BlobRestoreRange("container2/blobpath3","")
+new BlobRestoreRange("container/blobpath1", "container/blobpath2"),
+new BlobRestoreRange("container2/blobpath3", "")
             });
             ArmOperation<BlobRestoreStatus> lro = await storageAccount.RestoreBlobRangesAsync(WaitUntil.Completed, content);
             BlobRestoreStatus result = lro.Value;

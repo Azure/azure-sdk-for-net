@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Sql.Samples
             LongTermRetentionPolicyResource longTermRetentionPolicy = client.GetLongTermRetentionPolicyResource(longTermRetentionPolicyResourceId);
 
             // invoke the operation
-            LongTermRetentionPolicyData data = new LongTermRetentionPolicyData()
+            LongTermRetentionPolicyData data = new LongTermRetentionPolicyData
             {
                 MakeBackupsImmutable = true,
                 BackupStorageAccessTier = SqlBackupStorageAccessTier.Hot,

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             {
                 return null;
             }
-            EndpointType type = default;
+            HybridConnectivityEndpointType type = default;
             ResourceIdentifier resourceId = default;
             string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             {
                 if (property.NameEquals("type"u8))
                 {
-                    type = new EndpointType(property.Value.GetString());
+                    type = new HybridConnectivityEndpointType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceId"u8))
