@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             ContainerRegistryAgentPoolResource containerRegistryAgentPool = client.GetContainerRegistryAgentPoolResource(containerRegistryAgentPoolResourceId);
 
             // invoke the operation
-            ContainerRegistryAgentPoolPatch patch = new ContainerRegistryAgentPoolPatch()
+            ContainerRegistryAgentPoolPatch patch = new ContainerRegistryAgentPoolPatch
             {
                 Count = 1,
             };
