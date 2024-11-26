@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Communication.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Communication.Samples
@@ -94,11 +93,11 @@ namespace Azure.ResourceManager.Communication.Samples
             EmailServiceResource emailServiceResource = client.GetEmailServiceResource(emailServiceResourceId);
 
             // invoke the operation
-            EmailServiceResourcePatch patch = new EmailServiceResourcePatch()
+            EmailServiceResourcePatch patch = new EmailServiceResourcePatch
             {
                 Tags =
 {
-["newTag"] = "newVal",
+["newTag"] = "newVal"
 },
             };
             ArmOperation<EmailServiceResource> lro = await emailServiceResource.UpdateAsync(WaitUntil.Completed, patch);
@@ -109,64 +108,6 @@ namespace Azure.ResourceManager.Communication.Samples
             EmailServiceResourceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetEmailServiceResources_ListEmailServiceResourcesBySubscription()
-        {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/emailServices/listBySubscription.json
-            // this example is just showing the usage of "EmailServices_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "11112222-3333-4444-5555-666677778888";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (EmailServiceResource item in subscriptionResource.GetEmailServiceResourcesAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                EmailServiceResourceData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetVerifiedExchangeOnlineDomainsEmailServices_GetVerifiedExchangeOnlineDomains()
-        {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/emailServices/getVerifiedExchangeOnlineDomains.json
-            // this example is just showing the usage of "EmailServices_ListVerifiedExchangeOnlineDomains" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "11112222-3333-4444-5555-666677778888";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (string item in subscriptionResource.GetVerifiedExchangeOnlineDomainsEmailServicesAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
         }
     }
 }

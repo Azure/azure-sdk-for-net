@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
             UserSessionResource userSession = client.GetUserSessionResource(userSessionResourceId);
 
             // invoke the operation
-            UserSessionMessage sendMessage = new UserSessionMessage()
+            UserSessionMessage sendMessage = new UserSessionMessage
             {
                 MessageTitle = "title",
                 MessageBody = "body",

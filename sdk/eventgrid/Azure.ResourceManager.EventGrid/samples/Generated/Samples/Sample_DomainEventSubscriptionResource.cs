@@ -18,36 +18,6 @@ namespace Azure.ResourceManager.EventGrid.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetDeliveryAttributes_DomainEventSubscriptionsGetDeliveryAttributes()
-        {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/DomainEventSubscriptions_GetDeliveryAttributes.json
-            // this example is just showing the usage of "DomainEventSubscriptions_GetDeliveryAttributes" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this DomainEventSubscriptionResource created on azure
-            // for more information of creating DomainEventSubscriptionResource, please refer to the document of DomainEventSubscriptionResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
-            string resourceGroupName = "examplerg";
-            string domainName = "exampleDomain1";
-            string eventSubscriptionName = "examplesubscription1";
-            ResourceIdentifier domainEventSubscriptionResourceId = DomainEventSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, domainName, eventSubscriptionName);
-            DomainEventSubscriptionResource domainEventSubscription = client.GetDomainEventSubscriptionResource(domainEventSubscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (DeliveryAttributeMapping item in domainEventSubscription.GetDeliveryAttributesAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Get_DomainEventSubscriptionsGet()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/DomainEventSubscriptions_Get.json
@@ -126,22 +96,19 @@ namespace Azure.ResourceManager.EventGrid.Samples
             DomainEventSubscriptionResource domainEventSubscription = client.GetDomainEventSubscriptionResource(domainEventSubscriptionResourceId);
 
             // invoke the operation
-            EventGridSubscriptionPatch patch = new EventGridSubscriptionPatch()
+            EventGridSubscriptionPatch patch = new EventGridSubscriptionPatch
             {
-                Destination = new WebHookEventSubscriptionDestination()
+                Destination = new WebHookEventSubscriptionDestination
                 {
                     Endpoint = new Uri("https://requestb.in/15ksip71"),
                 },
-                Filter = new EventSubscriptionFilter()
+                Filter = new EventSubscriptionFilter
                 {
                     SubjectBeginsWith = "existingPrefix",
                     SubjectEndsWith = "newSuffix",
                     IsSubjectCaseSensitive = true,
                 },
-                Labels =
-{
-"label1","label2"
-},
+                Labels = { "label1", "label2" },
             };
             ArmOperation<DomainEventSubscriptionResource> lro = await domainEventSubscription.UpdateAsync(WaitUntil.Completed, patch);
             DomainEventSubscriptionResource result = lro.Value;
@@ -151,6 +118,36 @@ namespace Azure.ResourceManager.EventGrid.Samples
             EventGridSubscriptionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetDeliveryAttributes_DomainEventSubscriptionsGetDeliveryAttributes()
+        {
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/DomainEventSubscriptions_GetDeliveryAttributes.json
+            // this example is just showing the usage of "DomainEventSubscriptions_GetDeliveryAttributes" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DomainEventSubscriptionResource created on azure
+            // for more information of creating DomainEventSubscriptionResource, please refer to the document of DomainEventSubscriptionResource
+            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string resourceGroupName = "examplerg";
+            string domainName = "exampleDomain1";
+            string eventSubscriptionName = "examplesubscription1";
+            ResourceIdentifier domainEventSubscriptionResourceId = DomainEventSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, domainName, eventSubscriptionName);
+            DomainEventSubscriptionResource domainEventSubscription = client.GetDomainEventSubscriptionResource(domainEventSubscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (DeliveryAttributeMapping item in domainEventSubscription.GetDeliveryAttributesAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
 
         [Test]

@@ -32,7 +32,9 @@ namespace Azure.Search.Documents.Models
         /// <param name="nextLink"> Continuation URL returned when the query can't return all the requested results in a single response. You can use this URL to formulate another GET or POST Search request to get the next part of the search response. Make sure to use the same verb (GET or POST) as the request that produced this response. </param>
         /// <param name="semanticPartialResponseReason"> Reason that a partial response was returned for a semantic ranking request. </param>
         /// <param name="semanticPartialResponseType"> Type of partial response that was returned for a semantic ranking request. </param>
-        internal SearchDocumentsResult(long? count, double? coverage, IReadOnlyDictionary<string, IList<FacetResult>> facets, IReadOnlyList<QueryAnswerResult> answers, SearchOptions nextPageParameters, IReadOnlyList<SearchResult> results, string nextLink, SemanticErrorReason? semanticPartialResponseReason, SemanticSearchResultsType? semanticPartialResponseType)
+        /// <param name="semanticQueryRewritesResultType"> Type of query rewrite that was used to retrieve documents. </param>
+        /// <param name="debugInfo"> Debug information that applies to the search results as a whole. </param>
+        internal SearchDocumentsResult(long? count, double? coverage, IReadOnlyDictionary<string, IList<FacetResult>> facets, IReadOnlyList<QueryAnswerResult> answers, SearchOptions nextPageParameters, IReadOnlyList<SearchResult> results, string nextLink, SemanticErrorReason? semanticPartialResponseReason, SemanticSearchResultsType? semanticPartialResponseType, SemanticQueryRewritesResultType? semanticQueryRewritesResultType, DebugInfo debugInfo)
         {
             Count = count;
             Coverage = coverage;
@@ -43,6 +45,8 @@ namespace Azure.Search.Documents.Models
             NextLink = nextLink;
             SemanticPartialResponseReason = semanticPartialResponseReason;
             SemanticPartialResponseType = semanticPartialResponseType;
+            SemanticQueryRewritesResultType = semanticQueryRewritesResultType;
+            DebugInfo = debugInfo;
         }
 
         /// <summary> The total count of results found by the search operation, or null if the count was not requested. If present, the count may be greater than the number of results in this response. This can happen if you use the $top or $skip parameters, or if the query can't return all the requested documents in a single response. </summary>
@@ -63,5 +67,9 @@ namespace Azure.Search.Documents.Models
         public SemanticErrorReason? SemanticPartialResponseReason { get; }
         /// <summary> Type of partial response that was returned for a semantic ranking request. </summary>
         public SemanticSearchResultsType? SemanticPartialResponseType { get; }
+        /// <summary> Type of query rewrite that was used to retrieve documents. </summary>
+        public SemanticQueryRewritesResultType? SemanticQueryRewritesResultType { get; }
+        /// <summary> Debug information that applies to the search results as a whole. </summary>
+        public DebugInfo DebugInfo { get; }
     }
 }

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Billing.Samples
             PartnerTransferDetailResource partnerTransferDetail = client.GetPartnerTransferDetailResource(partnerTransferDetailResourceId);
 
             // invoke the operation
-            PartnerTransferDetailCreateOrUpdateContent content = new PartnerTransferDetailCreateOrUpdateContent()
+            PartnerTransferDetailCreateOrUpdateContent content = new PartnerTransferDetailCreateOrUpdateContent
             {
                 RecipientEmailId = "user@contoso.com",
             };

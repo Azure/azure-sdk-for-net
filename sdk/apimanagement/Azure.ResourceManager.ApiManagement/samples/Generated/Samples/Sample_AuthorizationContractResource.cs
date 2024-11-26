@@ -50,6 +50,35 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_ApiManagementDeleteAuthorization()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementDeleteAuthorization.json
+            // this example is just showing the usage of "Authorization_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AuthorizationContractResource created on azure
+            // for more information of creating AuthorizationContractResource, please refer to the document of AuthorizationContractResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string authorizationProviderId = "aadwithauthcode";
+            string authorizationId = "authz1";
+            ResourceIdentifier authorizationContractResourceId = AuthorizationContractResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, authorizationProviderId, authorizationId);
+            AuthorizationContractResource authorizationContract = client.GetAuthorizationContractResource(authorizationContractResourceId);
+
+            // invoke the operation
+            ETag ifMatch = new ETag("*");
+            await authorizationContract.DeleteAsync(WaitUntil.Completed, ifMatch);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ApiManagementCreateAuthorizationAADAuthCode()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateAuthorizationAADAuthCode.json
@@ -71,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             AuthorizationContractResource authorizationContract = client.GetAuthorizationContractResource(authorizationContractResourceId);
 
             // invoke the operation
-            AuthorizationContractData data = new AuthorizationContractData()
+            AuthorizationContractData data = new AuthorizationContractData
             {
                 AuthorizationType = ApiManagementAuthorizationType.OAuth2,
                 OAuth2GrantType = OAuth2GrantType.AuthorizationCode,
@@ -109,14 +138,14 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             AuthorizationContractResource authorizationContract = client.GetAuthorizationContractResource(authorizationContractResourceId);
 
             // invoke the operation
-            AuthorizationContractData data = new AuthorizationContractData()
+            AuthorizationContractData data = new AuthorizationContractData
             {
                 AuthorizationType = ApiManagementAuthorizationType.OAuth2,
                 OAuth2GrantType = OAuth2GrantType.AuthorizationCode,
                 Parameters =
 {
 ["clientId"] = "53790925-fdd3-4b80-bc7a-4c3aaf25801d",
-["clientSecret"] = "xxxxxxxxxxxxxxx~xxxxxxxxx",
+["clientSecret"] = "xxxxxxxxxxxxxxx~xxxxxxxxx"
 },
             };
             ArmOperation<AuthorizationContractResource> lro = await authorizationContract.UpdateAsync(WaitUntil.Completed, data);
@@ -127,35 +156,6 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             AuthorizationContractData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_ApiManagementDeleteAuthorization()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementDeleteAuthorization.json
-            // this example is just showing the usage of "Authorization_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AuthorizationContractResource created on azure
-            // for more information of creating AuthorizationContractResource, please refer to the document of AuthorizationContractResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string authorizationProviderId = "aadwithauthcode";
-            string authorizationId = "authz1";
-            ResourceIdentifier authorizationContractResourceId = AuthorizationContractResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, authorizationProviderId, authorizationId);
-            AuthorizationContractResource authorizationContract = client.GetAuthorizationContractResource(authorizationContractResourceId);
-
-            // invoke the operation
-            ETag ifMatch = new ETag("*");
-            await authorizationContract.DeleteAsync(WaitUntil.Completed, ifMatch);
-
-            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             AuthorizationContractResource authorizationContract = client.GetAuthorizationContractResource(authorizationContractResourceId);
 
             // invoke the operation
-            AuthorizationConfirmConsentCodeContent content = new AuthorizationConfirmConsentCodeContent()
+            AuthorizationConfirmConsentCodeContent content = new AuthorizationConfirmConsentCodeContent
             {
                 ConsentCode = "theconsentcode",
             };
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             AuthorizationContractResource authorizationContract = client.GetAuthorizationContractResource(authorizationContractResourceId);
 
             // invoke the operation
-            AuthorizationLoginContent content = new AuthorizationLoginContent()
+            AuthorizationLoginContent content = new AuthorizationLoginContent
             {
                 PostLoginRedirectUri = new Uri("https://www.bing.com/"),
             };

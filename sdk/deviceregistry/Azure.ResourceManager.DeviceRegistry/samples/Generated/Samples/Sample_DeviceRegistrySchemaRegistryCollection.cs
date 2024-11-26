@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ListSchemaRegistriesResourceGroup()
+        public async Task CreateOrUpdate_CreateSchemaRegistry()
         {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2024-09-01-preview/examples/List_SchemaRegistries_ResourceGroup.json
-            // this example is just showing the usage of "SchemaRegistries_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2024-09-01-preview/examples/Create_SchemaRegistry.json
+            // this example is just showing the usage of "SchemaRegistries_CreateOrReplace" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -40,17 +40,26 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             // get the collection of this DeviceRegistrySchemaRegistryResource
             DeviceRegistrySchemaRegistryCollection collection = resourceGroupResource.GetDeviceRegistrySchemaRegistries();
 
-            // invoke the operation and iterate over the result
-            await foreach (DeviceRegistrySchemaRegistryResource item in collection.GetAllAsync())
+            // invoke the operation
+            string schemaRegistryName = "my-schema-registry";
+            DeviceRegistrySchemaRegistryData data = new DeviceRegistrySchemaRegistryData(new AzureLocation("West Europe"))
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                DeviceRegistrySchemaRegistryData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                Properties = new SchemaRegistryProperties("sr-namespace-001", new Uri("my-blob-storage.blob.core.windows.net/my-container"))
+                {
+                    DisplayName = "Schema Registry namespace 001",
+                    Description = "This is a sample Schema Registry",
+                },
+                Identity = new ManagedServiceIdentity("None"),
+                Tags = { },
+            };
+            ArmOperation<DeviceRegistrySchemaRegistryResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, schemaRegistryName, data);
+            DeviceRegistrySchemaRegistryResource result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DeviceRegistrySchemaRegistryData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
@@ -84,6 +93,41 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             DeviceRegistrySchemaRegistryData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListSchemaRegistriesResourceGroup()
+        {
+            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2024-09-01-preview/examples/List_SchemaRegistries_ResourceGroup.json
+            // this example is just showing the usage of "SchemaRegistries_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this DeviceRegistrySchemaRegistryResource
+            DeviceRegistrySchemaRegistryCollection collection = resourceGroupResource.GetDeviceRegistrySchemaRegistries();
+
+            // invoke the operation and iterate over the result
+            await foreach (DeviceRegistrySchemaRegistryResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                DeviceRegistrySchemaRegistryData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -154,52 +198,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_CreateSchemaRegistry()
-        {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2024-09-01-preview/examples/Create_SchemaRegistry.json
-            // this example is just showing the usage of "SchemaRegistries_CreateOrReplace" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "myResourceGroup";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this DeviceRegistrySchemaRegistryResource
-            DeviceRegistrySchemaRegistryCollection collection = resourceGroupResource.GetDeviceRegistrySchemaRegistries();
-
-            // invoke the operation
-            string schemaRegistryName = "my-schema-registry";
-            DeviceRegistrySchemaRegistryData data = new DeviceRegistrySchemaRegistryData(new AzureLocation("West Europe"))
-            {
-                Properties = new SchemaRegistryProperties("sr-namespace-001", new Uri("my-blob-storage.blob.core.windows.net/my-container"))
-                {
-                    DisplayName = "Schema Registry namespace 001",
-                    Description = "This is a sample Schema Registry",
-                },
-                Identity = new ManagedServiceIdentity("None"),
-                Tags =
-{
-},
-            };
-            ArmOperation<DeviceRegistrySchemaRegistryResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, schemaRegistryName, data);
-            DeviceRegistrySchemaRegistryResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            DeviceRegistrySchemaRegistryData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

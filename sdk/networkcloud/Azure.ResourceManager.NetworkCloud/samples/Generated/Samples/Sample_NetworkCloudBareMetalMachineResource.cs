@@ -10,44 +10,12 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.NetworkCloud.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetworkCloud.Samples
 {
     public partial class Sample_NetworkCloudBareMetalMachineResource
     {
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetNetworkCloudBareMetalMachines_ListBareMetalMachinesForSubscription()
-        {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/BareMetalMachines_ListBySubscription.json
-            // this example is just showing the usage of "BareMetalMachines_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (NetworkCloudBareMetalMachineResource item in subscriptionResource.GetNetworkCloudBareMetalMachinesAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                NetworkCloudBareMetalMachineData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetBareMetalMachine()
@@ -99,12 +67,12 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudBareMetalMachineResource networkCloudBareMetalMachine = client.GetNetworkCloudBareMetalMachineResource(networkCloudBareMetalMachineResourceId);
 
             // invoke the operation
-            NetworkCloudBareMetalMachinePatch patch = new NetworkCloudBareMetalMachinePatch()
+            NetworkCloudBareMetalMachinePatch patch = new NetworkCloudBareMetalMachinePatch
             {
                 Tags =
 {
 ["key1"] = "myvalue1",
-["key2"] = "myvalue2",
+["key2"] = "myvalue2"
 },
                 MachineDetails = "machinedetails",
             };
@@ -139,7 +107,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudBareMetalMachineResource networkCloudBareMetalMachine = client.GetNetworkCloudBareMetalMachineResource(networkCloudBareMetalMachineResourceId);
 
             // invoke the operation
-            BareMetalMachineCordonContent content = new BareMetalMachineCordonContent()
+            BareMetalMachineCordonContent content = new BareMetalMachineCordonContent
             {
                 Evacuate = BareMetalMachineEvacuate.True,
             };
@@ -170,7 +138,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudBareMetalMachineResource networkCloudBareMetalMachine = client.GetNetworkCloudBareMetalMachineResource(networkCloudBareMetalMachineResourceId);
 
             // invoke the operation
-            BareMetalMachinePowerOffContent content = new BareMetalMachinePowerOffContent()
+            BareMetalMachinePowerOffContent content = new BareMetalMachinePowerOffContent
             {
                 SkipShutdown = BareMetalMachineSkipShutdown.True,
             };
@@ -228,7 +196,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudBareMetalMachineResource networkCloudBareMetalMachine = client.GetNetworkCloudBareMetalMachineResource(networkCloudBareMetalMachineResourceId);
 
             // invoke the operation
-            BareMetalMachineReplaceContent content = new BareMetalMachineReplaceContent()
+            BareMetalMachineReplaceContent content = new BareMetalMachineReplaceContent
             {
                 BmcCredentials = new AdministrativeCredentials("bmcuser")
                 {
@@ -295,10 +263,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             // invoke the operation
             BareMetalMachineRunCommandContent content = new BareMetalMachineRunCommandContent(60L, "cHdkCg==")
             {
-                Arguments =
-{
-"--argument1","argument2"
-},
+                Arguments = { "--argument1", "argument2" },
             };
             ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudBareMetalMachine.RunCommandAsync(WaitUntil.Completed, content);
             NetworkCloudOperationStatusResult result = lro.Value;
@@ -331,10 +296,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             {
 new BareMetalMachineCommandSpecification("hardware-support-data-collection")
 {
-Arguments =
-{
-"SysInfo","TTYLog"
-},
+Arguments = {"SysInfo", "TTYLog"},
 }
             }, 60L);
             ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudBareMetalMachine.RunDataExtractsAsync(WaitUntil.Completed, content);
@@ -368,16 +330,11 @@ Arguments =
             {
 new BareMetalMachineCommandSpecification("kubectl get")
 {
-Arguments =
-{
-"pods","-A"
+Arguments = {"pods", "-A"},
 },
-},new BareMetalMachineCommandSpecification("ping")
+new BareMetalMachineCommandSpecification("ping")
 {
-Arguments =
-{
-"192.168.0.99","-c","3"
-},
+Arguments = {"192.168.0.99", "-c", "3"},
 }
             }, 60L);
             ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudBareMetalMachine.RunReadCommandsAsync(WaitUntil.Completed, content);
