@@ -27,7 +27,7 @@ public class AppServiceFeature : CloudMachineFeature
             Sku = Sku,
             Kind = "app"
         };
-        infrastructure.AddResource(hostingPlan);
+        infrastructure.AddConstruct(hostingPlan);
 
         WebSite appService = new("cm_website")
         {
@@ -59,7 +59,7 @@ public class AppServiceFeature : CloudMachineFeature
                 ]
             }
         };
-        infrastructure.AddResource(appService);
+        infrastructure.AddConstruct(appService);
 
         return appService;
     }

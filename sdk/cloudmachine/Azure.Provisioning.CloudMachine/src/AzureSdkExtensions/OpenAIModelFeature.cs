@@ -3,10 +3,9 @@
 
 using System;
 using System.Diagnostics;
-using Azure.Core;
+using System.Linq;
 using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.CognitiveServices;
-using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.CloudMachine.OpenAI;
@@ -27,17 +26,17 @@ public class OpenAIModelFeature : CloudMachineFeature
 
     private static OpenAIFeature GetOrCreateOpenAI(CloudMachineInfrastructure cm)
     {
-        foreach (OpenAIFeature feature in cm.Features.FindAll<OpenAIFeature>())
-        {
-            return feature;
-        }
-        var openAI = new OpenAIFeature();
+        // TODO: is it OK that we return the first one?
+        OpenAIFeature? openAI = cm.Features.FindAll<OpenAIFeature>().FirstOrDefault();
+        if (openAI != default) return openAI;
+
+        openAI = new OpenAIFeature();
         cm.AddFeature(openAI);
-        cm.Connections.Add("Azure.AI.OpenAI.AzureOpenAIClient", new Uri($"https://{cm.Id}.openai.azure.com"));
+
         return openAI;
     }
 
-    public override void AddTo(CloudMachineInfrastructure cm)
+    protected internal override void AddTo(CloudMachineInfrastructure cm)
     {
         OpenAIFeature openAI = GetOrCreateOpenAI(cm);
 
@@ -95,7 +94,7 @@ public class OpenAIModelFeature : CloudMachineFeature
             }
         };
 
-        cm.AddResource(deployment);
+        cm.AddConstruct(deployment);
 
         return deployment;
     }

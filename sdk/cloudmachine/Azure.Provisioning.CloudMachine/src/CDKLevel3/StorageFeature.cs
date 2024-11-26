@@ -44,17 +44,17 @@ public class StorageFeature : CloudMachineFeature
                     UserAssignedIdentities = { { BicepFunction.Interpolate($"{infrastructure.Identity.Id}").Compile().ToString(), new UserAssignedIdentityDetails() } }
                 }
             };
-        infrastructure.AddResource(_storage);
+        infrastructure.AddConstruct(_storage);
 
         var _blobs = new BlobService("cm_storage_blobs")
         {
             Parent = _storage,
         };
-        infrastructure.AddResource(_blobs);
+        infrastructure.AddConstruct(_blobs);
 
         foreach (var containerName in _containerNames)
         {
-            infrastructure.AddResource(
+            infrastructure.AddConstruct(
                 new BlobContainer("cm_storage_blobs_container_" + containerName, "2023-01-01")
                 {
                     Parent = _blobs,
@@ -71,7 +71,7 @@ public class StorageFeature : CloudMachineFeature
             ]);
 
         // Placeholders for now.
-        infrastructure.AddResource(new ProvisioningOutput($"storage_name", typeof(string)) { Value = _storage.Name });
+        infrastructure.AddConstruct(new ProvisioningOutput($"storage_name", typeof(string)) { Value = _storage.Name });
 
         Emitted = _storage;
         return _storage;

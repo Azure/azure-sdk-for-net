@@ -24,7 +24,7 @@ public class ServiceBusTopicFeature(string name, ServiceBusNamespaceFeature pare
             Status = ServiceBusMessagingEntityStatus.Active
         };
 
-        infrastructure.AddResource(topic);
+        infrastructure.AddConstruct(topic);
         Emitted = topic;
         return topic;
     }

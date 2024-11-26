@@ -26,7 +26,7 @@ public class EventGridSystemTopicFeature(string topicName, CloudMachineFeature s
             Name = topicName
         };
 
-        infrastructure.AddResource(topic);
+        infrastructure.AddConstruct(topic);
 
         Emitted = topic;
         return topic;

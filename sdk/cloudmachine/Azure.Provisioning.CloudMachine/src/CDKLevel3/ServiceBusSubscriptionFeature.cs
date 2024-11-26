@@ -27,7 +27,7 @@ public class ServiceBusSubscriptionFeature(string name, ServiceBusTopicFeature p
             Status = ServiceBusMessagingEntityStatus.Active
         };
 
-        infrastructure.AddResource(subscription);
+        infrastructure.AddConstruct(subscription);
         Emitted = subscription;
         return subscription;
     }

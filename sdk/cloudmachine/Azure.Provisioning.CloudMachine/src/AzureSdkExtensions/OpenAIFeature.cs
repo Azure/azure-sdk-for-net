@@ -15,10 +15,15 @@ internal class OpenAIFeature : CloudMachineFeature
     public OpenAIFeature()
     { }
 
+    protected internal override void AddTo(CloudMachineInfrastructure cm)
+    {
+        cm.Features.Add(this);
+        cm.Connections.Add("Azure.AI.OpenAI.AzureOpenAIClient", new Uri($"https://{cm.Id}.openai.azure.com"));
+    }
     protected override ProvisionableResource EmitCore(CloudMachineInfrastructure cloudMachine)
     {
         CognitiveServicesAccount cognitiveServices = CreateOpenAIAccount(cloudMachine);
-        cloudMachine.AddResource(cognitiveServices);
+        cloudMachine.AddConstruct(cognitiveServices);
 
         RequiredSystemRoles.Add(cognitiveServices, [(CognitiveServicesBuiltInRole.GetBuiltInRoleName(CognitiveServicesBuiltInRole.CognitiveServicesOpenAIContributor) ,CognitiveServicesBuiltInRole.CognitiveServicesOpenAIContributor.ToString())]);
 

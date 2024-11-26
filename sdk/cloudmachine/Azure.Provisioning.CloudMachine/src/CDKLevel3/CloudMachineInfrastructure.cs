@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Authorization;
 using Azure.Provisioning.CloudMachine;
@@ -19,18 +18,23 @@ public class CloudMachineInfrastructure
     internal const string SB_PRIVATE_TOPIC = "cm_servicebus_topic_private";
     internal const string SB_PRIVATE_SUB = "cm_servicebus_subscription_private";
 
-    private readonly Dictionary<string, object> _connections = [];
     private readonly Infrastructure _infrastructure = new("cm");
     private readonly List<Provisionable> _resources = [];
-    internal List<Type> Endpoints { get; } = [];
 
+    internal List<Type> Endpoints { get; } = [];
     public FeatureCollection Features { get; } = new();
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public Dictionary<string, object> Connections { get; } = [];
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public UserAssignedIdentity Identity { get; private set; }
     public string Id { get; private set; }
 
     /// <summary>
     /// The common principalId parameter.
     /// </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public ProvisioningParameter PrincipalIdParameter => new("principalId", typeof(string));
 
     public CloudMachineInfrastructure(string? cmId = default)
@@ -62,14 +66,7 @@ public class CloudMachineInfrastructure
         Features.Add(new SystemTopicEventSubscriptionFeature("cm_eventgrid_subscription_blob", systemTopic, sbTopicPrivate, sbNamespace));
     }
 
-    public void AddResource(NamedProvisionableConstruct resource)
-    {
-        _resources.Add(resource);
-    }
-    public void AddFeature(CloudMachineFeature feature)
-    {
-        feature.AddTo(this);
-    }
+    public void AddFeature(CloudMachineFeature feature) => feature.AddTo(this);
 
     public void AddEndpoints<T>()
     {
@@ -80,16 +77,15 @@ public class CloudMachineInfrastructure
     }
 
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public Dictionary<string, object> Connections => _connections;
+    public void AddConstruct(NamedProvisionableConstruct resource)
+    {
+        _resources.Add(resource);
+    }
 
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public ProvisioningPlan Build(ProvisioningBuildOptions? context = default)
     {
-        context ??= new ProvisioningBuildOptions();
-
         Features.Emit(this);
-
-        // This must occur after the features have been emitted.
-        context.InfrastructureResolvers.Add(new RoleResolver(Features.RoleAnnotations, [Identity], [PrincipalIdParameter]));
 
         // Always add a default location parameter.
         // azd assumes there will be a location parameter for every module.
@@ -113,46 +109,18 @@ public class CloudMachineInfrastructure
             _infrastructure.Add(resource);
         }
 
+        context ??= new ProvisioningBuildOptions();
+        // This must occur after the features have been emitted.
+        context.InfrastructureResolvers.Add(new RoleResolver(Features.RoleAnnotations, [Identity], [PrincipalIdParameter]));
         return _infrastructure.Build(context);
     }
 
-    internal class RoleResolver(Dictionary<Provisionable, (string RoleName, string RoleId)[]> annotations, IEnumerable<UserAssignedIdentity> managedIdentities, IEnumerable<BicepValue<Guid>> userPrincipals) : InfrastructureResolver
-    {
-        public override IEnumerable<Provisionable> ResolveResources(IEnumerable<Provisionable> resources, ProvisioningBuildOptions options)
-        {
-            foreach (Provisionable provisionable in base.ResolveResources(resources, options))
-            {
-                yield return provisionable;
-                if (annotations.TryGetValue(provisionable, out (string RoleName, string RoleId)[]? roles) && provisionable is ProvisionableResource resource && roles is not null)
-                {
-                    foreach ((string RoleName, string RoleId) in roles)
-                    {
-                        foreach (BicepValue<Guid> userPrincipal in userPrincipals)
-                        {
-                            yield return new RoleAssignment($"{resource.BicepIdentifier}_{userPrincipal.Value.ToString().Replace('-', '_')}_{RoleName}")
-                            {
-                                Name = BicepFunction.CreateGuid(resource.BicepIdentifier, userPrincipal, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", RoleId)),
-                                Scope = new IdentifierExpression(resource.BicepIdentifier),
-                                PrincipalType = RoleManagementPrincipalType.User,
-                                RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", RoleId),
-                                PrincipalId = userPrincipal
-                            };
-                        }
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override string ToString() => Id;
 
-                        foreach (UserAssignedIdentity identity in managedIdentities)
-                        {
-                            yield return new RoleAssignment($"{resource.BicepIdentifier}_{identity.BicepIdentifier}_{RoleName}")
-                            {
-                                Name = BicepFunction.CreateGuid(resource.BicepIdentifier, identity.Id, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", RoleId)),
-                                Scope = new IdentifierExpression(resource.BicepIdentifier),
-                                PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
-                                RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", RoleId),
-                                PrincipalId = identity.PrincipalId
-                            };
-                        }
-                    }
-                }
-            }
-        }
-    }
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override int GetHashCode() => base.GetHashCode();
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override bool Equals(object? obj) => base.Equals(obj);
 }

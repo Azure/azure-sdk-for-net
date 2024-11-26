@@ -42,7 +42,7 @@ public class KeyVaultFeature : CloudMachineFeature
                     ]
                 },
         };
-        infrastructure.AddResource(keyVaultResource);
+        infrastructure.AddConstruct(keyVaultResource);
         RequiredSystemRoles.Add(keyVaultResource, [(KeyVaultBuiltInRole.GetBuiltInRoleName(KeyVaultBuiltInRole.KeyVaultAdministrator), KeyVaultBuiltInRole.KeyVaultAdministrator.ToString())]);
 
         return keyVaultResource;

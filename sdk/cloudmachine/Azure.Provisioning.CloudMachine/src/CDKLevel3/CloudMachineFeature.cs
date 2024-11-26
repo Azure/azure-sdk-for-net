@@ -11,11 +11,9 @@ namespace Azure.Provisioning.CloudMachine;
 
 public abstract class CloudMachineFeature
 {
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public virtual void AddTo(CloudMachineInfrastructure cm) => cm.Features.Add(this);
+    protected internal virtual void AddTo(CloudMachineInfrastructure cm) => cm.Features.Add(this);
 
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public void Emit(CloudMachineInfrastructure cm)
+    internal void Emit(CloudMachineInfrastructure cm)
     {
         if (Emitted != null)
             return;
@@ -36,4 +34,13 @@ public abstract class CloudMachineFeature
             return typed;
         throw new ArgumentException($"Expected resource of type {typeof(T).Name}, but got {feature.GetType().Name}");
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override string ToString() => base.ToString()!;
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override int GetHashCode() => base.GetHashCode();
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override bool Equals(object? obj) => base.Equals(obj);
 }

@@ -20,8 +20,8 @@ public class ServiceBusNamespaceFeature(string name, ServiceBusSkuName sku = Ser
             },
             Name = name,
         };
-        infrastructure.AddResource(_serviceBusNamespace);
-        infrastructure.AddResource(
+        infrastructure.AddConstruct(_serviceBusNamespace);
+        infrastructure.AddConstruct(
             new ServiceBusNamespaceAuthorizationRule("cm_servicebus_auth_rule", "2021-11-01")
             {
                 Parent = _serviceBusNamespace,

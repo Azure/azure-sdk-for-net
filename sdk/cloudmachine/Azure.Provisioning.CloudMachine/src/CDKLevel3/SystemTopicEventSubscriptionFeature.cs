@@ -62,8 +62,8 @@ public class SystemTopicEventSubscriptionFeature(string name, EventGridSystemTop
         };
         subscription.DependsOn.Add(roleAssignment);
 
-        infrastructure.AddResource(subscription);
-        infrastructure.AddResource(roleAssignment);
+        infrastructure.AddConstruct(subscription);
+        infrastructure.AddConstruct(roleAssignment);
 
         Emitted = subscription;
         return subscription;
