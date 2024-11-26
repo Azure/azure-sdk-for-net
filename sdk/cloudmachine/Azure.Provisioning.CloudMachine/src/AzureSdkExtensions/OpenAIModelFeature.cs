@@ -3,8 +3,10 @@
 
 using System;
 using System.Diagnostics;
+using Azure.Core;
 using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.CognitiveServices;
+using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.CloudMachine.OpenAI;
@@ -31,13 +33,28 @@ public class OpenAIModelFeature : CloudMachineFeature
         }
         var openAI = new OpenAIFeature();
         cm.AddFeature(openAI);
+        cm.Connections.Add("Azure.AI.OpenAI.AzureOpenAIClient", new Uri($"https://{cm.Id}.openai.azure.com"));
         return openAI;
     }
 
     public override void AddTo(CloudMachineInfrastructure cm)
     {
-        OpenAIFeature openAI = OpenAIModelFeature.GetOrCreateOpenAI(cm);
+        OpenAIFeature openAI = GetOrCreateOpenAI(cm);
+
         openAI.AddModel(this);
+
+        // add connections
+        switch (Kind)
+        {
+            case AIModelKind.Chat:
+                cm.Connections.Add("OpenAI.Chat.ChatClient", $"{cm.Id}_chat");
+                break;
+            case AIModelKind.Embedding:
+                cm.Connections.Add("OpenAI.Embeddings.EmbeddingClient", $"{cm.Id}_embedding");
+                break;
+            default:
+                throw new NotImplementedException();
+        }
     }
 
     protected override ProvisionableResource EmitCore(CloudMachineInfrastructure cm)

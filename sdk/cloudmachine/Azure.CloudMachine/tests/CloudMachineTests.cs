@@ -27,9 +27,9 @@ public class CloudMachineTests
         infra.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
         //if (args.Contains("-azd")) Azd.Init(infra);
 
-        //var configuration = infra.Configuration;
+        var connections = infra.Connections;
 
-        CloudMachineClient client = new();
+        CloudMachineClient client = new(connections: connections);
         ChatClient chat = client.GetOpenAIChatClient();
     }
 

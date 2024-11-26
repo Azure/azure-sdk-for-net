@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Authorization;
@@ -18,7 +19,7 @@ public class CloudMachineInfrastructure
     internal const string SB_PRIVATE_TOPIC = "cm_servicebus_topic_private";
     internal const string SB_PRIVATE_SUB = "cm_servicebus_subscription_private";
 
-    private readonly List<ClientConnectionOptions> _connections = [];
+    private readonly Dictionary<string, object> _connections = [];
     private readonly Infrastructure _infrastructure = new("cm");
     private readonly List<Provisionable> _resources = [];
     internal List<Type> Endpoints { get; } = [];
@@ -31,16 +32,6 @@ public class CloudMachineInfrastructure
     /// The common principalId parameter.
     /// </summary>
     public ProvisioningParameter PrincipalIdParameter => new("principalId", typeof(string));
-
-    ///// <summary>
-    ///// The common principalType parameter.
-    ///// </summary>
-    //public ProvisioningParameter PrincipalTypeParameter => new BicepParameter("principalType", typeof(string));
-
-    ///// <summary>
-    ///// The common principalName parameter.
-    ///// </summary>
-    //public ProvisioningParameter PrincipalNameParameter => new BicepParameter("principalName", typeof(string));
 
     public CloudMachineInfrastructure(string? cmId = default)
     {
@@ -87,6 +78,9 @@ public class CloudMachineInfrastructure
             throw new InvalidOperationException("Endpoints type must be an interface.");
         Endpoints.Add(endpointsType);
     }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public Dictionary<string, object> Connections => _connections;
 
     public ProvisioningPlan Build(ProvisioningBuildOptions? context = default)
     {

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -19,6 +20,7 @@ namespace Azure.CloudMachine;
 public class CloudMachineWorkspace : ClientWorkspace
 {
     private TokenCredential Credential { get; }
+    private Dictionary<string, object> Connections { get; }
 
     /// <summary>
     /// The cloud machine ID.
@@ -31,9 +33,10 @@ public class CloudMachineWorkspace : ClientWorkspace
     /// </summary>
     /// <param name="credential"></param>
     /// <param name="configuration"></param>
+    /// <param name="connections"></param>
     /// <exception cref="Exception"></exception>
     [SuppressMessage("Usage", "AZC0007:DO provide a minimal constructor that takes only the parameters required to connect to the service.", Justification = "<Pending>")]
-    public CloudMachineWorkspace(TokenCredential credential = default, IConfiguration configuration = default)
+    public CloudMachineWorkspace(TokenCredential credential = default, IConfiguration configuration = default, Dictionary<string, object> connections = default)
     {
         if (credential != default)
         {
@@ -47,6 +50,15 @@ public class CloudMachineWorkspace : ClientWorkspace
                 string clientId when !string.IsNullOrEmpty(clientId) => new ManagedIdentityCredential(clientId),
                 _ => new ChainedTokenCredential(new AzureCliCredential(), new AzureDeveloperCliCredential())
             };
+        }
+
+        if (connections != default)
+        {
+            Connections = connections;
+        }
+        else
+        {
+            Connections = new();
         }
 
         Id = configuration switch
@@ -78,10 +90,24 @@ public class CloudMachineWorkspace : ClientWorkspace
             "Azure.Messaging.ServiceBus.ServiceBusProcessor" => new ClientConnectionOptions("cm_servicebus_default_topic/cm_servicebus_subscription_default"),
             "Azure.Messaging.ServiceBus.ServiceBusProcessor$private" => new ClientConnectionOptions("cm_servicebus_topic_private/cm_servicebus_subscription_private"),
             "Azure.Storage.Blobs.BlobContainerClient" => new ClientConnectionOptions(new($"https://{Id}.blob.core.windows.net/{instanceId ?? "default"}"), Credential),
-            "Azure.AI.OpenAI.AzureOpenAIClient" => new ClientConnectionOptions(new($"https://{Id}.openai.azure.com"), Credential),
-            "OpenAI.Chat.ChatClient" => new ClientConnectionOptions($"{Id}_chat"),
-            "OpenAI.Embeddings.EmbeddingClient" => new ClientConnectionOptions($"{Id}_embedding"),
-            _ => throw new Exception($"unknown client {clientId}"),
+            _ => GetExtensionConnection(clientId)
+        };
+
+        ClientConnectionOptions GetExtensionConnection(string clientId)
+        {
+            if (Connections.TryGetValue(clientId, out object connection))
+            {
+                if (connection is Uri uri)
+                {
+                    return new ClientConnectionOptions(uri, Credential);
+                }
+                if (connection is string str)
+                {
+                    return new ClientConnectionOptions(str);
+                }
+                throw new NotImplementedException();
+            }
+            throw new Exception($"unknown client {clientId}");
         };
     }
 

@@ -17,7 +17,7 @@ internal class OpenAIFeature : CloudMachineFeature
 
     protected override ProvisionableResource EmitCore(CloudMachineInfrastructure cloudMachine)
     {
-        CognitiveServicesAccount cognitiveServices = OpenAIFeature.CreateOpenAIAccount(cloudMachine);
+        CognitiveServicesAccount cognitiveServices = CreateOpenAIAccount(cloudMachine);
         cloudMachine.AddResource(cognitiveServices);
 
         RequiredSystemRoles.Add(cognitiveServices, [(CognitiveServicesBuiltInRole.GetBuiltInRoleName(CognitiveServicesBuiltInRole.CognitiveServicesOpenAIContributor) ,CognitiveServicesBuiltInRole.CognitiveServicesOpenAIContributor.ToString())]);

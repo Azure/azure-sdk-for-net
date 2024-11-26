@@ -53,6 +53,11 @@ internal static class AppConfigHelpers
 
     private static bool TryReadCmId(string appsettings, out string? cmid)
     {
+        if (!File.Exists(appsettings))
+        {
+            cmid = null;
+            return false;
+        }
         using FileStream json = File.OpenRead(appsettings);
         using JsonDocument jd = JsonDocument.Parse(json);
         JsonElement je = jd.RootElement;

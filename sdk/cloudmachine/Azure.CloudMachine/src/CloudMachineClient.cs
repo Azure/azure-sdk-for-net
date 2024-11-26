@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using Azure.Core;
 using Microsoft.Extensions.Configuration;
 
@@ -25,9 +26,10 @@ public partial class CloudMachineClient : CloudMachineWorkspace
     /// </summary>
     /// <param name="credential">The token credential.</param>
     /// <param name="configuration">The configuration settings.</param>
-    public CloudMachineClient(TokenCredential credential = default, IConfiguration configuration = default)
+    /// <param name="connections"></param>
+    public CloudMachineClient(TokenCredential credential = default, IConfiguration configuration = default, Dictionary<string, object> connections = default)
 #pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
-        : base(credential, configuration)
+        : base(credential, configuration, connections)
     {
         Messaging = new MessagingServices(this);
         Storage = new StorageServices(this);
