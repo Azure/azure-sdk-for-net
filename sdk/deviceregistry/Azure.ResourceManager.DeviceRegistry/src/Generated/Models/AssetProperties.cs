@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             Attributes = new ChangeTrackingDictionary<string, BinaryData>();
             DiscoveredAssetRefs = new ChangeTrackingList<string>();
             Datasets = new ChangeTrackingList<Dataset>();
-            Events = new ChangeTrackingList<AssetEvent>();
+            Events = new ChangeTrackingList<Event>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AssetProperties"/>. </summary>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="status"> Read only object to reflect changes that have occurred on the Edge. Similar to Kubernetes status property for custom resources. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssetProperties(string uuid, bool? enabled, string externalAssetId, string displayName, string description, string assetEndpointProfileRef, long? version, string manufacturer, Uri manufacturerUri, string model, string productCode, string hardwareRevision, string softwareRevision, Uri documentationUri, string serialNumber, IDictionary<string, BinaryData> attributes, IList<string> discoveredAssetRefs, string defaultDatasetsConfiguration, string defaultEventsConfiguration, Topic defaultTopic, IList<Dataset> datasets, IList<AssetEvent> events, AssetStatus status, DeviceRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AssetProperties(string uuid, bool? enabled, string externalAssetId, string displayName, string description, string assetEndpointProfileRef, long? version, string manufacturer, string manufacturerUri, string model, string productCode, string hardwareRevision, string softwareRevision, string documentationUri, string serialNumber, IDictionary<string, BinaryData> attributes, IList<string> discoveredAssetRefs, string defaultDatasetsConfiguration, string defaultEventsConfiguration, Topic defaultTopic, IList<Dataset> datasets, IList<Event> events, AssetStatus status, DeviceRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Uuid = uuid;
             Enabled = enabled;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <summary> Asset manufacturer name. </summary>
         public string Manufacturer { get; set; }
         /// <summary> Asset manufacturer URI. </summary>
-        public Uri ManufacturerUri { get; set; }
+        public string ManufacturerUri { get; set; }
         /// <summary> Asset model name. </summary>
         public string Model { get; set; }
         /// <summary> Asset product code. </summary>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <summary> Revision number of the software. </summary>
         public string SoftwareRevision { get; set; }
         /// <summary> Reference to the documentation. </summary>
-        public Uri DocumentationUri { get; set; }
+        public string DocumentationUri { get; set; }
         /// <summary> Asset serial number. </summary>
         public string SerialNumber { get; set; }
         /// <summary>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <summary> Array of datasets that are part of the asset. Each dataset describes the data points that make up the set. </summary>
         public IList<Dataset> Datasets { get; }
         /// <summary> Array of events that are part of the asset. Each event can have per-event configuration. </summary>
-        public IList<AssetEvent> Events { get; }
+        public IList<Event> Events { get; }
         /// <summary> Read only object to reflect changes that have occurred on the Edge. Similar to Kubernetes status property for custom resources. </summary>
         public AssetStatus Status { get; }
         /// <summary> Provisioning state of the resource. </summary>

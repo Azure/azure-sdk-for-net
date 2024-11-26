@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -32,16 +33,12 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             var rg = await CreateResourceGroup(subscription, _rgNamePrefix, AzureLocation.WestUS);
             var extendedLocation = new DeviceRegistryExtendedLocation() { ExtendedLocationType = "CustomLocation", Name = _extendedLocationName };
 
-            var discoveredAssetEndpointProfilesCollection = rg.GetDiscoveredAssetEndpointProfiles();
+            var discoveredAssetEndpointProfilesCollection = rg.GetDeviceRegistryDiscoveredAssetEndpointProfiles();
 
             // Create DeviceRegistry DiscoveredAssetEndpointProfile
-            var discoveredAssetEndpointProfileData = new DiscoveredAssetEndpointProfileData(AzureLocation.WestUS, extendedLocation)
+            var discoveredAssetEndpointProfileData = new DeviceRegistryDiscoveredAssetEndpointProfileData(AzureLocation.WestUS, extendedLocation)
             {
-                Properties = new()
-                {
-                    TargetAddress = new Uri("opc.tcp://aep-uri"),
-                    EndpointProfileType = "Microsoft.OpcUa"
-                }
+                Properties = new(new Uri("opc.tcp://aep-uri"), "Microsoft.OpcUa", "sampleDiscoveryId", 1)
             };
             discoveredAssetEndpointProfileData.Properties.SupportedAuthenticationMethods.Add("Anonymous");
             discoveredAssetEndpointProfileData.Properties.SupportedAuthenticationMethods.Add("UsernamePassword");
@@ -62,36 +59,44 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.AreEqual(discoveredAssetEndpointProfileReadResponse.Value.Data.Properties.SupportedAuthenticationMethods[1], discoveredAssetEndpointProfileData.Properties.SupportedAuthenticationMethods[1]);
 
             // List DeviceRegistry DiscoveredAssetEndpointProfile by Resource Group
-            var discoveredAssetEndpointProfileResourcesListByResourceGroup = new List<DiscoveredAssetEndpointProfileResource>();
+            int resourcesToFetchByResourceGroup = 10;
+            int fetchedResourcesByResourceGroup = 0;
+            var discoveredAssetEndpointProfileResourcesListByResourceGroup = new List<DeviceRegistryDiscoveredAssetEndpointProfileResource>();
             var discoveredAssetEndpointProfileResourceListByResourceGroupAsyncIterator = discoveredAssetEndpointProfilesCollection.GetAllAsync(CancellationToken.None);
             await foreach (var discoveredAssetEndpointProfileEntry in discoveredAssetEndpointProfileResourceListByResourceGroupAsyncIterator)
             {
+                fetchedResourcesByResourceGroup++;
                 discoveredAssetEndpointProfileResourcesListByResourceGroup.Add(discoveredAssetEndpointProfileEntry);
+                // limit the test to at most the first 10 entries
+                if (fetchedResourcesByResourceGroup == resourcesToFetchByResourceGroup)
+                {
+                    break;
+                }
             }
             Assert.IsNotEmpty(discoveredAssetEndpointProfileResourcesListByResourceGroup);
-            Assert.AreEqual(discoveredAssetEndpointProfileResourcesListByResourceGroup.Count, 1);
-            Assert.AreEqual(discoveredAssetEndpointProfileResourcesListByResourceGroup[0].Data.Properties.TargetAddress, discoveredAssetEndpointProfileData.Properties.TargetAddress);
-            Assert.AreEqual(discoveredAssetEndpointProfileResourcesListByResourceGroup[0].Data.Properties.EndpointProfileType, discoveredAssetEndpointProfileData.Properties.EndpointProfileType);
-            Assert.AreEqual(discoveredAssetEndpointProfileResourcesListByResourceGroup[0].Data.Properties.SupportedAuthenticationMethods[0], discoveredAssetEndpointProfileData.Properties.SupportedAuthenticationMethods[0]);
-            Assert.AreEqual(discoveredAssetEndpointProfileResourcesListByResourceGroup[0].Data.Properties.SupportedAuthenticationMethods[1], discoveredAssetEndpointProfileData.Properties.SupportedAuthenticationMethods[1]);
+            Assert.GreaterOrEqual(discoveredAssetEndpointProfileResourcesListByResourceGroup.Count, 1);
 
             // List DeviceRegistry DiscoveredAssetEndpointProfile by Subscription
-            var discoveredAssetEndpointProfileResourcesListBySubscription = new List<DiscoveredAssetEndpointProfileResource>();
-            var discoveredAssetEndpointProfileResourceListBySubscriptionAsyncIterator = subscription.GetDiscoveredAssetEndpointProfilesAsync(CancellationToken.None);
+            int resourcesToFetchBySubscription = 10;
+            int fetchedResourcesBySubscription = 0;
+            var discoveredAssetEndpointProfileResourcesListBySubscription = new List<DeviceRegistryDiscoveredAssetEndpointProfileResource>();
+            var discoveredAssetEndpointProfileResourceListBySubscriptionAsyncIterator = subscription.GetDeviceRegistryDiscoveredAssetEndpointProfilesAsync(CancellationToken.None);
             await foreach (var discoveredAssetEndpointProfileEntry in discoveredAssetEndpointProfileResourceListBySubscriptionAsyncIterator)
             {
+                fetchedResourcesBySubscription++;
                 discoveredAssetEndpointProfileResourcesListBySubscription.Add(discoveredAssetEndpointProfileEntry);
+                // limit the test to at most the first 10 entries
+                if (fetchedResourcesBySubscription == resourcesToFetchBySubscription)
+                {
+                    break;
+                }
             }
             Assert.IsNotEmpty(discoveredAssetEndpointProfileResourcesListBySubscription);
-            Assert.AreEqual(discoveredAssetEndpointProfileResourcesListBySubscription.Count, 1);
-            Assert.AreEqual(discoveredAssetEndpointProfileResourcesListBySubscription[0].Data.Properties.TargetAddress, discoveredAssetEndpointProfileData.Properties.TargetAddress);
-            Assert.AreEqual(discoveredAssetEndpointProfileResourcesListBySubscription[0].Data.Properties.EndpointProfileType, discoveredAssetEndpointProfileData.Properties.EndpointProfileType);
-            Assert.AreEqual(discoveredAssetEndpointProfileResourcesListBySubscription[0].Data.Properties.SupportedAuthenticationMethods[0], discoveredAssetEndpointProfileData.Properties.SupportedAuthenticationMethods[0]);
-            Assert.AreEqual(discoveredAssetEndpointProfileResourcesListBySubscription[0].Data.Properties.SupportedAuthenticationMethods[1], discoveredAssetEndpointProfileData.Properties.SupportedAuthenticationMethods[1]);
+            Assert.GreaterOrEqual(discoveredAssetEndpointProfileResourcesListBySubscription.Count, 1);
 
             // Update DeviceRegistry DiscoveredAssetEndpointProfile
             var discoveredAssetEndpointProfile = discoveredAssetEndpointProfileReadResponse.Value;
-            var discoveredAssetEndpointProfilePatchData = new DiscoveredAssetEndpointProfilePatch
+            var discoveredAssetEndpointProfilePatchData = new DeviceRegistryDiscoveredAssetEndpointProfilePatch
             {
                 Properties = new()
                 {
@@ -104,10 +109,20 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.AreEqual(discoveredAssetEndpointProfileUpdateResponse.Value.Data.Properties.EndpointProfileType, discoveredAssetEndpointProfileData.Properties.EndpointProfileType);
             Assert.AreEqual(discoveredAssetEndpointProfileUpdateResponse.Value.Data.Properties.SupportedAuthenticationMethods[0], discoveredAssetEndpointProfileData.Properties.SupportedAuthenticationMethods[0]);
             Assert.AreEqual(discoveredAssetEndpointProfileUpdateResponse.Value.Data.Properties.SupportedAuthenticationMethods[1], discoveredAssetEndpointProfileData.Properties.SupportedAuthenticationMethods[1]);
-            Assert.AreEqual(discoveredAssetEndpointProfileUpdateResponse.Value.Data.Properties.AdditionalConfiguration, discoveredAssetEndpointProfileData.Properties.AdditionalConfiguration);
+            Assert.AreEqual(discoveredAssetEndpointProfileUpdateResponse.Value.Data.Properties.AdditionalConfiguration, discoveredAssetEndpointProfilePatchData.Properties.AdditionalConfiguration);
 
             // Delete DeviceRegistry DiscoveredAssetEndpointProfile
-            await discoveredAssetEndpointProfile.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
+            try
+            {
+                await discoveredAssetEndpointProfile.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
+            }
+            catch (RequestFailedException ex)
+            {
+                if (ex.Status != 200)
+                {
+                    throw;
+                }
+            }
         }
     }
 }

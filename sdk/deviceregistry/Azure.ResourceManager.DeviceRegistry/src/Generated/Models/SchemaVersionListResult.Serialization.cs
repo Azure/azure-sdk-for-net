@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             {
                 return null;
             }
-            IReadOnlyList<SchemaVersionData> value = default;
+            IReadOnlyList<DeviceRegistrySchemaVersionData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<SchemaVersionData> array = new List<SchemaVersionData>();
+                    List<DeviceRegistrySchemaVersionData> array = new List<DeviceRegistrySchemaVersionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SchemaVersionData.DeserializeSchemaVersionData(item, options));
+                        array.Add(DeviceRegistrySchemaVersionData.DeserializeDeviceRegistrySchemaVersionData(item, options));
                     }
                     value = array;
                     continue;

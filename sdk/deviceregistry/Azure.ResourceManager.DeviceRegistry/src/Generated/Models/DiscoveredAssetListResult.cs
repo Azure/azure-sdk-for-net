@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <summary> Initializes a new instance of <see cref="DiscoveredAssetListResult"/>. </summary>
         /// <param name="value"> The DiscoveredAsset items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal DiscoveredAssetListResult(IEnumerable<DiscoveredAssetData> value)
+        internal DiscoveredAssetListResult(IEnumerable<DeviceRegistryDiscoveredAssetData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="value"> The DiscoveredAsset items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiscoveredAssetListResult(IReadOnlyList<DiscoveredAssetData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DiscoveredAssetListResult(IReadOnlyList<DeviceRegistryDiscoveredAssetData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         }
 
         /// <summary> The DiscoveredAsset items on this page. </summary>
-        public IReadOnlyList<DiscoveredAssetData> Value { get; }
+        public IReadOnlyList<DeviceRegistryDiscoveredAssetData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

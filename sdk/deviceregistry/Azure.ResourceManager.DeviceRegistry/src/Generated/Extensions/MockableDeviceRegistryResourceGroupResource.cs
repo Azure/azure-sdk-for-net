@@ -171,11 +171,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
             return GetDeviceRegistryAssets().Get(assetName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DiscoveredAssetEndpointProfileResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DiscoveredAssetEndpointProfileResources and their operations over a DiscoveredAssetEndpointProfileResource. </returns>
-        public virtual DiscoveredAssetEndpointProfileCollection GetDiscoveredAssetEndpointProfiles()
+        /// <summary> Gets a collection of DeviceRegistryDiscoveredAssetEndpointProfileResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of DeviceRegistryDiscoveredAssetEndpointProfileResources and their operations over a DeviceRegistryDiscoveredAssetEndpointProfileResource. </returns>
+        public virtual DeviceRegistryDiscoveredAssetEndpointProfileCollection GetDeviceRegistryDiscoveredAssetEndpointProfiles()
         {
-            return GetCachedClient(client => new DiscoveredAssetEndpointProfileCollection(client, Id));
+            return GetCachedClient(client => new DeviceRegistryDiscoveredAssetEndpointProfileCollection(client, Id));
         }
 
         /// <summary>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DiscoveredAssetEndpointProfileResource"/></description>
+        /// <description><see cref="DeviceRegistryDiscoveredAssetEndpointProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -204,9 +204,9 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="discoveredAssetEndpointProfileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="discoveredAssetEndpointProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DiscoveredAssetEndpointProfileResource>> GetDiscoveredAssetEndpointProfileAsync(string discoveredAssetEndpointProfileName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeviceRegistryDiscoveredAssetEndpointProfileResource>> GetDeviceRegistryDiscoveredAssetEndpointProfileAsync(string discoveredAssetEndpointProfileName, CancellationToken cancellationToken = default)
         {
-            return await GetDiscoveredAssetEndpointProfiles().GetAsync(discoveredAssetEndpointProfileName, cancellationToken).ConfigureAwait(false);
+            return await GetDeviceRegistryDiscoveredAssetEndpointProfiles().GetAsync(discoveredAssetEndpointProfileName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DiscoveredAssetEndpointProfileResource"/></description>
+        /// <description><see cref="DeviceRegistryDiscoveredAssetEndpointProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,47 +235,16 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="discoveredAssetEndpointProfileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="discoveredAssetEndpointProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DiscoveredAssetEndpointProfileResource> GetDiscoveredAssetEndpointProfile(string discoveredAssetEndpointProfileName, CancellationToken cancellationToken = default)
+        public virtual Response<DeviceRegistryDiscoveredAssetEndpointProfileResource> GetDeviceRegistryDiscoveredAssetEndpointProfile(string discoveredAssetEndpointProfileName, CancellationToken cancellationToken = default)
         {
-            return GetDiscoveredAssetEndpointProfiles().Get(discoveredAssetEndpointProfileName, cancellationToken);
+            return GetDeviceRegistryDiscoveredAssetEndpointProfiles().Get(discoveredAssetEndpointProfileName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DiscoveredAssetResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DiscoveredAssetResources and their operations over a DiscoveredAssetResource. </returns>
-        public virtual DiscoveredAssetCollection GetDiscoveredAssets()
+        /// <summary> Gets a collection of DeviceRegistryDiscoveredAssetResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of DeviceRegistryDiscoveredAssetResources and their operations over a DeviceRegistryDiscoveredAssetResource. </returns>
+        public virtual DeviceRegistryDiscoveredAssetCollection GetDeviceRegistryDiscoveredAssets()
         {
-            return GetCachedClient(client => new DiscoveredAssetCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a DiscoveredAsset
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/discoveredAssets/{discoveredAssetName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiscoveredAssets_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiscoveredAssetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="discoveredAssetName"> Discovered Asset name parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="discoveredAssetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="discoveredAssetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DiscoveredAssetResource>> GetDiscoveredAssetAsync(string discoveredAssetName, CancellationToken cancellationToken = default)
-        {
-            return await GetDiscoveredAssets().GetAsync(discoveredAssetName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new DeviceRegistryDiscoveredAssetCollection(client, Id));
         }
 
         /// <summary>
@@ -295,7 +264,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DiscoveredAssetResource"/></description>
+        /// <description><see cref="DeviceRegistryDiscoveredAssetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,16 +273,47 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="discoveredAssetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="discoveredAssetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DiscoveredAssetResource> GetDiscoveredAsset(string discoveredAssetName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeviceRegistryDiscoveredAssetResource>> GetDeviceRegistryDiscoveredAssetAsync(string discoveredAssetName, CancellationToken cancellationToken = default)
         {
-            return GetDiscoveredAssets().Get(discoveredAssetName, cancellationToken);
+            return await GetDeviceRegistryDiscoveredAssets().GetAsync(discoveredAssetName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of SchemaRegistryResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of SchemaRegistryResources and their operations over a SchemaRegistryResource. </returns>
-        public virtual SchemaRegistryCollection GetSchemaRegistries()
+        /// <summary>
+        /// Get a DiscoveredAsset
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/discoveredAssets/{discoveredAssetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DiscoveredAssets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceRegistryDiscoveredAssetResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="discoveredAssetName"> Discovered Asset name parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="discoveredAssetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="discoveredAssetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DeviceRegistryDiscoveredAssetResource> GetDeviceRegistryDiscoveredAsset(string discoveredAssetName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(client => new SchemaRegistryCollection(client, Id));
+            return GetDeviceRegistryDiscoveredAssets().Get(discoveredAssetName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DeviceRegistrySchemaRegistryResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of DeviceRegistrySchemaRegistryResources and their operations over a DeviceRegistrySchemaRegistryResource. </returns>
+        public virtual DeviceRegistrySchemaRegistryCollection GetDeviceRegistrySchemaRegistries()
+        {
+            return GetCachedClient(client => new DeviceRegistrySchemaRegistryCollection(client, Id));
         }
 
         /// <summary>
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SchemaRegistryResource"/></description>
+        /// <description><see cref="DeviceRegistrySchemaRegistryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -342,9 +342,9 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="schemaRegistryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="schemaRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SchemaRegistryResource>> GetSchemaRegistryAsync(string schemaRegistryName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeviceRegistrySchemaRegistryResource>> GetDeviceRegistrySchemaRegistryAsync(string schemaRegistryName, CancellationToken cancellationToken = default)
         {
-            return await GetSchemaRegistries().GetAsync(schemaRegistryName, cancellationToken).ConfigureAwait(false);
+            return await GetDeviceRegistrySchemaRegistries().GetAsync(schemaRegistryName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SchemaRegistryResource"/></description>
+        /// <description><see cref="DeviceRegistrySchemaRegistryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -373,9 +373,9 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="schemaRegistryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="schemaRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SchemaRegistryResource> GetSchemaRegistry(string schemaRegistryName, CancellationToken cancellationToken = default)
+        public virtual Response<DeviceRegistrySchemaRegistryResource> GetDeviceRegistrySchemaRegistry(string schemaRegistryName, CancellationToken cancellationToken = default)
         {
-            return GetSchemaRegistries().Get(schemaRegistryName, cancellationToken);
+            return GetDeviceRegistrySchemaRegistries().Get(schemaRegistryName, cancellationToken);
         }
     }
 }

@@ -22,12 +22,15 @@ use-model-reader-writer: true
 #mgmt-debug:
 #  show-serialized-names: true
 
-rename-mapping:
-  Event: AssetEvent
-
 prepend-rp-prefix:
   - Asset
   - AssetEndpointProfile
+  - DiscoveredAsset
+  - DiscoveredAssetEndpointProfile
+  - SchemaRegistry
+  - Schema
+  - SchemaVersion
+  - BillingContainer
   - ExtendedLocation
   - ProvisioningState
 
@@ -35,8 +38,6 @@ format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
-  '*Uri': 'Uri'
-  '*Uris': 'Uri'
 
 acronym-mapping:
   CPU: Cpu
@@ -60,8 +61,5 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
-
-directive:
-  - remove-operation: 'OperationStatus_Get'
 
 ```

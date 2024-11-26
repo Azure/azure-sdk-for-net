@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="discoveredAssetEndpointProfileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="discoveredAssetEndpointProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DiscoveredAssetEndpointProfileData>> GetAsync(string subscriptionId, string resourceGroupName, string discoveredAssetEndpointProfileName, CancellationToken cancellationToken = default)
+        public async Task<Response<DeviceRegistryDiscoveredAssetEndpointProfileData>> GetAsync(string subscriptionId, string resourceGroupName, string discoveredAssetEndpointProfileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -253,13 +253,13 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 case 200:
                     {
-                        DiscoveredAssetEndpointProfileData value = default;
+                        DeviceRegistryDiscoveredAssetEndpointProfileData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DiscoveredAssetEndpointProfileData.DeserializeDiscoveredAssetEndpointProfileData(document.RootElement);
+                        value = DeviceRegistryDiscoveredAssetEndpointProfileData.DeserializeDeviceRegistryDiscoveredAssetEndpointProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DiscoveredAssetEndpointProfileData)null, message.Response);
+                    return Response.FromValue((DeviceRegistryDiscoveredAssetEndpointProfileData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="discoveredAssetEndpointProfileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="discoveredAssetEndpointProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DiscoveredAssetEndpointProfileData> Get(string subscriptionId, string resourceGroupName, string discoveredAssetEndpointProfileName, CancellationToken cancellationToken = default)
+        public Response<DeviceRegistryDiscoveredAssetEndpointProfileData> Get(string subscriptionId, string resourceGroupName, string discoveredAssetEndpointProfileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -284,19 +284,19 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 case 200:
                     {
-                        DiscoveredAssetEndpointProfileData value = default;
+                        DeviceRegistryDiscoveredAssetEndpointProfileData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DiscoveredAssetEndpointProfileData.DeserializeDiscoveredAssetEndpointProfileData(document.RootElement);
+                        value = DeviceRegistryDiscoveredAssetEndpointProfileData.DeserializeDeviceRegistryDiscoveredAssetEndpointProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DiscoveredAssetEndpointProfileData)null, message.Response);
+                    return Response.FromValue((DeviceRegistryDiscoveredAssetEndpointProfileData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrReplaceRequestUri(string subscriptionId, string resourceGroupName, string discoveredAssetEndpointProfileName, DiscoveredAssetEndpointProfileData data)
+        internal RequestUriBuilder CreateCreateOrReplaceRequestUri(string subscriptionId, string resourceGroupName, string discoveredAssetEndpointProfileName, DeviceRegistryDiscoveredAssetEndpointProfileData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrReplaceRequest(string subscriptionId, string resourceGroupName, string discoveredAssetEndpointProfileName, DiscoveredAssetEndpointProfileData data)
+        internal HttpMessage CreateCreateOrReplaceRequest(string subscriptionId, string resourceGroupName, string discoveredAssetEndpointProfileName, DeviceRegistryDiscoveredAssetEndpointProfileData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="discoveredAssetEndpointProfileName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="discoveredAssetEndpointProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrReplaceAsync(string subscriptionId, string resourceGroupName, string discoveredAssetEndpointProfileName, DiscoveredAssetEndpointProfileData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrReplaceAsync(string subscriptionId, string resourceGroupName, string discoveredAssetEndpointProfileName, DeviceRegistryDiscoveredAssetEndpointProfileData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="discoveredAssetEndpointProfileName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="discoveredAssetEndpointProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrReplace(string subscriptionId, string resourceGroupName, string discoveredAssetEndpointProfileName, DiscoveredAssetEndpointProfileData data, CancellationToken cancellationToken = default)
+        public Response CreateOrReplace(string subscriptionId, string resourceGroupName, string discoveredAssetEndpointProfileName, DeviceRegistryDiscoveredAssetEndpointProfileData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string discoveredAssetEndpointProfileName, DiscoveredAssetEndpointProfilePatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string discoveredAssetEndpointProfileName, DeviceRegistryDiscoveredAssetEndpointProfilePatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string discoveredAssetEndpointProfileName, DiscoveredAssetEndpointProfilePatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string discoveredAssetEndpointProfileName, DeviceRegistryDiscoveredAssetEndpointProfilePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="discoveredAssetEndpointProfileName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="discoveredAssetEndpointProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string discoveredAssetEndpointProfileName, DiscoveredAssetEndpointProfilePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string discoveredAssetEndpointProfileName, DeviceRegistryDiscoveredAssetEndpointProfilePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="discoveredAssetEndpointProfileName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="discoveredAssetEndpointProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string discoveredAssetEndpointProfileName, DiscoveredAssetEndpointProfilePatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string discoveredAssetEndpointProfileName, DeviceRegistryDiscoveredAssetEndpointProfilePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

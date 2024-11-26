@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="discoveredAssetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="discoveredAssetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DiscoveredAssetData>> GetAsync(string subscriptionId, string resourceGroupName, string discoveredAssetName, CancellationToken cancellationToken = default)
+        public async Task<Response<DeviceRegistryDiscoveredAssetData>> GetAsync(string subscriptionId, string resourceGroupName, string discoveredAssetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -253,13 +253,13 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 case 200:
                     {
-                        DiscoveredAssetData value = default;
+                        DeviceRegistryDiscoveredAssetData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DiscoveredAssetData.DeserializeDiscoveredAssetData(document.RootElement);
+                        value = DeviceRegistryDiscoveredAssetData.DeserializeDeviceRegistryDiscoveredAssetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DiscoveredAssetData)null, message.Response);
+                    return Response.FromValue((DeviceRegistryDiscoveredAssetData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="discoveredAssetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="discoveredAssetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DiscoveredAssetData> Get(string subscriptionId, string resourceGroupName, string discoveredAssetName, CancellationToken cancellationToken = default)
+        public Response<DeviceRegistryDiscoveredAssetData> Get(string subscriptionId, string resourceGroupName, string discoveredAssetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -284,19 +284,19 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 case 200:
                     {
-                        DiscoveredAssetData value = default;
+                        DeviceRegistryDiscoveredAssetData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DiscoveredAssetData.DeserializeDiscoveredAssetData(document.RootElement);
+                        value = DeviceRegistryDiscoveredAssetData.DeserializeDeviceRegistryDiscoveredAssetData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DiscoveredAssetData)null, message.Response);
+                    return Response.FromValue((DeviceRegistryDiscoveredAssetData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrReplaceRequestUri(string subscriptionId, string resourceGroupName, string discoveredAssetName, DiscoveredAssetData data)
+        internal RequestUriBuilder CreateCreateOrReplaceRequestUri(string subscriptionId, string resourceGroupName, string discoveredAssetName, DeviceRegistryDiscoveredAssetData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrReplaceRequest(string subscriptionId, string resourceGroupName, string discoveredAssetName, DiscoveredAssetData data)
+        internal HttpMessage CreateCreateOrReplaceRequest(string subscriptionId, string resourceGroupName, string discoveredAssetName, DeviceRegistryDiscoveredAssetData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="discoveredAssetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="discoveredAssetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrReplaceAsync(string subscriptionId, string resourceGroupName, string discoveredAssetName, DiscoveredAssetData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrReplaceAsync(string subscriptionId, string resourceGroupName, string discoveredAssetName, DeviceRegistryDiscoveredAssetData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="discoveredAssetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="discoveredAssetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrReplace(string subscriptionId, string resourceGroupName, string discoveredAssetName, DiscoveredAssetData data, CancellationToken cancellationToken = default)
+        public Response CreateOrReplace(string subscriptionId, string resourceGroupName, string discoveredAssetName, DeviceRegistryDiscoveredAssetData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string discoveredAssetName, DiscoveredAssetPatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string discoveredAssetName, DeviceRegistryDiscoveredAssetPatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string discoveredAssetName, DiscoveredAssetPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string discoveredAssetName, DeviceRegistryDiscoveredAssetPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="discoveredAssetName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="discoveredAssetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string discoveredAssetName, DiscoveredAssetPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string discoveredAssetName, DeviceRegistryDiscoveredAssetPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="discoveredAssetName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="discoveredAssetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string discoveredAssetName, DiscoveredAssetPatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string discoveredAssetName, DeviceRegistryDiscoveredAssetPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

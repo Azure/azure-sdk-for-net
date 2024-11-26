@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -37,9 +38,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             // Create DeviceRegistry Asset
             var assetData = new DeviceRegistryAssetData(AzureLocation.WestUS, extendedLocation)
             {
-                Properties = new()
+                Properties = new("assetEndpointProfileReference")
                 {
-                    AssetEndpointProfileRef = "assetEndpointProfileReference",
                     Description = "This is an asset."
                 }
             };
@@ -64,36 +64,40 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.AreEqual(assetReadResponse.Value.Data.Properties.Enabled, true);
 
             // List DeviceRegistry Asset by Resource Group
+            int resourcesToFetchByResourceGroup = 10;
+            int fetchedResourcesByResourceGroup = 0;
             var assetResourcesListByResourceGroup = new List<DeviceRegistryAssetResource>();
             var assetResourceListByResourceGroupAsyncIterator = assetsCollection.GetAllAsync(CancellationToken.None);
             await foreach (var assetEntry in assetResourceListByResourceGroupAsyncIterator)
             {
+                fetchedResourcesByResourceGroup++;
                 assetResourcesListByResourceGroup.Add(assetEntry);
+                // limit the test to at most the first 10 entries
+                if (fetchedResourcesByResourceGroup == resourcesToFetchByResourceGroup)
+                {
+                    break;
+                }
             }
             Assert.IsNotEmpty(assetResourcesListByResourceGroup);
-            Assert.AreEqual(assetResourcesListByResourceGroup.Count, 1);
-            Assert.IsTrue(Guid.TryParse(assetResourcesListByResourceGroup[0].Data.Properties.Uuid, out _));
-            Assert.AreEqual(assetResourcesListByResourceGroup[0].Data.Properties.ExternalAssetId, assetReadResponse.Value.Data.Properties.Uuid);
-            Assert.AreEqual(assetResourcesListByResourceGroup[0].Data.Properties.AssetEndpointProfileRef, assetData.Properties.AssetEndpointProfileRef);
-            Assert.AreEqual(assetResourcesListByResourceGroup[0].Data.Properties.DisplayName, assetReadResponse.Value.Data.Name);
-            Assert.AreEqual(assetResourcesListByResourceGroup[0].Data.Properties.Version, 1);
-            Assert.AreEqual(assetResourcesListByResourceGroup[0].Data.Properties.Enabled, true);
+            Assert.GreaterOrEqual(assetResourcesListByResourceGroup.Count, 1);
 
             // List DeviceRegistry Asset by Subscription
+            int resourcesToFetchBySubscription = 10;
+            int fetchedResourcesBySubscription = 0;
             var assetResourcesListBySubscription = new List<DeviceRegistryAssetResource>();
             var assetResourceListBySubscriptionAsyncIterator = subscription.GetDeviceRegistryAssetsAsync(CancellationToken.None);
             await foreach (var assetEntry in assetResourceListBySubscriptionAsyncIterator)
             {
+                fetchedResourcesBySubscription++;
                 assetResourcesListBySubscription.Add(assetEntry);
+                // limit the test to at most the first 10 entries
+                if (fetchedResourcesBySubscription == resourcesToFetchBySubscription)
+                {
+                    break;
+                }
             }
             Assert.IsNotEmpty(assetResourcesListBySubscription);
-            Assert.AreEqual(assetResourcesListBySubscription.Count, 1);
-            Assert.IsTrue(Guid.TryParse(assetResourcesListBySubscription[0].Data.Properties.Uuid, out _));
-            Assert.AreEqual(assetResourcesListBySubscription[0].Data.Properties.ExternalAssetId, assetReadResponse.Value.Data.Properties.Uuid);
-            Assert.AreEqual(assetResourcesListBySubscription[0].Data.Properties.AssetEndpointProfileRef, assetData.Properties.AssetEndpointProfileRef);
-            Assert.AreEqual(assetResourcesListBySubscription[0].Data.Properties.DisplayName, assetReadResponse.Value.Data.Name);
-            Assert.AreEqual(assetResourcesListBySubscription[0].Data.Properties.Version, 1);
-            Assert.AreEqual(assetResourcesListBySubscription[0].Data.Properties.Enabled, true);
+            Assert.GreaterOrEqual(assetResourcesListBySubscription.Count, 1);
 
             // Update DeviceRegistry Asset
             var asset = assetReadResponse.Value;

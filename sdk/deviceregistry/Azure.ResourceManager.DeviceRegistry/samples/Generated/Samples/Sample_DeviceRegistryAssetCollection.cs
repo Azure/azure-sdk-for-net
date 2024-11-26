@@ -291,12 +291,12 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
                     DisplayName = "AssetDisplayName",
                     Description = "This is a sample Asset",
                     Manufacturer = "Contoso",
-                    ManufacturerUri = new Uri("https://www.contoso.com/manufacturerUri"),
+                    ManufacturerUri = "https://www.contoso.com/manufacturerUri",
                     Model = "ContosoModel",
                     ProductCode = "SA34VDG",
                     HardwareRevision = "1.0",
                     SoftwareRevision = "2.0",
-                    DocumentationUri = new Uri("https://www.example.com/manual"),
+                    DocumentationUri = "https://www.example.com/manual",
                     SerialNumber = "64-103816-519918-8",
                     DiscoveredAssetRefs =
 {
@@ -333,7 +333,7 @@ DataPointConfiguration = "{\"publishingInterval\":4,\"samplingInterval\":4,\"que
 },
                     Events =
 {
-new AssetEvent("event1","nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt3")
+new Event("event1","nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt3")
 {
 ObservabilityMode = EventObservabilityMode.None,
 EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":1,\"queueSize\":8}",
@@ -341,7 +341,7 @@ Topic = new Topic("/path/event1")
 {
 Retain = TopicRetainType.Keep,
 },
-},new AssetEvent("event2","nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt4")
+},new Event("event2","nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt4")
 {
 ObservabilityMode = EventObservabilityMode.Log,
 EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSize\":4}",
@@ -396,12 +396,12 @@ EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSi
                     DisplayName = "AssetDisplayName",
                     Description = "This is a sample Asset",
                     Manufacturer = "Contoso",
-                    ManufacturerUri = new Uri("https://www.contoso.com/manufacturerUri"),
+                    ManufacturerUri = "https://www.contoso.com/manufacturerUri",
                     Model = "ContosoModel",
                     ProductCode = "SA34VDG",
                     HardwareRevision = "1.0",
                     SoftwareRevision = "2.0",
-                    DocumentationUri = new Uri("https://www.example.com/manual"),
+                    DocumentationUri = "https://www.example.com/manual",
                     SerialNumber = "64-103816-519918-8",
                     DefaultDatasetsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
                     DefaultEventsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
@@ -434,7 +434,7 @@ DataPointConfiguration = "{\"publishingInterval\":4,\"samplingInterval\":4,\"que
 },
                     Events =
 {
-new AssetEvent("event1","nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt3")
+new Event("event1","nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt3")
 {
 ObservabilityMode = EventObservabilityMode.None,
 EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":1,\"queueSize\":8}",
@@ -442,7 +442,7 @@ Topic = new Topic("/path/event1")
 {
 Retain = TopicRetainType.Keep,
 },
-},new AssetEvent("event2","nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt4")
+},new Event("event2","nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt4")
 {
 ObservabilityMode = EventObservabilityMode.Log,
 EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSize\":4}",
@@ -496,12 +496,12 @@ EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSi
                     ExternalAssetId = "8ZBA6LRHU0A458969",
                     Description = "This is a sample Asset",
                     Manufacturer = "Contoso",
-                    ManufacturerUri = new Uri("https://www.contoso.com/manufacturerUri"),
+                    ManufacturerUri = "https://www.contoso.com/manufacturerUri",
                     Model = "ContosoModel",
                     ProductCode = "SA34VDG",
                     HardwareRevision = "1.0",
                     SoftwareRevision = "2.0",
-                    DocumentationUri = new Uri("https://www.example.com/manual"),
+                    DocumentationUri = "https://www.example.com/manual",
                     SerialNumber = "64-103816-519918-8",
                     DefaultDatasetsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
                     DefaultEventsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
@@ -534,7 +534,7 @@ DataPointConfiguration = "{\"publishingInterval\":4,\"samplingInterval\":4,\"que
 },
                     Events =
 {
-new AssetEvent("event1","nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt3")
+new Event("event1","nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt3")
 {
 ObservabilityMode = EventObservabilityMode.None,
 EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":1,\"queueSize\":8}",
@@ -542,7 +542,7 @@ Topic = new Topic("/path/event1")
 {
 Retain = TopicRetainType.Keep,
 },
-},new AssetEvent("event2","nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt4")
+},new Event("event2","nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt4")
 {
 ObservabilityMode = EventObservabilityMode.Log,
 EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSize\":4}",
@@ -596,12 +596,12 @@ EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSi
                     DisplayName = "AssetDisplayName",
                     Description = "This is a sample Asset",
                     Manufacturer = "Contoso",
-                    ManufacturerUri = new Uri("https://www.contoso.com/manufacturerUri"),
+                    ManufacturerUri = "https://www.contoso.com/manufacturerUri",
                     Model = "ContosoModel",
                     ProductCode = "SA34VDG",
                     HardwareRevision = "1.0",
                     SoftwareRevision = "2.0",
-                    DocumentationUri = new Uri("https://www.example.com/manual"),
+                    DocumentationUri = "https://www.example.com/manual",
                     SerialNumber = "64-103816-519918-8",
                     DefaultDatasetsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
                     DefaultEventsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
@@ -634,7 +634,7 @@ DataPointConfiguration = "{\"publishingInterval\":4,\"samplingInterval\":4,\"que
 },
                     Events =
 {
-new AssetEvent("event1","nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt3")
+new Event("event1","nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt3")
 {
 ObservabilityMode = EventObservabilityMode.None,
 EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":1,\"queueSize\":8}",
@@ -642,7 +642,7 @@ Topic = new Topic("/path/event1")
 {
 Retain = TopicRetainType.Keep,
 },
-},new AssetEvent("event2","nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt4")
+},new Event("event2","nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt4")
 {
 ObservabilityMode = EventObservabilityMode.Log,
 EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSize\":4}",

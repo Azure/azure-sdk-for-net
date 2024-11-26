@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             {
                 return null;
             }
-            IReadOnlyList<DiscoveredAssetData> value = default;
+            IReadOnlyList<DeviceRegistryDiscoveredAssetData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<DiscoveredAssetData> array = new List<DiscoveredAssetData>();
+                    List<DeviceRegistryDiscoveredAssetData> array = new List<DeviceRegistryDiscoveredAssetData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiscoveredAssetData.DeserializeDiscoveredAssetData(item, options));
+                        array.Add(DeviceRegistryDiscoveredAssetData.DeserializeDeviceRegistryDiscoveredAssetData(item, options));
                     }
                     value = array;
                     continue;

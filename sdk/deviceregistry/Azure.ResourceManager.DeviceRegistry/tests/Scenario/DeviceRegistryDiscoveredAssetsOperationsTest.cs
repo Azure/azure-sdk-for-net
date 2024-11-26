@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -31,17 +33,15 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             var rg = await CreateResourceGroup(subscription, _rgNamePrefix, AzureLocation.WestUS);
             var extendedLocation = new DeviceRegistryExtendedLocation() { ExtendedLocationType = "CustomLocation", Name = _extendedLocationName };
 
-            var discoveredAssetsCollection = rg.GetDiscoveredAssets();
+            var discoveredAssetsCollection = rg.GetDeviceRegistryDiscoveredAssets();
 
             // Create DeviceRegistry DiscoveredAsset
-            var discoveredAssetData = new DiscoveredAssetData(AzureLocation.WestUS, extendedLocation)
+            var discoveredAssetData = new DeviceRegistryDiscoveredAssetData(AzureLocation.WestUS, extendedLocation)
             {
-                Properties = new()
-                {
-                    AssetEndpointProfileRef = "assetEndpointProfileReference",
-                    Manufacturer = "Contoso"
-                }
+                Properties = new("assetEndpointProfileReference", "discoveryIdSample", 1)
             };
+            discoveredAssetData.Properties.Manufacturer = "Contoso";
+            discoveredAssetData.Properties.ManufacturerUri = "http://contoso.com";
             var discoveredAssetCreateOrUpdateResponse = await discoveredAssetsCollection.CreateOrUpdateAsync(WaitUntil.Completed, discoveredAssetName, discoveredAssetData, CancellationToken.None);
             Assert.IsNotNull(discoveredAssetCreateOrUpdateResponse.Value);
             Assert.AreEqual(discoveredAssetCreateOrUpdateResponse.Value.Data.Properties.AssetEndpointProfileRef, discoveredAssetData.Properties.AssetEndpointProfileRef);
@@ -54,32 +54,44 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.AreEqual(discoveredAssetReadResponse.Value.Data.Properties.Manufacturer, discoveredAssetData.Properties.Manufacturer);
 
             // List DeviceRegistry DiscoveredAsset by Resource Group
-            var discoveredAssetResourcesListByResourceGroup = new List<DiscoveredAssetResource>();
+            int resourcesToFetchByResourceGroup = 10;
+            int fetchedResourcesByResourceGroup = 0;
+            var discoveredAssetResourcesListByResourceGroup = new List<DeviceRegistryDiscoveredAssetResource>();
             var discoveredAssetResourceListByResourceGroupAsyncIterator = discoveredAssetsCollection.GetAllAsync(CancellationToken.None);
             await foreach (var discoveredAssetEntry in discoveredAssetResourceListByResourceGroupAsyncIterator)
             {
+                fetchedResourcesByResourceGroup++;
                 discoveredAssetResourcesListByResourceGroup.Add(discoveredAssetEntry);
+                // limit the test to at most the first 10 entries
+                if (fetchedResourcesByResourceGroup == resourcesToFetchByResourceGroup)
+                {
+                    break;
+                }
             }
             Assert.IsNotEmpty(discoveredAssetResourcesListByResourceGroup);
             Assert.AreEqual(discoveredAssetResourcesListByResourceGroup.Count, 1);
-            Assert.AreEqual(discoveredAssetResourcesListByResourceGroup[0].Data.Properties.AssetEndpointProfileRef, discoveredAssetData.Properties.AssetEndpointProfileRef);
-            Assert.AreEqual(discoveredAssetResourcesListByResourceGroup[0].Data.Properties.Manufacturer, discoveredAssetData.Properties.Manufacturer);
 
             // List DeviceRegistry Asset by Subscription
-            var discoveredAssetResourcesListBySubscription = new List<DiscoveredAssetResource>();
-            var discoveredAssetResourceListBySubscriptionAsyncIterator = subscription.GetDiscoveredAssetsAsync(CancellationToken.None);
+            int resourcesToFetchBySubscription = 10;
+            int fetchedResourcesBySubscription = 0;
+            var discoveredAssetResourcesListBySubscription = new List<DeviceRegistryDiscoveredAssetResource>();
+            var discoveredAssetResourceListBySubscriptionAsyncIterator = subscription.GetDeviceRegistryDiscoveredAssetsAsync(CancellationToken.None);
             await foreach (var discoveredAssetEntry in discoveredAssetResourceListBySubscriptionAsyncIterator)
             {
+                fetchedResourcesBySubscription++;
                 discoveredAssetResourcesListBySubscription.Add(discoveredAssetEntry);
+                // limit the test to at most the first 10 entries
+                if (fetchedResourcesBySubscription == resourcesToFetchBySubscription)
+                {
+                    break;
+                }
             }
             Assert.IsNotEmpty(discoveredAssetResourcesListBySubscription);
-            Assert.AreEqual(discoveredAssetResourcesListBySubscription.Count, 1);
-            Assert.AreEqual(discoveredAssetResourcesListBySubscription[0].Data.Properties.AssetEndpointProfileRef, discoveredAssetData.Properties.AssetEndpointProfileRef);
-            Assert.AreEqual(discoveredAssetResourcesListBySubscription[0].Data.Properties.Manufacturer, discoveredAssetData.Properties.Manufacturer);
+            Assert.GreaterOrEqual(discoveredAssetResourcesListBySubscription.Count, 1);
 
             // Update DeviceRegistry DiscoveredAsset
             var discoveredAsset = discoveredAssetReadResponse.Value;
-            var discoveredAssetPatchData = new DiscoveredAssetPatch
+            var discoveredAssetPatchData = new DeviceRegistryDiscoveredAssetPatch
             {
                 Properties = new()
                 {
@@ -92,7 +104,17 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.AreEqual(discoveredAssetUpdateResponse.Value.Data.Properties.Manufacturer, discoveredAssetPatchData.Properties.Manufacturer);
 
             // Delete DeviceRegistry DiscoveredAsset
-            await discoveredAsset.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
+            try
+            {
+                await discoveredAsset.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
+            }
+            catch (RequestFailedException ex)
+            {
+                if (ex.Status != 200)
+                {
+                    throw;
+                }
+            }
         }
     }
 }

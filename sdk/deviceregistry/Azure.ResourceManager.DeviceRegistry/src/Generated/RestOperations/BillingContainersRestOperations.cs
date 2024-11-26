@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="billingContainerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="billingContainerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BillingContainerData>> GetAsync(string subscriptionId, string billingContainerName, CancellationToken cancellationToken = default)
+        public async Task<Response<DeviceRegistryBillingContainerData>> GetAsync(string subscriptionId, string billingContainerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(billingContainerName, nameof(billingContainerName));
@@ -161,13 +161,13 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 case 200:
                     {
-                        BillingContainerData value = default;
+                        DeviceRegistryBillingContainerData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BillingContainerData.DeserializeBillingContainerData(document.RootElement);
+                        value = DeviceRegistryBillingContainerData.DeserializeDeviceRegistryBillingContainerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((BillingContainerData)null, message.Response);
+                    return Response.FromValue((DeviceRegistryBillingContainerData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="billingContainerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="billingContainerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BillingContainerData> Get(string subscriptionId, string billingContainerName, CancellationToken cancellationToken = default)
+        public Response<DeviceRegistryBillingContainerData> Get(string subscriptionId, string billingContainerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(billingContainerName, nameof(billingContainerName));
@@ -190,13 +190,13 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 case 200:
                     {
-                        BillingContainerData value = default;
+                        DeviceRegistryBillingContainerData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BillingContainerData.DeserializeBillingContainerData(document.RootElement);
+                        value = DeviceRegistryBillingContainerData.DeserializeDeviceRegistryBillingContainerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((BillingContainerData)null, message.Response);
+                    return Response.FromValue((DeviceRegistryBillingContainerData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

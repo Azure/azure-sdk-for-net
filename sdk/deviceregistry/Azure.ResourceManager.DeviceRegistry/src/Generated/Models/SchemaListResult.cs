@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <summary> Initializes a new instance of <see cref="SchemaListResult"/>. </summary>
         /// <param name="value"> The Schema items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal SchemaListResult(IEnumerable<SchemaData> value)
+        internal SchemaListResult(IEnumerable<DeviceRegistrySchemaData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="value"> The Schema items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SchemaListResult(IReadOnlyList<SchemaData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SchemaListResult(IReadOnlyList<DeviceRegistrySchemaData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         }
 
         /// <summary> The Schema items on this page. </summary>
-        public IReadOnlyList<SchemaData> Value { get; }
+        public IReadOnlyList<DeviceRegistrySchemaData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
