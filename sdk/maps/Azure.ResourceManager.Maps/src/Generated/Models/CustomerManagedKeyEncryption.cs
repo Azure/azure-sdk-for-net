@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.HybridConnectivity.Models
+namespace Azure.ResourceManager.Maps.Models
 {
-    /// <summary> Properties of public cloud connectors. </summary>
-    internal partial class PublicCloudConnectorPropertiesUpdate
+    /// <summary> All Customer-managed key encryption properties for the resource. </summary>
+    public partial class CustomerManagedKeyEncryption
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,31 +45,25 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PublicCloudConnectorPropertiesUpdate"/>. </summary>
-        public PublicCloudConnectorPropertiesUpdate()
+        /// <summary> Initializes a new instance of <see cref="CustomerManagedKeyEncryption"/>. </summary>
+        public CustomerManagedKeyEncryption()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PublicCloudConnectorPropertiesUpdate"/>. </summary>
-        /// <param name="awsCloudProfile"> Cloud profile for AWS. </param>
+        /// <summary> Initializes a new instance of <see cref="CustomerManagedKeyEncryption"/>. </summary>
+        /// <param name="keyEncryptionKeyIdentity"> All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault. </param>
+        /// <param name="keyEncryptionKeyUri"> key encryption key Url, versioned or non-versioned. Ex: https://contosovault.vault.azure.net/keys/contosokek/562a4bb76b524a1493a6afe8e536ee78 or https://contosovault.vault.azure.net/keys/contosokek. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PublicCloudConnectorPropertiesUpdate(AwsCloudProfileUpdate awsCloudProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CustomerManagedKeyEncryption(CustomerManagedKeyEncryptionKeyIdentity keyEncryptionKeyIdentity, Uri keyEncryptionKeyUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            AwsCloudProfile = awsCloudProfile;
+            KeyEncryptionKeyIdentity = keyEncryptionKeyIdentity;
+            KeyEncryptionKeyUri = keyEncryptionKeyUri;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Cloud profile for AWS. </summary>
-        internal AwsCloudProfileUpdate AwsCloudProfile { get; set; }
-        /// <summary> List of AWS accounts which need to be excluded. </summary>
-        public IList<string> AwsCloudExcludedAccounts
-        {
-            get
-            {
-                if (AwsCloudProfile is null)
-                    AwsCloudProfile = new AwsCloudProfileUpdate();
-                return AwsCloudProfile.ExcludedAccounts;
-            }
-        }
+        /// <summary> All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault. </summary>
+        public CustomerManagedKeyEncryptionKeyIdentity KeyEncryptionKeyIdentity { get; set; }
+        /// <summary> key encryption key Url, versioned or non-versioned. Ex: https://contosovault.vault.azure.net/keys/contosokek/562a4bb76b524a1493a6afe8e536ee78 or https://contosovault.vault.azure.net/keys/contosokek. </summary>
+        public Uri KeyEncryptionKeyUri { get; set; }
     }
 }

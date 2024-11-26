@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Maps.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetMapsAccounts_ListAccountsBySubscription()
         {
-            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/ListAccountsBySubscription.json
+            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/stable/2023-06-01/examples/ListAccountsBySubscription.json
             // this example is just showing the usage of "Accounts_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
