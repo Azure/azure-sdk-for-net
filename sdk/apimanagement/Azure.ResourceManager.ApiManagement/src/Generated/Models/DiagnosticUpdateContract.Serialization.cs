@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("backend"u8);
                 writer.WriteObjectValue(Backend, options);
             }
-            if (Optional.IsDefined(LogClientIP))
+            if (Optional.IsDefined(IsLogClientIP))
             {
                 writer.WritePropertyName("logClientIp"u8);
-                writer.WriteBooleanValue(LogClientIP.Value);
+                writer.WriteBooleanValue(IsLogClientIP.Value);
             }
             if (Optional.IsDefined(HttpCorrelationProtocol))
             {
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("operationNameFormat"u8);
                 writer.WriteStringValue(OperationNameFormat.Value.ToString());
             }
-            if (Optional.IsDefined(Metrics))
+            if (Optional.IsDefined(IsMetrics))
             {
                 writer.WritePropertyName("metrics"u8);
-                writer.WriteBooleanValue(Metrics.Value);
+                writer.WriteBooleanValue(IsMetrics.Value);
             }
             writer.WriteEndObject();
         }
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ResourceType type = default;
             SystemData systemData = default;
             AlwaysLog? alwaysLog = default;
-            string loggerId = default;
+            ResourceIdentifier loggerId = default;
             SamplingSettings sampling = default;
             PipelineDiagnosticSettings frontend = default;
             PipelineDiagnosticSettings backend = default;
@@ -174,7 +174,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         }
                         if (property0.NameEquals("loggerId"u8))
                         {
-                            loggerId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            loggerId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("sampling"u8))
@@ -368,15 +372,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 if (Optional.IsDefined(LoggerId))
                 {
                     builder.Append("    loggerId: ");
-                    if (LoggerId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{LoggerId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{LoggerId}'");
-                    }
+                    builder.AppendLine($"'{LoggerId.ToString()}'");
                 }
             }
 
@@ -425,7 +421,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogClientIP), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsLogClientIP), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    logClientIp: ");
@@ -433,10 +429,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             else
             {
-                if (Optional.IsDefined(LogClientIP))
+                if (Optional.IsDefined(IsLogClientIP))
                 {
                     builder.Append("    logClientIp: ");
-                    var boolValue = LogClientIP.Value == true ? "true" : "false";
+                    var boolValue = IsLogClientIP.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
@@ -486,7 +482,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Metrics), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsMetrics), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    metrics: ");
@@ -494,10 +490,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             else
             {
-                if (Optional.IsDefined(Metrics))
+                if (Optional.IsDefined(IsMetrics))
                 {
                     builder.Append("    metrics: ");
-                    var boolValue = Metrics.Value == true ? "true" : "false";
+                    var boolValue = IsMetrics.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }

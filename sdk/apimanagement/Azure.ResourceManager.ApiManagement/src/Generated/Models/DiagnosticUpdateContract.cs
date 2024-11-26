@@ -62,24 +62,24 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="sampling"> Sampling settings for Diagnostic. </param>
         /// <param name="frontend"> Diagnostic settings for incoming/outgoing HTTP messages to the Gateway. </param>
         /// <param name="backend"> Diagnostic settings for incoming/outgoing HTTP messages to the Backend. </param>
-        /// <param name="logClientIP"> Log the ClientIP. Default is false. </param>
+        /// <param name="isLogClientIP"> Log the ClientIP. Default is false. </param>
         /// <param name="httpCorrelationProtocol"> Sets correlation protocol to use for Application Insights diagnostics. </param>
         /// <param name="verbosity"> The verbosity level applied to traces emitted by trace policies. </param>
         /// <param name="operationNameFormat"> The format of the Operation Name for Application Insights telemetries. Default is Name. </param>
-        /// <param name="metrics"> Emit custom metrics via emit-metric policy. Applicable only to Application Insights diagnostic settings. </param>
+        /// <param name="isMetrics"> Emit custom metrics via emit-metric policy. Applicable only to Application Insights diagnostic settings. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiagnosticUpdateContract(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlwaysLog? alwaysLog, string loggerId, SamplingSettings sampling, PipelineDiagnosticSettings frontend, PipelineDiagnosticSettings backend, bool? logClientIP, HttpCorrelationProtocol? httpCorrelationProtocol, TraceVerbosityLevel? verbosity, OperationNameFormat? operationNameFormat, bool? metrics, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DiagnosticUpdateContract(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlwaysLog? alwaysLog, ResourceIdentifier loggerId, SamplingSettings sampling, PipelineDiagnosticSettings frontend, PipelineDiagnosticSettings backend, bool? isLogClientIP, HttpCorrelationProtocol? httpCorrelationProtocol, TraceVerbosityLevel? verbosity, OperationNameFormat? operationNameFormat, bool? isMetrics, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             AlwaysLog = alwaysLog;
             LoggerId = loggerId;
             Sampling = sampling;
             Frontend = frontend;
             Backend = backend;
-            LogClientIP = logClientIP;
+            IsLogClientIP = isLogClientIP;
             HttpCorrelationProtocol = httpCorrelationProtocol;
             Verbosity = verbosity;
             OperationNameFormat = operationNameFormat;
-            Metrics = metrics;
+            IsMetrics = isMetrics;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public AlwaysLog? AlwaysLog { get; set; }
         /// <summary> Resource Id of a target logger. </summary>
         [WirePath("properties.loggerId")]
-        public string LoggerId { get; set; }
+        public ResourceIdentifier LoggerId { get; set; }
         /// <summary> Sampling settings for Diagnostic. </summary>
         [WirePath("properties.sampling")]
         public SamplingSettings Sampling { get; set; }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public PipelineDiagnosticSettings Backend { get; set; }
         /// <summary> Log the ClientIP. Default is false. </summary>
         [WirePath("properties.logClientIp")]
-        public bool? LogClientIP { get; set; }
+        public bool? IsLogClientIP { get; set; }
         /// <summary> Sets correlation protocol to use for Application Insights diagnostics. </summary>
         [WirePath("properties.httpCorrelationProtocol")]
         public HttpCorrelationProtocol? HttpCorrelationProtocol { get; set; }
@@ -112,6 +112,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public OperationNameFormat? OperationNameFormat { get; set; }
         /// <summary> Emit custom metrics via emit-metric policy. Applicable only to Application Insights diagnostic settings. </summary>
         [WirePath("properties.metrics")]
-        public bool? Metrics { get; set; }
+        public bool? IsMetrics { get; set; }
     }
 }

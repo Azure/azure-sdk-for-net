@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            IReadOnlyList<ApiManagementGatewayConfigConnectionResourceData> value = default;
+            IReadOnlyList<ApiGatewayConfigConnectionData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<ApiManagementGatewayConfigConnectionResourceData> array = new List<ApiManagementGatewayConfigConnectionResourceData>();
+                    List<ApiGatewayConfigConnectionData> array = new List<ApiGatewayConfigConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementGatewayConfigConnectionResourceData.DeserializeApiManagementGatewayConfigConnectionResourceData(item, options));
+                        array.Add(ApiGatewayConfigConnectionData.DeserializeApiGatewayConfigConnectionData(item, options));
                     }
                     value = array;
                     continue;

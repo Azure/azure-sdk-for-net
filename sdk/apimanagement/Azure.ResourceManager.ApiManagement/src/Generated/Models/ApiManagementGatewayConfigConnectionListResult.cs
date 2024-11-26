@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayConfigConnectionListResult"/>. </summary>
         /// <param name="value"> Result of the List API Management gateway config connection operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ApiManagementGatewayConfigConnectionListResult(IEnumerable<ApiManagementGatewayConfigConnectionResourceData> value)
+        internal ApiManagementGatewayConfigConnectionListResult(IEnumerable<ApiGatewayConfigConnectionData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="value"> Result of the List API Management gateway config connection operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of API Management services. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementGatewayConfigConnectionListResult(IReadOnlyList<ApiManagementGatewayConfigConnectionResourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiManagementGatewayConfigConnectionListResult(IReadOnlyList<ApiGatewayConfigConnectionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Result of the List API Management gateway config connection operation. </summary>
-        public IReadOnlyList<ApiManagementGatewayConfigConnectionResourceData> Value { get; }
+        public IReadOnlyList<ApiGatewayConfigConnectionData> Value { get; }
         /// <summary> Link to the next set of results. Not empty if Value contains incomplete list of API Management services. </summary>
         public string NextLink { get; }
     }

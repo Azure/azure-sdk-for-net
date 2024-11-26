@@ -14,10 +14,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A class representing the ApiManagementGatewayResource data model.
+    /// A class representing the ApiGateway data model.
     /// A single API Management gateway resource in List or Get response.
     /// </summary>
-    public partial class ApiManagementGatewayResourceData : TrackedResourceData
+    public partial class ApiGatewayData : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,18 +51,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiGatewayData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> SKU properties of the API Management gateway. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        public ApiManagementGatewayResourceData(AzureLocation location, ApiManagementGatewaySkuProperties sku) : base(location)
+        public ApiGatewayData(AzureLocation location, ApiManagementGatewaySkuProperties sku) : base(location)
         {
             Argument.AssertNotNull(sku, nameof(sku));
 
             Sku = sku;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiGatewayData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="configurationApi"> Information regarding the Configuration API of the API Management gateway. This is only applicable for API gateway with Standard SKU. </param>
         /// <param name="virtualNetworkType"> The type of VPN in which API Management gateway needs to be configured in. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementGatewayResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ApiManagementGatewaySkuProperties sku, ETag? etag, string provisioningState, string targetProvisioningState, DateTimeOffset? createdAtUtc, FrontendConfiguration frontend, BackendConfiguration backend, GatewayConfigurationApi configurationApi, VirtualNetworkType? virtualNetworkType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ApiGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ApiManagementGatewaySkuProperties sku, ETag? etag, string provisioningState, string targetProvisioningState, DateTimeOffset? createdAtUtc, FrontendConfiguration frontend, BackendConfiguration backend, GatewayConfigurationApi configurationApi, VirtualNetworkType? virtualNetworkType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             ETag = etag;
@@ -93,8 +93,8 @@ namespace Azure.ResourceManager.ApiManagement
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayResourceData"/> for deserialization. </summary>
-        internal ApiManagementGatewayResourceData()
+        /// <summary> Initializes a new instance of <see cref="ApiGatewayData"/> for deserialization. </summary>
+        internal ApiGatewayData()
         {
         }
 

@@ -16,11 +16,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiManagementGatewayConfigConnectionResourceData : IUtf8JsonSerializable, IJsonModel<ApiManagementGatewayConfigConnectionResourceData>
+    public partial class ApiGatewayConfigConnectionData : IUtf8JsonSerializable, IJsonModel<ApiGatewayConfigConnectionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementGatewayConfigConnectionResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiGatewayConfigConnectionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ApiManagementGatewayConfigConnectionResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ApiGatewayConfigConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementGatewayConfigConnectionResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiGatewayConfigConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementGatewayConfigConnectionResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiGatewayConfigConnectionData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -73,19 +73,19 @@ namespace Azure.ResourceManager.ApiManagement
             writer.WriteEndObject();
         }
 
-        ApiManagementGatewayConfigConnectionResourceData IJsonModel<ApiManagementGatewayConfigConnectionResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ApiGatewayConfigConnectionData IJsonModel<ApiGatewayConfigConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementGatewayConfigConnectionResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiGatewayConfigConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementGatewayConfigConnectionResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiGatewayConfigConnectionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeApiManagementGatewayConfigConnectionResourceData(document.RootElement, options);
+            return DeserializeApiGatewayConfigConnectionData(document.RootElement, options);
         }
 
-        internal static ApiManagementGatewayConfigConnectionResourceData DeserializeApiManagementGatewayConfigConnectionResourceData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ApiGatewayConfigConnectionData DeserializeApiGatewayConfigConnectionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ApiManagementGatewayConfigConnectionResourceData(
+            return new ApiGatewayConfigConnectionData(
                 id,
                 name,
                 type,
@@ -386,9 +386,9 @@ namespace Azure.ResourceManager.ApiManagement
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<ApiManagementGatewayConfigConnectionResourceData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ApiGatewayConfigConnectionData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementGatewayConfigConnectionResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiGatewayConfigConnectionData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -397,26 +397,26 @@ namespace Azure.ResourceManager.ApiManagement
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementGatewayConfigConnectionResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiGatewayConfigConnectionData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ApiManagementGatewayConfigConnectionResourceData IPersistableModel<ApiManagementGatewayConfigConnectionResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ApiGatewayConfigConnectionData IPersistableModel<ApiGatewayConfigConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementGatewayConfigConnectionResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiGatewayConfigConnectionData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeApiManagementGatewayConfigConnectionResourceData(document.RootElement, options);
+                        return DeserializeApiGatewayConfigConnectionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementGatewayConfigConnectionResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiGatewayConfigConnectionData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ApiManagementGatewayConfigConnectionResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApiGatewayConfigConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

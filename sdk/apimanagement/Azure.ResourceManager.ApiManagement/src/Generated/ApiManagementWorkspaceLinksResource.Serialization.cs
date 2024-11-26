@@ -11,16 +11,16 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiManagementWorkspaceLinksResource : IJsonModel<ApiManagementWorkspaceLinksResourceData>
+    public partial class ApiManagementWorkspaceLinksResource : IJsonModel<ApiManagementWorkspaceLinksData>
     {
-        void IJsonModel<ApiManagementWorkspaceLinksResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementWorkspaceLinksResourceData>)Data).Write(writer, options);
+        void IJsonModel<ApiManagementWorkspaceLinksData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementWorkspaceLinksData>)Data).Write(writer, options);
 
-        ApiManagementWorkspaceLinksResourceData IJsonModel<ApiManagementWorkspaceLinksResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementWorkspaceLinksResourceData>)Data).Create(ref reader, options);
+        ApiManagementWorkspaceLinksData IJsonModel<ApiManagementWorkspaceLinksData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementWorkspaceLinksData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ApiManagementWorkspaceLinksResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ApiManagementWorkspaceLinksData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ApiManagementWorkspaceLinksResourceData IPersistableModel<ApiManagementWorkspaceLinksResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementWorkspaceLinksResourceData>(data, options);
+        ApiManagementWorkspaceLinksData IPersistableModel<ApiManagementWorkspaceLinksData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementWorkspaceLinksData>(data, options);
 
-        string IPersistableModel<ApiManagementWorkspaceLinksResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementWorkspaceLinksResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ApiManagementWorkspaceLinksData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementWorkspaceLinksData>)Data).GetFormatFromOptions(options);
     }
 }

@@ -35,15 +35,15 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="GatewayResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GatewayResource.CreateResourceIdentifier" /> to create a <see cref="GatewayResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="ApiGatewayResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiGatewayResource.CreateResourceIdentifier" /> to create an <see cref="ApiGatewayResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GatewayResource"/> object. </returns>
-        public virtual GatewayResource GetGatewayResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiGatewayResource"/> object. </returns>
+        public virtual ApiGatewayResource GetApiGatewayResource(ResourceIdentifier id)
         {
-            GatewayResource.ValidateResourceId(id);
-            return new GatewayResource(Client, id);
+            ApiGatewayResource.ValidateResourceId(id);
+            return new ApiGatewayResource(Client, id);
         }
 
         /// <summary>
@@ -635,15 +635,15 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="GatewayConfigConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GatewayConfigConnectionResource.CreateResourceIdentifier" /> to create a <see cref="GatewayConfigConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="ApiGatewayConfigConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiGatewayConfigConnectionResource.CreateResourceIdentifier" /> to create an <see cref="ApiGatewayConfigConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GatewayConfigConnectionResource"/> object. </returns>
-        public virtual GatewayConfigConnectionResource GetGatewayConfigConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiGatewayConfigConnectionResource"/> object. </returns>
+        public virtual ApiGatewayConfigConnectionResource GetApiGatewayConfigConnectionResource(ResourceIdentifier id)
         {
-            GatewayConfigConnectionResource.ValidateResourceId(id);
-            return new GatewayConfigConnectionResource(Client, id);
+            ApiGatewayConfigConnectionResource.ValidateResourceId(id);
+            return new ApiGatewayConfigConnectionResource(Client, id);
         }
 
         /// <summary>

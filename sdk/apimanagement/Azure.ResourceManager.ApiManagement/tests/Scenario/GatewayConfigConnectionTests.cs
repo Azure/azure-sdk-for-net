@@ -28,20 +28,20 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
         private ResourceGroupResource ResourceGroup { get; set; }
 
-        private GatewayResource GatewayResource { get; set; }
+        private ApiGatewayResource GatewayResource { get; set; }
 
-        private GatewayResourceCollection GatewayResources { get; set; }
+        private ApiGatewayCollection GatewayResources { get; set; }
 
         private async Task SetCollectionsAsync()
         {
             ResourceGroup = await CreateResourceGroupAsync();
-            GatewayResources = ResourceGroup.GetGatewayResources();
+            GatewayResources = ResourceGroup.GetApiGateways();
         }
 
         private async Task CreateGatewayResourceAsync()
         {
             var apiName = Recording.GenerateAssetName("sdktestapimv2-");
-            var data = new ApiManagementGatewayResourceData(AzureLocation.WestUS2, new ApiManagementGatewaySkuProperties(ApiGatewaySkuType.WorkspaceGatewayPremium));
+            var data = new ApiGatewayData(AzureLocation.WestUS2, new ApiManagementGatewaySkuProperties(ApiGatewaySkuType.WorkspaceGatewayPremium));
             GatewayResource = (await GatewayResources.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
         }
 

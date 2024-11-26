@@ -15,7 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.ApiManagement.Samples
 {
-    public partial class Sample_GatewayResource
+    public partial class Sample_ApiGatewayResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -29,16 +29,16 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this GatewayResource created on azure
-            // for more information of creating GatewayResource, please refer to the document of GatewayResource
+            // this example assumes you already have this ApiGatewayResource created on azure
+            // for more information of creating ApiGatewayResource, please refer to the document of ApiGatewayResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string gatewayName = "apimGateway1";
-            ResourceIdentifier gatewayResourceId = GatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
-            GatewayResource gatewayResource = client.GetGatewayResource(gatewayResourceId);
+            ResourceIdentifier apiGatewayResourceId = ApiGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
+            ApiGatewayResource apiGateway = client.GetApiGatewayResource(apiGatewayResourceId);
 
             // invoke the operation
-            GatewayResourcePatch patch = new GatewayResourcePatch()
+            ApiGatewayPatch patch = new ApiGatewayPatch()
             {
                 Sku = new ApiManagementGatewaySkuPropertiesForPatch()
                 {
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 ["Test"] = "User",
 },
             };
-            ArmOperation<GatewayResource> lro = await gatewayResource.UpdateAsync(WaitUntil.Completed, patch);
-            GatewayResource result = lro.Value;
+            ArmOperation<ApiGatewayResource> lro = await apiGateway.UpdateAsync(WaitUntil.Completed, patch);
+            ApiGatewayResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ApiManagementGatewayResourceData resourceData = result.Data;
+            ApiGatewayData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -73,20 +73,20 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this GatewayResource created on azure
-            // for more information of creating GatewayResource, please refer to the document of GatewayResource
+            // this example assumes you already have this ApiGatewayResource created on azure
+            // for more information of creating ApiGatewayResource, please refer to the document of ApiGatewayResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string gatewayName = "apimService1";
-            ResourceIdentifier gatewayResourceId = GatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
-            GatewayResource gatewayResource = client.GetGatewayResource(gatewayResourceId);
+            ResourceIdentifier apiGatewayResourceId = ApiGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
+            ApiGatewayResource apiGateway = client.GetApiGatewayResource(apiGatewayResourceId);
 
             // invoke the operation
-            GatewayResource result = await gatewayResource.GetAsync();
+            ApiGatewayResource result = await apiGateway.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ApiManagementGatewayResourceData resourceData = result.Data;
+            ApiGatewayData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -103,23 +103,23 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this GatewayResource created on azure
-            // for more information of creating GatewayResource, please refer to the document of GatewayResource
+            // this example assumes you already have this ApiGatewayResource created on azure
+            // for more information of creating ApiGatewayResource, please refer to the document of ApiGatewayResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string gatewayName = "example-gateway";
-            ResourceIdentifier gatewayResourceId = GatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
-            GatewayResource gatewayResource = client.GetGatewayResource(gatewayResourceId);
+            ResourceIdentifier apiGatewayResourceId = ApiGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
+            ApiGatewayResource apiGateway = client.GetApiGatewayResource(apiGatewayResourceId);
 
             // invoke the operation
-            await gatewayResource.DeleteAsync(WaitUntil.Completed);
+            await apiGateway.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetGatewayResources_ApiManagementListGatewaysBySubscription()
+        public async Task GetApiGateways_ApiManagementListGatewaysBySubscription()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementListGatewaysBySubscription.json
             // this example is just showing the usage of "ApiGateway_List" operation, for the dependent resources, they will have to be created separately.
@@ -136,11 +136,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (GatewayResource item in subscriptionResource.GetGatewayResourcesAsync())
+            await foreach (ApiGatewayResource item in subscriptionResource.GetApiGatewaysAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ApiManagementGatewayResourceData resourceData = item.Data;
+                ApiGatewayData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -160,16 +160,16 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this GatewayResource created on azure
-            // for more information of creating GatewayResource, please refer to the document of GatewayResource
+            // this example assumes you already have this ApiGatewayResource created on azure
+            // for more information of creating ApiGatewayResource, please refer to the document of ApiGatewayResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string gatewayName = "apimService1";
-            ResourceIdentifier gatewayResourceId = GatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
-            GatewayResource gatewayResource = client.GetGatewayResource(gatewayResourceId);
+            ResourceIdentifier apiGatewayResourceId = ApiGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
+            ApiGatewayResource apiGateway = client.GetApiGatewayResource(apiGatewayResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (GatewayResourceSkuResult item in gatewayResource.GetAvailableSkusApiManagementGatewaySkusAsync())
+            await foreach (GatewayResourceSkuResult item in apiGateway.GetAvailableSkusApiManagementGatewaySkusAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="ApiManagementWorkspaceLinksListResult"/>. </summary>
         /// <param name="value"> Result of the List API Management WorkspaceLinks operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ApiManagementWorkspaceLinksListResult(IEnumerable<ApiManagementWorkspaceLinksResourceData> value)
+        internal ApiManagementWorkspaceLinksListResult(IEnumerable<ApiManagementWorkspaceLinksData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="value"> Result of the List API Management WorkspaceLinks operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of API Management services. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementWorkspaceLinksListResult(IReadOnlyList<ApiManagementWorkspaceLinksResourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiManagementWorkspaceLinksListResult(IReadOnlyList<ApiManagementWorkspaceLinksData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Result of the List API Management WorkspaceLinks operation. </summary>
-        public IReadOnlyList<ApiManagementWorkspaceLinksResourceData> Value { get; }
+        public IReadOnlyList<ApiManagementWorkspaceLinksData> Value { get; }
         /// <summary> Link to the next set of results. Not empty if Value contains incomplete list of API Management services. </summary>
         public string NextLink { get; }
     }

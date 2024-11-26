@@ -2377,9 +2377,9 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Gets a collection of ApiManagementWorkspaceLinksResources in the ApiManagementService. </summary>
         /// <returns> An object representing collection of ApiManagementWorkspaceLinksResources and their operations over a ApiManagementWorkspaceLinksResource. </returns>
-        public virtual ApiManagementWorkspaceLinksResourceCollection GetApiManagementWorkspaceLinksResources()
+        public virtual ApiManagementWorkspaceLinksCollection GetAllApiManagementWorkspaceLinks()
         {
-            return GetCachedClient(client => new ApiManagementWorkspaceLinksResourceCollection(client, Id));
+            return GetCachedClient(client => new ApiManagementWorkspaceLinksCollection(client, Id));
         }
 
         /// <summary>
@@ -2408,9 +2408,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ApiManagementWorkspaceLinksResource>> GetApiManagementWorkspaceLinksResourceAsync(string workspaceId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementWorkspaceLinksResource>> GetApiManagementWorkspaceLinksAsync(string workspaceId, CancellationToken cancellationToken = default)
         {
-            return await GetApiManagementWorkspaceLinksResources().GetAsync(workspaceId, cancellationToken).ConfigureAwait(false);
+            return await GetAllApiManagementWorkspaceLinks().GetAsync(workspaceId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2439,9 +2439,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ApiManagementWorkspaceLinksResource> GetApiManagementWorkspaceLinksResource(string workspaceId, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementWorkspaceLinksResource> GetApiManagementWorkspaceLinks(string workspaceId, CancellationToken cancellationToken = default)
         {
-            return GetApiManagementWorkspaceLinksResources().Get(workspaceId, cancellationToken);
+            return GetAllApiManagementWorkspaceLinks().Get(workspaceId, cancellationToken);
         }
 
         /// <summary> Gets a collection of WorkspaceContractResources in the ApiManagementService. </summary>

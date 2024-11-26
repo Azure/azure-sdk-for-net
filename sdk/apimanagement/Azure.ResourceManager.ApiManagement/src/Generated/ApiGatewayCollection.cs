@@ -19,28 +19,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="GatewayResource"/> and their operations.
-    /// Each <see cref="GatewayResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="GatewayResourceCollection"/> instance call the GetGatewayResources method from an instance of <see cref="ResourceGroupResource"/>.
+    /// A class representing a collection of <see cref="ApiGatewayResource"/> and their operations.
+    /// Each <see cref="ApiGatewayResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="ApiGatewayCollection"/> instance call the GetApiGateways method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class GatewayResourceCollection : ArmCollection, IEnumerable<GatewayResource>, IAsyncEnumerable<GatewayResource>
+    public partial class ApiGatewayCollection : ArmCollection, IEnumerable<ApiGatewayResource>, IAsyncEnumerable<ApiGatewayResource>
     {
-        private readonly ClientDiagnostics _gatewayResourceApiGatewayClientDiagnostics;
-        private readonly ApiGatewayRestOperations _gatewayResourceApiGatewayRestClient;
+        private readonly ClientDiagnostics _apiGatewayClientDiagnostics;
+        private readonly ApiGatewayRestOperations _apiGatewayRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="GatewayResourceCollection"/> class for mocking. </summary>
-        protected GatewayResourceCollection()
+        /// <summary> Initializes a new instance of the <see cref="ApiGatewayCollection"/> class for mocking. </summary>
+        protected ApiGatewayCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="GatewayResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiGatewayCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal GatewayResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ApiGatewayCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _gatewayResourceApiGatewayClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", GatewayResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(GatewayResource.ResourceType, out string gatewayResourceApiGatewayApiVersion);
-            _gatewayResourceApiGatewayRestClient = new ApiGatewayRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, gatewayResourceApiGatewayApiVersion);
+            _apiGatewayClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiGatewayResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ApiGatewayResource.ResourceType, out string apiGatewayApiVersion);
+            _apiGatewayRestClient = new ApiGatewayRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiGatewayApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GatewayResource"/></description>
+        /// <description><see cref="ApiGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -79,17 +79,17 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<GatewayResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string gatewayName, ApiManagementGatewayResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ApiGatewayResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string gatewayName, ApiGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _gatewayResourceApiGatewayClientDiagnostics.CreateScope("GatewayResourceCollection.CreateOrUpdate");
+            using var scope = _apiGatewayClientDiagnostics.CreateScope("ApiGatewayCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _gatewayResourceApiGatewayRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<GatewayResource>(new GatewayResourceOperationSource(Client), _gatewayResourceApiGatewayClientDiagnostics, Pipeline, _gatewayResourceApiGatewayRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _apiGatewayRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ApiManagementArmOperation<ApiGatewayResource>(new ApiGatewayOperationSource(Client), _apiGatewayClientDiagnostics, Pipeline, _apiGatewayRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GatewayResource"/></description>
+        /// <description><see cref="ApiGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,17 +128,17 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<GatewayResource> CreateOrUpdate(WaitUntil waitUntil, string gatewayName, ApiManagementGatewayResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ApiGatewayResource> CreateOrUpdate(WaitUntil waitUntil, string gatewayName, ApiGatewayData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _gatewayResourceApiGatewayClientDiagnostics.CreateScope("GatewayResourceCollection.CreateOrUpdate");
+            using var scope = _apiGatewayClientDiagnostics.CreateScope("ApiGatewayCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _gatewayResourceApiGatewayRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, data, cancellationToken);
-                var operation = new ApiManagementArmOperation<GatewayResource>(new GatewayResourceOperationSource(Client), _gatewayResourceApiGatewayClientDiagnostics, Pipeline, _gatewayResourceApiGatewayRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, data).Request, response, OperationFinalStateVia.Location);
+                var response = _apiGatewayRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, data, cancellationToken);
+                var operation = new ApiManagementArmOperation<ApiGatewayResource>(new ApiGatewayOperationSource(Client), _apiGatewayClientDiagnostics, Pipeline, _apiGatewayRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GatewayResource"/></description>
+        /// <description><see cref="ApiGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -175,18 +175,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
-        public virtual async Task<Response<GatewayResource>> GetAsync(string gatewayName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiGatewayResource>> GetAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
-            using var scope = _gatewayResourceApiGatewayClientDiagnostics.CreateScope("GatewayResourceCollection.Get");
+            using var scope = _apiGatewayClientDiagnostics.CreateScope("ApiGatewayCollection.Get");
             scope.Start();
             try
             {
-                var response = await _gatewayResourceApiGatewayRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken).ConfigureAwait(false);
+                var response = await _apiGatewayRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GatewayResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiGatewayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GatewayResource"/></description>
+        /// <description><see cref="ApiGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,18 +220,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
-        public virtual Response<GatewayResource> Get(string gatewayName, CancellationToken cancellationToken = default)
+        public virtual Response<ApiGatewayResource> Get(string gatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
-            using var scope = _gatewayResourceApiGatewayClientDiagnostics.CreateScope("GatewayResourceCollection.Get");
+            using var scope = _apiGatewayClientDiagnostics.CreateScope("ApiGatewayCollection.Get");
             scope.Start();
             try
             {
-                var response = _gatewayResourceApiGatewayRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken);
+                var response = _apiGatewayRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GatewayResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiGatewayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -257,17 +257,17 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GatewayResource"/></description>
+        /// <description><see cref="ApiGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GatewayResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GatewayResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ApiGatewayResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiGatewayResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _gatewayResourceApiGatewayRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _gatewayResourceApiGatewayRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GatewayResource(Client, ApiManagementGatewayResourceData.DeserializeApiManagementGatewayResourceData(e)), _gatewayResourceApiGatewayClientDiagnostics, Pipeline, "GatewayResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiGatewayRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiGatewayRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiGatewayResource(Client, ApiGatewayData.DeserializeApiGatewayData(e)), _apiGatewayClientDiagnostics, Pipeline, "ApiGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -287,17 +287,17 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GatewayResource"/></description>
+        /// <description><see cref="ApiGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GatewayResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GatewayResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApiGatewayResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiGatewayResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _gatewayResourceApiGatewayRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _gatewayResourceApiGatewayRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GatewayResource(Client, ApiManagementGatewayResourceData.DeserializeApiManagementGatewayResourceData(e)), _gatewayResourceApiGatewayClientDiagnostics, Pipeline, "GatewayResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiGatewayRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiGatewayRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiGatewayResource(Client, ApiGatewayData.DeserializeApiGatewayData(e)), _apiGatewayClientDiagnostics, Pipeline, "ApiGatewayCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GatewayResource"/></description>
+        /// <description><see cref="ApiGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -329,11 +329,11 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
-            using var scope = _gatewayResourceApiGatewayClientDiagnostics.CreateScope("GatewayResourceCollection.Exists");
+            using var scope = _apiGatewayClientDiagnostics.CreateScope("ApiGatewayCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _gatewayResourceApiGatewayRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _apiGatewayRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GatewayResource"/></description>
+        /// <description><see cref="ApiGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -372,11 +372,11 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
-            using var scope = _gatewayResourceApiGatewayClientDiagnostics.CreateScope("GatewayResourceCollection.Exists");
+            using var scope = _apiGatewayClientDiagnostics.CreateScope("ApiGatewayCollection.Exists");
             scope.Start();
             try
             {
-                var response = _gatewayResourceApiGatewayRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken: cancellationToken);
+                var response = _apiGatewayRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GatewayResource"/></description>
+        /// <description><see cref="ApiGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -411,18 +411,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
-        public virtual async Task<NullableResponse<GatewayResource>> GetIfExistsAsync(string gatewayName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ApiGatewayResource>> GetIfExistsAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
-            using var scope = _gatewayResourceApiGatewayClientDiagnostics.CreateScope("GatewayResourceCollection.GetIfExists");
+            using var scope = _apiGatewayClientDiagnostics.CreateScope("ApiGatewayCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _gatewayResourceApiGatewayRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _apiGatewayRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<GatewayResource>(response.GetRawResponse());
-                return Response.FromValue(new GatewayResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<ApiGatewayResource>(response.GetRawResponse());
+                return Response.FromValue(new ApiGatewayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GatewayResource"/></description>
+        /// <description><see cref="ApiGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -456,18 +456,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
-        public virtual NullableResponse<GatewayResource> GetIfExists(string gatewayName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ApiGatewayResource> GetIfExists(string gatewayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
 
-            using var scope = _gatewayResourceApiGatewayClientDiagnostics.CreateScope("GatewayResourceCollection.GetIfExists");
+            using var scope = _apiGatewayClientDiagnostics.CreateScope("ApiGatewayCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _gatewayResourceApiGatewayRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken: cancellationToken);
+                var response = _apiGatewayRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, gatewayName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<GatewayResource>(response.GetRawResponse());
-                return Response.FromValue(new GatewayResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<ApiGatewayResource>(response.GetRawResponse());
+                return Response.FromValue(new ApiGatewayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        IEnumerator<GatewayResource> IEnumerable<GatewayResource>.GetEnumerator()
+        IEnumerator<ApiGatewayResource> IEnumerable<ApiGatewayResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.ApiManagement
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<GatewayResource> IAsyncEnumerable<GatewayResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ApiGatewayResource> IAsyncEnumerable<ApiGatewayResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

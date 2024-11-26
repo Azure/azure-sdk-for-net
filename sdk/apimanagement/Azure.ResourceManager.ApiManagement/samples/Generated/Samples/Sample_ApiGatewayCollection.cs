@@ -15,7 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.ApiManagement.Samples
 {
-    public partial class Sample_GatewayResourceCollection
+    public partial class Sample_ApiGatewayCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this GatewayResource
-            GatewayResourceCollection collection = resourceGroupResource.GetGatewayResources();
+            // get the collection of this ApiGatewayResource
+            ApiGatewayCollection collection = resourceGroupResource.GetApiGateways();
 
             // invoke the operation
             string gatewayName = "apimGateway1";
-            ApiManagementGatewayResourceData data = new ApiManagementGatewayResourceData(new AzureLocation("South Central US"), new ApiManagementGatewaySkuProperties(ApiGatewaySkuType.Standard)
+            ApiGatewayData data = new ApiGatewayData(new AzureLocation("South Central US"), new ApiManagementGatewaySkuProperties(ApiGatewaySkuType.Standard)
             {
                 Capacity = 1,
             })
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 ["Test"] = "User",
 },
             };
-            ArmOperation<GatewayResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, gatewayName, data);
-            GatewayResource result = lro.Value;
+            ArmOperation<ApiGatewayResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, gatewayName, data);
+            ApiGatewayResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ApiManagementGatewayResourceData resourceData = result.Data;
+            ApiGatewayData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this GatewayResource
-            GatewayResourceCollection collection = resourceGroupResource.GetGatewayResources();
+            // get the collection of this ApiGatewayResource
+            ApiGatewayCollection collection = resourceGroupResource.GetApiGateways();
 
             // invoke the operation
             string gatewayName = "apimGateway1";
-            ApiManagementGatewayResourceData data = new ApiManagementGatewayResourceData(new AzureLocation("South Central US"), new ApiManagementGatewaySkuProperties(ApiGatewaySkuType.WorkspaceGatewayPremium)
+            ApiGatewayData data = new ApiGatewayData(new AzureLocation("South Central US"), new ApiManagementGatewaySkuProperties(ApiGatewaySkuType.WorkspaceGatewayPremium)
             {
                 Capacity = 1,
             })
@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 ["Test"] = "User",
 },
             };
-            ArmOperation<GatewayResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, gatewayName, data);
-            GatewayResource result = lro.Value;
+            ArmOperation<ApiGatewayResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, gatewayName, data);
+            ApiGatewayResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ApiManagementGatewayResourceData resourceData = result.Data;
+            ApiGatewayData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -129,16 +129,16 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this GatewayResource
-            GatewayResourceCollection collection = resourceGroupResource.GetGatewayResources();
+            // get the collection of this ApiGatewayResource
+            ApiGatewayCollection collection = resourceGroupResource.GetApiGateways();
 
             // invoke the operation
             string gatewayName = "apimService1";
-            GatewayResource result = await collection.GetAsync(gatewayName);
+            ApiGatewayResource result = await collection.GetAsync(gatewayName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ApiManagementGatewayResourceData resourceData = result.Data;
+            ApiGatewayData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -162,8 +162,8 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this GatewayResource
-            GatewayResourceCollection collection = resourceGroupResource.GetGatewayResources();
+            // get the collection of this ApiGatewayResource
+            ApiGatewayCollection collection = resourceGroupResource.GetApiGateways();
 
             // invoke the operation
             string gatewayName = "apimService1";
@@ -191,13 +191,13 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this GatewayResource
-            GatewayResourceCollection collection = resourceGroupResource.GetGatewayResources();
+            // get the collection of this ApiGatewayResource
+            ApiGatewayCollection collection = resourceGroupResource.GetApiGateways();
 
             // invoke the operation
             string gatewayName = "apimService1";
-            NullableResponse<GatewayResource> response = await collection.GetIfExistsAsync(gatewayName);
-            GatewayResource result = response.HasValue ? response.Value : null;
+            NullableResponse<ApiGatewayResource> response = await collection.GetIfExistsAsync(gatewayName);
+            ApiGatewayResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ApiManagementGatewayResourceData resourceData = result.Data;
+                ApiGatewayData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -232,15 +232,15 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this GatewayResource
-            GatewayResourceCollection collection = resourceGroupResource.GetGatewayResources();
+            // get the collection of this ApiGatewayResource
+            ApiGatewayCollection collection = resourceGroupResource.GetApiGateways();
 
             // invoke the operation and iterate over the result
-            await foreach (GatewayResource item in collection.GetAllAsync())
+            await foreach (ApiGatewayResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ApiManagementGatewayResourceData resourceData = item.Data;
+                ApiGatewayData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

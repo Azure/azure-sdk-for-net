@@ -12,15 +12,16 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.ApiManagement.Models
+namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class GatewayResourcePatch : IUtf8JsonSerializable, IJsonModel<GatewayResourcePatch>
+    public partial class ApiGatewayData : IUtf8JsonSerializable, IJsonModel<ApiGatewayData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GatewayResourcePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiGatewayData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<GatewayResourcePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ApiGatewayData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -31,33 +32,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GatewayResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiGatewayData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GatewayResourcePatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiGatewayData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Sku))
-            {
-                writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
-            }
+            writer.WritePropertyName("sku"u8);
+            writer.WriteObjectValue(Sku, options);
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -99,19 +86,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteEndObject();
         }
 
-        GatewayResourcePatch IJsonModel<GatewayResourcePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ApiGatewayData IJsonModel<ApiGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GatewayResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiGatewayData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GatewayResourcePatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiGatewayData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGatewayResourcePatch(document.RootElement, options);
+            return DeserializeApiGatewayData(document.RootElement, options);
         }
 
-        internal static GatewayResourcePatch DeserializeGatewayResourcePatch(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ApiGatewayData DeserializeApiGatewayData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -119,9 +106,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            ApiManagementGatewaySkuPropertiesForPatch sku = default;
+            ApiManagementGatewaySkuProperties sku = default;
             ETag? etag = default;
             IDictionary<string, string> tags = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -139,11 +127,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sku = ApiManagementGatewaySkuPropertiesForPatch.DeserializeApiManagementGatewaySkuPropertiesForPatch(property.Value, options);
+                    sku = ApiManagementGatewaySkuProperties.DeserializeApiManagementGatewaySkuProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -167,6 +151,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -266,11 +255,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new GatewayResourcePatch(
+            return new ApiGatewayData(
                 id,
                 name,
                 type,
                 systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
                 sku,
                 etag,
                 provisioningState,
@@ -280,7 +271,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 backend,
                 configurationApi,
                 virtualNetworkType,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
 
@@ -316,6 +306,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         builder.AppendLine($"'{Name}'");
                     }
                 }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  location: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  location: ");
+                builder.AppendLine($"'{Location.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
@@ -561,9 +563,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<GatewayResourcePatch>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ApiGatewayData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GatewayResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiGatewayData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -572,26 +574,26 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(GatewayResourcePatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiGatewayData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        GatewayResourcePatch IPersistableModel<GatewayResourcePatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ApiGatewayData IPersistableModel<ApiGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GatewayResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiGatewayData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeGatewayResourcePatch(document.RootElement, options);
+                        return DeserializeApiGatewayData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GatewayResourcePatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiGatewayData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<GatewayResourcePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApiGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

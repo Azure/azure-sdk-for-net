@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             DiagnosticUpdateContract diagnosticUpdateContract = new DiagnosticUpdateContract()
             {
                 AlwaysLog = AlwaysLog.AllErrors,
-                LoggerId = "/workspaces/wks1/loggers/applicationinsights",
+                LoggerId = new ResourceIdentifier("/workspaces/wks1/loggers/applicationinsights"),
                 Sampling = new SamplingSettings()
                 {
                     SamplingType = SamplingType.Fixed,

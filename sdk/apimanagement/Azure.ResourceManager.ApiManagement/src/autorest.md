@@ -67,8 +67,8 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends/{backendId}: ApiManagementBackend
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/certificates/{certificateId}: ApiManagementCertificate
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/loggers/{loggerId}: ApiManagementLogger
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}: GatewayResource
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}/configConnections/{configConnectionName}: GatewayConfigConnectionResource
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}: ApiGateway
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}/configConnections/{configConnectionName}: ApiGatewayConfigConnection
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -131,7 +131,6 @@ override-operation-name:
   ContentType_ListByService: GetContentTypes
   ContentItem_ListByService: GetContentItems
   ContentItem_GetEntityTag: GetContentItemEntityTag
-  OperationStatus_Get: GetOperationStatus
   ProductSubscriptions_List: GetAllProductSubscriptionData # temporary - to be removed once the polymorphic resource change is merged.
 
 prepend-rp-prefix:
@@ -325,9 +324,21 @@ rename-mapping:
   ApiVersionSetUpdateParameters: ApiVersionSetPatch
   OperationUpdateContract: ApiOperationPatch
   NamedValueCreateContract: ApiManagementNamedValueCreateOrUpdateContent
+  ApiManagementGatewayConfigConnectionResource: ApiGatewayConfigConnection
+  ApiManagementGatewayResource: ApiGateway
+  ApiManagementWorkspaceLinksResource: ApiManagementWorkspaceLinks
+  SoapApiType.grpc: Grpc
+  AllPoliciesContract.properties.referencePolicyId: -|arm-id
+  DiagnosticUpdateContract.properties.logClientIp: IsLogClientIP
+  DiagnosticUpdateContract.properties.metrics: IsMetrics
+  DiagnosticUpdateContract.properties.loggerId: -|arm-id
+
+keep-plural-resource-data:
+  - ApiManagementWorkspaceLinks
 
 directive:
   - remove-operation: 'ApiManagementOperations_List'
+  - remove-operation: 'OperationStatus_Get'
   - from: definitions.json
     where: $.definitions
     transform: >

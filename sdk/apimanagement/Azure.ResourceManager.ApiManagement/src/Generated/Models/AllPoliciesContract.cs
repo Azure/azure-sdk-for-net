@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="referencePolicyId"> Policy Identifier. </param>
         /// <param name="complianceState"> Policy Restriction Compliance State. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AllPoliciesContract(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string referencePolicyId, PolicyComplianceState? complianceState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AllPoliciesContract(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier referencePolicyId, PolicyComplianceState? complianceState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ReferencePolicyId = referencePolicyId;
             ComplianceState = complianceState;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Policy Identifier. </summary>
         [WirePath("properties.referencePolicyId")]
-        public string ReferencePolicyId { get; set; }
+        public ResourceIdentifier ReferencePolicyId { get; set; }
         /// <summary> Policy Restriction Compliance State. </summary>
         [WirePath("properties.complianceState")]
         public PolicyComplianceState? ComplianceState { get; set; }

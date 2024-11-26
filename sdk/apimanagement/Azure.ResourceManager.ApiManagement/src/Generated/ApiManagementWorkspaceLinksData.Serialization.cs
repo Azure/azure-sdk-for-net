@@ -17,11 +17,11 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiManagementWorkspaceLinksResourceData : IUtf8JsonSerializable, IJsonModel<ApiManagementWorkspaceLinksResourceData>
+    public partial class ApiManagementWorkspaceLinksData : IUtf8JsonSerializable, IJsonModel<ApiManagementWorkspaceLinksData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementWorkspaceLinksResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementWorkspaceLinksData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ApiManagementWorkspaceLinksResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ApiManagementWorkspaceLinksData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementWorkspaceLinksResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementWorkspaceLinksData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementWorkspaceLinksResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementWorkspaceLinksData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -64,19 +64,19 @@ namespace Azure.ResourceManager.ApiManagement
             writer.WriteEndObject();
         }
 
-        ApiManagementWorkspaceLinksResourceData IJsonModel<ApiManagementWorkspaceLinksResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ApiManagementWorkspaceLinksData IJsonModel<ApiManagementWorkspaceLinksData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementWorkspaceLinksResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementWorkspaceLinksData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementWorkspaceLinksResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementWorkspaceLinksData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeApiManagementWorkspaceLinksResourceData(document.RootElement, options);
+            return DeserializeApiManagementWorkspaceLinksData(document.RootElement, options);
         }
 
-        internal static ApiManagementWorkspaceLinksResourceData DeserializeApiManagementWorkspaceLinksResourceData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ApiManagementWorkspaceLinksData DeserializeApiManagementWorkspaceLinksData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ApiManagementWorkspaceLinksResourceData(
+            return new ApiManagementWorkspaceLinksData(
                 id,
                 name,
                 type,
@@ -304,9 +304,9 @@ namespace Azure.ResourceManager.ApiManagement
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<ApiManagementWorkspaceLinksResourceData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ApiManagementWorkspaceLinksData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementWorkspaceLinksResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementWorkspaceLinksData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -315,26 +315,26 @@ namespace Azure.ResourceManager.ApiManagement
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementWorkspaceLinksResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementWorkspaceLinksData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ApiManagementWorkspaceLinksResourceData IPersistableModel<ApiManagementWorkspaceLinksResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ApiManagementWorkspaceLinksData IPersistableModel<ApiManagementWorkspaceLinksData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementWorkspaceLinksResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementWorkspaceLinksData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeApiManagementWorkspaceLinksResourceData(document.RootElement, options);
+                        return DeserializeApiManagementWorkspaceLinksData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementWorkspaceLinksResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementWorkspaceLinksData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ApiManagementWorkspaceLinksResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApiManagementWorkspaceLinksData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

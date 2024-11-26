@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string WebSocketValue = "websocket";
         private const string GraphQLValue = "graphql";
         private const string ODataValue = "odata";
-        private const string GRPCValue = "grpc";
+        private const string GrpcValue = "grpc";
 
         /// <summary> Imports a SOAP API having a RESTful front end. </summary>
         public static SoapApiType SoapToRest { get; } = new SoapApiType(SoapToRestValue);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Imports the API having a OData front end. </summary>
         public static SoapApiType OData { get; } = new SoapApiType(ODataValue);
         /// <summary> Imports the API having a gRPC front end. </summary>
-        public static SoapApiType GRPC { get; } = new SoapApiType(GRPCValue);
+        public static SoapApiType Grpc { get; } = new SoapApiType(GrpcValue);
         /// <summary> Determines if two <see cref="SoapApiType"/> values are the same. </summary>
         public static bool operator ==(SoapApiType left, SoapApiType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SoapApiType"/> values are not the same. </summary>

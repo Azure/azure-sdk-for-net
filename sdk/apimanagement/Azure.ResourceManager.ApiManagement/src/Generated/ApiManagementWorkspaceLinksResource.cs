@@ -15,10 +15,10 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A Class representing an ApiManagementWorkspaceLinksResource along with the instance operations that can be performed on it.
+    /// A Class representing an ApiManagementWorkspaceLinks along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiManagementWorkspaceLinksResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetApiManagementWorkspaceLinksResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetApiManagementWorkspaceLinksResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetApiManagementWorkspaceLinks method.
     /// </summary>
     public partial class ApiManagementWorkspaceLinksResource : ArmResource
     {
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.ApiManagement
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinkClientDiagnostics;
-        private readonly ApiManagementWorkspaceLinkRestOperations _apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinkRestClient;
-        private readonly ApiManagementWorkspaceLinksResourceData _data;
+        private readonly ClientDiagnostics _apiManagementWorkspaceLinksApiManagementWorkspaceLinkClientDiagnostics;
+        private readonly ApiManagementWorkspaceLinkRestOperations _apiManagementWorkspaceLinksApiManagementWorkspaceLinkRestClient;
+        private readonly ApiManagementWorkspaceLinksData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/workspaceLinks";
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Initializes a new instance of the <see cref="ApiManagementWorkspaceLinksResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ApiManagementWorkspaceLinksResource(ArmClient client, ApiManagementWorkspaceLinksResourceData data) : this(client, data.Id)
+        internal ApiManagementWorkspaceLinksResource(ArmClient client, ApiManagementWorkspaceLinksData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -59,9 +59,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ApiManagementWorkspaceLinksResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinkApiVersion);
-            _apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinkRestClient = new ApiManagementWorkspaceLinkRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinkApiVersion);
+            _apiManagementWorkspaceLinksApiManagementWorkspaceLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string apiManagementWorkspaceLinksApiManagementWorkspaceLinkApiVersion);
+            _apiManagementWorkspaceLinksApiManagementWorkspaceLinkRestClient = new ApiManagementWorkspaceLinkRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementWorkspaceLinksApiManagementWorkspaceLinkApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ApiManagementWorkspaceLinksResourceData Data
+        public virtual ApiManagementWorkspaceLinksData Data
         {
             get
             {
@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ApiManagementWorkspaceLinksResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinkClientDiagnostics.CreateScope("ApiManagementWorkspaceLinksResource.Get");
+            using var scope = _apiManagementWorkspaceLinksApiManagementWorkspaceLinkClientDiagnostics.CreateScope("ApiManagementWorkspaceLinksResource.Get");
             scope.Start();
             try
             {
-                var response = await _apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _apiManagementWorkspaceLinksApiManagementWorkspaceLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ApiManagementWorkspaceLinksResource(Client, response.Value), response.GetRawResponse());
@@ -152,11 +152,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ApiManagementWorkspaceLinksResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinkClientDiagnostics.CreateScope("ApiManagementWorkspaceLinksResource.Get");
+            using var scope = _apiManagementWorkspaceLinksApiManagementWorkspaceLinkClientDiagnostics.CreateScope("ApiManagementWorkspaceLinksResource.Get");
             scope.Start();
             try
             {
-                var response = _apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _apiManagementWorkspaceLinksApiManagementWorkspaceLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ApiManagementWorkspaceLinksResource(Client, response.Value), response.GetRawResponse());

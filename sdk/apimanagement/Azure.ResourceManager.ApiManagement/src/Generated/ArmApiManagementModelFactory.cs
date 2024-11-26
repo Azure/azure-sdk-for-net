@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmApiManagementModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementGatewayResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiGatewayData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="subnetId"> Information regarding how the gateway should integrate with backend systems. </param>
         /// <param name="configurationApiHostname"> Information regarding the Configuration API of the API Management gateway. This is only applicable for API gateway with Standard SKU. </param>
         /// <param name="virtualNetworkType"> The type of VPN in which API Management gateway needs to be configured in. </param>
-        /// <returns> A new <see cref="ApiManagement.ApiManagementGatewayResourceData"/> instance for mocking. </returns>
-        public static ApiManagementGatewayResourceData ApiManagementGatewayResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ApiManagementGatewaySkuProperties sku = null, ETag? etag = null, string provisioningState = null, string targetProvisioningState = null, DateTimeOffset? createdAtUtc = null, string frontendDefaultHostname = null, ResourceIdentifier subnetId = null, string configurationApiHostname = null, VirtualNetworkType? virtualNetworkType = null)
+        /// <returns> A new <see cref="ApiManagement.ApiGatewayData"/> instance for mocking. </returns>
+        public static ApiGatewayData ApiGatewayData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ApiManagementGatewaySkuProperties sku = null, ETag? etag = null, string provisioningState = null, string targetProvisioningState = null, DateTimeOffset? createdAtUtc = null, string frontendDefaultHostname = null, ResourceIdentifier subnetId = null, string configurationApiHostname = null, VirtualNetworkType? virtualNetworkType = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ApiManagementGatewayResourceData(
+            return new ApiGatewayData(
                 id,
                 name,
                 resourceType,
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.GatewayResourcePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApiGatewayPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="configurationApiHostname"> Information regarding the Configuration API of the API Management gateway. This is only applicable for API gateway with Standard SKU. </param>
         /// <param name="virtualNetworkType"> The type of VPN in which API Management gateway needs to be configured in. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.GatewayResourcePatch"/> instance for mocking. </returns>
-        public static GatewayResourcePatch GatewayResourcePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ApiManagementGatewaySkuPropertiesForPatch sku = null, ETag? etag = null, string provisioningState = null, string targetProvisioningState = null, DateTimeOffset? createdAtUtc = null, string frontendDefaultHostname = null, ResourceIdentifier subnetId = null, string configurationApiHostname = null, VirtualNetworkType? virtualNetworkType = null, IDictionary<string, string> tags = null)
+        /// <returns> A new <see cref="Models.ApiGatewayPatch"/> instance for mocking. </returns>
+        public static ApiGatewayPatch ApiGatewayPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ApiManagementGatewaySkuPropertiesForPatch sku = null, ETag? etag = null, string provisioningState = null, string targetProvisioningState = null, DateTimeOffset? createdAtUtc = null, string frontendDefaultHostname = null, ResourceIdentifier subnetId = null, string configurationApiHostname = null, VirtualNetworkType? virtualNetworkType = null, IDictionary<string, string> tags = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new GatewayResourcePatch(
+            return new ApiGatewayPatch(
                 id,
                 name,
                 resourceType,
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="referencePolicyId"> Policy Identifier. </param>
         /// <param name="complianceState"> Policy Restriction Compliance State. </param>
         /// <returns> A new <see cref="Models.AllPoliciesContract"/> instance for mocking. </returns>
-        public static AllPoliciesContract AllPoliciesContract(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string referencePolicyId = null, PolicyComplianceState? complianceState = null)
+        public static AllPoliciesContract AllPoliciesContract(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier referencePolicyId = null, PolicyComplianceState? complianceState = null)
         {
             return new AllPoliciesContract(
                 id,
@@ -1701,7 +1701,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementGatewayConfigConnectionResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiGatewayConfigConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1711,12 +1711,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="sourceId"> The link to the API Management service workspace. </param>
         /// <param name="defaultHostname"> The default hostname of the data-plane gateway. </param>
         /// <param name="hostnames"> The hostnames of the data-plane gateway to which requests can be sent. </param>
-        /// <returns> A new <see cref="ApiManagement.ApiManagementGatewayConfigConnectionResourceData"/> instance for mocking. </returns>
-        public static ApiManagementGatewayConfigConnectionResourceData ApiManagementGatewayConfigConnectionResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string provisioningState = null, ResourceIdentifier sourceId = null, string defaultHostname = null, IEnumerable<string> hostnames = null)
+        /// <returns> A new <see cref="ApiManagement.ApiGatewayConfigConnectionData"/> instance for mocking. </returns>
+        public static ApiGatewayConfigConnectionData ApiGatewayConfigConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string provisioningState = null, ResourceIdentifier sourceId = null, string defaultHostname = null, IEnumerable<string> hostnames = null)
         {
             hostnames ??= new List<string>();
 
-            return new ApiManagementGatewayConfigConnectionResourceData(
+            return new ApiGatewayConfigConnectionData(
                 id,
                 name,
                 resourceType,
@@ -3378,13 +3378,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="sampling"> Sampling settings for Diagnostic. </param>
         /// <param name="frontend"> Diagnostic settings for incoming/outgoing HTTP messages to the Gateway. </param>
         /// <param name="backend"> Diagnostic settings for incoming/outgoing HTTP messages to the Backend. </param>
-        /// <param name="logClientIP"> Log the ClientIP. Default is false. </param>
+        /// <param name="isLogClientIP"> Log the ClientIP. Default is false. </param>
         /// <param name="httpCorrelationProtocol"> Sets correlation protocol to use for Application Insights diagnostics. </param>
         /// <param name="verbosity"> The verbosity level applied to traces emitted by trace policies. </param>
         /// <param name="operationNameFormat"> The format of the Operation Name for Application Insights telemetries. Default is Name. </param>
-        /// <param name="metrics"> Emit custom metrics via emit-metric policy. Applicable only to Application Insights diagnostic settings. </param>
+        /// <param name="isMetrics"> Emit custom metrics via emit-metric policy. Applicable only to Application Insights diagnostic settings. </param>
         /// <returns> A new <see cref="Models.DiagnosticUpdateContract"/> instance for mocking. </returns>
-        public static DiagnosticUpdateContract DiagnosticUpdateContract(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AlwaysLog? alwaysLog = null, string loggerId = null, SamplingSettings sampling = null, PipelineDiagnosticSettings frontend = null, PipelineDiagnosticSettings backend = null, bool? logClientIP = null, HttpCorrelationProtocol? httpCorrelationProtocol = null, TraceVerbosityLevel? verbosity = null, OperationNameFormat? operationNameFormat = null, bool? metrics = null)
+        public static DiagnosticUpdateContract DiagnosticUpdateContract(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AlwaysLog? alwaysLog = null, ResourceIdentifier loggerId = null, SamplingSettings sampling = null, PipelineDiagnosticSettings frontend = null, PipelineDiagnosticSettings backend = null, bool? isLogClientIP = null, HttpCorrelationProtocol? httpCorrelationProtocol = null, TraceVerbosityLevel? verbosity = null, OperationNameFormat? operationNameFormat = null, bool? isMetrics = null)
         {
             return new DiagnosticUpdateContract(
                 id,
@@ -3396,15 +3396,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 sampling,
                 frontend,
                 backend,
-                logClientIP,
+                isLogClientIP,
                 httpCorrelationProtocol,
                 verbosity,
                 operationNameFormat,
-                metrics,
+                isMetrics,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementWorkspaceLinksResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementWorkspaceLinksData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3412,12 +3412,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="etag"> ETag of the resource. </param>
         /// <param name="workspaceId"> The link to the API Management service workspace. </param>
         /// <param name="gateways"> The array of linked gateways. </param>
-        /// <returns> A new <see cref="ApiManagement.ApiManagementWorkspaceLinksResourceData"/> instance for mocking. </returns>
-        public static ApiManagementWorkspaceLinksResourceData ApiManagementWorkspaceLinksResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, ResourceIdentifier workspaceId = null, IEnumerable<WritableSubResource> gateways = null)
+        /// <returns> A new <see cref="ApiManagement.ApiManagementWorkspaceLinksData"/> instance for mocking. </returns>
+        public static ApiManagementWorkspaceLinksData ApiManagementWorkspaceLinksData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, ResourceIdentifier workspaceId = null, IEnumerable<WritableSubResource> gateways = null)
         {
             gateways ??= new List<WritableSubResource>();
 
-            return new ApiManagementWorkspaceLinksResourceData(
+            return new ApiManagementWorkspaceLinksData(
                 id,
                 name,
                 resourceType,
@@ -3445,34 +3445,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 systemData,
                 displayName,
                 description,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OperationStatusResult"/>. </summary>
-        /// <param name="id"> Fully qualified ID for the async operation. </param>
-        /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
-        /// <param name="name"> Name of the async operation. </param>
-        /// <param name="status"> Operation status. </param>
-        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
-        /// <param name="startOn"> The start time of the operation. </param>
-        /// <param name="endOn"> The end time of the operation. </param>
-        /// <param name="operations"> The operations list. </param>
-        /// <param name="error"> If present, details of the operation error. </param>
-        /// <returns> A new <see cref="Models.OperationStatusResult"/> instance for mocking. </returns>
-        public static OperationStatusResult OperationStatusResult(ResourceIdentifier id = null, ResourceIdentifier resourceId = null, string name = null, string status = null, float? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null)
-        {
-            operations ??= new List<OperationStatusResult>();
-
-            return new OperationStatusResult(
-                id,
-                resourceId,
-                name,
-                status,
-                percentComplete,
-                startOn,
-                endOn,
-                operations?.ToList(),
-                error,
                 serializedAdditionalRawData: null);
         }
 

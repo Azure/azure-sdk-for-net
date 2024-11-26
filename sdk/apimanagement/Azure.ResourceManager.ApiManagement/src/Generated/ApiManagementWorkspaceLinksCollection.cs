@@ -20,31 +20,31 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary>
     /// A class representing a collection of <see cref="ApiManagementWorkspaceLinksResource"/> and their operations.
     /// Each <see cref="ApiManagementWorkspaceLinksResource"/> in the collection will belong to the same instance of <see cref="ApiManagementServiceResource"/>.
-    /// To get an <see cref="ApiManagementWorkspaceLinksResourceCollection"/> instance call the GetApiManagementWorkspaceLinksResources method from an instance of <see cref="ApiManagementServiceResource"/>.
+    /// To get an <see cref="ApiManagementWorkspaceLinksCollection"/> instance call the GetApiManagementWorkspaceLinks method from an instance of <see cref="ApiManagementServiceResource"/>.
     /// </summary>
-    public partial class ApiManagementWorkspaceLinksResourceCollection : ArmCollection, IEnumerable<ApiManagementWorkspaceLinksResource>, IAsyncEnumerable<ApiManagementWorkspaceLinksResource>
+    public partial class ApiManagementWorkspaceLinksCollection : ArmCollection, IEnumerable<ApiManagementWorkspaceLinksResource>, IAsyncEnumerable<ApiManagementWorkspaceLinksResource>
     {
-        private readonly ClientDiagnostics _apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinkClientDiagnostics;
-        private readonly ApiManagementWorkspaceLinkRestOperations _apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinkRestClient;
-        private readonly ClientDiagnostics _apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinksClientDiagnostics;
-        private readonly ApiManagementWorkspaceLinksRestOperations _apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinksRestClient;
+        private readonly ClientDiagnostics _apiManagementWorkspaceLinksApiManagementWorkspaceLinkClientDiagnostics;
+        private readonly ApiManagementWorkspaceLinkRestOperations _apiManagementWorkspaceLinksApiManagementWorkspaceLinkRestClient;
+        private readonly ClientDiagnostics _apiManagementWorkspaceLinksApiManagementWorkspaceLinksClientDiagnostics;
+        private readonly ApiManagementWorkspaceLinksRestOperations _apiManagementWorkspaceLinksApiManagementWorkspaceLinksRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ApiManagementWorkspaceLinksResourceCollection"/> class for mocking. </summary>
-        protected ApiManagementWorkspaceLinksResourceCollection()
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementWorkspaceLinksCollection"/> class for mocking. </summary>
+        protected ApiManagementWorkspaceLinksCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ApiManagementWorkspaceLinksResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementWorkspaceLinksCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal ApiManagementWorkspaceLinksResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ApiManagementWorkspaceLinksCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementWorkspaceLinksResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ApiManagementWorkspaceLinksResource.ResourceType, out string apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinkApiVersion);
-            _apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinkRestClient = new ApiManagementWorkspaceLinkRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinkApiVersion);
-            _apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementWorkspaceLinksResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ApiManagementWorkspaceLinksResource.ResourceType, out string apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinksApiVersion);
-            _apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinksRestClient = new ApiManagementWorkspaceLinksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinksApiVersion);
+            _apiManagementWorkspaceLinksApiManagementWorkspaceLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementWorkspaceLinksResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ApiManagementWorkspaceLinksResource.ResourceType, out string apiManagementWorkspaceLinksApiManagementWorkspaceLinkApiVersion);
+            _apiManagementWorkspaceLinksApiManagementWorkspaceLinkRestClient = new ApiManagementWorkspaceLinkRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementWorkspaceLinksApiManagementWorkspaceLinkApiVersion);
+            _apiManagementWorkspaceLinksApiManagementWorkspaceLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementWorkspaceLinksResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ApiManagementWorkspaceLinksResource.ResourceType, out string apiManagementWorkspaceLinksApiManagementWorkspaceLinksApiVersion);
+            _apiManagementWorkspaceLinksApiManagementWorkspaceLinksRestClient = new ApiManagementWorkspaceLinksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementWorkspaceLinksApiManagementWorkspaceLinksApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
 
-            using var scope = _apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinkClientDiagnostics.CreateScope("ApiManagementWorkspaceLinksResourceCollection.Get");
+            using var scope = _apiManagementWorkspaceLinksApiManagementWorkspaceLinkClientDiagnostics.CreateScope("ApiManagementWorkspaceLinksCollection.Get");
             scope.Start();
             try
             {
-                var response = await _apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceId, cancellationToken).ConfigureAwait(false);
+                var response = await _apiManagementWorkspaceLinksApiManagementWorkspaceLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ApiManagementWorkspaceLinksResource(Client, response.Value), response.GetRawResponse());
@@ -130,11 +130,11 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
 
-            using var scope = _apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinkClientDiagnostics.CreateScope("ApiManagementWorkspaceLinksResourceCollection.Get");
+            using var scope = _apiManagementWorkspaceLinksApiManagementWorkspaceLinkClientDiagnostics.CreateScope("ApiManagementWorkspaceLinksCollection.Get");
             scope.Start();
             try
             {
-                var response = _apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceId, cancellationToken);
+                var response = _apiManagementWorkspaceLinksApiManagementWorkspaceLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ApiManagementWorkspaceLinksResource(Client, response.Value), response.GetRawResponse());
@@ -171,9 +171,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="ApiManagementWorkspaceLinksResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiManagementWorkspaceLinksResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinksRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinksRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementWorkspaceLinksResource(Client, ApiManagementWorkspaceLinksResourceData.DeserializeApiManagementWorkspaceLinksResourceData(e)), _apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinksClientDiagnostics, Pipeline, "ApiManagementWorkspaceLinksResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementWorkspaceLinksApiManagementWorkspaceLinksRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementWorkspaceLinksApiManagementWorkspaceLinksRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementWorkspaceLinksResource(Client, ApiManagementWorkspaceLinksData.DeserializeApiManagementWorkspaceLinksData(e)), _apiManagementWorkspaceLinksApiManagementWorkspaceLinksClientDiagnostics, Pipeline, "ApiManagementWorkspaceLinksCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -201,9 +201,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="ApiManagementWorkspaceLinksResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiManagementWorkspaceLinksResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinksRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinksRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementWorkspaceLinksResource(Client, ApiManagementWorkspaceLinksResourceData.DeserializeApiManagementWorkspaceLinksResourceData(e)), _apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinksClientDiagnostics, Pipeline, "ApiManagementWorkspaceLinksResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementWorkspaceLinksApiManagementWorkspaceLinksRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementWorkspaceLinksApiManagementWorkspaceLinksRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementWorkspaceLinksResource(Client, ApiManagementWorkspaceLinksData.DeserializeApiManagementWorkspaceLinksData(e)), _apiManagementWorkspaceLinksApiManagementWorkspaceLinksClientDiagnostics, Pipeline, "ApiManagementWorkspaceLinksCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -235,11 +235,11 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
 
-            using var scope = _apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinkClientDiagnostics.CreateScope("ApiManagementWorkspaceLinksResourceCollection.Exists");
+            using var scope = _apiManagementWorkspaceLinksApiManagementWorkspaceLinkClientDiagnostics.CreateScope("ApiManagementWorkspaceLinksCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _apiManagementWorkspaceLinksApiManagementWorkspaceLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -278,11 +278,11 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
 
-            using var scope = _apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinkClientDiagnostics.CreateScope("ApiManagementWorkspaceLinksResourceCollection.Exists");
+            using var scope = _apiManagementWorkspaceLinksApiManagementWorkspaceLinkClientDiagnostics.CreateScope("ApiManagementWorkspaceLinksCollection.Exists");
             scope.Start();
             try
             {
-                var response = _apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceId, cancellationToken: cancellationToken);
+                var response = _apiManagementWorkspaceLinksApiManagementWorkspaceLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -321,11 +321,11 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
 
-            using var scope = _apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinkClientDiagnostics.CreateScope("ApiManagementWorkspaceLinksResourceCollection.GetIfExists");
+            using var scope = _apiManagementWorkspaceLinksApiManagementWorkspaceLinkClientDiagnostics.CreateScope("ApiManagementWorkspaceLinksCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _apiManagementWorkspaceLinksApiManagementWorkspaceLinkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<ApiManagementWorkspaceLinksResource>(response.GetRawResponse());
                 return Response.FromValue(new ApiManagementWorkspaceLinksResource(Client, response.Value), response.GetRawResponse());
@@ -366,11 +366,11 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
 
-            using var scope = _apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinkClientDiagnostics.CreateScope("ApiManagementWorkspaceLinksResourceCollection.GetIfExists");
+            using var scope = _apiManagementWorkspaceLinksApiManagementWorkspaceLinkClientDiagnostics.CreateScope("ApiManagementWorkspaceLinksCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _apiManagementWorkspaceLinksResourceApiManagementWorkspaceLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceId, cancellationToken: cancellationToken);
+                var response = _apiManagementWorkspaceLinksApiManagementWorkspaceLinkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceId, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<ApiManagementWorkspaceLinksResource>(response.GetRawResponse());
                 return Response.FromValue(new ApiManagementWorkspaceLinksResource(Client, response.Value), response.GetRawResponse());

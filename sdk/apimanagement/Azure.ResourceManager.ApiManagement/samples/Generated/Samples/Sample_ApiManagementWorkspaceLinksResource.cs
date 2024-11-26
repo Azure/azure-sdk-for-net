@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             string serviceName = "service1";
             string workspaceId = "wk-1";
             ResourceIdentifier apiManagementWorkspaceLinksResourceId = ApiManagementWorkspaceLinksResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId);
-            ApiManagementWorkspaceLinksResource apiManagementWorkspaceLinksResource = client.GetApiManagementWorkspaceLinksResource(apiManagementWorkspaceLinksResourceId);
+            ApiManagementWorkspaceLinksResource apiManagementWorkspaceLinks = client.GetApiManagementWorkspaceLinksResource(apiManagementWorkspaceLinksResourceId);
 
             // invoke the operation
-            ApiManagementWorkspaceLinksResource result = await apiManagementWorkspaceLinksResource.GetAsync();
+            ApiManagementWorkspaceLinksResource result = await apiManagementWorkspaceLinks.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ApiManagementWorkspaceLinksResourceData resourceData = result.Data;
+            ApiManagementWorkspaceLinksData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

@@ -14,10 +14,10 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A class representing the ApiManagementWorkspaceLinksResource data model.
+    /// A class representing the ApiManagementWorkspaceLinks data model.
     /// A single API Management WorkspaceLinks in List or Get response.
     /// </summary>
-    public partial class ApiManagementWorkspaceLinksResourceData : ResourceData
+    public partial class ApiManagementWorkspaceLinksData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,13 +51,13 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ApiManagementWorkspaceLinksResourceData"/>. </summary>
-        public ApiManagementWorkspaceLinksResourceData()
+        /// <summary> Initializes a new instance of <see cref="ApiManagementWorkspaceLinksData"/>. </summary>
+        public ApiManagementWorkspaceLinksData()
         {
             Gateways = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiManagementWorkspaceLinksResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementWorkspaceLinksData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="workspaceId"> The link to the API Management service workspace. </param>
         /// <param name="gateways"> The array of linked gateways. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementWorkspaceLinksResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, ResourceIdentifier workspaceId, IList<WritableSubResource> gateways, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ApiManagementWorkspaceLinksData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, ResourceIdentifier workspaceId, IList<WritableSubResource> gateways, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             WorkspaceId = workspaceId;

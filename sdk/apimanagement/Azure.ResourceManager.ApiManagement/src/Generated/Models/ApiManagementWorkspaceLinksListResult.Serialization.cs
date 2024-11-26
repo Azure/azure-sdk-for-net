@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            IReadOnlyList<ApiManagementWorkspaceLinksResourceData> value = default;
+            IReadOnlyList<ApiManagementWorkspaceLinksData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<ApiManagementWorkspaceLinksResourceData> array = new List<ApiManagementWorkspaceLinksResourceData>();
+                    List<ApiManagementWorkspaceLinksData> array = new List<ApiManagementWorkspaceLinksData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementWorkspaceLinksResourceData.DeserializeApiManagementWorkspaceLinksResourceData(item, options));
+                        array.Add(ApiManagementWorkspaceLinksData.DeserializeApiManagementWorkspaceLinksData(item, options));
                     }
                     value = array;
                     continue;

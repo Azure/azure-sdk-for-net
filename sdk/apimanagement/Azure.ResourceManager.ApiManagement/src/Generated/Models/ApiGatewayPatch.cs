@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Parameter supplied to Update API Management gateway. </summary>
-    public partial class GatewayResourcePatch : ResourceData
+    public partial class ApiGatewayPatch : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,13 +47,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="GatewayResourcePatch"/>. </summary>
-        public GatewayResourcePatch()
+        /// <summary> Initializes a new instance of <see cref="ApiGatewayPatch"/>. </summary>
+        public ApiGatewayPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="GatewayResourcePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiGatewayPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="virtualNetworkType"> The type of VPN in which API Management gateway needs to be configured in. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GatewayResourcePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApiManagementGatewaySkuPropertiesForPatch sku, ETag? etag, string provisioningState, string targetProvisioningState, DateTimeOffset? createdAtUtc, FrontendConfiguration frontend, BackendConfiguration backend, GatewayConfigurationApi configurationApi, VirtualNetworkType? virtualNetworkType, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ApiGatewayPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApiManagementGatewaySkuPropertiesForPatch sku, ETag? etag, string provisioningState, string targetProvisioningState, DateTimeOffset? createdAtUtc, FrontendConfiguration frontend, BackendConfiguration backend, GatewayConfigurationApi configurationApi, VirtualNetworkType? virtualNetworkType, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             ETag = etag;

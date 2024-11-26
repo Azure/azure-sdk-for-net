@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of GatewayResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of GatewayResources and their operations over a GatewayResource. </returns>
-        public virtual GatewayResourceCollection GetGatewayResources()
+        /// <summary> Gets a collection of ApiGatewayResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ApiGatewayResources and their operations over a ApiGatewayResource. </returns>
+        public virtual ApiGatewayCollection GetApiGateways()
         {
-            return GetCachedClient(client => new GatewayResourceCollection(client, Id));
+            return GetCachedClient(client => new ApiGatewayCollection(client, Id));
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GatewayResource"/></description>
+        /// <description><see cref="ApiGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<GatewayResource>> GetGatewayResourceAsync(string gatewayName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiGatewayResource>> GetApiGatewayAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
-            return await GetGatewayResources().GetAsync(gatewayName, cancellationToken).ConfigureAwait(false);
+            return await GetApiGateways().GetAsync(gatewayName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="GatewayResource"/></description>
+        /// <description><see cref="ApiGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<GatewayResource> GetGatewayResource(string gatewayName, CancellationToken cancellationToken = default)
+        public virtual Response<ApiGatewayResource> GetApiGateway(string gatewayName, CancellationToken cancellationToken = default)
         {
-            return GetGatewayResources().Get(gatewayName, cancellationToken);
+            return GetApiGateways().Get(gatewayName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ApiManagementServiceResources in the ResourceGroupResource. </summary>

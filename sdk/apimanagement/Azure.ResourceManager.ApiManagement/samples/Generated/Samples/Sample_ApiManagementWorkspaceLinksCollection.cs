@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.ApiManagement.Samples
 {
-    public partial class Sample_ApiManagementWorkspaceLinksResourceCollection
+    public partial class Sample_ApiManagementWorkspaceLinksCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
 
             // get the collection of this ApiManagementWorkspaceLinksResource
-            ApiManagementWorkspaceLinksResourceCollection collection = apiManagementService.GetApiManagementWorkspaceLinksResources();
+            ApiManagementWorkspaceLinksCollection collection = apiManagementService.GetAllApiManagementWorkspaceLinks();
 
             // invoke the operation and iterate over the result
             await foreach (ApiManagementWorkspaceLinksResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ApiManagementWorkspaceLinksResourceData resourceData = item.Data;
+                ApiManagementWorkspaceLinksData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
 
             // get the collection of this ApiManagementWorkspaceLinksResource
-            ApiManagementWorkspaceLinksResourceCollection collection = apiManagementService.GetApiManagementWorkspaceLinksResources();
+            ApiManagementWorkspaceLinksCollection collection = apiManagementService.GetAllApiManagementWorkspaceLinks();
 
             // invoke the operation
             string workspaceId = "wk-1";
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ApiManagementWorkspaceLinksResourceData resourceData = result.Data;
+            ApiManagementWorkspaceLinksData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
 
             // get the collection of this ApiManagementWorkspaceLinksResource
-            ApiManagementWorkspaceLinksResourceCollection collection = apiManagementService.GetApiManagementWorkspaceLinksResources();
+            ApiManagementWorkspaceLinksCollection collection = apiManagementService.GetAllApiManagementWorkspaceLinks();
 
             // invoke the operation
             string workspaceId = "wk-1";
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
 
             // get the collection of this ApiManagementWorkspaceLinksResource
-            ApiManagementWorkspaceLinksResourceCollection collection = apiManagementService.GetApiManagementWorkspaceLinksResources();
+            ApiManagementWorkspaceLinksCollection collection = apiManagementService.GetAllApiManagementWorkspaceLinks();
 
             // invoke the operation
             string workspaceId = "wk-1";
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ApiManagementWorkspaceLinksResourceData resourceData = result.Data;
+                ApiManagementWorkspaceLinksData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

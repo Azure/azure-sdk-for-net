@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string referencePolicyId = default;
+            ResourceIdentifier referencePolicyId = default;
             PolicyComplianceState? complianceState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -117,7 +117,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         if (property0.NameEquals("referencePolicyId"u8))
                         {
-                            referencePolicyId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            referencePolicyId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("complianceState"u8))
@@ -225,15 +229,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 if (Optional.IsDefined(ReferencePolicyId))
                 {
                     builder.Append("    referencePolicyId: ");
-                    if (ReferencePolicyId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ReferencePolicyId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ReferencePolicyId}'");
-                    }
+                    builder.AppendLine($"'{ReferencePolicyId.ToString()}'");
                 }
             }
 

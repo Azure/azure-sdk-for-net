@@ -13,10 +13,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A class representing the ApiManagementGatewayConfigConnectionResource data model.
+    /// A class representing the ApiGatewayConfigConnection data model.
     /// A single API Management gateway resource in List or Get response.
     /// </summary>
-    public partial class ApiManagementGatewayConfigConnectionResourceData : ResourceData
+    public partial class ApiGatewayConfigConnectionData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -50,13 +50,13 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayConfigConnectionResourceData"/>. </summary>
-        public ApiManagementGatewayConfigConnectionResourceData()
+        /// <summary> Initializes a new instance of <see cref="ApiGatewayConfigConnectionData"/>. </summary>
+        public ApiGatewayConfigConnectionData()
         {
             Hostnames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayConfigConnectionResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiGatewayConfigConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="defaultHostname"> The default hostname of the data-plane gateway. </param>
         /// <param name="hostnames"> The hostnames of the data-plane gateway to which requests can be sent. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementGatewayConfigConnectionResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string provisioningState, ResourceIdentifier sourceId, string defaultHostname, IList<string> hostnames, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ApiGatewayConfigConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string provisioningState, ResourceIdentifier sourceId, string defaultHostname, IList<string> hostnames, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             ProvisioningState = provisioningState;

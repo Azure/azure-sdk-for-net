@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.ApiManagement.Samples
 {
-    public partial class Sample_GatewayConfigConnectionResourceCollection
+    public partial class Sample_ApiGatewayConfigConnectionCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -27,23 +27,23 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this GatewayResource created on azure
-            // for more information of creating GatewayResource, please refer to the document of GatewayResource
+            // this example assumes you already have this ApiGatewayResource created on azure
+            // for more information of creating ApiGatewayResource, please refer to the document of ApiGatewayResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string gatewayName = "standard-gw-1";
-            ResourceIdentifier gatewayResourceId = GatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
-            GatewayResource gatewayResource = client.GetGatewayResource(gatewayResourceId);
+            ResourceIdentifier apiGatewayResourceId = ApiGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
+            ApiGatewayResource apiGateway = client.GetApiGatewayResource(apiGatewayResourceId);
 
-            // get the collection of this GatewayConfigConnectionResource
-            GatewayConfigConnectionResourceCollection collection = gatewayResource.GetGatewayConfigConnectionResources();
+            // get the collection of this ApiGatewayConfigConnectionResource
+            ApiGatewayConfigConnectionCollection collection = apiGateway.GetApiGatewayConfigConnections();
 
             // invoke the operation and iterate over the result
-            await foreach (GatewayConfigConnectionResource item in collection.GetAllAsync())
+            await foreach (ApiGatewayConfigConnectionResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ApiManagementGatewayConfigConnectionResourceData resourceData = item.Data;
+                ApiGatewayConfigConnectionData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -63,24 +63,24 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this GatewayResource created on azure
-            // for more information of creating GatewayResource, please refer to the document of GatewayResource
+            // this example assumes you already have this ApiGatewayResource created on azure
+            // for more information of creating ApiGatewayResource, please refer to the document of ApiGatewayResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string gatewayName = "standard-gw-01";
-            ResourceIdentifier gatewayResourceId = GatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
-            GatewayResource gatewayResource = client.GetGatewayResource(gatewayResourceId);
+            ResourceIdentifier apiGatewayResourceId = ApiGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
+            ApiGatewayResource apiGateway = client.GetApiGatewayResource(apiGatewayResourceId);
 
-            // get the collection of this GatewayConfigConnectionResource
-            GatewayConfigConnectionResourceCollection collection = gatewayResource.GetGatewayConfigConnectionResources();
+            // get the collection of this ApiGatewayConfigConnectionResource
+            ApiGatewayConfigConnectionCollection collection = apiGateway.GetApiGatewayConfigConnections();
 
             // invoke the operation
             string configConnectionName = "gcc-01";
-            GatewayConfigConnectionResource result = await collection.GetAsync(configConnectionName);
+            ApiGatewayConfigConnectionResource result = await collection.GetAsync(configConnectionName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ApiManagementGatewayConfigConnectionResourceData resourceData = result.Data;
+            ApiGatewayConfigConnectionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -97,16 +97,16 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this GatewayResource created on azure
-            // for more information of creating GatewayResource, please refer to the document of GatewayResource
+            // this example assumes you already have this ApiGatewayResource created on azure
+            // for more information of creating ApiGatewayResource, please refer to the document of ApiGatewayResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string gatewayName = "standard-gw-01";
-            ResourceIdentifier gatewayResourceId = GatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
-            GatewayResource gatewayResource = client.GetGatewayResource(gatewayResourceId);
+            ResourceIdentifier apiGatewayResourceId = ApiGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
+            ApiGatewayResource apiGateway = client.GetApiGatewayResource(apiGatewayResourceId);
 
-            // get the collection of this GatewayConfigConnectionResource
-            GatewayConfigConnectionResourceCollection collection = gatewayResource.GetGatewayConfigConnectionResources();
+            // get the collection of this ApiGatewayConfigConnectionResource
+            ApiGatewayConfigConnectionCollection collection = apiGateway.GetApiGatewayConfigConnections();
 
             // invoke the operation
             string configConnectionName = "gcc-01";
@@ -127,21 +127,21 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this GatewayResource created on azure
-            // for more information of creating GatewayResource, please refer to the document of GatewayResource
+            // this example assumes you already have this ApiGatewayResource created on azure
+            // for more information of creating ApiGatewayResource, please refer to the document of ApiGatewayResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string gatewayName = "standard-gw-01";
-            ResourceIdentifier gatewayResourceId = GatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
-            GatewayResource gatewayResource = client.GetGatewayResource(gatewayResourceId);
+            ResourceIdentifier apiGatewayResourceId = ApiGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
+            ApiGatewayResource apiGateway = client.GetApiGatewayResource(apiGatewayResourceId);
 
-            // get the collection of this GatewayConfigConnectionResource
-            GatewayConfigConnectionResourceCollection collection = gatewayResource.GetGatewayConfigConnectionResources();
+            // get the collection of this ApiGatewayConfigConnectionResource
+            ApiGatewayConfigConnectionCollection collection = apiGateway.GetApiGatewayConfigConnections();
 
             // invoke the operation
             string configConnectionName = "gcc-01";
-            NullableResponse<GatewayConfigConnectionResource> response = await collection.GetIfExistsAsync(configConnectionName);
-            GatewayConfigConnectionResource result = response.HasValue ? response.Value : null;
+            NullableResponse<ApiGatewayConfigConnectionResource> response = await collection.GetIfExistsAsync(configConnectionName);
+            ApiGatewayConfigConnectionResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ApiManagementGatewayConfigConnectionResourceData resourceData = result.Data;
+                ApiGatewayConfigConnectionData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -169,29 +169,29 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this GatewayResource created on azure
-            // for more information of creating GatewayResource, please refer to the document of GatewayResource
+            // this example assumes you already have this ApiGatewayResource created on azure
+            // for more information of creating ApiGatewayResource, please refer to the document of ApiGatewayResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string gatewayName = "standard-gw-01";
-            ResourceIdentifier gatewayResourceId = GatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
-            GatewayResource gatewayResource = client.GetGatewayResource(gatewayResourceId);
+            ResourceIdentifier apiGatewayResourceId = ApiGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, gatewayName);
+            ApiGatewayResource apiGateway = client.GetApiGatewayResource(apiGatewayResourceId);
 
-            // get the collection of this GatewayConfigConnectionResource
-            GatewayConfigConnectionResourceCollection collection = gatewayResource.GetGatewayConfigConnectionResources();
+            // get the collection of this ApiGatewayConfigConnectionResource
+            ApiGatewayConfigConnectionCollection collection = apiGateway.GetApiGatewayConfigConnections();
 
             // invoke the operation
             string configConnectionName = "gcc-01";
-            ApiManagementGatewayConfigConnectionResourceData data = new ApiManagementGatewayConfigConnectionResourceData()
+            ApiGatewayConfigConnectionData data = new ApiGatewayConfigConnectionData()
             {
                 SourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ApiManagement/services/apim-service-1/workspaces/ws-001"),
             };
-            ArmOperation<GatewayConfigConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configConnectionName, data);
-            GatewayConfigConnectionResource result = lro.Value;
+            ArmOperation<ApiGatewayConfigConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configConnectionName, data);
+            ApiGatewayConfigConnectionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ApiManagementGatewayConfigConnectionResourceData resourceData = result.Data;
+            ApiGatewayConfigConnectionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
