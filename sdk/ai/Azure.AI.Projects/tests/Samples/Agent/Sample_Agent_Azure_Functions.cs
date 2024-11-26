@@ -23,7 +23,7 @@ public partial class Sample_Agent_Azure_Functions : SamplesBase<AIProjectsTestEn
         var storageQueueUri = TestEnvironment.STORAGE_QUEUE_URI;
         // Add experimental headers policy
         AIProjectClientOptions clientOptions = new();
-        clientOptions.AddPolicy(new ExperimentalHeaderPolicy(), HttpPipelinePosition.PerCall);
+        clientOptions.AddPolicy(new CustomHeadersPolicy(), HttpPipelinePosition.PerCall);
         AgentsClient client = new(connectionString, new DefaultAzureCredential(), clientOptions);
 
         #region Snippet:AzureFunctionsDefineFunctionTools
@@ -121,19 +121,6 @@ public partial class Sample_Agent_Azure_Functions : SamplesBase<AIProjectsTestEn
                 }
                 Console.WriteLine();
             }
-        }
-    }
-    private class ExperimentalHeaderPolicy : HttpPipelinePolicy
-    {
-        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-        {
-            message.Request.Headers.Add("x-ms-enable-preview", "true");
-            ProcessNext(message, pipeline);
-        }
-        public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-        {
-            message.Request.Headers.Add("x-ms-enable-preview", "true");
-            return ProcessNextAsync(message, pipeline);
         }
     }
 }
