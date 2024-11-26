@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests
         public string machineName = "testmachine";
         public string extensionName = "myExtension";
         // need to run private-endpoint-connection list and obtain from the 'name' property
-        public string privateEndpointConnectionName = "pe-test.f7a282a1-bb65-4609-b037-6a0e33685384";
+        public string privateEndpointConnectionName = "pe-test";
         public string runCommandName = "myRunCommand";
         public string esuLicenseName = "myESULicense";
         public string resourceGroupNameNSP = "ytongtest";
