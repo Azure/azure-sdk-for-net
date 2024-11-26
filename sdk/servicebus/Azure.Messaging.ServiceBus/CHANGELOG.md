@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed an issue where identifier generation for senders did not correctly include the entity path as an informational element.  ([#46952](https://github.com/Azure/azure-sdk-for-net/issues/46952))
+
 ### Other Changes
 
 - Added annotations to make the package compatible with trimming and native AOT compilation.
