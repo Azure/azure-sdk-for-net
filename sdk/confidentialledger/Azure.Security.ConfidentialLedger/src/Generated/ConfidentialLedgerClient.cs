@@ -20,7 +20,7 @@ namespace Azure.Security.ConfidentialLedger
         private static readonly string[] AuthorizationScopes = new string[] { "https://confidential-ledger.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly Uri _ledgerEndpoint;
+        private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -838,13 +838,55 @@ namespace Azure.Security.ConfidentialLedger
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetLedgerEntries", "entries", "nextLink", context);
         }
 
+        /// <summary>
+        /// [Protocol Method] Gets details on a list of users.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUsersAsync(RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetUsersAsync(RequestContext context = null)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetUsersRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetUsersNextPageRequest(nextLink, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetUsers", "ledgerUsers", "nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets details on a list of users.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/ConfidentialLedgerClient.xml" path="doc/members/member[@name='GetUsers(RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetUsers(RequestContext context = null)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetUsersRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetUsersNextPageRequest(nextLink, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConfidentialLedgerClient.GetUsers", "ledgerUsers", "nextLink", context);
+        }
+
         internal HttpMessage CreateGetConstitutionRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/governance/constitution", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -858,7 +900,7 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/governance/members", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -872,7 +914,7 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/enclaveQuotes", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -886,7 +928,7 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/collections", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -900,7 +942,7 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/transactions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (collectionId != null)
@@ -926,7 +968,7 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/transactions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (collectionId != null)
@@ -946,7 +988,7 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/transactions/", false);
             uri.AppendPath(transactionId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -965,7 +1007,7 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/transactions/", false);
             uri.AppendPath(transactionId, true);
             uri.AppendPath("/receipt", false);
@@ -981,7 +1023,7 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/transactions/", false);
             uri.AppendPath(transactionId, true);
             uri.AppendPath("/status", false);
@@ -997,7 +1039,7 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/transactions/current", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (collectionId != null)
@@ -1009,13 +1051,27 @@ namespace Azure.Security.ConfidentialLedger
             return message;
         }
 
+        internal HttpMessage CreateGetUsersRequest(RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/app/users", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
         internal HttpMessage CreateDeleteUserRequest(string userId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/users/", false);
             uri.AppendPath(userId, false);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -1030,7 +1086,7 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/users/", false);
             uri.AppendPath(userId, false);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -1045,7 +1101,7 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/app/users/", false);
             uri.AppendPath(userId, false);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -1062,7 +1118,7 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1075,7 +1131,7 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1088,7 +1144,20 @@ namespace Azure.Security.ConfidentialLedger
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetUsersNextPageRequest(string nextLink, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
