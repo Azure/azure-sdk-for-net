@@ -134,6 +134,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.AreEqual(schemaRegistryUpdateResponse.Value.Data.Properties.StorageAccountContainerUri, schemaRegistryData.Properties.StorageAccountContainerUri);
 
             #endregion
+
             #region SchemaRegistries/Schemas
             /***************************
             * SchemaRegistries/Schemas *
@@ -187,6 +188,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             var schemaRegistrySchema = schemaRegistrySchemaReadResponse.Value;
 
             #endregion
+
             #region SchemaRegistries/Schemas/SchemaVersions
             /******************************************
             * SchemaRegistries/Schemas/SchemaVersions *
