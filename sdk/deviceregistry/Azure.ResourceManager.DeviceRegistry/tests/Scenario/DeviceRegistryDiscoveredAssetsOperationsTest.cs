@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             }
             catch (RequestFailedException ex)
             {
-                // Delete returns 200 if the Arc-enabled resource is not available on the Edge
+                // Delete returns 200 from K8s Bridge if the Arc-enabled resource is not available on the Edge
                 if (ex.Status != 200)
                 {
                     throw;
