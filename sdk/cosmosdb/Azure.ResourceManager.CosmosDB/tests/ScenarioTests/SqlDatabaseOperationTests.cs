@@ -171,7 +171,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
             CosmosDBSqlDatabaseThroughputSettingResource throughput2 = (await throughput.CreateOrUpdateAsync(WaitUntil.Completed, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
-                new ThroughputSettingsResourceInfo(TestThroughput2, null, null, null, null, null, null, serializedAdditionalRawData: null)))).Value;
+                new ThroughputSettingsResourceInfo(TestThroughput2, null, null, null, null, null,
+                    new List<ThroughputBucketResource>(),
+                    serializedAdditionalRawData: new Dictionary<string, BinaryData>())))).Value;
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
         }
