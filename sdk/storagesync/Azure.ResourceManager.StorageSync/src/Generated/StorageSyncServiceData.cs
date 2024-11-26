@@ -65,20 +65,24 @@ namespace Azure.ResourceManager.StorageSync
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="identity"> managed identities for the Storage Sync service to interact with other Azure services without maintaining any secrets or credentials in code. </param>
         /// <param name="incomingTrafficPolicy"> Incoming Traffic Policy. </param>
         /// <param name="storageSyncServiceStatus"> Storage Sync service status. </param>
         /// <param name="storageSyncServiceUid"> Storage Sync service Uid. </param>
         /// <param name="provisioningState"> StorageSyncService Provisioning State. </param>
+        /// <param name="useIdentity"> Use Identity authorization when customer have finished setup RBAC permissions. </param>
         /// <param name="lastWorkflowId"> StorageSyncService lastWorkflowId. </param>
         /// <param name="lastOperationName"> Resource Last Operation Name. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connection associated with the specified storage sync service. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageSyncServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IncomingTrafficPolicy? incomingTrafficPolicy, int? storageSyncServiceStatus, Guid? storageSyncServiceUid, string provisioningState, string lastWorkflowId, string lastOperationName, IReadOnlyList<StorageSyncPrivateEndpointConnectionData> privateEndpointConnections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal StorageSyncServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IncomingTrafficPolicy? incomingTrafficPolicy, int? storageSyncServiceStatus, Guid? storageSyncServiceUid, string provisioningState, bool? useIdentity, string lastWorkflowId, string lastOperationName, IReadOnlyList<StorageSyncPrivateEndpointConnectionData> privateEndpointConnections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            Identity = identity;
             IncomingTrafficPolicy = incomingTrafficPolicy;
             StorageSyncServiceStatus = storageSyncServiceStatus;
             StorageSyncServiceUid = storageSyncServiceUid;
             ProvisioningState = provisioningState;
+            UseIdentity = useIdentity;
             LastWorkflowId = lastWorkflowId;
             LastOperationName = lastOperationName;
             PrivateEndpointConnections = privateEndpointConnections;
@@ -90,6 +94,8 @@ namespace Azure.ResourceManager.StorageSync
         {
         }
 
+        /// <summary> managed identities for the Storage Sync service to interact with other Azure services without maintaining any secrets or credentials in code. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Incoming Traffic Policy. </summary>
         public IncomingTrafficPolicy? IncomingTrafficPolicy { get; set; }
         /// <summary> Storage Sync service status. </summary>
@@ -98,6 +104,8 @@ namespace Azure.ResourceManager.StorageSync
         public Guid? StorageSyncServiceUid { get; }
         /// <summary> StorageSyncService Provisioning State. </summary>
         public string ProvisioningState { get; }
+        /// <summary> Use Identity authorization when customer have finished setup RBAC permissions. </summary>
+        public bool? UseIdentity { get; }
         /// <summary> StorageSyncService lastWorkflowId. </summary>
         public string LastWorkflowId { get; }
         /// <summary> Resource Last Operation Name. </summary>
