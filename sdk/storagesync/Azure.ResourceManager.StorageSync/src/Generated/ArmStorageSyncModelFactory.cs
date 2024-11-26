@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -36,15 +37,31 @@ namespace Azure.ResourceManager.StorageSync.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageSyncServiceCreateOrUpdateContent"/>. </summary>
-        /// <param name="location"> Required. Gets or sets the location of the resource. This will be one of the supported and registered Azure Geo Regions (e.g. West US, East US, Southeast Asia, etc.). The geo region of a resource cannot be changed once it is created, but if an identical geo region is specified on update, the request will succeed. </param>
-        /// <param name="tags"> Gets or sets a list of key value pairs that describe the resource. These tags can be used for viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key with a length no greater than 128 characters and a value with a length no greater than 256 characters. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="identity"> managed identities for the Storage Sync to interact with other Azure services without maintaining any secrets or credentials in code. </param>
         /// <param name="incomingTrafficPolicy"> Incoming Traffic Policy. </param>
+        /// <param name="useIdentity"> Use Identity authorization when customer have finished setup RBAC permissions. </param>
         /// <returns> A new <see cref="Models.StorageSyncServiceCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static StorageSyncServiceCreateOrUpdateContent StorageSyncServiceCreateOrUpdateContent(AzureLocation location = default, IDictionary<string, string> tags = null, IncomingTrafficPolicy? incomingTrafficPolicy = null)
+        public static StorageSyncServiceCreateOrUpdateContent StorageSyncServiceCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, IncomingTrafficPolicy? incomingTrafficPolicy = null, bool? useIdentity = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new StorageSyncServiceCreateOrUpdateContent(location, tags, incomingTrafficPolicy, serializedAdditionalRawData: null);
+            return new StorageSyncServiceCreateOrUpdateContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                incomingTrafficPolicy,
+                useIdentity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageSync.StorageSyncServiceData"/>. </summary>
@@ -54,15 +71,17 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="identity"> managed identities for the Storage Sync service to interact with other Azure services without maintaining any secrets or credentials in code. </param>
         /// <param name="incomingTrafficPolicy"> Incoming Traffic Policy. </param>
         /// <param name="storageSyncServiceStatus"> Storage Sync service status. </param>
         /// <param name="storageSyncServiceUid"> Storage Sync service Uid. </param>
         /// <param name="provisioningState"> StorageSyncService Provisioning State. </param>
+        /// <param name="useIdentity"> Use Identity authorization when customer have finished setup RBAC permissions. </param>
         /// <param name="lastWorkflowId"> StorageSyncService lastWorkflowId. </param>
         /// <param name="lastOperationName"> Resource Last Operation Name. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connection associated with the specified storage sync service. </param>
         /// <returns> A new <see cref="StorageSync.StorageSyncServiceData"/> instance for mocking. </returns>
-        public static StorageSyncServiceData StorageSyncServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IncomingTrafficPolicy? incomingTrafficPolicy = null, int? storageSyncServiceStatus = null, Guid? storageSyncServiceUid = null, string provisioningState = null, string lastWorkflowId = null, string lastOperationName = null, IEnumerable<StorageSyncPrivateEndpointConnectionData> privateEndpointConnections = null)
+        public static StorageSyncServiceData StorageSyncServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, IncomingTrafficPolicy? incomingTrafficPolicy = null, int? storageSyncServiceStatus = null, Guid? storageSyncServiceUid = null, string provisioningState = null, bool? useIdentity = null, string lastWorkflowId = null, string lastOperationName = null, IEnumerable<StorageSyncPrivateEndpointConnectionData> privateEndpointConnections = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<StorageSyncPrivateEndpointConnectionData>();
@@ -74,10 +93,12 @@ namespace Azure.ResourceManager.StorageSync.Models
                 systemData,
                 tags,
                 location,
+                identity,
                 incomingTrafficPolicy,
                 storageSyncServiceStatus,
                 storageSyncServiceUid,
                 provisioningState,
+                useIdentity,
                 lastWorkflowId,
                 lastOperationName,
                 privateEndpointConnections?.ToList(),
@@ -89,17 +110,21 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="privateEndpointId"> The resource of private end point. </param>
+        /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
+        /// <param name="privateEndpointId"> The private endpoint resource. </param>
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <returns> A new <see cref="StorageSync.StorageSyncPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static StorageSyncPrivateEndpointConnectionData StorageSyncPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, StorageSyncPrivateLinkServiceConnectionState connectionState = null, StorageSyncPrivateEndpointConnectionProvisioningState? provisioningState = null)
+        public static StorageSyncPrivateEndpointConnectionData StorageSyncPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> groupIds = null, ResourceIdentifier privateEndpointId = null, StorageSyncPrivateLinkServiceConnectionState connectionState = null, StorageSyncPrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
+            groupIds ??= new List<string>();
+
             return new StorageSyncPrivateEndpointConnectionData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                groupIds?.ToList(),
                 privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null,
                 connectionState,
                 provisioningState,
@@ -113,7 +138,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
+        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
         /// <returns> A new <see cref="Models.StorageSyncPrivateLinkResource"/> instance for mocking. </returns>
         public static StorageSyncPrivateLinkResource StorageSyncPrivateLinkResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
         {
@@ -373,8 +398,9 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="localCacheMode"> Policy for enabling follow-the-sun business models: link local cache to cloud behavior to pre-populate before local access. </param>
         /// <param name="initialUploadPolicy"> Policy for how the initial upload sync session is performed. </param>
         /// <param name="serverName"> Server name. </param>
+        /// <param name="serverEndpointProvisioningStatus"> Server Endpoint provisioning status. </param>
         /// <returns> A new <see cref="StorageSync.StorageSyncServerEndpointData"/> instance for mocking. </returns>
-        public static StorageSyncServerEndpointData StorageSyncServerEndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string serverLocalPath = null, StorageSyncFeatureStatus? cloudTiering = null, int? volumeFreeSpacePercent = null, int? tierFilesOlderThanDays = null, string friendlyName = null, ResourceIdentifier serverResourceId = null, string provisioningState = null, string lastWorkflowId = null, string lastOperationName = null, ServerEndpointSyncStatus syncStatus = null, StorageSyncFeatureStatus? offlineDataTransfer = null, ResourceIdentifier offlineDataTransferStorageAccountResourceId = null, Guid? offlineDataTransferStorageAccountTenantId = null, string offlineDataTransferShareName = null, ServerEndpointCloudTieringStatus cloudTieringStatus = null, ServerEndpointRecallStatus recallStatus = null, InitialDownloadPolicy? initialDownloadPolicy = null, LocalCacheMode? localCacheMode = null, InitialUploadPolicy? initialUploadPolicy = null, string serverName = null)
+        public static StorageSyncServerEndpointData StorageSyncServerEndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string serverLocalPath = null, StorageSyncFeatureStatus? cloudTiering = null, int? volumeFreeSpacePercent = null, int? tierFilesOlderThanDays = null, string friendlyName = null, ResourceIdentifier serverResourceId = null, string provisioningState = null, string lastWorkflowId = null, string lastOperationName = null, ServerEndpointSyncStatus syncStatus = null, StorageSyncFeatureStatus? offlineDataTransfer = null, ResourceIdentifier offlineDataTransferStorageAccountResourceId = null, Guid? offlineDataTransferStorageAccountTenantId = null, string offlineDataTransferShareName = null, ServerEndpointCloudTieringStatus cloudTieringStatus = null, ServerEndpointRecallStatus recallStatus = null, InitialDownloadPolicy? initialDownloadPolicy = null, LocalCacheMode? localCacheMode = null, InitialUploadPolicy? initialUploadPolicy = null, string serverName = null, ServerEndpointProvisioningStatus serverEndpointProvisioningStatus = null)
         {
             return new StorageSyncServerEndpointData(
                 id,
@@ -401,6 +427,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 localCacheMode,
                 initialUploadPolicy,
                 serverName,
+                serverEndpointProvisioningStatus,
                 serializedAdditionalRawData: null);
         }
 
@@ -638,6 +665,44 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new ServerEndpointRecallError(errorCode, count, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.ServerEndpointProvisioningStatus"/>. </summary>
+        /// <param name="provisioningStatus"> Server Endpoint provisioning status. </param>
+        /// <param name="provisioningType"> Server Endpoint provisioning type. </param>
+        /// <param name="provisioningStepStatuses"> Provisioning Step status information for each step in the provisioning process. </param>
+        /// <returns> A new <see cref="Models.ServerEndpointProvisioningStatus"/> instance for mocking. </returns>
+        public static ServerEndpointProvisioningStatus ServerEndpointProvisioningStatus(ServerProvisioningStatus? provisioningStatus = null, string provisioningType = null, IEnumerable<ServerEndpointProvisioningStepStatus> provisioningStepStatuses = null)
+        {
+            provisioningStepStatuses ??= new List<ServerEndpointProvisioningStepStatus>();
+
+            return new ServerEndpointProvisioningStatus(provisioningStatus, provisioningType, provisioningStepStatuses?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ServerEndpointProvisioningStepStatus"/>. </summary>
+        /// <param name="name"> Name of the provisioning step. </param>
+        /// <param name="status"> Status of the provisioning step. </param>
+        /// <param name="startOn"> Start time of the provisioning step. </param>
+        /// <param name="minutesLeft"> Estimated completion time of the provisioning step in minutes. </param>
+        /// <param name="progressPercentage"> Estimated progress percentage. </param>
+        /// <param name="endOn"> End time of the provisioning step. </param>
+        /// <param name="errorCode"> Error code (HResult) for the provisioning step. </param>
+        /// <param name="additionalInformation"> Additional information for the provisioning step. </param>
+        /// <returns> A new <see cref="Models.ServerEndpointProvisioningStepStatus"/> instance for mocking. </returns>
+        public static ServerEndpointProvisioningStepStatus ServerEndpointProvisioningStepStatus(string name = null, string status = null, DateTimeOffset? startOn = null, int? minutesLeft = null, int? progressPercentage = null, DateTimeOffset? endOn = null, int? errorCode = null, IReadOnlyDictionary<string, string> additionalInformation = null)
+        {
+            additionalInformation ??= new Dictionary<string, string>();
+
+            return new ServerEndpointProvisioningStepStatus(
+                name,
+                status,
+                startOn,
+                minutesLeft,
+                progressPercentage,
+                endOn,
+                errorCode,
+                additionalInformation,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="StorageSync.StorageSyncRegisteredServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -666,8 +731,12 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="monitoringEndpointUri"> Telemetry Endpoint Uri. </param>
         /// <param name="monitoringConfiguration"> Monitoring Configuration. </param>
         /// <param name="serverName"> Server name. </param>
+        /// <param name="applicationId"> Server Application Id. </param>
+        /// <param name="identity"> Apply server with newly discovered ApplicationId if available. </param>
+        /// <param name="latestApplicationId"> Latest Server Application Id discovered from the server. It is not yet applied. </param>
+        /// <param name="activeAuthType"> Server auth type. </param>
         /// <returns> A new <see cref="StorageSync.StorageSyncRegisteredServerData"/> instance for mocking. </returns>
-        public static StorageSyncRegisteredServerData StorageSyncRegisteredServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BinaryData serverCertificate = null, string agentVersion = null, RegisteredServerAgentVersionStatus? agentVersionStatus = null, DateTimeOffset? agentVersionExpireOn = null, string serverOSVersion = null, int? serverManagementErrorCode = null, string lastHeartbeat = null, string provisioningState = null, string serverRole = null, Guid? clusterId = null, string clusterName = null, Guid? serverId = null, Guid? storageSyncServiceUid = null, string lastWorkflowId = null, string lastOperationName = null, Uri discoveryEndpointUri = null, AzureLocation? resourceLocation = null, AzureLocation? serviceLocation = null, string friendlyName = null, Uri managementEndpointUri = null, Uri monitoringEndpointUri = null, string monitoringConfiguration = null, string serverName = null)
+        public static StorageSyncRegisteredServerData StorageSyncRegisteredServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BinaryData serverCertificate = null, string agentVersion = null, RegisteredServerAgentVersionStatus? agentVersionStatus = null, DateTimeOffset? agentVersionExpireOn = null, string serverOSVersion = null, int? serverManagementErrorCode = null, string lastHeartbeat = null, string provisioningState = null, string serverRole = null, Guid? clusterId = null, string clusterName = null, Guid? serverId = null, Guid? storageSyncServiceUid = null, string lastWorkflowId = null, string lastOperationName = null, Uri discoveryEndpointUri = null, AzureLocation? resourceLocation = null, AzureLocation? serviceLocation = null, string friendlyName = null, Uri managementEndpointUri = null, Uri monitoringEndpointUri = null, string monitoringConfiguration = null, string serverName = null, string applicationId = null, bool? identity = null, string latestApplicationId = null, ServerAuthType? activeAuthType = null)
         {
             return new StorageSyncRegisteredServerData(
                 id,
@@ -697,6 +766,10 @@ namespace Azure.ResourceManager.StorageSync.Models
                 monitoringEndpointUri,
                 monitoringConfiguration,
                 serverName,
+                applicationId,
+                identity,
+                latestApplicationId,
+                activeAuthType,
                 serializedAdditionalRawData: null);
         }
 
@@ -714,8 +787,10 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="clusterName"> Registered Server clusterName. </param>
         /// <param name="serverId"> Registered Server serverId. </param>
         /// <param name="friendlyName"> Friendly Name. </param>
+        /// <param name="applicationId"> Server ServicePrincipal Id. </param>
+        /// <param name="identity"> Apply server with newly discovered ApplicationId if available. </param>
         /// <returns> A new <see cref="Models.StorageSyncRegisteredServerCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static StorageSyncRegisteredServerCreateOrUpdateContent StorageSyncRegisteredServerCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BinaryData serverCertificate = null, string agentVersion = null, string serverOSVersion = null, string lastHeartbeat = null, string serverRole = null, Guid? clusterId = null, string clusterName = null, Guid? serverId = null, string friendlyName = null)
+        public static StorageSyncRegisteredServerCreateOrUpdateContent StorageSyncRegisteredServerCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BinaryData serverCertificate = null, string agentVersion = null, string serverOSVersion = null, string lastHeartbeat = null, string serverRole = null, Guid? clusterId = null, string clusterName = null, Guid? serverId = null, string friendlyName = null, string applicationId = null, bool? identity = null)
         {
             return new StorageSyncRegisteredServerCreateOrUpdateContent(
                 id,
@@ -731,6 +806,28 @@ namespace Azure.ResourceManager.StorageSync.Models
                 clusterName,
                 serverId,
                 friendlyName,
+                applicationId,
+                identity,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.StorageSyncRegisteredServerPatch"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="identity"> Apply server with newly discovered ApplicationId if available. </param>
+        /// <param name="applicationId"> Apply server with new ServicePrincipal Id. </param>
+        /// <returns> A new <see cref="Models.StorageSyncRegisteredServerPatch"/> instance for mocking. </returns>
+        public static StorageSyncRegisteredServerPatch StorageSyncRegisteredServerPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? identity = null, string applicationId = null)
+        {
+            return new StorageSyncRegisteredServerPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                identity,
+                applicationId,
                 serializedAdditionalRawData: null);
         }
 

@@ -162,6 +162,7 @@ namespace Azure.ResourceManager.StorageSync
     {
         public StorageSyncPrivateEndpointConnectionData() { }
         public Azure.ResourceManager.StorageSync.Models.StorageSyncPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<string> GroupIds { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.StorageSync.Models.StorageSyncPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -210,16 +211,20 @@ namespace Azure.ResourceManager.StorageSync
     public partial class StorageSyncRegisteredServerData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageSync.StorageSyncRegisteredServerData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageSync.StorageSyncRegisteredServerData>
     {
         public StorageSyncRegisteredServerData() { }
+        public Azure.ResourceManager.StorageSync.Models.ServerAuthType? ActiveAuthType { get { throw null; } }
         public string AgentVersion { get { throw null; } set { } }
         public System.DateTimeOffset? AgentVersionExpireOn { get { throw null; } }
         public Azure.ResourceManager.StorageSync.Models.RegisteredServerAgentVersionStatus? AgentVersionStatus { get { throw null; } }
+        public string ApplicationId { get { throw null; } set { } }
         public System.Guid? ClusterId { get { throw null; } set { } }
         public string ClusterName { get { throw null; } set { } }
         public System.Uri DiscoveryEndpointUri { get { throw null; } set { } }
         public string FriendlyName { get { throw null; } set { } }
+        public bool? Identity { get { throw null; } }
         public string LastHeartbeat { get { throw null; } set { } }
         public string LastOperationName { get { throw null; } set { } }
         public string LastWorkflowId { get { throw null; } set { } }
+        public string LatestApplicationId { get { throw null; } set { } }
         public System.Uri ManagementEndpointUri { get { throw null; } set { } }
         public string MonitoringConfiguration { get { throw null; } set { } }
         public System.Uri MonitoringEndpointUri { get { throw null; } set { } }
@@ -258,8 +263,14 @@ namespace Azure.ResourceManager.StorageSync
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageSync.StorageSyncRegisteredServerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation TriggerRollover(Azure.WaitUntil waitUntil, Azure.ResourceManager.StorageSync.Models.TriggerRolloverContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> TriggerRolloverAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.StorageSync.Models.TriggerRolloverContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method no longer works in all API versions. Please use the different Update instead.", false)]
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StorageSync.StorageSyncRegisteredServerResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.StorageSync.Models.StorageSyncRegisteredServerCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StorageSync.StorageSyncRegisteredServerResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.StorageSync.Models.StorageSyncRegisteredServerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method no longer works in all API versions. Please use the different UpdateAsync instead.", false)]
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StorageSync.StorageSyncRegisteredServerResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.StorageSync.Models.StorageSyncRegisteredServerCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.StorageSync.StorageSyncRegisteredServerResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.StorageSync.Models.StorageSyncRegisteredServerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class StorageSyncServerEndpointCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StorageSync.StorageSyncServerEndpointResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageSync.StorageSyncServerEndpointResource>, System.Collections.IEnumerable
     {
@@ -295,6 +306,7 @@ namespace Azure.ResourceManager.StorageSync
         public System.Guid? OfflineDataTransferStorageAccountTenantId { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.StorageSync.Models.ServerEndpointRecallStatus RecallStatus { get { throw null; } }
+        public Azure.ResourceManager.StorageSync.Models.ServerEndpointProvisioningStatus ServerEndpointProvisioningStatus { get { throw null; } set { } }
         public string ServerLocalPath { get { throw null; } set { } }
         public string ServerName { get { throw null; } }
         public Azure.Core.ResourceIdentifier ServerResourceId { get { throw null; } set { } }
@@ -349,6 +361,7 @@ namespace Azure.ResourceManager.StorageSync
     public partial class StorageSyncServiceData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageSync.StorageSyncServiceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageSync.StorageSyncServiceData>
     {
         public StorageSyncServiceData(Azure.Core.AzureLocation location) { }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.StorageSync.Models.IncomingTrafficPolicy? IncomingTrafficPolicy { get { throw null; } set { } }
         public string LastOperationName { get { throw null; } }
         public string LastWorkflowId { get { throw null; } }
@@ -356,6 +369,7 @@ namespace Azure.ResourceManager.StorageSync
         public string ProvisioningState { get { throw null; } }
         public int? StorageSyncServiceStatus { get { throw null; } }
         public System.Guid? StorageSyncServiceUid { get { throw null; } }
+        public bool? UseIdentity { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.StorageSync.StorageSyncServiceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageSync.StorageSyncServiceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageSync.StorageSyncServiceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -503,6 +517,8 @@ namespace Azure.ResourceManager.StorageSync.Models
         public static Azure.ResourceManager.StorageSync.Models.ServerEndpointBackgroundDataDownloadActivity ServerEndpointBackgroundDataDownloadActivity(System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), int? percentProgress = default(int?), long? downloadedBytes = default(long?)) { throw null; }
         public static Azure.ResourceManager.StorageSync.Models.ServerEndpointCloudTieringStatus ServerEndpointCloudTieringStatus(System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), Azure.ResourceManager.StorageSync.Models.ServerEndpointHealthState? health = default(Azure.ResourceManager.StorageSync.Models.ServerEndpointHealthState?), System.DateTimeOffset? healthLastUpdatedOn = default(System.DateTimeOffset?), int? lastCloudTieringResult = default(int?), System.DateTimeOffset? lastSuccessTimestamp = default(System.DateTimeOffset?), Azure.ResourceManager.StorageSync.Models.CloudTieringSpaceSavings spaceSavings = null, Azure.ResourceManager.StorageSync.Models.CloudTieringCachePerformance cachePerformance = null, Azure.ResourceManager.StorageSync.Models.CloudTieringFilesNotTiering filesNotTiering = null, Azure.ResourceManager.StorageSync.Models.CloudTieringVolumeFreeSpacePolicyStatus volumeFreeSpacePolicyStatus = null, Azure.ResourceManager.StorageSync.Models.CloudTieringDatePolicyStatus datePolicyStatus = null, Azure.ResourceManager.StorageSync.Models.CloudTieringLowDiskMode lowDiskMode = null) { throw null; }
         public static Azure.ResourceManager.StorageSync.Models.ServerEndpointFilesNotSyncingError ServerEndpointFilesNotSyncingError(int? errorCode = default(int?), long? persistentCount = default(long?), long? transientCount = default(long?)) { throw null; }
+        public static Azure.ResourceManager.StorageSync.Models.ServerEndpointProvisioningStatus ServerEndpointProvisioningStatus(Azure.ResourceManager.StorageSync.Models.ServerProvisioningStatus? provisioningStatus = default(Azure.ResourceManager.StorageSync.Models.ServerProvisioningStatus?), string provisioningType = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageSync.Models.ServerEndpointProvisioningStepStatus> provisioningStepStatuses = null) { throw null; }
+        public static Azure.ResourceManager.StorageSync.Models.ServerEndpointProvisioningStepStatus ServerEndpointProvisioningStepStatus(string name = null, string status = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), int? minutesLeft = default(int?), int? progressPercentage = default(int?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), int? errorCode = default(int?), System.Collections.Generic.IReadOnlyDictionary<string, string> additionalInformation = null) { throw null; }
         public static Azure.ResourceManager.StorageSync.Models.ServerEndpointRecallError ServerEndpointRecallError(int? errorCode = default(int?), long? count = default(long?)) { throw null; }
         public static Azure.ResourceManager.StorageSync.Models.ServerEndpointRecallStatus ServerEndpointRecallStatus(System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), long? totalRecallErrorsCount = default(long?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageSync.Models.ServerEndpointRecallError> recallErrors = null) { throw null; }
         public static Azure.ResourceManager.StorageSync.Models.ServerEndpointSyncActivityStatus ServerEndpointSyncActivityStatus(System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), long? perItemErrorCount = default(long?), long? appliedItemCount = default(long?), long? totalItemCount = default(long?), long? appliedBytes = default(long?), long? totalBytes = default(long?), Azure.ResourceManager.StorageSync.Models.ServerEndpointSyncMode? syncMode = default(Azure.ResourceManager.StorageSync.Models.ServerEndpointSyncMode?), int? sessionMinutesRemaining = default(int?)) { throw null; }
@@ -512,12 +528,29 @@ namespace Azure.ResourceManager.StorageSync.Models
         public static Azure.ResourceManager.StorageSync.StorageSyncGroupData StorageSyncGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Guid? uniqueId = default(System.Guid?), string syncGroupStatus = null) { throw null; }
         public static Azure.ResourceManager.StorageSync.Models.StorageSyncNameAvailabilityContent StorageSyncNameAvailabilityContent(string name = null, Azure.ResourceManager.StorageSync.Models.StorageSyncResourceType resourceType = default(Azure.ResourceManager.StorageSync.Models.StorageSyncResourceType)) { throw null; }
         public static Azure.ResourceManager.StorageSync.Models.StorageSyncNameAvailabilityResult StorageSyncNameAvailabilityResult(bool? isNameAvailable = default(bool?), Azure.ResourceManager.StorageSync.Models.StorageSyncNameUnavailableReason? reason = default(Azure.ResourceManager.StorageSync.Models.StorageSyncNameUnavailableReason?), string message = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method no longer works in all API versions. Please use the different PrivateEndpointConnectionData instead.", false)]
         public static Azure.ResourceManager.StorageSync.StorageSyncPrivateEndpointConnectionData StorageSyncPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.StorageSync.Models.StorageSyncPrivateLinkServiceConnectionState connectionState = null, Azure.ResourceManager.StorageSync.Models.StorageSyncPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.StorageSync.Models.StorageSyncPrivateEndpointConnectionProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.StorageSync.StorageSyncPrivateEndpointConnectionData StorageSyncPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<string> groupIds = null, Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.StorageSync.Models.StorageSyncPrivateLinkServiceConnectionState connectionState = null, Azure.ResourceManager.StorageSync.Models.StorageSyncPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.StorageSync.Models.StorageSyncPrivateEndpointConnectionProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.StorageSync.Models.StorageSyncPrivateLinkResource StorageSyncPrivateLinkResource(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method no longer works in all API versions. Please use the different CreateOrUpdateContent instead.", false)]
         public static Azure.ResourceManager.StorageSync.Models.StorageSyncRegisteredServerCreateOrUpdateContent StorageSyncRegisteredServerCreateOrUpdateContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.BinaryData serverCertificate = null, string agentVersion = null, string serverOSVersion = null, string lastHeartbeat = null, string serverRole = null, System.Guid? clusterId = default(System.Guid?), string clusterName = null, System.Guid? serverId = default(System.Guid?), string friendlyName = null) { throw null; }
+        public static Azure.ResourceManager.StorageSync.Models.StorageSyncRegisteredServerCreateOrUpdateContent StorageSyncRegisteredServerCreateOrUpdateContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.BinaryData serverCertificate = null, string agentVersion = null, string serverOSVersion = null, string lastHeartbeat = null, string serverRole = null, System.Guid? clusterId = default(System.Guid?), string clusterName = null, System.Guid? serverId = default(System.Guid?), string friendlyName = null, string applicationId = null, bool? identity = default(bool?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method no longer works in all API versions. Please use the different RegisteredServerData instead.", false)]
         public static Azure.ResourceManager.StorageSync.StorageSyncRegisteredServerData StorageSyncRegisteredServerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.BinaryData serverCertificate = null, string agentVersion = null, Azure.ResourceManager.StorageSync.Models.RegisteredServerAgentVersionStatus? agentVersionStatus = default(Azure.ResourceManager.StorageSync.Models.RegisteredServerAgentVersionStatus?), System.DateTimeOffset? agentVersionExpireOn = default(System.DateTimeOffset?), string serverOSVersion = null, int? serverManagementErrorCode = default(int?), string lastHeartbeat = null, string provisioningState = null, string serverRole = null, System.Guid? clusterId = default(System.Guid?), string clusterName = null, System.Guid? serverId = default(System.Guid?), System.Guid? storageSyncServiceUid = default(System.Guid?), string lastWorkflowId = null, string lastOperationName = null, System.Uri discoveryEndpointUri = null, Azure.Core.AzureLocation? resourceLocation = default(Azure.Core.AzureLocation?), Azure.Core.AzureLocation? serviceLocation = default(Azure.Core.AzureLocation?), string friendlyName = null, System.Uri managementEndpointUri = null, System.Uri monitoringEndpointUri = null, string monitoringConfiguration = null, string serverName = null) { throw null; }
+        public static Azure.ResourceManager.StorageSync.StorageSyncRegisteredServerData StorageSyncRegisteredServerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.BinaryData serverCertificate = null, string agentVersion = null, Azure.ResourceManager.StorageSync.Models.RegisteredServerAgentVersionStatus? agentVersionStatus = default(Azure.ResourceManager.StorageSync.Models.RegisteredServerAgentVersionStatus?), System.DateTimeOffset? agentVersionExpireOn = default(System.DateTimeOffset?), string serverOSVersion = null, int? serverManagementErrorCode = default(int?), string lastHeartbeat = null, string provisioningState = null, string serverRole = null, System.Guid? clusterId = default(System.Guid?), string clusterName = null, System.Guid? serverId = default(System.Guid?), System.Guid? storageSyncServiceUid = default(System.Guid?), string lastWorkflowId = null, string lastOperationName = null, System.Uri discoveryEndpointUri = null, Azure.Core.AzureLocation? resourceLocation = default(Azure.Core.AzureLocation?), Azure.Core.AzureLocation? serviceLocation = default(Azure.Core.AzureLocation?), string friendlyName = null, System.Uri managementEndpointUri = null, System.Uri monitoringEndpointUri = null, string monitoringConfiguration = null, string serverName = null, string applicationId = null, bool? identity = default(bool?), string latestApplicationId = null, Azure.ResourceManager.StorageSync.Models.ServerAuthType? activeAuthType = default(Azure.ResourceManager.StorageSync.Models.ServerAuthType?)) { throw null; }
+        public static Azure.ResourceManager.StorageSync.Models.StorageSyncRegisteredServerPatch StorageSyncRegisteredServerPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, bool? identity = default(bool?)) { throw null; }
         public static Azure.ResourceManager.StorageSync.Models.StorageSyncServerEndpointCreateOrUpdateContent StorageSyncServerEndpointCreateOrUpdateContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string serverLocalPath = null, Azure.ResourceManager.StorageSync.Models.StorageSyncFeatureStatus? cloudTiering = default(Azure.ResourceManager.StorageSync.Models.StorageSyncFeatureStatus?), int? volumeFreeSpacePercent = default(int?), int? tierFilesOlderThanDays = default(int?), string friendlyName = null, Azure.Core.ResourceIdentifier serverResourceId = null, Azure.ResourceManager.StorageSync.Models.StorageSyncFeatureStatus? offlineDataTransfer = default(Azure.ResourceManager.StorageSync.Models.StorageSyncFeatureStatus?), string offlineDataTransferShareName = null, Azure.ResourceManager.StorageSync.Models.InitialDownloadPolicy? initialDownloadPolicy = default(Azure.ResourceManager.StorageSync.Models.InitialDownloadPolicy?), Azure.ResourceManager.StorageSync.Models.LocalCacheMode? localCacheMode = default(Azure.ResourceManager.StorageSync.Models.LocalCacheMode?), Azure.ResourceManager.StorageSync.Models.InitialUploadPolicy? initialUploadPolicy = default(Azure.ResourceManager.StorageSync.Models.InitialUploadPolicy?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method no longer works in all API versions. Please use the different ServerEndpointData instead.", false)]
         public static Azure.ResourceManager.StorageSync.StorageSyncServerEndpointData StorageSyncServerEndpointData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string serverLocalPath = null, Azure.ResourceManager.StorageSync.Models.StorageSyncFeatureStatus? cloudTiering = default(Azure.ResourceManager.StorageSync.Models.StorageSyncFeatureStatus?), int? volumeFreeSpacePercent = default(int?), int? tierFilesOlderThanDays = default(int?), string friendlyName = null, Azure.Core.ResourceIdentifier serverResourceId = null, string provisioningState = null, string lastWorkflowId = null, string lastOperationName = null, Azure.ResourceManager.StorageSync.Models.ServerEndpointSyncStatus syncStatus = null, Azure.ResourceManager.StorageSync.Models.StorageSyncFeatureStatus? offlineDataTransfer = default(Azure.ResourceManager.StorageSync.Models.StorageSyncFeatureStatus?), Azure.Core.ResourceIdentifier offlineDataTransferStorageAccountResourceId = null, System.Guid? offlineDataTransferStorageAccountTenantId = default(System.Guid?), string offlineDataTransferShareName = null, Azure.ResourceManager.StorageSync.Models.ServerEndpointCloudTieringStatus cloudTieringStatus = null, Azure.ResourceManager.StorageSync.Models.ServerEndpointRecallStatus recallStatus = null, Azure.ResourceManager.StorageSync.Models.InitialDownloadPolicy? initialDownloadPolicy = default(Azure.ResourceManager.StorageSync.Models.InitialDownloadPolicy?), Azure.ResourceManager.StorageSync.Models.LocalCacheMode? localCacheMode = default(Azure.ResourceManager.StorageSync.Models.LocalCacheMode?), Azure.ResourceManager.StorageSync.Models.InitialUploadPolicy? initialUploadPolicy = default(Azure.ResourceManager.StorageSync.Models.InitialUploadPolicy?), string serverName = null) { throw null; }
+        public static Azure.ResourceManager.StorageSync.StorageSyncServerEndpointData StorageSyncServerEndpointData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string serverLocalPath = null, Azure.ResourceManager.StorageSync.Models.StorageSyncFeatureStatus? cloudTiering = default(Azure.ResourceManager.StorageSync.Models.StorageSyncFeatureStatus?), int? volumeFreeSpacePercent = default(int?), int? tierFilesOlderThanDays = default(int?), string friendlyName = null, Azure.Core.ResourceIdentifier serverResourceId = null, string provisioningState = null, string lastWorkflowId = null, string lastOperationName = null, Azure.ResourceManager.StorageSync.Models.ServerEndpointSyncStatus syncStatus = null, Azure.ResourceManager.StorageSync.Models.StorageSyncFeatureStatus? offlineDataTransfer = default(Azure.ResourceManager.StorageSync.Models.StorageSyncFeatureStatus?), Azure.Core.ResourceIdentifier offlineDataTransferStorageAccountResourceId = null, System.Guid? offlineDataTransferStorageAccountTenantId = default(System.Guid?), string offlineDataTransferShareName = null, Azure.ResourceManager.StorageSync.Models.ServerEndpointCloudTieringStatus cloudTieringStatus = null, Azure.ResourceManager.StorageSync.Models.ServerEndpointRecallStatus recallStatus = null, Azure.ResourceManager.StorageSync.Models.InitialDownloadPolicy? initialDownloadPolicy = default(Azure.ResourceManager.StorageSync.Models.InitialDownloadPolicy?), Azure.ResourceManager.StorageSync.Models.LocalCacheMode? localCacheMode = default(Azure.ResourceManager.StorageSync.Models.LocalCacheMode?), Azure.ResourceManager.StorageSync.Models.InitialUploadPolicy? initialUploadPolicy = default(Azure.ResourceManager.StorageSync.Models.InitialUploadPolicy?), string serverName = null, Azure.ResourceManager.StorageSync.Models.ServerEndpointProvisioningStatus serverEndpointProvisioningStatus = null) { throw null; }
+        public static Azure.ResourceManager.StorageSync.Models.StorageSyncServiceCreateOrUpdateContent StorageSyncServiceCreateOrUpdateContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.StorageSync.Models.IncomingTrafficPolicy? incomingTrafficPolicy = default(Azure.ResourceManager.StorageSync.Models.IncomingTrafficPolicy?), bool? useIdentity = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.StorageSync.StorageSyncServiceData StorageSyncServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.StorageSync.Models.IncomingTrafficPolicy? incomingTrafficPolicy = default(Azure.ResourceManager.StorageSync.Models.IncomingTrafficPolicy?), int? storageSyncServiceStatus = default(int?), System.Guid? storageSyncServiceUid = default(System.Guid?), string provisioningState = null, bool? useIdentity = default(bool?), string lastWorkflowId = null, string lastOperationName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageSync.StorageSyncPrivateEndpointConnectionData> privateEndpointConnections = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method no longer works in all API versions. Please use the different StorageSyncServiceData instead.", false)]
         public static Azure.ResourceManager.StorageSync.Models.StorageSyncServiceCreateOrUpdateContent StorageSyncServiceCreateOrUpdateContent(Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.StorageSync.Models.IncomingTrafficPolicy? incomingTrafficPolicy = default(Azure.ResourceManager.StorageSync.Models.IncomingTrafficPolicy?)) { throw null; }
         public static Azure.ResourceManager.StorageSync.StorageSyncServiceData StorageSyncServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.StorageSync.Models.IncomingTrafficPolicy? incomingTrafficPolicy = default(Azure.ResourceManager.StorageSync.Models.IncomingTrafficPolicy?), int? storageSyncServiceStatus = default(int?), System.Guid? storageSyncServiceUid = default(System.Guid?), string provisioningState = null, string lastWorkflowId = null, string lastOperationName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageSync.StorageSyncPrivateEndpointConnectionData> privateEndpointConnections = null) { throw null; }
         public static Azure.ResourceManager.StorageSync.StorageSyncWorkflowData StorageSyncWorkflowData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string lastStepName = null, Azure.ResourceManager.StorageSync.Models.StorageSyncWorkflowStatus? status = default(Azure.ResourceManager.StorageSync.Models.StorageSyncWorkflowStatus?), Azure.ResourceManager.StorageSync.Models.StorageSyncOperationDirection? operation = default(Azure.ResourceManager.StorageSync.Models.StorageSyncOperationDirection?), string steps = null, System.Guid? lastOperationId = default(System.Guid?), string commandName = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastStatusUpdatedOn = default(System.DateTimeOffset?)) { throw null; }
@@ -940,6 +973,25 @@ namespace Azure.ResourceManager.StorageSync.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageSync.Models.RestoreFileSpec>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageSync.Models.RestoreFileSpec>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ServerAuthType : System.IEquatable<Azure.ResourceManager.StorageSync.Models.ServerAuthType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ServerAuthType(string value) { throw null; }
+        public static Azure.ResourceManager.StorageSync.Models.ServerAuthType Certificate { get { throw null; } }
+        public static Azure.ResourceManager.StorageSync.Models.ServerAuthType ManagedIdentity { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.StorageSync.Models.ServerAuthType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.StorageSync.Models.ServerAuthType left, Azure.ResourceManager.StorageSync.Models.ServerAuthType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.StorageSync.Models.ServerAuthType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.StorageSync.Models.ServerAuthType left, Azure.ResourceManager.StorageSync.Models.ServerAuthType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ServerEndpointBackgroundDataDownloadActivity
     public partial class ServerEndpointBackgroundDataDownloadActivity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageSync.Models.ServerEndpointBackgroundDataDownloadActivity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageSync.Models.ServerEndpointBackgroundDataDownloadActivity>
     {
         internal ServerEndpointBackgroundDataDownloadActivity() { }
@@ -1027,6 +1079,26 @@ namespace Azure.ResourceManager.StorageSync.Models
         public static bool operator !=(Azure.ResourceManager.StorageSync.Models.ServerEndpointOfflineDataTransferState left, Azure.ResourceManager.StorageSync.Models.ServerEndpointOfflineDataTransferState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ServerEndpointProvisioningStatus
+    {
+        public ServerEndpointProvisioningStatus() { }
+        public Azure.ResourceManager.StorageSync.Models.ServerProvisioningStatus? ProvisioningStatus { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.StorageSync.Models.ServerEndpointProvisioningStepStatus> ProvisioningStepStatuses { get { throw null; } }
+        public string ProvisioningType { get { throw null; } }
+    }
+    public partial class ServerEndpointProvisioningStepStatus
+    {
+        internal ServerEndpointProvisioningStepStatus() { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, string> AdditionalInformation { get { throw null; } }
+        public System.DateTimeOffset? EndOn { get { throw null; } }
+        public int? ErrorCode { get { throw null; } }
+        public int? MinutesLeft { get { throw null; } }
+        public string Name { get { throw null; } }
+        public int? ProgressPercentage { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
+        public string Status { get { throw null; } }
+    }
+    public partial class ServerEndpointRecallError
     public partial class ServerEndpointRecallError : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageSync.Models.ServerEndpointRecallError>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageSync.Models.ServerEndpointRecallError>
     {
         internal ServerEndpointRecallError() { }
@@ -1149,6 +1221,27 @@ namespace Azure.ResourceManager.StorageSync.Models
         Azure.ResourceManager.StorageSync.Models.ServerEndpointSyncStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageSync.Models.ServerEndpointSyncStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageSync.Models.ServerEndpointSyncStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageSync.Models.ServerEndpointSyncStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ServerProvisioningStatus : System.IEquatable<Azure.ResourceManager.StorageSync.Models.ServerProvisioningStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ServerProvisioningStatus(string value) { throw null; }
+        public static Azure.ResourceManager.StorageSync.Models.ServerProvisioningStatus Error { get { throw null; } }
+        public static Azure.ResourceManager.StorageSync.Models.ServerProvisioningStatus InProgress { get { throw null; } }
+        public static Azure.ResourceManager.StorageSync.Models.ServerProvisioningStatus NotStarted { get { throw null; } }
+        public static Azure.ResourceManager.StorageSync.Models.ServerProvisioningStatus ReadySyncFunctional { get { throw null; } }
+        public static Azure.ResourceManager.StorageSync.Models.ServerProvisioningStatus ReadySyncNotFunctional { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.StorageSync.Models.ServerProvisioningStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.StorageSync.Models.ServerProvisioningStatus left, Azure.ResourceManager.StorageSync.Models.ServerProvisioningStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.StorageSync.Models.ServerProvisioningStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.StorageSync.Models.ServerProvisioningStatus left, Azure.ResourceManager.StorageSync.Models.ServerProvisioningStatus right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StorageSyncFeatureStatus : System.IEquatable<Azure.ResourceManager.StorageSync.Models.StorageSyncFeatureStatus>
@@ -1297,9 +1390,11 @@ namespace Azure.ResourceManager.StorageSync.Models
     {
         public StorageSyncRegisteredServerCreateOrUpdateContent() { }
         public string AgentVersion { get { throw null; } set { } }
+        public string ApplicationId { get { throw null; } set { } }
         public System.Guid? ClusterId { get { throw null; } set { } }
         public string ClusterName { get { throw null; } set { } }
         public string FriendlyName { get { throw null; } set { } }
+        public bool? Identity { get { throw null; } set { } }
         public string LastHeartbeat { get { throw null; } set { } }
         public System.BinaryData ServerCertificate { get { throw null; } set { } }
         public System.Guid? ServerId { get { throw null; } set { } }
@@ -1311,6 +1406,11 @@ namespace Azure.ResourceManager.StorageSync.Models
         Azure.ResourceManager.StorageSync.Models.StorageSyncRegisteredServerCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageSync.Models.StorageSyncRegisteredServerCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageSync.Models.StorageSyncRegisteredServerCreateOrUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageSync.Models.StorageSyncRegisteredServerCreateOrUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class StorageSyncRegisteredServerPatch : Azure.ResourceManager.Models.ResourceData
+    {
+        public StorageSyncRegisteredServerPatch() { }
+        public bool? Identity { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StorageSyncResourceType : System.IEquatable<Azure.ResourceManager.StorageSync.Models.StorageSyncResourceType>
@@ -1366,10 +1466,18 @@ namespace Azure.ResourceManager.StorageSync.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageSync.Models.StorageSyncServerEndpointPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageSync.Models.StorageSyncServerEndpointPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+<<<<<<< HEAD
+    public partial class StorageSyncServiceCreateOrUpdateContent : Azure.ResourceManager.Models.TrackedResourceData
+=======
     public partial class StorageSyncServiceCreateOrUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageSync.Models.StorageSyncServiceCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageSync.Models.StorageSyncServiceCreateOrUpdateContent>
+>>>>>>> upstream/main
     {
         public StorageSyncServiceCreateOrUpdateContent(Azure.Core.AzureLocation location) { }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.StorageSync.Models.IncomingTrafficPolicy? IncomingTrafficPolicy { get { throw null; } set { } }
+<<<<<<< HEAD
+        public bool? UseIdentity { get { throw null; } set { } }
+=======
         public Azure.Core.AzureLocation Location { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1378,18 +1486,24 @@ namespace Azure.ResourceManager.StorageSync.Models
         Azure.ResourceManager.StorageSync.Models.StorageSyncServiceCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageSync.Models.StorageSyncServiceCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageSync.Models.StorageSyncServiceCreateOrUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageSync.Models.StorageSyncServiceCreateOrUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+>>>>>>> upstream/main
     }
     public partial class StorageSyncServicePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageSync.Models.StorageSyncServicePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageSync.Models.StorageSyncServicePatch>
     {
         public StorageSyncServicePatch() { }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.StorageSync.Models.IncomingTrafficPolicy? IncomingTrafficPolicy { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+<<<<<<< HEAD
+        public bool? UseIdentity { get { throw null; } set { } }
+=======
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.StorageSync.Models.StorageSyncServicePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageSync.Models.StorageSyncServicePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageSync.Models.StorageSyncServicePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.StorageSync.Models.StorageSyncServicePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageSync.Models.StorageSyncServicePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageSync.Models.StorageSyncServicePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageSync.Models.StorageSyncServicePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+>>>>>>> upstream/main
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StorageSyncWorkflowStatus : System.IEquatable<Azure.ResourceManager.StorageSync.Models.StorageSyncWorkflowStatus>

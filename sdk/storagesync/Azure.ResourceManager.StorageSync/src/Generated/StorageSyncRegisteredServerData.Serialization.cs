@@ -161,6 +161,26 @@ namespace Azure.ResourceManager.StorageSync
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
+            if (Optional.IsDefined(ApplicationId))
+            {
+                writer.WritePropertyName("applicationId"u8);
+                writer.WriteStringValue(ApplicationId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                writer.WriteBooleanValue(Identity.Value);
+            }
+            if (Optional.IsDefined(LatestApplicationId))
+            {
+                writer.WritePropertyName("latestApplicationId"u8);
+                writer.WriteStringValue(LatestApplicationId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ActiveAuthType))
+            {
+                writer.WritePropertyName("activeAuthType"u8);
+                writer.WriteStringValue(ActiveAuthType.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -211,6 +231,10 @@ namespace Azure.ResourceManager.StorageSync
             Uri monitoringEndpointUri = default;
             string monitoringConfiguration = default;
             string serverName = default;
+            string applicationId = default;
+            bool? identity = default;
+            string latestApplicationId = default;
+            ServerAuthType? activeAuthType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -411,6 +435,34 @@ namespace Azure.ResourceManager.StorageSync
                             serverName = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("applicationId"u8))
+                        {
+                            applicationId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("identity"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            identity = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("latestApplicationId"u8))
+                        {
+                            latestApplicationId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("activeAuthType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            activeAuthType = new ServerAuthType(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -448,6 +500,10 @@ namespace Azure.ResourceManager.StorageSync
                 monitoringEndpointUri,
                 monitoringConfiguration,
                 serverName,
+                applicationId,
+                identity,
+                latestApplicationId,
+                activeAuthType,
                 serializedAdditionalRawData);
         }
 
