@@ -1,5 +1,6 @@
-<Project Sdk="Microsoft.NET.Sdk"
->
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup />
+
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.ResourceManager.Fabric.csproj" />
