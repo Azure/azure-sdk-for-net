@@ -11,8 +11,8 @@ To use `AzurePipelinesCredential`, configure the following values in the constru
 
 1. `clientId`: Client ID from your user-assigned managed identity OR Application (client) ID from your app registration.
 2. `tenantId`: Tenant ID from your user-assigned managed identity OR Directory (tenant) ID from your app registration.
-3. `serviceConnectionId`: The service connection ID is the **GUID representing your service connection**. Once you navigate to an Azure Pipelines service connection page, the value is obtained in one of the following ways:
-    1. Copy the **ID:** value that appears below the service connection title.
+3. `serviceConnectionId`: The service connection ID is the **GUID representing your service connection**. Once you navigate to an Azure Pipelines service connection details page, the value is obtained in one of the following ways:
+    1. Copy the **ID:** value that appears below the service connection name.
     1. Copy the `resourceId` value from the querystring of the page's URL.
    ![Places to locate the Azure Resource Manager service connection ID](../images/AzPipelinesServiceConnectionId.png)
 1. `systemAccessToken`: [See how to configure the predefined system variable System.AccessToken for the Azure Pipelines task](https://learn.microsoft.com/azure/devops/pipelines/build/variables?view=azure-devops&tabs=yaml#systemaccesstoken). This is the value you'll pass to the credential's constructor.
