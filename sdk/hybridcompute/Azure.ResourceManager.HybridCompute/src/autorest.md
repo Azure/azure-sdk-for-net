@@ -69,6 +69,8 @@ prepend-rp-prefix:
   - Disk
   - HardwareProfile
   - Processor
+  - ExecutionState
+  - FirmwareProfile
 
 list-exception: 
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{baseProvider}/{baseResourceType}/{baseResourceName}/providers/Microsoft.HybridCompute/settings/{settingsResourceName}

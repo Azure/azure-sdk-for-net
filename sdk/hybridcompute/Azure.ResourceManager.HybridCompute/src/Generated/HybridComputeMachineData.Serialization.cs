@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.HybridCompute
             HybridComputeServiceStatuses serviceStatuses = default;
             HybridComputeHardwareProfile hardwareProfile = default;
             StorageProfile storageProfile = default;
-            FirmwareProfile firmwareProfile = default;
+            HybridComputeFirmwareProfile firmwareProfile = default;
             HybridComputeCloudMetadata cloudMetadata = default;
             AgentUpgrade agentUpgrade = default;
             HybridComputeOSProfile osProfile = default;
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.HybridCompute
                             {
                                 continue;
                             }
-                            firmwareProfile = FirmwareProfile.DeserializeFirmwareProfile(property0.Value, options);
+                            firmwareProfile = HybridComputeFirmwareProfile.DeserializeHybridComputeFirmwareProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("cloudMetadata"u8))

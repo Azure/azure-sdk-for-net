@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Describes the firmware of the machine. </summary>
-    public partial class FirmwareProfile
+    public partial class HybridComputeFirmwareProfile
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="FirmwareProfile"/>. </summary>
-        internal FirmwareProfile()
+        /// <summary> Initializes a new instance of <see cref="HybridComputeFirmwareProfile"/>. </summary>
+        internal HybridComputeFirmwareProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FirmwareProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeFirmwareProfile"/>. </summary>
         /// <param name="serialNumber"> The serial number of the firmware. </param>
         /// <param name="firmwareProfileType"> The type of the firmware. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FirmwareProfile(string serialNumber, string firmwareProfileType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HybridComputeFirmwareProfile(string serialNumber, string firmwareProfileType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SerialNumber = serialNumber;
             FirmwareProfileType = firmwareProfileType;

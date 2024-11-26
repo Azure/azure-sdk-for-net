@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="detectedProperties"> Detected properties from the machine. </param>
         /// <param name="networkInterfaces"> Information about the network the machine is on. </param>
         /// <returns> A new <see cref="HybridCompute.HybridComputeMachineData"/> instance for mocking. </returns>
-        public static HybridComputeMachineData HybridComputeMachineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IEnumerable<HybridComputeMachineExtensionData> resources = null, ManagedServiceIdentity identity = null, ArcKindEnum? kind = null, HybridComputeLocation locationData = null, AgentConfiguration agentConfiguration = null, HybridComputeServiceStatuses serviceStatuses = null, HybridComputeHardwareProfile hardwareProfile = null, IEnumerable<HybridComputeDisk> storageDisks = null, FirmwareProfile firmwareProfile = null, string cloudMetadataProvider = null, AgentUpgrade agentUpgrade = null, HybridComputeOSProfile osProfile = null, LicenseProfileMachineInstanceView licenseProfile = null, string provisioningState = null, HybridComputeStatusType? status = null, DateTimeOffset? lastStatusChange = null, IEnumerable<ResponseError> errorDetails = null, string agentVersion = null, Guid? vmId = null, string displayName = null, string machineFqdn = null, string clientPublicKey = null, string osName = null, string osVersion = null, string osType = null, Guid? vmUuid = null, IEnumerable<MachineExtensionInstanceView> extensions = null, string osSku = null, string osEdition = null, string domainName = null, string adFqdn = null, string dnsFqdn = null, ResourceIdentifier privateLinkScopeResourceId = null, ResourceIdentifier parentClusterResourceId = null, string msSqlDiscovered = null, IReadOnlyDictionary<string, string> detectedProperties = null, IEnumerable<HybridComputeNetworkInterface> networkInterfaces = null)
+        public static HybridComputeMachineData HybridComputeMachineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IEnumerable<HybridComputeMachineExtensionData> resources = null, ManagedServiceIdentity identity = null, ArcKindEnum? kind = null, HybridComputeLocation locationData = null, AgentConfiguration agentConfiguration = null, HybridComputeServiceStatuses serviceStatuses = null, HybridComputeHardwareProfile hardwareProfile = null, IEnumerable<HybridComputeDisk> storageDisks = null, HybridComputeFirmwareProfile firmwareProfile = null, string cloudMetadataProvider = null, AgentUpgrade agentUpgrade = null, HybridComputeOSProfile osProfile = null, LicenseProfileMachineInstanceView licenseProfile = null, string provisioningState = null, HybridComputeStatusType? status = null, DateTimeOffset? lastStatusChange = null, IEnumerable<ResponseError> errorDetails = null, string agentVersion = null, Guid? vmId = null, string displayName = null, string machineFqdn = null, string clientPublicKey = null, string osName = null, string osVersion = null, string osType = null, Guid? vmUuid = null, IEnumerable<MachineExtensionInstanceView> extensions = null, string osSku = null, string osEdition = null, string domainName = null, string adFqdn = null, string dnsFqdn = null, ResourceIdentifier privateLinkScopeResourceId = null, ResourceIdentifier parentClusterResourceId = null, string msSqlDiscovered = null, IReadOnlyDictionary<string, string> detectedProperties = null, IEnumerable<HybridComputeNetworkInterface> networkInterfaces = null)
         {
             tags ??= new Dictionary<string, string>();
             resources ??= new List<HybridComputeMachineExtensionData>();
@@ -256,13 +256,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.FirmwareProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HybridComputeFirmwareProfile"/>. </summary>
         /// <param name="serialNumber"> The serial number of the firmware. </param>
         /// <param name="firmwareProfileType"> The type of the firmware. </param>
-        /// <returns> A new <see cref="Models.FirmwareProfile"/> instance for mocking. </returns>
-        public static FirmwareProfile FirmwareProfile(string serialNumber = null, string firmwareProfileType = null)
+        /// <returns> A new <see cref="Models.HybridComputeFirmwareProfile"/> instance for mocking. </returns>
+        public static HybridComputeFirmwareProfile HybridComputeFirmwareProfile(string serialNumber = null, string firmwareProfileType = null)
         {
-            return new FirmwareProfile(serialNumber, firmwareProfileType, serializedAdditionalRawData: null);
+            return new HybridComputeFirmwareProfile(serialNumber, firmwareProfileType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AgentUpgrade"/>. </summary>
@@ -777,7 +777,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="endOn"> Script end time. </param>
         /// <param name="statuses"> The  status information. </param>
         /// <returns> A new <see cref="Models.MachineRunCommandInstanceView"/> instance for mocking. </returns>
-        public static MachineRunCommandInstanceView MachineRunCommandInstanceView(ExecutionState? executionState = null, string executionMessage = null, int? exitCode = null, string output = null, string error = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<ExtensionsResourceStatus> statuses = null)
+        public static MachineRunCommandInstanceView MachineRunCommandInstanceView(HybridComputeExecutionState? executionState = null, string executionMessage = null, int? exitCode = null, string output = null, string error = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<ExtensionsResourceStatus> statuses = null)
         {
             statuses ??= new List<ExtensionsResourceStatus>();
 

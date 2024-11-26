@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="endOn"> Script end time. </param>
         /// <param name="statuses"> The  status information. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineRunCommandInstanceView(ExecutionState? executionState, string executionMessage, int? exitCode, string output, string error, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<ExtensionsResourceStatus> statuses, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineRunCommandInstanceView(HybridComputeExecutionState? executionState, string executionMessage, int? exitCode, string output, string error, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<ExtensionsResourceStatus> statuses, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExecutionState = executionState;
             ExecutionMessage = executionMessage;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Script execution status. </summary>
         [WirePath("executionState")]
-        public ExecutionState? ExecutionState { get; }
+        public HybridComputeExecutionState? ExecutionState { get; }
         /// <summary> Communicate script configuration errors or execution messages. </summary>
         [WirePath("executionMessage")]
         public string ExecutionMessage { get; }

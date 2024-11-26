@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             string baseResourceType = "machines";
             string baseResourceName = "testMachine";
             string settingsResourceName = "default";
-            ArcSettings arcSettings = new ArcSettings()
+            ArcSettings arcSettings = new ArcSettings
             {
                 GatewayResourceId = new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/hybridRG/providers/Microsoft.HybridCompute/gateways/newGateway"),
             };

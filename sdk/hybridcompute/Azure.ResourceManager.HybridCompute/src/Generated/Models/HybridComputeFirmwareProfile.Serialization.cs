@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class FirmwareProfile : IUtf8JsonSerializable, IJsonModel<FirmwareProfile>
+    public partial class HybridComputeFirmwareProfile : IUtf8JsonSerializable, IJsonModel<HybridComputeFirmwareProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirmwareProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputeFirmwareProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<FirmwareProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HybridComputeFirmwareProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FirmwareProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeFirmwareProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirmwareProfile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeFirmwareProfile)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && Optional.IsDefined(SerialNumber))
@@ -62,19 +62,19 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
         }
 
-        FirmwareProfile IJsonModel<FirmwareProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HybridComputeFirmwareProfile IJsonModel<HybridComputeFirmwareProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FirmwareProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeFirmwareProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirmwareProfile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeFirmwareProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFirmwareProfile(document.RootElement, options);
+            return DeserializeHybridComputeFirmwareProfile(document.RootElement, options);
         }
 
-        internal static FirmwareProfile DeserializeFirmwareProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static HybridComputeFirmwareProfile DeserializeHybridComputeFirmwareProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FirmwareProfile(serialNumber, type, serializedAdditionalRawData);
+            return new HybridComputeFirmwareProfile(serialNumber, type, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -168,9 +168,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<FirmwareProfile>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<HybridComputeFirmwareProfile>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FirmwareProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeFirmwareProfile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -179,26 +179,26 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(FirmwareProfile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeFirmwareProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
-        FirmwareProfile IPersistableModel<FirmwareProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        HybridComputeFirmwareProfile IPersistableModel<HybridComputeFirmwareProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FirmwareProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeFirmwareProfile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeFirmwareProfile(document.RootElement, options);
+                        return DeserializeHybridComputeFirmwareProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirmwareProfile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeFirmwareProfile)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<FirmwareProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HybridComputeFirmwareProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

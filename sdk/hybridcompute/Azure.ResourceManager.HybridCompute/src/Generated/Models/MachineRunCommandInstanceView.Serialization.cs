@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            ExecutionState? executionState = default;
+            HybridComputeExecutionState? executionState = default;
             string executionMessage = default;
             int? exitCode = default;
             string output = default;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    executionState = new ExecutionState(property.Value.GetString());
+                    executionState = new HybridComputeExecutionState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("executionMessage"u8))
