@@ -7,15 +7,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.CloudMac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.CloudMachine.Tests", "tests\Azure.Provisioning.CloudMachine.Tests.csproj", "{46DCEF27-4157-4FB6-A283-B8484EC45665}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.CloudMachine", "..\..\cloudmachine\Azure.CloudMachine\src\Azure.CloudMachine.csproj", "{AE9C0E9B-27D9-4220-98DA-0CB6A7936277}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.CloudMachine", "..\Azure.CloudMachine\src\Azure.CloudMachine.csproj", "{AE9C0E9B-27D9-4220-98DA-0CB6A7936277}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.CloudMachine.Tests", "..\..\cloudmachine\Azure.CloudMachine\tests\Azure.CloudMachine.Tests.csproj", "{246D5F77-0151-40C5-8644-26A468A57CDC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.CloudMachine.Tests", "..\Azure.CloudMachine\tests\Azure.CloudMachine.Tests.csproj", "{246D5F77-0151-40C5-8644-26A468A57CDC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Deployment", "..\Azure.Provisioning.Deployment\src\Azure.Provisioning.Deployment.csproj", "{4562F8C1-9FE3-4B68-BBB2-D052B49C915A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.CloudMachine.Web", "..\Azure.CloudMachine.Web\src\Azure.CloudMachine.Web.csproj", "{DD18D434-4665-43CA-97C0-4D63894EE23C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.CloudMachine.Web", "..\..\cloudmachine\Azure.CloudMachine.Web\src\Azure.CloudMachine.Web.csproj", "{DD18D434-4665-43CA-97C0-4D63894EE23C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.CloudMachine.All", "..\..\cloudmachine\Azure.CloudMachine.All\src\Azure.CloudMachine.All.csproj", "{4E651FF9-EF43-4302-B77B-83C08D8FD117}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.CloudMachine.All", "..\Azure.CloudMachine.All\src\Azure.CloudMachine.All.csproj", "{4E651FF9-EF43-4302-B77B-83C08D8FD117}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,10 +37,6 @@ Global
 		{246D5F77-0151-40C5-8644-26A468A57CDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{246D5F77-0151-40C5-8644-26A468A57CDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{246D5F77-0151-40C5-8644-26A468A57CDC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4562F8C1-9FE3-4B68-BBB2-D052B49C915A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4562F8C1-9FE3-4B68-BBB2-D052B49C915A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4562F8C1-9FE3-4B68-BBB2-D052B49C915A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4562F8C1-9FE3-4B68-BBB2-D052B49C915A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DD18D434-4665-43CA-97C0-4D63894EE23C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DD18D434-4665-43CA-97C0-4D63894EE23C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD18D434-4665-43CA-97C0-4D63894EE23C}.Release|Any CPU.ActiveCfg = Release|Any CPU

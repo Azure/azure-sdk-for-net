@@ -7,7 +7,6 @@ using System;
 using System.ClientModel.TypeSpec;
 using System.IO;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using NUnit.Framework;
 
 namespace Azure.CloudMachine.Tests;
@@ -59,7 +58,7 @@ public class TdkTests
 internal interface IAssistantService
 {
     [HttpPut]
-    Task UploadAsync(HttpRequest document);
+    Task UploadAsync(byte[] document);
     Task<string> SendAsync([FromQuery] string message);
 }
 

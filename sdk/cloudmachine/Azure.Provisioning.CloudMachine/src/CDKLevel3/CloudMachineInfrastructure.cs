@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Authorization;
 using Azure.Provisioning.CloudMachine;
@@ -17,6 +18,7 @@ public class CloudMachineInfrastructure
     internal const string SB_PRIVATE_TOPIC = "cm_servicebus_topic_private";
     internal const string SB_PRIVATE_SUB = "cm_servicebus_subscription_private";
 
+    private readonly List<ClientConnectionOptions> _connections = [];
     private readonly Infrastructure _infrastructure = new("cm");
     private readonly List<Provisionable> _resources = [];
     internal List<Type> Endpoints { get; } = [];
@@ -40,8 +42,12 @@ public class CloudMachineInfrastructure
     ///// </summary>
     //public ProvisioningParameter PrincipalNameParameter => new BicepParameter("principalName", typeof(string));
 
-    public CloudMachineInfrastructure(string cmId)
+    public CloudMachineInfrastructure(string? cmId = default)
     {
+        if (cmId == default)
+        {
+            cmId = AppConfigHelpers.ReadOrCreateCmid();
+        }
         Id = cmId;
 
         // setup CM identity
@@ -82,7 +88,7 @@ public class CloudMachineInfrastructure
         Endpoints.Add(endpointsType);
     }
 
-    public ProvisioningPlan Build(ProvisioningBuildOptions? context = null)
+    public ProvisioningPlan Build(ProvisioningBuildOptions? context = default)
     {
         context ??= new ProvisioningBuildOptions();
 

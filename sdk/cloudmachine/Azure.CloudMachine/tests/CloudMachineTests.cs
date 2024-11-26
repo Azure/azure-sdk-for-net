@@ -15,12 +15,34 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Primitives;
 using System.Linq;
 using System.IO;
-using Azure.Provisioning;
 
 namespace Azure.CloudMachine.Tests;
 
 public class CloudMachineTests
 {
+    [Test]
+    public void TwoAppsOpenAI()
+    {
+        CloudMachineInfrastructure infra = new();
+        infra.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
+        //if (args.Contains("-azd")) Azd.Init(infra);
+
+        //var configuration = infra.Configuration;
+
+        CloudMachineClient client = new();
+        ChatClient chat = client.GetOpenAIChatClient();
+    }
+
+    //[Test]
+    //public void SingleAppOpenAI(string[] args)
+    //{
+    //    CloudMachineClient client = new();
+    //    client.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
+    //    if (args.Contains("-azd")) Azd.Init(client);
+
+    //    ChatClient chat = client.GetOpenAIChatClient();
+    //}
+
     [Test]
     public void Configuration()
     {

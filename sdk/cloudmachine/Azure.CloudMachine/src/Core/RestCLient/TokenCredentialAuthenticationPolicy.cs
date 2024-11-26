@@ -11,13 +11,23 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.OpenAI;
 
-internal partial class TokenCredentialAuthenticationPolicy : PipelinePolicy
+/// <summary>
+/// TokenCredentialAuthenticationPolicy is a pipeline policy that authenticates requests using a TokenCredential.
+/// </summary>
+public partial class TokenCredentialAuthenticationPolicy : PipelinePolicy
 {
     private readonly TokenCredential _credential;
     private readonly string[] _scopes;
     private readonly TimeSpan _refreshOffset;
     private AccessToken? _currentToken;
 
+    /// <summary>
+    /// Creates a new TokenCredentialAuthenticationPolicy instance.
+    /// </summary>
+    /// <param name="credential"></param>
+    /// <param name="scopes"></param>
+    /// <param name="refreshOffset"></param>
+    /// <exception cref="ArgumentNullException"></exception>
     public TokenCredentialAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes, TimeSpan? refreshOffset = null)
     {
         if (credential is null) throw new ArgumentNullException(nameof(credential));
@@ -27,6 +37,13 @@ internal partial class TokenCredentialAuthenticationPolicy : PipelinePolicy
         _scopes = scopes.ToArray();
         _refreshOffset = refreshOffset ?? s_defaultRefreshOffset;
     }
+
+    /// <summary>
+    /// executes the policy.
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="pipeline"></param>
+    /// <param name="currentIndex"></param>
 
     public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
@@ -46,6 +63,13 @@ internal partial class TokenCredentialAuthenticationPolicy : PipelinePolicy
         }
     }
 
+    /// <summary>
+    /// executes the policy asynchronously.
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="pipeline"></param>
+    /// <param name="currentIndex"></param>
+    /// <returns></returns>
     public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
         if (message?.Request is not null)
@@ -75,7 +99,7 @@ internal partial class TokenCredentialAuthenticationPolicy : PipelinePolicy
 
     private TokenRequestContext CreateRequestContext(PipelineRequest request)
     {
-        if (request.Headers.TryGetValue("x-ms-client-request-id", out string? messageClientId))
+        if (request.Headers.TryGetValue("x-ms-client-request-id", out string messageClientId))
         {
             return new TokenRequestContext(_scopes, messageClientId);
         }

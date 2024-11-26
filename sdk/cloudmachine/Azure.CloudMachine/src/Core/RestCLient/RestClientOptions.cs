@@ -5,6 +5,9 @@ using System.ClientModel.Primitives;
 
 namespace Azure
 {
+    /// <summary>
+    /// Options for the REST client.
+    /// </summary>
     public class RestClientOptions : ClientPipelineOptions
     {
     }

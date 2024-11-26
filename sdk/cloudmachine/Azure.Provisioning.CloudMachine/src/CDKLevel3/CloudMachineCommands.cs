@@ -16,9 +16,10 @@ public class CloudMachineCommands
 {
     public static bool Execute(string[] args, Action<CloudMachineInfrastructure>? configure = default, bool exitProcessIfHandled = true)
     {
-        if (args.Length < 1) return false;
+        if (args.Length < 1)
+            return false;
 
-        string cmid = AzdHelpers.ReadOrCreateCmid();
+        string cmid = AppConfigHelpers.ReadOrCreateCmid();
         CloudMachineInfrastructure cmi = new(cmid);
         if (configure != default)
         {
@@ -27,7 +28,7 @@ public class CloudMachineCommands
 
         if (args[0] == "-bicep")
         {
-            GenerateBicep(cmi);
+            Azd.Init(cmi);
             return Handled(exitProcessIfHandled);
         }
 
@@ -48,7 +49,8 @@ public class CloudMachineCommands
 
         static bool Handled(bool exitProcessIfHandled)
         {
-            if (exitProcessIfHandled) Environment.Exit(0);
+            if (exitProcessIfHandled)
+                Environment.Exit(0);
             return true;
         }
     }
@@ -86,7 +88,8 @@ public class CloudMachineCommands
                 {
                     scenario = "chat";
                 }
-                if (caps.GetProperty("embeddings"u8).GetBoolean() == true)                                  {
+                if (caps.GetProperty("embeddings"u8).GetBoolean() == true)
+                {
                     scenario = "embeddings";
                 }
                 if (caps.GetProperty("inference"u8).GetBoolean() == false)
@@ -94,7 +97,8 @@ public class CloudMachineCommands
                     scenario = default; // inference==false means model cannot be deployed
                 }
 
-                if (scenario == default) continue;
+                if (scenario == default)
+                    continue;
 
                 if (scenario != default)
                 {
@@ -128,11 +132,5 @@ public class CloudMachineCommands
             using FileStream stream = File.OpenWrite(tspFile);
             TypeSpecWriter.WriteServer(stream, endpoints);
         }
-    }
-
-    private static void GenerateBicep(CloudMachineInfrastructure cmi)
-    {
-        string infraDirectory = Path.Combine(".", "infra");
-        AzdHelpers.Init(infraDirectory, cmi);
     }
 }
