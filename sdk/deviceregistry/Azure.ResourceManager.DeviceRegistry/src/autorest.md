@@ -64,4 +64,7 @@ acronym-mapping:
   URI: Uri
   Etag: ETag|etag
 
+directive:
+  - remove-operation: 'OperationStatus_Get'
+
 ```

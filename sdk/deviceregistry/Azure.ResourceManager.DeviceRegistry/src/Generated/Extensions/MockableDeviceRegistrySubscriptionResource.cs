@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.DeviceRegistry.Models;
 
 namespace Azure.ResourceManager.DeviceRegistry.Mocking
 {
@@ -26,8 +25,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         private DiscoveredAssetEndpointProfilesRestOperations _deviceRegistryDiscoveredAssetEndpointProfileDiscoveredAssetEndpointProfilesRestClient;
         private ClientDiagnostics _deviceRegistryDiscoveredAssetDiscoveredAssetsClientDiagnostics;
         private DiscoveredAssetsRestOperations _deviceRegistryDiscoveredAssetDiscoveredAssetsRestClient;
-        private ClientDiagnostics _operationStatusClientDiagnostics;
-        private OperationStatusRestOperations _operationStatusRestClient;
         private ClientDiagnostics _deviceRegistrySchemaRegistrySchemaRegistriesClientDiagnostics;
         private SchemaRegistriesRestOperations _deviceRegistrySchemaRegistrySchemaRegistriesRestClient;
 
@@ -51,8 +48,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         private DiscoveredAssetEndpointProfilesRestOperations DeviceRegistryDiscoveredAssetEndpointProfileDiscoveredAssetEndpointProfilesRestClient => _deviceRegistryDiscoveredAssetEndpointProfileDiscoveredAssetEndpointProfilesRestClient ??= new DiscoveredAssetEndpointProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DeviceRegistryDiscoveredAssetEndpointProfileResource.ResourceType));
         private ClientDiagnostics DeviceRegistryDiscoveredAssetDiscoveredAssetsClientDiagnostics => _deviceRegistryDiscoveredAssetDiscoveredAssetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", DeviceRegistryDiscoveredAssetResource.ResourceType.Namespace, Diagnostics);
         private DiscoveredAssetsRestOperations DeviceRegistryDiscoveredAssetDiscoveredAssetsRestClient => _deviceRegistryDiscoveredAssetDiscoveredAssetsRestClient ??= new DiscoveredAssetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DeviceRegistryDiscoveredAssetResource.ResourceType));
-        private ClientDiagnostics OperationStatusClientDiagnostics => _operationStatusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private OperationStatusRestOperations OperationStatusRestClient => _operationStatusRestClient ??= new OperationStatusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics DeviceRegistrySchemaRegistrySchemaRegistriesClientDiagnostics => _deviceRegistrySchemaRegistrySchemaRegistriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", DeviceRegistrySchemaRegistryResource.ResourceType.Namespace, Diagnostics);
         private SchemaRegistriesRestOperations DeviceRegistrySchemaRegistrySchemaRegistriesRestClient => _deviceRegistrySchemaRegistrySchemaRegistriesRestClient ??= new SchemaRegistriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DeviceRegistrySchemaRegistryResource.ResourceType));
 
@@ -369,86 +364,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
             HttpMessage FirstPageRequest(int? pageSizeHint) => DeviceRegistryDiscoveredAssetDiscoveredAssetsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DeviceRegistryDiscoveredAssetDiscoveredAssetsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeviceRegistryDiscoveredAssetResource(Client, DeviceRegistryDiscoveredAssetData.DeserializeDeviceRegistryDiscoveredAssetData(e)), DeviceRegistryDiscoveredAssetDiscoveredAssetsClientDiagnostics, Pipeline, "MockableDeviceRegistrySubscriptionResource.GetDeviceRegistryDiscoveredAssets", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Returns the current status of an async operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DeviceRegistry/locations/{location}/operationStatuses/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OperationStatus_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual async Task<Response<OperationStatusResult>> GetOperationStatuAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = OperationStatusClientDiagnostics.CreateScope("MockableDeviceRegistrySubscriptionResource.GetOperationStatu");
-            scope.Start();
-            try
-            {
-                var response = await OperationStatusRestClient.GetAsync(Id.SubscriptionId, location, operationId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Returns the current status of an async operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DeviceRegistry/locations/{location}/operationStatuses/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OperationStatus_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual Response<OperationStatusResult> GetOperationStatu(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = OperationStatusClientDiagnostics.CreateScope("MockableDeviceRegistrySubscriptionResource.GetOperationStatu");
-            scope.Start();
-            try
-            {
-                var response = OperationStatusRestClient.Get(Id.SubscriptionId, location, operationId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// <summary>
