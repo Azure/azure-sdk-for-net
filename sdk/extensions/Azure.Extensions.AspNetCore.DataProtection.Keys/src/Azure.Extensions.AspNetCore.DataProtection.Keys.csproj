@@ -14,6 +14,7 @@
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="Microsoft.AspNetCore.DataProtection" />
     <PackageReference Include="Azure.Security.KeyVault.Keys" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" VersionOverride="8.0.0.0" />
   </ItemGroup>
 
   <ItemGroup>
