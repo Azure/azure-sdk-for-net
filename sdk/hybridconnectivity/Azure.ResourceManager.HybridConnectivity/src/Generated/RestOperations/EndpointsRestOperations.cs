@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-12-01";
+            _apiVersion = apiVersion ?? "2023-03-15";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             }
         }
 
-        internal RequestUriBuilder CreateListIngressGatewayCredentialsRequestUri(string resourceUri, string endpointName, ListIngressGatewayCredentialsContent content, long? expiresin)
+        internal RequestUriBuilder CreateListIngressGatewayCredentialsRequestUri(string resourceUri, string endpointName, long? expiresin)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             return uri;
         }
 
-        internal HttpMessage CreateListIngressGatewayCredentialsRequest(string resourceUri, string endpointName, ListIngressGatewayCredentialsContent content, long? expiresin)
+        internal HttpMessage CreateListIngressGatewayCredentialsRequest(string resourceUri, string endpointName, long? expiresin)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -591,13 +591,6 @@ namespace Azure.ResourceManager.HybridConnectivity
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (content != null)
-            {
-                request.Headers.Add("Content-Type", "application/json");
-                var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-                request.Content = content0;
-            }
             _userAgent.Apply(message);
             return message;
         }
@@ -605,16 +598,15 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <summary> Gets the ingress gateway endpoint credentials. </summary>
         /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
         /// <param name="endpointName"> The endpoint name. </param>
-        /// <param name="content"> Object of type ListIngressGatewayCredentialsRequest. </param>
         /// <param name="expiresin"> The is how long the endpoint access token is valid (in seconds). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="endpointName"/> is null. </exception>
-        public async Task<Response<IngressGatewayAsset>> ListIngressGatewayCredentialsAsync(string resourceUri, string endpointName, ListIngressGatewayCredentialsContent content = null, long? expiresin = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IngressGatewayAsset>> ListIngressGatewayCredentialsAsync(string resourceUri, string endpointName, long? expiresin = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNull(endpointName, nameof(endpointName));
 
-            using var message = CreateListIngressGatewayCredentialsRequest(resourceUri, endpointName, content, expiresin);
+            using var message = CreateListIngressGatewayCredentialsRequest(resourceUri, endpointName, expiresin);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -633,16 +625,15 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <summary> Gets the ingress gateway endpoint credentials. </summary>
         /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource to be connected. </param>
         /// <param name="endpointName"> The endpoint name. </param>
-        /// <param name="content"> Object of type ListIngressGatewayCredentialsRequest. </param>
         /// <param name="expiresin"> The is how long the endpoint access token is valid (in seconds). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="endpointName"/> is null. </exception>
-        public Response<IngressGatewayAsset> ListIngressGatewayCredentials(string resourceUri, string endpointName, ListIngressGatewayCredentialsContent content = null, long? expiresin = null, CancellationToken cancellationToken = default)
+        public Response<IngressGatewayAsset> ListIngressGatewayCredentials(string resourceUri, string endpointName, long? expiresin = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNull(endpointName, nameof(endpointName));
 
-            using var message = CreateListIngressGatewayCredentialsRequest(resourceUri, endpointName, content, expiresin);
+            using var message = CreateListIngressGatewayCredentialsRequest(resourceUri, endpointName, expiresin);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
