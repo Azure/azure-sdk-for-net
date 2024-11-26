@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
 using Azure.Generator.Primitives;
 using Azure.Generator.Providers;
 using Azure.Generator.Providers.Abstraction;
@@ -17,9 +16,6 @@ namespace Azure.Generator
     {
         /// <inheritdoc/>
         public override CSharpType KeyCredentialType => typeof(AzureKeyCredential);
-
-        /// <inheritdoc/>
-        public override CSharpType ClientUriBuilderBaseType => typeof(RequestUriBuilder);
 
         /// <inheritdoc/>
         public override IClientResponseApi ClientResponseApi => AzureClientResponseProvider.Instance;

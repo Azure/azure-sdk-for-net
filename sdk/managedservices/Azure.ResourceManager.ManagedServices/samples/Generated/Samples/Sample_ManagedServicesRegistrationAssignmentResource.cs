@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ManagedServices.Samples
             ManagedServicesRegistrationAssignmentResource managedServicesRegistrationAssignment = client.GetManagedServicesRegistrationAssignmentResource(managedServicesRegistrationAssignmentResourceId);
 
             // invoke the operation
-            ManagedServicesRegistrationAssignmentData data = new ManagedServicesRegistrationAssignmentData()
+            ManagedServicesRegistrationAssignmentData data = new ManagedServicesRegistrationAssignmentData
             {
                 Properties = new ManagedServicesRegistrationAssignmentProperties(new ResourceIdentifier("/subscriptions/0afefe50-734e-4610-8a82-a144ahf49dea/providers/Microsoft.ManagedServices/registrationDefinitions/26c128c2-fefa-4340-9bb1-6e081c90ada2")),
             };

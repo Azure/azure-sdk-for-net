@@ -13,17 +13,17 @@ using Azure.Identity;
 using Azure.ResourceManager.HybridCompute.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
-using NUnit.Framework;
 
 namespace Azure.ResourceManager.HybridCompute.Samples
 {
     public partial class Sample_HybridComputeMachineResource
     {
-        [Test]
-        [Ignore("Only validating compilation of examples")]
+        // Update a Machine
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_UpdateAMachine()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/machine/Machines_Update.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/stable/2024-07-10/examples/machine/Machines_Update.json
             // this example is just showing the usage of "Machines_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -70,11 +70,12 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
+        // Delete a Machine
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteAMachine()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/machine/Machines_Delete.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/stable/2024-07-10/examples/machine/Machines_Delete.json
             // this example is just showing the usage of "Machines_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -93,14 +94,15 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             // invoke the operation
             await hybridComputeMachine.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine("Succeeded");
+            Console.WriteLine($"Succeeded");
         }
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
+        // Get Machine
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetMachine()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/machine/Machines_Get.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/stable/2024-07-10/examples/machine/Machines_Get.json
             // this example is just showing the usage of "Machines_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -126,11 +128,12 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
+        // Get Machine with License Profile Instance View
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetMachineWithLicenseProfileInstanceView()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/machine/Machines_Get_LicenseProfileInstanceView.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/stable/2024-07-10/examples/machine/Machines_Get_LicenseProfileInstanceView.json
             // this example is just showing the usage of "Machines_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -157,11 +160,12 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
+        // Assess patch state of a machine.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task AssessPatches_AssessPatchStateOfAMachine()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/machine/Machine_AssessPatches.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/stable/2024-07-10/examples/machine/Machine_AssessPatches.json
             // this example is just showing the usage of "Machines_AssessPatches" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -184,11 +188,12 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
+        // Install patch state of a machine.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task InstallPatches_InstallPatchStateOfAMachine()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/machine/Machine_InstallPatches.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/stable/2024-07-10/examples/machine/Machine_InstallPatches.json
             // this example is just showing the usage of "Machines_InstallPatches" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -222,11 +227,12 @@ VmGuestPatchClassificationWindow.Critical,VmGuestPatchClassificationWindow.Secur
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
+        // List Machines by resource group
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetHybridComputeMachines_ListMachinesByResourceGroup()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/machine/Machines_ListBySubscription.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/stable/2024-07-10/examples/machine/Machines_ListBySubscription.json
             // this example is just showing the usage of "Machines_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -250,14 +256,15 @@ VmGuestPatchClassificationWindow.Critical,VmGuestPatchClassificationWindow.Secur
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine("Succeeded");
+            Console.WriteLine($"Succeeded");
         }
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
+        // Upgrade Machine Extensions
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task UpgradeExtensions_UpgradeMachineExtensions()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/extension/Extensions_Upgrade.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/stable/2024-07-10/examples/extension/Extensions_Upgrade.json
             // this example is just showing the usage of "UpgradeExtensions" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -290,14 +297,15 @@ TargetVersion = "1.10",
             };
             await hybridComputeMachine.UpgradeExtensionsAsync(WaitUntil.Completed, extensionUpgradeParameters);
 
-            Console.WriteLine("Succeeded");
+            Console.WriteLine($"Succeeded");
         }
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
+        // GET Network Profile
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetNetworkProfile_GETNetworkProfile()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/NetworkProfile_Get.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/stable/2024-07-10/examples/NetworkProfile_Get.json
             // this example is just showing the usage of "NetworkProfile_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -319,11 +327,12 @@ TargetVersion = "1.10",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
+        // PrivateLinkScopeGet
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetValidationDetailsForMachinePrivateLinkScope_PrivateLinkScopeGet()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/privateLinkScope/PrivateLinkScopes_GetValidationForMachine.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/stable/2024-07-10/examples/privateLinkScope/PrivateLinkScopes_GetValidationForMachine.json
             // this example is just showing the usage of "PrivateLinkScopes_GetValidationDetailsForMachine" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

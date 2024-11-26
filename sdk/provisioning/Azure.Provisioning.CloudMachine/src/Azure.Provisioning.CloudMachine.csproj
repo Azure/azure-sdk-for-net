@@ -18,6 +18,7 @@
     <PackageReference Include="Azure.Provisioning.CognitiveServices" />
     <PackageReference Include="Azure.Provisioning.ServiceBus" />
     <PackageReference Include="Azure.Provisioning.EventGrid" />
+    <PackageReference Include="Azure.Provisioning.AppService" />
   </ItemGroup>
 
 </Project>

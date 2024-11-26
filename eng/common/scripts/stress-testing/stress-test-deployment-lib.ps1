@@ -414,7 +414,7 @@ function CheckDependencies()
         }
     )
 
-    Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
+    Install-ModuleIfNotInstalled "powershell-yaml" "0.4.7" | Import-Module
 
     $shouldError = $false
     foreach ($dep in $deps) {

@@ -11,8 +11,8 @@ See the [Contributing guidelines](https://github.com/Azure/azure-sdk-for-net/blo
 ```yaml
 title: SearchServiceClient
 input-file:
- - https://github.com/Azure/azure-rest-api-specs/blob/4b7fbd8b842b509a0330f20260821dd844328dff/specification/search/data-plane/Azure.Search/preview/2024-09-01-preview/searchindex.json
- - https://github.com/Azure/azure-rest-api-specs/blob/4b7fbd8b842b509a0330f20260821dd844328dff/specification/search/data-plane/Azure.Search/preview/2024-09-01-preview/searchservice.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/14531a7cf6101c1dd57e7c1c83103a047bb8f5bb/specification/search/data-plane/Azure.Search/preview/2024-11-01-preview/searchindex.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/14531a7cf6101c1dd57e7c1c83103a047bb8f5bb/specification/search/data-plane/Azure.Search/preview/2024-11-01-preview/searchservice.json
 generation1-convenience-client: true
 deserialize-null-collection-as-null-value: true
 ```
@@ -79,6 +79,27 @@ directive:
   where: $.paths["/docs('{key}')"].get.responses["200"].schema
   transform:  >
     $.additionalProperties = true;
+```
+
+### Fix `SearchDocumentsResult["@search.debugInfo"]` -> `SearchDocumentsResult["@search.debug"]`
+``` yaml
+directive:
+  - from: searchindex.json
+    where: $.definitions.SearchDocumentsResult.properties
+    transform: >
+      $["@search.debug"] = $["@search.debugInfo"];
+      delete $["@search.debugInfo"];
+```
+
+### Fix `SearchResult["@search.documentDebugInfo"]`
+``` yaml
+directive:
+  - from: searchindex.json
+    where: $.definitions.SearchResult.properties
+    transform: >
+      $["@search.documentDebugInfo"]["$ref"] = $["@search.documentDebugInfo"].items["$ref"];
+      delete $["@search.documentDebugInfo"].type;
+      delete $["@search.documentDebugInfo"].items;
 ```
 
 ### Archboard feedback for 11.6.0

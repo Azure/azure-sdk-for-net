@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SecuritySettingResource securitySetting = client.GetSecuritySettingResource(securitySettingResourceId);
 
             // invoke the operation
-            SecuritySettingData data = new DataExportSettings()
+            SecuritySettingData data = new DataExportSettings
             {
                 IsEnabled = true,
             };

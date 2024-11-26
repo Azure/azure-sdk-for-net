@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.HybridCompute.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_CreateOrUpdateAMachineExtension()
+        public async Task Get_GETMachineExtension()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/extension/Extension_Update.json
-            // this example is just showing the usage of "MachineExtensions_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/stable/2024-07-10/examples/extension/Extension_Get.json
+            // this example is just showing the usage of "MachineExtensions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -38,19 +38,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             HybridComputeMachineExtensionResource hybridComputeMachineExtension = client.GetHybridComputeMachineExtensionResource(hybridComputeMachineExtensionResourceId);
 
             // invoke the operation
-            HybridComputeMachineExtensionPatch patch = new HybridComputeMachineExtensionPatch()
-            {
-                Publisher = "Microsoft.Compute",
-                MachineExtensionUpdatePropertiesType = "CustomScriptExtension",
-                TypeHandlerVersion = "1.10",
-                EnableAutomaticUpgrade = true,
-                Settings =
-{
-["commandToExecute"] = BinaryData.FromString("\"powershell.exe -c \"Get-Process | Where-Object { $_.CPU -lt 100 }\"\""),
-},
-            };
-            ArmOperation<HybridComputeMachineExtensionResource> lro = await hybridComputeMachineExtension.UpdateAsync(WaitUntil.Completed, patch);
-            HybridComputeMachineExtensionResource result = lro.Value;
+            HybridComputeMachineExtensionResource result = await hybridComputeMachineExtension.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -88,10 +76,10 @@ namespace Azure.ResourceManager.HybridCompute.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_GETMachineExtension()
+        public async Task Update_CreateOrUpdateAMachineExtension()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/extension/Extension_Get.json
-            // this example is just showing the usage of "MachineExtensions_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/stable/2024-07-10/examples/extension/Extension_Update.json
+            // this example is just showing the usage of "MachineExtensions_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -108,7 +96,19 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             HybridComputeMachineExtensionResource hybridComputeMachineExtension = client.GetHybridComputeMachineExtensionResource(hybridComputeMachineExtensionResourceId);
 
             // invoke the operation
-            HybridComputeMachineExtensionResource result = await hybridComputeMachineExtension.GetAsync();
+            HybridComputeMachineExtensionPatch patch = new HybridComputeMachineExtensionPatch
+            {
+                Publisher = "Microsoft.Compute",
+                MachineExtensionUpdatePropertiesType = "CustomScriptExtension",
+                TypeHandlerVersion = "1.10",
+                EnableAutomaticUpgrade = true,
+                Settings =
+{
+["commandToExecute"] = BinaryData.FromObjectAsJson("powershell.exe -c \"Get-Process | Where-Object { $_.CPU -lt 100 }\"")
+},
+            };
+            ArmOperation<HybridComputeMachineExtensionResource> lro = await hybridComputeMachineExtension.UpdateAsync(WaitUntil.Completed, patch);
+            HybridComputeMachineExtensionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

@@ -69,13 +69,10 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlServerBlobAuditingPolicyResource sqlServerBlobAuditingPolicy = client.GetSqlServerBlobAuditingPolicyResource(sqlServerBlobAuditingPolicyResourceId);
 
             // invoke the operation
-            SqlServerBlobAuditingPolicyData data = new SqlServerBlobAuditingPolicyData()
+            SqlServerBlobAuditingPolicyData data = new SqlServerBlobAuditingPolicyData
             {
                 RetentionDays = 6,
-                AuditActionsAndGroups =
-{
-"SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP","FAILED_DATABASE_AUTHENTICATION_GROUP","BATCH_COMPLETED_GROUP"
-},
+                AuditActionsAndGroups = { "SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP", "FAILED_DATABASE_AUTHENTICATION_GROUP", "BATCH_COMPLETED_GROUP" },
                 IsStorageSecondaryKeyInUse = false,
                 IsAzureMonitorTargetEnabled = true,
                 QueueDelayMs = 4000,
@@ -116,7 +113,7 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlServerBlobAuditingPolicyResource sqlServerBlobAuditingPolicy = client.GetSqlServerBlobAuditingPolicyResource(sqlServerBlobAuditingPolicyResourceId);
 
             // invoke the operation
-            SqlServerBlobAuditingPolicyData data = new SqlServerBlobAuditingPolicyData()
+            SqlServerBlobAuditingPolicyData data = new SqlServerBlobAuditingPolicyData
             {
                 State = BlobAuditingPolicyState.Enabled,
                 StorageEndpoint = "https://mystorage.blob.core.windows.net",

@@ -9,7 +9,8 @@ csharp: true
 library-name: HybridConnectivity
 namespace: Azure.ResourceManager.HybridConnectivity
 # default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/fe44d3261ff0ea816315126120672ccec78c3074/specification/hybridconnectivity/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/5f869da70574588b5af7c46a20de802cb8edc093/specification/hybridconnectivity/resource-manager/readme.md
+#tag: package-2023-03
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -19,6 +20,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+
+#mgmt-debug: 
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -51,56 +55,37 @@ acronym-mapping:
   Etag: ETag|etag
 
 prepend-rp-prefix:
-  - InventoryResource
-  - CloudNativeType
+  # - CloudNativeType
   - EndpointProperties
-  - HostType
-  - InventoryProperties
+  # - HostType
+  # - InventoryProperties
   - ProvisioningState
-  - ResourceProvisioningState
+  # - ResourceProvisioningState
   - ServiceName
+  # - SolutionConfiguration
+  # - PublicCloudConnector
+  # - OperationStatusResult
+  # - SolutionTypeProperties
 
 rename-mapping:
-  # IngressGatewayResource and ManagedProxyResource are not ARM resource but end with Resource suffix which is not allowed, so we need to rename them
+  EndpointResource: HybridConnectivityEndpoint
+  # InventoryResource: HybridConnectivityInventory
+  ServiceConfigurationResource: HybridConnectivityServiceConfiguration
+  # SolutionTypeResource: HybridConnectivitySolutionType
   IngressGatewayResource: IngressGatewayAsset
   ManagedProxyResource: ManagedProxyAsset
-  # format transform
-  AADProfileProperties.serverId: -|uuid
-  PublicCloudConnectorProperties.connectorPrimaryIdentifier: -|uuid
+  IngressGatewayResource.ingress.aadProfile.serverId: -|uuid
+  # PublicCloudConnectorProperties.connectorPrimaryIdentifier: -|uuid
+  EndpointProperties.resourceId: -|arm-id
+  # InventoryProperties.azureResourceId: -|arm-id
+  ServiceConfigurationResource.properties.resourceId: -|arm-id
+  # GenerateAwsTemplateRequest.connectorId: -|arm-id
+  EndpointAccessResource: TargetResourceEndpointAccess
 
 directive:
-  - rename-model:
-      from: EndpointAccessResource
-      to: TargetResourceEndpointAccess
   - from: swagger-document
     where: $.definitions.EndpointProperties.properties.type
     transform: >
-      $["x-ms-client-name"] = "EndpointType";
-      $["x-ms-enum"]["name"] = "EndpointType"
-  - from: swagger-document
-    where: $.parameters.ResourceUriParameter
-    transform: >
-      $["x-ms-client-name"] = "scope"
-
-    # To generate as Azure.Core.ResourceIdentifier
-  - from: swagger-document
-    where: $.definitions.ServiceConfigurationProperties.properties.resourceId
-    transform: $['x-ms-format'] = 'arm-id'
-
-  - from: swagger-document
-    where: $.definitions.GenerateAwsTemplateRequest.properties.connectorId
-    transform: $['x-ms-format'] = 'arm-id'
-
-  - from: swagger-document
-    where: $.definitions.InventoryProperties.properties.azureResourceId
-    transform: $['x-ms-format'] = 'arm-id'
-
-  - from: swagger-document
-    where: $.definitions.EndpointProperties.properties.resourceId
-    transform: $['x-ms-format'] = 'arm-id'
-
-  - from: swagger-document
-    where: $.definitions.AADProfileProperties.properties.serverId
-    transform: $['x-ms-format'] = 'arm-id'
+      $["x-ms-enum"]["name"] = "HybridConnectivityEndpointType"
 
 ```
