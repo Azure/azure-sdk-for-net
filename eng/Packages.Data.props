@@ -220,13 +220,13 @@
 
   <!-- Packages intended for Extensions libraries only -->
   <ItemGroup Condition="'$(IsExtensionClientLibrary)' == 'true'">
-    <PackageReference Update="Microsoft.AspNetCore.DataProtection" Version="8.0.11" />
+    <PackageReference Update="Microsoft.AspNetCore.DataProtection" Version="3.1.32" />
     <PackageReference Update="Microsoft.AspNetCore.Http" Version="2.1.22" />
     <PackageReference Update="Microsoft.AspNetCore.Http.Connections" Version="1.0.15" />
     <PackageReference Update="Microsoft.Azure.Functions.Extensions" Version="1.0.0" />
     <PackageReference Update="Microsoft.Azure.Functions.Worker.Extensions.Abstractions" Version="1.1.0" />
     <PackageReference Update="Microsoft.Extensions.Azure" Version="1.7.6" />
-    <PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
+    <PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Abstractions" Version="2.1.0" />
     <PackageReference Update="Microsoft.Extensions.Configuration.Binder" Version="2.1.0" />
@@ -339,7 +339,7 @@
     <PackageReference Update="Microsoft.Extensions.Configuration" Version="5.0.0" />
     <PackageReference Update="Microsoft.Extensions.Hosting" Version="8.0.1" />
     <PackageReference Update="Microsoft.Extensions.Logging.Configuration" Version="8.0.0-rc.1.23419.4" />
-    <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
+    <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="3.1.32" />
     <PackageReference Update="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
     <PackageReference Update="Microsoft.Graph" Version="5.57.0" />
     <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.0.0" />
