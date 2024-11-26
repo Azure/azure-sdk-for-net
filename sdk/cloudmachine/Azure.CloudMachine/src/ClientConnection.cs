@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Text.Json.Serialization;
 
 namespace Azure.Core;
 
@@ -39,6 +40,7 @@ public readonly struct ClientConnection
     /// <param name="auth"></param>
     public ClientConnection(string id, string locator, ClientAuthenticationMethod auth = ClientAuthenticationMethod.EntraId)
     {
+        Id = id;
         Locator = locator;
         Authentication = auth;
     }
@@ -68,6 +70,12 @@ public readonly struct ClientConnection
     /// </summary>
     /// <returns></returns>
     public Uri ToUri() => new(Locator);
+
+    /// <summary>
+    /// Returns a string representation of the connection.
+    /// </summary>
+    /// <returns></returns>
+    public override string ToString() => $"{Id} => {Locator}";
 }
 
 /// <summary>

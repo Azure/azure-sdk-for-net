@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.CloudMachine.Tests;
 
-public class CloudMachineTests
+public class ProvisioningTests
 {
     [Test]
     public void GenerateBicep()
@@ -27,12 +27,5 @@ public class CloudMachineTests
         string actualBicep = infra.Build().Compile().FirstOrDefault().Value;
         string expectedBicep = File.ReadAllText(Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "GenerateBicep.bicep")).Replace("\r\n", Environment.NewLine);
         Assert.AreEqual(expectedBicep, actualBicep);
-    }
-
-    [Ignore("no recordings yet")]
-    [Test]
-    public void ListModels()
-    {
-        CloudMachineCommands.Execute(["-ai", "chat"], exitProcessIfHandled: false);
     }
 }

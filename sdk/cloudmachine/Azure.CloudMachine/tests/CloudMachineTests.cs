@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Primitives;
 using System.Linq;
 using System.IO;
+using System.Text.Json;
 
 namespace Azure.CloudMachine.Tests;
 
@@ -27,9 +28,12 @@ public class CloudMachineTests
         infra.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
         //if (args.Contains("-azd")) Azd.Init(infra);
 
-        var connections = infra.Connections;
+        ConnectionCollection connections = infra.Connections;
+        BinaryData serializedConnections = BinaryData.FromObjectAsJson(connections);
+        string text = serializedConnections.ToString();
+        ConnectionCollection deserializedConnections = JsonSerializer.Deserialize<ConnectionCollection>(serializedConnections)!;
 
-        CloudMachineClient client = new(connections: connections);
+        CloudMachineClient client = new(connections: deserializedConnections);
         ChatClient chat = client.GetOpenAIChatClient();
     }
 
