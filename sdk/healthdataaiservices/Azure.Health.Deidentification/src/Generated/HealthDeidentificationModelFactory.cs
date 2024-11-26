@@ -33,7 +33,7 @@ namespace Azure.Health.Deidentification
         /// <param name="startedAt"> Date and time when the job was started. </param>
         /// <param name="summary"> Summary of a job. Exists only when the job is completed. </param>
         /// <returns> A new <see cref="Deidentification.DeidentificationJob"/> instance for mocking. </returns>
-        public static DeidentificationJob DeidentificationJob(string name = null, DeidentificationOperationType? operation = null, SourceStorageLocation sourceLocation = null, TargetStorageLocation targetLocation = null, DeidentificationJobCustomizationOptions customizations = null, DeidentificationJobStatus status = default, ResponseError error = null, DateTimeOffset lastUpdatedAt = default, DateTimeOffset createdAt = default, DateTimeOffset? startedAt = null, DeidentificationJobSummary summary = null)
+        public static DeidentificationJob DeidentificationJob(string name = null, DeidentificationOperationType? operation = null, SourceStorageLocation sourceLocation = null, TargetStorageLocation targetLocation = null, DeidentificationJobCustomizationOptions customizations = null, OperationState status = default, ResponseError error = null, DateTimeOffset lastUpdatedAt = default, DateTimeOffset createdAt = default, DateTimeOffset? startedAt = null, DeidentificationJobSummary summary = null)
         {
             return new DeidentificationJob(
                 name,
