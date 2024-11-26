@@ -4,9 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Azure.Core;
 using Azure.Provisioning;
-using Azure.Provisioning.Authorization;
 using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
@@ -31,6 +29,12 @@ public class CloudMachineInfrastructure
     [EditorBrowsable(EditorBrowsableState.Never)]
     public UserAssignedIdentity Identity { get; private set; }
     public string Id { get; private set; }
+
+    public CloudMachineClient GetClient()
+    {
+        CloudMachineClient client = new(connections: Connections);
+        return client;
+    }
 
     /// <summary>
     /// The common principalId parameter.

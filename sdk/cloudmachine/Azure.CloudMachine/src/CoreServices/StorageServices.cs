@@ -12,6 +12,7 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Messaging.ServiceBus;
 using ContentType = Azure.Core.ContentType;
+using System.ComponentModel;
 
 namespace Azure.CloudMachine;
 
@@ -24,25 +25,21 @@ public readonly struct StorageServices
 
     internal StorageServices(CloudMachineClient cm) => _cm = cm;
 
-    private BlobContainerClient GetDefaultContainer()
+    // TODO: do we want Azure.Storage.Blobs in the public API? This would prevent us from using a custom implementation.
+    /// <summary>
+    /// Gets the container client.
+    /// </summary>
+    /// <param name="containerName"></param>
+    /// <returns></returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public BlobContainerClient GetContainer(string containerName = default)
     {
-        CloudMachineClient cm = _cm;
-        BlobContainerClient container = _cm.Subclients.Get(() =>
-        {
-            ClientConnection connection = cm.GetConnectionOptions("Azure.Storage.Blobs.BlobContainerClient");
-            BlobContainerClient container = new(connection.ToUri(), cm.Credential);
-            return container;
-        });
-        return container;
-    }
-
-    private BlobContainerClient GetContainer(string containerName)
-    {
-        string blobContainerClientId = typeof(BlobContainerClient).FullName;
+        if (containerName == default) containerName = "default";
+        string blobContainerClientId = $"{typeof(BlobContainerClient).FullName}@{containerName}";
         CloudMachineClient cm = _cm;
         BlobContainerClient container = cm.Subclients.Get(() =>
         {
-            ClientConnection connection = cm.GetConnectionOptions($"{typeof(BlobContainerClient).FullName}@{containerName}");
+            ClientConnection connection = cm.GetConnectionOptions(blobContainerClientId);
             BlobContainerClient container = new(connection.ToUri(), cm.Credential);
             return container;
         });
@@ -111,7 +108,7 @@ public readonly struct StorageServices
 
     private BlockBlobClient GetBlobClient(ref string name)
     {
-        BlobContainerClient container = GetDefaultContainer();
+        BlobContainerClient container = GetContainer(default);
         if (name == default) name = $"b{Guid.NewGuid()}";
         BlockBlobClient client = container.GetBlockBlobClient(name);
         return client;
@@ -206,7 +203,7 @@ public readonly struct StorageServices
 
     private BlobClient GetBlobClientFromPath(string path, string containerName)
     {
-        BlobContainerClient _blobContainer = GetDefaultContainer();
+        BlobContainerClient _blobContainer = GetContainer(default);
         string blobPath = ConvertPathToBlobPath(path, _blobContainer);
         if (containerName is null)
         {
