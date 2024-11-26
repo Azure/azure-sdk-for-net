@@ -69,14 +69,12 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             GremlinDatabaseThroughputSettingResource gremlinDatabaseThroughputSetting = client.GetGremlinDatabaseThroughputSettingResource(gremlinDatabaseThroughputSettingResourceId);
 
             // invoke the operation
-            ThroughputSettingsUpdateData data = new ThroughputSettingsUpdateData(new AzureLocation("West US"), new ThroughputSettingsResourceInfo()
+            ThroughputSettingsUpdateData data = new ThroughputSettingsUpdateData(new AzureLocation("West US"), new ThroughputSettingsResourceInfo
             {
                 Throughput = 400,
             })
             {
-                Tags =
-{
-},
+                Tags = { },
             };
             ArmOperation<GremlinDatabaseThroughputSettingResource> lro = await gremlinDatabaseThroughputSetting.CreateOrUpdateAsync(WaitUntil.Completed, data);
             GremlinDatabaseThroughputSettingResource result = lro.Value;

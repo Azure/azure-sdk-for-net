@@ -28,29 +28,22 @@ namespace Azure.ResourceManager.SelfHelp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this SelfHelpSolutionResource
             string scope = "subscriptions/mySubscription/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-rp";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            SelfHelpSolutionCollection collection = client.GetSelfHelpSolutions(scopeId);
+            SelfHelpSolutionCollection collection = client.GetSelfHelpSolutions(new ResourceIdentifier(scope));
 
             // invoke the operation
             string solutionResourceName = "SolutionResourceName1";
-            SelfHelpSolutionData data = new SelfHelpSolutionData()
+            SelfHelpSolutionData data = new SelfHelpSolutionData
             {
-                TriggerCriteria =
-{
-new SolutionTriggerCriterion()
+                TriggerCriteria = {new SolutionTriggerCriterion
 {
 Name = SelfHelpName.SolutionId,
 Value = "SolutionId1",
-}
-},
+}},
                 Parameters =
 {
-["resourceUri"] = "subscriptions/mySubscription/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-rp",
+["resourceUri"] = "subscriptions/mySubscription/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-rp"
 },
             };
             ArmOperation<SelfHelpSolutionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, solutionResourceName, data);
@@ -75,13 +68,9 @@ Value = "SolutionId1",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this SelfHelpSolutionResource
             string scope = "subscriptions/mySubscription/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-rp";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            SelfHelpSolutionCollection collection = client.GetSelfHelpSolutions(scopeId);
+            SelfHelpSolutionCollection collection = client.GetSelfHelpSolutions(new ResourceIdentifier(scope));
 
             // invoke the operation
             string solutionResourceName = "SolutionResource1";
@@ -106,13 +95,9 @@ Value = "SolutionId1",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this SelfHelpSolutionResource
             string scope = "subscriptions/mySubscription/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-rp";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            SelfHelpSolutionCollection collection = client.GetSelfHelpSolutions(scopeId);
+            SelfHelpSolutionCollection collection = client.GetSelfHelpSolutions(new ResourceIdentifier(scope));
 
             // invoke the operation
             string solutionResourceName = "SolutionResource1";
@@ -133,13 +118,9 @@ Value = "SolutionId1",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this SelfHelpSolutionResource
             string scope = "subscriptions/mySubscription/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-rp";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            SelfHelpSolutionCollection collection = client.GetSelfHelpSolutions(scopeId);
+            SelfHelpSolutionCollection collection = client.GetSelfHelpSolutions(new ResourceIdentifier(scope));
 
             // invoke the operation
             string solutionResourceName = "SolutionResource1";

@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Quota.Samples
             CurrentQuotaLimitBaseResource currentQuotaLimitBase = client.GetCurrentQuotaLimitBaseResource(currentQuotaLimitBaseResourceId);
 
             // invoke the operation
-            CurrentQuotaLimitBaseData data = new CurrentQuotaLimitBaseData()
+            CurrentQuotaLimitBaseData data = new CurrentQuotaLimitBaseData
             {
-                Properties = new QuotaProperties()
+                Properties = new QuotaProperties
                 {
                     Limit = new QuotaLimitObject(10),
-                    Name = new QuotaRequestResourceName()
+                    Name = new QuotaRequestResourceName
                     {
                         Value = "standardFSv2Family",
                     },
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.Quota.Samples
             CurrentQuotaLimitBaseResource currentQuotaLimitBase = client.GetCurrentQuotaLimitBaseResource(currentQuotaLimitBaseResourceId);
 
             // invoke the operation
-            CurrentQuotaLimitBaseData data = new CurrentQuotaLimitBaseData()
+            CurrentQuotaLimitBaseData data = new CurrentQuotaLimitBaseData
             {
-                Properties = new QuotaProperties()
+                Properties = new QuotaProperties
                 {
                     Limit = new QuotaLimitObject(10),
-                    Name = new QuotaRequestResourceName()
+                    Name = new QuotaRequestResourceName
                     {
                         Value = "MinPublicIpInterNetworkPrefixLength",
                     },

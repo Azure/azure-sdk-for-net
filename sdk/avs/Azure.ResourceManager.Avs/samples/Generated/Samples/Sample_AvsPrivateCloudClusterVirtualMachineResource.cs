@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Avs.Samples
             AvsPrivateCloudClusterVirtualMachineResource avsPrivateCloudClusterVirtualMachine = client.GetAvsPrivateCloudClusterVirtualMachineResource(avsPrivateCloudClusterVirtualMachineResourceId);
 
             // invoke the operation
-            AvsPrivateCloudClusterVirtualMachineRestrictMovement restrictMovement = new AvsPrivateCloudClusterVirtualMachineRestrictMovement()
+            AvsPrivateCloudClusterVirtualMachineRestrictMovement restrictMovement = new AvsPrivateCloudClusterVirtualMachineRestrictMovement
             {
                 RestrictMovement = VirtualMachineRestrictMovementState.Enabled,
             };

@@ -10,44 +10,12 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.AppService.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppService.Samples
 {
     public partial class Sample_StaticSiteResource
     {
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetStaticSites_GetAllStaticSitesInASubscription()
-        {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/GetAllStaticSites.json
-            // this example is just showing the usage of "StaticSites_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (StaticSiteResource item in subscriptionResource.GetStaticSitesAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                StaticSiteData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetDetailsForAStaticSite()
@@ -216,7 +184,7 @@ namespace Azure.ResourceManager.AppService.Samples
             // invoke the operation
             string authprovider = "aad";
             string userid = "1234";
-            StaticSiteUser staticSiteUserEnvelope = new StaticSiteUser()
+            StaticSiteUser staticSiteUserEnvelope = new StaticSiteUser
             {
                 Roles = "contributor",
             };
@@ -246,12 +214,12 @@ namespace Azure.ResourceManager.AppService.Samples
             StaticSiteResource staticSite = client.GetStaticSiteResource(staticSiteResourceId);
 
             // invoke the operation
-            AppServiceConfigurationDictionary appSettings = new AppServiceConfigurationDictionary()
+            AppServiceConfigurationDictionary appSettings = new AppServiceConfigurationDictionary
             {
                 Properties =
 {
 ["setting1"] = "someval",
-["setting2"] = "someval2",
+["setting2"] = "someval2"
 },
             };
             AppServiceConfigurationDictionary result = await staticSite.CreateOrUpdateAppSettingsAsync(appSettings);
@@ -280,12 +248,12 @@ namespace Azure.ResourceManager.AppService.Samples
             StaticSiteResource staticSite = client.GetStaticSiteResource(staticSiteResourceId);
 
             // invoke the operation
-            AppServiceConfigurationDictionary appSettings = new AppServiceConfigurationDictionary()
+            AppServiceConfigurationDictionary appSettings = new AppServiceConfigurationDictionary
             {
                 Properties =
 {
 ["setting1"] = "someval",
-["setting2"] = "someval2",
+["setting2"] = "someval2"
 },
             };
             AppServiceConfigurationDictionary result = await staticSite.CreateOrUpdateFunctionAppSettingsAsync(appSettings);
@@ -314,7 +282,7 @@ namespace Azure.ResourceManager.AppService.Samples
             StaticSiteResource staticSite = client.GetStaticSiteResource(staticSiteResourceId);
 
             // invoke the operation
-            StaticSiteUserInvitationContent content = new StaticSiteUserInvitationContent()
+            StaticSiteUserInvitationContent content = new StaticSiteUserInvitationContent
             {
                 Domain = "happy-sea-15afae3e.azurestaticwebsites.net",
                 Provider = "aad",
@@ -536,7 +504,7 @@ namespace Azure.ResourceManager.AppService.Samples
             StaticSiteResource staticSite = client.GetStaticSiteResource(staticSiteResourceId);
 
             // invoke the operation
-            StaticSiteResetContent content = new StaticSiteResetContent()
+            StaticSiteResetContent content = new StaticSiteResetContent
             {
                 RepositoryToken = "repoToken123",
                 ShouldUpdateRepository = true,
@@ -597,7 +565,7 @@ namespace Azure.ResourceManager.AppService.Samples
             StaticSiteResource staticSite = client.GetStaticSiteResource(staticSiteResourceId);
 
             // invoke the operation
-            StaticSiteZipDeployment staticSiteZipDeploymentEnvelope = new StaticSiteZipDeployment()
+            StaticSiteZipDeployment staticSiteZipDeploymentEnvelope = new StaticSiteZipDeployment
             {
                 AppZipUri = new Uri("https://teststorageaccount.net/happy-sea-15afae3e-master-81828877/app-zipdeploy.zip"),
                 ApiZipUri = new Uri("https://teststorageaccount.net/happy-sea-15afae3e-master-81828877/api-zipdeploy.zip"),

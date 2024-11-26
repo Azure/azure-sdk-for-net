@@ -50,6 +50,34 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_CosmosDBSqlContainerDelete()
+        {
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBSqlContainerDelete.json
+            // this example is just showing the usage of "SqlResources_DeleteSqlContainer" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CosmosDBSqlContainerResource created on azure
+            // for more information of creating CosmosDBSqlContainerResource, please refer to the document of CosmosDBSqlContainerResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string accountName = "ddb1";
+            string databaseName = "databaseName";
+            string containerName = "containerName";
+            ResourceIdentifier cosmosDBSqlContainerResourceId = CosmosDBSqlContainerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, databaseName, containerName);
+            CosmosDBSqlContainerResource cosmosDBSqlContainer = client.GetCosmosDBSqlContainerResource(cosmosDBSqlContainerResourceId);
+
+            // invoke the operation
+            await cosmosDBSqlContainer.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CosmosDBSqlContainerCreateUpdate()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBSqlContainerCreateUpdate.json
@@ -73,77 +101,55 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             // invoke the operation
             CosmosDBSqlContainerCreateOrUpdateContent content = new CosmosDBSqlContainerCreateOrUpdateContent(new AzureLocation("West US"), new CosmosDBSqlContainerResourceInfo("containerName")
             {
-                IndexingPolicy = new CosmosDBIndexingPolicy()
+                IndexingPolicy = new CosmosDBIndexingPolicy
                 {
                     IsAutomatic = true,
                     IndexingMode = CosmosDBIndexingMode.Consistent,
-                    IncludedPaths =
-{
-new CosmosDBIncludedPath()
+                    IncludedPaths = {new CosmosDBIncludedPath
 {
 Path = "/*",
-Indexes =
-{
-new CosmosDBPathIndexes()
+Indexes = {new CosmosDBPathIndexes
 {
 DataType = CosmosDBDataType.String,
 Precision = -1,
 Kind = CosmosDBIndexKind.Range,
-},new CosmosDBPathIndexes()
+}, new CosmosDBPathIndexes
 {
 DataType = CosmosDBDataType.Number,
 Precision = -1,
 Kind = CosmosDBIndexKind.Range,
-}
-},
-}
-},
-                    ExcludedPaths =
-{
-},
+}},
+}},
+                    ExcludedPaths = { },
                 },
-                PartitionKey = new CosmosDBContainerPartitionKey()
+                PartitionKey = new CosmosDBContainerPartitionKey
                 {
-                    Paths =
-{
-"/AccountNumber"
-},
+                    Paths = { "/AccountNumber" },
                     Kind = CosmosDBPartitionKind.Hash,
                 },
                 DefaultTtl = 100,
-                UniqueKeys =
+                UniqueKeys = {new CosmosDBUniqueKey
 {
-new CosmosDBUniqueKey()
-{
-Paths =
-{
-"/testPath"
-},
-}
-},
-                ConflictResolutionPolicy = new ConflictResolutionPolicy()
+Paths = {"/testPath"},
+}},
+                ConflictResolutionPolicy = new ConflictResolutionPolicy
                 {
                     Mode = ConflictResolutionMode.LastWriterWins,
                     ConflictResolutionPath = "/path",
                 },
                 ClientEncryptionPolicy = new CosmosDBClientEncryptionPolicy(new CosmosDBClientEncryptionIncludedPath[]
             {
-new CosmosDBClientEncryptionIncludedPath("/path","keyId","Deterministic","AEAD_AES_256_CBC_HMAC_SHA256")
+new CosmosDBClientEncryptionIncludedPath("/path", "keyId", "Deterministic", "AEAD_AES_256_CBC_HMAC_SHA256")
             }, 2),
-                ComputedProperties =
-{
-new ComputedProperty()
+                ComputedProperties = {new ComputedProperty
 {
 Name = "cp_lowerName",
 Query = "SELECT VALUE LOWER(c.name) FROM c",
-}
-},
+}},
             })
             {
                 Options = new CosmosDBCreateUpdateConfig(),
-                Tags =
-{
-},
+                Tags = { },
             };
             ArmOperation<CosmosDBSqlContainerResource> lro = await cosmosDBSqlContainer.UpdateAsync(WaitUntil.Completed, content);
             CosmosDBSqlContainerResource result = lro.Value;
@@ -180,7 +186,7 @@ Query = "SELECT VALUE LOWER(c.name) FROM c",
             // invoke the operation
             CosmosDBSqlContainerCreateOrUpdateContent content = new CosmosDBSqlContainerCreateOrUpdateContent(new AzureLocation("West US"), new CosmosDBSqlContainerResourceInfo("containerName")
             {
-                RestoreParameters = new ResourceRestoreParameters()
+                RestoreParameters = new ResourceRestoreParameters
                 {
                     RestoreSource = "/subscriptions/subid/providers/Microsoft.DocumentDB/locations/WestUS/restorableDatabaseAccounts/restorableDatabaseAccountId",
                     RestoreTimestampInUtc = DateTimeOffset.Parse("2022-07-20T18:28:00Z"),
@@ -190,9 +196,7 @@ Query = "SELECT VALUE LOWER(c.name) FROM c",
             })
             {
                 Options = new CosmosDBCreateUpdateConfig(),
-                Tags =
-{
-},
+                Tags = { },
             };
             ArmOperation<CosmosDBSqlContainerResource> lro = await cosmosDBSqlContainer.UpdateAsync(WaitUntil.Completed, content);
             CosmosDBSqlContainerResource result = lro.Value;
@@ -229,50 +233,37 @@ Query = "SELECT VALUE LOWER(c.name) FROM c",
             // invoke the operation
             CosmosDBSqlContainerCreateOrUpdateContent content = new CosmosDBSqlContainerCreateOrUpdateContent(new AzureLocation("West US"), new CosmosDBSqlContainerResourceInfo("mvContainerName")
             {
-                IndexingPolicy = new CosmosDBIndexingPolicy()
+                IndexingPolicy = new CosmosDBIndexingPolicy
                 {
                     IsAutomatic = true,
                     IndexingMode = CosmosDBIndexingMode.Consistent,
-                    IncludedPaths =
-{
-new CosmosDBIncludedPath()
+                    IncludedPaths = {new CosmosDBIncludedPath
 {
 Path = "/*",
-Indexes =
-{
-new CosmosDBPathIndexes()
+Indexes = {new CosmosDBPathIndexes
 {
 DataType = CosmosDBDataType.String,
 Precision = -1,
 Kind = CosmosDBIndexKind.Range,
-},new CosmosDBPathIndexes()
+}, new CosmosDBPathIndexes
 {
 DataType = CosmosDBDataType.Number,
 Precision = -1,
 Kind = CosmosDBIndexKind.Range,
-}
-},
-}
-},
-                    ExcludedPaths =
-{
-},
+}},
+}},
+                    ExcludedPaths = { },
                 },
-                PartitionKey = new CosmosDBContainerPartitionKey()
+                PartitionKey = new CosmosDBContainerPartitionKey
                 {
-                    Paths =
-{
-"/mvpk"
-},
+                    Paths = { "/mvpk" },
                     Kind = CosmosDBPartitionKind.Hash,
                 },
                 MaterializedViewDefinition = new MaterializedViewDefinition("sourceContainerName", "select * from ROOT"),
             })
             {
                 Options = new CosmosDBCreateUpdateConfig(),
-                Tags =
-{
-},
+                Tags = { },
             };
             ArmOperation<CosmosDBSqlContainerResource> lro = await cosmosDBSqlContainer.UpdateAsync(WaitUntil.Completed, content);
             CosmosDBSqlContainerResource result = lro.Value;
@@ -282,34 +273,6 @@ Kind = CosmosDBIndexKind.Range,
             CosmosDBSqlContainerData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_CosmosDBSqlContainerDelete()
-        {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBSqlContainerDelete.json
-            // this example is just showing the usage of "SqlResources_DeleteSqlContainer" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CosmosDBSqlContainerResource created on azure
-            // for more information of creating CosmosDBSqlContainerResource, please refer to the document of CosmosDBSqlContainerResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string accountName = "ddb1";
-            string databaseName = "databaseName";
-            string containerName = "containerName";
-            ResourceIdentifier cosmosDBSqlContainerResourceId = CosmosDBSqlContainerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, databaseName, containerName);
-            CosmosDBSqlContainerResource cosmosDBSqlContainer = client.GetCosmosDBSqlContainerResource(cosmosDBSqlContainerResourceId);
-
-            // invoke the operation
-            await cosmosDBSqlContainer.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -335,7 +298,7 @@ Kind = CosmosDBIndexKind.Range,
             CosmosDBSqlContainerResource cosmosDBSqlContainer = client.GetCosmosDBSqlContainerResource(cosmosDBSqlContainerResourceId);
 
             // invoke the operation
-            MergeParameters mergeParameters = new MergeParameters()
+            MergeParameters mergeParameters = new MergeParameters
             {
                 IsDryRun = false,
             };
@@ -368,7 +331,7 @@ Kind = CosmosDBIndexKind.Range,
             CosmosDBSqlContainerResource cosmosDBSqlContainer = client.GetCosmosDBSqlContainerResource(cosmosDBSqlContainerResourceId);
 
             // invoke the operation
-            ContinuousBackupRestoreLocation location = new ContinuousBackupRestoreLocation()
+            ContinuousBackupRestoreLocation location = new ContinuousBackupRestoreLocation
             {
                 Location = new AzureLocation("North Europe"),
             };
