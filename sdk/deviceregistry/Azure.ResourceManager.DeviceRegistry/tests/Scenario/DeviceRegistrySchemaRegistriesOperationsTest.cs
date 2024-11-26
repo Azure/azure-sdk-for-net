@@ -37,9 +37,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
 
             #region SchemaRegistries
             /*******************
-            *                  *
             * SchemaRegistries *
-            *                  *
             *******************/
 
             var schemaRegistriesCollection = rg.GetDeviceRegistrySchemaRegistries();
@@ -138,9 +136,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             #endregion
             #region SchemaRegistries/Schemas
             /***************************
-            *                          *
             * SchemaRegistries/Schemas *
-            *                          *
             ***************************/
 
             var schemaRegistriesSchemasCollection = schemaRegistry.GetDeviceRegistrySchemas();
@@ -193,9 +189,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             #endregion
             #region SchemaRegistries/Schemas/SchemaVersions
             /******************************************
-            *                                         *
             * SchemaRegistries/Schemas/SchemaVersions *
-            *                                         *
             ******************************************/
 
             var schemaRegistriesSchemaVersionsCollection = schemaRegistrySchema.GetDeviceRegistrySchemaVersions();
