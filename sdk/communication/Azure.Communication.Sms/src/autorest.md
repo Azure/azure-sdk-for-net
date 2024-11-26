@@ -9,7 +9,7 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 tag: package-sms-2024-12-10-preview
 model-namespace: true
 require:
-    -  C:\azure-rest-api-specs\specification\communication\data-plane\Sms\readme.md
+    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b538b6ec5e8ea500a60a5708e2cb046705a62114/specification/communication/data-plane/Sms/readme.md
 payload-flattening-threshold: 10
 generation1-convenience-client: true
 ```
