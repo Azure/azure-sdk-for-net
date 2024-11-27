@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.CloudMachine.Core;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.CloudMachine;
@@ -80,7 +81,5 @@ public class StorageFeature : CloudMachineFeature
     }
 
     protected internal override void EmitConnections(ConnectionCollection connections, string cmId)
-    {
-        connections.Add(new ClientConnection("Azure.Storage.Blobs.BlobContainerClient@default", $"https://{cmId}.blob.core.windows.net/default"));
-    }
+        => connections.Add(CloudMachineConnections.CreateDefaultBlobContainerConnection(cmId));
 }
