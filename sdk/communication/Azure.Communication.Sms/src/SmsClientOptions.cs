@@ -42,7 +42,7 @@ namespace Azure.Communication.Sms
             /// </summary>
             V2021_03_07 = 1,
             /// <summary>
-            /// The "2024-02-05-preview" of the Sms service.
+            /// The "2024-12-10-preview" of the Sms service.
             /// </summary>
             V2024_12_10_Preview = 2
 #pragma warning restore CA1707 // Identifiers should not contain underscores
