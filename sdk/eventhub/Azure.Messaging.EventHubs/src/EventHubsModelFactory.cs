@@ -42,7 +42,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="name">The name of the Event Hub.</param>
         /// <param name="createdOn">The date and time at which the Event Hub was created.</param>
         /// <param name="partitionIds">The set of unique identifiers for each partition.</param>
-        /// <param name="isGeoReplicationEnabled">A flag indicating whether or not the Event Hub has geo-replication enabled.</param>
+        /// <param name="isGeoReplicationEnabled">A flag indicating whether or not the Event Hubs namespace has geo-replication enabled.</param>
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static EventHubProperties EventHubProperties(string name,
