@@ -64,17 +64,17 @@ namespace Azure.Storage.DataMovement
             Behaviors behaviors,
             CancellationToken cancellationToken)
         {
-            _cancellationToken = cancellationToken;
-            // Set bytes transferred to the length of bytes we got back from the initial
-            // download request
-            _bytesTransferred = currentTransferred;
-            _expectedLength = expectedLength;
-
             if (expectedLength <= 0)
             {
                 throw Errors.InvalidExpectedLength(expectedLength);
             }
             Argument.AssertNotNull(behaviors, nameof(behaviors));
+
+            _cancellationToken = cancellationToken;
+            // Set bytes transferred to the length of bytes we got back from the initial
+            // download request
+            _bytesTransferred = currentTransferred;
+            _expectedLength = expectedLength;
 
             _copyToDestinationFile = behaviors.CopyToDestinationFile
                 ?? throw Errors.ArgumentNull(nameof(behaviors.CopyToDestinationFile));
@@ -96,9 +96,9 @@ namespace Azure.Storage.DataMovement
             _downloadRangeProcessor.TryComplete();
         }
 
-        public void QueueChunk(QueueDownloadChunkArgs args)
+        public ValueTask QueueChunkAsync(QueueDownloadChunkArgs args)
         {
-            _downloadRangeProcessor.QueueAsync(args);
+            return _downloadRangeProcessor.QueueAsync(args);
         }
 
         private async Task ProcessDownloadRange(QueueDownloadChunkArgs args, CancellationToken cancellationToken = default)
