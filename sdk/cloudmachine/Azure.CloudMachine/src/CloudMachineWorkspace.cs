@@ -113,10 +113,11 @@ public class CloudMachineWorkspace : ClientWorkspace
             writer.WriteEndObject();
             writer.WriteEndObject();
             writer.Flush();
+            file.Close();
             return cmid;
         }
 
-        using FileStream json = File.OpenRead(appsettings);
+        using FileStream json = new FileStream(appsettings, FileMode.Open, FileAccess.Read, FileShare.Read);
         using JsonDocument jd = JsonDocument.Parse(json);
         JsonElement je = jd.RootElement;
         // attempt to read CM configuration from existing configuration file
@@ -144,7 +145,7 @@ public class CloudMachineWorkspace : ClientWorkspace
             cmProperties.Add("ID", cmid);
             obj.Add("CloudMachine", cmProperties);
 
-            using FileStream file = File.OpenWrite(appsettings);
+            using FileStream file = new FileStream(appsettings, FileMode.Open, FileAccess.Write, FileShare.None);
             JsonWriterOptions writerOptions = new()
             {
                 Indented = true,

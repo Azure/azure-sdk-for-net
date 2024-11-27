@@ -24,6 +24,7 @@ public partial class CloudMachineTests
             return;
         }
 
+        // TODO: we need to allow newing up the client.
         CloudMachineClient client = infra.GetClient();
     }
 }
