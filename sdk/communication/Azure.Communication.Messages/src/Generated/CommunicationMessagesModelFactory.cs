@@ -110,6 +110,144 @@ namespace Azure.Communication.Messages
             return new AudioNotificationContent(channelRegistrationId, to?.ToList(), CommunicationMessageKind.Audio, serializedAdditionalRawData: null, mediaUri);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Messages.ReactionNotificationContent"/>. </summary>
+        /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
+        /// <param name="to"> The native external platform user identifiers of the recipient. </param>
+        /// <param name="emoji"> emoji content like \uD83D\uDE00. </param>
+        /// <param name="messageId"> ID of the previous message you want to reply to. </param>
+        /// <returns> A new <see cref="Messages.ReactionNotificationContent"/> instance for mocking. </returns>
+        public static ReactionNotificationContent ReactionNotificationContent(Guid channelRegistrationId = default, IEnumerable<string> to = null, string emoji = null, string messageId = null)
+        {
+            to ??= new List<string>();
+
+            return new ReactionNotificationContent(
+                channelRegistrationId,
+                to?.ToList(),
+                CommunicationMessageKind.Reaction,
+                serializedAdditionalRawData: null,
+                emoji,
+                messageId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.StickerNotificationContent"/>. </summary>
+        /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
+        /// <param name="to"> The native external platform user identifiers of the recipient. </param>
+        /// <param name="mediaUri"> A media url for the file. Required if the type is one of the supported media types, e.g. image. </param>
+        /// <returns> A new <see cref="Messages.StickerNotificationContent"/> instance for mocking. </returns>
+        public static StickerNotificationContent StickerNotificationContent(Guid channelRegistrationId = default, IEnumerable<string> to = null, Uri mediaUri = null)
+        {
+            to ??= new List<string>();
+
+            return new StickerNotificationContent(channelRegistrationId, to?.ToList(), CommunicationMessageKind.Sticker, serializedAdditionalRawData: null, mediaUri);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.InteractiveNotificationContent"/>. </summary>
+        /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
+        /// <param name="to"> The native external platform user identifiers of the recipient. </param>
+        /// <param name="interactiveMessage"> The interactive message content. </param>
+        /// <returns> A new <see cref="Messages.InteractiveNotificationContent"/> instance for mocking. </returns>
+        public static InteractiveNotificationContent InteractiveNotificationContent(Guid channelRegistrationId = default, IEnumerable<string> to = null, InteractiveMessage interactiveMessage = null)
+        {
+            to ??= new List<string>();
+
+            return new InteractiveNotificationContent(channelRegistrationId, to?.ToList(), CommunicationMessageKind.Interactive, serializedAdditionalRawData: null, interactiveMessage);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.InteractiveMessage"/>. </summary>
+        /// <param name="header">
+        /// Gets or Sets Header content. Supports the following types:text, images etc.
+        /// Please note <see cref="MessageContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Messages.ActionSetContent"/>, <see cref="ButtonSetContent"/>, <see cref="Messages.DocumentMessageContent"/>, <see cref="Messages.ImageMessageContent"/>, <see cref="Messages.TextMessageContent"/>, <see cref="Messages.UrlContent"/> and <see cref="Messages.VideoMessageContent"/>.
+        /// </param>
+        /// <param name="body"> Gets or Sets Message body content. Emojis, markdown, and links are supported. </param>
+        /// <param name="footer"> Gets or Sets Message footer content. Emojis, markdown, and links are supported. </param>
+        /// <param name="actionBindings">
+        /// The binding object to get or set Action which describes options user have to respond to message.
+        /// Please note <see cref="ActionBindings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Messages.WhatsAppButtonActionBindings"/>, <see cref="Messages.WhatsAppListActionBindings"/> and <see cref="Messages.WhatsAppUrlActionBindings"/>.
+        /// </param>
+        /// <returns> A new <see cref="Messages.InteractiveMessage"/> instance for mocking. </returns>
+        public static InteractiveMessage InteractiveMessage(MessageContent header = null, TextMessageContent body = null, TextMessageContent footer = null, ActionBindings actionBindings = null)
+        {
+            return new InteractiveMessage(header, body, footer, actionBindings, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.TextMessageContent"/>. </summary>
+        /// <param name="text"> The text value. </param>
+        /// <returns> A new <see cref="Messages.TextMessageContent"/> instance for mocking. </returns>
+        public static TextMessageContent TextMessageContent(string text = null)
+        {
+            return new TextMessageContent(MessageContentKind.Text, serializedAdditionalRawData: null, text);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.DocumentMessageContent"/>. </summary>
+        /// <param name="mediaUri"> MediaUri of the media content. </param>
+        /// <returns> A new <see cref="Messages.DocumentMessageContent"/> instance for mocking. </returns>
+        public static DocumentMessageContent DocumentMessageContent(Uri mediaUri = null)
+        {
+            return new DocumentMessageContent(MessageContentKind.Document, serializedAdditionalRawData: null, mediaUri);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.ImageMessageContent"/>. </summary>
+        /// <param name="mediaUri"> MediaUri of the media content. </param>
+        /// <returns> A new <see cref="Messages.ImageMessageContent"/> instance for mocking. </returns>
+        public static ImageMessageContent ImageMessageContent(Uri mediaUri = null)
+        {
+            return new ImageMessageContent(MessageContentKind.Image, serializedAdditionalRawData: null, mediaUri);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.VideoMessageContent"/>. </summary>
+        /// <param name="mediaUri"> MediaUri of the media content. </param>
+        /// <returns> A new <see cref="Messages.VideoMessageContent"/> instance for mocking. </returns>
+        public static VideoMessageContent VideoMessageContent(Uri mediaUri = null)
+        {
+            return new VideoMessageContent(MessageContentKind.Video, serializedAdditionalRawData: null, mediaUri);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.UrlContent"/>. </summary>
+        /// <param name="title"> Title of the url content. </param>
+        /// <param name="url"> The url in the content. </param>
+        /// <returns> A new <see cref="Messages.UrlContent"/> instance for mocking. </returns>
+        public static UrlContent UrlContent(string title = null, Uri url = null)
+        {
+            return new UrlContent(MessageContentKind.Url, serializedAdditionalRawData: null, title, url);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.ActionSetContent"/>. </summary>
+        /// <param name="title"> Title of the actionSet content. </param>
+        /// <param name="actionSet"> Set or group of actions. </param>
+        /// <returns> A new <see cref="Messages.ActionSetContent"/> instance for mocking. </returns>
+        public static ActionSetContent ActionSetContent(string title = null, IEnumerable<ActionSet> actionSet = null)
+        {
+            actionSet ??= new List<ActionSet>();
+
+            return new ActionSetContent(MessageContentKind.ActionSet, serializedAdditionalRawData: null, title, actionSet?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.WhatsAppListActionBindings"/>. </summary>
+        /// <param name="action"> Action content of Interactive message. </param>
+        /// <returns> A new <see cref="Messages.WhatsAppListActionBindings"/> instance for mocking. </returns>
+        public static WhatsAppListActionBindings WhatsAppListActionBindings(ActionSetContent action = null)
+        {
+            return new WhatsAppListActionBindings(MessageActionBindingKind.WhatsAppListAction, serializedAdditionalRawData: null, action);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.WhatsAppButtonActionBindings"/>. </summary>
+        /// <param name="action"> Action content of Button based Interactive message. </param>
+        /// <returns> A new <see cref="Messages.WhatsAppButtonActionBindings"/> instance for mocking. </returns>
+        public static WhatsAppButtonActionBindings WhatsAppButtonActionBindings(ButtonSetContent action = null)
+        {
+            return new WhatsAppButtonActionBindings(MessageActionBindingKind.WhatsAppButtonAction, serializedAdditionalRawData: null, action);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.WhatsAppUrlActionBindings"/>. </summary>
+        /// <param name="action"> Action content of Quick action Interactive message. </param>
+        /// <returns> A new <see cref="Messages.WhatsAppUrlActionBindings"/> instance for mocking. </returns>
+        public static WhatsAppUrlActionBindings WhatsAppUrlActionBindings(UrlContent action = null)
+        {
+            return new WhatsAppUrlActionBindings(MessageActionBindingKind.WhatsAppUrlAction, serializedAdditionalRawData: null, action);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Messages.TemplateNotificationContent"/>. </summary>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
