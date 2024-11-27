@@ -25,7 +25,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests
         public async Task GetProjectAsync()
         {
             // Arrange
-            string projectName = "MyTextProjectAsync";
+            string projectName = "MyTextProject111";
 
             // Act
             Response<ProjectMetadata> response = await client.GetProjectAsync(projectName);
@@ -145,7 +145,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests
         public async Task CreateProjectAsync()
         {
             // Arrange
-            string projectName = "MyTextProject";
+            string projectName = "MyTextProject111";
             var projectData = new
             {
                 projectName = projectName,
@@ -153,7 +153,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests
                 projectKind = "CustomEntityRecognition",
                 description = "Project description for a Custom Entity Recognition project",
                 multilingual = true,
-                storageInputContainerName = "loanagreements"
+                storageInputContainerName = "e2e0test0data"
             };
 
             using RequestContent content = RequestContent.Create(projectData);
