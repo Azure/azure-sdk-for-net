@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             DevTestLabPolicyResource devTestLabPolicy = client.GetDevTestLabPolicyResource(devTestLabPolicyResourceId);
 
             // invoke the operation
-            DevTestLabPolicyPatch patch = new DevTestLabPolicyPatch()
+            DevTestLabPolicyPatch patch = new DevTestLabPolicyPatch
             {
                 Tags =
 {
-["tagName1"] = "tagValue1",
+["tagName1"] = "tagValue1"
 },
             };
             DevTestLabPolicyResource result = await devTestLabPolicy.UpdateAsync(patch);

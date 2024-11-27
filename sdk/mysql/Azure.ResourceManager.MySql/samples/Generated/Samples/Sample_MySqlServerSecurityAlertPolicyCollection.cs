@@ -18,6 +18,91 @@ namespace Azure.ResourceManager.MySql.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_UpdateAServerSThreatDetectionPolicyWithAllParameters()
+        {
+            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2017-12-01/examples/ServerSecurityAlertsCreateMax.json
+            // this example is just showing the usage of "ServerSecurityAlertPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MySqlServerResource created on azure
+            // for more information of creating MySqlServerResource, please refer to the document of MySqlServerResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "securityalert-4799";
+            string serverName = "securityalert-6440";
+            ResourceIdentifier mySqlServerResourceId = MySqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            MySqlServerResource mySqlServer = client.GetMySqlServerResource(mySqlServerResourceId);
+
+            // get the collection of this MySqlServerSecurityAlertPolicyResource
+            MySqlServerSecurityAlertPolicyCollection collection = mySqlServer.GetMySqlServerSecurityAlertPolicies();
+
+            // invoke the operation
+            MySqlSecurityAlertPolicyName securityAlertPolicyName = MySqlSecurityAlertPolicyName.Default;
+            MySqlServerSecurityAlertPolicyData data = new MySqlServerSecurityAlertPolicyData
+            {
+                State = MySqlServerSecurityAlertPolicyState.Enabled,
+                DisabledAlerts = { "Access_Anomaly", "Usage_Anomaly" },
+                EmailAddresses = { "testSecurityAlert@microsoft.com" },
+                SendToEmailAccountAdmins = true,
+                StorageEndpoint = "https://mystorage.blob.core.windows.net",
+                StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
+                RetentionDays = 5,
+            };
+            ArmOperation<MySqlServerSecurityAlertPolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, securityAlertPolicyName, data);
+            MySqlServerSecurityAlertPolicyResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            MySqlServerSecurityAlertPolicyData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_UpdateAServerSThreatDetectionPolicyWithMinimalParameters()
+        {
+            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2017-12-01/examples/ServerSecurityAlertsCreateMin.json
+            // this example is just showing the usage of "ServerSecurityAlertPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MySqlServerResource created on azure
+            // for more information of creating MySqlServerResource, please refer to the document of MySqlServerResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "securityalert-4799";
+            string serverName = "securityalert-6440";
+            ResourceIdentifier mySqlServerResourceId = MySqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            MySqlServerResource mySqlServer = client.GetMySqlServerResource(mySqlServerResourceId);
+
+            // get the collection of this MySqlServerSecurityAlertPolicyResource
+            MySqlServerSecurityAlertPolicyCollection collection = mySqlServer.GetMySqlServerSecurityAlertPolicies();
+
+            // invoke the operation
+            MySqlSecurityAlertPolicyName securityAlertPolicyName = MySqlSecurityAlertPolicyName.Default;
+            MySqlServerSecurityAlertPolicyData data = new MySqlServerSecurityAlertPolicyData
+            {
+                State = MySqlServerSecurityAlertPolicyState.Disabled,
+                SendToEmailAccountAdmins = true,
+            };
+            ArmOperation<MySqlServerSecurityAlertPolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, securityAlertPolicyName, data);
+            MySqlServerSecurityAlertPolicyResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            MySqlServerSecurityAlertPolicyData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAServerSThreatDetectionPolicy()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2017-12-01/examples/ServerSecurityAlertsGet.json
@@ -48,6 +133,42 @@ namespace Azure.ResourceManager.MySql.Samples
             MySqlServerSecurityAlertPolicyData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListTheServerSThreatDetectionPolicies()
+        {
+            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2017-12-01/examples/ServerSecurityAlertsListByServer.json
+            // this example is just showing the usage of "ServerSecurityAlertPolicies_ListByServer" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MySqlServerResource created on azure
+            // for more information of creating MySqlServerResource, please refer to the document of MySqlServerResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "securityalert-4799";
+            string serverName = "securityalert-6440";
+            ResourceIdentifier mySqlServerResourceId = MySqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            MySqlServerResource mySqlServer = client.GetMySqlServerResource(mySqlServerResourceId);
+
+            // get the collection of this MySqlServerSecurityAlertPolicyResource
+            MySqlServerSecurityAlertPolicyCollection collection = mySqlServer.GetMySqlServerSecurityAlertPolicies();
+
+            // invoke the operation and iterate over the result
+            await foreach (MySqlServerSecurityAlertPolicyResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                MySqlServerSecurityAlertPolicyData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -120,133 +241,6 @@ namespace Azure.ResourceManager.MySql.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_UpdateAServerSThreatDetectionPolicyWithAllParameters()
-        {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2017-12-01/examples/ServerSecurityAlertsCreateMax.json
-            // this example is just showing the usage of "ServerSecurityAlertPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MySqlServerResource created on azure
-            // for more information of creating MySqlServerResource, please refer to the document of MySqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "securityalert-4799";
-            string serverName = "securityalert-6440";
-            ResourceIdentifier mySqlServerResourceId = MySqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            MySqlServerResource mySqlServer = client.GetMySqlServerResource(mySqlServerResourceId);
-
-            // get the collection of this MySqlServerSecurityAlertPolicyResource
-            MySqlServerSecurityAlertPolicyCollection collection = mySqlServer.GetMySqlServerSecurityAlertPolicies();
-
-            // invoke the operation
-            MySqlSecurityAlertPolicyName securityAlertPolicyName = MySqlSecurityAlertPolicyName.Default;
-            MySqlServerSecurityAlertPolicyData data = new MySqlServerSecurityAlertPolicyData()
-            {
-                State = MySqlServerSecurityAlertPolicyState.Enabled,
-                DisabledAlerts =
-{
-"Access_Anomaly","Usage_Anomaly"
-},
-                EmailAddresses =
-{
-"testSecurityAlert@microsoft.com"
-},
-                SendToEmailAccountAdmins = true,
-                StorageEndpoint = "https://mystorage.blob.core.windows.net",
-                StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
-                RetentionDays = 5,
-            };
-            ArmOperation<MySqlServerSecurityAlertPolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, securityAlertPolicyName, data);
-            MySqlServerSecurityAlertPolicyResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            MySqlServerSecurityAlertPolicyData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_UpdateAServerSThreatDetectionPolicyWithMinimalParameters()
-        {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2017-12-01/examples/ServerSecurityAlertsCreateMin.json
-            // this example is just showing the usage of "ServerSecurityAlertPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MySqlServerResource created on azure
-            // for more information of creating MySqlServerResource, please refer to the document of MySqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "securityalert-4799";
-            string serverName = "securityalert-6440";
-            ResourceIdentifier mySqlServerResourceId = MySqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            MySqlServerResource mySqlServer = client.GetMySqlServerResource(mySqlServerResourceId);
-
-            // get the collection of this MySqlServerSecurityAlertPolicyResource
-            MySqlServerSecurityAlertPolicyCollection collection = mySqlServer.GetMySqlServerSecurityAlertPolicies();
-
-            // invoke the operation
-            MySqlSecurityAlertPolicyName securityAlertPolicyName = MySqlSecurityAlertPolicyName.Default;
-            MySqlServerSecurityAlertPolicyData data = new MySqlServerSecurityAlertPolicyData()
-            {
-                State = MySqlServerSecurityAlertPolicyState.Disabled,
-                SendToEmailAccountAdmins = true,
-            };
-            ArmOperation<MySqlServerSecurityAlertPolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, securityAlertPolicyName, data);
-            MySqlServerSecurityAlertPolicyResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            MySqlServerSecurityAlertPolicyData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ListTheServerSThreatDetectionPolicies()
-        {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/legacy/stable/2017-12-01/examples/ServerSecurityAlertsListByServer.json
-            // this example is just showing the usage of "ServerSecurityAlertPolicies_ListByServer" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MySqlServerResource created on azure
-            // for more information of creating MySqlServerResource, please refer to the document of MySqlServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "securityalert-4799";
-            string serverName = "securityalert-6440";
-            ResourceIdentifier mySqlServerResourceId = MySqlServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            MySqlServerResource mySqlServer = client.GetMySqlServerResource(mySqlServerResourceId);
-
-            // get the collection of this MySqlServerSecurityAlertPolicyResource
-            MySqlServerSecurityAlertPolicyCollection collection = mySqlServer.GetMySqlServerSecurityAlertPolicies();
-
-            // invoke the operation and iterate over the result
-            await foreach (MySqlServerSecurityAlertPolicyResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                MySqlServerSecurityAlertPolicyData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
         }
     }
 }

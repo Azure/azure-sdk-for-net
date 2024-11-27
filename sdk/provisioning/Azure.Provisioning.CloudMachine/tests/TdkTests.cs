@@ -53,7 +53,7 @@ public class TdkTests
     }
 
 
-    """;
+    """.Replace("\r\n", Environment.NewLine);
 }
 
 internal interface IAssistantService

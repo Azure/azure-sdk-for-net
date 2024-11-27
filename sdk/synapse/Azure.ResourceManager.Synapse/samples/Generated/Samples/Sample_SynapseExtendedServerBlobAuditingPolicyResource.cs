@@ -69,17 +69,14 @@ namespace Azure.ResourceManager.Synapse.Samples
             SynapseExtendedServerBlobAuditingPolicyResource synapseExtendedServerBlobAuditingPolicy = client.GetSynapseExtendedServerBlobAuditingPolicyResource(synapseExtendedServerBlobAuditingPolicyResourceId);
 
             // invoke the operation
-            SynapseExtendedServerBlobAuditingPolicyData data = new SynapseExtendedServerBlobAuditingPolicyData()
+            SynapseExtendedServerBlobAuditingPolicyData data = new SynapseExtendedServerBlobAuditingPolicyData
             {
                 PredicateExpression = "object_name = 'SensitiveData'",
                 State = SynapseBlobAuditingPolicyState.Enabled,
                 StorageEndpoint = "https://mystorage.blob.core.windows.net",
                 StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
                 RetentionDays = 6,
-                AuditActionsAndGroups =
-{
-"SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP","FAILED_DATABASE_AUTHENTICATION_GROUP","BATCH_COMPLETED_GROUP"
-},
+                AuditActionsAndGroups = { "SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP", "FAILED_DATABASE_AUTHENTICATION_GROUP", "BATCH_COMPLETED_GROUP" },
                 StorageAccountSubscriptionId = Guid.Parse("00000000-1234-0000-5678-000000000000"),
                 IsStorageSecondaryKeyInUse = false,
                 IsAzureMonitorTargetEnabled = true,
@@ -116,7 +113,7 @@ namespace Azure.ResourceManager.Synapse.Samples
             SynapseExtendedServerBlobAuditingPolicyResource synapseExtendedServerBlobAuditingPolicy = client.GetSynapseExtendedServerBlobAuditingPolicyResource(synapseExtendedServerBlobAuditingPolicyResourceId);
 
             // invoke the operation
-            SynapseExtendedServerBlobAuditingPolicyData data = new SynapseExtendedServerBlobAuditingPolicyData()
+            SynapseExtendedServerBlobAuditingPolicyData data = new SynapseExtendedServerBlobAuditingPolicyData
             {
                 State = SynapseBlobAuditingPolicyState.Enabled,
                 StorageEndpoint = "https://mystorage.blob.core.windows.net",

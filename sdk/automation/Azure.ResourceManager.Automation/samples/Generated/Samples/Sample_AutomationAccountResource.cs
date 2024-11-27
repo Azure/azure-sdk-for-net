@@ -10,13 +10,104 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Automation.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Automation.Samples
 {
     public partial class Sample_AutomationAccountResource
     {
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetAutomationAccount()
+        {
+            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2021-06-22/examples/getAutomationAccount.json
+            // this example is just showing the usage of "AutomationAccount_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AutomationAccountResource created on azure
+            // for more information of creating AutomationAccountResource, please refer to the document of AutomationAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg";
+            string automationAccountName = "myAutomationAccount9";
+            ResourceIdentifier automationAccountResourceId = AutomationAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName);
+            AutomationAccountResource automationAccount = client.GetAutomationAccountResource(automationAccountResourceId);
+
+            // invoke the operation
+            AutomationAccountResource result = await automationAccount.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            AutomationAccountData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteAutomationAccount()
+        {
+            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2021-06-22/examples/deleteAutomationAccount.json
+            // this example is just showing the usage of "AutomationAccount_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AutomationAccountResource created on azure
+            // for more information of creating AutomationAccountResource, please refer to the document of AutomationAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg";
+            string automationAccountName = "myAutomationAccount9";
+            ResourceIdentifier automationAccountResourceId = AutomationAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName);
+            AutomationAccountResource automationAccount = client.GetAutomationAccountResource(automationAccountResourceId);
+
+            // invoke the operation
+            await automationAccount.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateAnAutomationAccount()
+        {
+            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2021-06-22/examples/updateAutomationAccount.json
+            // this example is just showing the usage of "AutomationAccount_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AutomationAccountResource created on azure
+            // for more information of creating AutomationAccountResource, please refer to the document of AutomationAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg";
+            string automationAccountName = "myAutomationAccount9";
+            ResourceIdentifier automationAccountResourceId = AutomationAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName);
+            AutomationAccountResource automationAccount = client.GetAutomationAccountResource(automationAccountResourceId);
+
+            // invoke the operation
+            AutomationAccountPatch patch = new AutomationAccountPatch
+            {
+                Name = "myAutomationAccount9",
+                Location = new AzureLocation("East US 2"),
+                Sku = new AutomationSku(AutomationSkuName.Free),
+            };
+            AutomationAccountResource result = await automationAccount.UpdateAsync(patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            AutomationAccountData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task AutomationPrivateLinkResources_GetsPrivateEndpointConnection()
@@ -219,129 +310,6 @@ namespace Azure.ResourceManager.Automation.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_UpdateAnAutomationAccount()
-        {
-            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2021-06-22/examples/updateAutomationAccount.json
-            // this example is just showing the usage of "AutomationAccount_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AutomationAccountResource created on azure
-            // for more information of creating AutomationAccountResource, please refer to the document of AutomationAccountResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg";
-            string automationAccountName = "myAutomationAccount9";
-            ResourceIdentifier automationAccountResourceId = AutomationAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName);
-            AutomationAccountResource automationAccount = client.GetAutomationAccountResource(automationAccountResourceId);
-
-            // invoke the operation
-            AutomationAccountPatch patch = new AutomationAccountPatch()
-            {
-                Name = "myAutomationAccount9",
-                Location = new AzureLocation("East US 2"),
-                Sku = new AutomationSku(AutomationSkuName.Free),
-            };
-            AutomationAccountResource result = await automationAccount.UpdateAsync(patch);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            AutomationAccountData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_DeleteAutomationAccount()
-        {
-            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2021-06-22/examples/deleteAutomationAccount.json
-            // this example is just showing the usage of "AutomationAccount_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AutomationAccountResource created on azure
-            // for more information of creating AutomationAccountResource, please refer to the document of AutomationAccountResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg";
-            string automationAccountName = "myAutomationAccount9";
-            ResourceIdentifier automationAccountResourceId = AutomationAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName);
-            AutomationAccountResource automationAccount = client.GetAutomationAccountResource(automationAccountResourceId);
-
-            // invoke the operation
-            await automationAccount.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Get_GetAutomationAccount()
-        {
-            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2021-06-22/examples/getAutomationAccount.json
-            // this example is just showing the usage of "AutomationAccount_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AutomationAccountResource created on azure
-            // for more information of creating AutomationAccountResource, please refer to the document of AutomationAccountResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg";
-            string automationAccountName = "myAutomationAccount9";
-            ResourceIdentifier automationAccountResourceId = AutomationAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName);
-            AutomationAccountResource automationAccount = client.GetAutomationAccountResource(automationAccountResourceId);
-
-            // invoke the operation
-            AutomationAccountResource result = await automationAccount.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            AutomationAccountData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAutomationAccounts_ListAutomationAccountsByResourceGroup()
-        {
-            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2021-06-22/examples/listAutomationAccountsBySubscription.json
-            // this example is just showing the usage of "AutomationAccount_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (AutomationAccountResource item in subscriptionResource.GetAutomationAccountsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                AutomationAccountData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetStatistics_GetStatisticsOfAnAutomationAccount()
         {
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2021-06-22/examples/getStatisticsOfAutomationAccount.json
@@ -504,7 +472,7 @@ namespace Azure.ResourceManager.Automation.Samples
             AutomationAccountResource automationAccount = client.GetAutomationAccountResource(automationAccountResourceId);
 
             // invoke the operation
-            GraphicalRunbookContent content = new GraphicalRunbookContent()
+            GraphicalRunbookContent content = new GraphicalRunbookContent
             {
                 GraphRunbookJson = "<GraphRunbookJSON>",
             };
@@ -534,9 +502,9 @@ namespace Azure.ResourceManager.Automation.Samples
             AutomationAccountResource automationAccount = client.GetAutomationAccountResource(automationAccountResourceId);
 
             // invoke the operation
-            GraphicalRunbookContent content = new GraphicalRunbookContent()
+            GraphicalRunbookContent content = new GraphicalRunbookContent
             {
-                RawContent = new RawGraphicalRunbookContent()
+                RawContent = new RawGraphicalRunbookContent
                 {
                     SchemaVersion = "1.10",
                     RunbookDefinition = "AAEAAADAQAAAAAAAAAMAgAAAGJPcmNoZXN0cmF0b3IuR3JhcGhSdW5ib29rLk1vZGVsLCBWZXJzaW9uPTcuMy4wLjAsIEN1bHR....",
