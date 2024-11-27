@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.Chaos.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ChaosTargetTypeResources in the SubscriptionResource. </summary>
+        /// <summary> Gets a collection of ChaosTargetMetadataResources in the SubscriptionResource. </summary>
         /// <param name="location"> The name of the Azure region. </param>
-        /// <returns> An object representing collection of ChaosTargetTypeResources and their operations over a ChaosTargetTypeResource. </returns>
-        public virtual ChaosTargetTypeCollection GetChaosTargetTypes(AzureLocation location)
+        /// <returns> An object representing collection of ChaosTargetMetadataResources and their operations over a ChaosTargetMetadataResource. </returns>
+        public virtual ChaosTargetMetadataCollection GetAllChaosTargetMetadata(AzureLocation location)
         {
-            return new ChaosTargetTypeCollection(Client, Id, location);
+            return new ChaosTargetMetadataCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ChaosTargetTypeResource"/></description>
+        /// <description><see cref="ChaosTargetMetadataResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="targetTypeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ChaosTargetTypeResource>> GetChaosTargetTypeAsync(AzureLocation location, string targetTypeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ChaosTargetMetadataResource>> GetChaosTargetMetadataAsync(AzureLocation location, string targetTypeName, CancellationToken cancellationToken = default)
         {
-            return await GetChaosTargetTypes(location).GetAsync(targetTypeName, cancellationToken).ConfigureAwait(false);
+            return await GetAllChaosTargetMetadata(location).GetAsync(targetTypeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ChaosTargetTypeResource"/></description>
+        /// <description><see cref="ChaosTargetMetadataResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -117,9 +117,9 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="targetTypeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ChaosTargetTypeResource> GetChaosTargetType(AzureLocation location, string targetTypeName, CancellationToken cancellationToken = default)
+        public virtual Response<ChaosTargetMetadataResource> GetChaosTargetMetadata(AzureLocation location, string targetTypeName, CancellationToken cancellationToken = default)
         {
-            return GetChaosTargetTypes(location).Get(targetTypeName, cancellationToken);
+            return GetAllChaosTargetMetadata(location).Get(targetTypeName, cancellationToken);
         }
 
         /// <summary>

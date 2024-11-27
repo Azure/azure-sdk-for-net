@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    internal partial class CapabilityTypePropertiesRuntimeProperties : IUtf8JsonSerializable, IJsonModel<CapabilityTypePropertiesRuntimeProperties>
+    internal partial class ChaosCapabilityMetadataRuntimeProperties : IUtf8JsonSerializable, IJsonModel<ChaosCapabilityMetadataRuntimeProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CapabilityTypePropertiesRuntimeProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChaosCapabilityMetadataRuntimeProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CapabilityTypePropertiesRuntimeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ChaosCapabilityMetadataRuntimeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CapabilityTypePropertiesRuntimeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ChaosCapabilityMetadataRuntimeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapabilityTypePropertiesRuntimeProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ChaosCapabilityMetadataRuntimeProperties)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && Optional.IsDefined(Kind))
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.Chaos.Models
             }
         }
 
-        CapabilityTypePropertiesRuntimeProperties IJsonModel<CapabilityTypePropertiesRuntimeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ChaosCapabilityMetadataRuntimeProperties IJsonModel<ChaosCapabilityMetadataRuntimeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CapabilityTypePropertiesRuntimeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ChaosCapabilityMetadataRuntimeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapabilityTypePropertiesRuntimeProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ChaosCapabilityMetadataRuntimeProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCapabilityTypePropertiesRuntimeProperties(document.RootElement, options);
+            return DeserializeChaosCapabilityMetadataRuntimeProperties(document.RootElement, options);
         }
 
-        internal static CapabilityTypePropertiesRuntimeProperties DeserializeCapabilityTypePropertiesRuntimeProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ChaosCapabilityMetadataRuntimeProperties DeserializeChaosCapabilityMetadataRuntimeProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -92,38 +92,38 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CapabilityTypePropertiesRuntimeProperties(kind, serializedAdditionalRawData);
+            return new ChaosCapabilityMetadataRuntimeProperties(kind, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CapabilityTypePropertiesRuntimeProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ChaosCapabilityMetadataRuntimeProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CapabilityTypePropertiesRuntimeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ChaosCapabilityMetadataRuntimeProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CapabilityTypePropertiesRuntimeProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChaosCapabilityMetadataRuntimeProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CapabilityTypePropertiesRuntimeProperties IPersistableModel<CapabilityTypePropertiesRuntimeProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ChaosCapabilityMetadataRuntimeProperties IPersistableModel<ChaosCapabilityMetadataRuntimeProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CapabilityTypePropertiesRuntimeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ChaosCapabilityMetadataRuntimeProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeCapabilityTypePropertiesRuntimeProperties(document.RootElement, options);
+                        return DeserializeChaosCapabilityMetadataRuntimeProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CapabilityTypePropertiesRuntimeProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChaosCapabilityMetadataRuntimeProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CapabilityTypePropertiesRuntimeProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ChaosCapabilityMetadataRuntimeProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

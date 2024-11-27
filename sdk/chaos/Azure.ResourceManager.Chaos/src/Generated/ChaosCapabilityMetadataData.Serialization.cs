@@ -15,11 +15,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Chaos
 {
-    public partial class ChaosCapabilityTypeData : IUtf8JsonSerializable, IJsonModel<ChaosCapabilityTypeData>
+    public partial class ChaosCapabilityMetadataData : IUtf8JsonSerializable, IJsonModel<ChaosCapabilityMetadataData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChaosCapabilityTypeData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChaosCapabilityMetadataData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ChaosCapabilityTypeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ChaosCapabilityMetadataData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChaosCapabilityTypeData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ChaosCapabilityMetadataData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChaosCapabilityTypeData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ChaosCapabilityMetadataData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -102,19 +102,19 @@ namespace Azure.ResourceManager.Chaos
             writer.WriteEndObject();
         }
 
-        ChaosCapabilityTypeData IJsonModel<ChaosCapabilityTypeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ChaosCapabilityMetadataData IJsonModel<ChaosCapabilityMetadataData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChaosCapabilityTypeData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ChaosCapabilityMetadataData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChaosCapabilityTypeData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ChaosCapabilityMetadataData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeChaosCapabilityTypeData(document.RootElement, options);
+            return DeserializeChaosCapabilityMetadataData(document.RootElement, options);
         }
 
-        internal static ChaosCapabilityTypeData DeserializeChaosCapabilityTypeData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ChaosCapabilityMetadataData DeserializeChaosCapabilityMetadataData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Chaos
             string kind = default;
             IReadOnlyList<string> azureRbacActions = default;
             IReadOnlyList<string> azureRbacDataActions = default;
-            CapabilityTypePropertiesRuntimeProperties runtimeProperties = default;
+            ChaosCapabilityMetadataRuntimeProperties runtimeProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Chaos
                             {
                                 continue;
                             }
-                            runtimeProperties = CapabilityTypePropertiesRuntimeProperties.DeserializeCapabilityTypePropertiesRuntimeProperties(property0.Value, options);
+                            runtimeProperties = ChaosCapabilityMetadataRuntimeProperties.DeserializeChaosCapabilityMetadataRuntimeProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Chaos
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ChaosCapabilityTypeData(
+            return new ChaosCapabilityMetadataData(
                 id,
                 name,
                 type,
@@ -272,22 +272,22 @@ namespace Azure.ResourceManager.Chaos
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ChaosCapabilityTypeData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ChaosCapabilityMetadataData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChaosCapabilityTypeData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ChaosCapabilityMetadataData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ChaosCapabilityTypeData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChaosCapabilityMetadataData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ChaosCapabilityTypeData IPersistableModel<ChaosCapabilityTypeData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ChaosCapabilityMetadataData IPersistableModel<ChaosCapabilityMetadataData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChaosCapabilityTypeData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ChaosCapabilityMetadataData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -297,10 +297,10 @@ namespace Azure.ResourceManager.Chaos
                         return DeserializeChaosCapabilityTypeData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChaosCapabilityTypeData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChaosCapabilityMetadataData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ChaosCapabilityTypeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ChaosCapabilityMetadataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

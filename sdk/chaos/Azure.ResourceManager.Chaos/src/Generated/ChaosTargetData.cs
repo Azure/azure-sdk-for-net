@@ -103,6 +103,6 @@ namespace Azure.ResourceManager.Chaos
         /// </summary>
         public IDictionary<string, BinaryData> Properties { get; }
         /// <summary> Azure resource location. </summary>
-        public AzureLocation? Location { get; }
+        public AzureLocation? Location { get; set; }
     }
 }

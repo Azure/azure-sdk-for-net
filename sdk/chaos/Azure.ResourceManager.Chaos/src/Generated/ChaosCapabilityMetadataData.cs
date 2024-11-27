@@ -14,10 +14,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Chaos
 {
     /// <summary>
-    /// A class representing the ChaosCapabilityType data model.
+    /// A class representing the ChaosCapabilityMetadata data model.
     /// Model that represents a Capability Type resource.
     /// </summary>
-    public partial class ChaosCapabilityTypeData : ResourceData
+    public partial class ChaosCapabilityMetadataData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,14 +51,14 @@ namespace Azure.ResourceManager.Chaos
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ChaosCapabilityTypeData"/>. </summary>
-        internal ChaosCapabilityTypeData()
+        /// <summary> Initializes a new instance of <see cref="ChaosCapabilityMetadataData"/>. </summary>
+        internal ChaosCapabilityMetadataData()
         {
             AzureRbacActions = new ChangeTrackingList<string>();
             AzureRbacDataActions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChaosCapabilityTypeData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChaosCapabilityMetadataData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="azureRbacDataActions"> Data plane actions necessary to execute capability type. </param>
         /// <param name="runtimeProperties"> Runtime properties of this Capability Type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosCapabilityTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publisher, string targetType, string displayName, string description, string parametersSchema, string urn, string kind, IReadOnlyList<string> azureRbacActions, IReadOnlyList<string> azureRbacDataActions, CapabilityTypePropertiesRuntimeProperties runtimeProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ChaosCapabilityMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publisher, string targetType, string displayName, string description, string parametersSchema, string urn, string kind, IReadOnlyList<string> azureRbacActions, IReadOnlyList<string> azureRbacDataActions, ChaosCapabilityMetadataRuntimeProperties runtimeProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Publisher = publisher;
             TargetType = targetType;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Chaos
         /// <summary> Data plane actions necessary to execute capability type. </summary>
         public IReadOnlyList<string> AzureRbacDataActions { get; }
         /// <summary> Runtime properties of this Capability Type. </summary>
-        internal CapabilityTypePropertiesRuntimeProperties RuntimeProperties { get; }
+        internal ChaosCapabilityMetadataRuntimeProperties RuntimeProperties { get; }
         /// <summary> String of the kind of the resource's action type (continuous or discrete). </summary>
         public string RuntimeKind
         {

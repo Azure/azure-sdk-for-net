@@ -15,14 +15,14 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Chaos
 {
     /// <summary>
-    /// A Class representing a ChaosCapabilityType along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ChaosCapabilityTypeResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetChaosCapabilityTypeResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ChaosTargetTypeResource"/> using the GetChaosCapabilityType method.
+    /// A Class representing a ChaosCapabilityMetadata along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ChaosCapabilityMetadataResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetChaosCapabilityMetadataResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ChaosTargetMetadataResource"/> using the GetChaosCapabilityMetadata method.
     /// </summary>
-    public partial class ChaosCapabilityTypeResource : ArmResource
+    public partial class ChaosCapabilityMetadataResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ChaosCapabilityTypeResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ChaosCapabilityMetadataResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="location"> The location. </param>
         /// <param name="targetTypeName"> The targetTypeName. </param>
@@ -33,35 +33,35 @@ namespace Azure.ResourceManager.Chaos
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _chaosCapabilityTypeCapabilityTypesClientDiagnostics;
-        private readonly CapabilityTypesRestOperations _chaosCapabilityTypeCapabilityTypesRestClient;
-        private readonly ChaosCapabilityTypeData _data;
+        private readonly ClientDiagnostics _chaosCapabilityMetadataCapabilityTypesClientDiagnostics;
+        private readonly CapabilityTypesRestOperations _chaosCapabilityMetadataCapabilityTypesRestClient;
+        private readonly ChaosCapabilityMetadataData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Chaos/locations/targetTypes/capabilityTypes";
 
-        /// <summary> Initializes a new instance of the <see cref="ChaosCapabilityTypeResource"/> class for mocking. </summary>
-        protected ChaosCapabilityTypeResource()
+        /// <summary> Initializes a new instance of the <see cref="ChaosCapabilityMetadataResource"/> class for mocking. </summary>
+        protected ChaosCapabilityMetadataResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ChaosCapabilityTypeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ChaosCapabilityMetadataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ChaosCapabilityTypeResource(ArmClient client, ChaosCapabilityTypeData data) : this(client, data.Id)
+        internal ChaosCapabilityMetadataResource(ArmClient client, ChaosCapabilityMetadataData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ChaosCapabilityTypeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ChaosCapabilityMetadataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ChaosCapabilityTypeResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ChaosCapabilityMetadataResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _chaosCapabilityTypeCapabilityTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string chaosCapabilityTypeCapabilityTypesApiVersion);
-            _chaosCapabilityTypeCapabilityTypesRestClient = new CapabilityTypesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, chaosCapabilityTypeCapabilityTypesApiVersion);
+            _chaosCapabilityMetadataCapabilityTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string chaosCapabilityMetadataCapabilityTypesApiVersion);
+            _chaosCapabilityMetadataCapabilityTypesRestClient = new CapabilityTypesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, chaosCapabilityMetadataCapabilityTypesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Chaos
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ChaosCapabilityTypeData Data
+        public virtual ChaosCapabilityMetadataData Data
         {
             get
             {
@@ -105,21 +105,21 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ChaosCapabilityTypeResource"/></description>
+        /// <description><see cref="ChaosCapabilityMetadataResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ChaosCapabilityTypeResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ChaosCapabilityMetadataResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _chaosCapabilityTypeCapabilityTypesClientDiagnostics.CreateScope("ChaosCapabilityTypeResource.Get");
+            using var scope = _chaosCapabilityMetadataCapabilityTypesClientDiagnostics.CreateScope("ChaosCapabilityMetadataResource.Get");
             scope.Start();
             try
             {
-                var response = await _chaosCapabilityTypeCapabilityTypesRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _chaosCapabilityMetadataCapabilityTypesRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ChaosCapabilityTypeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ChaosCapabilityMetadataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,21 +145,21 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ChaosCapabilityTypeResource"/></description>
+        /// <description><see cref="ChaosCapabilityMetadataResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ChaosCapabilityTypeResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ChaosCapabilityMetadataResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _chaosCapabilityTypeCapabilityTypesClientDiagnostics.CreateScope("ChaosCapabilityTypeResource.Get");
+            using var scope = _chaosCapabilityMetadataCapabilityTypesClientDiagnostics.CreateScope("ChaosCapabilityMetadataResource.Get");
             scope.Start();
             try
             {
-                var response = _chaosCapabilityTypeCapabilityTypesRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _chaosCapabilityMetadataCapabilityTypesRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ChaosCapabilityTypeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ChaosCapabilityMetadataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

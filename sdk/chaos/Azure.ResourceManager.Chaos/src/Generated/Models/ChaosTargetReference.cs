@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="referenceType"> Enum of the Target reference type. </param>
         /// <param name="id"> String of the resource ID of a Target resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public ChaosTargetReference(ChaosTargetReferenceType referenceType, string id)
+        public ChaosTargetReference(ChaosTargetReferenceType referenceType, ResourceIdentifier id)
         {
             Argument.AssertNotNull(id, nameof(id));
 
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="referenceType"> Enum of the Target reference type. </param>
         /// <param name="id"> String of the resource ID of a Target resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosTargetReference(ChaosTargetReferenceType referenceType, string id, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ChaosTargetReference(ChaosTargetReferenceType referenceType, ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ReferenceType = referenceType;
             Id = id;
@@ -76,6 +77,6 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <summary> Enum of the Target reference type. </summary>
         public ChaosTargetReferenceType ReferenceType { get; set; }
         /// <summary> String of the resource ID of a Target resource. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
     }
 }

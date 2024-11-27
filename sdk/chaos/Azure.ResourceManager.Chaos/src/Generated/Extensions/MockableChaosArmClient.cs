@@ -59,27 +59,27 @@ namespace Azure.ResourceManager.Chaos.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ChaosCapabilityTypeResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ChaosCapabilityTypeResource.CreateResourceIdentifier" /> to create a <see cref="ChaosCapabilityTypeResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="ChaosCapabilityMetadataResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ChaosCapabilityMetadataResource.CreateResourceIdentifier" /> to create a <see cref="ChaosCapabilityMetadataResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ChaosCapabilityTypeResource"/> object. </returns>
-        public virtual ChaosCapabilityTypeResource GetChaosCapabilityTypeResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ChaosCapabilityMetadataResource"/> object. </returns>
+        public virtual ChaosCapabilityMetadataResource GetChaosCapabilityMetadataResource(ResourceIdentifier id)
         {
-            ChaosCapabilityTypeResource.ValidateResourceId(id);
-            return new ChaosCapabilityTypeResource(Client, id);
+            ChaosCapabilityMetadataResource.ValidateResourceId(id);
+            return new ChaosCapabilityMetadataResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ChaosTargetTypeResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ChaosTargetTypeResource.CreateResourceIdentifier" /> to create a <see cref="ChaosTargetTypeResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="ChaosTargetMetadataResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ChaosTargetMetadataResource.CreateResourceIdentifier" /> to create a <see cref="ChaosTargetMetadataResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ChaosTargetTypeResource"/> object. </returns>
-        public virtual ChaosTargetTypeResource GetChaosTargetTypeResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ChaosTargetMetadataResource"/> object. </returns>
+        public virtual ChaosTargetMetadataResource GetChaosTargetMetadataResource(ResourceIdentifier id)
         {
-            ChaosTargetTypeResource.ValidateResourceId(id);
-            return new ChaosTargetTypeResource(Client, id);
+            ChaosTargetMetadataResource.ValidateResourceId(id);
+            return new ChaosTargetMetadataResource(Client, id);
         }
 
         /// <summary>
