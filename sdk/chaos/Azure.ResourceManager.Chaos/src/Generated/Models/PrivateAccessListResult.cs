@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary> The information of the experiment run. </summary>
-    internal partial class ChaosExperimentRunInformation
+    /// <summary> Model that represents a list of private access resources and a link for pagination. </summary>
+    internal partial class PrivateAccessListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +46,35 @@ namespace Azure.ResourceManager.Chaos.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ChaosExperimentRunInformation"/>. </summary>
-        internal ChaosExperimentRunInformation()
+        /// <summary> Initializes a new instance of <see cref="PrivateAccessListResult"/>. </summary>
+        /// <param name="value"> The PrivateAccess items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal PrivateAccessListResult(IEnumerable<PrivateAccessData> value)
         {
-            Steps = new ChangeTrackingList<ChaosExperimentRunStepStatus>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChaosExperimentRunInformation"/>. </summary>
-        /// <param name="steps"> The steps of the experiment run. </param>
+        /// <summary> Initializes a new instance of <see cref="PrivateAccessListResult"/>. </summary>
+        /// <param name="value"> The PrivateAccess items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosExperimentRunInformation(IReadOnlyList<ChaosExperimentRunStepStatus> steps, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PrivateAccessListResult(IReadOnlyList<PrivateAccessData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Steps = steps;
+            Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The steps of the experiment run. </summary>
-        public IReadOnlyList<ChaosExperimentRunStepStatus> Steps { get; }
+        /// <summary> Initializes a new instance of <see cref="PrivateAccessListResult"/> for deserialization. </summary>
+        internal PrivateAccessListResult()
+        {
+        }
+
+        /// <summary> The PrivateAccess items on this page. </summary>
+        public IReadOnlyList<PrivateAccessData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

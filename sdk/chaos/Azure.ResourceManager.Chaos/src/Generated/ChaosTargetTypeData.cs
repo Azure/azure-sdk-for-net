@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Chaos
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ChaosTargetTypeData"/>. </summary>
-        public ChaosTargetTypeData()
+        internal ChaosTargetTypeData()
         {
             ResourceTypes = new ChangeTrackingList<string>();
         }
@@ -61,15 +61,13 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> Location of the Target Type resource. </param>
         /// <param name="displayName"> Localized string of the display name. </param>
         /// <param name="description"> Localized string of the description. </param>
         /// <param name="propertiesSchema"> URL to retrieve JSON schema of the Target Type properties. </param>
         /// <param name="resourceTypes"> List of resource types this Target Type can extend. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosTargetTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string displayName, string description, string propertiesSchema, IReadOnlyList<string> resourceTypes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ChaosTargetTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, string propertiesSchema, IReadOnlyList<string> resourceTypes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Location = location;
             DisplayName = displayName;
             Description = description;
             PropertiesSchema = propertiesSchema;
@@ -77,8 +75,6 @@ namespace Azure.ResourceManager.Chaos
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Location of the Target Type resource. </summary>
-        public AzureLocation? Location { get; set; }
         /// <summary> Localized string of the display name. </summary>
         public string DisplayName { get; }
         /// <summary> Localized string of the description. </summary>

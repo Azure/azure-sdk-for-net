@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 return null;
             }
             ChaosTargetReferenceType type = default;
-            ResourceIdentifier id = default;
+            string id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
                 if (property.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetACapabilityTypeForAVirtualMachineTargetResourceOnWestus2Location()
         {
-            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/GetCapabilityType.json
-            // this example is just showing the usage of "CapabilityTypes_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01-preview/CapabilityTypes_Get.json
+            // this example is just showing the usage of "CapabilityType_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.Chaos.Samples
             // this example assumes you already have this ChaosTargetTypeResource created on azure
             // for more information of creating ChaosTargetTypeResource, please refer to the document of ChaosTargetTypeResource
             string subscriptionId = "6b052e15-03d3-4f17-b2e1-be7f07588291";
-            string locationName = "westus2";
+            AzureLocation location = new AzureLocation("westus2");
             string targetTypeName = "Microsoft-VirtualMachine";
-            ResourceIdentifier chaosTargetTypeResourceId = ChaosTargetTypeResource.CreateResourceIdentifier(subscriptionId, locationName, targetTypeName);
+            ResourceIdentifier chaosTargetTypeResourceId = ChaosTargetTypeResource.CreateResourceIdentifier(subscriptionId, location, targetTypeName);
             ChaosTargetTypeResource chaosTargetType = client.GetChaosTargetTypeResource(chaosTargetTypeResourceId);
 
             // get the collection of this ChaosCapabilityTypeResource
@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAllCapabilityTypesForAVirtualMachineTargetResourceOnWestus2Location()
         {
-            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/ListCapabilityTypes.json
-            // this example is just showing the usage of "CapabilityTypes_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01-preview/CapabilityTypes_List.json
+            // this example is just showing the usage of "CapabilityType_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -64,9 +64,9 @@ namespace Azure.ResourceManager.Chaos.Samples
             // this example assumes you already have this ChaosTargetTypeResource created on azure
             // for more information of creating ChaosTargetTypeResource, please refer to the document of ChaosTargetTypeResource
             string subscriptionId = "6b052e15-03d3-4f17-b2e1-be7f07588291";
-            string locationName = "westus2";
+            AzureLocation location = new AzureLocation("westus2");
             string targetTypeName = "Microsoft-VirtualMachine";
-            ResourceIdentifier chaosTargetTypeResourceId = ChaosTargetTypeResource.CreateResourceIdentifier(subscriptionId, locationName, targetTypeName);
+            ResourceIdentifier chaosTargetTypeResourceId = ChaosTargetTypeResource.CreateResourceIdentifier(subscriptionId, location, targetTypeName);
             ChaosTargetTypeResource chaosTargetType = client.GetChaosTargetTypeResource(chaosTargetTypeResourceId);
 
             // get the collection of this ChaosCapabilityTypeResource
@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetACapabilityTypeForAVirtualMachineTargetResourceOnWestus2Location()
         {
-            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/GetCapabilityType.json
-            // this example is just showing the usage of "CapabilityTypes_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01-preview/CapabilityTypes_Get.json
+            // this example is just showing the usage of "CapabilityType_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.Chaos.Samples
             // this example assumes you already have this ChaosTargetTypeResource created on azure
             // for more information of creating ChaosTargetTypeResource, please refer to the document of ChaosTargetTypeResource
             string subscriptionId = "6b052e15-03d3-4f17-b2e1-be7f07588291";
-            string locationName = "westus2";
+            AzureLocation location = new AzureLocation("westus2");
             string targetTypeName = "Microsoft-VirtualMachine";
-            ResourceIdentifier chaosTargetTypeResourceId = ChaosTargetTypeResource.CreateResourceIdentifier(subscriptionId, locationName, targetTypeName);
+            ResourceIdentifier chaosTargetTypeResourceId = ChaosTargetTypeResource.CreateResourceIdentifier(subscriptionId, location, targetTypeName);
             ChaosTargetTypeResource chaosTargetType = client.GetChaosTargetTypeResource(chaosTargetTypeResourceId);
 
             // get the collection of this ChaosCapabilityTypeResource
@@ -119,8 +119,8 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetACapabilityTypeForAVirtualMachineTargetResourceOnWestus2Location()
         {
-            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/GetCapabilityType.json
-            // this example is just showing the usage of "CapabilityTypes_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01-preview/CapabilityTypes_Get.json
+            // this example is just showing the usage of "CapabilityType_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -130,9 +130,9 @@ namespace Azure.ResourceManager.Chaos.Samples
             // this example assumes you already have this ChaosTargetTypeResource created on azure
             // for more information of creating ChaosTargetTypeResource, please refer to the document of ChaosTargetTypeResource
             string subscriptionId = "6b052e15-03d3-4f17-b2e1-be7f07588291";
-            string locationName = "westus2";
+            AzureLocation location = new AzureLocation("westus2");
             string targetTypeName = "Microsoft-VirtualMachine";
-            ResourceIdentifier chaosTargetTypeResourceId = ChaosTargetTypeResource.CreateResourceIdentifier(subscriptionId, locationName, targetTypeName);
+            ResourceIdentifier chaosTargetTypeResourceId = ChaosTargetTypeResource.CreateResourceIdentifier(subscriptionId, location, targetTypeName);
             ChaosTargetTypeResource chaosTargetType = client.GetChaosTargetTypeResource(chaosTargetTypeResourceId);
 
             // get the collection of this ChaosCapabilityTypeResource

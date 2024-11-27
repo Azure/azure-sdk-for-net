@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Chaos
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ChaosCapabilityTypeData"/>. </summary>
-        public ChaosCapabilityTypeData()
+        internal ChaosCapabilityTypeData()
         {
             AzureRbacActions = new ChangeTrackingList<string>();
             AzureRbacDataActions = new ChangeTrackingList<string>();
@@ -63,7 +63,6 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> Location of the Capability Type resource. </param>
         /// <param name="publisher"> String of the Publisher that this Capability Type extends. </param>
         /// <param name="targetType"> String of the Target Type that this Capability Type extends. </param>
         /// <param name="displayName"> Localized string of the display name. </param>
@@ -75,9 +74,8 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="azureRbacDataActions"> Data plane actions necessary to execute capability type. </param>
         /// <param name="runtimeProperties"> Runtime properties of this Capability Type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosCapabilityTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string publisher, string targetType, string displayName, string description, string parametersSchema, string urn, string kind, IList<string> azureRbacActions, IList<string> azureRbacDataActions, ChaosCapabilityTypeRuntimeProperties runtimeProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ChaosCapabilityTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publisher, string targetType, string displayName, string description, string parametersSchema, string urn, string kind, IReadOnlyList<string> azureRbacActions, IReadOnlyList<string> azureRbacDataActions, CapabilityTypePropertiesRuntimeProperties runtimeProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Location = location;
             Publisher = publisher;
             TargetType = targetType;
             DisplayName = displayName;
@@ -91,8 +89,6 @@ namespace Azure.ResourceManager.Chaos
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Location of the Capability Type resource. </summary>
-        public AzureLocation? Location { get; set; }
         /// <summary> String of the Publisher that this Capability Type extends. </summary>
         public string Publisher { get; }
         /// <summary> String of the Target Type that this Capability Type extends. </summary>
@@ -108,15 +104,15 @@ namespace Azure.ResourceManager.Chaos
         /// <summary> String of the kind of this Capability Type. </summary>
         public string Kind { get; }
         /// <summary> Control plane actions necessary to execute capability type. </summary>
-        public IList<string> AzureRbacActions { get; }
+        public IReadOnlyList<string> AzureRbacActions { get; }
         /// <summary> Data plane actions necessary to execute capability type. </summary>
-        public IList<string> AzureRbacDataActions { get; }
+        public IReadOnlyList<string> AzureRbacDataActions { get; }
         /// <summary> Runtime properties of this Capability Type. </summary>
-        internal ChaosCapabilityTypeRuntimeProperties RuntimeProperties { get; set; }
+        internal CapabilityTypePropertiesRuntimeProperties RuntimeProperties { get; }
         /// <summary> String of the kind of the resource's action type (continuous or discrete). </summary>
         public string RuntimeKind
         {
-            get => RuntimeProperties is null ? default : RuntimeProperties.Kind;
+            get => RuntimeProperties?.Kind;
         }
     }
 }

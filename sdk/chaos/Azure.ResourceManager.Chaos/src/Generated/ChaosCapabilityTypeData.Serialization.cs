@@ -37,11 +37,6 @@ namespace Azure.ResourceManager.Chaos
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
-            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(Publisher))
@@ -79,7 +74,7 @@ namespace Azure.ResourceManager.Chaos
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsCollectionDefined(AzureRbacActions))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AzureRbacActions))
             {
                 writer.WritePropertyName("azureRbacActions"u8);
                 writer.WriteStartArray();
@@ -89,7 +84,7 @@ namespace Azure.ResourceManager.Chaos
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AzureRbacDataActions))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AzureRbacDataActions))
             {
                 writer.WritePropertyName("azureRbacDataActions"u8);
                 writer.WriteStartArray();
@@ -99,7 +94,7 @@ namespace Azure.ResourceManager.Chaos
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RuntimeProperties))
+            if (options.Format != "W" && Optional.IsDefined(RuntimeProperties))
             {
                 writer.WritePropertyName("runtimeProperties"u8);
                 writer.WriteObjectValue(RuntimeProperties, options);
@@ -127,7 +122,6 @@ namespace Azure.ResourceManager.Chaos
             {
                 return null;
             }
-            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -139,22 +133,13 @@ namespace Azure.ResourceManager.Chaos
             string parametersSchema = default;
             string urn = default;
             string kind = default;
-            IList<string> azureRbacActions = default;
-            IList<string> azureRbacDataActions = default;
-            ChaosCapabilityTypeRuntimeProperties runtimeProperties = default;
+            IReadOnlyList<string> azureRbacActions = default;
+            IReadOnlyList<string> azureRbacDataActions = default;
+            CapabilityTypePropertiesRuntimeProperties runtimeProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -257,7 +242,7 @@ namespace Azure.ResourceManager.Chaos
                             {
                                 continue;
                             }
-                            runtimeProperties = ChaosCapabilityTypeRuntimeProperties.DeserializeChaosCapabilityTypeRuntimeProperties(property0.Value, options);
+                            runtimeProperties = CapabilityTypePropertiesRuntimeProperties.DeserializeCapabilityTypePropertiesRuntimeProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -274,7 +259,6 @@ namespace Azure.ResourceManager.Chaos
                 name,
                 type,
                 systemData,
-                location,
                 publisher,
                 targetType,
                 displayName,

@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAExperimentInAResourceGroup()
         {
-            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/GetExperiment.json
-            // this example is just showing the usage of "Experiments_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01-preview/Experiments_Get.json
+            // this example is just showing the usage of "Experiment_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAExperimentInAResourceGroup()
         {
-            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/DeleteExperiment.json
-            // this example is just showing the usage of "Experiments_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01-preview/Experiments_Delete.json
+            // this example is just showing the usage of "Experiment_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAnExperimentInAResourceGroup()
         {
-            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/UpdateExperiment.json
-            // this example is just showing the usage of "Experiments_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01-preview/Experiments_Update.json
+            // this example is just showing the usage of "Experiment_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Cancel_CancelARunningExperiment()
         {
-            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/CancelExperiment.json
+            // Generated from example definition: 2024-11-01-preview/Experiments_Cancel.json
             // this example is just showing the usage of "Experiments_Cancel" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Start_StartAExperiment()
         {
-            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/StartExperiment.json
+            // Generated from example definition: 2024-11-01-preview/Experiments_Start.json
             // this example is just showing the usage of "Experiments_Start" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

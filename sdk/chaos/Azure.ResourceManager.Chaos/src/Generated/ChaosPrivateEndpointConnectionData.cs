@@ -7,11 +7,17 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Chaos.Models;
+using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Chaos.Models
+namespace Azure.ResourceManager.Chaos
 {
-    /// <summary> Runtime properties of this Capability Type. </summary>
-    internal partial class ChaosCapabilityTypeRuntimeProperties
+    /// <summary>
+    /// A class representing the ChaosPrivateEndpointConnection data model.
+    /// The private endpoint connection resource.
+    /// </summary>
+    public partial class ChaosPrivateEndpointConnectionData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +51,25 @@ namespace Azure.ResourceManager.Chaos.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ChaosCapabilityTypeRuntimeProperties"/>. </summary>
-        public ChaosCapabilityTypeRuntimeProperties()
+        /// <summary> Initializes a new instance of <see cref="ChaosPrivateEndpointConnectionData"/>. </summary>
+        internal ChaosPrivateEndpointConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChaosCapabilityTypeRuntimeProperties"/>. </summary>
-        /// <param name="kind"> String of the kind of the resource's action type (continuous or discrete). </param>
+        /// <summary> Initializes a new instance of <see cref="ChaosPrivateEndpointConnectionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> Resource properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosCapabilityTypeRuntimeProperties(string kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ChaosPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateEndpointConnectionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Kind = kind;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> String of the kind of the resource's action type (continuous or discrete). </summary>
-        public string Kind { get; }
+        /// <summary> Resource properties. </summary>
+        public PrivateEndpointConnectionProperties Properties { get; }
     }
 }

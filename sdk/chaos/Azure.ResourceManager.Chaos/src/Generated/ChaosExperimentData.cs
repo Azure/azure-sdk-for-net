@@ -77,7 +77,6 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> The identity of the experiment resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
         /// <param name="provisioningState"> Most recent provisioning state for the given experiment resource. </param>
         /// <param name="steps"> List of steps. </param>
         /// <param name="selectors">
@@ -85,13 +84,16 @@ namespace Azure.ResourceManager.Chaos
         /// Please note <see cref="ChaosTargetSelector"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ChaosTargetListSelector"/> and <see cref="ChaosTargetQuerySelector"/>.
         /// </param>
+        /// <param name="customerDataStorage"> Optional customer-managed Storage account where Experiment schema will be stored. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosExperimentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ChaosProvisioningState? provisioningState, IList<ChaosExperimentStep> steps, IList<ChaosTargetSelector> selectors, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ChaosExperimentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ChaosProvisioningState? provisioningState, IList<ChaosExperimentStep> steps, IList<ChaosTargetSelector> selectors, CustomerDataStorageProperties customerDataStorage, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            Identity = identity;
             ProvisioningState = provisioningState;
             Steps = steps;
             Selectors = selectors;
+            CustomerDataStorage = customerDataStorage;
+            Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -100,8 +102,6 @@ namespace Azure.ResourceManager.Chaos
         {
         }
 
-        /// <summary> The identity of the experiment resource. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Most recent provisioning state for the given experiment resource. </summary>
         public ChaosProvisioningState? ProvisioningState { get; }
         /// <summary> List of steps. </summary>
@@ -112,5 +112,9 @@ namespace Azure.ResourceManager.Chaos
         /// The available derived classes include <see cref="ChaosTargetListSelector"/> and <see cref="ChaosTargetQuerySelector"/>.
         /// </summary>
         public IList<ChaosTargetSelector> Selectors { get; }
+        /// <summary> Optional customer-managed Storage account where Experiment schema will be stored. </summary>
+        public CustomerDataStorageProperties CustomerDataStorage { get; set; }
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

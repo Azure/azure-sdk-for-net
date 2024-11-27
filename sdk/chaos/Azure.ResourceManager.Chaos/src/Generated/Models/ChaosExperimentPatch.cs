@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> Initializes a new instance of <see cref="ChaosExperimentPatch"/>. </summary>
         /// <param name="identity"> The identity of the experiment resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
-        /// <param name="tags"> The tags of the experiment resource. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ChaosExperimentPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> The identity of the experiment resource. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> The tags of the experiment resource. </summary>
+        /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }
 }

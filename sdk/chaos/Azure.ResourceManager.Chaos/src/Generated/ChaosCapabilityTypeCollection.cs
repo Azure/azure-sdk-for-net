@@ -56,15 +56,15 @@ namespace Azure.ResourceManager.Chaos
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}/capabilityTypes/{capabilityTypeName}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{location}/targetTypes/{targetTypeName}/capabilityTypes/{capabilityTypeName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CapabilityTypes_Get</description>
+        /// <description>CapabilityType_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Chaos
             scope.Start();
             try
             {
-                var response = await _chaosCapabilityTypeCapabilityTypesRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, capabilityTypeName, cancellationToken).ConfigureAwait(false);
+                var response = await _chaosCapabilityTypeCapabilityTypesRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, capabilityTypeName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ChaosCapabilityTypeResource(Client, response.Value), response.GetRawResponse());
@@ -101,15 +101,15 @@ namespace Azure.ResourceManager.Chaos
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}/capabilityTypes/{capabilityTypeName}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{location}/targetTypes/{targetTypeName}/capabilityTypes/{capabilityTypeName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CapabilityTypes_Get</description>
+        /// <description>CapabilityType_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Chaos
             scope.Start();
             try
             {
-                var response = _chaosCapabilityTypeCapabilityTypesRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, capabilityTypeName, cancellationToken);
+                var response = _chaosCapabilityTypeCapabilityTypesRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, capabilityTypeName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ChaosCapabilityTypeResource(Client, response.Value), response.GetRawResponse());
@@ -146,15 +146,15 @@ namespace Azure.ResourceManager.Chaos
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}/capabilityTypes</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{location}/targetTypes/{targetTypeName}/capabilityTypes</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CapabilityTypes_List</description>
+        /// <description>CapabilityType_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -167,8 +167,8 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> An async collection of <see cref="ChaosCapabilityTypeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ChaosCapabilityTypeResource> GetAllAsync(string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _chaosCapabilityTypeCapabilityTypesRestClient.CreateListRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, continuationToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _chaosCapabilityTypeCapabilityTypesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.Parent.Name, Id.Name, continuationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _chaosCapabilityTypeCapabilityTypesRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, continuationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _chaosCapabilityTypeCapabilityTypesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, continuationToken);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ChaosCapabilityTypeResource(Client, ChaosCapabilityTypeData.DeserializeChaosCapabilityTypeData(e)), _chaosCapabilityTypeCapabilityTypesClientDiagnostics, Pipeline, "ChaosCapabilityTypeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -177,15 +177,15 @@ namespace Azure.ResourceManager.Chaos
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}/capabilityTypes</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{location}/targetTypes/{targetTypeName}/capabilityTypes</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CapabilityTypes_List</description>
+        /// <description>CapabilityType_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -198,8 +198,8 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> A collection of <see cref="ChaosCapabilityTypeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ChaosCapabilityTypeResource> GetAll(string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _chaosCapabilityTypeCapabilityTypesRestClient.CreateListRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, continuationToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _chaosCapabilityTypeCapabilityTypesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.Parent.Name, Id.Name, continuationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _chaosCapabilityTypeCapabilityTypesRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, continuationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _chaosCapabilityTypeCapabilityTypesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, continuationToken);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ChaosCapabilityTypeResource(Client, ChaosCapabilityTypeData.DeserializeChaosCapabilityTypeData(e)), _chaosCapabilityTypeCapabilityTypesClientDiagnostics, Pipeline, "ChaosCapabilityTypeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -208,15 +208,15 @@ namespace Azure.ResourceManager.Chaos
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}/capabilityTypes/{capabilityTypeName}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{location}/targetTypes/{targetTypeName}/capabilityTypes/{capabilityTypeName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CapabilityTypes_Get</description>
+        /// <description>CapabilityType_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Chaos
             scope.Start();
             try
             {
-                var response = await _chaosCapabilityTypeCapabilityTypesRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, capabilityTypeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _chaosCapabilityTypeCapabilityTypesRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, capabilityTypeName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -251,15 +251,15 @@ namespace Azure.ResourceManager.Chaos
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}/capabilityTypes/{capabilityTypeName}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{location}/targetTypes/{targetTypeName}/capabilityTypes/{capabilityTypeName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CapabilityTypes_Get</description>
+        /// <description>CapabilityType_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Chaos
             scope.Start();
             try
             {
-                var response = _chaosCapabilityTypeCapabilityTypesRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, capabilityTypeName, cancellationToken: cancellationToken);
+                var response = _chaosCapabilityTypeCapabilityTypesRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, capabilityTypeName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -294,15 +294,15 @@ namespace Azure.ResourceManager.Chaos
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}/capabilityTypes/{capabilityTypeName}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{location}/targetTypes/{targetTypeName}/capabilityTypes/{capabilityTypeName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CapabilityTypes_Get</description>
+        /// <description>CapabilityType_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Chaos
             scope.Start();
             try
             {
-                var response = await _chaosCapabilityTypeCapabilityTypesRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, capabilityTypeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _chaosCapabilityTypeCapabilityTypesRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, capabilityTypeName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<ChaosCapabilityTypeResource>(response.GetRawResponse());
                 return Response.FromValue(new ChaosCapabilityTypeResource(Client, response.Value), response.GetRawResponse());
@@ -339,15 +339,15 @@ namespace Azure.ResourceManager.Chaos
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}/capabilityTypes/{capabilityTypeName}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{location}/targetTypes/{targetTypeName}/capabilityTypes/{capabilityTypeName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CapabilityTypes_Get</description>
+        /// <description>CapabilityType_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Chaos
             scope.Start();
             try
             {
-                var response = _chaosCapabilityTypeCapabilityTypesRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, capabilityTypeName, cancellationToken: cancellationToken);
+                var response = _chaosCapabilityTypeCapabilityTypesRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, capabilityTypeName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<ChaosCapabilityTypeResource>(response.GetRawResponse());
                 return Response.FromValue(new ChaosCapabilityTypeResource(Client, response.Value), response.GetRawResponse());

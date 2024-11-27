@@ -38,21 +38,6 @@ namespace Azure.ResourceManager.Chaos.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status);
-            }
-            if (options.Format != "W" && Optional.IsDefined(StartedOn))
-            {
-                writer.WritePropertyName("startedAt"u8);
-                writer.WriteStringValue(StartedOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(StoppedOn))
-            {
-                writer.WritePropertyName("stoppedAt"u8);
-                writer.WriteStringValue(StoppedOn.Value, "O");
-            }
             if (options.Format != "W" && Optional.IsDefined(FailureReason))
             {
                 writer.WritePropertyName("failureReason"u8);
@@ -95,12 +80,9 @@ namespace Azure.ResourceManager.Chaos.Models
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string status = default;
-            DateTimeOffset? startedAt = default;
-            DateTimeOffset? stoppedAt = default;
             string failureReason = default;
             DateTimeOffset? lastActionAt = default;
-            ChaosExperimentRunInformation runInformation = default;
+            ExperimentExecutionDetailsPropertiesRunInformation runInformation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,29 +120,6 @@ namespace Azure.ResourceManager.Chaos.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("status"u8))
-                        {
-                            status = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("startedAt"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            startedAt = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("stoppedAt"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            stoppedAt = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
                         if (property0.NameEquals("failureReason"u8))
                         {
                             failureReason = property0.Value.GetString();
@@ -181,7 +140,7 @@ namespace Azure.ResourceManager.Chaos.Models
                             {
                                 continue;
                             }
-                            runInformation = ChaosExperimentRunInformation.DeserializeChaosExperimentRunInformation(property0.Value, options);
+                            runInformation = ExperimentExecutionDetailsPropertiesRunInformation.DeserializeExperimentExecutionDetailsPropertiesRunInformation(property0.Value, options);
                             continue;
                         }
                     }
@@ -198,9 +157,6 @@ namespace Azure.ResourceManager.Chaos.Models
                 name,
                 type,
                 systemData,
-                status,
-                startedAt,
-                stoppedAt,
                 failureReason,
                 lastActionAt,
                 runInformation,

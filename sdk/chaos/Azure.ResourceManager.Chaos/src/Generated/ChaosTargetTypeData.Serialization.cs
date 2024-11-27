@@ -36,11 +36,6 @@ namespace Azure.ResourceManager.Chaos
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
-            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(DisplayName))
@@ -91,7 +86,6 @@ namespace Azure.ResourceManager.Chaos
             {
                 return null;
             }
-            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -104,15 +98,6 @@ namespace Azure.ResourceManager.Chaos
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -189,7 +174,6 @@ namespace Azure.ResourceManager.Chaos
                 name,
                 type,
                 systemData,
-                location,
                 displayName,
                 description,
                 propertiesSchema,

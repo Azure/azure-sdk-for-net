@@ -36,31 +36,34 @@ namespace Azure.ResourceManager.Chaos
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Location))
+            if (Optional.IsCollectionDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteStartObject();
+                foreach (var item in Properties)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            foreach (var item in Properties)
-            {
-                writer.WritePropertyName(item.Key);
-                if (item.Value == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
-            writer.WriteEndObject();
         }
 
         ChaosTargetData IJsonModel<ChaosTargetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -83,8 +86,8 @@ namespace Azure.ResourceManager.Chaos
             {
                 return null;
             }
-            AzureLocation? location = default;
             IDictionary<string, BinaryData> properties = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -93,17 +96,12 @@ namespace Azure.ResourceManager.Chaos
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"u8))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -117,6 +115,15 @@ namespace Azure.ResourceManager.Chaos
                         }
                     }
                     properties = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("location"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -154,8 +161,8 @@ namespace Azure.ResourceManager.Chaos
                 name,
                 type,
                 systemData,
+                properties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 location,
-                properties,
                 serializedAdditionalRawData);
         }
 
