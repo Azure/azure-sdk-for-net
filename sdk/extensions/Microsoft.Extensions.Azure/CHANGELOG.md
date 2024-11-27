@@ -1,11 +1,14 @@
 # Release History
 
-## 1.9.0 (2024-11-26)
+## 1.9.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
 
 ### Other Changes
-
-- Updated dependency `Microsoft.Extensions.DependencyInjection.Abstractions` to version `8.0.2`
-- Updated dependency `Microsoft.Bcl.AsyncInterfaces` to version `8.0.0`
 
 ## 1.8.0 (2024-11-05)
 
