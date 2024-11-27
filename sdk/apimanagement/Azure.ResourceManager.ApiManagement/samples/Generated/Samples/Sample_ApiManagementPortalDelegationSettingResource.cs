@@ -18,32 +18,6 @@ namespace Azure.ResourceManager.ApiManagement.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetEntityTag_ApiManagementHeadDelegationSettings()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementHeadDelegationSettings.json
-            // this example is just showing the usage of "DelegationSettings_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiManagementPortalDelegationSettingResource created on azure
-            // for more information of creating ApiManagementPortalDelegationSettingResource, please refer to the document of ApiManagementPortalDelegationSettingResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            ResourceIdentifier apiManagementPortalDelegationSettingResourceId = ApiManagementPortalDelegationSettingResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
-            ApiManagementPortalDelegationSettingResource apiManagementPortalDelegationSetting = client.GetApiManagementPortalDelegationSettingResource(apiManagementPortalDelegationSettingResourceId);
-
-            // invoke the operation
-            bool result = await apiManagementPortalDelegationSetting.GetEntityTagAsync();
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementPortalSettingsGetDelegation()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementPortalSettingsGetDelegation.json
@@ -94,7 +68,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             ETag ifMatch = new ETag("*");
-            ApiManagementPortalDelegationSettingData data = new ApiManagementPortalDelegationSettingData()
+            ApiManagementPortalDelegationSettingData data = new ApiManagementPortalDelegationSettingData
             {
                 Uri = new Uri("http://contoso.com/delegation"),
                 ValidationKey = "<validationKey>",
@@ -127,7 +101,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiManagementPortalDelegationSettingResource apiManagementPortalDelegationSetting = client.GetApiManagementPortalDelegationSettingResource(apiManagementPortalDelegationSettingResourceId);
 
             // invoke the operation
-            ApiManagementPortalDelegationSettingData data = new ApiManagementPortalDelegationSettingData()
+            ApiManagementPortalDelegationSettingData data = new ApiManagementPortalDelegationSettingData
             {
                 Uri = new Uri("http://contoso.com/delegation"),
                 ValidationKey = "<validationKey>",
@@ -167,6 +141,32 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             PortalSettingValidationKeyContract result = await apiManagementPortalDelegationSetting.GetSecretsAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetEntityTag_ApiManagementHeadDelegationSettings()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementHeadDelegationSettings.json
+            // this example is just showing the usage of "DelegationSettings_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementPortalDelegationSettingResource created on azure
+            // for more information of creating ApiManagementPortalDelegationSettingResource, please refer to the document of ApiManagementPortalDelegationSettingResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            ResourceIdentifier apiManagementPortalDelegationSettingResourceId = ApiManagementPortalDelegationSettingResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
+            ApiManagementPortalDelegationSettingResource apiManagementPortalDelegationSetting = client.GetApiManagementPortalDelegationSettingResource(apiManagementPortalDelegationSettingResourceId);
+
+            // invoke the operation
+            bool result = await apiManagementPortalDelegationSetting.GetEntityTagAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

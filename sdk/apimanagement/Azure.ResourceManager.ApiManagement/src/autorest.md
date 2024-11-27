@@ -144,7 +144,6 @@ rename-mapping:
   GatewayHostnameConfigurationContract.properties.negotiateClientCertificate: IsClientCertificateRequired
   SubscriptionsDelegationSettingsProperties.enabled: IsSubscriptionDelegationEnabled
   RegistrationDelegationSettingsProperties.enabled: IsUserRegistrationDelegationEnabled
-  DiagnosticContract.properties.logClientIp: IsLogClientIPEnabled
   BackendTlsProperties.validateCertificateChain: ShouldValidateCertificateChain
   BackendTlsProperties.validateCertificateName: ShouldValidateCertificateName
   HostnameConfiguration.defaultSslBinding: IsDefaultSslBindingEnabled
@@ -329,9 +328,8 @@ rename-mapping:
   ApiManagementWorkspaceLinksResource: ApiManagementWorkspaceLinks
   SoapApiType.grpc: Grpc
   AllPoliciesContract.properties.referencePolicyId: -|arm-id
-  DiagnosticUpdateContract.properties.logClientIp: IsLogClientIP
-  DiagnosticUpdateContract.properties.metrics: IsMetrics
-  DiagnosticUpdateContract.properties.loggerId: -|arm-id
+  DiagnosticUpdateContract.properties.logClientIp: IsLogClientIPEnabled
+  DiagnosticContract.properties.logClientIp: IsLogClientIPEnabled
 
 keep-plural-resource-data:
   - ApiManagementWorkspaceLinks

@@ -27,13 +27,9 @@ namespace Azure.ResourceManager.SelfHelp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this SelfHelpDiagnosticResource
             string scope = "subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourceGroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            SelfHelpDiagnosticCollection collection = client.GetSelfHelpDiagnostics(scopeId);
+            SelfHelpDiagnosticCollection collection = client.GetSelfHelpDiagnostics(new ResourceIdentifier(scope));
 
             // invoke the operation
             string diagnosticsResourceName = "VMNotWorkingInsight";
@@ -60,13 +56,9 @@ namespace Azure.ResourceManager.SelfHelp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this SelfHelpDiagnosticResource
             string scope = "subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourceGroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            SelfHelpDiagnosticCollection collection = client.GetSelfHelpDiagnostics(scopeId);
+            SelfHelpDiagnosticCollection collection = client.GetSelfHelpDiagnostics(new ResourceIdentifier(scope));
 
             // invoke the operation
             string diagnosticsResourceName = "VMNotWorkingInsight";
@@ -91,13 +83,9 @@ namespace Azure.ResourceManager.SelfHelp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this SelfHelpDiagnosticResource
             string scope = "subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourceGroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            SelfHelpDiagnosticCollection collection = client.GetSelfHelpDiagnostics(scopeId);
+            SelfHelpDiagnosticCollection collection = client.GetSelfHelpDiagnostics(new ResourceIdentifier(scope));
 
             // invoke the operation
             string diagnosticsResourceName = "VMNotWorkingInsight";
@@ -118,13 +106,9 @@ namespace Azure.ResourceManager.SelfHelp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this SelfHelpDiagnosticResource
             string scope = "subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourceGroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            SelfHelpDiagnosticCollection collection = client.GetSelfHelpDiagnostics(scopeId);
+            SelfHelpDiagnosticCollection collection = client.GetSelfHelpDiagnostics(new ResourceIdentifier(scope));
 
             // invoke the operation
             string diagnosticsResourceName = "VMNotWorkingInsight";

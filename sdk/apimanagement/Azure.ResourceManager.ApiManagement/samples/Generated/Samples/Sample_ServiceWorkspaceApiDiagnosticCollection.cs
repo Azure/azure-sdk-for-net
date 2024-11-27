@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.ApiManagement.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ApiManagementListWorkspaceApiDiagnostics()
+        public async Task CreateOrUpdate_ApiManagementCreateWorkspaceApiDiagnostic()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementListWorkspaceApiDiagnostics.json
-            // this example is just showing the usage of "WorkspaceApiDiagnostic_ListByWorkspace" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateWorkspaceApiDiagnostic.json
+            // this example is just showing the usage of "WorkspaceApiDiagnostic_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -34,24 +34,59 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string workspaceId = "wks1";
-            string apiId = "echo-api";
+            string apiId = "57d1f7558aa04f15146d9d8a";
             ResourceIdentifier serviceWorkspaceApiResourceId = ServiceWorkspaceApiResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId, apiId);
             ServiceWorkspaceApiResource serviceWorkspaceApi = client.GetServiceWorkspaceApiResource(serviceWorkspaceApiResourceId);
 
             // get the collection of this ServiceWorkspaceApiDiagnosticResource
             ServiceWorkspaceApiDiagnosticCollection collection = serviceWorkspaceApi.GetServiceWorkspaceApiDiagnostics();
 
-            // invoke the operation and iterate over the result
-            await foreach (ServiceWorkspaceApiDiagnosticResource item in collection.GetAllAsync())
+            // invoke the operation
+            string diagnosticId = "applicationinsights";
+            DiagnosticContractData data = new DiagnosticContractData
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                DiagnosticContractData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                AlwaysLog = AlwaysLog.AllErrors,
+                LoggerId = "/workspaces/wks1/loggers/applicationinsights",
+                Sampling = new SamplingSettings
+                {
+                    SamplingType = SamplingType.Fixed,
+                    Percentage = 50,
+                },
+                Frontend = new PipelineDiagnosticSettings
+                {
+                    Request = new HttpMessageDiagnostic
+                    {
+                        Headers = { "Content-type" },
+                        BodyBytes = 512,
+                    },
+                    Response = new HttpMessageDiagnostic
+                    {
+                        Headers = { "Content-type" },
+                        BodyBytes = 512,
+                    },
+                },
+                Backend = new PipelineDiagnosticSettings
+                {
+                    Request = new HttpMessageDiagnostic
+                    {
+                        Headers = { "Content-type" },
+                        BodyBytes = 512,
+                    },
+                    Response = new HttpMessageDiagnostic
+                    {
+                        Headers = { "Content-type" },
+                        BodyBytes = 512,
+                    },
+                },
+            };
+            ArmOperation<ServiceWorkspaceApiDiagnosticResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diagnosticId, data);
+            ServiceWorkspaceApiDiagnosticResource result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DiagnosticContractData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
@@ -88,6 +123,44 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             DiagnosticContractData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ApiManagementListWorkspaceApiDiagnostics()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementListWorkspaceApiDiagnostics.json
+            // this example is just showing the usage of "WorkspaceApiDiagnostic_ListByWorkspace" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ServiceWorkspaceApiResource created on azure
+            // for more information of creating ServiceWorkspaceApiResource, please refer to the document of ServiceWorkspaceApiResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string workspaceId = "wks1";
+            string apiId = "echo-api";
+            ResourceIdentifier serviceWorkspaceApiResourceId = ServiceWorkspaceApiResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId, apiId);
+            ServiceWorkspaceApiResource serviceWorkspaceApi = client.GetServiceWorkspaceApiResource(serviceWorkspaceApiResourceId);
+
+            // get the collection of this ServiceWorkspaceApiDiagnosticResource
+            ServiceWorkspaceApiDiagnosticCollection collection = serviceWorkspaceApi.GetServiceWorkspaceApiDiagnostics();
+
+            // invoke the operation and iterate over the result
+            await foreach (ServiceWorkspaceApiDiagnosticResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                DiagnosticContractData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -164,91 +237,6 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_ApiManagementCreateWorkspaceApiDiagnostic()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateWorkspaceApiDiagnostic.json
-            // this example is just showing the usage of "WorkspaceApiDiagnostic_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ServiceWorkspaceApiResource created on azure
-            // for more information of creating ServiceWorkspaceApiResource, please refer to the document of ServiceWorkspaceApiResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string workspaceId = "wks1";
-            string apiId = "57d1f7558aa04f15146d9d8a";
-            ResourceIdentifier serviceWorkspaceApiResourceId = ServiceWorkspaceApiResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId, apiId);
-            ServiceWorkspaceApiResource serviceWorkspaceApi = client.GetServiceWorkspaceApiResource(serviceWorkspaceApiResourceId);
-
-            // get the collection of this ServiceWorkspaceApiDiagnosticResource
-            ServiceWorkspaceApiDiagnosticCollection collection = serviceWorkspaceApi.GetServiceWorkspaceApiDiagnostics();
-
-            // invoke the operation
-            string diagnosticId = "applicationinsights";
-            DiagnosticContractData data = new DiagnosticContractData()
-            {
-                AlwaysLog = AlwaysLog.AllErrors,
-                LoggerId = "/workspaces/wks1/loggers/applicationinsights",
-                Sampling = new SamplingSettings()
-                {
-                    SamplingType = SamplingType.Fixed,
-                    Percentage = 50,
-                },
-                Frontend = new PipelineDiagnosticSettings()
-                {
-                    Request = new HttpMessageDiagnostic()
-                    {
-                        Headers =
-{
-"Content-type"
-},
-                        BodyBytes = 512,
-                    },
-                    Response = new HttpMessageDiagnostic()
-                    {
-                        Headers =
-{
-"Content-type"
-},
-                        BodyBytes = 512,
-                    },
-                },
-                Backend = new PipelineDiagnosticSettings()
-                {
-                    Request = new HttpMessageDiagnostic()
-                    {
-                        Headers =
-{
-"Content-type"
-},
-                        BodyBytes = 512,
-                    },
-                    Response = new HttpMessageDiagnostic()
-                    {
-                        Headers =
-{
-"Content-type"
-},
-                        BodyBytes = 512,
-                    },
-                },
-            };
-            ArmOperation<ServiceWorkspaceApiDiagnosticResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, diagnosticId, data);
-            ServiceWorkspaceApiDiagnosticResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            DiagnosticContractData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

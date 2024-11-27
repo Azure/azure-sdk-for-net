@@ -18,33 +18,6 @@ namespace Azure.ResourceManager.ApiManagement.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetEntityTag_ApiManagementHeadGroup()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementHeadGroup.json
-            // this example is just showing the usage of "Group_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiManagementGroupResource created on azure
-            // for more information of creating ApiManagementGroupResource, please refer to the document of ApiManagementGroupResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string groupId = "59306a29e4bbd510dc24e5f9";
-            ResourceIdentifier apiManagementGroupResourceId = ApiManagementGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, groupId);
-            ApiManagementGroupResource apiManagementGroup = client.GetApiManagementGroupResource(apiManagementGroupResourceId);
-
-            // invoke the operation
-            bool result = await apiManagementGroup.GetEntityTagAsync();
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementGetGroup()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetGroup.json
@@ -66,42 +39,6 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             ApiManagementGroupResource result = await apiManagementGroup.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ApiManagementGroupData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Update_ApiManagementUpdateGroup()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementUpdateGroup.json
-            // this example is just showing the usage of "Group_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiManagementGroupResource created on azure
-            // for more information of creating ApiManagementGroupResource, please refer to the document of ApiManagementGroupResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string groupId = "tempgroup";
-            ResourceIdentifier apiManagementGroupResourceId = ApiManagementGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, groupId);
-            ApiManagementGroupResource apiManagementGroup = client.GetApiManagementGroupResource(apiManagementGroupResourceId);
-
-            // invoke the operation
-            ETag ifMatch = new ETag("*");
-            ApiManagementGroupPatch patch = new ApiManagementGroupPatch()
-            {
-                DisplayName = "temp group",
-            };
-            ApiManagementGroupResource result = await apiManagementGroup.UpdateAsync(ifMatch, patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -136,6 +73,42 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             await apiManagementGroup.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_ApiManagementUpdateGroup()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementUpdateGroup.json
+            // this example is just showing the usage of "Group_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementGroupResource created on azure
+            // for more information of creating ApiManagementGroupResource, please refer to the document of ApiManagementGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string groupId = "tempgroup";
+            ResourceIdentifier apiManagementGroupResourceId = ApiManagementGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, groupId);
+            ApiManagementGroupResource apiManagementGroup = client.GetApiManagementGroupResource(apiManagementGroupResourceId);
+
+            // invoke the operation
+            ETag ifMatch = new ETag("*");
+            ApiManagementGroupPatch patch = new ApiManagementGroupPatch
+            {
+                DisplayName = "temp group",
+            };
+            ApiManagementGroupResource result = await apiManagementGroup.UpdateAsync(ifMatch, patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApiManagementGroupData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
@@ -250,6 +223,33 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             await apiManagementGroup.DeleteGroupUserAsync(userId);
 
             Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetEntityTag_ApiManagementHeadGroup()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementHeadGroup.json
+            // this example is just showing the usage of "Group_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementGroupResource created on azure
+            // for more information of creating ApiManagementGroupResource, please refer to the document of ApiManagementGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string groupId = "59306a29e4bbd510dc24e5f9";
+            ResourceIdentifier apiManagementGroupResourceId = ApiManagementGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, groupId);
+            ApiManagementGroupResource apiManagementGroup = client.GetApiManagementGroupResource(apiManagementGroupResourceId);
+
+            // invoke the operation
+            bool result = await apiManagementGroup.GetEntityTagAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

@@ -18,34 +18,6 @@ namespace Azure.ResourceManager.ApiManagement.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetEntityTag_ApiManagementHeadWorkspacePolicy()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementHeadWorkspacePolicy.json
-            // this example is just showing the usage of "WorkspacePolicy_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ServiceWorkspacePolicyResource created on azure
-            // for more information of creating ServiceWorkspacePolicyResource, please refer to the document of ServiceWorkspacePolicyResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string workspaceId = "wks1";
-            PolicyName policyId = PolicyName.Policy;
-            ResourceIdentifier serviceWorkspacePolicyResourceId = ServiceWorkspacePolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId, policyId);
-            ServiceWorkspacePolicyResource serviceWorkspacePolicy = client.GetServiceWorkspacePolicyResource(serviceWorkspacePolicyResourceId);
-
-            // invoke the operation
-            bool result = await serviceWorkspacePolicy.GetEntityTagAsync();
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementGetWorkspacePolicy()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetWorkspacePolicy.json
@@ -78,6 +50,35 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_ApiManagementDeleteWorkspacePolicy()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementDeleteWorkspacePolicy.json
+            // this example is just showing the usage of "WorkspacePolicy_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ServiceWorkspacePolicyResource created on azure
+            // for more information of creating ServiceWorkspacePolicyResource, please refer to the document of ServiceWorkspacePolicyResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string workspaceId = "wks1";
+            PolicyName policyId = PolicyName.Policy;
+            ResourceIdentifier serviceWorkspacePolicyResourceId = ServiceWorkspacePolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId, policyId);
+            ServiceWorkspacePolicyResource serviceWorkspacePolicy = client.GetServiceWorkspacePolicyResource(serviceWorkspacePolicyResourceId);
+
+            // invoke the operation
+            ETag ifMatch = new ETag("*");
+            await serviceWorkspacePolicy.DeleteAsync(WaitUntil.Completed, ifMatch);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ApiManagementCreateWorkspacePolicy()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateWorkspacePolicy.json
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ServiceWorkspacePolicyResource serviceWorkspacePolicy = client.GetServiceWorkspacePolicyResource(serviceWorkspacePolicyResourceId);
 
             // invoke the operation
-            PolicyContractData data = new PolicyContractData()
+            PolicyContractData data = new PolicyContractData
             {
                 Value = "<policies> <inbound /> <backend>    <forward-request />  </backend>  <outbound /></policies>",
                 Format = PolicyContentFormat.Xml,
@@ -138,7 +139,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ServiceWorkspacePolicyResource serviceWorkspacePolicy = client.GetServiceWorkspacePolicyResource(serviceWorkspacePolicyResourceId);
 
             // invoke the operation
-            PolicyContractData data = new PolicyContractData()
+            PolicyContractData data = new PolicyContractData
             {
                 Value = "<policies>\r\n     <inbound>\r\n     <base />\r\n  <set-header name=\"newvalue\" exists-action=\"override\">\r\n   <value>\"@(context.Request.Headers.FirstOrDefault(h => h.Ke==\"Via\"))\" </value>\r\n    </set-header>\r\n  </inbound>\r\n      </policies>",
                 Format = PolicyContentFormat.RawXml,
@@ -156,10 +157,10 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Delete_ApiManagementDeleteWorkspacePolicy()
+        public async Task GetEntityTag_ApiManagementHeadWorkspacePolicy()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementDeleteWorkspacePolicy.json
-            // this example is just showing the usage of "WorkspacePolicy_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementHeadWorkspacePolicy.json
+            // this example is just showing the usage of "WorkspacePolicy_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -177,10 +178,9 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ServiceWorkspacePolicyResource serviceWorkspacePolicy = client.GetServiceWorkspacePolicyResource(serviceWorkspacePolicyResourceId);
 
             // invoke the operation
-            ETag ifMatch = new ETag("*");
-            await serviceWorkspacePolicy.DeleteAsync(WaitUntil.Completed, ifMatch);
+            bool result = await serviceWorkspacePolicy.GetEntityTagAsync();
 
-            Console.WriteLine("Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

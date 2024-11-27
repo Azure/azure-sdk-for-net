@@ -44,41 +44,35 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             string serviceName = "apimService1";
             ApiManagementServiceData data = new ApiManagementServiceData(new AzureLocation("West US"), new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Premium, 1), "apim@autorestsdk.com", "autorestsdk")
             {
-                HostnameConfigurations =
-{
-new HostnameConfiguration(HostnameType.Proxy,"gateway1.msitesting.net")
+                HostnameConfigurations = {new HostnameConfiguration(HostnameType.Proxy, "gateway1.msitesting.net")
 {
 EncodedCertificate = "****** Base 64 Encoded Certificate ************",
 CertificatePassword = "Password",
 IsDefaultSslBindingEnabled = true,
-},new HostnameConfiguration(HostnameType.Management,"mgmt.msitesting.net")
+}, new HostnameConfiguration(HostnameType.Management, "mgmt.msitesting.net")
 {
 EncodedCertificate = "****** Base 64 Encoded Certificate ************",
 CertificatePassword = "Password",
-},new HostnameConfiguration(HostnameType.Portal,"portal1.msitesting.net")
+}, new HostnameConfiguration(HostnameType.Portal, "portal1.msitesting.net")
 {
 EncodedCertificate = "****** Base 64 Encoded Certificate ************",
 CertificatePassword = "Password",
-},new HostnameConfiguration(HostnameType.ConfigurationApi,"configuration-api.msitesting.net")
+}, new HostnameConfiguration(HostnameType.ConfigurationApi, "configuration-api.msitesting.net")
 {
 EncodedCertificate = "****** Base 64 Encoded Certificate ************",
 CertificatePassword = "Password",
-}
-},
-                AdditionalLocations =
-{
-new AdditionalLocation(new AzureLocation("East US"),new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Premium,1))
+}},
+                AdditionalLocations = {new AdditionalLocation(new AzureLocation("East US"), new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Premium, 1))
 {
 DisableGateway = true,
-}
-},
+}},
                 VirtualNetworkType = VirtualNetworkType.None,
                 MinApiVersion = "2019-01-01",
                 Tags =
 {
 ["tag1"] = "value1",
 ["tag2"] = "value2",
-["tag3"] = "value3",
+["tag3"] = "value3"
 },
             };
             ArmOperation<ApiManagementServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serviceName, data);
@@ -120,7 +114,7 @@ DisableGateway = true,
                 Tags =
 {
 ["Name"] = "Contoso",
-["Test"] = "User",
+["Test"] = "User"
 },
             };
             ArmOperation<ApiManagementServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serviceName, data);
@@ -164,7 +158,7 @@ DisableGateway = true,
 {
 ["tag1"] = "value1",
 ["tag2"] = "value2",
-["tag3"] = "value3",
+["tag3"] = "value3"
 },
             };
             ArmOperation<ApiManagementServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serviceName, data);
@@ -203,12 +197,9 @@ DisableGateway = true,
             string serviceName = "apimService1";
             ApiManagementServiceData data = new ApiManagementServiceData(new AzureLocation("East US 2 EUAP"), new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Premium, 2), "apim@autorestsdk.com", "autorestsdk")
             {
-                Zones =
-{
-"1","2"
-},
+                Zones = { "1", "2" },
                 PublicIPAddressId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgName/providers/Microsoft.Network/publicIPAddresses/apimazvnet"),
-                VirtualNetworkConfiguration = new VirtualNetworkConfiguration()
+                VirtualNetworkConfiguration = new VirtualNetworkConfiguration
                 {
                     SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgName/providers/Microsoft.Network/virtualNetworks/apimcus/subnets/tenant"),
                 },
@@ -217,7 +208,7 @@ DisableGateway = true,
 {
 ["tag1"] = "value1",
 ["tag2"] = "value2",
-["tag3"] = "value3",
+["tag3"] = "value3"
 },
             };
             ArmOperation<ApiManagementServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serviceName, data);
@@ -256,15 +247,12 @@ DisableGateway = true,
             string serviceName = "apimService1";
             ApiManagementServiceData data = new ApiManagementServiceData(new AzureLocation("North europe"), new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Premium, 2), "apim@autorestsdk.com", "autorestsdk")
             {
-                Zones =
-{
-"1","2"
-},
+                Zones = { "1", "2" },
                 Tags =
 {
 ["tag1"] = "value1",
 ["tag2"] = "value2",
-["tag3"] = "value3",
+["tag3"] = "value3"
 },
             };
             ArmOperation<ApiManagementServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serviceName, data);
@@ -308,7 +296,7 @@ DisableGateway = true,
 {
 ["tag1"] = "value1",
 ["tag2"] = "value2",
-["tag3"] = "value3",
+["tag3"] = "value3"
 },
             };
             ArmOperation<ApiManagementServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serviceName, data);
@@ -351,37 +339,34 @@ DisableGateway = true,
                 {
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1")] = new UserAssignedIdentity()
 },
                 },
-                HostnameConfigurations =
-{
-new HostnameConfiguration(HostnameType.Proxy,"gateway1.msitesting.net")
+                HostnameConfigurations = {new HostnameConfiguration(HostnameType.Proxy, "gateway1.msitesting.net")
 {
 KeyVaultSecretUri = new Uri("https://rpbvtkeyvaultintegration.vault.azure.net/secrets/msitestingCert"),
 IdentityClientId = "329419bc-adec-4dce-9568-25a6d486e468",
 IsDefaultSslBindingEnabled = true,
-},new HostnameConfiguration(HostnameType.Management,"mgmt.msitesting.net")
+}, new HostnameConfiguration(HostnameType.Management, "mgmt.msitesting.net")
 {
 KeyVaultSecretUri = new Uri("https://rpbvtkeyvaultintegration.vault.azure.net/secrets/msitestingCert"),
 IdentityClientId = "329419bc-adec-4dce-9568-25a6d486e468",
-},new HostnameConfiguration(HostnameType.Portal,"portal1.msitesting.net")
+}, new HostnameConfiguration(HostnameType.Portal, "portal1.msitesting.net")
 {
 KeyVaultSecretUri = new Uri("https://rpbvtkeyvaultintegration.vault.azure.net/secrets/msitestingCert"),
 IdentityClientId = "329419bc-adec-4dce-9568-25a6d486e468",
-},new HostnameConfiguration(HostnameType.ConfigurationApi,"configuration-api.msitesting.net")
+}, new HostnameConfiguration(HostnameType.ConfigurationApi, "configuration-api.msitesting.net")
 {
 EncodedCertificate = "****** Base 64 Encoded Certificate ************",
 CertificatePassword = "Password",
-}
-},
+}},
                 VirtualNetworkType = VirtualNetworkType.None,
                 MinApiVersion = "2019-01-01",
                 Tags =
 {
 ["tag1"] = "value1",
 ["tag2"] = "value2",
-["tag3"] = "value3",
+["tag3"] = "value3"
 },
             };
             ArmOperation<ApiManagementServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serviceName, data);
@@ -424,7 +409,7 @@ CertificatePassword = "Password",
                 Tags =
 {
 ["Name"] = "Contoso",
-["Test"] = "User",
+["Test"] = "User"
 },
             };
             ArmOperation<ApiManagementServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serviceName, data);
@@ -468,7 +453,7 @@ CertificatePassword = "Password",
 {
 ["tag1"] = "value1",
 ["tag2"] = "value2",
-["tag3"] = "value3",
+["tag3"] = "value3"
 },
             };
             ArmOperation<ApiManagementServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serviceName, data);
@@ -507,19 +492,16 @@ CertificatePassword = "Password",
             string serviceName = "apimService1";
             ApiManagementServiceData data = new ApiManagementServiceData(new AzureLocation("Central US"), new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Basic, 1), "apim@autorestsdk.com", "autorestsdk")
             {
-                Certificates =
-{
-new CertificateConfiguration(CertificateConfigurationStoreName.CertificateAuthority)
+                Certificates = {new CertificateConfiguration(CertificateConfigurationStoreName.CertificateAuthority)
 {
 EncodedCertificate = "*******Base64 encoded Certificate******************",
 CertificatePassword = "Password",
-}
-},
+}},
                 Tags =
 {
 ["tag1"] = "value1",
 ["tag2"] = "value2",
-["tag3"] = "value3",
+["tag3"] = "value3"
 },
             };
             ArmOperation<ApiManagementServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serviceName, data);
@@ -562,14 +544,14 @@ CertificatePassword = "Password",
                 {
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/apimService1")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/apimService1")] = new UserAssignedIdentity()
 },
                 },
                 Tags =
 {
 ["tag1"] = "value1",
 ["tag2"] = "value2",
-["tag3"] = "value3",
+["tag3"] = "value3"
 },
             };
             ArmOperation<ApiManagementServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serviceName, data);
@@ -613,7 +595,7 @@ CertificatePassword = "Password",
 {
 ["tag1"] = "value1",
 ["tag2"] = "value2",
-["tag3"] = "value3",
+["tag3"] = "value3"
 },
             };
             ArmOperation<ApiManagementServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serviceName, data);
@@ -699,9 +681,168 @@ CertificatePassword = "Password",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Get_ApiManagementServiceGetService()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementServiceGetService.json
+            // this example is just showing the usage of "ApiManagementService_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this ApiManagementServiceResource
+            ApiManagementServiceCollection collection = resourceGroupResource.GetApiManagementServices();
+
+            // invoke the operation
+            string serviceName = "apimService1";
+            ApiManagementServiceResource result = await collection.GetAsync(serviceName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApiManagementServiceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_ApiManagementServiceGetServiceHavingMsi()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementServiceGetServiceHavingMsi.json
+            // this example is just showing the usage of "ApiManagementService_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this ApiManagementServiceResource
+            ApiManagementServiceCollection collection = resourceGroupResource.GetApiManagementServices();
+
+            // invoke the operation
+            string serviceName = "apimService1";
+            ApiManagementServiceResource result = await collection.GetAsync(serviceName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApiManagementServiceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ApiManagementListServiceBySubscriptionAndResourceGroup()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementListServiceBySubscriptionAndResourceGroup.json
+            // this example is just showing the usage of "ApiManagementService_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this ApiManagementServiceResource
+            ApiManagementServiceCollection collection = resourceGroupResource.GetApiManagementServices();
+
+            // invoke the operation and iterate over the result
+            await foreach (ApiManagementServiceResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ApiManagementServiceData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ApiManagementServiceGetMultiRegionInternalVnet()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementServiceGetMultiRegionInternalVnet.json
+            // this example is just showing the usage of "ApiManagementService_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this ApiManagementServiceResource
+            ApiManagementServiceCollection collection = resourceGroupResource.GetApiManagementServices();
+
+            // invoke the operation
+            string serviceName = "apimService1";
+            bool result = await collection.ExistsAsync(serviceName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_ApiManagementServiceGetService()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementServiceGetService.json
+            // this example is just showing the usage of "ApiManagementService_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this ApiManagementServiceResource
+            ApiManagementServiceCollection collection = resourceGroupResource.GetApiManagementServices();
+
+            // invoke the operation
+            string serviceName = "apimService1";
+            bool result = await collection.ExistsAsync(serviceName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_ApiManagementServiceGetServiceHavingMsi()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementServiceGetServiceHavingMsi.json
             // this example is just showing the usage of "ApiManagementService_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -769,68 +910,6 @@ CertificatePassword = "Password",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_ApiManagementServiceGetService()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementServiceGetService.json
-            // this example is just showing the usage of "ApiManagementService_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this ApiManagementServiceResource
-            ApiManagementServiceCollection collection = resourceGroupResource.GetApiManagementServices();
-
-            // invoke the operation
-            string serviceName = "apimService1";
-            ApiManagementServiceResource result = await collection.GetAsync(serviceName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ApiManagementServiceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Exists_ApiManagementServiceGetService()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementServiceGetService.json
-            // this example is just showing the usage of "ApiManagementService_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this ApiManagementServiceResource
-            ApiManagementServiceCollection collection = resourceGroupResource.GetApiManagementServices();
-
-            // invoke the operation
-            string serviceName = "apimService1";
-            bool result = await collection.ExistsAsync(serviceName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ApiManagementServiceGetService()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementServiceGetService.json
@@ -872,68 +951,6 @@ CertificatePassword = "Password",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_ApiManagementServiceGetServiceHavingMsi()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementServiceGetServiceHavingMsi.json
-            // this example is just showing the usage of "ApiManagementService_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this ApiManagementServiceResource
-            ApiManagementServiceCollection collection = resourceGroupResource.GetApiManagementServices();
-
-            // invoke the operation
-            string serviceName = "apimService1";
-            ApiManagementServiceResource result = await collection.GetAsync(serviceName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ApiManagementServiceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Exists_ApiManagementServiceGetServiceHavingMsi()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementServiceGetServiceHavingMsi.json
-            // this example is just showing the usage of "ApiManagementService_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this ApiManagementServiceResource
-            ApiManagementServiceCollection collection = resourceGroupResource.GetApiManagementServices();
-
-            // invoke the operation
-            string serviceName = "apimService1";
-            bool result = await collection.ExistsAsync(serviceName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ApiManagementServiceGetServiceHavingMsi()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementServiceGetServiceHavingMsi.json
@@ -971,41 +988,6 @@ CertificatePassword = "Password",
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ApiManagementListServiceBySubscriptionAndResourceGroup()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementListServiceBySubscriptionAndResourceGroup.json
-            // this example is just showing the usage of "ApiManagementService_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this ApiManagementServiceResource
-            ApiManagementServiceCollection collection = resourceGroupResource.GetApiManagementServices();
-
-            // invoke the operation and iterate over the result
-            await foreach (ApiManagementServiceResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ApiManagementServiceData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
         }
     }
 }

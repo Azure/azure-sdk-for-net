@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.ApiManagement.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ApiManagementListWorkspaceNamedValues()
+        public async Task CreateOrUpdate_ApiManagementCreateWorkspaceNamedValue()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementListWorkspaceNamedValues.json
-            // this example is just showing the usage of "WorkspaceNamedValue_ListByService" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateWorkspaceNamedValue.json
+            // this example is just showing the usage of "WorkspaceNamedValue_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -40,17 +40,70 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // get the collection of this ServiceWorkspaceNamedValueResource
             ServiceWorkspaceNamedValueCollection collection = workspaceContract.GetServiceWorkspaceNamedValues();
 
-            // invoke the operation and iterate over the result
-            await foreach (ServiceWorkspaceNamedValueResource item in collection.GetAllAsync())
+            // invoke the operation
+            string namedValueId = "testprop2";
+            ApiManagementNamedValueCreateOrUpdateContent content = new ApiManagementNamedValueCreateOrUpdateContent
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ApiManagementNamedValueData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                Tags = { "foo", "bar" },
+                IsSecret = false,
+                DisplayName = "prop3name",
+                Value = "propValue",
+            };
+            ArmOperation<ServiceWorkspaceNamedValueResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, namedValueId, content);
+            ServiceWorkspaceNamedValueResource result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApiManagementNamedValueData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_ApiManagementCreateWorkspaceNamedValueWithKeyVault()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateWorkspaceNamedValueWithKeyVault.json
+            // this example is just showing the usage of "WorkspaceNamedValue_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this WorkspaceContractResource created on azure
+            // for more information of creating WorkspaceContractResource, please refer to the document of WorkspaceContractResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string workspaceId = "wks1";
+            ResourceIdentifier workspaceContractResourceId = WorkspaceContractResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId);
+            WorkspaceContractResource workspaceContract = client.GetWorkspaceContractResource(workspaceContractResourceId);
+
+            // get the collection of this ServiceWorkspaceNamedValueResource
+            ServiceWorkspaceNamedValueCollection collection = workspaceContract.GetServiceWorkspaceNamedValues();
+
+            // invoke the operation
+            string namedValueId = "testprop6";
+            ApiManagementNamedValueCreateOrUpdateContent content = new ApiManagementNamedValueCreateOrUpdateContent
+            {
+                Tags = { "foo", "bar" },
+                IsSecret = true,
+                DisplayName = "prop6namekv",
+                KeyVault = new KeyVaultContractCreateProperties
+                {
+                    SecretIdentifier = "https://contoso.vault.azure.net/secrets/aadSecret",
+                    IdentityClientId = "ceaa6b06-c00f-43ef-99ac-f53d1fe876a0",
+                },
+            };
+            ArmOperation<ServiceWorkspaceNamedValueResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, namedValueId, content);
+            ServiceWorkspaceNamedValueResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApiManagementNamedValueData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
@@ -90,6 +143,78 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Get_ApiManagementGetWorkspaceNamedValueWithKeyVault()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetWorkspaceNamedValueWithKeyVault.json
+            // this example is just showing the usage of "WorkspaceNamedValue_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this WorkspaceContractResource created on azure
+            // for more information of creating WorkspaceContractResource, please refer to the document of WorkspaceContractResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string workspaceId = "wks1";
+            ResourceIdentifier workspaceContractResourceId = WorkspaceContractResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId);
+            WorkspaceContractResource workspaceContract = client.GetWorkspaceContractResource(workspaceContractResourceId);
+
+            // get the collection of this ServiceWorkspaceNamedValueResource
+            ServiceWorkspaceNamedValueCollection collection = workspaceContract.GetServiceWorkspaceNamedValues();
+
+            // invoke the operation
+            string namedValueId = "testprop6";
+            ServiceWorkspaceNamedValueResource result = await collection.GetAsync(namedValueId);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApiManagementNamedValueData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ApiManagementListWorkspaceNamedValues()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementListWorkspaceNamedValues.json
+            // this example is just showing the usage of "WorkspaceNamedValue_ListByService" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this WorkspaceContractResource created on azure
+            // for more information of creating WorkspaceContractResource, please refer to the document of WorkspaceContractResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string workspaceId = "wks1";
+            ResourceIdentifier workspaceContractResourceId = WorkspaceContractResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId);
+            WorkspaceContractResource workspaceContract = client.GetWorkspaceContractResource(workspaceContractResourceId);
+
+            // get the collection of this ServiceWorkspaceNamedValueResource
+            ServiceWorkspaceNamedValueCollection collection = workspaceContract.GetServiceWorkspaceNamedValues();
+
+            // invoke the operation and iterate over the result
+            await foreach (ServiceWorkspaceNamedValueResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ApiManagementNamedValueData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ApiManagementGetWorkspaceNamedValue()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetWorkspaceNamedValue.json
@@ -114,6 +239,37 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             string namedValueId = "testarmTemplateproperties2";
+            bool result = await collection.ExistsAsync(namedValueId);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_ApiManagementGetWorkspaceNamedValueWithKeyVault()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetWorkspaceNamedValueWithKeyVault.json
+            // this example is just showing the usage of "WorkspaceNamedValue_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this WorkspaceContractResource created on azure
+            // for more information of creating WorkspaceContractResource, please refer to the document of WorkspaceContractResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string workspaceId = "wks1";
+            ResourceIdentifier workspaceContractResourceId = WorkspaceContractResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId);
+            WorkspaceContractResource workspaceContract = client.GetWorkspaceContractResource(workspaceContractResourceId);
+
+            // get the collection of this ServiceWorkspaceNamedValueResource
+            ServiceWorkspaceNamedValueCollection collection = workspaceContract.GetServiceWorkspaceNamedValues();
+
+            // invoke the operation
+            string namedValueId = "testprop6";
             bool result = await collection.ExistsAsync(namedValueId);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -164,72 +320,6 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_ApiManagementGetWorkspaceNamedValueWithKeyVault()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetWorkspaceNamedValueWithKeyVault.json
-            // this example is just showing the usage of "WorkspaceNamedValue_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this WorkspaceContractResource created on azure
-            // for more information of creating WorkspaceContractResource, please refer to the document of WorkspaceContractResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string workspaceId = "wks1";
-            ResourceIdentifier workspaceContractResourceId = WorkspaceContractResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId);
-            WorkspaceContractResource workspaceContract = client.GetWorkspaceContractResource(workspaceContractResourceId);
-
-            // get the collection of this ServiceWorkspaceNamedValueResource
-            ServiceWorkspaceNamedValueCollection collection = workspaceContract.GetServiceWorkspaceNamedValues();
-
-            // invoke the operation
-            string namedValueId = "testprop6";
-            ServiceWorkspaceNamedValueResource result = await collection.GetAsync(namedValueId);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ApiManagementNamedValueData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Exists_ApiManagementGetWorkspaceNamedValueWithKeyVault()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetWorkspaceNamedValueWithKeyVault.json
-            // this example is just showing the usage of "WorkspaceNamedValue_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this WorkspaceContractResource created on azure
-            // for more information of creating WorkspaceContractResource, please refer to the document of WorkspaceContractResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string workspaceId = "wks1";
-            ResourceIdentifier workspaceContractResourceId = WorkspaceContractResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId);
-            WorkspaceContractResource workspaceContract = client.GetWorkspaceContractResource(workspaceContractResourceId);
-
-            // get the collection of this ServiceWorkspaceNamedValueResource
-            ServiceWorkspaceNamedValueCollection collection = workspaceContract.GetServiceWorkspaceNamedValues();
-
-            // invoke the operation
-            string namedValueId = "testprop6";
-            bool result = await collection.ExistsAsync(namedValueId);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ApiManagementGetWorkspaceNamedValueWithKeyVault()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetWorkspaceNamedValueWithKeyVault.json
@@ -269,102 +359,6 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_ApiManagementCreateWorkspaceNamedValue()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateWorkspaceNamedValue.json
-            // this example is just showing the usage of "WorkspaceNamedValue_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this WorkspaceContractResource created on azure
-            // for more information of creating WorkspaceContractResource, please refer to the document of WorkspaceContractResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string workspaceId = "wks1";
-            ResourceIdentifier workspaceContractResourceId = WorkspaceContractResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId);
-            WorkspaceContractResource workspaceContract = client.GetWorkspaceContractResource(workspaceContractResourceId);
-
-            // get the collection of this ServiceWorkspaceNamedValueResource
-            ServiceWorkspaceNamedValueCollection collection = workspaceContract.GetServiceWorkspaceNamedValues();
-
-            // invoke the operation
-            string namedValueId = "testprop2";
-            ApiManagementNamedValueCreateOrUpdateContent content = new ApiManagementNamedValueCreateOrUpdateContent()
-            {
-                Tags =
-{
-"foo","bar"
-},
-                IsSecret = false,
-                DisplayName = "prop3name",
-                Value = "propValue",
-            };
-            ArmOperation<ServiceWorkspaceNamedValueResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, namedValueId, content);
-            ServiceWorkspaceNamedValueResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ApiManagementNamedValueData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_ApiManagementCreateWorkspaceNamedValueWithKeyVault()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateWorkspaceNamedValueWithKeyVault.json
-            // this example is just showing the usage of "WorkspaceNamedValue_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this WorkspaceContractResource created on azure
-            // for more information of creating WorkspaceContractResource, please refer to the document of WorkspaceContractResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string workspaceId = "wks1";
-            ResourceIdentifier workspaceContractResourceId = WorkspaceContractResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId);
-            WorkspaceContractResource workspaceContract = client.GetWorkspaceContractResource(workspaceContractResourceId);
-
-            // get the collection of this ServiceWorkspaceNamedValueResource
-            ServiceWorkspaceNamedValueCollection collection = workspaceContract.GetServiceWorkspaceNamedValues();
-
-            // invoke the operation
-            string namedValueId = "testprop6";
-            ApiManagementNamedValueCreateOrUpdateContent content = new ApiManagementNamedValueCreateOrUpdateContent()
-            {
-                Tags =
-{
-"foo","bar"
-},
-                IsSecret = true,
-                DisplayName = "prop6namekv",
-                KeyVault = new KeyVaultContractCreateProperties()
-                {
-                    SecretIdentifier = "https://contoso.vault.azure.net/secrets/aadSecret",
-                    IdentityClientId = "ceaa6b06-c00f-43ef-99ac-f53d1fe876a0",
-                },
-            };
-            ArmOperation<ServiceWorkspaceNamedValueResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, namedValueId, content);
-            ServiceWorkspaceNamedValueResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ApiManagementNamedValueData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

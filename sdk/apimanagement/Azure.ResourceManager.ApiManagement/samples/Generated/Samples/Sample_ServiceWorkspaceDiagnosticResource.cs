@@ -18,34 +18,6 @@ namespace Azure.ResourceManager.ApiManagement.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetEntityTag_ApiManagementHeadWorkspaceDiagnostic()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementHeadWorkspaceDiagnostic.json
-            // this example is just showing the usage of "WorkspaceDiagnostic_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ServiceWorkspaceDiagnosticResource created on azure
-            // for more information of creating ServiceWorkspaceDiagnosticResource, please refer to the document of ServiceWorkspaceDiagnosticResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string workspaceId = "wks1";
-            string diagnosticId = "applicationinsights";
-            ResourceIdentifier serviceWorkspaceDiagnosticResourceId = ServiceWorkspaceDiagnosticResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId, diagnosticId);
-            ServiceWorkspaceDiagnosticResource serviceWorkspaceDiagnostic = client.GetServiceWorkspaceDiagnosticResource(serviceWorkspaceDiagnosticResourceId);
-
-            // invoke the operation
-            bool result = await serviceWorkspaceDiagnostic.GetEntityTagAsync();
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementGetWorkspaceDiagnostic()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetWorkspaceDiagnostic.json
@@ -68,87 +40,6 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             ServiceWorkspaceDiagnosticResource result = await serviceWorkspaceDiagnostic.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            DiagnosticContractData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Update_ApiManagementUpdateWorkspaceDiagnostic()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementUpdateWorkspaceDiagnostic.json
-            // this example is just showing the usage of "WorkspaceDiagnostic_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ServiceWorkspaceDiagnosticResource created on azure
-            // for more information of creating ServiceWorkspaceDiagnosticResource, please refer to the document of ServiceWorkspaceDiagnosticResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string workspaceId = "wks1";
-            string diagnosticId = "applicationinsights";
-            ResourceIdentifier serviceWorkspaceDiagnosticResourceId = ServiceWorkspaceDiagnosticResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId, diagnosticId);
-            ServiceWorkspaceDiagnosticResource serviceWorkspaceDiagnostic = client.GetServiceWorkspaceDiagnosticResource(serviceWorkspaceDiagnosticResourceId);
-
-            // invoke the operation
-            ETag ifMatch = new ETag("*");
-            DiagnosticUpdateContract diagnosticUpdateContract = new DiagnosticUpdateContract()
-            {
-                AlwaysLog = AlwaysLog.AllErrors,
-                LoggerId = new ResourceIdentifier("/workspaces/wks1/loggers/applicationinsights"),
-                Sampling = new SamplingSettings()
-                {
-                    SamplingType = SamplingType.Fixed,
-                    Percentage = 50,
-                },
-                Frontend = new PipelineDiagnosticSettings()
-                {
-                    Request = new HttpMessageDiagnostic()
-                    {
-                        Headers =
-{
-"Content-type"
-},
-                        BodyBytes = 512,
-                    },
-                    Response = new HttpMessageDiagnostic()
-                    {
-                        Headers =
-{
-"Content-type"
-},
-                        BodyBytes = 512,
-                    },
-                },
-                Backend = new PipelineDiagnosticSettings()
-                {
-                    Request = new HttpMessageDiagnostic()
-                    {
-                        Headers =
-{
-"Content-type"
-},
-                        BodyBytes = 512,
-                    },
-                    Response = new HttpMessageDiagnostic()
-                    {
-                        Headers =
-{
-"Content-type"
-},
-                        BodyBytes = 512,
-                    },
-                },
-            };
-            ServiceWorkspaceDiagnosticResource result = await serviceWorkspaceDiagnostic.UpdateAsync(ifMatch, diagnosticUpdateContract);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -184,6 +75,103 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             await serviceWorkspaceDiagnostic.DeleteAsync(WaitUntil.Completed, ifMatch);
 
             Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_ApiManagementUpdateWorkspaceDiagnostic()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementUpdateWorkspaceDiagnostic.json
+            // this example is just showing the usage of "WorkspaceDiagnostic_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ServiceWorkspaceDiagnosticResource created on azure
+            // for more information of creating ServiceWorkspaceDiagnosticResource, please refer to the document of ServiceWorkspaceDiagnosticResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string workspaceId = "wks1";
+            string diagnosticId = "applicationinsights";
+            ResourceIdentifier serviceWorkspaceDiagnosticResourceId = ServiceWorkspaceDiagnosticResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId, diagnosticId);
+            ServiceWorkspaceDiagnosticResource serviceWorkspaceDiagnostic = client.GetServiceWorkspaceDiagnosticResource(serviceWorkspaceDiagnosticResourceId);
+
+            // invoke the operation
+            ETag ifMatch = new ETag("*");
+            DiagnosticUpdateContract diagnosticUpdateContract = new DiagnosticUpdateContract
+            {
+                AlwaysLog = AlwaysLog.AllErrors,
+                LoggerId = "/workspaces/wks1/loggers/applicationinsights",
+                Sampling = new SamplingSettings
+                {
+                    SamplingType = SamplingType.Fixed,
+                    Percentage = 50,
+                },
+                Frontend = new PipelineDiagnosticSettings
+                {
+                    Request = new HttpMessageDiagnostic
+                    {
+                        Headers = { "Content-type" },
+                        BodyBytes = 512,
+                    },
+                    Response = new HttpMessageDiagnostic
+                    {
+                        Headers = { "Content-type" },
+                        BodyBytes = 512,
+                    },
+                },
+                Backend = new PipelineDiagnosticSettings
+                {
+                    Request = new HttpMessageDiagnostic
+                    {
+                        Headers = { "Content-type" },
+                        BodyBytes = 512,
+                    },
+                    Response = new HttpMessageDiagnostic
+                    {
+                        Headers = { "Content-type" },
+                        BodyBytes = 512,
+                    },
+                },
+            };
+            ServiceWorkspaceDiagnosticResource result = await serviceWorkspaceDiagnostic.UpdateAsync(ifMatch, diagnosticUpdateContract);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DiagnosticContractData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetEntityTag_ApiManagementHeadWorkspaceDiagnostic()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementHeadWorkspaceDiagnostic.json
+            // this example is just showing the usage of "WorkspaceDiagnostic_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ServiceWorkspaceDiagnosticResource created on azure
+            // for more information of creating ServiceWorkspaceDiagnosticResource, please refer to the document of ServiceWorkspaceDiagnosticResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string workspaceId = "wks1";
+            string diagnosticId = "applicationinsights";
+            ResourceIdentifier serviceWorkspaceDiagnosticResourceId = ServiceWorkspaceDiagnosticResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId, diagnosticId);
+            ServiceWorkspaceDiagnosticResource serviceWorkspaceDiagnostic = client.GetServiceWorkspaceDiagnosticResource(serviceWorkspaceDiagnosticResourceId);
+
+            // invoke the operation
+            bool result = await serviceWorkspaceDiagnostic.GetEntityTagAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

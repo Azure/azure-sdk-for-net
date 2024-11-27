@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.ApiManagement.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ApiManagementListWorkspaceCertificates()
+        public async Task CreateOrUpdate_ApiManagementCreateWorkspaceCertificate()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementListWorkspaceCertificates.json
-            // this example is just showing the usage of "WorkspaceCertificate_ListByWorkspace" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateWorkspaceCertificate.json
+            // this example is just showing the usage of "WorkspaceCertificate_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -40,17 +40,65 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // get the collection of this ServiceWorkspaceCertificateResource
             ServiceWorkspaceCertificateCollection collection = workspaceContract.GetServiceWorkspaceCertificates();
 
-            // invoke the operation and iterate over the result
-            await foreach (ServiceWorkspaceCertificateResource item in collection.GetAllAsync())
+            // invoke the operation
+            string certificateId = "tempcert";
+            ApiManagementCertificateCreateOrUpdateContent content = new ApiManagementCertificateCreateOrUpdateContent
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ApiManagementCertificateData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                Data = "****************Base 64 Encoded Certificate *******************************",
+                Password = "****Certificate Password******",
+            };
+            ArmOperation<ServiceWorkspaceCertificateResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, certificateId, content);
+            ServiceWorkspaceCertificateResource result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApiManagementCertificateData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_ApiManagementCreateWorkspaceCertificateWithKeyVault()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateWorkspaceCertificateWithKeyVault.json
+            // this example is just showing the usage of "WorkspaceCertificate_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this WorkspaceContractResource created on azure
+            // for more information of creating WorkspaceContractResource, please refer to the document of WorkspaceContractResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string workspaceId = "wks1";
+            ResourceIdentifier workspaceContractResourceId = WorkspaceContractResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId);
+            WorkspaceContractResource workspaceContract = client.GetWorkspaceContractResource(workspaceContractResourceId);
+
+            // get the collection of this ServiceWorkspaceCertificateResource
+            ServiceWorkspaceCertificateCollection collection = workspaceContract.GetServiceWorkspaceCertificates();
+
+            // invoke the operation
+            string certificateId = "templateCertkv";
+            ApiManagementCertificateCreateOrUpdateContent content = new ApiManagementCertificateCreateOrUpdateContent
+            {
+                KeyVaultDetails = new KeyVaultContractCreateProperties
+                {
+                    SecretIdentifier = "https://rpbvtkeyvaultintegration.vault-int.azure-int.net/secrets/msitestingCert",
+                    IdentityClientId = "ceaa6b06-c00f-43ef-99ac-f53d1fe876a0",
+                },
+            };
+            ArmOperation<ServiceWorkspaceCertificateResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, certificateId, content);
+            ServiceWorkspaceCertificateResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApiManagementCertificateData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
@@ -90,6 +138,78 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Get_ApiManagementGetWorkspaceCertificateWithKeyVault()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetWorkspaceCertificateWithKeyVault.json
+            // this example is just showing the usage of "WorkspaceCertificate_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this WorkspaceContractResource created on azure
+            // for more information of creating WorkspaceContractResource, please refer to the document of WorkspaceContractResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string workspaceId = "wks1";
+            ResourceIdentifier workspaceContractResourceId = WorkspaceContractResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId);
+            WorkspaceContractResource workspaceContract = client.GetWorkspaceContractResource(workspaceContractResourceId);
+
+            // get the collection of this ServiceWorkspaceCertificateResource
+            ServiceWorkspaceCertificateCollection collection = workspaceContract.GetServiceWorkspaceCertificates();
+
+            // invoke the operation
+            string certificateId = "templateCertkv";
+            ServiceWorkspaceCertificateResource result = await collection.GetAsync(certificateId);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ApiManagementCertificateData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ApiManagementListWorkspaceCertificates()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementListWorkspaceCertificates.json
+            // this example is just showing the usage of "WorkspaceCertificate_ListByWorkspace" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this WorkspaceContractResource created on azure
+            // for more information of creating WorkspaceContractResource, please refer to the document of WorkspaceContractResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string workspaceId = "wks1";
+            ResourceIdentifier workspaceContractResourceId = WorkspaceContractResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId);
+            WorkspaceContractResource workspaceContract = client.GetWorkspaceContractResource(workspaceContractResourceId);
+
+            // get the collection of this ServiceWorkspaceCertificateResource
+            ServiceWorkspaceCertificateCollection collection = workspaceContract.GetServiceWorkspaceCertificates();
+
+            // invoke the operation and iterate over the result
+            await foreach (ServiceWorkspaceCertificateResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ApiManagementCertificateData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ApiManagementGetWorkspaceCertificate()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetWorkspaceCertificate.json
@@ -114,6 +234,37 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             string certificateId = "templateCert1";
+            bool result = await collection.ExistsAsync(certificateId);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_ApiManagementGetWorkspaceCertificateWithKeyVault()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetWorkspaceCertificateWithKeyVault.json
+            // this example is just showing the usage of "WorkspaceCertificate_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this WorkspaceContractResource created on azure
+            // for more information of creating WorkspaceContractResource, please refer to the document of WorkspaceContractResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string workspaceId = "wks1";
+            ResourceIdentifier workspaceContractResourceId = WorkspaceContractResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId);
+            WorkspaceContractResource workspaceContract = client.GetWorkspaceContractResource(workspaceContractResourceId);
+
+            // get the collection of this ServiceWorkspaceCertificateResource
+            ServiceWorkspaceCertificateCollection collection = workspaceContract.GetServiceWorkspaceCertificates();
+
+            // invoke the operation
+            string certificateId = "templateCertkv";
             bool result = await collection.ExistsAsync(certificateId);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -164,72 +315,6 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_ApiManagementGetWorkspaceCertificateWithKeyVault()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetWorkspaceCertificateWithKeyVault.json
-            // this example is just showing the usage of "WorkspaceCertificate_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this WorkspaceContractResource created on azure
-            // for more information of creating WorkspaceContractResource, please refer to the document of WorkspaceContractResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string workspaceId = "wks1";
-            ResourceIdentifier workspaceContractResourceId = WorkspaceContractResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId);
-            WorkspaceContractResource workspaceContract = client.GetWorkspaceContractResource(workspaceContractResourceId);
-
-            // get the collection of this ServiceWorkspaceCertificateResource
-            ServiceWorkspaceCertificateCollection collection = workspaceContract.GetServiceWorkspaceCertificates();
-
-            // invoke the operation
-            string certificateId = "templateCertkv";
-            ServiceWorkspaceCertificateResource result = await collection.GetAsync(certificateId);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ApiManagementCertificateData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Exists_ApiManagementGetWorkspaceCertificateWithKeyVault()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetWorkspaceCertificateWithKeyVault.json
-            // this example is just showing the usage of "WorkspaceCertificate_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this WorkspaceContractResource created on azure
-            // for more information of creating WorkspaceContractResource, please refer to the document of WorkspaceContractResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string workspaceId = "wks1";
-            ResourceIdentifier workspaceContractResourceId = WorkspaceContractResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId);
-            WorkspaceContractResource workspaceContract = client.GetWorkspaceContractResource(workspaceContractResourceId);
-
-            // get the collection of this ServiceWorkspaceCertificateResource
-            ServiceWorkspaceCertificateCollection collection = workspaceContract.GetServiceWorkspaceCertificates();
-
-            // invoke the operation
-            string certificateId = "templateCertkv";
-            bool result = await collection.ExistsAsync(certificateId);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ApiManagementGetWorkspaceCertificateWithKeyVault()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementGetWorkspaceCertificateWithKeyVault.json
@@ -269,91 +354,6 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_ApiManagementCreateWorkspaceCertificate()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateWorkspaceCertificate.json
-            // this example is just showing the usage of "WorkspaceCertificate_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this WorkspaceContractResource created on azure
-            // for more information of creating WorkspaceContractResource, please refer to the document of WorkspaceContractResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string workspaceId = "wks1";
-            ResourceIdentifier workspaceContractResourceId = WorkspaceContractResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId);
-            WorkspaceContractResource workspaceContract = client.GetWorkspaceContractResource(workspaceContractResourceId);
-
-            // get the collection of this ServiceWorkspaceCertificateResource
-            ServiceWorkspaceCertificateCollection collection = workspaceContract.GetServiceWorkspaceCertificates();
-
-            // invoke the operation
-            string certificateId = "tempcert";
-            ApiManagementCertificateCreateOrUpdateContent content = new ApiManagementCertificateCreateOrUpdateContent()
-            {
-                Data = "****************Base 64 Encoded Certificate *******************************",
-                Password = "****Certificate Password******",
-            };
-            ArmOperation<ServiceWorkspaceCertificateResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, certificateId, content);
-            ServiceWorkspaceCertificateResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ApiManagementCertificateData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_ApiManagementCreateWorkspaceCertificateWithKeyVault()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2024-05-01/examples/ApiManagementCreateWorkspaceCertificateWithKeyVault.json
-            // this example is just showing the usage of "WorkspaceCertificate_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this WorkspaceContractResource created on azure
-            // for more information of creating WorkspaceContractResource, please refer to the document of WorkspaceContractResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string workspaceId = "wks1";
-            ResourceIdentifier workspaceContractResourceId = WorkspaceContractResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, workspaceId);
-            WorkspaceContractResource workspaceContract = client.GetWorkspaceContractResource(workspaceContractResourceId);
-
-            // get the collection of this ServiceWorkspaceCertificateResource
-            ServiceWorkspaceCertificateCollection collection = workspaceContract.GetServiceWorkspaceCertificates();
-
-            // invoke the operation
-            string certificateId = "templateCertkv";
-            ApiManagementCertificateCreateOrUpdateContent content = new ApiManagementCertificateCreateOrUpdateContent()
-            {
-                KeyVaultDetails = new KeyVaultContractCreateProperties()
-                {
-                    SecretIdentifier = "https://rpbvtkeyvaultintegration.vault-int.azure-int.net/secrets/msitestingCert",
-                    IdentityClientId = "ceaa6b06-c00f-43ef-99ac-f53d1fe876a0",
-                },
-            };
-            ArmOperation<ServiceWorkspaceCertificateResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, certificateId, content);
-            ServiceWorkspaceCertificateResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ApiManagementCertificateData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

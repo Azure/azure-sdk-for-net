@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Samples
             ServerAdvancedThreatProtectionResource serverAdvancedThreatProtection = client.GetServerAdvancedThreatProtectionResource(serverAdvancedThreatProtectionResourceId);
 
             // invoke the operation
-            ServerAdvancedThreatProtectionData data = new ServerAdvancedThreatProtectionData()
+            ServerAdvancedThreatProtectionData data = new ServerAdvancedThreatProtectionData
             {
                 State = AdvancedThreatProtectionState.Enabled,
             };
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Sql.Samples
             ServerAdvancedThreatProtectionResource serverAdvancedThreatProtection = client.GetServerAdvancedThreatProtectionResource(serverAdvancedThreatProtectionResourceId);
 
             // invoke the operation
-            ServerAdvancedThreatProtectionData data = new ServerAdvancedThreatProtectionData()
+            ServerAdvancedThreatProtectionData data = new ServerAdvancedThreatProtectionData
             {
                 State = AdvancedThreatProtectionState.Disabled,
             };
