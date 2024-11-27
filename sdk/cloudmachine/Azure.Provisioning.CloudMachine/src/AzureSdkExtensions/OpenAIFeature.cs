@@ -16,14 +16,7 @@ internal class OpenAIFeature : CloudMachineFeature
     public OpenAIFeature()
     { }
 
-    protected internal override void AddTo(CloudMachineInfrastructure cm)
-    {
-        cm.Features.Add(this);
-
-        ClientConnection connection = new("Azure.AI.OpenAI.AzureOpenAIClient", $"https://{cm.Id}.openai.azure.com");
-        cm.Connections.Add(connection);
-    }
-    protected override ProvisionableResource EmitCore(CloudMachineInfrastructure cloudMachine)
+    protected override ProvisionableResource EmitInfrastructure(CloudMachineInfrastructure cloudMachine)
     {
         CognitiveServicesAccount cognitiveServices = CreateOpenAIAccount(cloudMachine);
         cloudMachine.AddConstruct(cognitiveServices);
@@ -44,6 +37,16 @@ internal class OpenAIFeature : CloudMachineFeature
         }
 
         return cognitiveServices;
+    }
+
+    protected internal override void EmitConnections(ConnectionCollection connections, string cmId)
+    {
+        ClientConnection connection = new("Azure.AI.OpenAI.AzureOpenAIClient", $"https://{cmId}.openai.azure.com");
+
+        if (!connections.Contains(connection))
+        {
+            connections.Add(connection);
+        }
     }
 
     internal void AddModel(OpenAIModelFeature model)

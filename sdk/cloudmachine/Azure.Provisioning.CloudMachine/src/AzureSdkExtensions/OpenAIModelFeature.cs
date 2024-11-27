@@ -25,39 +25,36 @@ public class OpenAIModelFeature : CloudMachineFeature
 
     internal OpenAIFeature Account { get; set; } = default!;
 
-    private static OpenAIFeature GetOrCreateOpenAI(CloudMachineInfrastructure cm)
+    protected internal override void EmitFeatures(FeatureCollection features, string cmId)
     {
         // TODO: is it OK that we return the first one?
-        OpenAIFeature? openAI = cm.Features.FindAll<OpenAIFeature>().FirstOrDefault();
-        if (openAI != default) return openAI;
-
-        openAI = new OpenAIFeature();
-        cm.AddFeature(openAI);
-
-        return openAI;
+        OpenAIFeature? openAI = features.FindAll<OpenAIFeature>().FirstOrDefault();
+        if (openAI == default)
+        {
+            openAI = new OpenAIFeature(); // TODO: we need to add connection
+            features.Add(openAI);
+        }
+        openAI.AddModel(this);
     }
 
-    protected internal override void AddTo(CloudMachineInfrastructure cm)
+    protected internal override void EmitConnections(ConnectionCollection connections, string cmId)
     {
-        OpenAIFeature openAI = GetOrCreateOpenAI(cm);
-
-        openAI.AddModel(this);
-
+        Account.EmitConnections(connections, cmId);
         // add connections
         switch (Kind)
         {
             case AIModelKind.Chat:
-                cm.Connections.Add(new ClientConnection("OpenAI.Chat.ChatClient", $"{cm.Id}_chat"));
+                connections.Add(new ClientConnection("OpenAI.Chat.ChatClient", $"{cmId}_chat"));
                 break;
             case AIModelKind.Embedding:
-                cm.Connections.Add(new ClientConnection("OpenAI.Embeddings.EmbeddingClient", $"{cm.Id}_embedding"));
+                connections.Add(new ClientConnection("OpenAI.Embeddings.EmbeddingClient", $"{cmId}_embedding"));
                 break;
             default:
                 throw new NotImplementedException();
         }
     }
 
-    protected override ProvisionableResource EmitCore(CloudMachineInfrastructure cm)
+    protected override ProvisionableResource EmitInfrastructure(CloudMachineInfrastructure cm)
     {
         string name = Kind switch
         {

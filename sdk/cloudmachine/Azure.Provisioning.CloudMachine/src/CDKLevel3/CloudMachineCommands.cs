@@ -4,42 +4,17 @@
 using System;
 using System.ClientModel.Primitives;
 using System.ClientModel.TypeSpec;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using Azure.AI.OpenAI;
 using Azure.Core;
 using Azure.Identity;
-using Azure.Provisioning.CloudMachine;
 
 namespace Azure.CloudMachine;
 
 public static class CloudMachineCommands
 {
-    public static T AddFeature<T>(this CloudMachineClient client, T feature) where T : CloudMachineFeature
-    {
-        CloudMachineInfrastructure infra = client.Subclients.Get(() =>
-        {
-            CloudMachineInfrastructure infra = new CloudMachineInfrastructure();
-            return infra;
-        });
-        infra.AddFeature(feature);
-        return feature;
-    }
-
-    public static void Configure(this CloudMachineClient client, Action<CloudMachineInfrastructure>? configure = default)
-    {
-        CloudMachineInfrastructure cmi = new(client.Id);
-        if (configure != default)
-        {
-            configure(cmi);
-        }
-        foreach (ClientConnection clientConnection in cmi.Connections)
-        {
-            client.Connections.Add(clientConnection);
-        }
-        Azd.Init(cmi);
-    }
-
     public static bool Execute(string[] args, Action<CloudMachineInfrastructure>? configure = default, bool exitProcessIfHandled = true)
     {
         if (args.Length < 1)
@@ -60,7 +35,7 @@ public static class CloudMachineCommands
 
         if (args[0] == "-tsp")
         {
-            GenerateTsp(cmi);
+            GenerateTsp(cmi.Endpoints);
             return Handled(exitProcessIfHandled);
         }
 
@@ -143,11 +118,11 @@ public static class CloudMachineCommands
         }
     }
 
-    private static void GenerateTsp(CloudMachineInfrastructure cmi)
+    private static void GenerateTsp(IEnumerable<Type> operationGroups)
     {
-        foreach (Type endpoints in cmi.Endpoints)
+        foreach (Type operationGroup in operationGroups)
         {
-            string name = endpoints.Name;
+            string name = operationGroup.Name;
             if (name.StartsWith("I"))
                 name = name.Substring(1);
             string directory = Path.Combine(".", "tsp");
@@ -156,7 +131,7 @@ public static class CloudMachineCommands
             if (File.Exists(tspFile))
                 File.Delete(tspFile);
             using FileStream stream = File.OpenWrite(tspFile);
-            TypeSpecWriter.WriteServer(stream, endpoints);
+            TypeSpecWriter.WriteServer(stream, operationGroup);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Azure.CloudMachine;
 
 public class EventGridSystemTopicFeature(string topicName, CloudMachineFeature source) : CloudMachineFeature
 {
-    protected override ProvisionableResource EmitCore(CloudMachineInfrastructure infrastructure)
+    protected override ProvisionableResource EmitInfrastructure(CloudMachineInfrastructure infrastructure)
     {
         var topic = new SystemTopic("cm_eventgrid_topic", "2022-06-15")
         {

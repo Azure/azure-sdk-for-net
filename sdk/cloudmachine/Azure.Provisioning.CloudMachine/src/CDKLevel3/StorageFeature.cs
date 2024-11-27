@@ -30,7 +30,7 @@ public class StorageFeature : CloudMachineFeature
             _containerNames = ["default"];
     }
 
-    protected override ProvisionableResource EmitCore(CloudMachineInfrastructure infrastructure)
+    protected override ProvisionableResource EmitInfrastructure(CloudMachineInfrastructure infrastructure)
     {
         var _storage =
             new StorageAccount("cm_storage", StorageAccount.ResourceVersions.V2023_01_01)
@@ -79,9 +79,8 @@ public class StorageFeature : CloudMachineFeature
         return _storage;
     }
 
-    protected internal override void AddTo(CloudMachineInfrastructure cm)
+    protected internal override void EmitConnections(ConnectionCollection connections, string cmId)
     {
-        base.AddTo(cm);
-        cm.Connections.Add(new ClientConnection("Azure.Storage.Blobs.BlobContainerClient@default", $"https://{cm.Id}.blob.core.windows.net/default"));
+        connections.Add(new ClientConnection("Azure.Storage.Blobs.BlobContainerClient@default", $"https://{cmId}.blob.core.windows.net/default"));
     }
 }

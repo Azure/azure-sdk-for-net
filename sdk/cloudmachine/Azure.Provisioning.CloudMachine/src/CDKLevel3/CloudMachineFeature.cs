@@ -11,17 +11,17 @@ namespace Azure.Provisioning.CloudMachine;
 
 public abstract class CloudMachineFeature
 {
-    protected internal virtual void AddTo(CloudMachineInfrastructure cm) => cm.Features.Add(this);
+    protected abstract ProvisionableResource EmitInfrastructure(CloudMachineInfrastructure cm);
+    protected internal virtual void EmitConnections(ConnectionCollection connections, string cmId) { }
+    protected internal virtual void EmitFeatures(FeatureCollection features, string cmId)
+        => features.Add(this);
 
     internal void Emit(CloudMachineInfrastructure cm)
     {
-        if (Emitted != null)
-            return;
-        ProvisionableResource provisionable = EmitCore(cm);
+        if (Emitted != null) return;
+        ProvisionableResource provisionable = EmitInfrastructure(cm);
         Emitted = provisionable;
     }
-
-    protected abstract ProvisionableResource EmitCore(CloudMachineInfrastructure cm);
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public ProvisionableResource Emitted { get; protected set; } = default!;

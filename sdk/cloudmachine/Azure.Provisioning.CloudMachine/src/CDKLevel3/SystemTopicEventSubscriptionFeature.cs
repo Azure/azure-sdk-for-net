@@ -12,7 +12,7 @@ namespace Azure.CloudMachine;
 
 public class SystemTopicEventSubscriptionFeature(string name, EventGridSystemTopicFeature parent, ServiceBusTopicFeature destination, ServiceBusNamespaceFeature parentNamespace) : CloudMachineFeature
 {
-    protected override ProvisionableResource EmitCore(CloudMachineInfrastructure infrastructure)
+    protected override ProvisionableResource EmitInfrastructure(CloudMachineInfrastructure infrastructure)
     {
         ServiceBusNamespace serviceBusNamespace = EnsureEmits<ServiceBusNamespace>(parentNamespace);
 

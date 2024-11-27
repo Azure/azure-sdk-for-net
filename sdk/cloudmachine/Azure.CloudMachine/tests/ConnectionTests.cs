@@ -4,25 +4,33 @@
 #nullable enable
 
 using System;
+using System.Linq;
+using System.Text.Json;
+using Azure.CloudMachine.KeyVault;
 using Azure.CloudMachine.OpenAI;
+using Azure.Storage.Blobs;
 using NUnit.Framework;
 using OpenAI.Chat;
-using System.Text.Json;
-using Azure.Storage.Blobs;
-using Azure.CloudMachine.KeyVault;
 
 namespace Azure.CloudMachine.Tests;
 
 public class ConnectionTests
 {
-    private static void ValidateClient(CloudMachineClient client)
+    [Test]
+    [TestCase([new string[0]])]
+    public void TwoClients(string[] args)
     {
-        ChatClient chat = client.GetOpenAIChatClient();
-        StorageServices storage = client.Storage;
-        BlobContainerClient container = storage.GetContainer(default);
-        MessagingServices messaging = client.Messaging;
+        CloudMachineInfrastructure infra = new();
+        infra.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
+        if (args.Contains("-azd")) Azd.Init(infra);
+
+        CloudMachineClient client = infra.GetClient();
+
+        ValidateClient(client);
     }
 
+    // this tests the scenario where provisioning is done in one app, but runtime is done by another app
+    // the connections needs to be serialized and deserialized
     [Test]
     public void TwoApps()
     {
@@ -39,23 +47,15 @@ public class ConnectionTests
         ValidateClient(client);
     }
 
+    // TODO: maybe this is too hacky. do we really need this?
     [Test]
-    public void TwoClients()
-    {
-        CloudMachineInfrastructure infra = new();
-        infra.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
-
-        CloudMachineClient client = infra.GetClient();
-
-        ValidateClient(client);
-    }
-
-    [Test]
-    public void SingleClientAdd()
+    [TestCase([new string[0]])]
+    public void SingleClientAdd(string[] args)
     {
         CloudMachineClient client = new();
         client.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
-        //if (args.Contains("-azd")) Azd.Init(client);
+
+        if (args.Contains("-azd")) Azd.Init(client);
 
         ChatClient chat = client.GetOpenAIChatClient();
     }
@@ -66,23 +66,19 @@ public class ConnectionTests
         CloudMachineClient client = new();
         client.Configure((infrastructure) =>
         {
-            infrastructure.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
-        });
-        ValidateClient(client);
-    }
-
-    [Test]
-    public void Configuration()
-    {
-        CloudMachineCommands.Execute(["-bicep"], (infrastructure) =>
-        {
             infrastructure.AddFeature(new KeyVaultFeature());
             infrastructure.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
             infrastructure.AddFeature(new OpenAIModelFeature("text-embedding-ada-002", "2", AIModelKind.Embedding));
-        }, exitProcessIfHandled: false);
+        });
+        ValidateClient(client);
+        var embeddings = client.GetOpenAIEmbeddingsClient();
+    }
 
-        CloudMachineClient cm = new();
-        Console.WriteLine(cm.Id);
-        var embeddings = cm.GetOpenAIEmbeddingsClient();
+    private static void ValidateClient(CloudMachineClient client)
+    {
+        ChatClient chat = client.GetOpenAIChatClient();
+        StorageServices storage = client.Storage;
+        BlobContainerClient container = storage.GetContainer(default);
+        MessagingServices messaging = client.Messaging;
     }
 }

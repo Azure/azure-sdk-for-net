@@ -11,7 +11,7 @@ namespace Azure.CloudMachine;
 
 public class ServiceBusSubscriptionFeature(string name, ServiceBusTopicFeature parent) : CloudMachineFeature
 {
-    protected override ProvisionableResource EmitCore(CloudMachineInfrastructure infrastructure)
+    protected override ProvisionableResource EmitInfrastructure(CloudMachineInfrastructure infrastructure)
     {
         var subscription = new ServiceBusSubscription(name, "2021-11-01")
         {
@@ -33,13 +33,12 @@ public class ServiceBusSubscriptionFeature(string name, ServiceBusTopicFeature p
         return subscription;
     }
 
-    protected internal override void AddTo(CloudMachineInfrastructure cm)
+    protected internal override void EmitConnections(ConnectionCollection connections, string cmId)
     {
-        base.AddTo(cm);
         ClientConnection connection = new(
             $"{name}",
             $"{parent.Name}/{name}"
         );
-        cm.Connections.Add(connection);
+        connections.Add(connection);
     }
 }

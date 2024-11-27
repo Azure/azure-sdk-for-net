@@ -18,7 +18,7 @@ public class CloudMachineInfrastructure
     internal const string SB_PRIVATE_SUB = "cm_servicebus_subscription_private";
 
     private readonly Infrastructure _infrastructure = new("cm");
-    private readonly List<Provisionable> _resources = [];
+    private readonly List<NamedProvisionableConstruct> _constrcuts = [];
 
     internal List<Type> Endpoints { get; } = [];
     public FeatureCollection Features { get; } = new();
@@ -68,7 +68,8 @@ public class CloudMachineInfrastructure
 
     public T AddFeature<T>(T feature) where T: CloudMachineFeature
     {
-        feature.AddTo(this);
+        feature.EmitFeatures(Features, Id);
+        feature.EmitConnections(Connections, Id);
         return feature;
     }
 
@@ -83,7 +84,7 @@ public class CloudMachineInfrastructure
     [EditorBrowsable(EditorBrowsableState.Never)]
     public void AddConstruct(NamedProvisionableConstruct resource)
     {
-        _resources.Add(resource);
+        _constrcuts.Add(resource);
     }
 
     [EditorBrowsable(EditorBrowsableState.Never)]
@@ -108,7 +109,7 @@ public class CloudMachineInfrastructure
         _infrastructure.Add(Identity);
 
         // Add any add-on resources to the infrastructure.
-        foreach (Provisionable resource in _resources)
+        foreach (Provisionable resource in _constrcuts)
         {
             _infrastructure.Add(resource);
         }

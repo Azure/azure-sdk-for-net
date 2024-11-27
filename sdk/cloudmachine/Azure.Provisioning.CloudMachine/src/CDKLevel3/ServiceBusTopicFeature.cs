@@ -17,7 +17,7 @@ public class ServiceBusTopicFeature : CloudMachineFeature
         _parent = parent;
     }
 
-    protected override ProvisionableResource EmitCore(CloudMachineInfrastructure infrastructure)
+    protected override ProvisionableResource EmitInfrastructure(CloudMachineInfrastructure infrastructure)
     {
         var topic = new ServiceBusTopic(Name, "2021-11-01")
         {
@@ -36,10 +36,9 @@ public class ServiceBusTopicFeature : CloudMachineFeature
         return topic;
     }
 
-    protected internal override void AddTo(CloudMachineInfrastructure cm)
+    protected internal override void EmitConnections(ConnectionCollection connections, string cmId)
     {
-        base.AddTo(cm);
-        cm.Connections.Add(new ClientConnection(Name, Name));
+        connections.Add(new ClientConnection(Name, Name));
     }
 
     /// <summary>

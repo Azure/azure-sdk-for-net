@@ -10,7 +10,7 @@ namespace Azure.CloudMachine;
 
 public class ServiceBusNamespaceFeature(string name, ServiceBusSkuName sku = ServiceBusSkuName.Standard, ServiceBusSkuTier tier = ServiceBusSkuTier.Standard) : CloudMachineFeature
 {
-    protected override ProvisionableResource EmitCore(CloudMachineInfrastructure infrastructure)
+    protected override ProvisionableResource EmitInfrastructure(CloudMachineInfrastructure infrastructure)
     {
         var _serviceBusNamespace = new ServiceBusNamespace("cm_servicebus")
         {
@@ -40,9 +40,8 @@ public class ServiceBusNamespaceFeature(string name, ServiceBusSkuName sku = Ser
         return _serviceBusNamespace;
     }
 
-    protected internal override void AddTo(CloudMachineInfrastructure cm)
+    protected internal override void EmitConnections(ConnectionCollection connections, string cmId)
     {
-        base.AddTo(cm);
-        cm.Connections.Add(new ClientConnection("Azure.Messaging.ServiceBus.ServiceBusClient", $"https://{cm.Id}.servicebus.windows.net/"));
+        connections.Add(new ClientConnection("Azure.Messaging.ServiceBus.ServiceBusClient", $"https://{cmId}.servicebus.windows.net/"));
     }
 }

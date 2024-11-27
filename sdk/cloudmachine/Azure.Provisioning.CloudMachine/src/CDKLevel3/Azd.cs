@@ -19,6 +19,12 @@ public static class Azd
     private const string MainBicepName = "main";
     private const string ResourceGroupVersion = "2024-03-01";
 
+    public static void Init(CloudMachineClient client, string? infraDirectory = default)
+    {
+        CloudMachineInfrastructure infra = client.GetInfrastructure();
+        Init(infra, infraDirectory);
+    }
+
     public static void Init(CloudMachineInfrastructure infra, string? infraDirectory = default)
     {
         if (infraDirectory == default) infraDirectory = Path.Combine(".", "infra");
