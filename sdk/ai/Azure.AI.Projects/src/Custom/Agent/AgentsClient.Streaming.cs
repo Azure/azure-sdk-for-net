@@ -57,7 +57,7 @@ public partial class AgentsClient
     /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="assistantId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
 #pragma warning disable AZC0015 // Unexpected client method return type.
-    public virtual AsyncCollectionResult<StreamingUpdate> CreateRunStreamingAsync(string threadId, string assistantId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ThreadMessage> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<StreamingUpdate> CreateRunStreamingAsync(string threadId, string assistantId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ThreadMessageOptions> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
 #pragma warning restore AZC0015 // Unexpected client method return type.
     {
         Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -68,7 +68,7 @@ public partial class AgentsClient
             overrideModelName,
             overrideInstructions,
             additionalInstructions,
-            additionalMessages?.ToList() as IReadOnlyList<ThreadMessage> ?? new ChangeTrackingList<ThreadMessage>(),
+            additionalMessages?.ToList() as IReadOnlyList<ThreadMessageOptions> ?? new ChangeTrackingList<ThreadMessageOptions>(),
             overrideTools?.ToList() as IReadOnlyList<ToolDefinition> ?? new ChangeTrackingList<ToolDefinition>(),
             stream: true,
             temperature,
@@ -131,7 +131,7 @@ public partial class AgentsClient
     /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="assistantId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
 #pragma warning disable AZC0015 // Unexpected client method return type.
-    public virtual CollectionResult<StreamingUpdate> CreateRunStreaming(string threadId, string assistantId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ThreadMessage> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<StreamingUpdate> CreateRunStreaming(string threadId, string assistantId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ThreadMessageOptions> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
 #pragma warning restore AZC0015 // Unexpected client method return type.
     {
         Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -142,7 +142,7 @@ public partial class AgentsClient
             overrideModelName,
             overrideInstructions,
             additionalInstructions,
-            additionalMessages?.ToList() as IReadOnlyList<ThreadMessage> ?? new ChangeTrackingList<ThreadMessage>(),
+            additionalMessages?.ToList() as IReadOnlyList<ThreadMessageOptions> ?? new ChangeTrackingList<ThreadMessageOptions>(),
             overrideTools?.ToList() as IReadOnlyList<ToolDefinition> ?? new ChangeTrackingList<ToolDefinition>(),
             stream: true,
             temperature,

@@ -67,12 +67,9 @@ namespace Azure.ResourceManager.ProviderHub.Samples
             CustomRolloutResource customRollout = client.GetCustomRolloutResource(customRolloutResourceId);
 
             // invoke the operation
-            CustomRolloutData data = new CustomRolloutData(new CustomRolloutProperties(new CustomRolloutSpecification(new TrafficRegions()
+            CustomRolloutData data = new CustomRolloutData(new CustomRolloutProperties(new CustomRolloutSpecification(new TrafficRegions
             {
-                Regions =
-{
-new AzureLocation("brazilus")
-},
+                Regions = { new AzureLocation("brazilus") },
             })));
             ArmOperation<CustomRolloutResource> lro = await customRollout.UpdateAsync(WaitUntil.Completed, data);
             CustomRolloutResource result = lro.Value;

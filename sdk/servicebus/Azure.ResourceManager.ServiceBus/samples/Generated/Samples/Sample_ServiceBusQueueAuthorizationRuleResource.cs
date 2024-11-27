@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.ServiceBus.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_QueueAuthorizationRuleCreate()
+        public async Task Get_QueueAuthorizationRuleGet()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2024-01-01/examples/Queues/SBQueueAuthorizationRuleCreate.json
-            // this example is just showing the usage of "QueueAuthorizationRules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2024-01-01/examples/Queues/SBQueueAuthorizationRuleGet.json
+            // this example is just showing the usage of "QueueAuthorizationRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -39,15 +39,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             ServiceBusQueueAuthorizationRuleResource serviceBusQueueAuthorizationRule = client.GetServiceBusQueueAuthorizationRuleResource(serviceBusQueueAuthorizationRuleResourceId);
 
             // invoke the operation
-            ServiceBusAuthorizationRuleData data = new ServiceBusAuthorizationRuleData()
-            {
-                Rights =
-{
-ServiceBusAccessRight.Listen,ServiceBusAccessRight.Send
-},
-            };
-            ArmOperation<ServiceBusQueueAuthorizationRuleResource> lro = await serviceBusQueueAuthorizationRule.UpdateAsync(WaitUntil.Completed, data);
-            ServiceBusQueueAuthorizationRuleResource result = lro.Value;
+            ServiceBusQueueAuthorizationRuleResource result = await serviceBusQueueAuthorizationRule.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -86,10 +78,10 @@ ServiceBusAccessRight.Listen,ServiceBusAccessRight.Send
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_QueueAuthorizationRuleGet()
+        public async Task Update_QueueAuthorizationRuleCreate()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2024-01-01/examples/Queues/SBQueueAuthorizationRuleGet.json
-            // this example is just showing the usage of "QueueAuthorizationRules_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2024-01-01/examples/Queues/SBQueueAuthorizationRuleCreate.json
+            // this example is just showing the usage of "QueueAuthorizationRules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -107,7 +99,12 @@ ServiceBusAccessRight.Listen,ServiceBusAccessRight.Send
             ServiceBusQueueAuthorizationRuleResource serviceBusQueueAuthorizationRule = client.GetServiceBusQueueAuthorizationRuleResource(serviceBusQueueAuthorizationRuleResourceId);
 
             // invoke the operation
-            ServiceBusQueueAuthorizationRuleResource result = await serviceBusQueueAuthorizationRule.GetAsync();
+            ServiceBusAuthorizationRuleData data = new ServiceBusAuthorizationRuleData
+            {
+                Rights = { ServiceBusAccessRight.Listen, ServiceBusAccessRight.Send },
+            };
+            ArmOperation<ServiceBusQueueAuthorizationRuleResource> lro = await serviceBusQueueAuthorizationRule.UpdateAsync(WaitUntil.Completed, data);
+            ServiceBusQueueAuthorizationRuleResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

@@ -1075,7 +1075,7 @@
 # PRLabel: %HybridConnectivity
 /sdk/hybridconnectivity/Azure.ResourceManager.*/                   @alexmahonic
 
-# ServiceLabel: %%HybridConnectivity %Mgmt
+# ServiceLabel: %HybridConnectivity %Mgmt
 # ServiceOwners:                                                   @alexmahonic
 
 # ######## Eng Sys ########

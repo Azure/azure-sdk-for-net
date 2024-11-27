@@ -64,9 +64,10 @@ namespace Azure.AI.Projects
         /// <param name="data"> Data for evaluation. </param>
         /// <param name="description"> Description of the evaluation. It can be used to store additional information about the evaluation and is mutable. </param>
         /// <param name="systemData"> Metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="provisioningStatus"> Status of the evaluation. It is set by service and is read-only. </param>
+        /// <param name="provisioningState"> Provisioning State of the evaluation. It is set by service and is read-only. </param>
         /// <param name="tags"> Evaluation's tags. Unlike properties, tags are fully mutable. </param>
         /// <param name="properties"> Evaluation's properties. Unlike tags, properties are add-only. Once added, a property cannot be removed. </param>
+        /// <param name="isEnabled"> Enabled status of the evaluation. It is set by service and is read-only. </param>
         /// <param name="evaluators"> Evaluators to be used for the evaluation. </param>
         /// <param name="trigger">
         /// Trigger for the evaluation.
@@ -74,7 +75,7 @@ namespace Azure.AI.Projects
         /// The available derived classes include <see cref="CronTrigger"/> and <see cref="RecurrenceTrigger"/>.
         /// </param>
         /// <returns> A new <see cref="Projects.EvaluationSchedule"/> instance for mocking. </returns>
-        public static EvaluationSchedule EvaluationSchedule(string name = null, ApplicationInsightsConfiguration data = null, string description = null, SystemData systemData = null, string provisioningStatus = null, IDictionary<string, string> tags = null, IDictionary<string, string> properties = null, IDictionary<string, EvaluatorConfiguration> evaluators = null, Trigger trigger = null)
+        public static EvaluationSchedule EvaluationSchedule(string name = null, ApplicationInsightsConfiguration data = null, string description = null, SystemData systemData = null, string provisioningState = null, IDictionary<string, string> tags = null, IDictionary<string, string> properties = null, string isEnabled = null, IDictionary<string, EvaluatorConfiguration> evaluators = null, Trigger trigger = null)
         {
             tags ??= new Dictionary<string, string>();
             properties ??= new Dictionary<string, string>();
@@ -85,9 +86,10 @@ namespace Azure.AI.Projects
                 data,
                 description,
                 systemData,
-                provisioningStatus,
+                provisioningState,
                 tags,
                 properties,
+                isEnabled,
                 evaluators,
                 trigger,
                 serializedAdditionalRawData: null);
@@ -184,6 +186,23 @@ namespace Azure.AI.Projects
             metadata ??= new Dictionary<string, string>();
 
             return new ThreadMessageOptions(role, content, attachments?.ToList(), metadata, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.MessageIncompleteDetails"/>. </summary>
+        /// <param name="reason"> The provided reason describing why the message was marked as incomplete. </param>
+        /// <returns> A new <see cref="Projects.MessageIncompleteDetails"/> instance for mocking. </returns>
+        public static MessageIncompleteDetails MessageIncompleteDetails(MessageIncompleteDetailsReason reason = default)
+        {
+            return new MessageIncompleteDetails(reason, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.MessageTextAnnotation"/>. </summary>
+        /// <param name="type"> The object type. </param>
+        /// <param name="text"> The textual content associated with this text annotation item. </param>
+        /// <returns> A new <see cref="Projects.MessageTextAnnotation"/> instance for mocking. </returns>
+        public static MessageTextAnnotation MessageTextAnnotation(string type = null, string text = null)
+        {
+            return new UnknownMessageTextAnnotation(type, text, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Projects.RequiredToolCall"/>. </summary>

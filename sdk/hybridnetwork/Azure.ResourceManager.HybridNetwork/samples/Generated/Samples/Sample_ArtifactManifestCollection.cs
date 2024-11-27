@@ -18,43 +18,6 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_GetArtifactManifestListResource()
-        {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/ArtifactManifestListByArtifactStore.json
-            // this example is just showing the usage of "ArtifactManifests_ListByArtifactStore" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArtifactStoreResource created on azure
-            // for more information of creating ArtifactStoreResource, please refer to the document of ArtifactStoreResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg";
-            string publisherName = "TestPublisher";
-            string artifactStoreName = "TestArtifactStore";
-            ResourceIdentifier artifactStoreResourceId = ArtifactStoreResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, publisherName, artifactStoreName);
-            ArtifactStoreResource artifactStore = client.GetArtifactStoreResource(artifactStoreResourceId);
-
-            // get the collection of this ArtifactManifestResource
-            ArtifactManifestCollection collection = artifactStore.GetArtifactManifests();
-
-            // invoke the operation and iterate over the result
-            await foreach (ArtifactManifestResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ArtifactManifestData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateTheArtifactManifestResource()
         {
             // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/ArtifactManifestCreate.json
@@ -81,22 +44,19 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
             string artifactManifestName = "TestManifest";
             ArtifactManifestData data = new ArtifactManifestData(new AzureLocation("eastus"))
             {
-                Properties = new ArtifactManifestPropertiesFormat()
+                Properties = new ArtifactManifestPropertiesFormat
                 {
-                    Artifacts =
-{
-new ManifestArtifactFormat()
+                    Artifacts = {new ManifestArtifactFormat
 {
 ArtifactName = "fed-rbac",
 ArtifactType = ArtifactType.OCIArtifact,
 ArtifactVersion = "1.0.0",
-},new ManifestArtifactFormat()
+}, new ManifestArtifactFormat
 {
 ArtifactName = "nginx",
 ArtifactType = ArtifactType.OCIArtifact,
 ArtifactVersion = "v1",
-}
-},
+}},
                 },
             };
             ArmOperation<ArtifactManifestResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, artifactManifestName, data);
@@ -142,6 +102,43 @@ ArtifactVersion = "v1",
             ArtifactManifestData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_GetArtifactManifestListResource()
+        {
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/ArtifactManifestListByArtifactStore.json
+            // this example is just showing the usage of "ArtifactManifests_ListByArtifactStore" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ArtifactStoreResource created on azure
+            // for more information of creating ArtifactStoreResource, please refer to the document of ArtifactStoreResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg";
+            string publisherName = "TestPublisher";
+            string artifactStoreName = "TestArtifactStore";
+            ResourceIdentifier artifactStoreResourceId = ArtifactStoreResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, publisherName, artifactStoreName);
+            ArtifactStoreResource artifactStore = client.GetArtifactStoreResource(artifactStoreResourceId);
+
+            // get the collection of this ArtifactManifestResource
+            ArtifactManifestCollection collection = artifactStore.GetArtifactManifests();
+
+            // invoke the operation and iterate over the result
+            await foreach (ArtifactManifestResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ArtifactManifestData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
 
         [Test]

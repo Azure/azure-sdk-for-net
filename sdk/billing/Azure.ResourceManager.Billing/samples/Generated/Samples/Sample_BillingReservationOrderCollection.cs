@@ -49,9 +49,103 @@ namespace Azure.ResourceManager.Billing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Get_ReservationOrderGetByBillingAccountWithExpandPlanInformation()
+        {
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/reservationOrderGetByBillingAccountWithExpandPlanInformation.json
+            // this example is just showing the usage of "ReservationOrders_GetByBillingAccount" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BillingAccountResource created on azure
+            // for more information of creating BillingAccountResource, please refer to the document of BillingAccountResource
+            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
+            ResourceIdentifier billingAccountResourceId = BillingAccountResource.CreateResourceIdentifier(billingAccountName);
+            BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
+
+            // get the collection of this BillingReservationOrderResource
+            BillingReservationOrderCollection collection = billingAccount.GetBillingReservationOrders();
+
+            // invoke the operation
+            string reservationOrderId = "20000000-0000-0000-0000-000000000000";
+            BillingReservationOrderResource result = await collection.GetAsync(reservationOrderId);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BillingReservationOrderData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ReservationOrderListByBillingAccount()
+        {
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/reservationOrdersListByBillingAccount.json
+            // this example is just showing the usage of "ReservationOrders_ListByBillingAccount" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BillingAccountResource created on azure
+            // for more information of creating BillingAccountResource, please refer to the document of BillingAccountResource
+            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
+            ResourceIdentifier billingAccountResourceId = BillingAccountResource.CreateResourceIdentifier(billingAccountName);
+            BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
+
+            // get the collection of this BillingReservationOrderResource
+            BillingReservationOrderCollection collection = billingAccount.GetBillingReservationOrders();
+
+            // invoke the operation and iterate over the result
+            await foreach (BillingReservationOrderResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                BillingReservationOrderData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ReservationOrderGetByBillingAccount()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/reservationOrderGetByBillingAccount.json
+            // this example is just showing the usage of "ReservationOrders_GetByBillingAccount" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BillingAccountResource created on azure
+            // for more information of creating BillingAccountResource, please refer to the document of BillingAccountResource
+            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
+            ResourceIdentifier billingAccountResourceId = BillingAccountResource.CreateResourceIdentifier(billingAccountName);
+            BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
+
+            // get the collection of this BillingReservationOrderResource
+            BillingReservationOrderCollection collection = billingAccount.GetBillingReservationOrders();
+
+            // invoke the operation
+            string reservationOrderId = "20000000-0000-0000-0000-000000000000";
+            bool result = await collection.ExistsAsync(reservationOrderId);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_ReservationOrderGetByBillingAccountWithExpandPlanInformation()
+        {
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/reservationOrderGetByBillingAccountWithExpandPlanInformation.json
             // this example is just showing the usage of "ReservationOrders_GetByBillingAccount" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -117,66 +211,6 @@ namespace Azure.ResourceManager.Billing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_ReservationOrderGetByBillingAccountWithExpandPlanInformation()
-        {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/reservationOrderGetByBillingAccountWithExpandPlanInformation.json
-            // this example is just showing the usage of "ReservationOrders_GetByBillingAccount" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BillingAccountResource created on azure
-            // for more information of creating BillingAccountResource, please refer to the document of BillingAccountResource
-            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
-            ResourceIdentifier billingAccountResourceId = BillingAccountResource.CreateResourceIdentifier(billingAccountName);
-            BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
-
-            // get the collection of this BillingReservationOrderResource
-            BillingReservationOrderCollection collection = billingAccount.GetBillingReservationOrders();
-
-            // invoke the operation
-            string reservationOrderId = "20000000-0000-0000-0000-000000000000";
-            BillingReservationOrderResource result = await collection.GetAsync(reservationOrderId);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            BillingReservationOrderData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Exists_ReservationOrderGetByBillingAccountWithExpandPlanInformation()
-        {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/reservationOrderGetByBillingAccountWithExpandPlanInformation.json
-            // this example is just showing the usage of "ReservationOrders_GetByBillingAccount" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BillingAccountResource created on azure
-            // for more information of creating BillingAccountResource, please refer to the document of BillingAccountResource
-            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
-            ResourceIdentifier billingAccountResourceId = BillingAccountResource.CreateResourceIdentifier(billingAccountName);
-            BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
-
-            // get the collection of this BillingReservationOrderResource
-            BillingReservationOrderCollection collection = billingAccount.GetBillingReservationOrders();
-
-            // invoke the operation
-            string reservationOrderId = "20000000-0000-0000-0000-000000000000";
-            bool result = await collection.ExistsAsync(reservationOrderId);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ReservationOrderGetByBillingAccountWithExpandPlanInformation()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/reservationOrderGetByBillingAccountWithExpandPlanInformation.json
@@ -213,40 +247,6 @@ namespace Azure.ResourceManager.Billing.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ReservationOrderListByBillingAccount()
-        {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/reservationOrdersListByBillingAccount.json
-            // this example is just showing the usage of "ReservationOrders_ListByBillingAccount" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BillingAccountResource created on azure
-            // for more information of creating BillingAccountResource, please refer to the document of BillingAccountResource
-            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
-            ResourceIdentifier billingAccountResourceId = BillingAccountResource.CreateResourceIdentifier(billingAccountName);
-            BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
-
-            // get the collection of this BillingReservationOrderResource
-            BillingReservationOrderCollection collection = billingAccount.GetBillingReservationOrders();
-
-            // invoke the operation and iterate over the result
-            await foreach (BillingReservationOrderResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                BillingReservationOrderData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
         }
     }
 }

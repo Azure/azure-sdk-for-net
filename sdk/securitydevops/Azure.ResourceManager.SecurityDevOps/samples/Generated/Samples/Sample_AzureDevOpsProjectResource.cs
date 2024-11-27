@@ -71,9 +71,9 @@ namespace Azure.ResourceManager.SecurityDevOps.Samples
             AzureDevOpsProjectResource azureDevOpsProject = client.GetAzureDevOpsProjectResource(azureDevOpsProjectResourceId);
 
             // invoke the operation
-            AzureDevOpsProjectData data = new AzureDevOpsProjectData()
+            AzureDevOpsProjectData data = new AzureDevOpsProjectData
             {
-                Properties = new AzureDevOpsProjectProperties()
+                Properties = new AzureDevOpsProjectProperties
                 {
                     AutoDiscovery = AutoDiscovery.Disabled,
                 },
