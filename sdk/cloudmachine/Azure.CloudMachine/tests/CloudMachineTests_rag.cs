@@ -24,7 +24,7 @@ public partial class CloudMachineTests
 {
     [Ignore("no recordings yet")]
     [Test]
-    public void EmbeddingsDemo()
+    public void RagDemo()
     {
         string[] testMessages = [
             "When did the continuation policy change for DefaultAzureCredential?",
