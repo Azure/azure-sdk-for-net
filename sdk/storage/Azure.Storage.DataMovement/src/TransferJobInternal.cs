@@ -503,8 +503,8 @@ namespace Azure.Storage.DataMovement
                         ClientDiagnostics)
                         .ConfigureAwait(false);
                 }
+                _dataTransfer.TransferStatus.SetFailedItem();
             }
-            _dataTransfer.TransferStatus.SetFailedItem();
 
             try
             {
