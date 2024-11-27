@@ -101,18 +101,18 @@ namespace Azure.Generator
         }
 
         /// <inheritdoc/>
-        public override MethodBodyStatement SerializeValueType(CSharpType type, SerializationFormat serializationFormat, ValueExpression value, Type valueType, ScopedApi<Utf8JsonWriter> utf8JsonWriterSnippet, ScopedApi<ModelReaderWriterOptions> mrwOptionsParameterSnippet)
+        public override MethodBodyStatement SerializeValueType(CSharpType type, SerializationFormat serializationFormat, ValueExpression value, Type valueType, ScopedApi<Utf8JsonWriter> utf8JsonWriter, ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter)
         {
-            var statement = SerializeValueTypeCore(type, serializationFormat, value, valueType, utf8JsonWriterSnippet, mrwOptionsParameterSnippet);
-            return statement ?? base.SerializeValueType(type, serializationFormat, value, valueType, utf8JsonWriterSnippet, mrwOptionsParameterSnippet);
+            var statement = SerializeValueTypeCore(type, serializationFormat, value, valueType, utf8JsonWriter, mrwOptionsParameter);
+            return statement ?? base.SerializeValueType(type, serializationFormat, value, valueType, utf8JsonWriter, mrwOptionsParameter);
         }
 
-        private MethodBodyStatement? SerializeValueTypeCore(CSharpType type, SerializationFormat serializationFormat, ValueExpression value, Type valueType, ScopedApi<Utf8JsonWriter> utf8JsonWriterSnippet, ScopedApi<ModelReaderWriterOptions> mrwOptionsParameterSnippet)
+        private MethodBodyStatement? SerializeValueTypeCore(CSharpType type, SerializationFormat serializationFormat, ValueExpression value, Type valueType, ScopedApi<Utf8JsonWriter> utf8JsonWriter, ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter)
         {
             return valueType switch
             {
                 Type t when t == typeof(ResourceIdentifier) =>
-                    utf8JsonWriterSnippet.WriteStringValue(value.Property(nameof(ResourceIdentifier.Name))),
+                    utf8JsonWriter.WriteStringValue(value.Property(nameof(ResourceIdentifier.Name))),
                 _ => null,
             };
         }
