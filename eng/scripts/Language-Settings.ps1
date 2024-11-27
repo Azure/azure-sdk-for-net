@@ -9,6 +9,36 @@ $PackageRepositoryUri = "https://www.nuget.org/packages"
 
 . "$PSScriptRoot/docs/Docs-ToC.ps1"
 
+$DependencyCalculationPackages = @(
+  "Azure.Core",
+  "Azure.Identity"#,
+  # "Azure.ResourceManager" temporarily removed until we can figure out why it's not working correctly on the build machine. it works locally
+)
+
+# this entire thing should go away in favor of having the eng/services call
+# return just the dependent packages, versus the entire set of dependent test packages only.
+# this is a temporary workaround to use the existing dependency calculation to uncover
+# any other situations I might be missing
+function processTestProject($projPath) {
+  $cleanPath = $projPath -replace "^\$\(RepoRoot\)", ""
+
+  # Split the path into segments
+  $pathSegments = $cleanPath -split "[\\/]"
+
+  # Find the index of the 'tests' directory
+  $testsIndex = $pathSegments.IndexOf("tests")
+
+  if ($testsIndex -gt 0) {
+      # Reconstruct the path up to the directory just above 'tests'
+      $parentDirectory = ($pathSegments[0..($testsIndex - 1)] -join [System.IO.Path]::DirectorySeparatorChar)
+      return $parentDirectory
+  } else {
+      Write-Error "Unable to retrieve a package directory for this this test project: $projPath"
+      # If 'tests' is not found, return the original path (optional behavior)
+      $_
+  }
+}
+
 function Get-AllPackageInfoFromRepo($serviceDirectory)
 {
   $allPackageProps = @()
@@ -42,6 +72,55 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     $pkgProp.SdkType = $sdkType
     $pkgProp.IsNewSdk = ($isNewSdk -eq 'true')
     $pkgProp.ArtifactName = $pkgName
+    $pkgProp.IncludedForValidation = $false
+    $pkgProp.DirectoryPath = ($pkgProp.DirectoryPath)
+
+    if ($pkgProp.Name -in $DependencyCalculationPackages) {
+      Write-Host "In the additional dependency grabber list, calculating dependencies for $($pkgProp.Name)"
+      $outputFilePath = Join-Path $RepoRoot "$($pkgProp.Name)_dependencylist.txt"
+
+      if (!(Test-Path $outputFilePath)) {
+        # calculate the dependent packages
+        $output = dotnet build /t:ProjectDependsOn ./eng/service.proj `
+          /p:TestDependsOnDependency="$($pkgProp.Name)" `
+          /p:IncludeSrc=false /p:IncludeStress=false /p:IncludeSamples=false  `
+          /p:IncludePerf=false /p:RunApiCompat=false `
+          /p:InheritDocEnabled=false /p:BuildProjectReferences=false `
+          /p:OutputProjectFilePath="$outputFilePath"
+
+        if ($LASTEXITCODE -ne 0) {
+          Write-Host "Something went wrong calculating dependencies for $($pkgProp.Name)"
+          Write-Host $output
+        }
+      }
+
+      $pkgRelPath = $pkgProp.DirectoryPath.Replace($RepoRoot, "").TrimStart("\/")
+
+      if ($LASTEXITCODE -eq 0) {
+        if (Test-Path $outputFilePath) {
+          $dependentProjects = Get-Content $outputFilePath
+          $testPackages = @{}
+
+          foreach ($projectLine in $dependentProjects) {
+            $testPackage = processTestProject($projectLine)
+            if ($testPackage -and $testPackage -ne $pkgRelPath) {
+              if ($testPackages[$testPackage]) {
+                $testPackages[$testPackage] += 1
+              }
+              else {
+                $testPackages[$testPackage] = 1
+              }
+            }
+          }
+
+          $pkgProp.AdditionalValidationPackages = $testPackages.Keys
+
+          Write-Host "Remove-Item $outputFilePath"
+        }
+      } else {
+        Write-Host "Failed to calculate dependencies for $($pkgProp.Name)"
+      }
+    }
 
     $allPackageProps += $pkgProp
   }

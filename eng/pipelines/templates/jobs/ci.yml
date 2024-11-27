@@ -83,8 +83,17 @@ jobs:
           echo "##vso[task.setvariable variable=SkipDevBuildNumber]true"
         displayName: "Set SkipDevBuildNumber env variable"
       - template: /eng/common/pipelines/templates/steps/daily-dev-build-variable.yml
+
+      - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
         parameters:
-          ServiceDirectory: ${{parameters.ServiceDirectory}}
+          ServiceDirectory: ${{ parameters.ServiceDirectory }}
+
+      - template: /eng/pipelines/templates/steps/set-artifact-packages.yml
+        parameters:
+          PackageInfo: '$(Build.ArtifactStagingDirectory)/PackageInfo'
+          Artifacts: ${{ parameters.Artifacts }}
+          IncludeIndirect: false
+
       - pwsh: |
           # Reset SkipDevBuildNumber as empty
           $skipDevBuildNumber = ""
@@ -103,32 +112,25 @@ jobs:
         displayName: 'Use Python 3.11'
         inputs:
           versionSpec: '3.11'
+
       - template: /eng/pipelines/templates/steps/dotnet-diagnostics.yml
         parameters:
           LogFilePath: $(Build.ArtifactStagingDirectory)/pack.binlog
-      - script: >-
-          dotnet pack eng/service.proj -warnaserror
-          /p:ValidateRunApiCompat=true
-          /p:SDKType=${{ parameters.SDKType }}
-          /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
-          /p:IncludeTests=false
-          /p:PublicSign=false $(VersioningProperties)
-          /p:Configuration=$(BuildConfiguration)
-          /p:CommitSHA=$(Build.SourceVersion)
-          /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory)
-          $(DiagnosticArguments)
-        displayName: "Build and Package"
 
-      - task: Powershell@2
-        inputs:
-          filePath: $(Build.SourcesDirectory)/eng/common/scripts/Save-Package-Properties.ps1
-          arguments: >
-            -ServiceDirectory ${{parameters.ServiceDirectory}}
-            -OutDirectory $(Build.ArtifactStagingDirectory)/PackageInfo
-            -AddDevVersion:$$(SetDevVersion)
-          pwsh: true
-          workingDirectory: $(Pipeline.Workspace)
-        displayName: Update package properties with dev version
+      - pwsh: |
+          dotnet pack eng/service.proj -warnaserror `
+            -nowarn:NU1902 `
+            /p:ValidateRunApiCompat=true `
+            /p:SDKType=${{ parameters.SDKType }} `
+            /p:IncludeTests=false `
+            /p:PublicSign=false $(VersioningProperties) `
+            /p:Configuration=$(BuildConfiguration) `
+            /p:CommitSHA=$(Build.SourceVersion) `
+            /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory) `
+            /p:ServiceDirectory=* `
+            /p:ProjectListOverrideFile=$(ProjectListOverrideFile) `
+            $(DiagnosticArguments)
+        displayName: "Build and Package"
 
       - task: Powershell@2
         inputs:
@@ -202,13 +204,34 @@ jobs:
 
       - template: /eng/common/pipelines/templates/steps/cache-ps-modules.yml
 
-      - template: /eng/common/pipelines/templates/steps/verify-samples.yml
+      - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
         parameters:
           ServiceDirectory: ${{ parameters.ServiceDirectory }}
 
-      - template: /eng/common/pipelines/templates/steps/verify-readme.yml
+      - template: /eng/pipelines/templates/steps/set-artifact-packages.yml
         parameters:
-          ScanPath: $(Build.SourcesDirectory)/sdk/${{ parameters.ServiceDirectory }}
+          PackageInfo: '$(Build.ArtifactStagingDirectory)/PackageInfo'
+          Artifacts: ${{ parameters.Artifacts }}
+          IncludeIndirect: false
+
+      - pwsh: |
+          # todo: we have individual packages that we can go after. Do we want to scan only under the changed package for Sample Metadata?
+          # there is a potential for loss of coverage here. Need to check a before/after with dumping the scanpaths.
+          $serviceDirectories = "$(ChangedServices)" -split ","
+          $ScanPaths = @()
+          foreach ($ServiceDirectory in $serviceDirectories) {
+            $ScanPath = [System.IO.Path]::Combine('$(Build.SourcesDirectory)', 'sdk', $ServiceDirectory)
+            Write-Host "Adding $ScanPath to the scanned paths"
+            $ScanPaths += $ScanPath
+          }
+          Get-ChildItem $ScanPaths -Filter *.md -Recurse | eng/common/scripts/Test-SampleMetadata.ps1 -AllowParentProducts
+        displayName: Verify sample metadata
+        workingDirectory: $(Build.SourcesDirectory)
+
+      - template: /eng/common/pipelines/templates/steps/verify-readmes.yml
+        parameters:
+          PackagePropertiesFolder: '$(Build.ArtifactStagingDirectory)/PackageInfo'
+          IncludeIndirect: false
 
       - task: NodeTool@0
         inputs:
@@ -225,36 +248,53 @@ jobs:
           arguments: 'restore'
           workingDirectory: '$(Agent.BuildDirectory)'
 
-      - task: PowerShell@2
-        displayName: "Verify generated code"
+      # todo: emplace under CodeChecks.ps1 passing an argument of PackageInfoFolder
+      - pwsh: |
+          $failed = $false
+          $serviceDirectories = "$(ChangedServices)" -split ","
+          $ScanPaths = @()
+          foreach ($ServiceDirectory in $serviceDirectories) {
+            ./eng/scripts/CodeChecks.ps1 `
+              -ServiceDirectory $ServiceDirectory `
+              -SDKType ${{ parameters.SDKType }} `
+              -SpellCheckPublicApiSurface `
+
+            if ($LASTEXITCODE -ne 0) {
+              $failed = $true
+            }
+          }
+
+          if ($failed) {
+            exit 1
+          }
+        displayName: Verify Generated Code
         env:
           EnableSourceLink: false
-        inputs:
-          filePath: "eng/scripts/CodeChecks.ps1"
-          arguments: >
-            -ServiceDirectory ${{ parameters.ServiceDirectory }}
-            -SDKType ${{ parameters.SDKType }}
-            -SpellCheckPublicApiSurface
-          pwsh: true
-          failOnStderr: false
 
       - template: /eng/pipelines/templates/steps/dotnet-diagnostics.yml
         parameters:
           LogFilePath: $(Build.ArtifactStagingDirectory)/rebuild.binlog
 
-      - script: >-
-          dotnet build eng/service.proj -warnaserror
-          /t:rebuild
-          /p:DebugType=none
-          /p:SDKType=${{ parameters.SDKType }}
-          /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
-          /p:IncludePerf=false
-          /p:IncludeStress=false
-          /p:PublicSign=false
-          /p:Configuration=$(BuildConfiguration)
-          /p:EnableSourceLink=false
-          /p:BuildSnippets=true
-          $(DiagnosticArguments)
+      - pwsh: |
+          # todo: there is a way to glob this together, see reference above in 'Build'
+          # todo: remove nowarn:NU1902 that popped up due to dependency on MessagePack that is cg moderate flagged
+          $services = "$(ChangedServices)" -split ","
+
+          foreach ($service in $services) {
+            Write-Host "building $service"
+            dotnet build eng/service.proj -warnaserror `
+              /t:rebuild `
+              /p:DebugType=none `
+              /p:SDKType=${{ parameters.SDKType }} `
+              /p:ServiceDirectory=$service `
+              /p:IncludePerf=false `
+              /p:IncludeStress=false `
+              /p:PublicSign=false `
+              /p:Configuration=$(BuildConfiguration) `
+              /p:EnableSourceLink=false `
+              /p:BuildSnippets=true `
+              $(DiagnosticArguments)
+          }
         displayName: Build snippets
         condition: and(succeeded(), eq(${{ parameters.BuildSnippets }}, true))
 
@@ -296,6 +336,7 @@ jobs:
             BaselineFilePath: $(Build.sourcesdirectory)/eng/dotnet.gdnbaselines
             ServiceDirectory: ${{ parameters.ServiceDirectory }}
 
+    # temporarily comment to figure out the projectlistoverridefile for builds
     - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
       parameters:
         GenerateJobName: generate_target_service_test_matrix
@@ -305,44 +346,79 @@ jobs:
         MatrixReplace: ${{ parameters.MatrixReplace }}
         CloudConfig:
           Cloud: public
+        ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
+          SparseCheckoutPaths:
+            - "/*"
+            - "!SessionRecords"
+          EnablePRGeneration: true
+          PRMatrixSetting: ProjectNames
+          PRJobBatchSize: 20
+          PRMatrixIndirectFilters:
+            - 'AdditionalTestArgs=.*true'
+          PreGenerationSteps:
+            - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
+              parameters:
+                ServiceDirectory: ${{parameters.ServiceDirectory}}
+                PackageInfoDirectory: $(Build.ArtifactStagingDirectory)/PackageInfoPublishing
+
+            # when we publish the packageinfo as an artifact, it actually cleans up the original files. Since we need them during matrix generation
+            # we output them to a publishing directory, copy from there into the target PackageInfoDirectory, and then publish the originals
+            - pwsh: |
+                mkdir "$(Build.ArtifactStagingDirectory)/PackageInfo"
+                Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)/PackageInfoPublishing" -File | Copy-Item -Destination "$(Build.ArtifactStagingDirectory)/PackageInfo$($_.Name)" -Force
+              displayName: Copy ArtifactInfo from Publishing Directory
+
+            - pwsh: |
+                Get-ChildItem -R $(Build.ArtifactStagingDirectory)/PackageInfoPublishing | ForEach-Object {  $content = Get-Content $_.FullName; Write-Host "$($_.FullName): `n$content" }
+                Get-ChildItem -R $(Build.ArtifactStagingDirectory)/PackageInfo | ForEach-Object {  $content = Get-Content $_.FullName; Write-Host "$($_.FullName): `n$content" }
+              displayName: Dump Available Artifacts
+
+            - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
+              parameters:
+                ArtifactName: 'TestPackagesArtifact'
+                ArtifactPath: '$(Build.ArtifactStagingDirectory)/PackageInfoPublishing'
+
+
         AdditionalParameters:
           SDKType: ${{ parameters.SDKType }}
           ServiceDirectory: ${{ parameters.ServiceDirectory }}
           TestSetupSteps: ${{ parameters.TestSetupSteps }}
           TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
 
-    - ${{ if ne(parameters.TestDependsOnDependency, 'not-specified') }}:
-      - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
-        parameters:
-          GenerateJobName: generate_target_dependencies_test_matrix
-          JobTemplatePath: /eng/pipelines/templates/jobs/ci.tests.yml
-          MatrixConfigs: ${{ parameters.MatrixConfigs }}
-          MatrixFilters: ${{ parameters.MatrixFilters }}
-          MatrixReplace:
-            # Force UseProjectReferenceToAzureClients option to always be true because we only want to test with ProjectReference for dependency tests
-            - AdditionalTestArguments=\/p:UseProjectReferenceToAzureClients\=false/\/p:UseProjectReferenceToAzureClients\=true
-            - ${{ each matrixReplace in parameters.MatrixReplace }}:
-                - ${{ matrixReplace }}
-          CloudConfig:
-            Cloud: public
-          SparseCheckoutPaths:
-            - /*
-            - '!/sdk/*/**/SessionRecords/*'
-          PreGenerationSteps:
-            - ${{ each config in parameters.MatrixConfigs }}:
-                - template: /eng/pipelines/templates/steps/dependency.tests.yml
-                  parameters:
-                    TestDependsOnDependency: ${{ parameters.TestDependsOnDependency }}
-                    # The value for ProjectListOverrideFilePropertyName should be the same as AdditionalParameters ProjectListOverrideFilePropertyName below
-                    ProjectListOverrideFilePropertyName: 'ProjectListOverrideFile'
-                    ProjectFilesOutputFolder: $(Build.ArtifactStagingDirectory)
-                    ExcludeTargetTestProjects: true
-                    ServiceDirectory: ${{ parameters.ServiceDirectory }}
-                    MatrixConfigsFile: ${{ config.Path }}
-          AdditionalParameters:
-            SDKType: ${{ parameters.SDKType }}
-            ServiceDirectory: ${{ parameters.ServiceDirectory }}
-            TestSetupSteps: ${{ parameters.TestSetupSteps }}
-            TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
-            # The value for ProjectListOverrideFilePropertyName should be the same as dependency.tests.yml parameter ProjectListOverrideFilePropertyName
-            ProjectListOverrideFilePropertyName: 'ProjectListOverrideFile'
+    # this entire section is no longer necessary, as dependencies are now generated within the language-settings Get-AllPkgProperties
+    # functionality populating AdditionalPackagesForValidation
+    # - ${{ if ne(parameters.TestDependsOnDependency, 'not-specified') }}:
+    #   - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
+    #     parameters:
+    #       GenerateJobName: generate_target_dependencies_test_matrix
+    #       JobTemplatePath: /eng/pipelines/templates/jobs/ci.tests.yml
+    #       MatrixConfigs: ${{ parameters.MatrixConfigs }}
+    #       MatrixFilters: ${{ parameters.MatrixFilters }}
+    #       MatrixReplace:
+    #         # Force UseProjectReferenceToAzureClients option to always be true because we only want to test with ProjectReference for dependency tests
+    #         - AdditionalTestArguments=\/p:UseProjectReferenceToAzureClients\=false/\/p:UseProjectReferenceToAzureClients\=true
+    #         - ${{ each matrixReplace in parameters.MatrixReplace }}:
+    #             - ${{ matrixReplace }}
+    #       CloudConfig:
+    #         Cloud: public
+    #       SparseCheckoutPaths:
+    #         - /*
+    #         - '!/sdk/*/**/SessionRecords/*'
+    #       PreGenerationSteps:
+    #         - ${{ each config in parameters.MatrixConfigs }}:
+    #             - template: /eng/pipelines/templates/steps/dependency.tests.yml
+    #               parameters:
+    #                 TestDependsOnDependency: ${{ parameters.TestDependsOnDependency }}
+    #                 # The value for ProjectListOverrideFilePropertyName should be the same as AdditionalParameters ProjectListOverrideFilePropertyName below
+    #                 ProjectListOverrideFilePropertyName: 'ProjectListOverrideFile'
+    #                 ProjectFilesOutputFolder: $(Build.ArtifactStagingDirectory)
+    #                 ExcludeTargetTestProjects: true
+    #                 ServiceDirectory: ${{ parameters.ServiceDirectory }}
+    #                 MatrixConfigsFile: ${{ config.Path }}
+    #       AdditionalParameters:
+    #         SDKType: ${{ parameters.SDKType }}
+    #         ServiceDirectory: ${{ parameters.ServiceDirectory }}
+    #         TestSetupSteps: ${{ parameters.TestSetupSteps }}
+    #         TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
+    #         # The value for ProjectListOverrideFilePropertyName should be the same as dependency.tests.yml parameter ProjectListOverrideFilePropertyName
+    #         ProjectListOverrideFilePropertyName: 'ProjectListOverrideFile'

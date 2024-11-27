@@ -82,12 +82,11 @@ jobs:
                 - "/*"
                 - "!SessionRecords"
                 - "/sdk/*/**/SessionRecords/*"
-      - ${{ if ne(parameters.ProjectListOverrideFilePropertyName, '') }}:
+      - ${{ if and(eq(variables['Build.Reason'], 'PullRequest'), eq(parameters.ServiceDirectory, 'auto')) }}:
         - task: DownloadPipelineArtifact@2
           inputs:
-            artifact: DependencyTestProjectReferences
-            patterns: "**/$(${{ parameters.ProjectListOverrideFilePropertyName }})"
-            path: $(Build.SourcesDirectory)
+            artifact: TestPackagesArtifact
+            path: $(Build.SourcesDirectory)/PackageInfo
       - pwsh: |
           $(Build.SourcesDirectory)/eng/common/scripts/trust-proxy-certificate.ps1
         displayName: 'Language Specific Certificate Trust'
@@ -101,19 +100,20 @@ jobs:
       - ${{ each step in parameters.TestSetupSteps }}:
         - ${{ each pair in step }}:
             ${{ pair.key }}: ${{ pair.value }}
+
+      - pwsh: |
+          Get-ChildItem -Path $(Build.SourcesDirectory) | ForEach-Object { Write-Host $_.FullName }
+        displayName: Dump Visible Files
+
+      - template: /eng/pipelines/templates/steps/set-artifact-packages.yml
+        parameters:
+          PackageInfo: '$(Build.SourcesDirectory)/PackageInfo'
+
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
         parameters:
           NuGetCacheKey: Test
       - pwsh: |
-          if ("${{ parameters.ProjectListOverrideFilePropertyName }}" -ne '') {
-            Write-Host "##vso[task.setvariable variable=ProjectListOverrideFileName]$(${{ parameters.ProjectListOverrideFilePropertyName }})"
-            Write-Host "##vso[task.setvariable variable=CodeCoverageFilePattern]$(Build.SourcesDirectory)\sdk\**\coverage.cobertura.xml"
-          }
-          else
-          {
-            Write-Host "##vso[task.setvariable variable=ProjectListOverrideFileName]"
-            Write-Host "##vso[task.setvariable variable=CodeCoverageFilePattern]$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}\**\coverage.cobertura.xml"
-          }
+          Write-Host "##vso[task.setvariable variable=CodeCoverageFilePattern]$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}\**\coverage.cobertura.xml"
         displayName: Set variable for the project list file and coverage directory
       - template: /eng/pipelines/templates/steps/dotnet-diagnostics.yml
         parameters:
@@ -131,7 +131,7 @@ jobs:
           /p:Configuration=$(BuildConfiguration)
           /p:CollectCoverage=$(CollectCoverage)
           /p:EnableSourceLink=false
-          /p:ProjectListOverrideFile=$(ProjectListOverrideFileName)
+          /p:ProjectListOverrideFile=$(ProjectListOverrideFile)
           $(AdditionalTestArguments)
           $(DiagnosticArguments)
         displayName: "Build & Test ($(TestTargetFramework))"
