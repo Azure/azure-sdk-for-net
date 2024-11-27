@@ -1,16 +1,16 @@
 # Release History
 
-## 1.1.0-beta.8 (Unreleased)
+## 1.1.0 (Unreleased)
 
 ### Features Added
 
+- Upgraded api-version tag from 'package-2022-01-preview' to 'package-2024-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/cfe266748ace6a5775d0d23ecbc654741d91958b/specification/servicebus/resource-manager/readme.md.
 - Exposed `JsonModelWriteCore` for model serialization procedure.
 
-### Breaking Changes
-
-### Bugs Fixed
-
 ### Other Changes
+
+- Upgraded Azure.Core from 1.25.0 to 1.44.1
+- Upgraded Azure.ResourceManager from 1.2.0 to 1.13.0
 
 ## 1.1.0-beta.7 (2024-05-07)
 
@@ -22,20 +22,20 @@
 
 ### Features Added
 
-- Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+- Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
 
 ## 1.1.0-beta.5 (2024-03-26)
 
 ### Features Added
 
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Added experimental Bicep serialization.
 
 ## 1.1.0-beta.4 (2023-11-21)
 
 ### Features Added
 
-- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Other Changes
 
@@ -45,7 +45,7 @@
 
 ### Features Added
 
-- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Enabled the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 
 ### Other Changes
 
@@ -105,12 +105,12 @@ Polishing since last public beta release:
 
 ### Breaking Changes
 
-- Simplify `type` property names.
+- Simplified `type` property names.
 - Normalized the body parameter type names for PUT / POST / PATCH operations if it is only used as input.
 
 ### Other Changes
 
-- Upgrade dependency to Azure.ResourceManager 1.0.0
+- Upgraded dependency to Azure.ResourceManager 1.0.0
 
 ## 1.0.0-beta.3 (2022-03-31)
 

@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 namespace: Azure.ResourceManager.ServiceBus
 require: https://github.com/Azure/azure-rest-api-specs/blob/cfe266748ace6a5775d0d23ecbc654741d91958b/specification/servicebus/resource-manager/readme.md
-tag: package-2024-01
+#tag: package-2024-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
