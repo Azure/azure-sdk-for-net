@@ -4,6 +4,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -25,21 +26,17 @@ public class SchedulerTests : DurableTaskSchedulerManagementTestBase
     {
         SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
         ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg", AzureLocation.NorthCentralUS);
+        await TestContext.Error.WriteLineAsync(
+            $"subscription: {subscription.Data.SubscriptionId}, resource group {rg.Data.Name}");
         string resourceName = Recording.GenerateAssetName("resource");
 
         // Create Scheduler
         SchedulerData createSchedulerData = new SchedulerData
         {
-            Properties = new SchedulerProperties
-            {
-                Sku = new SchedulerSku
-                {
-                    Name = "Dedicated",
-                    Capacity = 1
-                },
-                IPAllowlist = { "12.14.16.18/20", "11.13.15.17/20", "123.124.125.126" },
-            },
-            Location = AzureLocation.NorthCentralUS
+            Location = AzureLocation.NorthCentralUS,
+            Properties = new SchedulerProperties(
+                ipAllowlist: new List<string> { "12.14.16.18/20", "11.13.15.17/20", "123.124.125.126" },
+                sku: new SchedulerSku { Name = "Dedicated", Capacity = 1 }),
         };
 
         ArmOperation<SchedulerResource> longRunningOperation =
@@ -75,19 +72,14 @@ public class SchedulerTests : DurableTaskSchedulerManagementTestBase
 
         SchedulerData updateSchedulerData = new SchedulerData
         {
-            Properties = new SchedulerProperties
-            {
-                Sku = new SchedulerSku
-                {
-                    Name = "Dedicated",
-                    Capacity = 1
-                },
-                IPAllowlist = { "12.14.16.18/22", "11.13.15.17/22", "123.124.125.126" },
-            },
-            Location = AzureLocation.NorthCentralUS
+            Location = AzureLocation.NorthCentralUS,
+            Properties = new SchedulerProperties(
+                ipAllowlist: new List<string> { "12.14.16.18/22", "11.13.15.17/22", "123.124.125.126" },
+                sku: new SchedulerSku { Name = "Dedicated", Capacity = 1 })
         };
 
-        longRunningOperation = await rg.GetSchedulers().CreateOrUpdateAsync(WaitUntil.Started, resourceName, updateSchedulerData);
+        longRunningOperation =
+            await rg.GetSchedulers().CreateOrUpdateAsync(WaitUntil.Started, resourceName, updateSchedulerData);
         // while the update is in progress the resource is in updating state
         resource = await rg.GetSchedulerAsync(resourceName);
         Assert.AreEqual(ProvisioningState.Updating, resource.Data.Properties.ProvisioningState);
@@ -105,7 +97,7 @@ public class SchedulerTests : DurableTaskSchedulerManagementTestBase
         // List all schedulers and verify the updated scheduler is present
         List<SchedulerResource> schedulers = await rg.GetSchedulers().GetAllAsync().ToEnumerableAsync();
         // look for the scheduler with the ARM resource ID matching our resource
-        resource =  schedulers.FirstOrDefault(s => s.Data.Id == resourceId);
+        resource = schedulers.FirstOrDefault(s => s.Data.Id == resourceId);
         Assert.NotNull(resource);
         Assert.AreEqual(resourceName, resource.Data.Name);
         Assert.AreEqual("Dedicated", resource.Data.Properties.Sku.Name);
@@ -119,10 +111,9 @@ public class SchedulerTests : DurableTaskSchedulerManagementTestBase
 
         SchedulerData patchSchedulerData = new SchedulerData
         {
-            Properties = new SchedulerProperties
-            {
-                IPAllowlist = { "21.22.23.24/25" }
-            },
+            Properties = new SchedulerProperties(
+                ipAllowlist: new List<string> { "21.22.23.24/25" },
+                sku: null)
         };
 
         longRunningOperation = await resource.UpdateAsync(waitUntil: WaitUntil.Started, patchSchedulerData);
