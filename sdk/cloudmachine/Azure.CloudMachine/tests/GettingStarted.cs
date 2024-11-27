@@ -7,6 +7,7 @@ using System;
 using Azure.CloudMachine.OpenAI;
 using NUnit.Framework;
 using System.Linq;
+using OpenAI.Chat;
 
 namespace Azure.CloudMachine.Tests;
 
@@ -26,5 +27,9 @@ public partial class CloudMachineTests
 
         // TODO: we need to allow newing up the client.
         CloudMachineClient client = infra.GetClient();
+
+        ChatClient chat = client.GetOpenAIChatClient();
+        string completion = chat.CompleteChat("List all noble gases.").AsText();
+        Console.WriteLine(completion);
     }
 }

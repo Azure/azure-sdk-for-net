@@ -51,6 +51,13 @@ public static class AzureOpenAIExtensions
     /// <summary>
     /// returns full text of all parts.
     /// </summary>
+    /// <returns></returns>
+    public static string AsText(this ClientResult<ChatCompletion> completionResult)
+        => AsText(completionResult.Value);
+
+    /// <summary>
+    /// returns full text of all parts.
+    /// </summary>
     /// <param name="completion"></param>
     /// <returns></returns>
     public static string AsText(this ChatCompletion completion)
