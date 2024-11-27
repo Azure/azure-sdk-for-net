@@ -34,7 +34,7 @@
      "enumType": {
       "$ref": "2"
      },
-     "description": "Text message type.",
+     "doc": "Text message type.",
      "decorators": []
     },
     {
@@ -52,7 +52,7 @@
      "enumType": {
       "$ref": "2"
      },
-     "description": "Image message type.",
+     "doc": "Image message type.",
      "decorators": []
     },
     {
@@ -70,7 +70,7 @@
      "enumType": {
       "$ref": "2"
      },
-     "description": "Image message type. Legacy image type for `MediaNotificationContent` which is being deprecated",
+     "doc": "Image message type. Legacy image type for `MediaNotificationContent` which is being deprecated",
      "decorators": []
     },
     {
@@ -88,7 +88,7 @@
      "enumType": {
       "$ref": "2"
      },
-     "description": "Document message type.",
+     "doc": "Document message type.",
      "decorators": []
     },
     {
@@ -106,7 +106,7 @@
      "enumType": {
       "$ref": "2"
      },
-     "description": "Video message type.",
+     "doc": "Video message type.",
      "decorators": []
     },
     {
@@ -124,7 +124,7 @@
      "enumType": {
       "$ref": "2"
      },
-     "description": "Audio message type.",
+     "doc": "Audio message type.",
      "decorators": []
     },
     {
@@ -142,11 +142,11 @@
      "enumType": {
       "$ref": "2"
      },
-     "description": "Template message type.",
+     "doc": "Template message type.",
      "decorators": []
     }
    ],
-   "description": "The type of message.",
+   "doc": "The type of message.",
    "isFixed": false,
    "isFlags": false,
    "usage": "Input,Json",
@@ -180,7 +180,7 @@
      "enumType": {
       "$ref": "18"
      },
-     "description": "The text template parameter type.",
+     "doc": "The text template parameter type.",
      "decorators": []
     },
     {
@@ -198,7 +198,7 @@
      "enumType": {
       "$ref": "18"
      },
-     "description": "The image template parameter type.",
+     "doc": "The image template parameter type.",
      "decorators": []
     },
     {
@@ -216,7 +216,7 @@
      "enumType": {
       "$ref": "18"
      },
-     "description": "The document template parameter type.",
+     "doc": "The document template parameter type.",
      "decorators": []
     },
     {
@@ -234,7 +234,7 @@
      "enumType": {
       "$ref": "18"
      },
-     "description": "The video template parameter type.",
+     "doc": "The video template parameter type.",
      "decorators": []
     },
     {
@@ -252,7 +252,7 @@
      "enumType": {
       "$ref": "18"
      },
-     "description": "The location template parameter type.",
+     "doc": "The location template parameter type.",
      "decorators": []
     },
     {
@@ -270,11 +270,11 @@
      "enumType": {
       "$ref": "18"
      },
-     "description": "The quick action template parameter type.",
+     "doc": "The quick action template parameter type.",
      "decorators": []
     }
    ],
-   "description": "The type of the template parameter.",
+   "doc": "The type of the template parameter.",
    "isFixed": false,
    "isFlags": false,
    "usage": "Input,Json",
@@ -308,11 +308,11 @@
      "enumType": {
       "$ref": "32"
      },
-     "description": "The WhatsApp template type.",
+     "doc": "The WhatsApp template type.",
      "decorators": []
     }
    ],
-   "description": "The type of the message template.",
+   "doc": "The type of the message template.",
    "isFixed": false,
    "isFlags": false,
    "usage": "Input,Json",
@@ -346,7 +346,7 @@
      "enumType": {
       "$ref": "36"
      },
-     "description": "The WhatsApp button sub type is quick reply.",
+     "doc": "The WhatsApp button sub type is quick reply.",
      "decorators": []
     },
     {
@@ -364,11 +364,11 @@
      "enumType": {
       "$ref": "36"
      },
-     "description": "The WhatsApp button sub type is url.",
+     "doc": "The WhatsApp button sub type is url.",
      "decorators": []
     }
    ],
-   "description": "The WhatsApp button sub type.",
+   "doc": "The WhatsApp button sub type.",
    "isFixed": false,
    "isFlags": false,
    "usage": "Input,Json",
@@ -402,7 +402,7 @@
      "enumType": {
       "$ref": "42"
      },
-     "description": "Azure Communication Messages 2024-02-01 api version",
+     "doc": "Azure Communication Messages 2024-02-01 api version",
      "decorators": []
     },
     {
@@ -420,11 +420,11 @@
      "enumType": {
       "$ref": "42"
      },
-     "description": "Azure Communication Messages 2024-08-30 api version",
+     "doc": "Azure Communication Messages 2024-08-30 api version",
      "decorators": []
     }
    ],
-   "description": "Azure Communication Messages Versions",
+   "doc": "Azure Communication Messages Versions",
    "isFixed": true,
    "isFlags": false,
    "usage": "ApiVersionEnum",
@@ -458,7 +458,7 @@
      "enumType": {
       "$ref": "48"
      },
-     "description": "Message template is approved.",
+     "doc": "Message template is approved.",
      "decorators": []
     },
     {
@@ -476,7 +476,7 @@
      "enumType": {
       "$ref": "48"
      },
-     "description": "Message template is rejected.",
+     "doc": "Message template is rejected.",
      "decorators": []
     },
     {
@@ -494,7 +494,7 @@
      "enumType": {
       "$ref": "48"
      },
-     "description": "Message template is pending.",
+     "doc": "Message template is pending.",
      "decorators": []
     },
     {
@@ -512,11 +512,11 @@
      "enumType": {
       "$ref": "48"
      },
-     "description": "Message template is paused.",
+     "doc": "Message template is paused.",
      "decorators": []
     }
    ],
-   "description": "The aggregated template status.",
+   "doc": "The aggregated template status.",
    "isFixed": false,
    "isFlags": false,
    "usage": "Output,Json",
@@ -550,11 +550,11 @@
      "enumType": {
       "$ref": "58"
      },
-     "description": "The WhatsApp communication messages channel type.",
+     "doc": "The WhatsApp communication messages channel type.",
      "decorators": []
     }
    ],
-   "description": "The type of the communication messages channel.",
+   "doc": "The type of the communication messages channel.",
    "isFixed": false,
    "isFlags": false,
    "usage": "Output,Json",
@@ -588,7 +588,7 @@
      "enumType": {
       "$ref": "62"
      },
-     "description": "If the request was accepted and the server guarantees that the server state reflects a single execution of the operation.",
+     "doc": "If the request was accepted and the server guarantees that the server state reflects a single execution of the operation.",
      "decorators": []
     },
     {
@@ -606,11 +606,11 @@
      "enumType": {
       "$ref": "62"
      },
-     "description": "If the request was rejected because the combination of Repeatability-First-Sent and Repeatability-Request-ID were invalid\nor because the Repeatability-First-Sent value was outside the range of values held by the server.",
+     "doc": "If the request was rejected because the combination of Repeatability-First-Sent and Repeatability-Request-ID were invalid\nor because the Repeatability-First-Sent value was outside the range of values held by the server.",
      "decorators": []
     }
    ],
-   "description": "Repeatability Result header options",
+   "doc": "Repeatability Result header options",
    "isFixed": true,
    "isFlags": false,
    "usage": "Output",
@@ -624,14 +624,14 @@
    "name": "NotificationContent",
    "crossLanguageDefinitionId": "Azure.Communication.MessagesService.NotificationContent",
    "usage": "Input,Json",
-   "description": "Details of the message to send.",
+   "doc": "Details of the message to send.",
    "decorators": [],
    "discriminatorProperty": {
     "$id": "69",
     "kind": "property",
     "name": "kind",
     "serializedName": "kind",
-    "description": "The type discriminator describing a notification type.",
+    "doc": "The type discriminator describing a notification type.",
     "type": {
      "$ref": "2"
     },
@@ -648,7 +648,7 @@
      "kind": "property",
      "name": "channelRegistrationId",
      "serializedName": "channelRegistrationId",
-     "description": "The Channel Registration ID for the Business Identifier.",
+     "doc": "The Channel Registration ID for the Business Identifier.",
      "type": {
       "$id": "71",
       "kind": "string",
@@ -675,7 +675,7 @@
      "kind": "property",
      "name": "to",
      "serializedName": "to",
-     "description": "The native external platform user identifiers of the recipient.",
+     "doc": "The native external platform user identifiers of the recipient.",
      "type": {
       "$id": "74",
       "kind": "array",
@@ -709,7 +709,7 @@
      "name": "TextNotificationContent",
      "crossLanguageDefinitionId": "Azure.Communication.MessagesService.TextNotificationContent",
      "usage": "Input,Json",
-     "description": "A request to send a text notification.",
+     "doc": "A request to send a text notification.",
      "discriminatorValue": "text",
      "decorators": [],
      "baseModel": {
@@ -721,7 +721,7 @@
        "kind": "property",
        "name": "kind",
        "serializedName": "kind",
-       "description": "Message notification type is text.",
+       "doc": "Message notification type is text.",
        "type": {
         "$id": "79",
         "kind": "constant",
@@ -747,7 +747,7 @@
        "kind": "property",
        "name": "content",
        "serializedName": "content",
-       "description": "Message content.",
+       "doc": "Message content.",
        "type": {
         "$id": "82",
         "kind": "string",
@@ -771,7 +771,7 @@
      "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MediaNotificationContent",
      "usage": "Input,Json",
      "deprecation": "`MediaNotificationContent` is being deprecated, we encourage you to use the new `ImageNotificationContent` for sending images instead.",
-     "description": "@deprecated A request to send an image notification.",
+     "doc": "@deprecated A request to send an image notification.",
      "discriminatorValue": "image_v0",
      "decorators": [],
      "baseModel": {
@@ -783,7 +783,7 @@
        "kind": "property",
        "name": "kind",
        "serializedName": "kind",
-       "description": "Message notification type is image.",
+       "doc": "Message notification type is image.",
        "type": {
         "$id": "85",
         "kind": "constant",
@@ -809,7 +809,7 @@
        "kind": "property",
        "name": "content",
        "serializedName": "content",
-       "description": "Optional text content.",
+       "doc": "Optional text content.",
        "type": {
         "$id": "88",
         "kind": "string",
@@ -829,7 +829,7 @@
        "kind": "property",
        "name": "mediaUri",
        "serializedName": "mediaUri",
-       "description": "A media url for the file. Required if the type is one of the supported media types, e.g. image",
+       "doc": "A media url for the file. Required if the type is one of the supported media types, e.g. image",
        "type": {
         "$id": "90",
         "kind": "url",
@@ -852,7 +852,7 @@
      "name": "ImageNotificationContent",
      "crossLanguageDefinitionId": "Azure.Communication.MessagesService.ImageNotificationContent",
      "usage": "Input,Json",
-     "description": "A request to send an image notification.",
+     "doc": "A request to send an image notification.",
      "discriminatorValue": "image",
      "decorators": [],
      "baseModel": {
@@ -864,7 +864,7 @@
        "kind": "property",
        "name": "kind",
        "serializedName": "kind",
-       "description": "Message notification type is image.",
+       "doc": "Message notification type is image.",
        "type": {
         "$id": "93",
         "kind": "constant",
@@ -890,7 +890,7 @@
        "kind": "property",
        "name": "caption",
        "serializedName": "caption",
-       "description": "Optional text content.",
+       "doc": "Optional text content.",
        "type": {
         "$id": "96",
         "kind": "string",
@@ -910,7 +910,7 @@
        "kind": "property",
        "name": "mediaUri",
        "serializedName": "mediaUri",
-       "description": "A media url for the file. Required if the type is one of the supported media types, e.g. image",
+       "doc": "A media url for the file. Required if the type is one of the supported media types, e.g. image",
        "type": {
         "$id": "98",
         "kind": "url",
@@ -933,7 +933,7 @@
      "name": "DocumentNotificationContent",
      "crossLanguageDefinitionId": "Azure.Communication.MessagesService.DocumentNotificationContent",
      "usage": "Input,Json",
-     "description": "A request to send a document notification.",
+     "doc": "A request to send a document notification.",
      "discriminatorValue": "document",
      "decorators": [],
      "baseModel": {
@@ -945,7 +945,7 @@
        "kind": "property",
        "name": "kind",
        "serializedName": "kind",
-       "description": "Message notification type is image.",
+       "doc": "Message notification type is image.",
        "type": {
         "$id": "101",
         "kind": "constant",
@@ -971,7 +971,7 @@
        "kind": "property",
        "name": "caption",
        "serializedName": "caption",
-       "description": "Optional text content.",
+       "doc": "Optional text content.",
        "type": {
         "$id": "104",
         "kind": "string",
@@ -991,7 +991,7 @@
        "kind": "property",
        "name": "fileName",
        "serializedName": "fileName",
-       "description": "Optional name for the file.",
+       "doc": "Optional name for the file.",
        "type": {
         "$id": "106",
         "kind": "string",
@@ -1011,7 +1011,7 @@
        "kind": "property",
        "name": "mediaUri",
        "serializedName": "mediaUri",
-       "description": "A media url for the file. Required if the type is one of the supported media types, e.g. image",
+       "doc": "A media url for the file. Required if the type is one of the supported media types, e.g. image",
        "type": {
         "$id": "108",
         "kind": "url",
@@ -1034,7 +1034,7 @@
      "name": "VideoNotificationContent",
      "crossLanguageDefinitionId": "Azure.Communication.MessagesService.VideoNotificationContent",
      "usage": "Input,Json",
-     "description": "A request to send a video notification.",
+     "doc": "A request to send a video notification.",
      "discriminatorValue": "video",
      "decorators": [],
      "baseModel": {
@@ -1046,7 +1046,7 @@
        "kind": "property",
        "name": "kind",
        "serializedName": "kind",
-       "description": "Message notification type is image.",
+       "doc": "Message notification type is image.",
        "type": {
         "$id": "111",
         "kind": "constant",
@@ -1072,7 +1072,7 @@
        "kind": "property",
        "name": "caption",
        "serializedName": "caption",
-       "description": "Optional text content.",
+       "doc": "Optional text content.",
        "type": {
         "$id": "114",
         "kind": "string",
@@ -1092,7 +1092,7 @@
        "kind": "property",
        "name": "mediaUri",
        "serializedName": "mediaUri",
-       "description": "A media url for the file. Required if the type is one of the supported media types, e.g. image",
+       "doc": "A media url for the file. Required if the type is one of the supported media types, e.g. image",
        "type": {
         "$id": "116",
         "kind": "url",
@@ -1115,7 +1115,7 @@
      "name": "AudioNotificationContent",
      "crossLanguageDefinitionId": "Azure.Communication.MessagesService.AudioNotificationContent",
      "usage": "Input,Json",
-     "description": "A request to send an audio notification.",
+     "doc": "A request to send an audio notification.",
      "discriminatorValue": "audio",
      "decorators": [],
      "baseModel": {
@@ -1127,7 +1127,7 @@
        "kind": "property",
        "name": "kind",
        "serializedName": "kind",
-       "description": "Message notification type is audio.",
+       "doc": "Message notification type is audio.",
        "type": {
         "$id": "119",
         "kind": "constant",
@@ -1153,7 +1153,7 @@
        "kind": "property",
        "name": "mediaUri",
        "serializedName": "mediaUri",
-       "description": "A media url for the file. Required if the type is one of the supported media types, e.g. image",
+       "doc": "A media url for the file. Required if the type is one of the supported media types, e.g. image",
        "type": {
         "$id": "122",
         "kind": "url",
@@ -1176,7 +1176,7 @@
      "name": "TemplateNotificationContent",
      "crossLanguageDefinitionId": "Azure.Communication.MessagesService.TemplateNotificationContent",
      "usage": "Input,Json",
-     "description": "A request to send a template notification.",
+     "doc": "A request to send a template notification.",
      "discriminatorValue": "template",
      "decorators": [],
      "baseModel": {
@@ -1188,7 +1188,7 @@
        "kind": "property",
        "name": "kind",
        "serializedName": "kind",
-       "description": "Message notification type is template.",
+       "doc": "Message notification type is template.",
        "type": {
         "$id": "125",
         "kind": "constant",
@@ -1214,14 +1214,14 @@
        "kind": "property",
        "name": "template",
        "serializedName": "template",
-       "description": "The template object used to create templates.",
+       "doc": "The template object used to create templates.",
        "type": {
         "$id": "128",
         "kind": "model",
         "name": "MessageTemplate",
         "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplate",
         "usage": "Input,Json",
-        "description": "The template object used to create templates.",
+        "doc": "The template object used to create templates.",
         "decorators": [],
         "properties": [
          {
@@ -1229,7 +1229,7 @@
           "kind": "property",
           "name": "name",
           "serializedName": "name",
-          "description": "Name of the template.",
+          "doc": "Name of the template.",
           "type": {
            "$id": "130",
            "kind": "string",
@@ -1249,7 +1249,7 @@
           "kind": "property",
           "name": "language",
           "serializedName": "language",
-          "description": "The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'.",
+          "doc": "The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'.",
           "type": {
            "$id": "132",
            "kind": "string",
@@ -1269,7 +1269,7 @@
           "kind": "property",
           "name": "values",
           "serializedName": "values",
-          "description": "The template values.",
+          "doc": "The template values.",
           "type": {
            "$id": "134",
            "kind": "array",
@@ -1280,14 +1280,14 @@
             "name": "MessageTemplateValue",
             "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateValue",
             "usage": "Input,Json",
-            "description": "The class describes a parameter of a template.",
+            "doc": "The class describes a parameter of a template.",
             "decorators": [],
             "discriminatorProperty": {
              "$id": "136",
              "kind": "property",
              "name": "kind",
              "serializedName": "kind",
-             "description": "The type discriminator describing a template parameter type.",
+             "doc": "The type discriminator describing a template parameter type.",
              "type": {
               "$ref": "18"
              },
@@ -1304,7 +1304,7 @@
               "kind": "property",
               "name": "name",
               "serializedName": "name",
-              "description": "Template binding reference name",
+              "doc": "Template binding reference name",
               "type": {
                "$id": "138",
                "kind": "string",
@@ -1331,7 +1331,7 @@
               "name": "MessageTemplateText",
               "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateText",
               "usage": "Input,Json",
-              "description": "The message template's text value information.",
+              "doc": "The message template's text value information.",
               "discriminatorValue": "text",
               "decorators": [],
               "baseModel": {
@@ -1343,7 +1343,7 @@
                 "kind": "property",
                 "name": "kind",
                 "serializedName": "kind",
-                "description": "Message parameter type is text.",
+                "doc": "Message parameter type is text.",
                 "type": {
                  "$id": "142",
                  "kind": "constant",
@@ -1369,7 +1369,7 @@
                 "kind": "property",
                 "name": "text",
                 "serializedName": "text",
-                "description": "The text value.",
+                "doc": "The text value.",
                 "type": {
                  "$id": "145",
                  "kind": "string",
@@ -1392,7 +1392,7 @@
               "name": "MessageTemplateImage",
               "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateImage",
               "usage": "Input,Json",
-              "description": "The message template's image value information.",
+              "doc": "The message template's image value information.",
               "discriminatorValue": "image",
               "decorators": [],
               "baseModel": {
@@ -1404,7 +1404,7 @@
                 "kind": "property",
                 "name": "kind",
                 "serializedName": "kind",
-                "description": "Message parameter type is image.",
+                "doc": "Message parameter type is image.",
                 "type": {
                  "$id": "148",
                  "kind": "constant",
@@ -1430,7 +1430,7 @@
                 "kind": "property",
                 "name": "uri",
                 "serializedName": "url",
-                "description": "The (public) URL of the media.",
+                "doc": "The (public) URL of the media.",
                 "type": {
                  "$id": "151",
                  "kind": "url",
@@ -1450,7 +1450,7 @@
                 "kind": "property",
                 "name": "caption",
                 "serializedName": "caption",
-                "description": "The [optional] caption of the media object.",
+                "doc": "The [optional] caption of the media object.",
                 "type": {
                  "$id": "153",
                  "kind": "string",
@@ -1470,7 +1470,7 @@
                 "kind": "property",
                 "name": "fileName",
                 "serializedName": "fileName",
-                "description": "The [optional] filename of the media file.",
+                "doc": "The [optional] filename of the media file.",
                 "type": {
                  "$id": "155",
                  "kind": "string",
@@ -1493,7 +1493,7 @@
               "name": "MessageTemplateDocument",
               "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateDocument",
               "usage": "Input,Json",
-              "description": "The message template's document value information.",
+              "doc": "The message template's document value information.",
               "discriminatorValue": "document",
               "decorators": [],
               "baseModel": {
@@ -1505,7 +1505,7 @@
                 "kind": "property",
                 "name": "kind",
                 "serializedName": "kind",
-                "description": "Message parameter type is document.",
+                "doc": "Message parameter type is document.",
                 "type": {
                  "$id": "158",
                  "kind": "constant",
@@ -1531,7 +1531,7 @@
                 "kind": "property",
                 "name": "uri",
                 "serializedName": "url",
-                "description": "The (public) URL of the media.",
+                "doc": "The (public) URL of the media.",
                 "type": {
                  "$id": "161",
                  "kind": "url",
@@ -1551,7 +1551,7 @@
                 "kind": "property",
                 "name": "caption",
                 "serializedName": "caption",
-                "description": "The [optional] caption of the media object.",
+                "doc": "The [optional] caption of the media object.",
                 "type": {
                  "$id": "163",
                  "kind": "string",
@@ -1571,7 +1571,7 @@
                 "kind": "property",
                 "name": "fileName",
                 "serializedName": "fileName",
-                "description": "The [optional] filename of the media file.",
+                "doc": "The [optional] filename of the media file.",
                 "type": {
                  "$id": "165",
                  "kind": "string",
@@ -1594,7 +1594,7 @@
               "name": "MessageTemplateVideo",
               "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateVideo",
               "usage": "Input,Json",
-              "description": "The message template's video value information.",
+              "doc": "The message template's video value information.",
               "discriminatorValue": "video",
               "decorators": [],
               "baseModel": {
@@ -1606,7 +1606,7 @@
                 "kind": "property",
                 "name": "kind",
                 "serializedName": "kind",
-                "description": "Message parameter type is video.",
+                "doc": "Message parameter type is video.",
                 "type": {
                  "$id": "168",
                  "kind": "constant",
@@ -1632,7 +1632,7 @@
                 "kind": "property",
                 "name": "uri",
                 "serializedName": "url",
-                "description": "The (public) URL of the media.",
+                "doc": "The (public) URL of the media.",
                 "type": {
                  "$id": "171",
                  "kind": "url",
@@ -1652,7 +1652,7 @@
                 "kind": "property",
                 "name": "caption",
                 "serializedName": "caption",
-                "description": "The [optional] caption of the media object.",
+                "doc": "The [optional] caption of the media object.",
                 "type": {
                  "$id": "173",
                  "kind": "string",
@@ -1672,7 +1672,7 @@
                 "kind": "property",
                 "name": "fileName",
                 "serializedName": "fileName",
-                "description": "The [optional] filename of the media file.",
+                "doc": "The [optional] filename of the media file.",
                 "type": {
                  "$id": "175",
                  "kind": "string",
@@ -1695,7 +1695,7 @@
               "name": "MessageTemplateLocation",
               "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateLocation",
               "usage": "Input,Json",
-              "description": "The message template's location value information.",
+              "doc": "The message template's location value information.",
               "discriminatorValue": "location",
               "decorators": [],
               "baseModel": {
@@ -1707,7 +1707,7 @@
                 "kind": "property",
                 "name": "kind",
                 "serializedName": "kind",
-                "description": "Message parameter type is location.",
+                "doc": "Message parameter type is location.",
                 "type": {
                  "$id": "178",
                  "kind": "constant",
@@ -1733,7 +1733,7 @@
                 "kind": "property",
                 "name": "locationName",
                 "serializedName": "locationName",
-                "description": "The [Optional] name of the location.",
+                "doc": "The [Optional] name of the location.",
                 "type": {
                  "$id": "181",
                  "kind": "string",
@@ -1753,7 +1753,7 @@
                 "kind": "property",
                 "name": "address",
                 "serializedName": "address",
-                "description": "The [Optional] address of the location.",
+                "doc": "The [Optional] address of the location.",
                 "type": {
                  "$id": "183",
                  "kind": "string",
@@ -1773,7 +1773,7 @@
                 "kind": "property",
                 "name": "latitude",
                 "serializedName": "latitude",
-                "description": "The latitude of the location.",
+                "doc": "The latitude of the location.",
                 "type": {
                  "$id": "185",
                  "kind": "float64",
@@ -1793,7 +1793,7 @@
                 "kind": "property",
                 "name": "longitude",
                 "serializedName": "longitude",
-                "description": "The longitude of the location.",
+                "doc": "The longitude of the location.",
                 "type": {
                  "$id": "187",
                  "kind": "float64",
@@ -1816,7 +1816,7 @@
               "name": "MessageTemplateQuickAction",
               "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateQuickAction",
               "usage": "Input,Json",
-              "description": "The message template's quick action value information.",
+              "doc": "The message template's quick action value information.",
               "discriminatorValue": "quickAction",
               "decorators": [],
               "baseModel": {
@@ -1828,7 +1828,7 @@
                 "kind": "property",
                 "name": "kind",
                 "serializedName": "kind",
-                "description": "Message parameter type is quick action.",
+                "doc": "Message parameter type is quick action.",
                 "type": {
                  "$id": "190",
                  "kind": "constant",
@@ -1854,7 +1854,7 @@
                 "kind": "property",
                 "name": "text",
                 "serializedName": "text",
-                "description": "The [Optional] quick action text",
+                "doc": "The [Optional] quick action text",
                 "type": {
                  "$id": "193",
                  "kind": "string",
@@ -1874,7 +1874,7 @@
                 "kind": "property",
                 "name": "payload",
                 "serializedName": "payload",
-                "description": "The [Optional] quick action payload",
+                "doc": "The [Optional] quick action payload",
                 "type": {
                  "$id": "195",
                  "kind": "string",
@@ -1908,21 +1908,21 @@
           "kind": "property",
           "name": "bindings",
           "serializedName": "bindings",
-          "description": "The binding object to link values to the template specific locations",
+          "doc": "The binding object to link values to the template specific locations",
           "type": {
            "$id": "197",
            "kind": "model",
            "name": "MessageTemplateBindings",
            "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateBindings",
            "usage": "Input,Json",
-           "description": "The binding object to link values to the template specific locations",
+           "doc": "The binding object to link values to the template specific locations",
            "decorators": [],
            "discriminatorProperty": {
             "$id": "198",
             "kind": "property",
             "name": "kind",
             "serializedName": "kind",
-            "description": "The type discriminator describing a template bindings type.",
+            "doc": "The type discriminator describing a template bindings type.",
             "type": {
              "$ref": "32"
             },
@@ -1946,7 +1946,7 @@
              "name": "WhatsAppMessageTemplateBindings",
              "crossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateBindings",
              "usage": "Input,Json",
-             "description": "The template bindings for WhatsApp",
+             "doc": "The template bindings for WhatsApp",
              "discriminatorValue": "whatsApp",
              "decorators": [],
              "baseModel": {
@@ -1958,7 +1958,7 @@
                "kind": "property",
                "name": "kind",
                "serializedName": "kind",
-               "description": "MessageTemplateBindings is whatsApp",
+               "doc": "MessageTemplateBindings is whatsApp",
                "type": {
                 "$id": "202",
                 "kind": "constant",
@@ -1984,7 +1984,7 @@
                "kind": "property",
                "name": "header",
                "serializedName": "header",
-               "description": "The header template bindings",
+               "doc": "The header template bindings",
                "type": {
                 "$id": "205",
                 "kind": "array",
@@ -1995,7 +1995,7 @@
                  "name": "WhatsAppMessageTemplateBindingsComponent",
                  "crossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateBindingsComponent",
                  "usage": "Input,Json",
-                 "description": "The template bindings component for WhatsApp",
+                 "doc": "The template bindings component for WhatsApp",
                  "decorators": [],
                  "properties": [
                   {
@@ -2003,7 +2003,7 @@
                    "kind": "property",
                    "name": "refValue",
                    "serializedName": "refValue",
-                   "description": "The name of the referenced item in the template values.",
+                   "doc": "The name of the referenced item in the template values.",
                    "type": {
                     "$id": "208",
                     "kind": "string",
@@ -2035,7 +2035,7 @@
                "kind": "property",
                "name": "body",
                "serializedName": "body",
-               "description": "The body template bindings",
+               "doc": "The body template bindings",
                "type": {
                 "$id": "210",
                 "kind": "array",
@@ -2058,7 +2058,7 @@
                "kind": "property",
                "name": "footer",
                "serializedName": "footer",
-               "description": "The footer template bindings",
+               "doc": "The footer template bindings",
                "type": {
                 "$id": "212",
                 "kind": "array",
@@ -2081,7 +2081,7 @@
                "kind": "property",
                "name": "buttons",
                "serializedName": "buttons",
-               "description": "The button template bindings",
+               "doc": "The button template bindings",
                "type": {
                 "$id": "214",
                 "kind": "array",
@@ -2092,7 +2092,7 @@
                  "name": "WhatsAppMessageTemplateBindingsButton",
                  "crossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateBindingsButton",
                  "usage": "Input,Json",
-                 "description": "The template bindings component button for WhatsApp",
+                 "doc": "The template bindings component button for WhatsApp",
                  "decorators": [],
                  "properties": [
                   {
@@ -2100,7 +2100,7 @@
                    "kind": "property",
                    "name": "subType",
                    "serializedName": "subType",
-                   "description": "The WhatsApp button sub type",
+                   "doc": "The WhatsApp button sub type",
                    "type": {
                     "$ref": "36"
                    },
@@ -2116,7 +2116,7 @@
                    "kind": "property",
                    "name": "refValue",
                    "serializedName": "refValue",
-                   "description": "The name of the referenced item in the template values.",
+                   "doc": "The name of the referenced item in the template values.",
                    "type": {
                     "$id": "218",
                     "kind": "string",
@@ -2230,7 +2230,7 @@
    "name": "SendMessageResult",
    "crossLanguageDefinitionId": "Azure.Communication.MessagesService.SendMessageResult",
    "usage": "Output,Json",
-   "description": "Result of the send message operation.",
+   "doc": "Result of the send message operation.",
    "decorators": [],
    "properties": [
     {
@@ -2238,7 +2238,7 @@
      "kind": "property",
      "name": "receipts",
      "serializedName": "receipts",
-     "description": "Receipts of the send message operation.",
+     "doc": "Receipts of the send message operation.",
      "type": {
       "$id": "221",
       "kind": "array",
@@ -2249,7 +2249,7 @@
        "name": "MessageReceipt",
        "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageReceipt",
        "usage": "Output,Json",
-       "description": "Receipt of the sending one message.",
+       "doc": "Receipt of the sending one message.",
        "decorators": [],
        "properties": [
         {
@@ -2257,7 +2257,7 @@
          "kind": "property",
          "name": "messageId",
          "serializedName": "messageId",
-         "description": "The message id.",
+         "doc": "The message id.",
          "type": {
           "$id": "224",
           "kind": "string",
@@ -2277,7 +2277,7 @@
          "kind": "property",
          "name": "to",
          "serializedName": "to",
-         "description": "The native external platform user identifier of the recipient.",
+         "doc": "The native external platform user identifier of the recipient.",
          "type": {
           "$id": "226",
           "kind": "string",
@@ -2315,14 +2315,14 @@
    "name": "MessageTemplateItem",
    "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateItem",
    "usage": "Output,Json",
-   "description": "The message template as returned from the service.",
+   "doc": "The message template as returned from the service.",
    "decorators": [],
    "discriminatorProperty": {
     "$id": "228",
     "kind": "property",
     "name": "kind",
     "serializedName": "kind",
-    "description": "The type discriminator describing a template type.",
+    "doc": "The type discriminator describing a template type.",
     "type": {
      "$ref": "58"
     },
@@ -2339,7 +2339,7 @@
      "kind": "property",
      "name": "name",
      "serializedName": "name",
-     "description": "The template's name.",
+     "doc": "The template's name.",
      "type": {
       "$id": "230",
       "kind": "string",
@@ -2359,7 +2359,7 @@
      "kind": "property",
      "name": "language",
      "serializedName": "language",
-     "description": "The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'.",
+     "doc": "The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'.",
      "type": {
       "$id": "232",
       "kind": "string",
@@ -2379,7 +2379,7 @@
      "kind": "property",
      "name": "status",
      "serializedName": "status",
-     "description": "The aggregated template status.",
+     "doc": "The aggregated template status.",
      "type": {
       "$ref": "48"
      },
@@ -2402,7 +2402,7 @@
      "name": "WhatsAppMessageTemplateItem",
      "crossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateItem",
      "usage": "Output,Json",
-     "description": "The WhatsApp-specific template response contract",
+     "doc": "The WhatsApp-specific template response contract",
      "discriminatorValue": "whatsApp",
      "decorators": [],
      "baseModel": {
@@ -2414,7 +2414,7 @@
        "kind": "property",
        "name": "content",
        "serializedName": "content",
-       "description": "WhatsApp platform's template content. This is the payload returned from WhatsApp API.",
+       "doc": "WhatsApp platform's template content. This is the payload returned from WhatsApp API.",
        "type": {
         "$id": "237",
         "kind": "unknown",
@@ -2434,7 +2434,7 @@
        "kind": "property",
        "name": "kind",
        "serializedName": "kind",
-       "description": "Message template response type is whatsApp.",
+       "doc": "Message template response type is whatsApp.",
        "type": {
         "$id": "239",
         "kind": "constant",
@@ -2468,7 +2468,7 @@
    "name": "PagedMessageTemplateItem",
    "crossLanguageDefinitionId": "Azure.Core.Foundations.CustomPage",
    "usage": "Output,Json",
-   "description": "Paged collection of MessageTemplateItem items",
+   "doc": "Paged collection of MessageTemplateItem items",
    "decorators": [],
    "properties": [
     {
@@ -2476,7 +2476,7 @@
      "kind": "property",
      "name": "value",
      "serializedName": "value",
-     "description": "The MessageTemplateItem items on this page",
+     "doc": "The MessageTemplateItem items on this page",
      "type": {
       "$id": "243",
       "kind": "array",
@@ -2499,7 +2499,7 @@
      "kind": "property",
      "name": "nextLink",
      "serializedName": "nextLink",
-     "description": "The link to the next page of items",
+     "doc": "The link to the next page of items",
      "type": {
       "$id": "245",
       "kind": "url",
@@ -2533,14 +2533,14 @@
      "$id": "248",
      "Name": "send",
      "ResourceName": "NotificationMessagesClient",
-     "Description": "Sends a notification message from Business to User.",
+     "Doc": "Sends a notification message from Business to User.",
      "Accessibility": "public",
      "Parameters": [
       {
        "$id": "249",
        "Name": "apiVersion",
        "NameInRequest": "api-version",
-       "Description": "The API version to use for this operation.",
+       "Doc": "The API version to use for this operation.",
        "Type": {
         "$id": "250",
         "kind": "string",
@@ -2572,7 +2572,7 @@
        "$id": "253",
        "Name": "repeatabilityRequestId",
        "NameInRequest": "Repeatability-Request-ID",
-       "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
+       "Doc": "An opaque, globally-unique, client-generated string identifier for the request.",
        "Type": {
         "$id": "254",
         "kind": "string",
@@ -2594,7 +2594,7 @@
        "$id": "255",
        "Name": "repeatabilityFirstSent",
        "NameInRequest": "Repeatability-First-Sent",
-       "Description": "Specifies the date and time at which the request was first created.",
+       "Doc": "Specifies the date and time at which the request was first created.",
        "Type": {
         "$id": "256",
         "kind": "utcDateTime",
@@ -2624,7 +2624,7 @@
        "$id": "258",
        "Name": "clientRequestId",
        "NameInRequest": "x-ms-client-request-id",
-       "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
+       "Doc": "An opaque, globally-unique, client-generated string identifier for the request.",
        "Type": {
         "$id": "259",
         "kind": "string",
@@ -2653,7 +2653,7 @@
        "$id": "261",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
-       "Description": "Body parameter's content type. Known values are application/json",
+       "Doc": "Body parameter's content type. Known values are application/json",
        "Type": {
         "$id": "262",
         "kind": "constant",
@@ -2708,7 +2708,7 @@
        "$id": "267",
        "Name": "notificationContent",
        "NameInRequest": "notificationContent",
-       "Description": "Details of the message to send.",
+       "Doc": "Details of the message to send.",
        "Type": {
         "$ref": "68"
        },
@@ -2738,7 +2738,7 @@
          "$id": "269",
          "Name": "repeatabilityResult",
          "NameInResponse": "Repeatability-Result",
-         "Description": "Indicates whether the repeatable request was accepted or rejected.",
+         "Doc": "Indicates whether the repeatable request was accepted or rejected.",
          "Type": {
           "$ref": "62"
          }
@@ -2747,7 +2747,7 @@
          "$id": "270",
          "Name": "clientRequestId",
          "NameInResponse": "x-ms-client-request-id",
-         "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
+         "Doc": "An opaque, globally-unique, client-generated string identifier for the request.",
          "Type": {
           "$id": "271",
           "kind": "string",
@@ -2787,14 +2787,14 @@
      "$id": "273",
      "Name": "downloadMediaInternal",
      "ResourceName": "MessageDataStream",
-     "Description": "Download the Media payload from a User to Business message.",
+     "Doc": "Download the Media payload from a User to Business message.",
      "Accessibility": "internal",
      "Parameters": [
       {
        "$id": "274",
        "Name": "apiVersion",
        "NameInRequest": "api-version",
-       "Description": "The API version to use for this operation.",
+       "Doc": "The API version to use for this operation.",
        "Type": {
         "$id": "275",
         "kind": "string",
@@ -2826,7 +2826,7 @@
        "$id": "278",
        "Name": "id",
        "NameInRequest": "id",
-       "Description": "The stream ID.",
+       "Doc": "The stream ID.",
        "Type": {
         "$id": "279",
         "kind": "string",
@@ -2848,7 +2848,7 @@
        "$id": "280",
        "Name": "clientRequestId",
        "NameInRequest": "x-ms-client-request-id",
-       "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
+       "Doc": "An opaque, globally-unique, client-generated string identifier for the request.",
        "Type": {
         "$id": "281",
         "kind": "string",
@@ -2920,7 +2920,7 @@
          "$id": "288",
          "Name": "clientRequestId",
          "NameInResponse": "x-ms-client-request-id",
-         "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
+         "Doc": "An opaque, globally-unique, client-generated string identifier for the request.",
          "Type": {
           "$id": "289",
           "kind": "string",
@@ -2940,7 +2940,7 @@
          "$id": "291",
          "Name": "contentType",
          "NameInResponse": "content-type",
-         "Description": "The stream content type.",
+         "Doc": "The stream content type.",
          "Type": {
           "$id": "292",
           "kind": "constant",
@@ -3037,7 +3037,7 @@
      "$id": "302",
      "Name": "endpoint",
      "NameInRequest": "endpoint",
-     "Description": "The communication resource, for example https://my-resource.communication.azure.com",
+     "Doc": "The communication resource, for example https://my-resource.communication.azure.com",
      "Type": {
       "$id": "303",
       "kind": "url",
@@ -3065,14 +3065,14 @@
      "$id": "305",
      "Name": "getTemplates",
      "ResourceName": "MessageTemplateItem",
-     "Description": "List all templates for given Azure Communication Services channel",
+     "Doc": "List all templates for given Azure Communication Services channel",
      "Accessibility": "public",
      "Parameters": [
       {
        "$id": "306",
        "Name": "apiVersion",
        "NameInRequest": "api-version",
-       "Description": "The API version to use for this operation.",
+       "Doc": "The API version to use for this operation.",
        "Type": {
         "$id": "307",
         "kind": "string",
@@ -3104,7 +3104,7 @@
        "$id": "310",
        "Name": "channelId",
        "NameInRequest": "channelId",
-       "Description": "The registration ID of the channel.",
+       "Doc": "The registration ID of the channel.",
        "Type": {
         "$id": "311",
         "kind": "string",
@@ -3133,7 +3133,7 @@
        "$id": "313",
        "Name": "maxpagesize",
        "NameInRequest": "maxpagesize",
-       "Description": "Number of objects to return per page.",
+       "Doc": "Number of objects to return per page.",
        "Type": {
         "$id": "314",
         "kind": "int32",
@@ -3155,7 +3155,7 @@
        "$id": "315",
        "Name": "clientRequestId",
        "NameInRequest": "x-ms-client-request-id",
-       "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
+       "Doc": "An opaque, globally-unique, client-generated string identifier for the request.",
        "Type": {
         "$id": "316",
         "kind": "string",
@@ -3223,7 +3223,7 @@
          "$id": "322",
          "Name": "clientRequestId",
          "NameInResponse": "x-ms-client-request-id",
-         "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
+         "Doc": "An opaque, globally-unique, client-generated string identifier for the request.",
          "Type": {
           "$id": "323",
           "kind": "string",
@@ -3270,7 +3270,7 @@
      "$id": "327",
      "Name": "endpoint",
      "NameInRequest": "endpoint",
-     "Description": "The communication resource, for example https://my-resource.communication.azure.com",
+     "Doc": "The communication resource, for example https://my-resource.communication.azure.com",
      "Type": {
       "$id": "328",
       "kind": "url",
