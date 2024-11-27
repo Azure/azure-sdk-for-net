@@ -23,9 +23,12 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
         }
 
         private const string ScalableExecutionValue = "ScalableExecution";
+        private const string ReportingValue = "Reporting";
 
         /// <summary> The quota details for scalable execution feature. When enabled, Playwright client workers can connect to cloud-hosted browsers. This can increase the number of parallel workers for a test run, significantly minimizing test completion durations. </summary>
         public static PlaywrightTestingQuotaName ScalableExecution { get; } = new PlaywrightTestingQuotaName(ScalableExecutionValue);
+        /// <summary> The quota details for reporting feature. When enabled, Playwright client will be able to upload and display test results, including artifacts like traces and screenshots, in the Playwright portal. This enables faster and more efficient troubleshooting. </summary>
+        public static PlaywrightTestingQuotaName Reporting { get; } = new PlaywrightTestingQuotaName(ReportingValue);
         /// <summary> Determines if two <see cref="PlaywrightTestingQuotaName"/> values are the same. </summary>
         public static bool operator ==(PlaywrightTestingQuotaName left, PlaywrightTestingQuotaName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PlaywrightTestingQuotaName"/> values are not the same. </summary>

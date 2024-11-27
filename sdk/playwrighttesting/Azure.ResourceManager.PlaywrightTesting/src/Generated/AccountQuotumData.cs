@@ -14,10 +14,10 @@ using Azure.ResourceManager.PlaywrightTesting.Models;
 namespace Azure.ResourceManager.PlaywrightTesting
 {
     /// <summary>
-    /// A class representing the PlaywrightTestingAccount data model.
-    /// A Playwright service account resource.
+    /// A class representing the AccountQuotum data model.
+    /// A quota resource for a Playwright service account.
     /// </summary>
-    public partial class PlaywrightTestingAccountData : TrackedResourceData
+    public partial class AccountQuotumData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,33 +51,25 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingAccountData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public PlaywrightTestingAccountData(AzureLocation location) : base(location)
+        /// <summary> Initializes a new instance of <see cref="AccountQuotumData"/>. </summary>
+        public AccountQuotumData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingAccountData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccountQuotumData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PlaywrightTestingAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AccountProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal AccountQuotumData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AccountQuotaProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingAccountData"/> for deserialization. </summary>
-        internal PlaywrightTestingAccountData()
-        {
-        }
-
         /// <summary> The resource-specific properties for this resource. </summary>
-        public AccountProperties Properties { get; set; }
+        public AccountQuotaProperties Properties { get; set; }
     }
 }

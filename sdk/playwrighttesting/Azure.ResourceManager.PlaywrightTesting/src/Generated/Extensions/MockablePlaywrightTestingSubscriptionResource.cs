@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
@@ -50,11 +51,11 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         }
 
         /// <summary>
-        /// Get quota by name.
+        /// Get subscription quota by name.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzurePlaywrightService/locations/{location}/quotas/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzurePlaywrightService/locations/{location}/quotas/{quotaName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2024-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -71,20 +72,20 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// </list>
         /// </summary>
         /// <param name="location"> The location of quota in ARM Normalized format like eastus, southeastasia etc. </param>
-        /// <param name="name"> The quota name. </param>
+        /// <param name="quotaName"> The quota name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PlaywrightTestingQuotaResource>> GetPlaywrightTestingQuotaAsync(AzureLocation location, PlaywrightTestingQuotaName name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlaywrightTestingQuotaResource>> GetPlaywrightTestingQuotaAsync(AzureLocation location, PlaywrightTestingQuotaName quotaName, CancellationToken cancellationToken = default)
         {
-            return await GetAllPlaywrightTestingQuota(location).GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetAllPlaywrightTestingQuota(location).GetAsync(quotaName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Get quota by name.
+        /// Get subscription quota by name.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzurePlaywrightService/locations/{location}/quotas/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzurePlaywrightService/locations/{location}/quotas/{quotaName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2024-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -101,12 +102,12 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// </list>
         /// </summary>
         /// <param name="location"> The location of quota in ARM Normalized format like eastus, southeastasia etc. </param>
-        /// <param name="name"> The quota name. </param>
+        /// <param name="quotaName"> The quota name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<PlaywrightTestingQuotaResource> GetPlaywrightTestingQuota(AzureLocation location, PlaywrightTestingQuotaName name, CancellationToken cancellationToken = default)
+        public virtual Response<PlaywrightTestingQuotaResource> GetPlaywrightTestingQuota(AzureLocation location, PlaywrightTestingQuotaName quotaName, CancellationToken cancellationToken = default)
         {
-            return GetAllPlaywrightTestingQuota(location).Get(name, cancellationToken);
+            return GetAllPlaywrightTestingQuota(location).Get(quotaName, cancellationToken);
         }
 
         /// <summary>
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2024-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -152,7 +153,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2024-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -167,6 +168,90 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
             HttpMessage FirstPageRequest(int? pageSizeHint) => PlaywrightTestingAccountAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PlaywrightTestingAccountAccountsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PlaywrightTestingAccountResource(Client, PlaywrightTestingAccountData.DeserializePlaywrightTestingAccountData(e)), PlaywrightTestingAccountAccountsClientDiagnostics, Pipeline, "MockablePlaywrightTestingSubscriptionResource.GetPlaywrightTestingAccounts", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Adds check global name availability operation, normally used if a resource name must be globally unique.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzurePlaywrightService/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PlaywrightTestingAccountResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The CheckAvailability request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<PlaywrightTestingNameAvailabilityResult>> CheckNameAvailabilityAccountAsync(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = PlaywrightTestingAccountAccountsClientDiagnostics.CreateScope("MockablePlaywrightTestingSubscriptionResource.CheckNameAvailabilityAccount");
+            scope.Start();
+            try
+            {
+                var response = await PlaywrightTestingAccountAccountsRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Adds check global name availability operation, normally used if a resource name must be globally unique.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzurePlaywrightService/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PlaywrightTestingAccountResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The CheckAvailability request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<PlaywrightTestingNameAvailabilityResult> CheckNameAvailabilityAccount(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = PlaywrightTestingAccountAccountsClientDiagnostics.CreateScope("MockablePlaywrightTestingSubscriptionResource.CheckNameAvailabilityAccount");
+            scope.Start();
+            try
+            {
+                var response = PlaywrightTestingAccountAccountsRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

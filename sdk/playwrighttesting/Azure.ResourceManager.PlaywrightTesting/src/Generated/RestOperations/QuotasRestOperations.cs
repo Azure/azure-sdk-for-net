@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-10-01-preview";
+            _apiVersion = apiVersion ?? "2024-12-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         }
 
         /// <summary> List quotas for a given subscription Id. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The location of quota in ARM Normalized format like eastus, southeastasia etc. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         }
 
         /// <summary> List quotas for a given subscription Id. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The location of quota in ARM Normalized format like eastus, southeastasia etc. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
             }
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, AzureLocation location, PlaywrightTestingQuotaName name)
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, AzureLocation location, PlaywrightTestingQuotaName quotaName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -129,12 +129,12 @@ namespace Azure.ResourceManager.PlaywrightTesting
             uri.AppendPath("/providers/Microsoft.AzurePlaywrightService/locations/", false);
             uri.AppendPath(location, true);
             uri.AppendPath("/quotas/", false);
-            uri.AppendPath(name.ToString(), true);
+            uri.AppendPath(quotaName.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation location, PlaywrightTestingQuotaName name)
+        internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation location, PlaywrightTestingQuotaName quotaName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
             uri.AppendPath("/providers/Microsoft.AzurePlaywrightService/locations/", false);
             uri.AppendPath(location, true);
             uri.AppendPath("/quotas/", false);
-            uri.AppendPath(name.ToString(), true);
+            uri.AppendPath(quotaName.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -154,18 +154,18 @@ namespace Azure.ResourceManager.PlaywrightTesting
             return message;
         }
 
-        /// <summary> Get quota by name. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Get subscription quota by name. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The location of quota in ARM Normalized format like eastus, southeastasia etc. </param>
-        /// <param name="name"> The quota name. </param>
+        /// <param name="quotaName"> The quota name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PlaywrightTestingQuotaData>> GetAsync(string subscriptionId, AzureLocation location, PlaywrightTestingQuotaName name, CancellationToken cancellationToken = default)
+        public async Task<Response<PlaywrightTestingQuotaData>> GetAsync(string subscriptionId, AzureLocation location, PlaywrightTestingQuotaName quotaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateGetRequest(subscriptionId, location, name);
+            using var message = CreateGetRequest(subscriptionId, location, quotaName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -183,18 +183,18 @@ namespace Azure.ResourceManager.PlaywrightTesting
             }
         }
 
-        /// <summary> Get quota by name. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Get subscription quota by name. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The location of quota in ARM Normalized format like eastus, southeastasia etc. </param>
-        /// <param name="name"> The quota name. </param>
+        /// <param name="quotaName"> The quota name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PlaywrightTestingQuotaData> Get(string subscriptionId, AzureLocation location, PlaywrightTestingQuotaName name, CancellationToken cancellationToken = default)
+        public Response<PlaywrightTestingQuotaData> Get(string subscriptionId, AzureLocation location, PlaywrightTestingQuotaName quotaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateGetRequest(subscriptionId, location, name);
+            using var message = CreateGetRequest(subscriptionId, location, quotaName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
 
         /// <summary> List quotas for a given subscription Id. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The location of quota in ARM Normalized format like eastus, southeastasia etc. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
 
         /// <summary> List quotas for a given subscription Id. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The location of quota in ARM Normalized format like eastus, southeastasia etc. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>

@@ -41,31 +41,6 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
             }
             if (options.Format != "W")
             {
-                writer.WritePropertyName("createdAt"u8);
-                writer.WriteStringValue(CreatedOn, "O");
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("expiryAt"u8);
-                writer.WriteStringValue(ExpiryOn, "O");
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("allocatedValue"u8);
-                writer.WriteNumberValue(AllocatedValue);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("usedValue"u8);
-                writer.WriteNumberValue(UsedValue);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("percentageUsed"u8);
-                writer.WriteNumberValue(PercentageUsed);
-            }
-            if (options.Format != "W")
-            {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.ToString());
             }
@@ -107,11 +82,6 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                 return null;
             }
             string accountId = default;
-            DateTimeOffset createdAt = default;
-            DateTimeOffset expiryAt = default;
-            int allocatedValue = default;
-            int usedValue = default;
-            decimal percentageUsed = default;
             FreeTrialState state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -120,31 +90,6 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                 if (property.NameEquals("accountId"u8))
                 {
                     accountId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("createdAt"u8))
-                {
-                    createdAt = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("expiryAt"u8))
-                {
-                    expiryAt = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("allocatedValue"u8))
-                {
-                    allocatedValue = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("usedValue"u8))
-                {
-                    usedValue = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("percentageUsed"u8))
-                {
-                    percentageUsed = property.Value.GetDecimal();
                     continue;
                 }
                 if (property.NameEquals("state"u8))
@@ -158,15 +103,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FreeTrialProperties(
-                accountId,
-                createdAt,
-                expiryAt,
-                allocatedValue,
-                usedValue,
-                percentageUsed,
-                state,
-                serializedAdditionalRawData);
+            return new FreeTrialProperties(accountId, state, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FreeTrialProperties>.Write(ModelReaderWriterOptions options)

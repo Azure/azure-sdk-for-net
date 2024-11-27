@@ -7,17 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
-using Azure.ResourceManager.PlaywrightTesting.Models;
+using System.Linq;
 
-namespace Azure.ResourceManager.PlaywrightTesting
+namespace Azure.ResourceManager.PlaywrightTesting.Models
 {
-    /// <summary>
-    /// A class representing the PlaywrightTestingQuota data model.
-    /// A subscription quota resource.
-    /// </summary>
-    public partial class PlaywrightTestingQuotaData : ResourceData
+    /// <summary> The response of a AccountQuota list operation. </summary>
+    internal partial class AccountQuotaListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,25 +46,35 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingQuotaData"/>. </summary>
-        public PlaywrightTestingQuotaData()
+        /// <summary> Initializes a new instance of <see cref="AccountQuotaListResult"/>. </summary>
+        /// <param name="value"> The AccountQuota items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal AccountQuotaListResult(IEnumerable<AccountQuotumData> value)
         {
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingQuotaData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <summary> Initializes a new instance of <see cref="AccountQuotaListResult"/>. </summary>
+        /// <param name="value"> The AccountQuota items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PlaywrightTestingQuotaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, QuotaProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AccountQuotaListResult(IReadOnlyList<AccountQuotumData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
+            Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
-        public QuotaProperties Properties { get; set; }
+        /// <summary> Initializes a new instance of <see cref="AccountQuotaListResult"/> for deserialization. </summary>
+        internal AccountQuotaListResult()
+        {
+        }
+
+        /// <summary> The AccountQuota items on this page. </summary>
+        public IReadOnlyList<AccountQuotumData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }
