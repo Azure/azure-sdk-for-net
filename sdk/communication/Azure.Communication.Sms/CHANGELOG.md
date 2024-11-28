@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.2
+## 1.1.0-beta.2 (2024-12-10)
 
 ### Features Added
  - Added support for Opt Out Management Api to:
