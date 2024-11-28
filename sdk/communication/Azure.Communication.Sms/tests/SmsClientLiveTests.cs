@@ -104,7 +104,7 @@ namespace Azure.Communication.Sms.Tests
             {
                 var response = await client.SendAsync(
                     from: TestEnvironment.FromPhoneNumber,
-                    to: new string[] { TestEnvironment.ToPhoneNumber, TestEnvironment.ToPhoneNumber },
+                    to: [TestEnvironment.ToPhoneNumber, TestEnvironment.ToPhoneNumber],
                    message: "Hi",
                    options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
                    {
@@ -210,7 +210,7 @@ namespace Azure.Communication.Sms.Tests
             SmsClient client = CreateSmsClient();
             try
             {
-                IEnumerable<string>? to = new string[] { TestEnvironment.ToPhoneNumber };
+                IEnumerable<string>? to = [TestEnvironment.ToPhoneNumber];
                 Response<IReadOnlyList<OptOutResponseItem>> result = await client.OptOuts.CheckAsync(
                     from: null,
                     to: to);
@@ -249,11 +249,11 @@ namespace Azure.Communication.Sms.Tests
             try
             {
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-                IEnumerable<string>? to = new string[]
-                {
+                IEnumerable<string>? to =
+                [
                     TestEnvironment.ToPhoneNumber,
                     null
-                };
+                ];
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 
                 Response<IReadOnlyList<OptOutResponseItem>> result = await client.OptOuts.CheckAsync(
@@ -269,14 +269,205 @@ namespace Azure.Communication.Sms.Tests
         }
 
         [Test]
+        public async Task CheckOptOutToInvalidNumberShouldThrow()
+        {
+            SmsClient client = CreateSmsClient();
+
+            try
+            {
+                IEnumerable<string>? to = ["+15550000000"];
+                Response<IReadOnlyList<OptOutResponseItem>> result = await client.OptOuts.CheckAsync(
+                    from: TestEnvironment.FromPhoneNumber,
+                    to: to);
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.That(ex.Message.Contains("InvalidInput"));
+                return;
+            }
+
+            Assert.Fail("CheckAsync should have thrown an exception.");
+        }
+
+        [Test]
+        public async Task AddOptOutFromNullNumberShouldThrow()
+        {
+            SmsClient client = CreateSmsClient();
+            try
+            {
+                IEnumerable<string>? to = [TestEnvironment.ToPhoneNumber];
+                Response<IReadOnlyList<OptOutAddResponseItem>> result = await client.OptOuts.AddAsync(
+                    from: null,
+                    to: to);
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("from", ex.ParamName);
+                return;
+            }
+            Assert.Fail("AddAsync should have thrown an exception.");
+        }
+
+        [Test]
+        public async Task AddOptOutToNullNumberShouldThrow()
+        {
+            SmsClient client = CreateSmsClient();
+            try
+            {
+                IEnumerable<string>? to = null;
+                Response<IReadOnlyList<OptOutAddResponseItem>> result = await client.OptOuts.AddAsync(
+                    from: TestEnvironment.FromPhoneNumber,
+                    to: to);
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("to", ex.ParamName);
+                return;
+            }
+            Assert.Fail("AddAsync should have thrown an exception.");
+        }
+
+        [Test]
+        public async Task AddOptOutToCollectionContainingNullShouldThrow()
+        {
+            SmsClient client = CreateSmsClient();
+            try
+            {
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+                IEnumerable<string>? to =
+                [
+                    TestEnvironment.ToPhoneNumber,
+                    null
+                ];
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+
+                Response<IReadOnlyList<OptOutAddResponseItem>> result = await client.OptOuts.AddAsync(
+                    from: TestEnvironment.FromPhoneNumber,
+                    to: to);
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("to", ex.ParamName);
+                return;
+            }
+            Assert.Fail("AddAsync should have thrown an exception.");
+        }
+
+        [Test]
+        public async Task AddOptOutToInvalidNumberShouldThrow()
+        {
+            SmsClient client = CreateSmsClient();
+
+            try
+            {
+                IEnumerable<string>? to = ["+15550000000"];
+                Response<IReadOnlyList<OptOutAddResponseItem>> result = await client.OptOuts.AddAsync(
+                    from: TestEnvironment.FromPhoneNumber,
+                    to: to);
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.That(ex.Message.Contains("InvalidInput"));
+                return;
+            }
+
+            Assert.Fail("AddAsync should have thrown an exception.");
+        }
+
+        [Test]
+        public async Task RemoveOptOutFromNullNumberShouldThrow()
+        {
+            SmsClient client = CreateSmsClient();
+            try
+            {
+                IEnumerable<string>? to = [TestEnvironment.ToPhoneNumber];
+                Response<IReadOnlyList<OptOutRemoveResponseItem>> result = await client.OptOuts.RemoveAsync(
+                    from: null,
+                    to: to);
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("from", ex.ParamName);
+                return;
+            }
+            Assert.Fail("RemoveAsync should have thrown an exception.");
+        }
+
+        [Test]
+        public async Task RemoveOptOutToNullNumberShouldThrow()
+        {
+            SmsClient client = CreateSmsClient();
+            try
+            {
+                IEnumerable<string>? to = null;
+                Response<IReadOnlyList<OptOutRemoveResponseItem>> result = await client.OptOuts.RemoveAsync(
+                    from: TestEnvironment.FromPhoneNumber,
+                    to: to);
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("to", ex.ParamName);
+                return;
+            }
+            Assert.Fail("RemoveAsync should have thrown an exception.");
+        }
+
+        [Test]
+        public async Task RemoveOptOutToCollectionContainingNullShouldThrow()
+        {
+            SmsClient client = CreateSmsClient();
+            try
+            {
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+                IEnumerable<string>? to =
+                [
+                    TestEnvironment.ToPhoneNumber,
+                    null
+                ];
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+
+                Response<IReadOnlyList<OptOutRemoveResponseItem>> result = await client.OptOuts.RemoveAsync(
+                    from: TestEnvironment.FromPhoneNumber,
+                    to: to);
+            }
+            catch (ArgumentNullException ex)
+            {
+                Assert.AreEqual("to", ex.ParamName);
+                return;
+            }
+            Assert.Fail("RemoveAsync should have thrown an exception.");
+        }
+
+        [Test]
+        public async Task RemoveOptOutToInvalidNumberShouldThrow()
+        {
+            SmsClient client = CreateSmsClient();
+
+            try
+            {
+                IEnumerable<string>? to = ["+15550000000"];
+                Response<IReadOnlyList<OptOutRemoveResponseItem>> result = await client.OptOuts.RemoveAsync(
+                    from: TestEnvironment.FromPhoneNumber,
+                    to: to);
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.That(ex.Message.Contains("InvalidInput"));
+                return;
+            }
+
+            Assert.Fail("RemoveAsync should have thrown an exception.");
+        }
+
+        [Test]
         public async Task AddOptOutEndpointShouldMarkRecipientAsOptedOut()
         {
             SmsClient client = CreateSmsClient();
             try
             {
-                IEnumerable<string>? to = new[] { TestEnvironment.ToPhoneNumber };
+                IEnumerable<string>? to = [TestEnvironment.ToPhoneNumber];
 
-                Response<IReadOnlyList<OptOutChangeResponseItem>> addResult = await client.OptOuts.AddAsync(
+                Response<IReadOnlyList<OptOutAddResponseItem>> addResult = await client.OptOuts.AddAsync(
                     from: TestEnvironment.FromPhoneNumber,
                     to: to);
 
@@ -300,13 +491,13 @@ namespace Azure.Communication.Sms.Tests
             SmsClient client = CreateSmsClient();
             try
             {
-                IEnumerable<string>? to = new[] { TestEnvironment.ToPhoneNumber };
+                IEnumerable<string>? to = [TestEnvironment.ToPhoneNumber];
 
-                Response<IReadOnlyList<OptOutChangeResponseItem>> addResult = await client.OptOuts.AddAsync(
+                Response<IReadOnlyList<OptOutAddResponseItem>> addResult = await client.OptOuts.AddAsync(
                     from: TestEnvironment.FromPhoneNumber,
                     to: to);
 
-                Response<IReadOnlyList<OptOutChangeResponseItem>> removeResult = await client.OptOuts.RemoveAsync(
+                Response<IReadOnlyList<OptOutRemoveResponseItem>> removeResult = await client.OptOuts.RemoveAsync(
                     from: TestEnvironment.FromPhoneNumber,
                     to: to);
 
@@ -330,9 +521,9 @@ namespace Azure.Communication.Sms.Tests
             SmsClient client = CreateSmsClient();
             try
             {
-                IEnumerable<string>? to = new[] { TestEnvironment.ToPhoneNumber, TestEnvironment.ToPhoneNumber };
+                IEnumerable<string>? to = [TestEnvironment.ToPhoneNumber, TestEnvironment.ToPhoneNumber];
 
-                Response<IReadOnlyList<OptOutChangeResponseItem>> addResult = await client.OptOuts.AddAsync(
+                Response<IReadOnlyList<OptOutAddResponseItem>> addResult = await client.OptOuts.AddAsync(
                     from: TestEnvironment.FromPhoneNumber,
                     to: to);
 
@@ -357,13 +548,13 @@ namespace Azure.Communication.Sms.Tests
             SmsClient client = CreateSmsClient();
             try
             {
-                IEnumerable<string>? to = new[] { TestEnvironment.ToPhoneNumber, TestEnvironment.ToPhoneNumber };
+                IEnumerable<string>? to = [TestEnvironment.ToPhoneNumber, TestEnvironment.ToPhoneNumber];
 
-                Response<IReadOnlyList<OptOutChangeResponseItem>> addResult = await client.OptOuts.AddAsync(
+                Response<IReadOnlyList<OptOutAddResponseItem>> addResult = await client.OptOuts.AddAsync(
                     from: TestEnvironment.FromPhoneNumber,
                     to: to);
 
-                Response<IReadOnlyList<OptOutChangeResponseItem>> removeResult = await client.OptOuts.RemoveAsync(
+                Response<IReadOnlyList<OptOutRemoveResponseItem>> removeResult = await client.OptOuts.RemoveAsync(
                     from: TestEnvironment.FromPhoneNumber,
                     to: to);
 
@@ -396,6 +587,19 @@ namespace Azure.Communication.Sms.Tests
                 streamReader.BaseStream.Seek(0, SeekOrigin.Begin);
                 string rawResponse = streamReader.ReadToEnd();
                 Assert.True(rawResponse.Contains("\"repeatabilityResult\":\"accepted\""));
+                return;
+            }
+            Assert.Fail("Response content stream is empty.");
+        }
+
+        private void AssertOptOutRawResponseBadRequest(Stream contentStream)
+        {
+            if (contentStream.Length > 0)
+            {
+                StreamReader streamReader = new StreamReader(contentStream);
+                streamReader.BaseStream.Seek(0, SeekOrigin.Begin);
+                string rawResponse = streamReader.ReadToEnd();
+                Assert.True(rawResponse.Contains("\"code\":\"InvalidInput\""));
                 return;
             }
             Assert.Fail("Response content stream is empty.");

@@ -94,7 +94,7 @@ namespace Azure.Communication.Sms.Tests
         public async Task AddAsyncOverload_PassesToGeneratedOne(string expectedFrom, IEnumerable<string> expectedTo)
         {
             Mock<OptOutsClient> mockClient = new Mock<OptOutsClient>() { CallBase = true };
-            Response<IReadOnlyList<OptOutChangeResponseItem>>? expectedResponse = default;
+            Response<IReadOnlyList<OptOutAddResponseItem>>? expectedResponse = default;
             CancellationToken cancellationToken = new CancellationTokenSource().Token;
             var callExpression = BuildExpression(x => x.AddAsync(It.IsAny<string>(), It.IsAny<IEnumerable<string>>(), It.IsAny<CancellationToken>()));
 
@@ -105,10 +105,10 @@ namespace Azure.Communication.Sms.Tests
                     Assert.AreEqual(expectedFrom, from);
                     Assert.AreEqual(expectedTo, to);
                     Assert.AreEqual(cancellationToken, token);
-                    return expectedResponse = new Mock<Response<IReadOnlyList<OptOutChangeResponseItem>>>().Object;
+                    return expectedResponse = new Mock<Response<IReadOnlyList<OptOutAddResponseItem>>>().Object;
                 });
 
-            Response<IReadOnlyList<OptOutChangeResponseItem>> actualResponse = await mockClient.Object.AddAsync(expectedFrom, expectedTo, cancellationToken);
+            Response<IReadOnlyList<OptOutAddResponseItem>> actualResponse = await mockClient.Object.AddAsync(expectedFrom, expectedTo, cancellationToken);
 
             mockClient.Verify(callExpression, Times.Once());
             Assert.AreEqual(expectedResponse, actualResponse);
@@ -118,7 +118,7 @@ namespace Azure.Communication.Sms.Tests
         public void AddOverload_PassesToGeneratedOne(string expectedFrom, IEnumerable<string> expectedTo)
         {
             Mock<OptOutsClient> mockClient = new Mock<OptOutsClient>() { CallBase = true };
-            Response<IReadOnlyList<OptOutChangeResponseItem>>? expectedResponse = default;
+            Response<IReadOnlyList<OptOutAddResponseItem>>? expectedResponse = default;
             CancellationToken cancellationToken = new CancellationTokenSource().Token;
             var callExpression = BuildExpression(x => x.Add(It.IsAny<string>(), It.IsAny<IEnumerable<string>>(), It.IsAny<CancellationToken>()));
 
@@ -129,10 +129,10 @@ namespace Azure.Communication.Sms.Tests
                     Assert.AreEqual(expectedFrom, from);
                     Assert.AreEqual(expectedTo, to);
                     Assert.AreEqual(cancellationToken, token);
-                    return expectedResponse = new Mock<Response<IReadOnlyList<OptOutChangeResponseItem>>>().Object;
+                    return expectedResponse = new Mock<Response<IReadOnlyList<OptOutAddResponseItem>>>().Object;
                 });
 
-            Response<IReadOnlyList<OptOutChangeResponseItem>> actualResponse = mockClient.Object.Add(expectedFrom, expectedTo, cancellationToken);
+            Response<IReadOnlyList<OptOutAddResponseItem>> actualResponse = mockClient.Object.Add(expectedFrom, expectedTo, cancellationToken);
 
             mockClient.Verify(callExpression, Times.Once());
             Assert.AreEqual(expectedResponse, actualResponse);
@@ -142,7 +142,7 @@ namespace Azure.Communication.Sms.Tests
         public async Task RemoveAsyncOverload_PassesToGeneratedOne(string expectedFrom, IEnumerable<string> expectedTo)
         {
             Mock<OptOutsClient> mockClient = new Mock<OptOutsClient>() { CallBase = true };
-            Response<IReadOnlyList<OptOutChangeResponseItem>>? expectedResponse = default;
+            Response<IReadOnlyList<OptOutRemoveResponseItem>>? expectedResponse = default;
             CancellationToken cancellationToken = new CancellationTokenSource().Token;
             var callExpression = BuildExpression(x => x.RemoveAsync(It.IsAny<string>(), It.IsAny<IEnumerable<string>>(), It.IsAny<CancellationToken>()));
 
@@ -153,10 +153,10 @@ namespace Azure.Communication.Sms.Tests
                     Assert.AreEqual(expectedFrom, from);
                     Assert.AreEqual(expectedTo, to);
                     Assert.AreEqual(cancellationToken, token);
-                    return expectedResponse = new Mock<Response<IReadOnlyList<OptOutChangeResponseItem>>>().Object;
+                    return expectedResponse = new Mock<Response<IReadOnlyList<OptOutRemoveResponseItem>>>().Object;
                 });
 
-            Response<IReadOnlyList<OptOutChangeResponseItem>> actualResponse = await mockClient.Object.RemoveAsync(expectedFrom, expectedTo, cancellationToken);
+            Response<IReadOnlyList<OptOutRemoveResponseItem>> actualResponse = await mockClient.Object.RemoveAsync(expectedFrom, expectedTo, cancellationToken);
 
             mockClient.Verify(callExpression, Times.Once());
             Assert.AreEqual(expectedResponse, actualResponse);
@@ -166,7 +166,7 @@ namespace Azure.Communication.Sms.Tests
         public void RemoveOverload_PassesToGeneratedOne(string expectedFrom, IEnumerable<string> expectedTo)
         {
             Mock<OptOutsClient> mockClient = new Mock<OptOutsClient>() { CallBase = true };
-            Response<IReadOnlyList<OptOutChangeResponseItem>>? expectedResponse = default;
+            Response<IReadOnlyList<OptOutRemoveResponseItem>>? expectedResponse = default;
             CancellationToken cancellationToken = new CancellationTokenSource().Token;
             var callExpression = BuildExpression(x => x.Remove(It.IsAny<string>(), It.IsAny<IEnumerable<string>>(), It.IsAny<CancellationToken>()));
 
@@ -177,10 +177,10 @@ namespace Azure.Communication.Sms.Tests
                     Assert.AreEqual(expectedFrom, from);
                     Assert.AreEqual(expectedTo, to);
                     Assert.AreEqual(cancellationToken, token);
-                    return expectedResponse = new Mock<Response<IReadOnlyList<OptOutChangeResponseItem>>>().Object;
+                    return expectedResponse = new Mock<Response<IReadOnlyList<OptOutRemoveResponseItem>>>().Object;
                 });
 
-            Response<IReadOnlyList<OptOutChangeResponseItem>> actualResponse = mockClient.Object.Remove(expectedFrom, expectedTo, cancellationToken);
+            Response<IReadOnlyList<OptOutRemoveResponseItem>> actualResponse = mockClient.Object.Remove(expectedFrom, expectedTo, cancellationToken);
 
             mockClient.Verify(callExpression, Times.Once());
             Assert.AreEqual(expectedResponse, actualResponse);

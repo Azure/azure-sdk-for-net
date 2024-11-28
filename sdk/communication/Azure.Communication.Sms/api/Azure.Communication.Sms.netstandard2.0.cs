@@ -3,12 +3,12 @@ namespace Azure.Communication.Sms
     public partial class OptOutsClient
     {
         protected OptOutsClient() { }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Communication.Sms.Models.OptOutChangeResponseItem>> Add(string from, System.Collections.Generic.IEnumerable<string> to, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Communication.Sms.Models.OptOutChangeResponseItem>>> AddAsync(string from, System.Collections.Generic.IEnumerable<string> to, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Communication.Sms.Models.OptOutAddResponseItem>> Add(string from, System.Collections.Generic.IEnumerable<string> to, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Communication.Sms.Models.OptOutAddResponseItem>>> AddAsync(string from, System.Collections.Generic.IEnumerable<string> to, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Communication.Sms.Models.OptOutResponseItem>> Check(string from, System.Collections.Generic.IEnumerable<string> to, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Communication.Sms.Models.OptOutResponseItem>>> CheckAsync(string from, System.Collections.Generic.IEnumerable<string> to, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Communication.Sms.Models.OptOutChangeResponseItem>> Remove(string from, System.Collections.Generic.IEnumerable<string> to, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Communication.Sms.Models.OptOutChangeResponseItem>>> RemoveAsync(string from, System.Collections.Generic.IEnumerable<string> to, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Communication.Sms.Models.OptOutRemoveResponseItem>> Remove(string from, System.Collections.Generic.IEnumerable<string> to, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Communication.Sms.Models.OptOutRemoveResponseItem>>> RemoveAsync(string from, System.Collections.Generic.IEnumerable<string> to, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SmsClient
     {
@@ -56,13 +56,13 @@ namespace Azure.Communication.Sms.Models
         public static Azure.Communication.Sms.Models.OptOutResponse OptOutResponse(System.Collections.Generic.IEnumerable<Azure.Communication.Sms.Models.OptOutResponseItem> value = null) { throw null; }
         public static Azure.Communication.Sms.Models.OptOutResponseItem OptOutResponseItem(string to = null, int httpStatusCode = 0, bool? isOptedOut = default(bool?), string errorMessage = null) { throw null; }
     }
-    public partial class OptOutChangeResponse
+    public partial class OptOutAddResponse
     {
-        internal OptOutChangeResponse() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Communication.Sms.Models.OptOutChangeResponseItem> Value { get { throw null; } }
+        internal OptOutAddResponse() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.Communication.Sms.Models.OptOutAddResponseItem> Value { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public partial struct OptOutChangeResponseItem
+    public partial struct OptOutAddResponseItem
     {
         private object _dummy;
         private int _dummyPrimitive;
@@ -73,6 +73,20 @@ namespace Azure.Communication.Sms.Models
     public partial class OptOutRecipient
     {
         public OptOutRecipient(string to) { }
+        public string To { get { throw null; } }
+    }
+    public partial class OptOutRemoveResponse
+    {
+        internal OptOutRemoveResponse() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.Communication.Sms.Models.OptOutRemoveResponseItem> Value { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public partial struct OptOutRemoveResponseItem
+    {
+        private object _dummy;
+        private int _dummyPrimitive;
+        public string ErrorMessage { get { throw null; } }
+        public int HttpStatusCode { get { throw null; } }
         public string To { get { throw null; } }
     }
     public partial class OptOutResponse

@@ -106,7 +106,7 @@ namespace Azure.Communication.Sms
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
-        public virtual async Task<Response<IReadOnlyList<OptOutChangeResponseItem>>> AddAsync(string from, IEnumerable<string> to, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<OptOutAddResponseItem>>> AddAsync(string from, IEnumerable<string> to, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(OptOutsClient)}.{nameof(Add)}");
             scope.Start();
@@ -117,7 +117,7 @@ namespace Azure.Communication.Sms
                 IEnumerable<OptOutRecipient> recipients = to.Select(x => new OptOutRecipient(Argument.CheckNotNullOrEmpty(x, nameof(to))));
 
                 Response<OptOutResponse> response = await OptOutsRestClient.AddAsync(from, recipients, cancellationToken).ConfigureAwait(false);
-                OptOutChangeResponse result = new OptOutChangeResponse(response.Value.Value.Select(r => new OptOutChangeResponseItem(r.To, r.HttpStatusCode, r.ErrorMessage)));
+                OptOutAddResponse result = new OptOutAddResponse(response.Value.Value.Select(r => new OptOutAddResponseItem(r.To, r.HttpStatusCode, r.ErrorMessage)));
 
                 return Response.FromValue(result.Value, response.GetRawResponse());
             }
@@ -137,7 +137,7 @@ namespace Azure.Communication.Sms
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
-        public virtual Response<IReadOnlyList<OptOutChangeResponseItem>> Add(string from, IEnumerable<string> to, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<OptOutAddResponseItem>> Add(string from, IEnumerable<string> to, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(OptOutsClient)}.{nameof(Add)}");
             scope.Start();
@@ -148,7 +148,7 @@ namespace Azure.Communication.Sms
 
                 IEnumerable<OptOutRecipient> recipients = to.Select(x => new OptOutRecipient(Argument.CheckNotNullOrEmpty(x, nameof(to))));
                 Response<OptOutResponse> response = OptOutsRestClient.Add(from, recipients, cancellationToken);
-                OptOutChangeResponse result = new OptOutChangeResponse(response.Value.Value.Select(r => new OptOutChangeResponseItem(r.To, r.HttpStatusCode, r.ErrorMessage)));
+                OptOutAddResponse result = new OptOutAddResponse(response.Value.Value.Select(r => new OptOutAddResponseItem(r.To, r.HttpStatusCode, r.ErrorMessage)));
 
                 return Response.FromValue(result.Value, response.GetRawResponse());
             }
@@ -168,7 +168,7 @@ namespace Azure.Communication.Sms
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
-        public virtual async Task<Response<IReadOnlyList<OptOutChangeResponseItem>>> RemoveAsync(string from, IEnumerable<string> to, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<OptOutRemoveResponseItem>>> RemoveAsync(string from, IEnumerable<string> to, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(OptOutsClient)}.{nameof(Remove)}");
             scope.Start();
@@ -179,7 +179,7 @@ namespace Azure.Communication.Sms
                 IEnumerable<OptOutRecipient> recipients = to.Select(x => new OptOutRecipient(Argument.CheckNotNullOrEmpty(x, nameof(to))));
 
                 Response<OptOutResponse> response = await OptOutsRestClient.RemoveAsync(from, recipients, cancellationToken).ConfigureAwait(false);
-                OptOutChangeResponse result = new OptOutChangeResponse(response.Value.Value.Select(r => new OptOutChangeResponseItem(r.To, r.HttpStatusCode, r.ErrorMessage)));
+                OptOutRemoveResponse result = new OptOutRemoveResponse(response.Value.Value.Select(r => new OptOutRemoveResponseItem(r.To, r.HttpStatusCode, r.ErrorMessage)));
 
                 return Response.FromValue(result.Value, response.GetRawResponse());
             }
@@ -199,7 +199,7 @@ namespace Azure.Communication.Sms
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
-        public virtual Response<IReadOnlyList<OptOutChangeResponseItem>> Remove(string from, IEnumerable<string> to, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<OptOutRemoveResponseItem>> Remove(string from, IEnumerable<string> to, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(OptOutsClient)}.{nameof(Remove)}");
             scope.Start();
@@ -210,7 +210,7 @@ namespace Azure.Communication.Sms
 
                 IEnumerable<OptOutRecipient> recipients = to.Select(x => new OptOutRecipient(Argument.CheckNotNullOrEmpty(x, nameof(to))));
                 Response<OptOutResponse> response = OptOutsRestClient.Remove(from, recipients, cancellationToken);
-                OptOutChangeResponse result = new OptOutChangeResponse(response.Value.Value.Select(r => new OptOutChangeResponseItem(r.To, r.HttpStatusCode, r.ErrorMessage)));
+                OptOutRemoveResponse result = new OptOutRemoveResponse(response.Value.Value.Select(r => new OptOutRemoveResponseItem(r.To, r.HttpStatusCode, r.ErrorMessage)));
 
                 return Response.FromValue(result.Value, response.GetRawResponse());
             }

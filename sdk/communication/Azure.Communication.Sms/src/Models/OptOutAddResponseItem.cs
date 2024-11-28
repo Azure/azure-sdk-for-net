@@ -5,14 +5,14 @@ using System;
 
 namespace Azure.Communication.Sms.Models
 {
-    /// <summary> The OptOutChangeResponseItem. </summary>
-    public struct OptOutChangeResponseItem
+    /// <summary> The OptOutAddResponseItem. </summary>
+    public struct OptOutAddResponseItem
     {
-        /// <summary> Initializes a new instance of <see cref="OptOutChangeResponseItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OptOutAddResponseItem"/>. </summary>
         /// <param name="to"> The recipient phone number (in E.164 format). </param>
         /// <param name="httpStatusCode"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> is null. </exception>
-        internal OptOutChangeResponseItem(string to, int httpStatusCode)
+        internal OptOutAddResponseItem(string to, int httpStatusCode)
         {
             Argument.AssertNotNull(to, nameof(to));
 
@@ -20,11 +20,11 @@ namespace Azure.Communication.Sms.Models
             HttpStatusCode = httpStatusCode;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OptOutChangeResponseItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OptOutAddResponseItem"/>. </summary>
         /// <param name="to"> The recipient phone number (in E.164 format). </param>
         /// <param name="httpStatusCode"></param>
         /// <param name="errorMessage"> Optional error message in case of 4xx/5xx errors. </param>
-        internal OptOutChangeResponseItem(string to, int httpStatusCode, string errorMessage)
+        internal OptOutAddResponseItem(string to, int httpStatusCode, string errorMessage)
         {
             To = to;
             HttpStatusCode = httpStatusCode;
