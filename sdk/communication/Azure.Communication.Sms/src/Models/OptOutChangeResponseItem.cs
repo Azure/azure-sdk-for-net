@@ -6,7 +6,7 @@ using System;
 namespace Azure.Communication.Sms.Models
 {
     /// <summary> The OptOutChangeResponseItem. </summary>
-    public class OptOutChangeResponseItem
+    public struct OptOutChangeResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="OptOutChangeResponseItem"/>. </summary>
         /// <param name="to"> The recipient phone number (in E.164 format). </param>

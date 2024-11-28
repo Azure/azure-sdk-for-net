@@ -324,6 +324,63 @@ namespace Azure.Communication.Sms.Tests
             }
         }
 
+        [Test]
+        public async Task AddOptOutEndpointShouldMarkRecipientsAsOptedOut()
+        {
+            SmsClient client = CreateSmsClient();
+            try
+            {
+                IEnumerable<string>? to = new[] { TestEnvironment.ToPhoneNumber, TestEnvironment.ToPhoneNumber };
+
+                Response<IReadOnlyList<OptOutChangeResponseItem>> addResult = await client.OptOuts.AddAsync(
+                    from: TestEnvironment.FromPhoneNumber,
+                    to: to);
+
+                Response<IReadOnlyList<OptOutResponseItem>> checkResult = await client.OptOuts.CheckAsync(
+                  from: TestEnvironment.FromPhoneNumber,
+                  to: to);
+
+                Assert.IsTrue(checkResult.Value[0].IsOptedOut);
+                Assert.IsTrue(checkResult.Value[1].IsOptedOut);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail("Exception should not have been thrown.");
+                Console.WriteLine(ex);
+                return;
+            }
+        }
+
+        [Test]
+        public async Task RemoveOptOutEndpointShouldMarkRecipientsAsOptedIn()
+        {
+            SmsClient client = CreateSmsClient();
+            try
+            {
+                IEnumerable<string>? to = new[] { TestEnvironment.ToPhoneNumber, TestEnvironment.ToPhoneNumber };
+
+                Response<IReadOnlyList<OptOutChangeResponseItem>> addResult = await client.OptOuts.AddAsync(
+                    from: TestEnvironment.FromPhoneNumber,
+                    to: to);
+
+                Response<IReadOnlyList<OptOutChangeResponseItem>> removeResult = await client.OptOuts.RemoveAsync(
+                    from: TestEnvironment.FromPhoneNumber,
+                    to: to);
+
+                Response<IReadOnlyList<OptOutResponseItem>> checkResult = await client.OptOuts.CheckAsync(
+                    from: TestEnvironment.FromPhoneNumber,
+                    to: to);
+
+                Assert.IsFalse(checkResult.Value[0].IsOptedOut);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail("Exception should not have been thrown.");
+                Console.WriteLine(ex);
+                return;
+            }
+        }
+
         private void AssertSmsSendingHappyPath(SmsSendResult sendResult)
         {
             Assert.True(sendResult.Successful);

@@ -61,9 +61,11 @@ namespace Azure.Communication.Sms.Models
         internal OptOutChangeResponse() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.Sms.Models.OptOutChangeResponseItem> Value { get { throw null; } }
     }
-    public partial class OptOutChangeResponseItem
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public partial struct OptOutChangeResponseItem
     {
-        internal OptOutChangeResponseItem() { }
+        private object _dummy;
+        private int _dummyPrimitive;
         public string ErrorMessage { get { throw null; } }
         public int HttpStatusCode { get { throw null; } }
         public string To { get { throw null; } }
