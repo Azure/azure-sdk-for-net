@@ -1223,15 +1223,10 @@ namespace Azure.ResourceManager.Network.Tests
                     new LoadBalancerInboundNatPool()
                     {
                         Name = inboundNatPool1Name,
-                        BackendPort = 81,
-                        FrontendPortRangeStart = 100,
-                        FrontendPortRangeEnd = 105,
-                        FrontendIPConfiguration = new WritableSubResource()
+                        Properties = new LoadBalancerInboundNatPoolProperties(LoadBalancingTransportProtocol.Tcp, frontendPortRangeStart: 100, frontendPortRangeEnd: 105, backendPort: 81)
                         {
-                            Id = GetChildLbResourceId(TestEnvironment.SubscriptionId,
-                            resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
-                        },
-                        Protocol = LoadBalancingTransportProtocol.Tcp
+                            FrontendIPConfigurationId = GetChildLbResourceId(TestEnvironment.SubscriptionId, resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
+                        }
                     }
                 }
             };
@@ -1254,18 +1249,17 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(100, getLoadBalancer.Value.Data.InboundNatPools[0].FrontendPortRangeStart);
             Assert.AreEqual(105, getLoadBalancer.Value.Data.InboundNatPools[0].FrontendPortRangeEnd);
             Assert.AreEqual(LoadBalancingTransportProtocol.Tcp, getLoadBalancer.Value.Data.InboundNatPools[0].Protocol);
-            Assert.AreEqual(GetChildLbResourceId(TestEnvironment.SubscriptionId, resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName), getLoadBalancer.Value.Data.InboundNatPools[0].FrontendIPConfiguration.Id.ToString());
+            Assert.AreEqual(GetChildLbResourceId(TestEnvironment.SubscriptionId, resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName), getLoadBalancer.Value.Data.InboundNatPools[0].Properties.FrontendIPConfigurationId.ToString());
             Assert.AreEqual(getLoadBalancer.Value.Data.InboundNatPools[0].Id, getLoadBalancer.Value.Data.FrontendIPConfigurations[0].InboundNatPools[0].Id.ToString());
 
             // Add a new nat pool
             LoadBalancerInboundNatPool natpool2 = new LoadBalancerInboundNatPool()
             {
                 Name = inboundNatPool2Name,
-                BackendPort = 81,
-                FrontendPortRangeStart = 107,
-                FrontendPortRangeEnd = 110,
-                FrontendIPConfiguration = new WritableSubResource() { Id = GetChildLbResourceId(TestEnvironment.SubscriptionId, resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName) },
-                Protocol = LoadBalancingTransportProtocol.Tcp
+                Properties = new LoadBalancerInboundNatPoolProperties(protocol: LoadBalancingTransportProtocol.Tcp, frontendPortRangeStart: 107, frontendPortRangeEnd: 110, backendPort: 81)
+                {
+                    FrontendIPConfigurationId = GetChildLbResourceId(TestEnvironment.SubscriptionId, resourceGroupName, lbName, "frontendIPConfigurations", frontendIpConfigName)
+                }
             };
             getLoadBalancer.Value.Data.InboundNatPools.Add(natpool2);
             await loadBalancerCollection.CreateOrUpdateAsync(WaitUntil.Completed, lbName, getLoadBalancer.Value.Data);
