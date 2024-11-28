@@ -67,17 +67,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Samples
             DiagnosticRemoteSupportSettingResource diagnosticRemoteSupportSetting = client.GetDiagnosticRemoteSupportSettingResource(diagnosticRemoteSupportSettingResourceId);
 
             // invoke the operation
-            DiagnosticRemoteSupportSettingData data = new DiagnosticRemoteSupportSettingData()
+            DiagnosticRemoteSupportSettingData data = new DiagnosticRemoteSupportSettingData
             {
-                RemoteSupportSettingsList =
-{
-new EdgeRemoteSupportSettings()
+                RemoteSupportSettingsList = {new EdgeRemoteSupportSettings
 {
 RemoteApplicationType = EdgeRemoteApplicationType.Powershell,
 AccessLevel = EdgeRemoteApplicationAccessLevel.ReadWrite,
 ExpireOn = DateTimeOffset.Parse("2021-07-07T00:00:00+00:00"),
-}
-},
+}},
             };
             ArmOperation<DiagnosticRemoteSupportSettingResource> lro = await diagnosticRemoteSupportSetting.CreateOrUpdateAsync(WaitUntil.Completed, data);
             DiagnosticRemoteSupportSettingResource result = lro.Value;

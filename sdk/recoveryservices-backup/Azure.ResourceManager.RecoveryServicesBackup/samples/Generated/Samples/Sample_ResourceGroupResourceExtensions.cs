@@ -203,6 +203,33 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task RefreshProtectionContainer_TriggerAzureVmDiscovery()
+        {
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/Common/RefreshContainers.json
+            // this example is just showing the usage of "ProtectionContainers_Refresh" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "SwaggerTestRg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // invoke the operation
+            string vaultName = "NetSDKTestRsVault";
+            string fabricName = "Azure";
+            await resourceGroupResource.RefreshProtectionContainerAsync(vaultName, fabricName);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBackupProtectableItems_ListProtectableItemsWithBackupManagementTypeFilterAsAzureIaasVm()
         {
             // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureIaasVm/BackupProtectableItems_List.json
@@ -346,7 +373,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
 
             // invoke the operation
             string vaultName = "testVault";
-            FetchTieringCostInfoContent content = new FetchTieringCostInfoForRehydrationContent(RecoveryPointTierType.ArchivedRP, RecoveryPointTierType.HardenedRP, "IaasVMContainer;iaasvmcontainerv2;netsdktestrg;netvmtestv2vm1", "VM;iaasvmcontainerv2;netsdktestrg;netvmtestv2vm1", "1222343434", RehydrationPriority.High);
+            FetchTieringCostInfoContent content = new FetchTieringCostInfoForRehydrationContent(
+                RecoveryPointTierType.ArchivedRP,
+                RecoveryPointTierType.HardenedRP,
+                "IaasVMContainer;iaasvmcontainerv2;netsdktestrg;netvmtestv2vm1",
+                "VM;iaasvmcontainerv2;netsdktestrg;netvmtestv2vm1",
+                "1222343434",
+                RehydrationPriority.High);
             ArmOperation<TieringCostInfo> lro = await resourceGroupResource.PostFetchTieringCostAsync(WaitUntil.Completed, vaultName, content);
             TieringCostInfo result = lro.Value;
 

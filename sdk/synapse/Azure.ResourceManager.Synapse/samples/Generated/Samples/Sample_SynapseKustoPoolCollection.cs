@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Synapse.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ListKustoPoolsInAWorkspace()
+        public async Task CreateOrUpdate_KustoPoolsCreateOrUpdate()
         {
-            // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/preview/2021-06-01-preview/examples/KustoPoolsListByWorkspace.json
-            // this example is just showing the usage of "KustoPools_ListByWorkspace" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/preview/2021-06-01-preview/examples/KustoPoolsCreateOrUpdate.json
+            // this example is just showing the usage of "KustoPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -32,24 +32,32 @@ namespace Azure.ResourceManager.Synapse.Samples
             // for more information of creating SynapseWorkspaceResource, please refer to the document of SynapseWorkspaceResource
             string subscriptionId = "12345678-1234-1234-1234-123456789098";
             string resourceGroupName = "kustorptest";
-            string workspaceName = "kustorptest";
+            string workspaceName = "synapseWorkspaceName";
             ResourceIdentifier synapseWorkspaceResourceId = SynapseWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
             SynapseWorkspaceResource synapseWorkspace = client.GetSynapseWorkspaceResource(synapseWorkspaceResourceId);
 
             // get the collection of this SynapseKustoPoolResource
             SynapseKustoPoolCollection collection = synapseWorkspace.GetSynapseKustoPools();
 
-            // invoke the operation and iterate over the result
-            await foreach (SynapseKustoPoolResource item in collection.GetAllAsync())
+            // invoke the operation
+            string kustoPoolName = "kustoclusterrptest4";
+            SynapseKustoPoolData data = new SynapseKustoPoolData(new AzureLocation("westus"), new SynapseDataSourceSku(SynapseSkuName.StorageOptimized, KustoPoolSkuSize.Medium)
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                SynapseKustoPoolData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                Capacity = 2,
+            })
+            {
+                EnableStreamingIngest = true,
+                EnablePurge = true,
+                WorkspaceUid = Guid.Parse("11111111-2222-3333-444444444444"),
+            };
+            ArmOperation<SynapseKustoPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, kustoPoolName, data);
+            SynapseKustoPoolResource result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SynapseKustoPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
@@ -84,6 +92,42 @@ namespace Azure.ResourceManager.Synapse.Samples
             SynapseKustoPoolData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListKustoPoolsInAWorkspace()
+        {
+            // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/preview/2021-06-01-preview/examples/KustoPoolsListByWorkspace.json
+            // this example is just showing the usage of "KustoPools_ListByWorkspace" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SynapseWorkspaceResource created on azure
+            // for more information of creating SynapseWorkspaceResource, please refer to the document of SynapseWorkspaceResource
+            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string resourceGroupName = "kustorptest";
+            string workspaceName = "kustorptest";
+            ResourceIdentifier synapseWorkspaceResourceId = SynapseWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            SynapseWorkspaceResource synapseWorkspace = client.GetSynapseWorkspaceResource(synapseWorkspaceResourceId);
+
+            // get the collection of this SynapseKustoPoolResource
+            SynapseKustoPoolCollection collection = synapseWorkspace.GetSynapseKustoPools();
+
+            // invoke the operation and iterate over the result
+            await foreach (SynapseKustoPoolResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                SynapseKustoPoolData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -156,50 +200,6 @@ namespace Azure.ResourceManager.Synapse.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_KustoPoolsCreateOrUpdate()
-        {
-            // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/preview/2021-06-01-preview/examples/KustoPoolsCreateOrUpdate.json
-            // this example is just showing the usage of "KustoPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SynapseWorkspaceResource created on azure
-            // for more information of creating SynapseWorkspaceResource, please refer to the document of SynapseWorkspaceResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
-            string resourceGroupName = "kustorptest";
-            string workspaceName = "synapseWorkspaceName";
-            ResourceIdentifier synapseWorkspaceResourceId = SynapseWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            SynapseWorkspaceResource synapseWorkspace = client.GetSynapseWorkspaceResource(synapseWorkspaceResourceId);
-
-            // get the collection of this SynapseKustoPoolResource
-            SynapseKustoPoolCollection collection = synapseWorkspace.GetSynapseKustoPools();
-
-            // invoke the operation
-            string kustoPoolName = "kustoclusterrptest4";
-            SynapseKustoPoolData data = new SynapseKustoPoolData(new AzureLocation("westus"), new SynapseDataSourceSku(SynapseSkuName.StorageOptimized, KustoPoolSkuSize.Medium)
-            {
-                Capacity = 2,
-            })
-            {
-                EnableStreamingIngest = true,
-                EnablePurge = true,
-                WorkspaceUid = Guid.Parse("11111111-2222-3333-444444444444"),
-            };
-            ArmOperation<SynapseKustoPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, kustoPoolName, data);
-            SynapseKustoPoolResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            SynapseKustoPoolData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

@@ -71,18 +71,18 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             AppPlatformBuildResource appPlatformBuild = client.GetAppPlatformBuildResource(appPlatformBuildResourceId);
 
             // invoke the operation
-            AppPlatformBuildData data = new AppPlatformBuildData()
+            AppPlatformBuildData data = new AppPlatformBuildData
             {
-                Properties = new AppPlatformBuildProperties()
+                Properties = new AppPlatformBuildProperties
                 {
                     RelativePath = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855-20210601-3ed9f4a2-986b-4bbd-b833-a42dccb2f777",
                     Builder = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/buildServices/default/builders/default",
                     AgentPool = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.AppPlatform/Spring/myservice/buildServices/default/agentPools/default",
                     Env =
 {
-["environmentVariable"] = "test",
+["environmentVariable"] = "test"
 },
-                    ResourceRequests = new AppPlatformBuildResourceRequirements()
+                    ResourceRequests = new AppPlatformBuildResourceRequirements
                     {
                         Cpu = "1",
                         Memory = "2Gi",

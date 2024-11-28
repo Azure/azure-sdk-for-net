@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             DevTestLabCustomImageResource devTestLabCustomImage = client.GetDevTestLabCustomImageResource(devTestLabCustomImageResourceId);
 
             // invoke the operation
-            DevTestLabCustomImagePatch patch = new DevTestLabCustomImagePatch()
+            DevTestLabCustomImagePatch patch = new DevTestLabCustomImagePatch
             {
                 Tags =
 {
-["tagName1"] = "tagValue2",
+["tagName1"] = "tagValue2"
 },
             };
             DevTestLabCustomImageResource result = await devTestLabCustomImage.UpdateAsync(patch);

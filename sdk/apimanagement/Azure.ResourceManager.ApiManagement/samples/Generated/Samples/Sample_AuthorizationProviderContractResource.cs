@@ -49,6 +49,34 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_ApiManagementDeleteAuthorizationProvider()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementDeleteAuthorizationProvider.json
+            // this example is just showing the usage of "AuthorizationProvider_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AuthorizationProviderContractResource created on azure
+            // for more information of creating AuthorizationProviderContractResource, please refer to the document of AuthorizationProviderContractResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string authorizationProviderId = "aadwithauthcode";
+            ResourceIdentifier authorizationProviderContractResourceId = AuthorizationProviderContractResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, authorizationProviderId);
+            AuthorizationProviderContractResource authorizationProviderContract = client.GetAuthorizationProviderContractResource(authorizationProviderContractResourceId);
+
+            // invoke the operation
+            ETag ifMatch = new ETag("*");
+            await authorizationProviderContract.DeleteAsync(WaitUntil.Completed, ifMatch);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ApiManagementCreateAuthorizationProviderAADAuthCode()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateAuthorizationProviderAADAuthCode.json
@@ -69,21 +97,21 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             AuthorizationProviderContractResource authorizationProviderContract = client.GetAuthorizationProviderContractResource(authorizationProviderContractResourceId);
 
             // invoke the operation
-            AuthorizationProviderContractData data = new AuthorizationProviderContractData()
+            AuthorizationProviderContractData data = new AuthorizationProviderContractData
             {
                 DisplayName = "aadwithauthcode",
                 IdentityProvider = "aad",
-                Oauth2 = new AuthorizationProviderOAuth2Settings()
+                Oauth2 = new AuthorizationProviderOAuth2Settings
                 {
                     RedirectUri = new Uri("https://authorization-manager.consent.azure-apim.net/redirect/apim/apimService1"),
-                    GrantTypes = new AuthorizationProviderOAuth2GrantTypes()
+                    GrantTypes = new AuthorizationProviderOAuth2GrantTypes
                     {
                         AuthorizationCode =
 {
 ["clientId"] = "59790825-fdd3-4b10-bc7a-4c3aaf25801d",
 ["clientSecret"] = "xxxxxxxxxxxxxxxxxxxxxxxx",
 ["resourceUri"] = "https://graph.microsoft.com",
-["scopes"] = "User.Read.All Group.Read.All",
+["scopes"] = "User.Read.All Group.Read.All"
 },
                     },
                 },
@@ -120,19 +148,19 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             AuthorizationProviderContractResource authorizationProviderContract = client.GetAuthorizationProviderContractResource(authorizationProviderContractResourceId);
 
             // invoke the operation
-            AuthorizationProviderContractData data = new AuthorizationProviderContractData()
+            AuthorizationProviderContractData data = new AuthorizationProviderContractData
             {
                 DisplayName = "aadwithclientcred",
                 IdentityProvider = "aad",
-                Oauth2 = new AuthorizationProviderOAuth2Settings()
+                Oauth2 = new AuthorizationProviderOAuth2Settings
                 {
                     RedirectUri = new Uri("https://authorization-manager.consent.azure-apim.net/redirect/apim/apimService1"),
-                    GrantTypes = new AuthorizationProviderOAuth2GrantTypes()
+                    GrantTypes = new AuthorizationProviderOAuth2GrantTypes
                     {
                         AuthorizationCode =
 {
 ["resourceUri"] = "https://graph.microsoft.com",
-["scopes"] = "User.Read.All Group.Read.All",
+["scopes"] = "User.Read.All Group.Read.All"
 },
                     },
                 },
@@ -169,14 +197,14 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             AuthorizationProviderContractResource authorizationProviderContract = client.GetAuthorizationProviderContractResource(authorizationProviderContractResourceId);
 
             // invoke the operation
-            AuthorizationProviderContractData data = new AuthorizationProviderContractData()
+            AuthorizationProviderContractData data = new AuthorizationProviderContractData
             {
                 DisplayName = "eventbrite",
                 IdentityProvider = "oauth2",
-                Oauth2 = new AuthorizationProviderOAuth2Settings()
+                Oauth2 = new AuthorizationProviderOAuth2Settings
                 {
                     RedirectUri = new Uri("https://authorization-manager.consent.azure-apim.net/redirect/apim/apimService1"),
-                    GrantTypes = new AuthorizationProviderOAuth2GrantTypes()
+                    GrantTypes = new AuthorizationProviderOAuth2GrantTypes
                     {
                         AuthorizationCode =
 {
@@ -185,7 +213,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 ["clientSecret"] = "xxxxxxxxxxxxxxxxxxxxxxxx",
 ["refreshUrl"] = "https://www.eventbrite.com/oauth/token",
 ["scopes"] = null,
-["tokenUrl"] = "https://www.eventbrite.com/oauth/token",
+["tokenUrl"] = "https://www.eventbrite.com/oauth/token"
 },
                     },
                 },
@@ -222,20 +250,20 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             AuthorizationProviderContractResource authorizationProviderContract = client.GetAuthorizationProviderContractResource(authorizationProviderContractResourceId);
 
             // invoke the operation
-            AuthorizationProviderContractData data = new AuthorizationProviderContractData()
+            AuthorizationProviderContractData data = new AuthorizationProviderContractData
             {
                 DisplayName = "google",
                 IdentityProvider = "google",
-                Oauth2 = new AuthorizationProviderOAuth2Settings()
+                Oauth2 = new AuthorizationProviderOAuth2Settings
                 {
                     RedirectUri = new Uri("https://authorization-manager.consent.azure-apim.net/redirect/apim/apimService1"),
-                    GrantTypes = new AuthorizationProviderOAuth2GrantTypes()
+                    GrantTypes = new AuthorizationProviderOAuth2GrantTypes
                     {
                         AuthorizationCode =
 {
 ["clientId"] = "99999999-xxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com",
 ["clientSecret"] = "XXXXXXXXXXXXXXXXXXXX",
-["scopes"] = "openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email",
+["scopes"] = "openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email"
 },
                     },
                 },
@@ -248,34 +276,6 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             AuthorizationProviderContractData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_ApiManagementDeleteAuthorizationProvider()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementDeleteAuthorizationProvider.json
-            // this example is just showing the usage of "AuthorizationProvider_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AuthorizationProviderContractResource created on azure
-            // for more information of creating AuthorizationProviderContractResource, please refer to the document of AuthorizationProviderContractResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string authorizationProviderId = "aadwithauthcode";
-            ResourceIdentifier authorizationProviderContractResourceId = AuthorizationProviderContractResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, authorizationProviderId);
-            AuthorizationProviderContractResource authorizationProviderContract = client.GetAuthorizationProviderContractResource(authorizationProviderContractResourceId);
-
-            // invoke the operation
-            ETag ifMatch = new ETag("*");
-            await authorizationProviderContract.DeleteAsync(WaitUntil.Completed, ifMatch);
-
-            Console.WriteLine("Succeeded");
         }
     }
 }

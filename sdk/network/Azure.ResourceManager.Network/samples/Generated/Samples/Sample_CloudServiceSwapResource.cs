@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Samples
             CloudServiceSwapResource cloudServiceSwap = client.GetCloudServiceSwapResource(cloudServiceSwapResourceId);
 
             // invoke the operation
-            CloudServiceSwapData data = new CloudServiceSwapData()
+            CloudServiceSwapData data = new CloudServiceSwapData
             {
                 CloudServiceSwapSlotType = SwapSlotType.Production,
             };

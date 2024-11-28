@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Kusto.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_KustoPrivateEndpointConnectionsList()
+        public async Task CreateOrUpdate_ApproveOrRejectAPrivateEndpointConnectionWithAGivenName()
         {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoPrivateEndpointConnectionsList.json
-            // this example is just showing the usage of "PrivateEndpointConnections_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoPrivateEndpointConnectionsCreateOrUpdate.json
+            // this example is just showing the usage of "PrivateEndpointConnections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -32,24 +32,31 @@ namespace Azure.ResourceManager.Kusto.Samples
             // for more information of creating KustoClusterResource, please refer to the document of KustoClusterResource
             string subscriptionId = "12345678-1234-1234-1234-123456789098";
             string resourceGroupName = "kustorptest";
-            string clusterName = "kustoCluster";
+            string clusterName = "kustoclusterrptest4";
             ResourceIdentifier kustoClusterResourceId = KustoClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
             KustoClusterResource kustoCluster = client.GetKustoClusterResource(kustoClusterResourceId);
 
             // get the collection of this KustoPrivateEndpointConnectionResource
             KustoPrivateEndpointConnectionCollection collection = kustoCluster.GetKustoPrivateEndpointConnections();
 
-            // invoke the operation and iterate over the result
-            await foreach (KustoPrivateEndpointConnectionResource item in collection.GetAllAsync())
+            // invoke the operation
+            string privateEndpointConnectionName = "privateEndpointTest";
+            KustoPrivateEndpointConnectionData data = new KustoPrivateEndpointConnectionData
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                KustoPrivateEndpointConnectionData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                ConnectionState = new KustoPrivateLinkServiceConnectionStateProperty
+                {
+                    Status = "Approved",
+                    Description = "Approved by johndoe@contoso.com",
+                },
+            };
+            ArmOperation<KustoPrivateEndpointConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionName, data);
+            KustoPrivateEndpointConnectionResource result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            KustoPrivateEndpointConnectionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
@@ -84,6 +91,42 @@ namespace Azure.ResourceManager.Kusto.Samples
             KustoPrivateEndpointConnectionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_KustoPrivateEndpointConnectionsList()
+        {
+            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoPrivateEndpointConnectionsList.json
+            // this example is just showing the usage of "PrivateEndpointConnections_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this KustoClusterResource created on azure
+            // for more information of creating KustoClusterResource, please refer to the document of KustoClusterResource
+            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string resourceGroupName = "kustorptest";
+            string clusterName = "kustoCluster";
+            ResourceIdentifier kustoClusterResourceId = KustoClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
+            KustoClusterResource kustoCluster = client.GetKustoClusterResource(kustoClusterResourceId);
+
+            // get the collection of this KustoPrivateEndpointConnectionResource
+            KustoPrivateEndpointConnectionCollection collection = kustoCluster.GetKustoPrivateEndpointConnections();
+
+            // invoke the operation and iterate over the result
+            await foreach (KustoPrivateEndpointConnectionResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                KustoPrivateEndpointConnectionData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -156,49 +199,6 @@ namespace Azure.ResourceManager.Kusto.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_ApproveOrRejectAPrivateEndpointConnectionWithAGivenName()
-        {
-            // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoPrivateEndpointConnectionsCreateOrUpdate.json
-            // this example is just showing the usage of "PrivateEndpointConnections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this KustoClusterResource created on azure
-            // for more information of creating KustoClusterResource, please refer to the document of KustoClusterResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
-            string resourceGroupName = "kustorptest";
-            string clusterName = "kustoclusterrptest4";
-            ResourceIdentifier kustoClusterResourceId = KustoClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
-            KustoClusterResource kustoCluster = client.GetKustoClusterResource(kustoClusterResourceId);
-
-            // get the collection of this KustoPrivateEndpointConnectionResource
-            KustoPrivateEndpointConnectionCollection collection = kustoCluster.GetKustoPrivateEndpointConnections();
-
-            // invoke the operation
-            string privateEndpointConnectionName = "privateEndpointTest";
-            KustoPrivateEndpointConnectionData data = new KustoPrivateEndpointConnectionData()
-            {
-                ConnectionState = new KustoPrivateLinkServiceConnectionStateProperty()
-                {
-                    Status = "Approved",
-                    Description = "Approved by johndoe@contoso.com",
-                },
-            };
-            ArmOperation<KustoPrivateEndpointConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionName, data);
-            KustoPrivateEndpointConnectionResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            KustoPrivateEndpointConnectionData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

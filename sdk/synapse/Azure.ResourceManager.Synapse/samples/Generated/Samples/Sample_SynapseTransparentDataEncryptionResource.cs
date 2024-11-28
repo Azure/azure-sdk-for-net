@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Synapse.Samples
             SynapseTransparentDataEncryptionResource synapseTransparentDataEncryption = client.GetSynapseTransparentDataEncryptionResource(synapseTransparentDataEncryptionResourceId);
 
             // invoke the operation
-            SynapseTransparentDataEncryptionData data = new SynapseTransparentDataEncryptionData()
+            SynapseTransparentDataEncryptionData data = new SynapseTransparentDataEncryptionData
             {
                 Status = SynapseTransparentDataEncryptionStatus.Enabled,
             };

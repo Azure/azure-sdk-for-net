@@ -94,20 +94,17 @@ namespace Azure.ResourceManager.ProviderHub.Samples
             DefaultRolloutResource defaultRollout = client.GetDefaultRolloutResource(defaultRolloutResourceId);
 
             // invoke the operation
-            DefaultRolloutData data = new DefaultRolloutData()
+            DefaultRolloutData data = new DefaultRolloutData
             {
-                Properties = new DefaultRolloutProperties()
+                Properties = new DefaultRolloutProperties
                 {
-                    Specification = new DefaultRolloutSpecification()
+                    Specification = new DefaultRolloutSpecification
                     {
-                        Canary = new CanaryTrafficRegionRolloutConfiguration()
+                        Canary = new CanaryTrafficRegionRolloutConfiguration
                         {
-                            SkipRegions =
-{
-new AzureLocation("eastus2euap")
-},
+                            SkipRegions = { new AzureLocation("eastus2euap") },
                         },
-                        RestOfTheWorldGroupTwo = new TrafficRegionRolloutConfiguration()
+                        RestOfTheWorldGroupTwo = new TrafficRegionRolloutConfiguration
                         {
                             WaitDuration = XmlConvert.ToTimeSpan("PT4H"),
                         },

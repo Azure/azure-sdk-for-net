@@ -9,8 +9,6 @@ using Azure.Provisioning.Primitives;
 using System.Collections.Generic;
 using Azure.Provisioning;
 using Azure.Provisioning.CloudMachine;
-using Azure.Core;
-using System.Runtime.CompilerServices;
 
 namespace Azure.CloudMachine;
 
@@ -18,7 +16,7 @@ public class CloudMachineInfrastructure
 {
     internal const string SB_PRIVATE_TOPIC = "cm_servicebus_topic_private";
     internal const string SB_PRIVATE_SUB = "cm_servicebus_subscription_private";
-    private readonly string _cmid;
+    private readonly string _cmId;
 
     private Infrastructure _infrastructure = new Infrastructure("cm");
     private List<Provisionable> _resources = new();
@@ -26,7 +24,7 @@ public class CloudMachineInfrastructure
     internal List<Type> Endpoints { get; } = new();
 
     public UserAssignedIdentity Identity { get; private set; }
-    public string Id => _cmid;
+    public string Id => _cmId;
 
     /// <summary>
     /// The common principalId parameter.
@@ -45,13 +43,27 @@ public class CloudMachineInfrastructure
 
     public CloudMachineInfrastructure(string cmId)
     {
-        _cmid = cmId;
+        _cmId = cmId;
 
         // setup CM identity
         Identity = new UserAssignedIdentity("cm_identity");
-        Identity.Name = _cmid;
+        Identity.Name = _cmId;
         _infrastructure.Add(new ProvisioningOutput($"cm_managed_identity_id", typeof(string)) { Value = Identity.Id });
-        Features.Add(new CloudMachineCoreFeature());
+
+        // Add core features
+        var storage = new StorageFeature(_cmId);
+        Features.Add(storage);
+        var sbNamespace = new ServiceBusNamespaceFeature(_cmId);
+        Features.Add(sbNamespace);
+        var sbTopic_private = new ServiceBusTopicFeature("cm_servicebus_topic_private", sbNamespace);
+        Features.Add(sbTopic_private);
+        var sbTopic_default = new ServiceBusTopicFeature("cm_servicebus_default_topic", sbNamespace);
+        Features.Add(sbTopic_default);
+        Features.Add(new ServiceBusSubscriptionFeature("cm_servicebus_subscription_private", sbTopic_private));
+        Features.Add(new ServiceBusSubscriptionFeature("cm_servicebus_subscription_default", sbTopic_default));
+        var systemTopic = new EventGridSystemTopicFeature(_cmId, storage);
+        Features.Add(systemTopic);
+        Features.Add(new SystemTopicEventSubscriptionFeature("cm_eventgrid_subscription_blob", systemTopic, sbTopic_private, sbNamespace));
     }
 
     public void AddResource(NamedProvisionableConstruct resource)
@@ -89,6 +101,13 @@ public class CloudMachineInfrastructure
             Description = "The location for the resource(s) to be deployed.",
             Value = BicepFunction.GetResourceGroup().Location
         });
+
+        _infrastructure.Add(new ProvisioningParameter("principalId", typeof(string))
+        {
+            Description = "The objectId of the current user principal.",
+        });
+
+        _infrastructure.Add(Identity);
 
         // Add any add-on resources to the infrastructure.
         foreach (Provisionable resource in _resources)

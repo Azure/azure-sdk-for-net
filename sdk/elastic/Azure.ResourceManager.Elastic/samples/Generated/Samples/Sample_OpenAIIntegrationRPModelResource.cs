@@ -49,6 +49,33 @@ namespace Azure.ResourceManager.Elastic.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_OpenAIDelete()
+        {
+            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/OpenAI_Delete.json
+            // this example is just showing the usage of "OpenAI_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this OpenAIIntegrationRPModelResource created on azure
+            // for more information of creating OpenAIIntegrationRPModelResource, please refer to the document of OpenAIIntegrationRPModelResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            string monitorName = "myMonitor";
+            string integrationName = "default";
+            ResourceIdentifier openAIIntegrationRPModelResourceId = OpenAIIntegrationRPModelResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName, integrationName);
+            OpenAIIntegrationRPModelResource openAIIntegrationRPModel = client.GetOpenAIIntegrationRPModelResource(openAIIntegrationRPModelResourceId);
+
+            // invoke the operation
+            await openAIIntegrationRPModel.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_OpenAICreateOrUpdate()
         {
             // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/OpenAI_CreateOrUpdate.json
@@ -78,33 +105,6 @@ namespace Azure.ResourceManager.Elastic.Samples
             OpenAIIntegrationRPModelData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_OpenAIDelete()
-        {
-            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/OpenAI_Delete.json
-            // this example is just showing the usage of "OpenAI_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this OpenAIIntegrationRPModelResource created on azure
-            // for more information of creating OpenAIIntegrationRPModelResource, please refer to the document of OpenAIIntegrationRPModelResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "myResourceGroup";
-            string monitorName = "myMonitor";
-            string integrationName = "default";
-            ResourceIdentifier openAIIntegrationRPModelResourceId = OpenAIIntegrationRPModelResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName, integrationName);
-            OpenAIIntegrationRPModelResource openAIIntegrationRPModel = client.GetOpenAIIntegrationRPModelResource(openAIIntegrationRPModelResourceId);
-
-            // invoke the operation
-            await openAIIntegrationRPModel.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
         }
 
         [Test]

@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             DevOpsRepositoryResource devOpsRepository = client.GetDevOpsRepositoryResource(devOpsRepositoryResourceId);
 
             // invoke the operation
-            DevOpsRepositoryData data = new DevOpsRepositoryData()
+            DevOpsRepositoryData data = new DevOpsRepositoryData
             {
-                Properties = new DevOpsRepositoryProperties()
+                Properties = new DevOpsRepositoryProperties
                 {
                     OnboardingState = ResourceOnboardingState.NotApplicable,
-                    ActionableRemediation = new ActionableRemediation()
+                    ActionableRemediation = new ActionableRemediation
                     {
                         State = ActionableRemediationState.Enabled,
                     },
