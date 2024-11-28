@@ -14,9 +14,6 @@ namespace Azure.CloudMachine;
 
 public class CloudMachineInfrastructure
 {
-    internal const string SB_PRIVATE_TOPIC = "cm_servicebus_topic_private";
-    internal const string SB_PRIVATE_SUB = "cm_servicebus_subscription_private";
-
     private readonly Infrastructure _infrastructure = new("cm");
     private readonly List<NamedProvisionableConstruct> _constrcuts = [];
 
@@ -56,13 +53,15 @@ public class CloudMachineInfrastructure
         _infrastructure.Add(new ProvisioningOutput("cm_managed_identity_id", typeof(string)) { Value = Identity.Id });
 
         // Add core features
-        var storage = AddFeature(new StorageFeature(Id));
+        var storage = AddFeature(new StorageAccountFeature(Id));
+        var blobs = AddFeature(new BlobServiceFeature(storage));
+        var defaultContainer = AddFeature(new BlobContainerFeature(blobs));
         var sbNamespace = AddFeature(new ServiceBusNamespaceFeature(Id));
         var sbTopicPrivate = AddFeature(new ServiceBusTopicFeature("cm_servicebus_topic_private", sbNamespace));
         var sbTopicDefault = AddFeature(new ServiceBusTopicFeature("cm_servicebus_default_topic", sbNamespace));
         AddFeature(new ServiceBusSubscriptionFeature("cm_servicebus_subscription_private", sbTopicPrivate)); // TODO: should private connections not be in the Connections collection?
         AddFeature(new ServiceBusSubscriptionFeature("cm_servicebus_subscription_default", sbTopicDefault));
-        var systemTopic = AddFeature(new EventGridSystemTopicFeature(Id, storage));
+        var systemTopic = AddFeature(new EventGridSystemTopicFeature(Id, storage, "Microsoft.Storage.StorageAccounts"));
         AddFeature(new SystemTopicEventSubscriptionFeature("cm_eventgrid_subscription_blob", systemTopic, sbTopicPrivate, sbNamespace));
     }
 

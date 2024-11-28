@@ -16,6 +16,27 @@ namespace Azure.CloudMachine.Tests;
 public class ProvisioningTests
 {
     [Test]
+    public void JustCloudMachine()
+    {
+        CloudMachineInfrastructure infra = new("cm0c420d2f21084cd");
+        string actualBicep = infra.Build().Compile().FirstOrDefault().Value;
+        string expectedBicep = LoadTestFile("JustCloudMachine.bicep");
+        Assert.AreEqual(expectedBicep, actualBicep);
+    }
+
+    [Test]
+    public void OpenAI()
+    {
+        CloudMachineInfrastructure infra = new("cm0c420d2f21084cd");
+        infra.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
+        infra.AddFeature(new OpenAIModelFeature("text-embedding-ada-002", "2", AIModelKind.Embedding));
+
+        string actualBicep = infra.Build().Compile().FirstOrDefault().Value;
+        string expectedBicep = LoadTestFile("OpenAI.bicep");
+        Assert.AreEqual(expectedBicep, actualBicep);
+    }
+
+    [Test]
     public void GenerateBicep()
     {
         CloudMachineInfrastructure infra = new("cm0c420d2f21084cd");
@@ -25,7 +46,17 @@ public class ProvisioningTests
         infra.AddFeature(new AppServiceFeature());
 
         string actualBicep = infra.Build().Compile().FirstOrDefault().Value;
-        string expectedBicep = File.ReadAllText(Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "GenerateBicep.bicep")).Replace("\r\n", Environment.NewLine);
+        string expectedBicep = LoadTestFile("GenerateBicep.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
+    }
+
+    private static string LoadTestFile(string filename)
+    {
+        string contents = File.ReadAllText(Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", filename));
+        contents = contents.Replace("\r\n", Environment.NewLine);
+        while (contents.EndsWith(Environment.NewLine))  {
+            contents = contents.Substring(0, contents.Length - Environment.NewLine.Length);
+        }
+        return contents;
     }
 }

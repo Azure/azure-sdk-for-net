@@ -34,7 +34,8 @@ public class OpenAIModelFeature : CloudMachineFeature
             openAI = new OpenAIFeature(); // TODO: we need to add connection
             features.Add(openAI);
         }
-        openAI.AddModel(this);
+        Account = openAI;
+        features.Add(this);
     }
 
     protected internal override void EmitConnections(ConnectionCollection connections, string cmId)
@@ -54,8 +55,11 @@ public class OpenAIModelFeature : CloudMachineFeature
         }
     }
 
-    protected override ProvisionableResource EmitInfrastructure(CloudMachineInfrastructure cm)
+    protected override ProvisionableResource EmitConstructs(CloudMachineInfrastructure cm)
     {
+        if (Account == null) throw new InvalidOperationException("Account must be set before emitting");
+        if (Account.Emitted == null) throw new InvalidOperationException("Account must be emitted before emitting");
+
         string name = Kind switch
         {
             AIModelKind.Chat => $"{cm.Id}_chat",
@@ -63,13 +67,7 @@ public class OpenAIModelFeature : CloudMachineFeature
             _ => throw new NotImplementedException()
         };
 
-        Debug.Assert(Account != null);
-        ProvisionableResource emitted = Account!.Emitted;
-        if (emitted == null)
-        {
-            Account.Emit(cm);
-        }
-        CognitiveServicesAccount parent = (CognitiveServicesAccount)Account!.Emitted;
+        CognitiveServicesAccount parent = (CognitiveServicesAccount)Account.Emitted;
 
         CognitiveServicesAccountDeployment deployment = new($"openai_{name}", "2024-06-01-preview") {
             Parent = parent,
@@ -89,12 +87,33 @@ public class OpenAIModelFeature : CloudMachineFeature
             {
                 Capacity = 120,
                 Name = "Standard"
-            }
+            },
         };
 
-        cm.AddConstruct(deployment);
+        // deployments need to have dependson set!
+        OpenAIModelFeature? previous = FindPrevious(cm, this);
+        if (previous != null)
+        {
+            if (previous.Emitted == null) throw new InvalidOperationException("Previous must be emitted");
+            CognitiveServicesAccountDeployment previousDeployment = (CognitiveServicesAccountDeployment)previous.Emitted;
+            deployment.DependsOn.Add(previousDeployment);
+        }
 
+        cm.AddConstruct(deployment);
         return deployment;
+
+        OpenAIModelFeature? FindPrevious(CloudMachineInfrastructure cm, OpenAIModelFeature current)
+        {
+            OpenAIModelFeature? previous = default;
+            foreach (var feature in cm.Features)
+            {
+                if (feature == current)
+                    return previous;
+                if (feature is OpenAIModelFeature oaim)
+                    previous = oaim;
+            }
+            throw new InvalidOperationException("current not found in infrastructure");
+        }
     }
 }
 

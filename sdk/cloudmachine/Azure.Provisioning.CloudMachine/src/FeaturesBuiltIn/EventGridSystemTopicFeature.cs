@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.CloudMachine.Core;
 using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.EventGrid;
 using Azure.Provisioning.Expressions;
@@ -10,13 +11,13 @@ using Azure.Provisioning.Storage;
 
 namespace Azure.CloudMachine;
 
-public class EventGridSystemTopicFeature(string topicName, CloudMachineFeature source) : CloudMachineFeature
+internal class EventGridSystemTopicFeature(string topicName, CloudMachineFeature source, string topicType) : CloudMachineFeature
 {
-    protected override ProvisionableResource EmitInfrastructure(CloudMachineInfrastructure infrastructure)
+    protected override ProvisionableResource EmitConstructs(CloudMachineInfrastructure infrastructure)
     {
-        var topic = new SystemTopic("cm_eventgrid_topic", "2022-06-15")
+        var topic = new SystemTopic("cm_eventgrid_topic", InternalConstants.EventGridTopicVersion)
         {
-            TopicType = "Microsoft.Storage.StorageAccounts",
+            TopicType = topicType,
             Source = EnsureEmits<StorageAccount>(source).Id,
             Identity = new()
             {
@@ -27,8 +28,6 @@ public class EventGridSystemTopicFeature(string topicName, CloudMachineFeature s
         };
 
         infrastructure.AddConstruct(topic);
-
-        Emitted = topic;
         return topic;
     }
 }

@@ -11,20 +11,34 @@ namespace Azure.Provisioning.CloudMachine;
 
 public abstract class CloudMachineFeature
 {
-    protected abstract ProvisionableResource EmitInfrastructure(CloudMachineInfrastructure cm);
+    private ProvisionableResource? _resource;
+
+    protected abstract ProvisionableResource EmitConstructs(CloudMachineInfrastructure cm);
     protected internal virtual void EmitConnections(ConnectionCollection connections, string cmId) { }
     protected internal virtual void EmitFeatures(FeatureCollection features, string cmId)
         => features.Add(this);
 
-    internal void Emit(CloudMachineInfrastructure cm)
+    internal ProvisionableResource Emit(CloudMachineInfrastructure cm)
     {
-        if (Emitted != null) return;
-        ProvisionableResource provisionable = EmitInfrastructure(cm);
-        Emitted = provisionable;
+        if (_resource == null)
+        {
+            ProvisionableResource provisionable = EmitConstructs(cm);
+            _resource = provisionable;
+        }
+        return Emitted;
     }
 
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public ProvisionableResource Emitted { get; protected set; } = default!;
+    public ProvisionableResource Emitted {
+        get
+        {
+            if (_resource == null)
+            {
+                throw new InvalidOperationException("Feature has not been emitted yet.");
+            }
+            return _resource;
+        }
+    }
 
     protected internal Dictionary<Provisionable, (string RoleName, string RoleId)[]> RequiredSystemRoles { get; } = [];
 

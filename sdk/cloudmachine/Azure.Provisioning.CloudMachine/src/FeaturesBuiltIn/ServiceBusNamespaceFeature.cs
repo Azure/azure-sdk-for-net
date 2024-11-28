@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.CloudMachine.Core;
 using Azure.Core;
 using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.Primitives;
@@ -10,7 +11,7 @@ namespace Azure.CloudMachine;
 
 public class ServiceBusNamespaceFeature(string name, ServiceBusSkuName sku = ServiceBusSkuName.Standard, ServiceBusSkuTier tier = ServiceBusSkuTier.Standard) : CloudMachineFeature
 {
-    protected override ProvisionableResource EmitInfrastructure(CloudMachineInfrastructure infrastructure)
+    protected override ProvisionableResource EmitConstructs(CloudMachineInfrastructure infrastructure)
     {
         var _serviceBusNamespace = new ServiceBusNamespace("cm_servicebus")
         {
@@ -36,12 +37,9 @@ public class ServiceBusNamespaceFeature(string name, ServiceBusSkuName sku = Ser
                 (ServiceBusBuiltInRole.GetBuiltInRoleName(ServiceBusBuiltInRole.AzureServiceBusDataOwner), ServiceBusBuiltInRole.AzureServiceBusDataOwner.ToString()),
             ]);
 
-        Emitted = _serviceBusNamespace;
         return _serviceBusNamespace;
     }
 
     protected internal override void EmitConnections(ConnectionCollection connections, string cmId)
-    {
-        connections.Add(new ClientConnection("Azure.Messaging.ServiceBus.ServiceBusClient", $"https://{cmId}.servicebus.windows.net/"));
-    }
+        => connections.Add(CloudMachineConnections.CreateDefaultServiceBusConnection(cmId));
 }

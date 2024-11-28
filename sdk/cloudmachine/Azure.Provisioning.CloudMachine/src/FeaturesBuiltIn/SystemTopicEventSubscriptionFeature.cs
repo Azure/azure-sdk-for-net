@@ -10,9 +10,9 @@ using Azure.Provisioning.ServiceBus;
 
 namespace Azure.CloudMachine;
 
-public class SystemTopicEventSubscriptionFeature(string name, EventGridSystemTopicFeature parent, ServiceBusTopicFeature destination, ServiceBusNamespaceFeature parentNamespace) : CloudMachineFeature
+internal class SystemTopicEventSubscriptionFeature(string name, EventGridSystemTopicFeature parent, ServiceBusTopicFeature destination, ServiceBusNamespaceFeature parentNamespace) : CloudMachineFeature
 {
-    protected override ProvisionableResource EmitInfrastructure(CloudMachineInfrastructure infrastructure)
+    protected override ProvisionableResource EmitConstructs(CloudMachineInfrastructure infrastructure)
     {
         ServiceBusNamespace serviceBusNamespace = EnsureEmits<ServiceBusNamespace>(parentNamespace);
 
@@ -64,8 +64,6 @@ public class SystemTopicEventSubscriptionFeature(string name, EventGridSystemTop
 
         infrastructure.AddConstruct(subscription);
         infrastructure.AddConstruct(roleAssignment);
-
-        Emitted = subscription;
         return subscription;
     }
 }

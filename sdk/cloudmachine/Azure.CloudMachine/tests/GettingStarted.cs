@@ -20,7 +20,7 @@ public partial class CloudMachineTests
         CloudMachineInfrastructure infra = new();
         infra.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
 
-        if (args.Contains("-bicep")) {
+        if (args.Contains("-azd")) {
             Azd.Init(infra);
             return;
         }

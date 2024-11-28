@@ -17,7 +17,7 @@ public class ServiceBusTopicFeature : CloudMachineFeature
         _parent = parent;
     }
 
-    protected override ProvisionableResource EmitInfrastructure(CloudMachineInfrastructure infrastructure)
+    protected override ProvisionableResource EmitConstructs(CloudMachineInfrastructure infrastructure)
     {
         var topic = new ServiceBusTopic(Name, "2021-11-01")
         {
@@ -32,7 +32,6 @@ public class ServiceBusTopicFeature : CloudMachineFeature
         };
 
         infrastructure.AddConstruct(topic);
-        Emitted = topic;
         return topic;
     }
 

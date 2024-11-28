@@ -17,5 +17,14 @@ namespace Azure.CloudMachine.Core
             );
             return connection;
         }
+
+        public static ClientConnection CreateDefaultServiceBusConnection(string cmId)
+        {
+            ClientConnection connection = new(
+                "Azure.Messaging.ServiceBus.ServiceBusClient",
+                $"https://{cmId}.servicebus.windows.net/"
+            );
+            return connection;
+        }
     }
 }

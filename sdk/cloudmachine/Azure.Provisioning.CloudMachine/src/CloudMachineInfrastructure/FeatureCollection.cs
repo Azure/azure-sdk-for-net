@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Provisioning.CloudMachine;
@@ -9,7 +10,7 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.CloudMachine;
 
-public class FeatureCollection
+public class FeatureCollection : IEnumerable<CloudMachineFeature>
 {
     private CloudMachineFeature[] _items = new CloudMachineFeature[4];
     private int _count;
@@ -60,4 +61,15 @@ public class FeatureCollection
             feature.Emit(infrastructure);
         }
     }
+
+    public IEnumerator<CloudMachineFeature> GetEnumerator()
+    {
+        for (int i=0; i < _count; i++)
+        {
+            yield return _items[i];
+        }
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+        => GetEnumerator();
 }

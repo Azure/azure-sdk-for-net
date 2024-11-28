@@ -11,30 +11,15 @@ namespace Azure.CloudMachine.OpenAI;
 
 internal class OpenAIFeature : CloudMachineFeature
 {
-    private readonly List<OpenAIModelFeature> _models = [];
-
     public OpenAIFeature()
     { }
 
-    protected override ProvisionableResource EmitInfrastructure(CloudMachineInfrastructure cloudMachine)
+    protected override ProvisionableResource EmitConstructs(CloudMachineInfrastructure cloudMachine)
     {
         CognitiveServicesAccount cognitiveServices = CreateOpenAIAccount(cloudMachine);
         cloudMachine.AddConstruct(cognitiveServices);
 
         RequiredSystemRoles.Add(cognitiveServices, [(CognitiveServicesBuiltInRole.GetBuiltInRoleName(CognitiveServicesBuiltInRole.CognitiveServicesOpenAIContributor) ,CognitiveServicesBuiltInRole.CognitiveServicesOpenAIContributor.ToString())]);
-
-        Emitted = cognitiveServices;
-
-        OpenAIModelFeature? previous = null;
-        foreach (OpenAIModelFeature model in _models)
-        {
-            model.Emit(cloudMachine);
-            if (previous != null)
-            {
-                model.Emitted.DependsOn.Add(previous.Emitted);
-            }
-            previous = model;
-        }
 
         return cognitiveServices;
     }
@@ -47,16 +32,6 @@ internal class OpenAIFeature : CloudMachineFeature
         {
             connections.Add(connection);
         }
-    }
-
-    internal void AddModel(OpenAIModelFeature model)
-    {
-        if (model.Account != null)
-        {
-            throw new InvalidOperationException("Model already added to an account");
-        }
-        model.Account = this;
-        _models.Add(model);
     }
 
     internal static CognitiveServicesAccount CreateOpenAIAccount(CloudMachineInfrastructure cm)

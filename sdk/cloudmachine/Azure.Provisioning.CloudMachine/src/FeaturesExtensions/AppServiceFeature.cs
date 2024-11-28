@@ -18,7 +18,7 @@ public class AppServiceFeature : CloudMachineFeature
         Sku = new AppServiceSkuDescription { Tier = "Free", Name = "F1" };
     }
 
-    protected override ProvisionableResource EmitInfrastructure(CloudMachineInfrastructure infrastructure)
+    protected override ProvisionableResource EmitConstructs(CloudMachineInfrastructure infrastructure)
     {
         //Add a App Service to the CloudMachine infrastructure.
         AppServicePlan hostingPlan = new("cm_hosting_plan")
