@@ -313,5 +313,41 @@ namespace Azure.ResourceManager.Network.Models
         {
             return InboundSecurityRule(id: id, name: name, resourceType: resourceType, etag: etag, ruleType: default, rules: rules, provisioningState: provisioningState);
         }
+
+        /// <summary> Initializes a new instance of <see cref="Models.LoadBalancerInboundNatPool"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="frontendIPConfigurationId"> A reference to frontend IP addresses. </param>
+        /// <param name="protocol"> The reference to the transport protocol used by the inbound NAT pool. </param>
+        /// <param name="frontendPortRangeStart"> The first port number in the range of external ports that will be used to provide Inbound Nat to NICs associated with a load balancer. Acceptable values range between 1 and 65534. </param>
+        /// <param name="frontendPortRangeEnd"> The last port number in the range of external ports that will be used to provide Inbound Nat to NICs associated with a load balancer. Acceptable values range between 1 and 65535. </param>
+        /// <param name="backendPort"> The port used for internal connections on the endpoint. Acceptable values are between 1 and 65535. </param>
+        /// <param name="idleTimeoutInMinutes"> The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes. This element is only used when the protocol is set to TCP. </param>
+        /// <param name="enableFloatingIP"> Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint. </param>
+        /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
+        /// <param name="provisioningState"> The provisioning state of the inbound NAT pool resource. </param>
+        /// <returns> A new <see cref="Models.LoadBalancerInboundNatPool"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static LoadBalancerInboundNatPool LoadBalancerInboundNatPool(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ResourceIdentifier frontendIPConfigurationId = null, LoadBalancingTransportProtocol? protocol = null, int? frontendPortRangeStart = null, int? frontendPortRangeEnd = null, int? backendPort = null, int? idleTimeoutInMinutes = null, bool? enableFloatingIP = null, bool? enableTcpReset = null, NetworkProvisioningState? provisioningState = null)
+        {
+            return LoadBalancerInboundNatPool(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                etag: etag,
+                properties: LoadBalancerInboundNatPoolProperties(
+                    frontendIPConfigurationId: frontendIPConfigurationId,
+                    protocol: protocol ?? default,
+                    frontendPortRangeStart: frontendPortRangeStart ?? default,
+                    frontendPortRangeEnd: frontendPortRangeEnd ?? default,
+                    backendPort: backendPort ?? default,
+                    idleTimeoutInMinutes: idleTimeoutInMinutes,
+                    enableFloatingIP: enableFloatingIP,
+                    enableTcpReset: enableTcpReset,
+                    provisioningState: provisioningState)
+                );
+        }
     }
 }

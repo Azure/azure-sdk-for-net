@@ -113,6 +113,7 @@ rename-mapping:
   Hub: ConnectivityHub
   IdpsQueryObject: IdpsQueryContent
   InboundNatPool: LoadBalancerInboundNatPool
+  InboundNatPoolPropertiesFormat: LoadBalancerInboundNatPoolProperties
   IpAllocation.properties.type: IPAllocationType
   IpAllocationListResult: NetworkIPAllocationListResult
   IPAllocationMethod: NetworkIPAllocationMethod
@@ -598,6 +599,12 @@ directive:
       {
           delete $[path];
       }
+  # disable the flatten and add additional properties to its properties object
+  - from: loadBalancer.json
+    where: $.definitions
+    transform: >
+      $.InboundNatPool.properties.properties["x-ms-client-flatten"] = false;
+      $.InboundNatPoolPropertiesFormat.additionalProperties = true;
   # - from: vmssPublicIpAddress.json
   #   where: $.paths
   #   transform: >

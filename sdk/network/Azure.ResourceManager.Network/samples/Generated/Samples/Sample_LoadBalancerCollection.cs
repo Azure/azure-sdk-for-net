@@ -777,14 +777,13 @@ Name = "test",
                 InboundNatRules = { },
                 InboundNatPools = {new LoadBalancerInboundNatPool
 {
+Properties = new LoadBalancerInboundNatPoolProperties(LoadBalancingTransportProtocol.Tcp, 8080, 8085, 8888)
+{
 FrontendIPConfigurationId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/frontendIPConfigurations/test"),
-Protocol = LoadBalancingTransportProtocol.Tcp,
-FrontendPortRangeStart = 8080,
-FrontendPortRangeEnd = 8085,
-BackendPort = 8888,
 IdleTimeoutInMinutes = 10,
 EnableFloatingIP = true,
 EnableTcpReset = true,
+},
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/inboundNatPools/test"),
 Name = "test",
 }},
