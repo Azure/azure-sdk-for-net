@@ -13,7 +13,7 @@ namespace Azure.Maps.TimeZones
     [CodeGenModel("TimezoneId")]
     public partial class TimeZoneId
     {
-        /// <inheritdoc/>
+        /// <summary> Initializes a new instance of <see cref="TimeZoneId"/>. </summary>
         internal TimeZoneId(string id, IReadOnlyList<string> aliases, IReadOnlyList<CountryRecord> countries, TimeZoneName name, ReferenceTime referenceTime, RepresentativePoint representativePoint, IReadOnlyList<TimeTransition> timeTransitions)
         {
             Id = id;
