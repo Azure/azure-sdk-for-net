@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Sql.Samples
             ManagedInstanceLongTermRetentionPolicyResource managedInstanceLongTermRetentionPolicy = client.GetManagedInstanceLongTermRetentionPolicyResource(managedInstanceLongTermRetentionPolicyResourceId);
 
             // invoke the operation
-            ManagedInstanceLongTermRetentionPolicyData data = new ManagedInstanceLongTermRetentionPolicyData()
+            ManagedInstanceLongTermRetentionPolicyData data = new ManagedInstanceLongTermRetentionPolicyData
             {
                 WeeklyRetention = "P1M",
                 MonthlyRetention = "P1Y",

@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.Network.Samples
             ConnectionMonitorResource connectionMonitor = client.GetConnectionMonitorResource(connectionMonitorResourceId);
 
             // invoke the operation
-            NetworkTagsObject networkTagsObject = new NetworkTagsObject()
+            NetworkTagsObject networkTagsObject = new NetworkTagsObject
             {
                 Tags =
 {
 ["tag1"] = "value1",
-["tag2"] = "value2",
+["tag2"] = "value2"
 },
             };
             ConnectionMonitorResource result = await connectionMonitor.UpdateAsync(networkTagsObject);

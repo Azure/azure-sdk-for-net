@@ -37,18 +37,15 @@ namespace Azure.ResourceManager.ComputeSchedule.Samples
 
             // invoke the operation
             string locationparameter = "ibfxsvilwrgqttuslbduzdtxcckdet";
-            SubmitDeallocateContent content = new SubmitDeallocateContent(new UserRequestSchedule(DateTimeOffset.Parse("2024-07-12T18:06:53.361Z"), "zlcujrtgxtgyik", ScheduledActionDeadlineType.Unknown), new ScheduledActionExecutionParameterDetail()
+            SubmitDeallocateContent content = new SubmitDeallocateContent(new UserRequestSchedule(DateTimeOffset.Parse("2024-07-12T18:06:53.361Z"), "zlcujrtgxtgyik", ScheduledActionDeadlineType.Unknown), new ScheduledActionExecutionParameterDetail
             {
                 OptimizationPreference = ScheduledActionOptimizationPreference.Cost,
-                RetryPolicy = new UserRequestRetryPolicy()
+                RetryPolicy = new UserRequestRetryPolicy
                 {
                     RetryCount = 30,
                     RetryWindowInMinutes = 27,
                 },
-            }, new UserRequestResources(new ResourceIdentifier[]
-            {
-new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Compute/virtualMachines/testResource2")
-            }), "23519o2f-1dca-4610-afb4-dd25eec1f34");
+            }, new UserRequestResources(new ResourceIdentifier[] { new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Compute/virtualMachines/testResource2") }), "23519o2f-1dca-4610-afb4-dd25eec1f34");
             DeallocateResourceOperationResult result = await subscriptionResource.SubmitVirtualMachineDeallocateAsync(locationparameter, content);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -74,10 +71,7 @@ new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourRes
 
             // invoke the operation
             string locationparameter = "qwfcdtmshnlownbkyh";
-            SubmitDeallocateContent content = new SubmitDeallocateContent(new UserRequestSchedule(DateTimeOffset.Parse("2024-07-12T18:06:53.361Z"), "zlcujrtgxtgyik", ScheduledActionDeadlineType.Unknown), new ScheduledActionExecutionParameterDetail(), new UserRequestResources(new ResourceIdentifier[]
-            {
-new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Compute/virtualMachines/testResource2")
-            }), "23519o2f-1dca-4610-afb4-dd25eec1f34");
+            SubmitDeallocateContent content = new SubmitDeallocateContent(new UserRequestSchedule(DateTimeOffset.Parse("2024-07-12T18:06:53.361Z"), "zlcujrtgxtgyik", ScheduledActionDeadlineType.Unknown), new ScheduledActionExecutionParameterDetail(), new UserRequestResources(new ResourceIdentifier[] { new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Compute/virtualMachines/testResource2") }), "23519o2f-1dca-4610-afb4-dd25eec1f34");
             DeallocateResourceOperationResult result = await subscriptionResource.SubmitVirtualMachineDeallocateAsync(locationparameter, content);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -103,18 +97,15 @@ new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourRes
 
             // invoke the operation
             string locationparameter = "bgxeayimbxqzev";
-            SubmitHibernateContent content = new SubmitHibernateContent(new UserRequestSchedule(DateTimeOffset.Parse("2024-07-12T18:06:53.361Z"), "zlcujrtgxtgyik", ScheduledActionDeadlineType.Unknown), new ScheduledActionExecutionParameterDetail()
+            SubmitHibernateContent content = new SubmitHibernateContent(new UserRequestSchedule(DateTimeOffset.Parse("2024-07-12T18:06:53.361Z"), "zlcujrtgxtgyik", ScheduledActionDeadlineType.Unknown), new ScheduledActionExecutionParameterDetail
             {
                 OptimizationPreference = ScheduledActionOptimizationPreference.Cost,
-                RetryPolicy = new UserRequestRetryPolicy()
+                RetryPolicy = new UserRequestRetryPolicy
                 {
                     RetryCount = 30,
                     RetryWindowInMinutes = 27,
                 },
-            }, new UserRequestResources(new ResourceIdentifier[]
-            {
-new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Compute/virtualMachines/testResource3")
-            }), "23519o2f-1dca-4610-afb4-dd25eec1f34");
+            }, new UserRequestResources(new ResourceIdentifier[] { new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Compute/virtualMachines/testResource3") }), "23519o2f-1dca-4610-afb4-dd25eec1f34");
             HibernateResourceOperationResult result = await subscriptionResource.SubmitVirtualMachineHibernateAsync(locationparameter, content);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -140,10 +131,7 @@ new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourRes
 
             // invoke the operation
             string locationparameter = "fvjciwudfbndlqumcgqs";
-            SubmitHibernateContent content = new SubmitHibernateContent(new UserRequestSchedule(DateTimeOffset.Parse("2024-07-12T18:06:53.361Z"), "zlcujrtgxtgyik", ScheduledActionDeadlineType.Unknown), new ScheduledActionExecutionParameterDetail(), new UserRequestResources(new ResourceIdentifier[]
-            {
-new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Compute/virtualMachines/testResource3")
-            }), "23519o2f-1dca-4610-afb4-dd25eec1f34");
+            SubmitHibernateContent content = new SubmitHibernateContent(new UserRequestSchedule(DateTimeOffset.Parse("2024-07-12T18:06:53.361Z"), "zlcujrtgxtgyik", ScheduledActionDeadlineType.Unknown), new ScheduledActionExecutionParameterDetail(), new UserRequestResources(new ResourceIdentifier[] { new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Compute/virtualMachines/testResource3") }), "23519o2f-1dca-4610-afb4-dd25eec1f34");
             HibernateResourceOperationResult result = await subscriptionResource.SubmitVirtualMachineHibernateAsync(locationparameter, content);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -169,18 +157,15 @@ new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourRes
 
             // invoke the operation
             string locationparameter = "fxiidszhrokwjmewlahfqjiocnes";
-            SubmitStartContent content = new SubmitStartContent(new UserRequestSchedule(DateTimeOffset.Parse("2024-07-12T18:06:53.361Z"), "zlcujrtgxtgyik", ScheduledActionDeadlineType.Unknown), new ScheduledActionExecutionParameterDetail()
+            SubmitStartContent content = new SubmitStartContent(new UserRequestSchedule(DateTimeOffset.Parse("2024-07-12T18:06:53.361Z"), "zlcujrtgxtgyik", ScheduledActionDeadlineType.Unknown), new ScheduledActionExecutionParameterDetail
             {
                 OptimizationPreference = ScheduledActionOptimizationPreference.Cost,
-                RetryPolicy = new UserRequestRetryPolicy()
+                RetryPolicy = new UserRequestRetryPolicy
                 {
                     RetryCount = 30,
                     RetryWindowInMinutes = 27,
                 },
-            }, new UserRequestResources(new ResourceIdentifier[]
-            {
-new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Compute/virtualMachines/testResource4")
-            }), "23480d2f-1dca-4610-afb4-dd25eec1f34");
+            }, new UserRequestResources(new ResourceIdentifier[] { new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Compute/virtualMachines/testResource4") }), "23480d2f-1dca-4610-afb4-dd25eec1f34");
             StartResourceOperationResult result = await subscriptionResource.SubmitVirtualMachineStartAsync(locationparameter, content);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -206,10 +191,7 @@ new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourRes
 
             // invoke the operation
             string locationparameter = "httzei";
-            SubmitStartContent content = new SubmitStartContent(new UserRequestSchedule(DateTimeOffset.Parse("2024-07-12T18:06:53.361Z"), "zlcujrtgxtgyik", ScheduledActionDeadlineType.Unknown), new ScheduledActionExecutionParameterDetail(), new UserRequestResources(new ResourceIdentifier[]
-            {
-new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Compute/virtualMachines/testResource4")
-            }), "23480d2f-1dca-4610-afb4-dd25eec1f34");
+            SubmitStartContent content = new SubmitStartContent(new UserRequestSchedule(DateTimeOffset.Parse("2024-07-12T18:06:53.361Z"), "zlcujrtgxtgyik", ScheduledActionDeadlineType.Unknown), new ScheduledActionExecutionParameterDetail(), new UserRequestResources(new ResourceIdentifier[] { new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Compute/virtualMachines/testResource4") }), "23480d2f-1dca-4610-afb4-dd25eec1f34");
             StartResourceOperationResult result = await subscriptionResource.SubmitVirtualMachineStartAsync(locationparameter, content);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -235,18 +217,15 @@ new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourRes
 
             // invoke the operation
             string locationparameter = "mklyzgztbivwzo";
-            ExecuteDeallocateContent content = new ExecuteDeallocateContent(new ScheduledActionExecutionParameterDetail()
+            ExecuteDeallocateContent content = new ExecuteDeallocateContent(new ScheduledActionExecutionParameterDetail
             {
                 OptimizationPreference = ScheduledActionOptimizationPreference.Cost,
-                RetryPolicy = new UserRequestRetryPolicy()
+                RetryPolicy = new UserRequestRetryPolicy
                 {
                     RetryCount = 30,
                     RetryWindowInMinutes = 27,
                 },
-            }, new UserRequestResources(new ResourceIdentifier[]
-            {
-new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Compute/virtualMachines/testResource2")
-            }), "01080d2f-1dca-4610-afb4-dd25eddf1f3c1");
+            }, new UserRequestResources(new ResourceIdentifier[] { new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Compute/virtualMachines/testResource2") }), "01080d2f-1dca-4610-afb4-dd25eddf1f3c1");
             DeallocateResourceOperationResult result = await subscriptionResource.ExecuteVirtualMachineDeallocateAsync(locationparameter, content);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -272,10 +251,7 @@ new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourRes
 
             // invoke the operation
             string locationparameter = "irbtacrhjgfpyvhvjo";
-            ExecuteDeallocateContent content = new ExecuteDeallocateContent(new ScheduledActionExecutionParameterDetail(), new UserRequestResources(new ResourceIdentifier[]
-            {
-new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Compute/virtualMachines/testResource2")
-            }), "01080d2f-1dca-4610-afb4-dd25eddf1f3c1");
+            ExecuteDeallocateContent content = new ExecuteDeallocateContent(new ScheduledActionExecutionParameterDetail(), new UserRequestResources(new ResourceIdentifier[] { new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Compute/virtualMachines/testResource2") }), "01080d2f-1dca-4610-afb4-dd25eddf1f3c1");
             DeallocateResourceOperationResult result = await subscriptionResource.ExecuteVirtualMachineDeallocateAsync(locationparameter, content);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -301,18 +277,15 @@ new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourRes
 
             // invoke the operation
             string locationparameter = "sejdmamuhhvfpljomwumsplc";
-            ExecuteHibernateContent content = new ExecuteHibernateContent(new ScheduledActionExecutionParameterDetail()
+            ExecuteHibernateContent content = new ExecuteHibernateContent(new ScheduledActionExecutionParameterDetail
             {
                 OptimizationPreference = ScheduledActionOptimizationPreference.Cost,
-                RetryPolicy = new UserRequestRetryPolicy()
+                RetryPolicy = new UserRequestRetryPolicy
                 {
                     RetryCount = 30,
                     RetryWindowInMinutes = 27,
                 },
-            }, new UserRequestResources(new ResourceIdentifier[]
-            {
-new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Compute/virtualMachines/testResource3")
-            }), "01080d2f-1dca-4610-afb4-dd25eec1f3c1");
+            }, new UserRequestResources(new ResourceIdentifier[] { new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Compute/virtualMachines/testResource3") }), "01080d2f-1dca-4610-afb4-dd25eec1f3c1");
             HibernateResourceOperationResult result = await subscriptionResource.ExecuteVirtualMachineHibernateAsync(locationparameter, content);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -338,10 +311,7 @@ new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourRes
 
             // invoke the operation
             string locationparameter = "kga";
-            ExecuteHibernateContent content = new ExecuteHibernateContent(new ScheduledActionExecutionParameterDetail(), new UserRequestResources(new ResourceIdentifier[]
-            {
-new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Compute/virtualMachines/testResource3")
-            }), "01080d2f-1dca-4610-afb4-dd25eec1f3c1");
+            ExecuteHibernateContent content = new ExecuteHibernateContent(new ScheduledActionExecutionParameterDetail(), new UserRequestResources(new ResourceIdentifier[] { new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Compute/virtualMachines/testResource3") }), "01080d2f-1dca-4610-afb4-dd25eec1f3c1");
             HibernateResourceOperationResult result = await subscriptionResource.ExecuteVirtualMachineHibernateAsync(locationparameter, content);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -367,18 +337,15 @@ new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourRes
 
             // invoke the operation
             string locationparameter = "ysfrwcfmfsh";
-            ExecuteStartContent content = new ExecuteStartContent(new ScheduledActionExecutionParameterDetail()
+            ExecuteStartContent content = new ExecuteStartContent(new ScheduledActionExecutionParameterDetail
             {
                 OptimizationPreference = ScheduledActionOptimizationPreference.Cost,
-                RetryPolicy = new UserRequestRetryPolicy()
+                RetryPolicy = new UserRequestRetryPolicy
                 {
                     RetryCount = 30,
                     RetryWindowInMinutes = 27,
                 },
-            }, new UserRequestResources(new ResourceIdentifier[]
-            {
-new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Compute/virtualMachines/testResource4")
-            }), "23230d2f-1dca-4610-afb4-dd25eec1f34");
+            }, new UserRequestResources(new ResourceIdentifier[] { new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Compute/virtualMachines/testResource4") }), "23230d2f-1dca-4610-afb4-dd25eec1f34");
             StartResourceOperationResult result = await subscriptionResource.ExecuteVirtualMachineStartAsync(locationparameter, content);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -404,10 +371,7 @@ new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourRes
 
             // invoke the operation
             string locationparameter = "qegbgjculewswqvnmaclcgpqqidl";
-            ExecuteStartContent content = new ExecuteStartContent(new ScheduledActionExecutionParameterDetail(), new UserRequestResources(new ResourceIdentifier[]
-            {
-new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Compute/virtualMachines/testResource4")
-            }), "23230d2f-1dca-4610-afb4-dd25eec1f34");
+            ExecuteStartContent content = new ExecuteStartContent(new ScheduledActionExecutionParameterDetail(), new UserRequestResources(new ResourceIdentifier[] { new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourResourceGroupName/providers/Microsoft.Compute/virtualMachines/testResource4") }), "23230d2f-1dca-4610-afb4-dd25eec1f34");
             StartResourceOperationResult result = await subscriptionResource.ExecuteVirtualMachineStartAsync(locationparameter, content);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -433,10 +397,7 @@ new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourRes
 
             // invoke the operation
             string locationparameter = "htxxasfxaesuecem";
-            GetOperationStatusContent content = new GetOperationStatusContent(new string[]
-            {
-"01080d2f-1dca-4610-afb4-dd25eec1f3df"
-            }, "01080d2f-1dca-4610-afb4-dd25eec1f3c1");
+            GetOperationStatusContent content = new GetOperationStatusContent(new string[] { "01080d2f-1dca-4610-afb4-dd25eec1f3df" }, "01080d2f-1dca-4610-afb4-dd25eec1f3c1");
             GetOperationStatusResult result = await subscriptionResource.GetVirtualMachineOperationStatusAsync(locationparameter, content);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -462,10 +423,7 @@ new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourRes
 
             // invoke the operation
             string locationparameter = "csay";
-            GetOperationStatusContent content = new GetOperationStatusContent(new string[]
-            {
-"01080d2f-1dca-4610-afb4-dd25eec1f3df"
-            }, "01080d2f-1dca-4610-afb4-dd25eec1f3c1");
+            GetOperationStatusContent content = new GetOperationStatusContent(new string[] { "01080d2f-1dca-4610-afb4-dd25eec1f3df" }, "01080d2f-1dca-4610-afb4-dd25eec1f3c1");
             GetOperationStatusResult result = await subscriptionResource.GetVirtualMachineOperationStatusAsync(locationparameter, content);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -491,10 +449,7 @@ new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourRes
 
             // invoke the operation
             string locationparameter = "tdxypnse";
-            CancelOperationsContent content = new CancelOperationsContent(new string[]
-            {
-"23480d2f-1dca-4610-afb4-dd25eec1f34r"
-            }, "01080d2f-1dca-4610-afb4-dd25eec1f3c1");
+            CancelOperationsContent content = new CancelOperationsContent(new string[] { "23480d2f-1dca-4610-afb4-dd25eec1f34r" }, "01080d2f-1dca-4610-afb4-dd25eec1f3c1");
             CancelOperationsResult result = await subscriptionResource.CancelVirtualMachineOperationsAsync(locationparameter, content);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -520,10 +475,7 @@ new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourRes
 
             // invoke the operation
             string locationparameter = "lwapkjsbltcqp";
-            CancelOperationsContent content = new CancelOperationsContent(new string[]
-            {
-"23480d2f-1dca-4610-afb4-dd25eec1f34r"
-            }, "01080d2f-1dca-4610-afb4-dd25eec1f3c1");
+            CancelOperationsContent content = new CancelOperationsContent(new string[] { "23480d2f-1dca-4610-afb4-dd25eec1f34r" }, "01080d2f-1dca-4610-afb4-dd25eec1f3c1");
             CancelOperationsResult result = await subscriptionResource.CancelVirtualMachineOperationsAsync(locationparameter, content);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -549,10 +501,7 @@ new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourRes
 
             // invoke the operation
             string locationparameter = "hfsa";
-            GetOperationErrorsContent content = new GetOperationErrorsContent(new string[]
-            {
-"DE84A209-5715-43E7-BC76-3E208A9A323"
-            });
+            GetOperationErrorsContent content = new GetOperationErrorsContent(new string[] { "DE84A209-5715-43E7-BC76-3E208A9A323" });
             GetOperationErrorsResult result = await subscriptionResource.GetVirtualMachineOperationErrorsAsync(locationparameter, content);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -578,10 +527,7 @@ new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourceGroups/YourRes
 
             // invoke the operation
             string locationparameter = "ggxoaxzxtdbi";
-            GetOperationErrorsContent content = new GetOperationErrorsContent(new string[]
-            {
-"qeicik"
-            });
+            GetOperationErrorsContent content = new GetOperationErrorsContent(new string[] { "qeicik" });
             GetOperationErrorsResult result = await subscriptionResource.GetVirtualMachineOperationErrorsAsync(locationparameter, content);
 
             Console.WriteLine($"Succeeded: {result}");

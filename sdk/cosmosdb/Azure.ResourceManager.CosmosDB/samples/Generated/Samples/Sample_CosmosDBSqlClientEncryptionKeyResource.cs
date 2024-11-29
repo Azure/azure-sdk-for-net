@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
@@ -71,12 +72,12 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             CosmosDBSqlClientEncryptionKeyResource cosmosDBSqlClientEncryptionKey = client.GetCosmosDBSqlClientEncryptionKeyResource(cosmosDBSqlClientEncryptionKeyResourceId);
 
             // invoke the operation
-            CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent content = new CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent(new CosmosDBSqlClientEncryptionKeyResourceInfo()
+            CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent content = new CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent(new CosmosDBSqlClientEncryptionKeyResourceInfo
             {
                 Id = "cekName",
                 EncryptionAlgorithm = "AEAD_AES_256_CBC_HMAC_SHA256",
-                WrappedDataEncryptionKey = Convert.FromBase64String("VGhpcyBpcyBhY3R1YWxseSBhbiBhcnJheSBvZiBieXRlcy4gVGhpcyByZXF1ZXN0L3Jlc3BvbnNlIGlzIGJlaW5nIHByZXNlbnRlZCBhcyBhIHN0cmluZyBmb3IgcmVhZGFiaWxpdHkgaW4gdGhlIGV4YW1wbGU="),
-                KeyWrapMetadata = new CosmosDBKeyWrapMetadata()
+                WrappedDataEncryptionKey = Encoding.UTF8.GetBytes("VGhpcyBpcyBhY3R1YWxseSBhbiBhcnJheSBvZiBieXRlcy4gVGhpcyByZXF1ZXN0L3Jlc3BvbnNlIGlzIGJlaW5nIHByZXNlbnRlZCBhcyBhIHN0cmluZyBmb3IgcmVhZGFiaWxpdHkgaW4gdGhlIGV4YW1wbGU="),
+                KeyWrapMetadata = new CosmosDBKeyWrapMetadata
                 {
                     Name = "customerManagedKey",
                     CosmosDBKeyWrapMetadataType = "AzureKeyVault",

@@ -72,9 +72,10 @@ namespace Azure.AI.Projects
         /// <param name="data"> Data for evaluation. </param>
         /// <param name="description"> Description of the evaluation. It can be used to store additional information about the evaluation and is mutable. </param>
         /// <param name="systemData"> Metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="provisioningStatus"> Status of the evaluation. It is set by service and is read-only. </param>
+        /// <param name="provisioningState"> Provisioning State of the evaluation. It is set by service and is read-only. </param>
         /// <param name="tags"> Evaluation's tags. Unlike properties, tags are fully mutable. </param>
         /// <param name="properties"> Evaluation's properties. Unlike tags, properties are add-only. Once added, a property cannot be removed. </param>
+        /// <param name="isEnabled"> Enabled status of the evaluation. It is set by service and is read-only. </param>
         /// <param name="evaluators"> Evaluators to be used for the evaluation. </param>
         /// <param name="trigger">
         /// Trigger for the evaluation.
@@ -82,15 +83,16 @@ namespace Azure.AI.Projects
         /// The available derived classes include <see cref="CronTrigger"/> and <see cref="RecurrenceTrigger"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluationSchedule(string name, ApplicationInsightsConfiguration data, string description, SystemData systemData, string provisioningStatus, IDictionary<string, string> tags, IDictionary<string, string> properties, IDictionary<string, EvaluatorConfiguration> evaluators, Trigger trigger, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EvaluationSchedule(string name, ApplicationInsightsConfiguration data, string description, SystemData systemData, string provisioningState, IDictionary<string, string> tags, IDictionary<string, string> properties, string isEnabled, IDictionary<string, EvaluatorConfiguration> evaluators, Trigger trigger, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Data = data;
             Description = description;
             SystemData = systemData;
-            ProvisioningStatus = provisioningStatus;
+            ProvisioningState = provisioningState;
             Tags = tags;
             Properties = properties;
+            IsEnabled = isEnabled;
             Evaluators = evaluators;
             Trigger = trigger;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -109,12 +111,14 @@ namespace Azure.AI.Projects
         public string Description { get; set; }
         /// <summary> Metadata containing createdBy and modifiedBy information. </summary>
         public SystemData SystemData { get; }
-        /// <summary> Status of the evaluation. It is set by service and is read-only. </summary>
-        public string ProvisioningStatus { get; }
+        /// <summary> Provisioning State of the evaluation. It is set by service and is read-only. </summary>
+        public string ProvisioningState { get; }
         /// <summary> Evaluation's tags. Unlike properties, tags are fully mutable. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Evaluation's properties. Unlike tags, properties are add-only. Once added, a property cannot be removed. </summary>
         public IDictionary<string, string> Properties { get; }
+        /// <summary> Enabled status of the evaluation. It is set by service and is read-only. </summary>
+        public string IsEnabled { get; }
         /// <summary> Evaluators to be used for the evaluation. </summary>
         public IDictionary<string, EvaluatorConfiguration> Evaluators { get; }
         /// <summary>

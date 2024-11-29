@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudVirtualMachineConsoleResource networkCloudVirtualMachineConsole = client.GetNetworkCloudVirtualMachineConsoleResource(networkCloudVirtualMachineConsoleResourceId);
 
             // invoke the operation
-            NetworkCloudVirtualMachineConsolePatch patch = new NetworkCloudVirtualMachineConsolePatch()
+            NetworkCloudVirtualMachineConsolePatch patch = new NetworkCloudVirtualMachineConsolePatch
             {
                 Tags =
 {
 ["key1"] = "myvalue1",
-["key2"] = "myvalue2",
+["key2"] = "myvalue2"
 },
                 Enabled = ConsoleEnabled.True,
                 ExpireOn = DateTimeOffset.Parse("2022-06-01T01:27:03.008Z"),
