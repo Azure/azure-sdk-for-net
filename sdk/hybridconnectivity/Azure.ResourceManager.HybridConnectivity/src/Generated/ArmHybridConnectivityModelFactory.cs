@@ -42,30 +42,6 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             return new HybridConnectivityEndpointProperties(endpointType, resourceId, provisioningState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="HybridConnectivity.HybridConnectivityServiceConfigurationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="serviceName"> Name of the service. </param>
-        /// <param name="resourceId"> The resource Id of the connectivity endpoint (optional). </param>
-        /// <param name="port"> The port on which service is enabled. </param>
-        /// <param name="provisioningState"> The resource provisioning state. </param>
-        /// <returns> A new <see cref="HybridConnectivity.HybridConnectivityServiceConfigurationData"/> instance for mocking. </returns>
-        public static HybridConnectivityServiceConfigurationData HybridConnectivityServiceConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HybridConnectivityServiceName? serviceName = null, ResourceIdentifier resourceId = null, long? port = null, HybridConnectivityProvisioningState? provisioningState = null)
-        {
-            return new HybridConnectivityServiceConfigurationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                serviceName,
-                resourceId,
-                port,
-                provisioningState,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.TargetResourceEndpointAccess"/>. </summary>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="namespaceNameSuffix"> The suffix domain name of relay namespace. </param>
@@ -129,6 +105,30 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         public static ManagedProxyAsset ManagedProxyAsset(string proxy = null, long expiresOn = default)
         {
             return new ManagedProxyAsset(proxy, expiresOn, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HybridConnectivity.HybridConnectivityServiceConfigurationData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="serviceName"> Name of the service. </param>
+        /// <param name="resourceId"> The resource Id of the connectivity endpoint (optional). </param>
+        /// <param name="port"> The port on which service is enabled. </param>
+        /// <param name="provisioningState"> The resource provisioning state. </param>
+        /// <returns> A new <see cref="HybridConnectivity.HybridConnectivityServiceConfigurationData"/> instance for mocking. </returns>
+        public static HybridConnectivityServiceConfigurationData HybridConnectivityServiceConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HybridConnectivityServiceName? serviceName = null, ResourceIdentifier resourceId = null, long? port = null, HybridConnectivityProvisioningState? provisioningState = null)
+        {
+            return new HybridConnectivityServiceConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                serviceName,
+                resourceId,
+                port,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
     }
 }

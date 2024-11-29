@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridConnectivity.Models
 {
-    /// <summary> Name of the service. </summary>
+    /// <summary> The name of the service. If not provided, the request will by pass the generation of service configuration token. </summary>
     public readonly partial struct HybridConnectivityServiceName : IEquatable<HybridConnectivityServiceName>
     {
         private readonly string _value;
