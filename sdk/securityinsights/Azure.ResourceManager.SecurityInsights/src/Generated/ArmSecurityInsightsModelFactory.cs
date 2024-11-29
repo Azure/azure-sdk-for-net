@@ -4637,6 +4637,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 pollingConfig);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsThreatIntelligence"/>. </summary>
+        /// <param name="confidence"> Confidence (must be between 0 and 1). </param>
+        /// <param name="providerName"> Name of the provider from whom this Threat Intelligence information was received. </param>
+        /// <param name="reportLink"> Report link. </param>
+        /// <param name="threatDescription"> Threat description (free text). </param>
+        /// <param name="threatName"> Threat name (e.g. "Jedobot malware"). </param>
+        /// <param name="threatType"> Threat type (e.g. "Botnet"). </param>
+        /// <returns> A new <see cref="Models.SecurityInsightsThreatIntelligence"/> instance for mocking. </returns>
+        public static SecurityInsightsThreatIntelligence SecurityInsightsThreatIntelligence(double? confidence = null, string providerName = null, string reportLink = null, string threatDescription = null, string threatName = null, string threatType = null)
+        {
+            return new SecurityInsightsThreatIntelligence(
+                confidence,
+                providerName,
+                reportLink,
+                threatDescription,
+                threatName,
+                threatType,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsAccountEntity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -4953,26 +4973,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 isAuthorized,
                 isProgramming,
                 isScanner);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsThreatIntelligence"/>. </summary>
-        /// <param name="confidence"> Confidence (must be between 0 and 1). </param>
-        /// <param name="providerName"> Name of the provider from whom this Threat Intelligence information was received. </param>
-        /// <param name="reportLink"> Report link. </param>
-        /// <param name="threatDescription"> Threat description (free text). </param>
-        /// <param name="threatName"> Threat name (e.g. "Jedobot malware"). </param>
-        /// <param name="threatType"> Threat type (e.g. "Botnet"). </param>
-        /// <returns> A new <see cref="Models.SecurityInsightsThreatIntelligence"/> instance for mocking. </returns>
-        public static SecurityInsightsThreatIntelligence SecurityInsightsThreatIntelligence(double? confidence = null, string providerName = null, string reportLink = null, string threatDescription = null, string threatName = null, string threatType = null)
-        {
-            return new SecurityInsightsThreatIntelligence(
-                confidence,
-                providerName,
-                reportLink,
-                threatDescription,
-                threatName,
-                threatType,
-                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsIPEntity"/>. </summary>
@@ -5401,9 +5401,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
         /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
-        /// <param name="uri"> A full URL the entity points to. </param>
+        /// <param name="uriString"> A full URL the entity points to. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsUriEntity"/> instance for mocking. </returns>
-        public static SecurityInsightsUriEntity SecurityInsightsUriEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> additionalData = null, string friendlyName = null, Uri uri = null)
+        public static SecurityInsightsUriEntity SecurityInsightsUriEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> additionalData = null, string friendlyName = null, string uriString = null)
         {
             additionalData ??= new Dictionary<string, BinaryData>();
 
@@ -5416,7 +5416,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 serializedAdditionalRawData: null,
                 additionalData,
                 friendlyName,
-                uri);
+                uriString);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NicEntity"/>. </summary>
