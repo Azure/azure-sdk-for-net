@@ -71,11 +71,11 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             AppPlatformBuildServiceAgentPoolResource appPlatformBuildServiceAgentPool = client.GetAppPlatformBuildServiceAgentPoolResource(appPlatformBuildServiceAgentPoolResourceId);
 
             // invoke the operation
-            AppPlatformBuildServiceAgentPoolData data = new AppPlatformBuildServiceAgentPoolData()
+            AppPlatformBuildServiceAgentPoolData data = new AppPlatformBuildServiceAgentPoolData
             {
-                Properties = new AppPlatformBuildServiceAgentPoolProperties()
+                Properties = new AppPlatformBuildServiceAgentPoolProperties
                 {
-                    PoolSize = new BuildServiceAgentPoolSizeProperties()
+                    PoolSize = new BuildServiceAgentPoolSizeProperties
                     {
                         Name = "S3",
                     },

@@ -18,34 +18,6 @@ namespace Azure.ResourceManager.MachineLearning.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Delete_DeleteRegistryModelVersion()
-        {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Registry/ModelVersion/delete.json
-            // this example is just showing the usage of "RegistryModelVersions_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MachineLearningRegistryModelVersionResource created on azure
-            // for more information of creating MachineLearningRegistryModelVersionResource, please refer to the document of MachineLearningRegistryModelVersionResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "test-rg";
-            string registryName = "my-aml-registry";
-            string modelName = "string";
-            string version = "string";
-            ResourceIdentifier machineLearningRegistryModelVersionResourceId = MachineLearningRegistryModelVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, registryName, modelName, version);
-            MachineLearningRegistryModelVersionResource machineLearningRegistryModelVersion = client.GetMachineLearningRegistryModelVersionResource(machineLearningRegistryModelVersionResourceId);
-
-            // invoke the operation
-            await machineLearningRegistryModelVersion.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetRegistryModelVersion()
         {
             // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Registry/ModelVersion/get.json
@@ -78,6 +50,34 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteRegistryModelVersion()
+        {
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Registry/ModelVersion/delete.json
+            // this example is just showing the usage of "RegistryModelVersions_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MachineLearningRegistryModelVersionResource created on azure
+            // for more information of creating MachineLearningRegistryModelVersionResource, please refer to the document of MachineLearningRegistryModelVersionResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "test-rg";
+            string registryName = "my-aml-registry";
+            string modelName = "string";
+            string version = "string";
+            ResourceIdentifier machineLearningRegistryModelVersionResourceId = MachineLearningRegistryModelVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, registryName, modelName, version);
+            MachineLearningRegistryModelVersionResource machineLearningRegistryModelVersion = client.GetMachineLearningRegistryModelVersionResource(machineLearningRegistryModelVersionResourceId);
+
+            // invoke the operation
+            await machineLearningRegistryModelVersion.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateRegistryModelVersion()
         {
             // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Registry/ModelVersion/createOrUpdate.json
@@ -99,17 +99,17 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             MachineLearningRegistryModelVersionResource machineLearningRegistryModelVersion = client.GetMachineLearningRegistryModelVersionResource(machineLearningRegistryModelVersionResourceId);
 
             // invoke the operation
-            MachineLearningModelVersionData data = new MachineLearningModelVersionData(new MachineLearningModelVersionProperties()
+            MachineLearningModelVersionData data = new MachineLearningModelVersionData(new MachineLearningModelVersionProperties
             {
                 Flavors =
 {
-["string"] = new MachineLearningFlavorData()
+["string"] = new MachineLearningFlavorData
 {
 Data =
 {
-["string"] = "string",
+["string"] = "string"
 },
-},
+}
 },
                 ModelType = "CustomModel",
                 ModelUri = new Uri("string"),
@@ -117,11 +117,11 @@ Data =
                 Description = "string",
                 Tags =
 {
-["string"] = "string",
+["string"] = "string"
 },
                 Properties =
 {
-["string"] = "string",
+["string"] = "string"
 },
             });
             ArmOperation<MachineLearningRegistryModelVersionResource> lro = await machineLearningRegistryModelVersion.UpdateAsync(WaitUntil.Completed, data);
@@ -157,7 +157,7 @@ Data =
             MachineLearningRegistryModelVersionResource machineLearningRegistryModelVersion = client.GetMachineLearningRegistryModelVersionResource(machineLearningRegistryModelVersionResourceId);
 
             // invoke the operation
-            PendingUploadRequestDto body = new PendingUploadRequestDto()
+            PendingUploadRequestDto body = new PendingUploadRequestDto
             {
                 PendingUploadId = "string",
                 PendingUploadType = PendingUploadType.TemporaryBlobReference,

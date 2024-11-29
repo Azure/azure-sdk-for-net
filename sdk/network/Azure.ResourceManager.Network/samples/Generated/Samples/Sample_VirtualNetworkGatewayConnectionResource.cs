@@ -18,38 +18,6 @@ namespace Azure.ResourceManager.Network.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task VpnDeviceConfigurationScript_GetVPNDeviceConfigurationScript()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGatewayVpnDeviceConfigurationScript.json
-            // this example is just showing the usage of "VirtualNetworkGateways_VpnDeviceConfigurationScript" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualNetworkGatewayConnectionResource created on azure
-            // for more information of creating VirtualNetworkGatewayConnectionResource, please refer to the document of VirtualNetworkGatewayConnectionResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string virtualNetworkGatewayConnectionName = "vpngw";
-            ResourceIdentifier virtualNetworkGatewayConnectionResourceId = VirtualNetworkGatewayConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayConnectionName);
-            VirtualNetworkGatewayConnectionResource virtualNetworkGatewayConnection = client.GetVirtualNetworkGatewayConnectionResource(virtualNetworkGatewayConnectionResourceId);
-
-            // invoke the operation
-            VpnDeviceScriptContent content = new VpnDeviceScriptContent()
-            {
-                Vendor = "Cisco",
-                DeviceFamily = "ISR",
-                FirmwareVersion = "IOS 15.1 (Preview)",
-            };
-            string result = await virtualNetworkGatewayConnection.VpnDeviceConfigurationScriptAsync(content);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetVirtualNetworkGatewayConnection()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGatewayConnectionGet.json
@@ -125,12 +93,12 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkGatewayConnectionResource virtualNetworkGatewayConnection = client.GetVirtualNetworkGatewayConnectionResource(virtualNetworkGatewayConnectionResourceId);
 
             // invoke the operation
-            NetworkTagsObject networkTagsObject = new NetworkTagsObject()
+            NetworkTagsObject networkTagsObject = new NetworkTagsObject
             {
                 Tags =
 {
 ["tag1"] = "value1",
-["tag2"] = "value2",
+["tag2"] = "value2"
 },
             };
             ArmOperation<VirtualNetworkGatewayConnectionResource> lro = await virtualNetworkGatewayConnection.UpdateAsync(WaitUntil.Completed, networkTagsObject);
@@ -141,6 +109,38 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkGatewayConnectionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task VpnDeviceConfigurationScript_GetVPNDeviceConfigurationScript()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkGatewayVpnDeviceConfigurationScript.json
+            // this example is just showing the usage of "VirtualNetworkGateways_VpnDeviceConfigurationScript" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualNetworkGatewayConnectionResource created on azure
+            // for more information of creating VirtualNetworkGatewayConnectionResource, please refer to the document of VirtualNetworkGatewayConnectionResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string virtualNetworkGatewayConnectionName = "vpngw";
+            ResourceIdentifier virtualNetworkGatewayConnectionResourceId = VirtualNetworkGatewayConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkGatewayConnectionName);
+            VirtualNetworkGatewayConnectionResource virtualNetworkGatewayConnection = client.GetVirtualNetworkGatewayConnectionResource(virtualNetworkGatewayConnectionResourceId);
+
+            // invoke the operation
+            VpnDeviceScriptContent content = new VpnDeviceScriptContent
+            {
+                Vendor = "Cisco",
+                DeviceFamily = "ISR",
+                FirmwareVersion = "IOS 15.1 (Preview)",
+            };
+            string result = await virtualNetworkGatewayConnection.VpnDeviceConfigurationScriptAsync(content);
+
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkGatewayConnectionResource virtualNetworkGatewayConnection = client.GetVirtualNetworkGatewayConnectionResource(virtualNetworkGatewayConnectionResourceId);
 
             // invoke the operation
-            VpnPacketCaptureStartContent content = new VpnPacketCaptureStartContent()
+            VpnPacketCaptureStartContent content = new VpnPacketCaptureStartContent
             {
                 FilterData = "{'TracingFlags': 11,'MaxPacketBufferSize': 120,'MaxFileSize': 200,'Filters': [{'SourceSubnets': ['20.1.1.0/24'],'DestinationSubnets': ['10.1.1.0/24'],'SourcePort': [500],'DestinationPort': [4500],'Protocol': 6,'TcpFlags': 16,'CaptureSingleDirectionTrafficOnly': true}]}",
             };
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkGatewayConnectionResource virtualNetworkGatewayConnection = client.GetVirtualNetworkGatewayConnectionResource(virtualNetworkGatewayConnectionResourceId);
 
             // invoke the operation
-            VpnPacketCaptureStopContent content = new VpnPacketCaptureStopContent()
+            VpnPacketCaptureStopContent content = new VpnPacketCaptureStopContent
             {
                 SasUri = new Uri("https://teststorage.blob.core.windows.net/?sv=2018-03-28&ss=bfqt&srt=sco&sp=rwdlacup&se=2019-09-13T07:44:05Z&st=2019-09-06T23:44:05Z&spr=https&sig=V1h9D1riltvZMI69d6ihENnFo%2FrCvTqGgjO2lf%2FVBhE%3D"),
             };

@@ -5,16 +5,17 @@
         {
             "apiVersion": "2024-06-01-preview",
             "type": "Microsoft.ServiceFabric/managedclusters",
-            "name": "sfmctestclusternet",
+            "name": "sfmctestclusternet1",
             "location": "southcentralus",
             "sku": {
                 "name": "Standard"
             },
             "tags": {
-                "SFRP.CertificateSource": "Dsms"
+                "SFRP.CertificateSource": "Dsms",
+                "SFRP.EnableDiagnosticMI": "true"
             },
             "properties": {
-                "dnsName": "sfmctestclusternet",
+                "dnsName": "sfmctestclusternet1",
                 "adminUserName": "testusername",
                 "adminPassword": "TestPass123!",
                 "clientConnectionPort": 19000,

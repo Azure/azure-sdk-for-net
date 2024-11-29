@@ -5,9 +5,8 @@ using Microsoft.CodeAnalysis;
 using Microsoft.Generator.CSharp;
 using Microsoft.Generator.CSharp.ClientModel;
 using System;
-using System.ClientModel;
-using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.IO;
 
 namespace Azure.Generator;
 
@@ -46,6 +45,8 @@ public class AzureClientPlugin : ClientModelPlugin
     {
         base.Configure();
         AddMetadataReference(MetadataReference.CreateFromFile(typeof(Response).Assembly.Location));
+        var sharedSourceDirectory = Path.Combine(Path.GetDirectoryName(typeof(AzureClientPlugin).Assembly.Location)!, "Shared", "Core");
+        AddSharedSourceDirectory(sharedSourceDirectory);
     }
 
     /// <summary>

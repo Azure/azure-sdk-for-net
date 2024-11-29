@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Sql.Samples
             LedgerDigestUploadResource ledgerDigestUpload = client.GetLedgerDigestUploadResource(ledgerDigestUploadResourceId);
 
             // invoke the operation
-            LedgerDigestUploadData data = new LedgerDigestUploadData()
+            LedgerDigestUploadData data = new LedgerDigestUploadData
             {
                 DigestStorageEndpoint = "https://MyAccount.blob.core.windows.net",
             };

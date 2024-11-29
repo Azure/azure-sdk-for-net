@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService.Samples
             WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
 
             // invoke the operation
-            SitePatchInfo info = new SitePatchInfo()
+            SitePatchInfo info = new SitePatchInfo
             {
                 ServerFarmId = new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/testrg123/providers/Microsoft.Web/serverfarms/DefaultAsp"),
             };
@@ -515,59 +515,65 @@ namespace Azure.ResourceManager.AppService.Samples
             WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
 
             // invoke the operation
-            WorkflowArtifacts workflowArtifacts = new WorkflowArtifacts()
+            WorkflowArtifacts workflowArtifacts = new WorkflowArtifacts
             {
-                AppSettings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+                AppSettings = BinaryData.FromObjectAsJson(new
                 {
-                    ["eventHub_connectionString"] = "Endpoint=sb://example.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=EXAMPLE1a2b3c4d5e6fEXAMPLE="
+                    eventHub_connectionString = "Endpoint=sb://example.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=EXAMPLE1a2b3c4d5e6fEXAMPLE=",
                 }),
                 Files =
 {
-["connections.json"] = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+["connections.json"] = BinaryData.FromObjectAsJson(new
 {
-["managedApiConnections"] = new Dictionary<string, object>()
+managedApiConnections = new object(),
+serviceProviderConnections = new
 {
+eventHub = new
+{
+displayName = "example1",
+parameterValues = new
+{
+connectionString = "@appsetting('eventHub_connectionString')",
 },
-["serviceProviderConnections"] = new Dictionary<string, object>()
+serviceProvider = new
 {
-["eventHub"] = new Dictionary<string, object>()
+id = "/serviceProviders/eventHub",
+},
+},
+},
+}),
+["test1/workflow.json"] = BinaryData.FromObjectAsJson(new
 {
-["displayName"] = "example1",
-["parameterValues"] = new Dictionary<string, object>()
-{
-["connectionString"] = "@appsetting('eventHub_connectionString')"},
-["serviceProvider"] = new Dictionary<string, object>()
-{
-["id"] = "/serviceProviders/eventHub"}}}}),
-["test1/workflow.json"] = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
-{
-["definition"] = new Dictionary<string, object>()
+definition = new Dictionary<string, object>
 {
 ["$schema"] = "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
-["actions"] = new Dictionary<string, object>()
-{
-},
+["actions"] = new object(),
 ["contentVersion"] = "1.0.0.0",
-["outputs"] = new Dictionary<string, object>()
+["outputs"] = new object(),
+["triggers"] = new
 {
+When_events_are_available_in_Event_hub = new
+{
+type = "ServiceProvider",
+inputs = new
+{
+parameters = new
+{
+eventHubName = "test123",
 },
-["triggers"] = new Dictionary<string, object>()
+serviceProviderConfiguration = new
 {
-["When_events_are_available_in_Event_hub"] = new Dictionary<string, object>()
-{
-["type"] = "ServiceProvider",
-["inputs"] = new Dictionary<string, object>()
-{
-["parameters"] = new Dictionary<string, object>()
-{
-["eventHubName"] = "test123"},
-["serviceProviderConfiguration"] = new Dictionary<string, object>()
-{
-["operationId"] = "receiveEvents",
-["connectionName"] = "eventHub",
-["serviceProviderId"] = "/serviceProviders/eventHub"}},
-["splitOn"] = "@triggerOutputs()?['body']"}}},
-["kind"] = "Stateful"}),
+operationId = "receiveEvents",
+connectionName = "eventHub",
+serviceProviderId = "/serviceProviders/eventHub",
+},
+},
+splitOn = "@triggerOutputs()?['body']",
+},
+}
+},
+kind = "Stateful",
+})
 },
             };
             await webSiteSlot.DeployWorkflowArtifactsSlotAsync(workflowArtifacts: workflowArtifacts);
