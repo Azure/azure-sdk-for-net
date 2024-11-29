@@ -210,6 +210,7 @@ rename-mapping:
   VpnPacketCaptureStartParameters: VpnPacketCaptureStartContent
   VpnPacketCaptureStopParameters: VpnPacketCaptureStopContent
   VpnPolicyMemberAttributeType.AADGroupId: AadGroupId
+  LoadBalancingRulePropertiesFormat: LoadBalancingRuleProperties
 
 keep-plural-resource-data:
 - PolicySignaturesOverridesForIdps

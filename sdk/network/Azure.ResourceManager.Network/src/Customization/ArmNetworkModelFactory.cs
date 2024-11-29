@@ -349,5 +349,50 @@ namespace Azure.ResourceManager.Network.Models
                     provisioningState: provisioningState)
                 );
         }
+
+
+        /// <summary> Initializes a new instance of <see cref="Network.LoadBalancingRuleData"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="frontendIPConfigurationId"> A reference to frontend IP addresses. </param>
+        /// <param name="backendAddressPoolId"> A reference to a pool of DIPs. Inbound traffic is randomly load balanced across IPs in the backend IPs. </param>
+        /// <param name="backendAddressPools"> An array of references to pool of DIPs. </param>
+        /// <param name="probeId"> The reference to the load balancer probe used by the load balancing rule. </param>
+        /// <param name="protocol"> The reference to the transport protocol used by the load balancing rule. </param>
+        /// <param name="loadDistribution"> The load distribution policy for this rule. </param>
+        /// <param name="frontendPort"> The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values are between 0 and 65534. Note that value 0 enables "Any Port". </param>
+        /// <param name="backendPort"> The port used for internal connections on the endpoint. Acceptable values are between 0 and 65535. Note that value 0 enables "Any Port". </param>
+        /// <param name="idleTimeoutInMinutes"> The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes. This element is only used when the protocol is set to TCP. </param>
+        /// <param name="enableFloatingIP"> Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint. </param>
+        /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
+        /// <param name="disableOutboundSnat"> Configures SNAT for the VMs in the backend pool to use the publicIP address specified in the frontend of the load balancing rule. </param>
+        /// <param name="provisioningState"> The provisioning state of the load balancing rule resource. </param>
+        /// <returns> A new <see cref="Network.LoadBalancingRuleData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static LoadBalancingRuleData LoadBalancingRuleData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ResourceIdentifier frontendIPConfigurationId = null, ResourceIdentifier backendAddressPoolId = null, IEnumerable<WritableSubResource> backendAddressPools = null, ResourceIdentifier probeId = null, LoadBalancingTransportProtocol? protocol = null, LoadDistribution? loadDistribution = null, int? frontendPort = null, int? backendPort = null, int? idleTimeoutInMinutes = null, bool? enableFloatingIP = null, bool? enableTcpReset = null, bool? disableOutboundSnat = null, NetworkProvisioningState? provisioningState = null)
+        {
+            return LoadBalancingRuleData(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                etag: etag,
+                properties: LoadBalancingRuleProperties(
+                    frontendIPConfigurationId: frontendIPConfigurationId,
+                    backendAddressPoolId: backendAddressPoolId,
+                    backendAddressPools: backendAddressPools,
+                    probeId: probeId,
+                    protocol: protocol ?? default,
+                    loadDistribution: loadDistribution ?? default,
+                    frontendPort: frontendPort ?? default,
+                    backendPort: backendPort ?? default,
+                    idleTimeoutInMinutes: idleTimeoutInMinutes,
+                    enableFloatingIP: enableFloatingIP,
+                    enableTcpReset: enableTcpReset,
+                    disableOutboundSnat: disableOutboundSnat,
+                    provisioningState: provisioningState)
+                );
+        }
     }
 }

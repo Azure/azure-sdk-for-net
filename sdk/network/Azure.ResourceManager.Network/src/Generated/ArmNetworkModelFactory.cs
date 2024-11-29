@@ -3773,7 +3773,21 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="properties"> Properties of load balancer load balancing rule. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Network.LoadBalancingRuleData"/> instance for mocking. </returns>
+        public static LoadBalancingRuleData LoadBalancingRuleData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, LoadBalancingRuleProperties properties = null, ETag? etag = null)
+        {
+            return new LoadBalancingRuleData(
+                id,
+                name,
+                resourceType,
+                serializedAdditionalRawData: null,
+                properties,
+                etag);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.LoadBalancingRuleProperties"/>. </summary>
         /// <param name="frontendIPConfigurationId"> A reference to frontend IP addresses. </param>
         /// <param name="backendAddressPoolId"> A reference to a pool of DIPs. Inbound traffic is randomly load balanced across IPs in the backend IPs. </param>
         /// <param name="backendAddressPools"> An array of references to pool of DIPs. </param>
@@ -3787,17 +3801,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
         /// <param name="disableOutboundSnat"> Configures SNAT for the VMs in the backend pool to use the publicIP address specified in the frontend of the load balancing rule. </param>
         /// <param name="provisioningState"> The provisioning state of the load balancing rule resource. </param>
-        /// <returns> A new <see cref="Network.LoadBalancingRuleData"/> instance for mocking. </returns>
-        public static LoadBalancingRuleData LoadBalancingRuleData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, ResourceIdentifier frontendIPConfigurationId = null, ResourceIdentifier backendAddressPoolId = null, IEnumerable<WritableSubResource> backendAddressPools = null, ResourceIdentifier probeId = null, LoadBalancingTransportProtocol? protocol = null, LoadDistribution? loadDistribution = null, int? frontendPort = null, int? backendPort = null, int? idleTimeoutInMinutes = null, bool? enableFloatingIP = null, bool? enableTcpReset = null, bool? disableOutboundSnat = null, NetworkProvisioningState? provisioningState = null)
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <returns> A new <see cref="Models.LoadBalancingRuleProperties"/> instance for mocking. </returns>
+        public static LoadBalancingRuleProperties LoadBalancingRuleProperties(ResourceIdentifier frontendIPConfigurationId = null, ResourceIdentifier backendAddressPoolId = null, IEnumerable<WritableSubResource> backendAddressPools = null, ResourceIdentifier probeId = null, LoadBalancingTransportProtocol protocol = default, LoadDistribution? loadDistribution = null, int frontendPort = default, int? backendPort = null, int? idleTimeoutInMinutes = null, bool? enableFloatingIP = null, bool? enableTcpReset = null, bool? disableOutboundSnat = null, NetworkProvisioningState? provisioningState = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
             backendAddressPools ??= new List<WritableSubResource>();
+            additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new LoadBalancingRuleData(
-                id,
-                name,
-                resourceType,
-                serializedAdditionalRawData: null,
-                etag,
+            return new LoadBalancingRuleProperties(
                 frontendIPConfigurationId != null ? ResourceManagerModelFactory.WritableSubResource(frontendIPConfigurationId) : null,
                 backendAddressPoolId != null ? ResourceManagerModelFactory.WritableSubResource(backendAddressPoolId) : null,
                 backendAddressPools?.ToList(),
@@ -3810,7 +3821,8 @@ namespace Azure.ResourceManager.Network.Models
                 enableFloatingIP,
                 enableTcpReset,
                 disableOutboundSnat,
-                provisioningState);
+                provisioningState,
+                additionalProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Network.ProbeData"/>. </summary>
