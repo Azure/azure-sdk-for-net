@@ -104,7 +104,7 @@ namespace Azure.Maps.TimeZones.Tests.Samples
                 AdditionalTimeZoneReturnInformation = AdditionalTimeZoneReturnInformation.All
             };
             GeoPosition coordinates = new GeoPosition(121.5640089, 25.0338053);
-            Response<TimeZoneResult> response =  client.GetTimeZoneByCoordinates(coordinates, options);
+            Response<TimeZoneResult> response = client.GetTimeZoneByCoordinates(coordinates, options);
 
             Console.WriteLine("Time zone for (latitude, longitude) = ({0}, {1}) is {2}: ",
                 coordinates.Latitude, coordinates.Longitude,
