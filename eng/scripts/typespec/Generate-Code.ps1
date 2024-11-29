@@ -35,7 +35,6 @@ function Refresh-Build {
 
 $testProjectsLocalDir = Join-Path $packageRoot 'generator' 'TestProjects' 'Local'
 $basicTypespecTestProject = Join-Path $testProjectsLocalDir "Basic-TypeSpec"
-$mgmtTypespecTestProject = Join-Path $testProjectsLocalDir "Mgmt-TypeSpec"
 
 Push-Location $packageRoot
 
@@ -47,13 +46,6 @@ Invoke-LoggedCommand (Get-TspCommand "$basicTypespecTestProject/Basic-TypeSpec.t
 
 Write-Host "Building BasicTypeSpec" -ForegroundColor Cyan
 Invoke-LoggedCommand "dotnet build $packageRoot/generator/TestProjects/Local/Basic-TypeSpec/src/BasicTypeSpec.csproj"
-
-Write-Host "Generating MgmtTypeSpec" -ForegroundColor Cyan
-Invoke-LoggedCommand (Get-TspCommand "$mgmtTypespecTestProject/main.tsp" $mgmtTypespecTestProject)
-
-# skip the build for now, we know it won't build
-# Write-Host "Building MgmtTypeSpec" -ForegroundColor Cyan
-# Invoke-LoggedCommand "dotnet build $packageRoot/generator/TestProjects/Local/Mgmt-TypeSpec/src/MgmtTypeSpec.csproj"
 
 Pop-Location
 
