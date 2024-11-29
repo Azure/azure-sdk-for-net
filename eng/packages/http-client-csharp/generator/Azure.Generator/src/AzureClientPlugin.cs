@@ -27,6 +27,10 @@ public class AzureClientPlugin : ClientModelPlugin
     /// <inheritdoc/>
     public override AzureOutputLibrary OutputLibrary => _azureOutputLibrary ??= new();
 
+    private AzureInputLibrary? _azureInputLibrary;
+    /// <inheritdoc/>
+    public override AzureInputLibrary InputLibrary => _azureInputLibrary ??= new(Instance.Configuration.OutputDirectory);
+
     /// <summary>
     /// The Azure client plugin to generate the Azure client SDK.
     /// </summary>
