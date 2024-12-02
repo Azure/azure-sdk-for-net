@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Samples
             HostingEnvironmentWorkerPoolResource hostingEnvironmentWorkerPool = client.GetHostingEnvironmentWorkerPoolResource(hostingEnvironmentWorkerPoolResourceId);
 
             // invoke the operation
-            AppServiceWorkerPoolData data = new AppServiceWorkerPoolData()
+            AppServiceWorkerPoolData data = new AppServiceWorkerPoolData
             {
                 WorkerSize = "Small",
                 WorkerCount = 3,

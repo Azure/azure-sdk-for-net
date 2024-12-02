@@ -19,215 +19,6 @@ namespace Azure.ResourceManager.Billing.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetBillingAccountAvailableBalance_AvailableBalanceGetByBillingAccount()
-        {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/availableBalanceGetByBillingAccount.json
-            // this example is just showing the usage of "AvailableBalances_GetByBillingAccount" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BillingAccountResource created on azure
-            // for more information of creating BillingAccountResource, please refer to the document of BillingAccountResource
-            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
-            ResourceIdentifier billingAccountResourceId = BillingAccountResource.CreateResourceIdentifier(billingAccountName);
-            BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
-
-            // invoke the operation
-            BillingAvailableBalanceData result = await billingAccount.GetBillingAccountAvailableBalanceAsync();
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task AddPaymentTerms_PaymentTermsAdd()
-        {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/paymentTermsAdd.json
-            // this example is just showing the usage of "BillingAccounts_AddPaymentTerms" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BillingAccountResource created on azure
-            // for more information of creating BillingAccountResource, please refer to the document of BillingAccountResource
-            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
-            ResourceIdentifier billingAccountResourceId = BillingAccountResource.CreateResourceIdentifier(billingAccountName);
-            BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
-
-            // invoke the operation
-            IEnumerable<BillingPaymentTerm> arrayOfPaymentTerm = new BillingPaymentTerm[]
-            {
-new BillingPaymentTerm()
-{
-Term = "net10",
-StartOn = DateTimeOffset.Parse("2023-01-05T22:39:34.2606750Z"),
-EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
-}
-            };
-            ArmOperation<BillingAccountResource> lro = await billingAccount.AddPaymentTermsAsync(WaitUntil.Completed, arrayOfPaymentTerm);
-            BillingAccountResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            BillingAccountData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CancelPaymentTerms_PaymentTermsCancel()
-        {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/paymentTermsCancel.json
-            // this example is just showing the usage of "BillingAccounts_CancelPaymentTerms" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BillingAccountResource created on azure
-            // for more information of creating BillingAccountResource, please refer to the document of BillingAccountResource
-            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
-            ResourceIdentifier billingAccountResourceId = BillingAccountResource.CreateResourceIdentifier(billingAccountName);
-            BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
-
-            // invoke the operation
-            DateTimeOffset dateTime = DateTimeOffset.Parse("2023-01-05T22:39:34.2606750Z");
-            ArmOperation<BillingAccountResource> lro = await billingAccount.CancelPaymentTermsAsync(WaitUntil.Completed, dateTime);
-            BillingAccountResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            BillingAccountData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task ConfirmTransition_BillingAccountsConfirmTransition()
-        {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingAccountsConfirmTransition.json
-            // this example is just showing the usage of "BillingAccounts_ConfirmTransition" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BillingAccountResource created on azure
-            // for more information of creating BillingAccountResource, please refer to the document of BillingAccountResource
-            string billingAccountName = "10000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
-            ResourceIdentifier billingAccountResourceId = BillingAccountResource.CreateResourceIdentifier(billingAccountName);
-            BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
-
-            // invoke the operation
-            BillingTransitionDetails result = await billingAccount.ConfirmTransitionAsync();
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetInvoiceSectionsByCreateSubscriptionPermission_InvoiceSectionsWithCreateSubscriptionPermissionList()
-        {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/invoiceSectionsWithCreateSubscriptionPermissionList.json
-            // this example is just showing the usage of "BillingAccounts_ListInvoiceSectionsByCreateSubscriptionPermission" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BillingAccountResource created on azure
-            // for more information of creating BillingAccountResource, please refer to the document of BillingAccountResource
-            string billingAccountName = "10000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
-            ResourceIdentifier billingAccountResourceId = BillingAccountResource.CreateResourceIdentifier(billingAccountName);
-            BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (InvoiceSectionWithCreateSubPermission item in billingAccount.GetInvoiceSectionsByCreateSubscriptionPermissionAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task ValidatePaymentTerms_PaymentTermInvalid()
-        {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/paymentTermInvalid.json
-            // this example is just showing the usage of "BillingAccounts_ValidatePaymentTerms" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BillingAccountResource created on azure
-            // for more information of creating BillingAccountResource, please refer to the document of BillingAccountResource
-            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
-            ResourceIdentifier billingAccountResourceId = BillingAccountResource.CreateResourceIdentifier(billingAccountName);
-            BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
-
-            // invoke the operation
-            IEnumerable<BillingPaymentTerm> arrayOfPaymentTerm = new BillingPaymentTerm[]
-            {
-new BillingPaymentTerm()
-{
-Term = "net10",
-StartOn = DateTimeOffset.Parse("2023-02-05T22:39:34.2606750Z"),
-EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
-}
-            };
-            PaymentTermsEligibilityResult result = await billingAccount.ValidatePaymentTermsAsync(arrayOfPaymentTerm);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task ValidatePaymentTerms_PaymentTermValid()
-        {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/paymentTermValid.json
-            // this example is just showing the usage of "BillingAccounts_ValidatePaymentTerms" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BillingAccountResource created on azure
-            // for more information of creating BillingAccountResource, please refer to the document of BillingAccountResource
-            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
-            ResourceIdentifier billingAccountResourceId = BillingAccountResource.CreateResourceIdentifier(billingAccountName);
-            BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
-
-            // invoke the operation
-            IEnumerable<BillingPaymentTerm> arrayOfPaymentTerm = new BillingPaymentTerm[]
-            {
-new BillingPaymentTerm()
-{
-Term = "net10",
-StartOn = DateTimeOffset.Parse("2023-01-05T22:39:34.2606750Z"),
-EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
-}
-            };
-            PaymentTermsEligibilityResult result = await billingAccount.ValidatePaymentTermsAsync(arrayOfPaymentTerm);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Get_BillingAccountWithExpandForPONumber()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingAccountWithExpandForPONumber.json
@@ -413,11 +204,11 @@ EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
             BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
 
             // invoke the operation
-            BillingAccountPatch patch = new BillingAccountPatch()
+            BillingAccountPatch patch = new BillingAccountPatch
             {
-                Properties = new BillingAccountProperties()
+                Properties = new BillingAccountProperties
                 {
-                    EnrollmentDetails = new BillingAccountEnrollmentDetails()
+                    EnrollmentDetails = new BillingAccountEnrollmentDetails
                     {
                         PoNumber = "poNumber123",
                     },
@@ -452,9 +243,9 @@ EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
             BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
 
             // invoke the operation
-            BillingAccountPatch patch = new BillingAccountPatch()
+            BillingAccountPatch patch = new BillingAccountPatch
             {
-                Properties = new BillingAccountProperties()
+                Properties = new BillingAccountProperties
                 {
                     DisplayName = "Test Account",
                     SoldTo = new BillingAddressDetails("1 Microsoft Way", "US")
@@ -474,6 +265,215 @@ EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
             BillingAccountData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetBillingAccountAvailableBalance_AvailableBalanceGetByBillingAccount()
+        {
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/availableBalanceGetByBillingAccount.json
+            // this example is just showing the usage of "AvailableBalances_GetByBillingAccount" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BillingAccountResource created on azure
+            // for more information of creating BillingAccountResource, please refer to the document of BillingAccountResource
+            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
+            ResourceIdentifier billingAccountResourceId = BillingAccountResource.CreateResourceIdentifier(billingAccountName);
+            BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
+
+            // invoke the operation
+            BillingAvailableBalanceData result = await billingAccount.GetBillingAccountAvailableBalanceAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task AddPaymentTerms_PaymentTermsAdd()
+        {
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/paymentTermsAdd.json
+            // this example is just showing the usage of "BillingAccounts_AddPaymentTerms" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BillingAccountResource created on azure
+            // for more information of creating BillingAccountResource, please refer to the document of BillingAccountResource
+            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
+            ResourceIdentifier billingAccountResourceId = BillingAccountResource.CreateResourceIdentifier(billingAccountName);
+            BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
+
+            // invoke the operation
+            IEnumerable<BillingPaymentTerm> arrayOfPaymentTerm = new BillingPaymentTerm[]
+            {
+new BillingPaymentTerm
+{
+Term = "net10",
+StartOn = DateTimeOffset.Parse("2023-01-05T22:39:34.2606750Z"),
+EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
+}
+            };
+            ArmOperation<BillingAccountResource> lro = await billingAccount.AddPaymentTermsAsync(WaitUntil.Completed, arrayOfPaymentTerm);
+            BillingAccountResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BillingAccountData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CancelPaymentTerms_PaymentTermsCancel()
+        {
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/paymentTermsCancel.json
+            // this example is just showing the usage of "BillingAccounts_CancelPaymentTerms" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BillingAccountResource created on azure
+            // for more information of creating BillingAccountResource, please refer to the document of BillingAccountResource
+            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
+            ResourceIdentifier billingAccountResourceId = BillingAccountResource.CreateResourceIdentifier(billingAccountName);
+            BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
+
+            // invoke the operation
+            DateTimeOffset dateTime = DateTimeOffset.Parse("2023-01-05T22:39:34.2606750Z");
+            ArmOperation<BillingAccountResource> lro = await billingAccount.CancelPaymentTermsAsync(WaitUntil.Completed, dateTime);
+            BillingAccountResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BillingAccountData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task ConfirmTransition_BillingAccountsConfirmTransition()
+        {
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingAccountsConfirmTransition.json
+            // this example is just showing the usage of "BillingAccounts_ConfirmTransition" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BillingAccountResource created on azure
+            // for more information of creating BillingAccountResource, please refer to the document of BillingAccountResource
+            string billingAccountName = "10000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
+            ResourceIdentifier billingAccountResourceId = BillingAccountResource.CreateResourceIdentifier(billingAccountName);
+            BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
+
+            // invoke the operation
+            BillingTransitionDetails result = await billingAccount.ConfirmTransitionAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetInvoiceSectionsByCreateSubscriptionPermission_InvoiceSectionsWithCreateSubscriptionPermissionList()
+        {
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/invoiceSectionsWithCreateSubscriptionPermissionList.json
+            // this example is just showing the usage of "BillingAccounts_ListInvoiceSectionsByCreateSubscriptionPermission" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BillingAccountResource created on azure
+            // for more information of creating BillingAccountResource, please refer to the document of BillingAccountResource
+            string billingAccountName = "10000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
+            ResourceIdentifier billingAccountResourceId = BillingAccountResource.CreateResourceIdentifier(billingAccountName);
+            BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (InvoiceSectionWithCreateSubPermission item in billingAccount.GetInvoiceSectionsByCreateSubscriptionPermissionAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task ValidatePaymentTerms_PaymentTermInvalid()
+        {
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/paymentTermInvalid.json
+            // this example is just showing the usage of "BillingAccounts_ValidatePaymentTerms" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BillingAccountResource created on azure
+            // for more information of creating BillingAccountResource, please refer to the document of BillingAccountResource
+            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
+            ResourceIdentifier billingAccountResourceId = BillingAccountResource.CreateResourceIdentifier(billingAccountName);
+            BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
+
+            // invoke the operation
+            IEnumerable<BillingPaymentTerm> arrayOfPaymentTerm = new BillingPaymentTerm[]
+            {
+new BillingPaymentTerm
+{
+Term = "net10",
+StartOn = DateTimeOffset.Parse("2023-02-05T22:39:34.2606750Z"),
+EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
+}
+            };
+            PaymentTermsEligibilityResult result = await billingAccount.ValidatePaymentTermsAsync(arrayOfPaymentTerm);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task ValidatePaymentTerms_PaymentTermValid()
+        {
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/paymentTermValid.json
+            // this example is just showing the usage of "BillingAccounts_ValidatePaymentTerms" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BillingAccountResource created on azure
+            // for more information of creating BillingAccountResource, please refer to the document of BillingAccountResource
+            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
+            ResourceIdentifier billingAccountResourceId = BillingAccountResource.CreateResourceIdentifier(billingAccountName);
+            BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
+
+            // invoke the operation
+            IEnumerable<BillingPaymentTerm> arrayOfPaymentTerm = new BillingPaymentTerm[]
+            {
+new BillingPaymentTerm
+{
+Term = "net10",
+StartOn = DateTimeOffset.Parse("2023-01-05T22:39:34.2606750Z"),
+EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
+}
+            };
+            PaymentTermsEligibilityResult result = await billingAccount.ValidatePaymentTermsAsync(arrayOfPaymentTerm);
+
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
@@ -522,12 +522,9 @@ EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
             BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
 
             // invoke the operation and iterate over the result
-            BillingCheckAccessContent content = new BillingCheckAccessContent()
+            BillingCheckAccessContent content = new BillingCheckAccessContent
             {
-                Actions =
-{
-"Microsoft.Billing/billingAccounts/read","Microsoft.Subscription/subscriptions/write"
-},
+                Actions = { "Microsoft.Billing/billingAccounts/read", "Microsoft.Subscription/subscriptions/write" },
             };
             await foreach (BillingCheckAccessResult item in billingAccount.CheckAccessBillingPermissionsAsync(content))
             {
@@ -556,7 +553,7 @@ EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
             BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
 
             // invoke the operation and iterate over the result
-            BillingAccountResourceGetBillingRequestsOptions options = new BillingAccountResourceGetBillingRequestsOptions() { };
+            BillingAccountResourceGetBillingRequestsOptions options = new BillingAccountResourceGetBillingRequestsOptions();
             await foreach (BillingRequestResource item in billingAccount.GetBillingRequestsAsync(options))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
@@ -645,7 +642,7 @@ EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
             BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
 
             // invoke the operation and iterate over the result
-            BillingAccountResourceGetByBillingAccountSavingsPlanOptions options = new BillingAccountResourceGetByBillingAccountSavingsPlanOptions() { Take = 3, SelectedState = "Succeeded", RefreshSummary = "true" };
+            BillingAccountResourceGetByBillingAccountSavingsPlanOptions options = new BillingAccountResourceGetByBillingAccountSavingsPlanOptions { Take = 3, SelectedState = "Succeeded", RefreshSummary = "true" };
             await foreach (BillingSavingsPlanModelResource item in billingAccount.GetByBillingAccountSavingsPlanAsync(options))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
@@ -679,11 +676,12 @@ EndOn = DateTimeOffset.Parse("2023-01-25T22:39:34.2606750Z"),
             // invoke the operation
             IEnumerable<BillingDocumentDownloadRequestContent> arrayOfDocumentDownloadRequest = new BillingDocumentDownloadRequestContent[]
             {
-new BillingDocumentDownloadRequestContent()
+new BillingDocumentDownloadRequestContent
 {
 DocumentName = "12345678",
 InvoiceName = "G123456789",
-},new BillingDocumentDownloadRequestContent()
+},
+new BillingDocumentDownloadRequestContent
 {
 DocumentName = "12345678",
 InvoiceName = "G987654321",
@@ -714,7 +712,7 @@ InvoiceName = "G987654321",
             BillingAccountResource billingAccount = client.GetBillingAccountResource(billingAccountResourceId);
 
             // invoke the operation and iterate over the result
-            BillingAccountResourceGetReservationsOptions options = new BillingAccountResourceGetReservationsOptions() { SelectedState = "Succeeded" };
+            BillingAccountResourceGetReservationsOptions options = new BillingAccountResourceGetReservationsOptions { SelectedState = "Succeeded" };
             await foreach (BillingReservationResource item in billingAccount.GetReservationsAsync(options))
             {
                 // the variable item is a resource, you could call other operations on this instance as well

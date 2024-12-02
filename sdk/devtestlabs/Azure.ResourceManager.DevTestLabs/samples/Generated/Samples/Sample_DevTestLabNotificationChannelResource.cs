@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             DevTestLabNotificationChannelResource devTestLabNotificationChannel = client.GetDevTestLabNotificationChannelResource(devTestLabNotificationChannelResourceId);
 
             // invoke the operation
-            DevTestLabNotificationChannelNotifyContent content = new DevTestLabNotificationChannelNotifyContent()
+            DevTestLabNotificationChannelNotifyContent content = new DevTestLabNotificationChannelNotifyContent
             {
                 EventName = DevTestLabNotificationChannelEventType.AutoShutdown,
                 JsonPayload = "{\"eventType\":\"AutoShutdown\",\"subscriptionId\":\"{subscriptionId}\",\"resourceGroupName\":\"resourceGroupName\",\"labName\":\"{labName}\"}",

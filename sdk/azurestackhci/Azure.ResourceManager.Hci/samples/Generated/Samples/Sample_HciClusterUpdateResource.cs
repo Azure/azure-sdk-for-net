@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Hci.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Post_ListAvailableUpdates()
+        public async Task Get_GetASpecificUpdate()
         {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/PostUpdates.json
-            // this example is just showing the usage of "Updates_Post" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/GetUpdates.json
+            // this example is just showing the usage of "Updates_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -38,9 +38,13 @@ namespace Azure.ResourceManager.Hci.Samples
             HciClusterUpdateResource hciClusterUpdate = client.GetHciClusterUpdateResource(hciClusterUpdateResourceId);
 
             // invoke the operation
-            await hciClusterUpdate.PostAsync(WaitUntil.Completed);
+            HciClusterUpdateResource result = await hciClusterUpdate.GetAsync();
 
-            Console.WriteLine("Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            HciClusterUpdateData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
@@ -92,20 +96,17 @@ namespace Azure.ResourceManager.Hci.Samples
             HciClusterUpdateResource hciClusterUpdate = client.GetHciClusterUpdateResource(hciClusterUpdateResourceId);
 
             // invoke the operation
-            HciClusterUpdateData data = new HciClusterUpdateData()
+            HciClusterUpdateData data = new HciClusterUpdateData
             {
                 InstalledOn = DateTimeOffset.Parse("2022-04-06T14:08:18.254Z"),
                 Description = "AzS Update 4.2203.2.32",
                 State = HciUpdateState.Installed,
-                Prerequisites =
-{
-new HciClusterUpdatePrerequisite()
+                Prerequisites = {new HciClusterUpdatePrerequisite
 {
 UpdateType = "update type",
 Version = "prerequisite version",
 PackageName = "update package name",
-}
-},
+}},
                 PackagePath = "\\\\SU1FileServer\\SU1_Infrastructure_2\\Updates\\Packages\\Microsoft4.2203.2.32",
                 PackageSizeInMb = 18858,
                 DisplayName = "AzS Update - 4.2203.2.32",
@@ -130,10 +131,10 @@ PackageName = "update package name",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_GetASpecificUpdate()
+        public async Task Post_ListAvailableUpdates()
         {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/GetUpdates.json
-            // this example is just showing the usage of "Updates_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/PostUpdates.json
+            // this example is just showing the usage of "Updates_Post" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -150,13 +151,9 @@ PackageName = "update package name",
             HciClusterUpdateResource hciClusterUpdate = client.GetHciClusterUpdateResource(hciClusterUpdateResourceId);
 
             // invoke the operation
-            HciClusterUpdateResource result = await hciClusterUpdate.GetAsync();
+            await hciClusterUpdate.PostAsync(WaitUntil.Completed);
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            HciClusterUpdateData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            Console.WriteLine("Succeeded");
         }
     }
 }

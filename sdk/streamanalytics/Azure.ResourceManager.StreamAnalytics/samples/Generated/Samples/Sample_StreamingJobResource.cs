@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.StreamAnalytics.Models;
 using NUnit.Framework;
 
@@ -17,67 +16,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 {
     public partial class Sample_StreamingJobResource
     {
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Update_UpdateAStreamingJob()
-        {
-            // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/StreamingJob_Update.json
-            // this example is just showing the usage of "StreamingJobs_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this StreamingJobResource created on azure
-            // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
-            string resourceGroupName = "sjrg6936";
-            string jobName = "sj59";
-            ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
-            StreamingJobResource streamingJob = client.GetStreamingJobResource(streamingJobResourceId);
-
-            // invoke the operation
-            StreamingJobData data = new StreamingJobData(new AzureLocation("placeholder"))
-            {
-                EventsOutOfOrderMaxDelayInSeconds = 21,
-                EventsLateArrivalMaxDelayInSeconds = 13,
-            };
-            StreamingJobResource result = await streamingJob.UpdateAsync(data);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            StreamingJobData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_DeleteAStreamingJob()
-        {
-            // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/StreamingJob_Delete.json
-            // this example is just showing the usage of "StreamingJobs_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this StreamingJobResource created on azure
-            // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
-            string resourceGroupName = "sjrg6936";
-            string jobName = "sj59";
-            ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
-            StreamingJobResource streamingJob = client.GetStreamingJobResource(streamingJobResourceId);
-
-            // invoke the operation
-            await streamingJob.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
-        }
-
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAStreamingJobAndDoNotUseTheExpandODataQueryParameter()
@@ -141,65 +79,63 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetStreamingJobs_ListAllStreamingJobsInASubscriptionAndDoNotUseTheExpandODataQueryParameter()
+        public async Task Delete_DeleteAStreamingJob()
         {
-            // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/StreamingJob_List_BySubscription_NoExpand.json
-            // this example is just showing the usage of "StreamingJobs_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/StreamingJob_Delete.json
+            // this example is just showing the usage of "StreamingJobs_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            // this example assumes you already have this StreamingJobResource created on azure
+            // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
             string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+            string resourceGroupName = "sjrg6936";
+            string jobName = "sj59";
+            ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            StreamingJobResource streamingJob = client.GetStreamingJobResource(streamingJobResourceId);
 
-            // invoke the operation and iterate over the result
-            await foreach (StreamingJobResource item in subscriptionResource.GetStreamingJobsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                StreamingJobData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+            // invoke the operation
+            await streamingJob.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetStreamingJobs_ListAllStreamingJobsInASubscriptionAndUseTheExpandODataQueryParameterToExpandInputsOutputsTransformationAndFunctions()
+        public async Task Update_UpdateAStreamingJob()
         {
-            // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/StreamingJob_List_BySubscription_Expand.json
-            // this example is just showing the usage of "StreamingJobs_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/StreamingJob_Update.json
+            // this example is just showing the usage of "StreamingJobs_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            // this example assumes you already have this StreamingJobResource created on azure
+            // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
             string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+            string resourceGroupName = "sjrg6936";
+            string jobName = "sj59";
+            ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            StreamingJobResource streamingJob = client.GetStreamingJobResource(streamingJobResourceId);
 
-            // invoke the operation and iterate over the result
-            string expand = "inputs,outputs,transformation,functions";
-            await foreach (StreamingJobResource item in subscriptionResource.GetStreamingJobsAsync(expand: expand))
+            // invoke the operation
+            StreamingJobData data = new StreamingJobData(default)
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                StreamingJobData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                EventsOutOfOrderMaxDelayInSeconds = 21,
+                EventsLateArrivalMaxDelayInSeconds = 13,
+            };
+            StreamingJobResource result = await streamingJob.UpdateAsync(data);
 
-            Console.WriteLine("Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            StreamingJobData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
@@ -223,7 +159,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
             StreamingJobResource streamingJob = client.GetStreamingJobResource(streamingJobResourceId);
 
             // invoke the operation
-            StartStreamingJobContent content = new StartStreamingJobContent()
+            StartStreamingJobContent content = new StartStreamingJobContent
             {
                 OutputStartMode = StreamingJobOutputStartMode.CustomTime,
                 OutputStartOn = DateTimeOffset.Parse("2012-12-12T12:12:12Z"),
@@ -254,7 +190,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
             StreamingJobResource streamingJob = client.GetStreamingJobResource(streamingJobResourceId);
 
             // invoke the operation
-            StartStreamingJobContent content = new StartStreamingJobContent()
+            StartStreamingJobContent content = new StartStreamingJobContent
             {
                 OutputStartMode = StreamingJobOutputStartMode.JobStartTime,
             };
@@ -284,7 +220,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
             StreamingJobResource streamingJob = client.GetStreamingJobResource(streamingJobResourceId);
 
             // invoke the operation
-            StartStreamingJobContent content = new StartStreamingJobContent()
+            StartStreamingJobContent content = new StartStreamingJobContent
             {
                 OutputStartMode = StreamingJobOutputStartMode.LastOutputEventTime,
             };
@@ -340,7 +276,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
             StreamingJobResource streamingJob = client.GetStreamingJobResource(streamingJobResourceId);
 
             // invoke the operation
-            ScaleStreamingJobContent content = new ScaleStreamingJobContent()
+            ScaleStreamingJobContent content = new ScaleStreamingJobContent
             {
                 StreamingUnits = 36,
             };

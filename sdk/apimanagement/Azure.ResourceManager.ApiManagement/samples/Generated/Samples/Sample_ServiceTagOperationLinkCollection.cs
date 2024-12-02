@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.ApiManagement.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ApiManagementListTagOperationLinks()
+        public async Task CreateOrUpdate_ApiManagementCreateTagOperationLink()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementListTagOperationLinks.json
-            // this example is just showing the usage of "TagOperationLink_ListByProduct" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateTagOperationLink.json
+            // this example is just showing the usage of "TagOperationLink_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -39,17 +39,20 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // get the collection of this ServiceTagOperationLinkResource
             ServiceTagOperationLinkCollection collection = apiManagementTag.GetServiceTagOperationLinks();
 
-            // invoke the operation and iterate over the result
-            await foreach (ServiceTagOperationLinkResource item in collection.GetAllAsync())
+            // invoke the operation
+            string operationLinkId = "link1";
+            TagOperationLinkContractData data = new TagOperationLinkContractData
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                TagOperationLinkContractData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                OperationId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/apis/echo-api/operations/op1",
+            };
+            ArmOperation<ServiceTagOperationLinkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, operationLinkId, data);
+            ServiceTagOperationLinkResource result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            TagOperationLinkContractData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
@@ -85,6 +88,43 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             TagOperationLinkContractData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ApiManagementListTagOperationLinks()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementListTagOperationLinks.json
+            // this example is just showing the usage of "TagOperationLink_ListByProduct" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiManagementTagResource created on azure
+            // for more information of creating ApiManagementTagResource, please refer to the document of ApiManagementTagResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string tagId = "tag1";
+            ResourceIdentifier apiManagementTagResourceId = ApiManagementTagResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, tagId);
+            ApiManagementTagResource apiManagementTag = client.GetApiManagementTagResource(apiManagementTagResourceId);
+
+            // get the collection of this ServiceTagOperationLinkResource
+            ServiceTagOperationLinkCollection collection = apiManagementTag.GetServiceTagOperationLinks();
+
+            // invoke the operation and iterate over the result
+            await foreach (ServiceTagOperationLinkResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                TagOperationLinkContractData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -159,46 +199,6 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_ApiManagementCreateTagOperationLink()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateTagOperationLink.json
-            // this example is just showing the usage of "TagOperationLink_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiManagementTagResource created on azure
-            // for more information of creating ApiManagementTagResource, please refer to the document of ApiManagementTagResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string tagId = "tag1";
-            ResourceIdentifier apiManagementTagResourceId = ApiManagementTagResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, tagId);
-            ApiManagementTagResource apiManagementTag = client.GetApiManagementTagResource(apiManagementTagResourceId);
-
-            // get the collection of this ServiceTagOperationLinkResource
-            ServiceTagOperationLinkCollection collection = apiManagementTag.GetServiceTagOperationLinks();
-
-            // invoke the operation
-            string operationLinkId = "link1";
-            TagOperationLinkContractData data = new TagOperationLinkContractData()
-            {
-                OperationId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/apis/echo-api/operations/op1",
-            };
-            ArmOperation<ServiceTagOperationLinkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, operationLinkId, data);
-            ServiceTagOperationLinkResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            TagOperationLinkContractData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }
