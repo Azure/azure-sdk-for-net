@@ -625,7 +625,7 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         Assert.AreEqual(expectedEventName, e.EventName);
         Assert.AreEqual(expectedLogLevel, e.Level);
         Assert.AreEqual(SystemClientModelEventSourceName, e.EventSource.Name);
-        //Guid.Parse(e.GetProperty<string>("requestId")); // Request id should be a guid
+        Guid.Parse(e.GetProperty<string>("requestId")); // Request id should be a guid
 
         return e;
     }

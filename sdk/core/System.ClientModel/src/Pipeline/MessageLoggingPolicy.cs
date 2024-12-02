@@ -70,8 +70,7 @@ public class MessageLoggingPolicy : PipelinePolicy
 
         PipelineRequest request = message.Request;
 
-        string requestId = Guid.NewGuid().ToString(); // TODO where should this be set?
-        message.Request.ClientRequestId = requestId;
+        string requestId = message.Request.ClientRequestId ?? string.Empty;
 
         _messageLogger.LogRequest(requestId, request, _clientAssembly);
 

@@ -638,7 +638,7 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
         LoggerEvent log = logger.SingleEventById(id);
         Assert.AreEqual(expectedEventName, log.EventId.Name);
         Assert.AreEqual(expectedLogLevel, log.LogLevel);
-        // Guid.Parse(log.GetValueFromArguments<string>("requestId")); // Request id should be a guid TODO
+        Guid.Parse(log.GetValueFromArguments<string>("requestId")); // Request id should be a guid
 
         return log;
     }
