@@ -11,6 +11,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using Azure.Core;
 using Azure.Identity;
+using Azure.Messaging.EventGrid.SystemEvents;
 using Microsoft.Extensions.Configuration;
 
 namespace Azure.CloudMachine;
@@ -50,7 +51,7 @@ public class CloudMachineWorkspace : ClientWorkspace
 
         Id = configuration switch
         {
-            null => ReadOrCreateCmid(),
+            null => AppConfigHelpers.ReadOrCreateCmid(),
             _ => configuration["CloudMachine:ID"] ?? throw new Exception("CloudMachine:ID configuration value missing")
         };
     }
@@ -82,6 +83,13 @@ public class CloudMachineWorkspace : ClientWorkspace
         return Connections[connectionId];
     }
 
+    /// <summary>
+    /// Reads or creates the cloud machine ID.
+    /// </summary>
+    /// <returns></returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public static string ReadOrCreateCmid() => AppConfigHelpers.ReadOrCreateCmid();
+
     /// <inheritdoc/>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override bool Equals(object obj) => base.Equals(obj);
@@ -93,80 +101,4 @@ public class CloudMachineWorkspace : ClientWorkspace
     /// <inheritdoc/>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override string ToString() => Id;
-
-    // TODO: Decide if this should live here.
-    internal static string ReadOrCreateCmid()
-    {
-        string appsettings = Path.Combine(".", "appsettings.json");
-
-        string cmid;
-        if (!File.Exists(appsettings))
-        {
-            cmid = GenerateCloudMachineId();
-
-            using FileStream file = File.OpenWrite(appsettings);
-            Utf8JsonWriter writer = new(file);
-            writer.WriteStartObject();
-            writer.WritePropertyName("CloudMachine"u8);
-            writer.WriteStartObject();
-            writer.WriteString("ID"u8, cmid);
-            writer.WriteEndObject();
-            writer.WriteEndObject();
-            writer.Flush();
-            file.Close();
-            return cmid;
-        }
-
-        using FileStream json = new FileStream(appsettings, FileMode.Open, FileAccess.Read, FileShare.Read);
-        using JsonDocument jd = JsonDocument.Parse(json);
-        JsonElement je = jd.RootElement;
-        // attempt to read CM configuration from existing configuration file
-        if (je.TryGetProperty("CloudMachine"u8, out JsonElement cm))
-        {
-            if (!cm.TryGetProperty("ID"u8, out JsonElement id))
-            {
-                throw new NotImplementedException();
-            }
-            cmid = id.GetString();
-            if (cmid == null)
-                throw new NotImplementedException();
-            return cmid;
-        }
-        else
-        {   // add CM configuration to existing file
-            json.Seek(0, SeekOrigin.Begin);
-            JsonNode root = JsonNode.Parse(json);
-            json.Close();
-            if (root is null || root is not JsonObject obj)
-                throw new InvalidOperationException("Existing appsettings.json is not a valid JSON object");
-
-            var cmProperties = new JsonObject();
-            cmid = GenerateCloudMachineId();
-            cmProperties.Add("ID", cmid);
-            obj.Add("CloudMachine", cmProperties);
-
-            using FileStream file = new FileStream(appsettings, FileMode.Open, FileAccess.Write, FileShare.None);
-            JsonWriterOptions writerOptions = new()
-            {
-                Indented = true,
-            };
-            Utf8JsonWriter writer = new(file, writerOptions);
-            JsonSerializerOptions options = new()
-            {
-                WriteIndented = true,
-            };
-            root.WriteTo(writer, options);
-            writer.Flush();
-        }
-
-        return cmid;
-
-        static string GenerateCloudMachineId()
-        {
-            var guid = Guid.NewGuid();
-            var guidString = guid.ToString("N");
-            var cnId = "cm" + guidString.Substring(0, 15); // we can increase it to 20, but the template name cannot be that long
-            return cnId;
-        }
-    }
 }

@@ -32,7 +32,7 @@ public static class Azd
         Directory.CreateDirectory(infraDirectory);
 
         infra.Build().Save(infraDirectory);
-        var cmid = AppConfigHelpers.ReadOrCreateCmid();
+        var cmid = CloudMachineWorkspace.ReadOrCreateCmid();
 
         // main.bicep
         var location = new ProvisioningParameter("location", typeof(string));
