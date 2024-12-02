@@ -17,7 +17,7 @@ public class ServiceBusTopicFeature : CloudMachineFeature
         _parent = parent;
     }
 
-    protected override ProvisionableResource EmitConstructs(CloudMachineInfrastructure infrastructure)
+    protected override ProvisionableResource EmitResources(CloudMachineInfrastructure infrastructure)
     {
         var topic = new ServiceBusTopic(Name, "2021-11-01")
         {
@@ -31,7 +31,7 @@ public class ServiceBusTopicFeature : CloudMachineFeature
             Status = ServiceBusMessagingEntityStatus.Active
         };
 
-        infrastructure.AddConstruct(topic);
+        infrastructure.AddResource(topic);
         return topic;
     }
 

@@ -17,18 +17,19 @@ namespace Azure.CloudMachine;
 internal class StorageAccountFeature : CloudMachineFeature
 {
     private readonly StorageSkuName _skuName;
-    private readonly string _name;
+    public string Name { get; }
+
     public StorageAccountFeature(string accountName, StorageSkuName sku = StorageSkuName.StandardLrs)
     {
         _skuName = sku;
-        _name = accountName;
+        Name = accountName;
     }
 
-    protected override ProvisionableResource EmitConstructs(CloudMachineInfrastructure infrastructure)
+    protected override ProvisionableResource EmitResources(CloudMachineInfrastructure infrastructure)
     {
         var storage = new StorageAccount("cm_storage", StorageAccount.ResourceVersions.V2023_01_01)
         {
-            Name = _name,
+            Name = Name,
             Kind = StorageKind.StorageV2,
             Sku = new StorageSku { Name = _skuName },
             IsHnsEnabled = true,
@@ -39,7 +40,7 @@ internal class StorageAccountFeature : CloudMachineFeature
                 UserAssignedIdentities = { { BicepFunction.Interpolate($"{infrastructure.Identity.Id}").Compile().ToString(), new UserAssignedIdentityDetails() } }
             }
         };
-        infrastructure.AddConstruct(storage);
+        infrastructure.AddResource(storage);
 
         RequiredSystemRoles.Add(storage,
             [
@@ -62,14 +63,14 @@ internal class BlobContainerFeature : CloudMachineFeature
         ContainerName = containerName;
         Parent = parent;
     }
-    protected override ProvisionableResource EmitConstructs(CloudMachineInfrastructure cm)
+    protected override ProvisionableResource EmitResources(CloudMachineInfrastructure cm)
     {
         BlobContainer container = new($"cm_storage_blobs_container_{ContainerName}", "2023-01-01")
         {
-            Parent = (BlobService)Parent.Emitted,
+            Parent = (BlobService)Parent.Resource,
             Name = ContainerName
         };
-        cm.AddConstruct(container);
+        cm.AddResource(container);
         return container;
     }
 
@@ -77,7 +78,7 @@ internal class BlobContainerFeature : CloudMachineFeature
     {
         ClientConnection connection = new(
             $"Azure.Storage.Blobs.BlobContainerClient@{ContainerName}",
-            $"https://{cmId}.blob.core.windows.net/{ContainerName}"
+            $"https://{Parent.Account.Name}.blob.core.windows.net/{ContainerName}"
         );
         connections.Add(connection);
     }
@@ -91,13 +92,13 @@ internal class BlobServiceFeature : CloudMachineFeature
     {
         Account = account;
     }
-    protected override ProvisionableResource EmitConstructs(CloudMachineInfrastructure cm)
+    protected override ProvisionableResource EmitResources(CloudMachineInfrastructure cm)
     {
         BlobService blobs = new("cm_storage_blobs")
         {
-            Parent = (StorageAccount)Account.Emitted,
+            Parent = (StorageAccount)Account.Resource,
         };
-        cm.AddConstruct(blobs);
+        cm.AddResource(blobs);
         return blobs;
     }
 }

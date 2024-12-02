@@ -11,7 +11,7 @@ namespace Azure.CloudMachine;
 
 public class ServiceBusNamespaceFeature(string name, ServiceBusSkuName sku = ServiceBusSkuName.Standard, ServiceBusSkuTier tier = ServiceBusSkuTier.Standard) : CloudMachineFeature
 {
-    protected override ProvisionableResource EmitConstructs(CloudMachineInfrastructure infrastructure)
+    protected override ProvisionableResource EmitResources(CloudMachineInfrastructure infrastructure)
     {
         var _serviceBusNamespace = new ServiceBusNamespace("cm_servicebus")
         {
@@ -22,8 +22,8 @@ public class ServiceBusNamespaceFeature(string name, ServiceBusSkuName sku = Ser
             },
             Name = name,
         };
-        infrastructure.AddConstruct(_serviceBusNamespace);
-        infrastructure.AddConstruct(
+        infrastructure.AddResource(_serviceBusNamespace);
+        infrastructure.AddResource(
             new ServiceBusNamespaceAuthorizationRule("cm_servicebus_auth_rule", "2021-11-01")
             {
                 Parent = _serviceBusNamespace,

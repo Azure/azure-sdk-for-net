@@ -18,7 +18,7 @@ public class AppServiceFeature : CloudMachineFeature
         Sku = new AppServiceSkuDescription { Tier = "Free", Name = "F1" };
     }
 
-    protected override ProvisionableResource EmitConstructs(CloudMachineInfrastructure infrastructure)
+    protected override ProvisionableResource EmitResources(CloudMachineInfrastructure infrastructure)
     {
         //Add a App Service to the CloudMachine infrastructure.
         AppServicePlan hostingPlan = new("cm_hosting_plan")
@@ -27,7 +27,7 @@ public class AppServiceFeature : CloudMachineFeature
             Sku = Sku,
             Kind = "app"
         };
-        infrastructure.AddConstruct(hostingPlan);
+        infrastructure.AddResource(hostingPlan);
 
         WebSite appService = new("cm_website")
         {
@@ -59,7 +59,7 @@ public class AppServiceFeature : CloudMachineFeature
                 ]
             }
         };
-        infrastructure.AddConstruct(appService);
+        infrastructure.AddResource(appService);
 
         return appService;
     }

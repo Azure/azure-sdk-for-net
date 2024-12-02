@@ -14,10 +14,10 @@ internal class OpenAIFeature : CloudMachineFeature
     public OpenAIFeature()
     { }
 
-    protected override ProvisionableResource EmitConstructs(CloudMachineInfrastructure cloudMachine)
+    protected override ProvisionableResource EmitResources(CloudMachineInfrastructure cloudMachine)
     {
         CognitiveServicesAccount cognitiveServices = CreateOpenAIAccount(cloudMachine);
-        cloudMachine.AddConstruct(cognitiveServices);
+        cloudMachine.AddResource(cognitiveServices);
 
         RequiredSystemRoles.Add(cognitiveServices, [(CognitiveServicesBuiltInRole.GetBuiltInRoleName(CognitiveServicesBuiltInRole.CognitiveServicesOpenAIContributor) ,CognitiveServicesBuiltInRole.CognitiveServicesOpenAIContributor.ToString())]);
 

@@ -81,7 +81,7 @@ public class CloudMachineInfrastructure
     }
 
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public void AddConstruct(NamedProvisionableConstruct resource)
+    public void AddResource(NamedProvisionableConstruct resource)
     {
         _constrcuts.Add(resource);
     }

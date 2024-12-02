@@ -13,7 +13,7 @@ namespace Azure.CloudMachine;
 
 internal class EventGridSystemTopicFeature(string topicName, CloudMachineFeature source, string topicType) : CloudMachineFeature
 {
-    protected override ProvisionableResource EmitConstructs(CloudMachineInfrastructure infrastructure)
+    protected override ProvisionableResource EmitResources(CloudMachineInfrastructure infrastructure)
     {
         var topic = new SystemTopic("cm_eventgrid_topic", InternalConstants.EventGridTopicVersion)
         {
@@ -27,7 +27,7 @@ internal class EventGridSystemTopicFeature(string topicName, CloudMachineFeature
             Name = topicName
         };
 
-        infrastructure.AddConstruct(topic);
+        infrastructure.AddResource(topic);
         return topic;
     }
 }

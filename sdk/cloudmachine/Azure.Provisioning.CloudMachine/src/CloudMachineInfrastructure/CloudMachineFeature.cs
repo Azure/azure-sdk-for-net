@@ -13,7 +13,7 @@ public abstract class CloudMachineFeature
 {
     private ProvisionableResource? _resource;
 
-    protected abstract ProvisionableResource EmitConstructs(CloudMachineInfrastructure cm);
+    protected abstract ProvisionableResource EmitResources(CloudMachineInfrastructure cm);
     protected internal virtual void EmitConnections(ConnectionCollection connections, string cmId) { }
     protected internal virtual void EmitFeatures(FeatureCollection features, string cmId)
         => features.Add(this);
@@ -22,14 +22,14 @@ public abstract class CloudMachineFeature
     {
         if (_resource == null)
         {
-            ProvisionableResource provisionable = EmitConstructs(cm);
-            _resource = provisionable;
+            ProvisionableResource namedResource = EmitResources(cm);
+            _resource = namedResource;
         }
-        return Emitted;
+        return Resource;
     }
 
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public ProvisionableResource Emitted {
+    public ProvisionableResource Resource {
         get
         {
             if (_resource == null)
@@ -44,7 +44,7 @@ public abstract class CloudMachineFeature
 
     protected static T EnsureEmits<T>(CloudMachineFeature feature)
     {
-        if (feature.Emitted is T typed)
+        if (feature.Resource is T typed)
             return typed;
         throw new ArgumentException($"Expected resource of type {typeof(T).Name}, but got {feature.GetType().Name}");
     }

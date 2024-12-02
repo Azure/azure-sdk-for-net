@@ -11,7 +11,7 @@ namespace Azure.CloudMachine;
 
 public class ServiceBusSubscriptionFeature(string name, ServiceBusTopicFeature parent) : CloudMachineFeature
 {
-    protected override ProvisionableResource EmitConstructs(CloudMachineInfrastructure infrastructure)
+    protected override ProvisionableResource EmitResources(CloudMachineInfrastructure infrastructure)
     {
         var subscription = new ServiceBusSubscription(name, "2021-11-01")
         {
@@ -28,7 +28,7 @@ public class ServiceBusSubscriptionFeature(string name, ServiceBusTopicFeature p
             Status = ServiceBusMessagingEntityStatus.Active
         };
 
-        infrastructure.AddConstruct(subscription);
+        infrastructure.AddResource(subscription);
         return subscription;
     }
 

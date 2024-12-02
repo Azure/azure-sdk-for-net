@@ -12,7 +12,7 @@ namespace Azure.CloudMachine;
 
 internal class SystemTopicEventSubscriptionFeature(string name, EventGridSystemTopicFeature parent, ServiceBusTopicFeature destination, ServiceBusNamespaceFeature parentNamespace) : CloudMachineFeature
 {
-    protected override ProvisionableResource EmitConstructs(CloudMachineInfrastructure infrastructure)
+    protected override ProvisionableResource EmitResources(CloudMachineInfrastructure infrastructure)
     {
         ServiceBusNamespace serviceBusNamespace = EnsureEmits<ServiceBusNamespace>(parentNamespace);
 
@@ -62,8 +62,8 @@ internal class SystemTopicEventSubscriptionFeature(string name, EventGridSystemT
         };
         subscription.DependsOn.Add(roleAssignment);
 
-        infrastructure.AddConstruct(subscription);
-        infrastructure.AddConstruct(roleAssignment);
+        infrastructure.AddResource(subscription);
+        infrastructure.AddResource(roleAssignment);
         return subscription;
     }
 }

@@ -55,10 +55,10 @@ public class OpenAIModelFeature : CloudMachineFeature
         }
     }
 
-    protected override ProvisionableResource EmitConstructs(CloudMachineInfrastructure cm)
+    protected override ProvisionableResource EmitResources(CloudMachineInfrastructure cm)
     {
         if (Account == null) throw new InvalidOperationException("Account must be set before emitting");
-        if (Account.Emitted == null) throw new InvalidOperationException("Account must be emitted before emitting");
+        if (Account.Resource == null) throw new InvalidOperationException("Account must be emitted before emitting");
 
         string name = Kind switch
         {
@@ -67,7 +67,7 @@ public class OpenAIModelFeature : CloudMachineFeature
             _ => throw new NotImplementedException()
         };
 
-        CognitiveServicesAccount parent = (CognitiveServicesAccount)Account.Emitted;
+        CognitiveServicesAccount parent = (CognitiveServicesAccount)Account.Resource;
 
         CognitiveServicesAccountDeployment deployment = new($"openai_{name}", "2024-06-01-preview") {
             Parent = parent,
@@ -94,12 +94,12 @@ public class OpenAIModelFeature : CloudMachineFeature
         OpenAIModelFeature? previous = FindPrevious(cm, this);
         if (previous != null)
         {
-            if (previous.Emitted == null) throw new InvalidOperationException("Previous must be emitted");
-            CognitiveServicesAccountDeployment previousDeployment = (CognitiveServicesAccountDeployment)previous.Emitted;
+            if (previous.Resource == null) throw new InvalidOperationException("Previous must be emitted");
+            CognitiveServicesAccountDeployment previousDeployment = (CognitiveServicesAccountDeployment)previous.Resource;
             deployment.DependsOn.Add(previousDeployment);
         }
 
-        cm.AddConstruct(deployment);
+        cm.AddResource(deployment);
         return deployment;
 
         OpenAIModelFeature? FindPrevious(CloudMachineInfrastructure cm, OpenAIModelFeature current)
