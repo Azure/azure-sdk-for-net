@@ -12,6 +12,8 @@ using Azure.Storage.Blobs;
 using NUnit.Framework;
 using OpenAI.Chat;
 
+[assembly: NonParallelizable]
+
 namespace Azure.CloudMachine.Tests;
 
 public class ConnectionTests
