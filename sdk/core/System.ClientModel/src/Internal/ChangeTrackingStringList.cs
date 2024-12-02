@@ -3,33 +3,44 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace System.ClientModel.Internal;
 
 internal class ChangeTrackingStringList : IList<string>
 {
-    private readonly IList<string> _list;
-
-    private bool _tracking;
+    private IList<string> _list;
+    private bool _frozen = false;
+    private bool _tracking = false;
 
     public ChangeTrackingStringList()
     {
-        _list = new List<string>();
-
-        _tracking = false;
+        _list = [];
     }
 
     public ChangeTrackingStringList(IEnumerable<string> collection)
     {
         _list = new List<string>(collection);
-
-        _tracking = false;
     }
 
     public void StartTracking() => _tracking = true;
     public void StopTracking() => _tracking = false;
 
     public bool HasChanged { get; private set; }
+
+    public void Freeze()
+    {
+        _frozen = true;
+        _list = new ReadOnlyCollection<string>(_list);
+    }
+
+    public void AssertNotFrozen()
+    {
+        if (_frozen)
+        {
+            throw new InvalidOperationException("Cannot change any client pipeline options after the client pipeline has been created.");
+        }
+    }
 
     #region IList implementation
 
@@ -38,6 +49,7 @@ internal class ChangeTrackingStringList : IList<string>
         get => _list[index];
         set
         {
+            AssertNotFrozen();
             _list[index] = value;
 
             HasChanged |= _tracking;
@@ -50,6 +62,7 @@ internal class ChangeTrackingStringList : IList<string>
 
     public void Add(string item)
     {
+        AssertNotFrozen();
         _list.Add(item);
 
         HasChanged |= _tracking;
@@ -57,6 +70,7 @@ internal class ChangeTrackingStringList : IList<string>
 
     public void Clear()
     {
+        AssertNotFrozen();
         int count = _list.Count;
 
         _list.Clear();
@@ -74,6 +88,7 @@ internal class ChangeTrackingStringList : IList<string>
 
     public void Insert(int index, string item)
     {
+        AssertNotFrozen();
         _list.Insert(index, item);
 
         HasChanged |= _tracking;
@@ -81,6 +96,7 @@ internal class ChangeTrackingStringList : IList<string>
 
     public bool Remove(string item)
     {
+        AssertNotFrozen();
         bool removed = _list.Remove(item);
 
         HasChanged |= _tracking && removed;
@@ -90,6 +106,7 @@ internal class ChangeTrackingStringList : IList<string>
 
     public void RemoveAt(int index)
     {
+        AssertNotFrozen();
         _list.RemoveAt(index);
 
         HasChanged |= _tracking;

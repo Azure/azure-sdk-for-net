@@ -36,10 +36,11 @@ public class MessageLoggingPolicy : PipelinePolicy
     /// <param name="options">The user-provided logging options object.</param>
     public MessageLoggingPolicy(ClientLoggingOptions? options = default)
     {
-        _enableMessageContentLogging = options?.EnableMessageContentLogging ?? ClientLoggingOptions.DefaultEnableMessageContentLogging;
-        _maxLength = options?.MessageContentSizeLimit ?? ClientLoggingOptions.DefaultMessageContentSizeLimit;
+        ClientLoggingOptions loggingOptions = options ?? new();
+        _enableMessageContentLogging = loggingOptions.EnableMessageContentLogging ?? ClientLoggingOptions.DefaultEnableMessageContentLogging;
+        _maxLength = loggingOptions.MessageContentSizeLimit ?? ClientLoggingOptions.DefaultMessageContentSizeLimit;
 
-        PipelineMessageSanitizer sanitizer = options?.GetPipelineMessageSanitizer() ?? ClientLoggingOptions.DefaultSanitizer;
+        PipelineMessageSanitizer sanitizer = loggingOptions.GetPipelineMessageSanitizer();
 
         _messageLogger = new PipelineMessageLogger(sanitizer, options?.LoggerFactory);
     }

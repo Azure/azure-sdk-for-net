@@ -91,8 +91,8 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
     {
         _loggingOptions.EnableMessageContentLogging = false;
 
-        MockPipelineResponse response = new(500, mockHeaders: _defaultHeaders);
-        response.SetContent(new byte[] { 1, 2, 3 });
+        MockPipelineResponse response = new(isError ? 500 : 200, mockHeaders: _defaultHeaders);
+        response.SetContent([1, 2, 3]);
 
         await CreatePipelineAndSendRequest(response, requestContentBytes: Encoding.UTF8.GetBytes("Hello world"));
 
@@ -107,7 +107,7 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
     {
         _loggingOptions.EnableMessageContentLogging = false;
 
-        MockPipelineResponse response = new(500, mockHeaders: _defaultTextHeaders);
+        MockPipelineResponse response = new(isError ? 500 : 200, mockHeaders: _defaultTextHeaders);
         response.SetContent("TextResponseContent");
 
         await CreatePipelineAndSendRequest(response, requestContentString: "TextRequestContent");
@@ -123,7 +123,7 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
     {
         _loggingOptions.EnableMessageContentLogging = true;
 
-        MockPipelineResponse response = new(200);
+        MockPipelineResponse response = new(isError ? 500 : 200);
 
         await CreatePipelineAndSendRequest(response);
 

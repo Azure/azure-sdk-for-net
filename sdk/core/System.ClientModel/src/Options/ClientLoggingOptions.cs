@@ -22,17 +22,10 @@ public class ClientLoggingOptions
     private int? _messageContentSizeLimit;
     private ILoggerFactory? _loggerFactory;
     private PipelineMessageSanitizer? _sanitizer;
-    private bool? _allowedHeaderNamesHasChanged;
-    private bool? _allowedQueryParametersHasChanged;
-    private IList<string>? _allowedHeaderNames;
-    private IList<string>? _allowedQueryParameters;
+    private ChangeTrackingStringList? _allowedHeaderNames;
+    private ChangeTrackingStringList? _allowedQueryParameters;
 
-    internal const bool DefaultEnableLogging = true;
-    internal const bool DefaultEnableMessageContentLogging = false;
-
-    internal const double RequestTooLongSeconds = 3.0; // sec
-    internal const int DefaultMessageContentSizeLimit = 4 * 1024;
-    internal static string[] DefaultAllowedHeaderNames { get; } = new[] {
+    private static string[] DefaultAllowedHeaderNames { get; } = [
             "traceparent",
             "Accept",
             "Cache-Control",
@@ -53,11 +46,14 @@ public class ClientLoggingOptions
             "Server",
             "Transfer-Encoding",
             "User-Agent",
-            "WWW-Authenticate" };
+            "WWW-Authenticate" ];
+    private static string[] DefaultAllowedQueryParameters { get; } = ["api-version"];
+    private static PipelineMessageSanitizer DefaultSanitizer { get; } = new(DefaultAllowedQueryParameters, DefaultAllowedHeaderNames);
 
-    internal static string[] DefaultAllowedQueryParameters { get; } = new[] { "api-version" };
-
-    internal static PipelineMessageSanitizer DefaultSanitizer { get; } = new(DefaultAllowedHeaderNames, DefaultAllowedQueryParameters);
+    internal const bool DefaultEnableLogging = true;
+    internal const bool DefaultEnableMessageContentLogging = false;
+    internal const int DefaultMessageContentSizeLimit = 4 * 1024;
+    internal const double RequestTooLongSeconds = 3.0; // sec
 
     /// <summary>
     /// Gets or sets the implementation of <see cref="ILoggerFactory"/> to use to
@@ -143,17 +139,31 @@ public class ClientLoggingOptions
     /// </summary>
     /// <value>Defaults to a list of common header names that do not
     /// typically hold sensitive information.</value>
-    public IList<string> AllowedHeaderNames // TODO
+    public IList<string> AllowedHeaderNames
     {
         get
         {
             if (!_frozen)
             {
-                return _allowedHeaderNames ??= new ChangeTrackingStringList(DefaultAllowedHeaderNames);
+                if (_allowedHeaderNames is null)
+                {
+                    var changeList = new ChangeTrackingStringList(DefaultAllowedHeaderNames);
+                    changeList.StartTracking();
+                    _allowedHeaderNames = changeList;
+                }
+                return _allowedHeaderNames;
             }
             else
             {
-                return _allowedHeaderNames ??= new ReadOnlyCollection<string>(DefaultAllowedHeaderNames);
+                if (_allowedHeaderNames is null)
+                {
+                    // If this instance is frozen still allow read-only access to the defaults by
+                    // creating a copy of the default allowed headers and freezing it. This
+                    // avoids copying the default array and allocating the change tracking list unless necessary.
+                    _allowedHeaderNames = new ChangeTrackingStringList(DefaultAllowedHeaderNames);
+                    _allowedHeaderNames.Freeze();
+                }
+                return _allowedHeaderNames;
             }
         }
     }
@@ -163,17 +173,31 @@ public class ClientLoggingOptions
     /// </summary>
     /// <value>Defaults to a list of common query parameters that do not
     /// typically hold sensitive information.</value>
-    public IList<string> AllowedQueryParameters // TODO
+    public IList<string> AllowedQueryParameters
     {
         get
         {
             if (!_frozen)
             {
-                return _allowedQueryParameters ??= new ChangeTrackingStringList(DefaultAllowedQueryParameters);
+                if (_allowedQueryParameters is null)
+                {
+                    var changeList = new ChangeTrackingStringList(DefaultAllowedQueryParameters);
+                    changeList.StartTracking();
+                    _allowedQueryParameters = changeList;
+                }
+                return _allowedQueryParameters;
             }
             else
             {
-                return _allowedQueryParameters ??= new ReadOnlyCollection<string>(DefaultAllowedQueryParameters);
+                if (_allowedQueryParameters is null)
+                {
+                    // If this instance is frozen still allow read-only access to the defaults by
+                    // creating a copy of the default allowed query parameters and freezing it. This
+                    // avoids copying the default array and allocating the change tracking list unless necessary.
+                    _allowedQueryParameters = new ChangeTrackingStringList(DefaultAllowedQueryParameters);
+                    _allowedQueryParameters.Freeze();
+                }
+                return _allowedQueryParameters;
             }
         }
     }
@@ -188,19 +212,13 @@ public class ClientLoggingOptions
         _frozen = true;
         if (_allowedHeaderNames is not null)
         {
-            ChangeTrackingStringList? headersChangeTracking = _allowedHeaderNames as ChangeTrackingStringList;
-
-            // Set the property to readonly before checking HasChanged
-            _allowedHeaderNames = new ReadOnlyCollection<string>(_allowedHeaderNames);
-            _allowedHeaderNamesHasChanged = headersChangeTracking?.HasChanged;
+            _allowedHeaderNames.Freeze();
+            _allowedHeaderNames.StopTracking();
         }
         if (_allowedQueryParameters is not null)
         {
-            ChangeTrackingStringList? queryParamsChangeTracking = _allowedQueryParameters as ChangeTrackingStringList;
-
-            // Set the property to readonly before checking HasChanged
-            _allowedQueryParameters = new ReadOnlyCollection<string>(_allowedQueryParameters);
-            _allowedQueryParametersHasChanged = queryParamsChangeTracking?.HasChanged;
+            _allowedQueryParameters.Freeze();
+            _allowedQueryParameters.StopTracking();
         }
     }
 
@@ -215,7 +233,7 @@ public class ClientLoggingOptions
     {
         if (_frozen)
         {
-            throw new InvalidOperationException("Cannot change a MessageLoggingPolicyOptions instance after the ClientPipeline is created.");
+            throw new InvalidOperationException("Cannot change a ClientLoggingOptions instance after the ClientPipeline is created.");
         }
     }
 
@@ -243,6 +261,11 @@ public class ClientLoggingOptions
 
     internal PipelineMessageSanitizer GetPipelineMessageSanitizer()
     {
+        Console.WriteLine($"Allowed header names:{_allowedHeaderNames}");
+        if (HeaderListIsDefault && QueryParameterListIsDefault)
+        {
+            return DefaultSanitizer;
+        }
         string[] headers = _allowedHeaderNames == null ? DefaultAllowedHeaderNames : [.. _allowedHeaderNames];
         string[] queryParams = _allowedQueryParameters == null ? DefaultAllowedQueryParameters : [.. _allowedQueryParameters];
 
@@ -263,9 +286,12 @@ public class ClientLoggingOptions
             && _enableMessageLogging == null
             && _enableMessageContentLogging == null
             && _loggerFactory == null
-            && _allowedHeaderNamesHasChanged != true // false or null
-            && _allowedQueryParametersHasChanged != true; // false or null
+            && HeaderListIsDefault
+            && QueryParameterListIsDefault;
     }
+
+    private bool HeaderListIsDefault => _allowedHeaderNames == null || !_allowedHeaderNames.HasChanged;
+    private bool QueryParameterListIsDefault => _allowedQueryParameters == null || !_allowedQueryParameters.HasChanged;
 
     internal bool ShouldUseDefaultPipelineTransport()
     {
