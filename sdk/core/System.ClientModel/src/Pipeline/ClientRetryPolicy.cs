@@ -24,12 +24,13 @@ public class ClientRetryPolicy : PipelinePolicy
     /// </summary>
     public static ClientRetryPolicy Default { get; } = new ClientRetryPolicy();
 
-    private const int DefaultMaxRetries = 3;
     private static readonly TimeSpan DefaultInitialDelay = TimeSpan.FromSeconds(0.8);
 
     private readonly int _maxRetries;
     private readonly TimeSpan _initialDelay;
     private readonly PipelineRetryLogger? _retryLogger;
+
+    internal const int DefaultMaxRetries = 3;
 
     /// <summary>
     /// Creates a new instance of the <see cref="ClientRetryPolicy"/> class.

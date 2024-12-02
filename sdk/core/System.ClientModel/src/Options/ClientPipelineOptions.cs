@@ -220,4 +220,47 @@ public class ClientPipelineOptions
             throw new InvalidOperationException("Cannot change a ClientPipelineOptions instance after it has been used to create a ClientPipeline.");
         }
     }
+
+    #region Helpers
+
+    internal HttpClientPipelineTransport GetHttpClientPipelineTransport()
+    {
+        // If client-wide logging is enabled via ILogger, the shared client pipeline transport instance cannot be used. The transport will need the
+        // logger factory instance from the logging options.
+        // If client-wide logging is disabled, the shared client pipeline transport instance cannot be used. By default, client-wide logging is
+        // enabled.
+        if (_loggingOptions != null && (_loggingOptions.ClientWideLoggingIsDisabled || _loggingOptions.ClientWideLoggingIsEnabledViaILogger))
+        {
+            return new HttpClientPipelineTransport(null, _loggingOptions.EnableLogging ?? ClientLoggingOptions.DefaultEnableLogging, _loggingOptions.LoggerFactory);
+        }
+        return HttpClientPipelineTransport.Shared;
+    }
+
+    internal ClientRetryPolicy GetClientRetryPolicy()
+    {
+        // If client-wide logging is enabled via ILogger, the default retry policy cannot be used. The policy will need the
+        // logger factory instance from the logging options.
+        // If client-wide logging is disabled, the default retry policy cannot be used. By default, client-wide logging is
+        // enabled.
+        if (_loggingOptions != null && (_loggingOptions.ClientWideLoggingIsDisabled || _loggingOptions.ClientWideLoggingIsEnabledViaILogger))
+        {
+            return new ClientRetryPolicy(ClientRetryPolicy.DefaultMaxRetries,
+                                         _loggingOptions.EnableLogging ?? ClientLoggingOptions.DefaultEnableLogging,
+                                         _loggingOptions.LoggerFactory);
+        }
+        return ClientRetryPolicy.Default;
+    }
+
+    internal bool AddMessageLoggingPolicy => _loggingOptions?.AddMessageLoggingPolicy ?? true;
+
+    internal MessageLoggingPolicy GetMessageLoggingPolicy()
+    {
+        if (_loggingOptions == null || _loggingOptions.AddDefaultMessageLoggingPolicy)
+        {
+            return System.ClientModel.Primitives.MessageLoggingPolicy.Default;
+        }
+        return new MessageLoggingPolicy(_loggingOptions);
+    }
+
+    #endregion
 }

@@ -274,29 +274,18 @@ public class ClientLoggingOptions
         return _sanitizer;
     }
 
-    internal bool ShouldAddMessageLoggingPolicy()
-    {
-        return EnableMessageLogging ?? EnableLogging ?? DefaultEnableLogging;
-    }
+    internal bool AddMessageLoggingPolicy => EnableMessageLogging ?? EnableLogging ?? DefaultEnableLogging;
+    internal bool ClientWideLoggingIsEnabledViaILogger => LoggerFactory != null && (EnableLogging == null || EnableLogging == true);
+    internal bool ClientWideLoggingIsDisabled => EnableLogging == false;
 
-    internal bool ShouldUseDefaultMessageLoggingPolicy()
-    {
-        return _enableLogging == null
-            && _messageContentSizeLimit == null
-            && _enableMessageLogging == null
-            && _enableMessageContentLogging == null
-            && _loggerFactory == null
-            && HeaderListIsDefault
-            && QueryParameterListIsDefault;
-    }
+    internal bool AddDefaultMessageLoggingPolicy => EnableLogging == null
+                                                    && MessageContentSizeLimit == null
+                                                    && EnableMessageLogging == null
+                                                    && EnableMessageContentLogging == null
+                                                    && LoggerFactory == null
+                                                    && HeaderListIsDefault
+                                                    && QueryParameterListIsDefault;
 
     private bool HeaderListIsDefault => _allowedHeaderNames == null || !_allowedHeaderNames.HasChanged;
     private bool QueryParameterListIsDefault => _allowedQueryParameters == null || !_allowedQueryParameters.HasChanged;
-
-    internal bool ShouldUseDefaultPipelineTransport()
-    {
-        return LoggerFactory == null && (EnableLogging == null || EnableLogging == DefaultEnableLogging);
-    }
-
-    internal bool ShouldUseDefaultRetryPolicy() => ShouldUseDefaultPipelineTransport();
 }

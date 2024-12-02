@@ -51,13 +51,14 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
     /// uses the provided <see cref="HttpClient"/>.
     /// </summary>
     /// <param name="client">The <see cref="HttpClient"/> that this transport
-    /// instance will use to send and receive HTTP requests and responses.
+    /// instance will use to send and receive HTTP requests and responses. If no <see cref="HttpClient"/>
+    /// is passed, a default shared client will be used.
     /// </param>
     /// <param name="enableLogging">If client-wide logging is enabled for this pipeline.</param>
     /// <param name="loggerFactory">The <see cref="ILoggerFactory"/> to use to create an <see cref="ILogger"/> instance for logging.</param>
     public HttpClientPipelineTransport(HttpClient? client, bool enableLogging, ILoggerFactory? loggerFactory) : base(enableLogging, loggerFactory)
     {
-        _httpClient = client ?? _sharedDefaultClient; // TODO
+        _httpClient = client ?? _sharedDefaultClient;
     }
 
     private static HttpClient CreateDefaultClient()
