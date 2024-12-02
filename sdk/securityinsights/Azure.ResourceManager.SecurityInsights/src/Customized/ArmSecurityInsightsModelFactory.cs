@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 serializedAdditionalRawData: null,
                 additionalData,
                 friendlyName,
-                uri);
+                null);
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsWatchlistData"/>. </summary>
