@@ -11,6 +11,8 @@ using Azure.CloudMachine.KeyVault;
 using Azure.CloudMachine.OpenAI;
 using NUnit.Framework;
 
+[assembly: NonParallelizable]
+
 namespace Azure.CloudMachine.Tests;
 
 public class ProvisioningTests
