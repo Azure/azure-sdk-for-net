@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ServiceBus
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-10-01-preview";
+            _apiVersion = apiVersion ?? "2024-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Gets all authorization rules for a queue. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="queueName"> The queue name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Gets all authorization rules for a queue. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="queueName"> The queue name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Creates an authorization rule for a queue. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="queueName"> The queue name. </param>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Creates an authorization rule for a queue. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="queueName"> The queue name. </param>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Deletes a queue authorization rule. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="queueName"> The queue name. </param>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Deletes a queue authorization rule. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="queueName"> The queue name. </param>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Gets an authorization rule for a queue by rule name. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="queueName"> The queue name. </param>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Gets an authorization rule for a queue by rule name. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="queueName"> The queue name. </param>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Primary and secondary connection strings to the queue. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="queueName"> The queue name. </param>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Primary and secondary connection strings to the queue. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="queueName"> The queue name. </param>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
@@ -626,7 +626,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Regenerates the primary or secondary connection strings to the queue. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="queueName"> The queue name. </param>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         /// <summary> Regenerates the primary or secondary connection strings to the queue. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="queueName"> The queue name. </param>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
@@ -719,7 +719,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Gets all authorization rules for a queue. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="queueName"> The queue name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -752,7 +752,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Gets all authorization rules for a queue. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="queueName"> The queue name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
