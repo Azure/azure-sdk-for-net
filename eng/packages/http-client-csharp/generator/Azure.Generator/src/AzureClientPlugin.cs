@@ -4,6 +4,7 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.Generator.CSharp;
 using Microsoft.Generator.CSharp.ClientModel;
+using Microsoft.Generator.CSharp.Input;
 using System;
 using System.ComponentModel.Composition;
 using System.IO;
