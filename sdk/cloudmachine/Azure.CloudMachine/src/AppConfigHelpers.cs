@@ -10,7 +10,7 @@ namespace Azure.CloudMachine;
 
 internal static class AppConfigHelpers
 {
-    internal static string ReadOrCreateCmid()
+    internal static string ReadOrCreateCloudMachineId()
     {
         string appsettings = Path.Combine(".", "appsettings.json");
 

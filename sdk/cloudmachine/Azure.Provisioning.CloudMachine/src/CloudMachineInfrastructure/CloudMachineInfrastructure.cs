@@ -43,7 +43,7 @@ public class CloudMachineInfrastructure
     {
         if (cmId == default)
         {
-            cmId = CloudMachineWorkspace.ReadOrCreateCmid();
+            cmId = CloudMachineWorkspace.ReadOrCreateCloudMachineId();
         }
         Id = cmId;
 

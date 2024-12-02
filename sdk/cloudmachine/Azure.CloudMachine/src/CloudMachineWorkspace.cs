@@ -51,7 +51,7 @@ public class CloudMachineWorkspace : ClientWorkspace
 
         Id = configuration switch
         {
-            null => AppConfigHelpers.ReadOrCreateCmid(),
+            null => AppConfigHelpers.ReadOrCreateCloudMachineId(),
             _ => configuration["CloudMachine:ID"] ?? throw new Exception("CloudMachine:ID configuration value missing")
         };
     }
@@ -88,7 +88,7 @@ public class CloudMachineWorkspace : ClientWorkspace
     /// </summary>
     /// <returns></returns>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static string ReadOrCreateCmid() => AppConfigHelpers.ReadOrCreateCmid();
+    public static string ReadOrCreateCloudMachineId() => AppConfigHelpers.ReadOrCreateCloudMachineId();
 
     /// <inheritdoc/>
     [EditorBrowsable(EditorBrowsableState.Never)]
