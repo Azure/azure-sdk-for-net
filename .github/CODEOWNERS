@@ -544,7 +544,7 @@
 # ServiceOwners:                                                   @aim-for-better @idear1203 @deshriva
 
 # PRLabel: %Health Deidentification
-/sdk/healthdataaiservices/                                         @alexathomases @jovinson-ms
+/sdk/healthdataaiservices/                                         @alexathomases
 
 # ServiceLabel: %Health Deidentification
 # ServiceOwners:                                                   @alexathomases
