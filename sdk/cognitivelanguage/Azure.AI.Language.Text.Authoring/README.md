@@ -77,14 +77,14 @@ To use DefaultAzureCredential with a client ID and secret, you'll need to set th
 
 Make sure you use the right namespace for DefaultAzureCredential at the top of your source file:
 
-```C#
+```C# Snippet:TextAuthoring_Identity_Namespace
 using Azure.Identity;
 using Azure.Core;
 ```
 
 Then you can create an instance of DefaultAzureCredential and pass it to a new instance of your client:
 
-```C#
+```C# Snippet:TextAnalysisAuthoring_CreateWithDefaultAzureCredential
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 DefaultAzureCredential credential = new DefaultAzureCredential();
 AuthoringClient client = new AuthoringClient(endpoint, credential);
@@ -175,7 +175,7 @@ When you interact with the Cognitive Language Services Text Authoring client lib
 
 For example, if you attempt to create a project with an invalid configuration, a 400 error is returned indicating "Bad Request".
 
-```C#
+```C# Snippet:TextAuthoringClient_BadRequest
 try
 {
     string invalidProjectName = "InvalidProject";

@@ -6,9 +6,9 @@ This sample demonstrates how to cancel a training job asynchronously using the `
 
 To create an `AuthoringClient`, you will need the service endpoint and credentials of your Language resource. You can specify the service version by providing an `AuthoringClientOptions` instance.
 
-```C# Snippet:CreateAuthoringClientForSpecificApiVersion_Async
+```C# Snippet:CreateAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
-AzureKeyCredential credential = new("your-api-key");
+AzureKeyCredential credential = new("your apikey");
 AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
 AuthoringClient client = new AuthoringClient(endpoint, credential, options);
 TextAnalysisAuthoring authoringClient = client.GetTextAnalysisAuthoringClient();
@@ -18,7 +18,7 @@ TextAnalysisAuthoring authoringClient = client.GetTextAnalysisAuthoringClient();
 
 To cancel a training job, call CancelTrainingJobAsync on the TextAnalysisAuthoring client.
 
-```C#
+```C# Snippet:Sample6_TextAuthoring_CancelTrainingJobAsync
 string projectName = "LoanAgreements";
 string jobId = "training-job-id"; // Replace with an actual job ID.
 

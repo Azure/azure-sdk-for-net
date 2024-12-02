@@ -6,9 +6,9 @@ This sample demonstrates how to retrieve metadata of a project asynchronously us
 
 To create an `AuthoringClient`, you will need the service endpoint and credentials of your Language resource. You can specify the service version by providing an `AuthoringClientOptions` instance.
 
-```C# Snippet:CreateAuthoringClientForSpecificApiVersion_Async
+```C# Snippet:CreateAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
-AzureKeyCredential credential = new("your-api-key");
+AzureKeyCredential credential = new("your apikey");
 AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
 AuthoringClient client = new AuthoringClient(endpoint, credential, options);
 TextAnalysisAuthoring authoringClient = client.GetTextAnalysisAuthoringClient();
@@ -20,7 +20,7 @@ The values of the endpoint and apiKey variables can be retrieved from environmen
 
 To retrieve metadata of a project, call GetProjectAsync on the TextAnalysisAuthoring client.
 
-```C#
+```C# Snippet:Sample1_TextAuthoring_GetProjectAsync
 string projectName = "MyTextProjectAsync";
 
 Response<ProjectMetadata> response = await authoringClient.GetProjectAsync(projectName);

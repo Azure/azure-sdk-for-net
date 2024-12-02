@@ -6,9 +6,9 @@ This sample demonstrates how to create a new project synchronously using the `Az
 
 To create an `AuthoringClient`, you will need the service endpoint and credentials of your Language resource. You can specify the service version by providing an `AuthoringClientOptions` instance.
 
-```C# Snippet:CreateAuthoringClientForSpecificApiVersion_Sync
+```C# Snippet:CreateAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
-AzureKeyCredential credential = new("your-api-key");
+AzureKeyCredential credential = new("your apikey");
 AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
 AuthoringClient client = new AuthoringClient(endpoint, credential, options);
 TextAnalysisAuthoring authoringClient = client.GetTextAnalysisAuthoringClient();
@@ -20,7 +20,7 @@ The values of the endpoint and apiKey variables can be retrieved from environmen
 
 To create a new project, call CreateProject on the TextAnalysisAuthoring client.
 
-```C#
+```C# Snippet:Sample3_TextAuthoring_CreateProject
 string projectName = "MyNewProject";
 var projectData = new
 {
