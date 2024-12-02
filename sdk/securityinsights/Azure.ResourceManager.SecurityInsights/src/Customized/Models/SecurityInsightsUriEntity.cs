@@ -8,7 +8,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsUriEntity
+    public partial class SecurityInsightsUriEntity : SecurityInsightsEntity
     {
         /// <summary> A full URL the entity points to. </summary>
         [EditorBrowsableAttribute(EditorBrowsableState.Never)]
