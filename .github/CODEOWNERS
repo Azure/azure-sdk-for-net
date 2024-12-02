@@ -544,10 +544,10 @@
 # ServiceOwners:                                                   @aim-for-better @idear1203 @deshriva
 
 # PRLabel: %Health Deidentification
-/sdk/healthdataaiservices/                                         @GrahamMThomas
+/sdk/healthdataaiservices/                                         @alexathomases @jovinson-ms
 
 # ServiceLabel: %Health Deidentification
-# ServiceOwners:                                                   @GrahamMThomas
+# ServiceOwners:                                                   @alexathomases
 
 # ServiceLabel: %HPC Cache
 # ServiceOwners:                                                   @romahamu @omzevall
