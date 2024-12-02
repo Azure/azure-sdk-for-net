@@ -36,6 +36,8 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "#Microsoft.Azure.Search.AIServicesByIdentity": return AIServicesAccountIdentity.DeserializeAIServicesAccountIdentity(element);
+                    case "#Microsoft.Azure.Search.AIServicesByKey": return AIServicesAccountKey.DeserializeAIServicesAccountKey(element);
                     case "#Microsoft.Azure.Search.CognitiveServicesByKey": return CognitiveServicesAccountKey.DeserializeCognitiveServicesAccountKey(element);
                     case "#Microsoft.Azure.Search.DefaultCognitiveServices": return DefaultCognitiveServicesAccount.DeserializeDefaultCognitiveServicesAccount(element);
                 }

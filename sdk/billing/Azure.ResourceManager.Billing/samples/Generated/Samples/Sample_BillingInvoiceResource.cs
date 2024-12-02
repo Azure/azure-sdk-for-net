@@ -18,6 +18,35 @@ namespace Azure.ResourceManager.Billing.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Get_InvoicesGetByBillingAccount()
+        {
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/invoicesGetByBillingAccount.json
+            // this example is just showing the usage of "Invoices_GetByBillingAccount" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BillingInvoiceResource created on azure
+            // for more information of creating BillingInvoiceResource, please refer to the document of BillingInvoiceResource
+            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
+            string invoiceName = "G123456789";
+            ResourceIdentifier billingInvoiceResourceId = BillingInvoiceResource.CreateResourceIdentifier(billingAccountName, invoiceName);
+            BillingInvoiceResource billingInvoice = client.GetBillingInvoiceResource(billingInvoiceResourceId);
+
+            // invoke the operation
+            BillingInvoiceResource result = await billingInvoice.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BillingInvoiceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Amend_InvoicesAmend()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/invoicesAmend.json
@@ -96,35 +125,6 @@ namespace Azure.ResourceManager.Billing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_InvoicesGetByBillingAccount()
-        {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/invoicesGetByBillingAccount.json
-            // this example is just showing the usage of "Invoices_GetByBillingAccount" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BillingInvoiceResource created on azure
-            // for more information of creating BillingInvoiceResource, please refer to the document of BillingInvoiceResource
-            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
-            string invoiceName = "G123456789";
-            ResourceIdentifier billingInvoiceResourceId = BillingInvoiceResource.CreateResourceIdentifier(billingAccountName, invoiceName);
-            BillingInvoiceResource billingInvoice = client.GetBillingInvoiceResource(billingInvoiceResourceId);
-
-            // invoke the operation
-            BillingInvoiceResource result = await billingInvoice.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            BillingInvoiceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetTransactions_TransactionsListByInvoice()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/transactionsListByInvoice.json
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Billing.Samples
             BillingInvoiceResource billingInvoice = client.GetBillingInvoiceResource(billingInvoiceResourceId);
 
             // invoke the operation and iterate over the result
-            BillingInvoiceResourceGetTransactionsOptions options = new BillingInvoiceResourceGetTransactionsOptions() { };
+            BillingInvoiceResourceGetTransactionsOptions options = new BillingInvoiceResourceGetTransactionsOptions();
             await foreach (BillingTransactionData item in billingInvoice.GetTransactionsAsync(options))
             {
                 Console.WriteLine($"Succeeded: {item}");

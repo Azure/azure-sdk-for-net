@@ -11,75 +11,12 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Avs.Samples
 {
     public partial class Sample_AvsPrivateCloudResource
     {
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAvsPrivateClouds_PrivateCloudsListInSubscription()
-        {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/PrivateClouds_ListInSubscription.json
-            // this example is just showing the usage of "PrivateClouds_ListInSubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (AvsPrivateCloudResource item in subscriptionResource.GetAvsPrivateCloudsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                AvsPrivateCloudData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAvsPrivateClouds_PrivateCloudsListInSubscriptionStretched()
-        {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/PrivateClouds_ListInSubscription_Stretched.json
-            // this example is just showing the usage of "PrivateClouds_ListInSubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (AvsPrivateCloudResource item in subscriptionResource.GetAvsPrivateCloudsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                AvsPrivateCloudData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Get_PrivateCloudsGet()
@@ -142,6 +79,32 @@ namespace Azure.ResourceManager.Avs.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_PrivateCloudsDelete()
+        {
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/PrivateClouds_Delete.json
+            // this example is just showing the usage of "PrivateClouds_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AvsPrivateCloudResource created on azure
+            // for more information of creating AvsPrivateCloudResource, please refer to the document of AvsPrivateCloudResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "group1";
+            string privateCloudName = "cloud1";
+            ResourceIdentifier avsPrivateCloudResourceId = AvsPrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
+            AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
+
+            // invoke the operation
+            await avsPrivateCloud.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PrivateCloudsUpdate()
         {
             // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/PrivateClouds_Update.json
@@ -161,17 +124,17 @@ namespace Azure.ResourceManager.Avs.Samples
             AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
 
             // invoke the operation
-            AvsPrivateCloudPatch patch = new AvsPrivateCloudPatch()
+            AvsPrivateCloudPatch patch = new AvsPrivateCloudPatch
             {
                 Identity = new ManagedServiceIdentity("None"),
-                ManagementCluster = new AvsManagementCluster()
+                ManagementCluster = new AvsManagementCluster
                 {
                     ClusterSize = 4,
                 },
-                Encryption = new CustomerManagedEncryption()
+                Encryption = new CustomerManagedEncryption
                 {
                     Status = AvsEncryptionState.Enabled,
-                    KeyVaultProperties = new AvsEncryptionKeyVaultProperties()
+                    KeyVaultProperties = new AvsEncryptionKeyVaultProperties
                     {
                         KeyName = "keyname1",
                         KeyVersion = "ver1.0",
@@ -210,9 +173,9 @@ namespace Azure.ResourceManager.Avs.Samples
             AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
 
             // invoke the operation
-            AvsPrivateCloudPatch patch = new AvsPrivateCloudPatch()
+            AvsPrivateCloudPatch patch = new AvsPrivateCloudPatch
             {
-                ManagementCluster = new AvsManagementCluster()
+                ManagementCluster = new AvsManagementCluster
                 {
                     ClusterSize = 4,
                 },
@@ -225,32 +188,6 @@ namespace Azure.ResourceManager.Avs.Samples
             AvsPrivateCloudData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_PrivateCloudsDelete()
-        {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/PrivateClouds_Delete.json
-            // this example is just showing the usage of "PrivateClouds_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AvsPrivateCloudResource created on azure
-            // for more information of creating AvsPrivateCloudResource, please refer to the document of AvsPrivateCloudResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "group1";
-            string privateCloudName = "cloud1";
-            ResourceIdentifier avsPrivateCloudResourceId = AvsPrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
-            AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
-
-            // invoke the operation
-            await avsPrivateCloud.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
         }
 
         [Test]

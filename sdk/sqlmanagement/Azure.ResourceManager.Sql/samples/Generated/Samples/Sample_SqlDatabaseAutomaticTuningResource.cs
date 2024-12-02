@@ -69,23 +69,23 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlDatabaseAutomaticTuningResource sqlDatabaseAutomaticTuning = client.GetSqlDatabaseAutomaticTuningResource(sqlDatabaseAutomaticTuningResourceId);
 
             // invoke the operation
-            SqlDatabaseAutomaticTuningData data = new SqlDatabaseAutomaticTuningData()
+            SqlDatabaseAutomaticTuningData data = new SqlDatabaseAutomaticTuningData
             {
                 DesiredState = AutomaticTuningMode.Auto,
                 Options =
 {
-["createIndex"] = new AutomaticTuningOptions()
+["createIndex"] = new AutomaticTuningOptions
 {
 DesiredState = AutomaticTuningOptionModeDesired.Off,
 },
-["dropIndex"] = new AutomaticTuningOptions()
+["dropIndex"] = new AutomaticTuningOptions
 {
 DesiredState = AutomaticTuningOptionModeDesired.On,
 },
-["forceLastGoodPlan"] = new AutomaticTuningOptions()
+["forceLastGoodPlan"] = new AutomaticTuningOptions
 {
 DesiredState = AutomaticTuningOptionModeDesired.Default,
-},
+}
 },
             };
             SqlDatabaseAutomaticTuningResource result = await sqlDatabaseAutomaticTuning.UpdateAsync(data);
@@ -119,7 +119,7 @@ DesiredState = AutomaticTuningOptionModeDesired.Default,
             SqlDatabaseAutomaticTuningResource sqlDatabaseAutomaticTuning = client.GetSqlDatabaseAutomaticTuningResource(sqlDatabaseAutomaticTuningResourceId);
 
             // invoke the operation
-            SqlDatabaseAutomaticTuningData data = new SqlDatabaseAutomaticTuningData()
+            SqlDatabaseAutomaticTuningData data = new SqlDatabaseAutomaticTuningData
             {
                 DesiredState = AutomaticTuningMode.Auto,
             };

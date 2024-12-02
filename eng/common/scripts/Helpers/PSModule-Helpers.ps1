@@ -79,7 +79,7 @@ function installModule([string]$moduleName, [string]$version, $repoUrl) {
   $repo = (Get-PSRepository).Where({ $_.SourceLocation -eq $repoUrl })
   if ($repo.Count -eq 0)
   {
-    Register-PSRepository -Name $repoUrl -SourceLocation $repoUrl -InstallationPolicy Trusted
+    Register-PSRepository -Name $repoUrl -SourceLocation $repoUrl -InstallationPolicy Trusted | Out-Null
     $repo = (Get-PSRepository).Where({ $_.SourceLocation -eq $repoUrl })
     if ($repo.Count -eq 0) {
       throw "Failed to register package repository $repoUrl."
@@ -87,7 +87,7 @@ function installModule([string]$moduleName, [string]$version, $repoUrl) {
   }
 
   if ($repo.InstallationPolicy -ne "Trusted") {
-    Set-PSRepository -Name $repo.Name -InstallationPolicy "Trusted"
+    Set-PSRepository -Name $repo.Name -InstallationPolicy "Trusted" | Out-Null
   }
 
   Write-Host "Installing module $moduleName with min version $version from $repoUrl"
@@ -104,7 +104,7 @@ function installModule([string]$moduleName, [string]$version, $repoUrl) {
 
   # Unregister repository as it can cause overlap issues with `dotnet tool install`
   # commands using the same devops feed
-  Unregister-PSRepository -Name $repoUrl
+  Unregister-PSRepository -Name $repoUrl | Out-Null
 
   return $modules[0]
 }
