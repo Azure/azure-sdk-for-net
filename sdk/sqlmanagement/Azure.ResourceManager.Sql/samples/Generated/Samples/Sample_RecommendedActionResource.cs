@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Sql.Samples
             RecommendedActionResource recommendedAction = client.GetRecommendedActionResource(recommendedActionResourceId);
 
             // invoke the operation
-            RecommendedActionData data = new RecommendedActionData()
+            RecommendedActionData data = new RecommendedActionData
             {
                 State = new RecommendedActionStateInfo(RecommendedActionCurrentState.Pending),
             };

@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.Avs.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_GlobalReachConnectionsList()
+        public async Task CreateOrUpdate_GlobalReachConnectionsCreateOrUpdate()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/GlobalReachConnections_List.json
-            // this example is just showing the usage of "GlobalReachConnections_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/GlobalReachConnections_CreateOrUpdate.json
+            // this example is just showing the usage of "GlobalReachConnections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -38,17 +38,21 @@ namespace Azure.ResourceManager.Avs.Samples
             // get the collection of this GlobalReachConnectionResource
             GlobalReachConnectionCollection collection = avsPrivateCloud.GetGlobalReachConnections();
 
-            // invoke the operation and iterate over the result
-            await foreach (GlobalReachConnectionResource item in collection.GetAllAsync())
+            // invoke the operation
+            string globalReachConnectionName = "connection1";
+            GlobalReachConnectionData data = new GlobalReachConnectionData
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                GlobalReachConnectionData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                AuthorizationKey = "01010101-0101-0101-0101-010101010101",
+                PeerExpressRouteCircuit = new ResourceIdentifier("/subscriptions/12341234-1234-1234-1234-123412341234/resourceGroups/mygroup/providers/Microsoft.Network/expressRouteCircuits/mypeer"),
+            };
+            ArmOperation<GlobalReachConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, globalReachConnectionName, data);
+            GlobalReachConnectionResource result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            GlobalReachConnectionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
@@ -83,6 +87,42 @@ namespace Azure.ResourceManager.Avs.Samples
             GlobalReachConnectionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_GlobalReachConnectionsList()
+        {
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/GlobalReachConnections_List.json
+            // this example is just showing the usage of "GlobalReachConnections_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AvsPrivateCloudResource created on azure
+            // for more information of creating AvsPrivateCloudResource, please refer to the document of AvsPrivateCloudResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "group1";
+            string privateCloudName = "cloud1";
+            ResourceIdentifier avsPrivateCloudResourceId = AvsPrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
+            AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
+
+            // get the collection of this GlobalReachConnectionResource
+            GlobalReachConnectionCollection collection = avsPrivateCloud.GetGlobalReachConnections();
+
+            // invoke the operation and iterate over the result
+            await foreach (GlobalReachConnectionResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                GlobalReachConnectionData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -155,46 +195,6 @@ namespace Azure.ResourceManager.Avs.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_GlobalReachConnectionsCreateOrUpdate()
-        {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/GlobalReachConnections_CreateOrUpdate.json
-            // this example is just showing the usage of "GlobalReachConnections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AvsPrivateCloudResource created on azure
-            // for more information of creating AvsPrivateCloudResource, please refer to the document of AvsPrivateCloudResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "group1";
-            string privateCloudName = "cloud1";
-            ResourceIdentifier avsPrivateCloudResourceId = AvsPrivateCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName);
-            AvsPrivateCloudResource avsPrivateCloud = client.GetAvsPrivateCloudResource(avsPrivateCloudResourceId);
-
-            // get the collection of this GlobalReachConnectionResource
-            GlobalReachConnectionCollection collection = avsPrivateCloud.GetGlobalReachConnections();
-
-            // invoke the operation
-            string globalReachConnectionName = "connection1";
-            GlobalReachConnectionData data = new GlobalReachConnectionData()
-            {
-                AuthorizationKey = "01010101-0101-0101-0101-010101010101",
-                PeerExpressRouteCircuit = new ResourceIdentifier("/subscriptions/12341234-1234-1234-1234-123412341234/resourceGroups/mygroup/providers/Microsoft.Network/expressRouteCircuits/mypeer"),
-            };
-            ArmOperation<GlobalReachConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, globalReachConnectionName, data);
-            GlobalReachConnectionResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            GlobalReachConnectionData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

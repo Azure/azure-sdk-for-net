@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             DevTestLabFormulaResource devTestLabFormula = client.GetDevTestLabFormulaResource(devTestLabFormulaResourceId);
 
             // invoke the operation
-            DevTestLabFormulaPatch patch = new DevTestLabFormulaPatch()
+            DevTestLabFormulaPatch patch = new DevTestLabFormulaPatch
             {
                 Tags =
 {
-["tagName1"] = "tagValue1",
+["tagName1"] = "tagValue1"
 },
             };
             DevTestLabFormulaResource result = await devTestLabFormula.UpdateAsync(patch);

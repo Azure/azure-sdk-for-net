@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Reservations.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            SubscriptionResourceGetCatalogOptions options = new SubscriptionResourceGetCatalogOptions() { ReservedResourceType = "VirtualMachines", Location = new AzureLocation("eastus") };
+            SubscriptionResourceGetCatalogOptions options = new SubscriptionResourceGetCatalogOptions { ReservedResourceType = "VirtualMachines", Location = new AzureLocation("eastus") };
             await foreach (ReservationCatalog item in subscriptionResource.GetCatalogAsync(options))
             {
                 Console.WriteLine($"Succeeded: {item}");

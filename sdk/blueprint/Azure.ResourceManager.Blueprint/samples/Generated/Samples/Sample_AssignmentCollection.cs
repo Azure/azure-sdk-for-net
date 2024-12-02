@@ -27,13 +27,9 @@ namespace Azure.ResourceManager.Blueprint.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this AssignmentResource
             string resourceScope = "managementGroups/ContosoOnlineGroup";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceScope));
-            AssignmentCollection collection = client.GetAssignments(scopeId);
+            AssignmentCollection collection = client.GetAssignments(new ResourceIdentifier(resourceScope));
 
             // invoke the operation
             string assignmentName = "assignSimpleBlueprint";
@@ -44,72 +40,6 @@ namespace Azure.ResourceManager.Blueprint.Samples
             AssignmentData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Exists_AssignmentAtManagementGroupScope()
-        {
-            // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/managementGroupBPAssignment/BlueprintAssignment_Get.json
-            // this example is just showing the usage of "Assignments_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this AssignmentResource
-            string resourceScope = "managementGroups/ContosoOnlineGroup";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceScope));
-            AssignmentCollection collection = client.GetAssignments(scopeId);
-
-            // invoke the operation
-            string assignmentName = "assignSimpleBlueprint";
-            bool result = await collection.ExistsAsync(assignmentName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_AssignmentAtManagementGroupScope()
-        {
-            // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/managementGroupBPAssignment/BlueprintAssignment_Get.json
-            // this example is just showing the usage of "Assignments_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this AssignmentResource
-            string resourceScope = "managementGroups/ContosoOnlineGroup";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceScope));
-            AssignmentCollection collection = client.GetAssignments(scopeId);
-
-            // invoke the operation
-            string assignmentName = "assignSimpleBlueprint";
-            NullableResponse<AssignmentResource> response = await collection.GetIfExistsAsync(assignmentName);
-            AssignmentResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine("Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                AssignmentData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
         }
 
         [Test]
@@ -124,13 +54,9 @@ namespace Azure.ResourceManager.Blueprint.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this AssignmentResource
             string resourceScope = "subscriptions/00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceScope));
-            AssignmentCollection collection = client.GetAssignments(scopeId);
+            AssignmentCollection collection = client.GetAssignments(new ResourceIdentifier(resourceScope));
 
             // invoke the operation
             string assignmentName = "assignSimpleBlueprint";
@@ -145,72 +71,6 @@ namespace Azure.ResourceManager.Blueprint.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_AssignmentAtSubscriptionScope()
-        {
-            // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/subscriptionBPAssignment/BlueprintAssignment_Get.json
-            // this example is just showing the usage of "Assignments_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this AssignmentResource
-            string resourceScope = "subscriptions/00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceScope));
-            AssignmentCollection collection = client.GetAssignments(scopeId);
-
-            // invoke the operation
-            string assignmentName = "assignSimpleBlueprint";
-            bool result = await collection.ExistsAsync(assignmentName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_AssignmentAtSubscriptionScope()
-        {
-            // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/subscriptionBPAssignment/BlueprintAssignment_Get.json
-            // this example is just showing the usage of "Assignments_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this AssignmentResource
-            string resourceScope = "subscriptions/00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceScope));
-            AssignmentCollection collection = client.GetAssignments(scopeId);
-
-            // invoke the operation
-            string assignmentName = "assignSimpleBlueprint";
-            NullableResponse<AssignmentResource> response = await collection.GetIfExistsAsync(assignmentName);
-            AssignmentResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine("Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                AssignmentData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_AssignmentAtManagementGroupScope()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/managementGroupBPAssignment/BlueprintAssignment_List.json
@@ -221,13 +81,9 @@ namespace Azure.ResourceManager.Blueprint.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this AssignmentResource
             string resourceScope = "managementGroups/ContosoOnlineGroup";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceScope));
-            AssignmentCollection collection = client.GetAssignments(scopeId);
+            AssignmentCollection collection = client.GetAssignments(new ResourceIdentifier(resourceScope));
 
             // invoke the operation and iterate over the result
             await foreach (AssignmentResource item in collection.GetAllAsync())
@@ -254,13 +110,9 @@ namespace Azure.ResourceManager.Blueprint.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this AssignmentResource
             string resourceScope = "subscriptions/00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceScope));
-            AssignmentCollection collection = client.GetAssignments(scopeId);
+            AssignmentCollection collection = client.GetAssignments(new ResourceIdentifier(resourceScope));
 
             // invoke the operation and iterate over the result
             await foreach (AssignmentResource item in collection.GetAllAsync())
@@ -273,6 +125,122 @@ namespace Azure.ResourceManager.Blueprint.Samples
             }
 
             Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_AssignmentAtManagementGroupScope()
+        {
+            // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/managementGroupBPAssignment/BlueprintAssignment_Get.json
+            // this example is just showing the usage of "Assignments_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this AssignmentResource
+            string resourceScope = "managementGroups/ContosoOnlineGroup";
+            AssignmentCollection collection = client.GetAssignments(new ResourceIdentifier(resourceScope));
+
+            // invoke the operation
+            string assignmentName = "assignSimpleBlueprint";
+            bool result = await collection.ExistsAsync(assignmentName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_AssignmentAtSubscriptionScope()
+        {
+            // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/subscriptionBPAssignment/BlueprintAssignment_Get.json
+            // this example is just showing the usage of "Assignments_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this AssignmentResource
+            string resourceScope = "subscriptions/00000000-0000-0000-0000-000000000000";
+            AssignmentCollection collection = client.GetAssignments(new ResourceIdentifier(resourceScope));
+
+            // invoke the operation
+            string assignmentName = "assignSimpleBlueprint";
+            bool result = await collection.ExistsAsync(assignmentName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_AssignmentAtManagementGroupScope()
+        {
+            // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/managementGroupBPAssignment/BlueprintAssignment_Get.json
+            // this example is just showing the usage of "Assignments_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this AssignmentResource
+            string resourceScope = "managementGroups/ContosoOnlineGroup";
+            AssignmentCollection collection = client.GetAssignments(new ResourceIdentifier(resourceScope));
+
+            // invoke the operation
+            string assignmentName = "assignSimpleBlueprint";
+            NullableResponse<AssignmentResource> response = await collection.GetIfExistsAsync(assignmentName);
+            AssignmentResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                AssignmentData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_AssignmentAtSubscriptionScope()
+        {
+            // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/subscriptionBPAssignment/BlueprintAssignment_Get.json
+            // this example is just showing the usage of "Assignments_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this AssignmentResource
+            string resourceScope = "subscriptions/00000000-0000-0000-0000-000000000000";
+            AssignmentCollection collection = client.GetAssignments(new ResourceIdentifier(resourceScope));
+
+            // invoke the operation
+            string assignmentName = "assignSimpleBlueprint";
+            NullableResponse<AssignmentResource> response = await collection.GetIfExistsAsync(assignmentName);
+            AssignmentResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                AssignmentData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }
