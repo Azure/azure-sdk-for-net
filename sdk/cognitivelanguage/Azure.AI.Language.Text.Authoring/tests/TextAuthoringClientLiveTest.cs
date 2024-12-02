@@ -11,6 +11,8 @@ using Azure.AI.Language.Text.Authoring.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using System.Text.Json;
+using System.Security.Claims;
 
 namespace Azure.AI.Language.Text.Authoring.Tests
 {
@@ -25,7 +27,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests
         public async Task GetProjectAsync()
         {
             // Arrange
-            string projectName = "MyTextProject111";
+            string projectName = "MyTextProject";
 
             // Act
             Response<ProjectMetadata> response = await client.GetProjectAsync(projectName);
@@ -49,11 +51,11 @@ namespace Azure.AI.Language.Text.Authoring.Tests
         public async Task ImportAsync()
         {
             // Arrange
-            string projectName = "LoanAgreements";
+            string projectName = "MyImportTextProject";
 
             var projectMetadata = new CreateProjectConfig(
-                projectKind: "CustomEntityRecognition",
-                storageInputContainerName: "loanagreements",
+                projectKind: "CustomSingleLabelClassification",
+                storageInputContainerName: "test-data",
                 projectName: projectName,
                 language: "en"
             )
@@ -63,55 +65,27 @@ namespace Azure.AI.Language.Text.Authoring.Tests
                 Settings = new ProjectSettings()
             };
 
-            var projectAssets = new ExportedCustomEntityRecognitionProjectAssets
+            var projectAssets = new ExportedCustomSingleLabelClassificationProjectAssets
             {
-                Entities =
+                Classes =
                 {
-                    new ExportedEntity { Category = "Date" },
-                    new ExportedEntity { Category = "LenderName" },
-                    new ExportedEntity { Category = "LenderAddress" }
+                    new ExportedClass { Category = "Date" },
+                    new ExportedClass { Category = "LenderName" },
+                    new ExportedClass { Category = "LenderAddress" }
                 },
                 Documents =
                 {
-                    new ExportedCustomEntityRecognitionDocument
+                    new ExportedCustomSingleLabelClassificationDocument
                     {
+                        Class= new ExportedDocumentClass{ Category = "Date" },
                         Location = "01.txt",
-                        Language = "en-us",
-                        Dataset = "Train",
-                        Entities =
-                        {
-                            new ExportedDocumentEntityRegion
-                            {
-                                RegionOffset = 0,
-                                RegionLength = 1793,
-                                Labels =
-                                {
-                                    new ExportedDocumentEntityLabel { Category = "Date", Offset = 5, Length = 9 },
-                                    new ExportedDocumentEntityLabel { Category = "LenderName", Offset = 273, Length = 14 },
-                                    new ExportedDocumentEntityLabel { Category = "LenderAddress", Offset = 314, Length = 15 }
-                                }
-                            }
-                        }
+                        Language = "en"
                     },
-                    new ExportedCustomEntityRecognitionDocument
+                    new ExportedCustomSingleLabelClassificationDocument
                     {
+                        Class= new ExportedDocumentClass{ Category = "LenderName" },
                         Location = "02.txt",
-                        Language = "en-us",
-                        Dataset = "Train",
-                        Entities =
-                        {
-                            new ExportedDocumentEntityRegion
-                            {
-                                RegionOffset = 0,
-                                RegionLength = 1804,
-                                Labels =
-                                {
-                                    new ExportedDocumentEntityLabel { Category = "Date", Offset = 5, Length = 10 },
-                                    new ExportedDocumentEntityLabel { Category = "LenderName", Offset = 284, Length = 10 },
-                                    new ExportedDocumentEntityLabel { Category = "LenderAddress", Offset = 321, Length = 20 }
-                                }
-                            }
-                        }
+                        Language = "en"
                     }
                 }
             };
@@ -145,12 +119,12 @@ namespace Azure.AI.Language.Text.Authoring.Tests
         public async Task CreateProjectAsync()
         {
             // Arrange
-            string projectName = "MyTextProject111";
+            string projectName = "MyTextProject";
             var projectData = new
             {
                 projectName = projectName,
                 language = "en",
-                projectKind = "CustomEntityRecognition",
+                projectKind = "customMultiLabelClassification",
                 description = "Project description for a Custom Entity Recognition project",
                 multilingual = true,
                 storageInputContainerName = "e2e0test0data"
@@ -173,7 +147,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests
         public async Task DeleteProjectAsync()
         {
             // Arrange
-            string projectName = "ProjectToDelete";
+            string projectName = "MyTextProject";
 
             // Act
             Operation operation = await client.DeleteProjectAsync(
@@ -183,7 +157,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests
 
             // Assert
             Assert.IsNotNull(operation);
-            Assert.AreEqual(204, operation.GetRawResponse().Status, "Expected the status to indicate project deletion success.");
+            Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected the status to indicate project deletion success.");
 
             // Logging for additional context
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
@@ -195,11 +169,11 @@ namespace Azure.AI.Language.Text.Authoring.Tests
         public async Task TrainAsync()
         {
             // Arrange
-            string projectName = "LoanAgreements";
+            string projectName = "MyTextProject";
 
             var trainingJobConfig = new TrainingJobConfig(
                 modelLabel: "model1",
-                trainingConfigVersion: "latest"
+                trainingConfigVersion: "2022-05-01"
             )
             {
                 EvaluationOptions = new EvaluationConfig
@@ -212,14 +186,14 @@ namespace Azure.AI.Language.Text.Authoring.Tests
 
             // Act
             Operation<TrainingJobResult> operation = await client.TrainAsync(
-                waitUntil: WaitUntil.Completed,
+                waitUntil: WaitUntil.Started,
                 projectName: projectName,
                 body: trainingJobConfig
             );
 
             // Assert
             Assert.IsNotNull(operation);
-            Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected the status to indicate successful training.");
+            Assert.AreEqual(202, operation.GetRawResponse().Status, "Expected the status to indicate successful training.");
 
             // Logging for additional context
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
@@ -231,19 +205,19 @@ namespace Azure.AI.Language.Text.Authoring.Tests
         public async Task CancelTrainingJobAsync()
         {
             // Arrange
-            string projectName = "LoanAgreements";
-            string jobId = "training-job-id"; // Replace with an actual job ID.
+            string projectName = "MyTextProject";
+            string jobId = "4e993615-bfe2-44bb-926b-fbe12dc17097_638686944000000000"; // Replace with an actual job ID.
 
             // Act
             Operation<TrainingJobResult> operation = await client.CancelTrainingJobAsync(
-                waitUntil: WaitUntil.Completed,
+                waitUntil: WaitUntil.Started,
                 projectName: projectName,
                 jobId: jobId
             );
 
             // Assert
             Assert.IsNotNull(operation);
-            Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected the status to indicate successful cancellation.");
+            Assert.AreEqual(202, operation.GetRawResponse().Status, "Expected the status to indicate successful cancellation.");
 
             // Logging for additional context
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;
@@ -255,8 +229,8 @@ namespace Azure.AI.Language.Text.Authoring.Tests
         public async Task GetModelEvaluationSummaryAsync()
         {
             // Arrange
-            string projectName = "LoanAgreements";
-            string trainedModelLabel = "model2";
+            string projectName = "MyTextProject";
+            string trainedModelLabel = "model1";
 
             // Act
             Response<EvaluationSummary> evaluationSummaryResponse = await client.GetModelEvaluationSummaryAsync(projectName, trainedModelLabel);
@@ -291,11 +265,14 @@ namespace Azure.AI.Language.Text.Authoring.Tests
                 foreach (var row in singleLabelSummary.CustomSingleLabelClassificationEvaluation.ConfusionMatrix.AdditionalProperties)
                 {
                     Console.WriteLine($"Row: {row.Key}");
-                    var columnData = row.Value.ToObjectFromJson<Dictionary<string, BinaryData>>();
+                    // Convert BinaryData to JSON string
+                    var json = row.Value.ToString();
+                    // Deserialize JSON string to dictionary
+                    var columnData = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, float>>>(json);
+
                     foreach (var col in columnData)
                     {
-                        var values = col.Value.ToObjectFromJson<Dictionary<string, float>>();
-                        Console.WriteLine($"    Column: {col.Key}, Normalized Value: {values["normalizedValue"]}, Raw Value: {values["rawValue"]}");
+                        Console.WriteLine($"    Column: {col.Key}, Normalized Value: {col.Value["normalizedValue"]}, Raw Value: {col.Value["rawValue"]}");
                     }
                 }
 
@@ -324,8 +301,8 @@ namespace Azure.AI.Language.Text.Authoring.Tests
         public async Task LoadSnapshotAsync()
         {
             // Arrange
-            string projectName = "LoanAgreements";
-            string trainedModelLabel = "ModelLabel"; // Replace with your actual model label.
+            string projectName = "MyTextProject";
+            string trainedModelLabel = "model1"; // Replace with your actual model label.
 
             // Act
             Operation operation = await client.LoadSnapshotAsync(
@@ -348,8 +325,8 @@ namespace Azure.AI.Language.Text.Authoring.Tests
         public async Task DeleteTrainedModelAsync()
         {
             // Arrange
-            string projectName = "LoanAgreements";
-            string trainedModelLabel = "ModelLabel"; // Replace with the actual model label.
+            string projectName = "MyTextProject";
+            string trainedModelLabel = "model1"; // Replace with the actual model label.
 
             // Act
             Response response = await client.DeleteTrainedModelAsync(
@@ -369,9 +346,9 @@ namespace Azure.AI.Language.Text.Authoring.Tests
         public async Task DeployProjectAsync()
         {
             // Arrange
-            string projectName = "LoanAgreements";
-            string deploymentName = "DeploymentName";
-            var deploymentConfig = new CreateDeploymentConfig(trainedModelLabel: "29886710a2ae49259d62cffca977db66");
+            string projectName = "MyTextProject";
+            string deploymentName = "deployment1";
+            var deploymentConfig = new CreateDeploymentConfig(trainedModelLabel: "m2");
 
             // Act
             Operation operation = await client.DeployProjectAsync(
@@ -393,10 +370,10 @@ namespace Azure.AI.Language.Text.Authoring.Tests
         public async Task SwapDeploymentsAsync()
         {
             // Arrange
-            string projectName = "LoanAgreements";
+            string projectName = "MyTextProject";
             var swapConfig = new SwapDeploymentsConfig(
-                firstDeploymentName: "DeploymentA",
-                secondDeploymentName: "DeploymentB"
+                firstDeploymentName: "deployment1",
+                secondDeploymentName: "deployment2"
             );
 
             // Act
@@ -418,8 +395,8 @@ namespace Azure.AI.Language.Text.Authoring.Tests
         public async Task DeleteDeploymentAsync()
         {
             // Arrange
-            string projectName = "LoanAgreements";
-            string deploymentName = "DeploymentA";
+            string projectName = "MyTextProject";
+            string deploymentName = "deployment2";
 
             // Act
             Operation operation = await client.DeleteDeploymentAsync(
@@ -430,7 +407,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests
 
             // Assert
             Assert.IsNotNull(operation);
-            Assert.AreEqual(204, operation.GetRawResponse().Status, "Expected the status to indicate successful deletion.");
+            Assert.AreEqual(200, operation.GetRawResponse().Status, "Expected the status to indicate successful deletion.");
 
             // Logging for additional context
             Console.WriteLine($"Deployment deletion completed with status: {operation.GetRawResponse().Status}");
