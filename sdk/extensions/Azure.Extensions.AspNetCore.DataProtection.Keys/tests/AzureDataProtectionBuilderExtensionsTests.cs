@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using Azure.Identity;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.DataProtection.KeyManagement;
-using Microsoft.Azure.KeyVault;
+using Azure.Security.KeyVault.Keys;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
+using Azure.Core.TestFramework;
 
 namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
 {
@@ -19,7 +20,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
         public void ProtectKeysWithAzureKeyVault_UsesAzureKeyVaultXmlEncryptor()
         {
             // Arrange
-            var client = new KeyVaultClient((_, _, _) => Task.FromResult(string.Empty));
+            var client = new KeyClient(new Uri("http://www.example.com/dummyKey"),new MockCredential());
             var serviceCollection = new ServiceCollection();
             var builder = serviceCollection.AddDataProtection();
 
@@ -36,7 +37,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
         public void ProtectKeysWithAzureKeyVault_WithServiceProviderFunc_UsesAzureKeyVaultXmlEncryptor()
         {
             // Arrange
-            var client = new KeyVaultClient((_, _, _) => Task.FromResult(string.Empty));
+            var client = new KeyClient(new Uri("http://www.example.com/dummyKey"), new MockCredential());
             var serviceCollection = new ServiceCollection();
             var builder = serviceCollection.AddDataProtection();
 

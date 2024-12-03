@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             AdvancedThreatProtectionSettingResource advancedThreatProtectionSetting = client.GetAdvancedThreatProtectionSettingResource(advancedThreatProtectionSettingResourceId);
 
             // invoke the operation
-            AdvancedThreatProtectionSettingData data = new AdvancedThreatProtectionSettingData()
+            AdvancedThreatProtectionSettingData data = new AdvancedThreatProtectionSettingData
             {
                 IsEnabled = true,
             };

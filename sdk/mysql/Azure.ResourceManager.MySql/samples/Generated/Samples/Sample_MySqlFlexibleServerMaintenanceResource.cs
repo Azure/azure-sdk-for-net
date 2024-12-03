@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             MySqlFlexibleServerMaintenanceResource mySqlFlexibleServerMaintenance = client.GetMySqlFlexibleServerMaintenanceResource(mySqlFlexibleServerMaintenanceResourceId);
 
             // invoke the operation
-            MySqlFlexibleServerMaintenancePatch patch = new MySqlFlexibleServerMaintenancePatch()
+            MySqlFlexibleServerMaintenancePatch patch = new MySqlFlexibleServerMaintenancePatch
             {
                 MaintenanceStartOn = DateTimeOffset.Parse("2024-01-20T00:00:00"),
             };

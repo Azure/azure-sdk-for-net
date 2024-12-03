@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Sql.Samples
             SyncMemberResource syncMember = client.GetSyncMemberResource(syncMemberResourceId);
 
             // invoke the operation
-            SyncMemberData data = new SyncMemberData()
+            SyncMemberData data = new SyncMemberData
             {
                 DatabaseType = SyncMemberDbType.AzureSqlDatabase,
                 SyncMemberAzureDatabaseResourceId = new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/syncgroupcrud-65440/providers/Microsoft.Sql/servers/syncgroupcrud-8475/databases/syncgroupcrud-4328"),

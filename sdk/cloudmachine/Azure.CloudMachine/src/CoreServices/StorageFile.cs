@@ -15,7 +15,7 @@ public class StorageFile
 {
     private readonly Response _response;
 
-    private StorageServices _storage;
+    private readonly StorageServices _storage;
 
     /// <summary>
     /// The path of the file in the storage account.
@@ -23,7 +23,7 @@ public class StorageFile
     public string Path { get; internal set; }
 
     /// <summary>
-    /// The requestId for the storage operation that triggered this event
+    /// The requestId for the storage operation that triggered this event.
     /// </summary>
     public string RequestId { get; internal set; }
 
@@ -45,6 +45,13 @@ public class StorageFile
     /// <returns></returns>
     public BinaryData Download()
         => _storage.Download(Path);
+
+    /// <summary>
+    /// Downloads the file from the storage account.
+    /// </summary>
+    /// <returns></returns>
+    public async Task<BinaryData> DownloadAsync()
+        => await _storage.DownloadAsync(Path).ConfigureAwait(false);
 
     // public async Task<BinaryData> DownloadAsync()
     //     => await _storage.DownloadBlobAsync(Path).ConfigureAwait(false);

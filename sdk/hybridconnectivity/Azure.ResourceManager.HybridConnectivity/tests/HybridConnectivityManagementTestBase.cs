@@ -47,20 +47,21 @@ namespace Azure.ResourceManager.HybridConnectivity.Tests
             return lro.Value;
         }
 
-        protected async Task<HybridConnectivityPublicCloudConnectorResource> CreatePublicCloudConnector(ResourceGroupResource rg)
-        {
-            var connectorData = new HybridConnectivityPublicCloudConnectorData(DefaultLocation) { };
+        // Comment out the following code as it is not used in version 2023-03-01
+        //protected async Task<HybridConnectivityPublicCloudConnectorResource> CreatePublicCloudConnector(ResourceGroupResource rg)
+        //{
+        //    var connectorData = new HybridConnectivityPublicCloudConnectorData(DefaultLocation) { };
 
-            var awsCloudProfile = new AwsCloudProfile("123456789123") { };
-            awsCloudProfile.IsOrganizationalAccount = false;
+        //    var awsCloudProfile = new AwsCloudProfile("123456789123") { };
+        //    awsCloudProfile.IsOrganizationalAccount = false;
 
-            var properties = new PublicCloudConnectorProperties(awsCloudProfile, HybridConnectivityHostType.AWS) { };
+        //    var properties = new PublicCloudConnectorProperties(awsCloudProfile, HybridConnectivityHostType.AWS) { };
 
-            connectorData.Properties = properties;
+        //    connectorData.Properties = properties;
 
-            var collection = rg.GetHybridConnectivityPublicCloudConnectors();
-            var pcc = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ConnectorName, connectorData);
-            return pcc.Value;
-        }
+        //    var collection = rg.GetHybridConnectivityPublicCloudConnectors();
+        //    var pcc = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ConnectorName, connectorData);
+        //    return pcc.Value;
+        //}
     }
 }

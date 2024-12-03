@@ -128,34 +128,29 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             AppPlatformAppResource appPlatformApp = client.GetAppPlatformAppResource(appPlatformAppResourceId);
 
             // invoke the operation
-            AppPlatformAppData data = new AppPlatformAppData()
+            AppPlatformAppData data = new AppPlatformAppData
             {
-                Properties = new AppPlatformAppProperties()
+                Properties = new AppPlatformAppProperties
                 {
                     IsPublic = true,
                     IsHttpsOnly = false,
-                    TemporaryDisk = new AppTemporaryDisk()
+                    TemporaryDisk = new AppTemporaryDisk
                     {
                         SizeInGB = 2,
                         MountPath = "/mytemporarydisk",
                     },
-                    PersistentDisk = new AppPersistentDisk()
+                    PersistentDisk = new AppPersistentDisk
                     {
                         SizeInGB = 2,
                         MountPath = "/mypersistentdisk",
                     },
-                    CustomPersistentDisks =
+                    CustomPersistentDisks = {new AppCustomPersistentDisk("myASCStorageID")
 {
-new AppCustomPersistentDisk("myASCStorageID")
+CustomPersistentDiskProperties = new AppPlatformAzureFileVolume("/mypath1/mypath2", "myFileShare")
 {
-CustomPersistentDiskProperties = new AppPlatformAzureFileVolume("/mypath1/mypath2","myFileShare")
-{
-MountOptions =
-{
+MountOptions = {},
 },
-},
-}
-},
+}},
                     IsEndToEndTlsEnabled = false,
                 },
                 Identity = new ManagedServiceIdentity("SystemAssigned,UserAssigned")
@@ -163,7 +158,7 @@ MountOptions =
                     UserAssignedIdentities =
 {
 [new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/samplegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1")] = new UserAssignedIdentity(),
-[new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/samplegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id2")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/samplegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id2")] = new UserAssignedIdentity()
 },
                 },
                 Location = new AzureLocation("eastus"),
@@ -200,36 +195,31 @@ MountOptions =
             AppPlatformAppResource appPlatformApp = client.GetAppPlatformAppResource(appPlatformAppResourceId);
 
             // invoke the operation
-            AppPlatformAppData data = new AppPlatformAppData()
+            AppPlatformAppData data = new AppPlatformAppData
             {
-                Properties = new AppPlatformAppProperties()
+                Properties = new AppPlatformAppProperties
                 {
                     IsPublic = true,
                     IsHttpsOnly = false,
-                    TemporaryDisk = new AppTemporaryDisk()
+                    TemporaryDisk = new AppTemporaryDisk
                     {
                         SizeInGB = 2,
                         MountPath = "/mytemporarydisk",
                     },
-                    PersistentDisk = new AppPersistentDisk()
+                    PersistentDisk = new AppPersistentDisk
                     {
                         SizeInGB = 2,
                         MountPath = "/mypersistentdisk",
                     },
-                    CustomPersistentDisks =
+                    CustomPersistentDisks = {new AppCustomPersistentDisk("myASCStorageID")
 {
-new AppCustomPersistentDisk("myASCStorageID")
+CustomPersistentDiskProperties = new AppPlatformAzureFileVolume("/mypath1/mypath2", "myFileShare")
 {
-CustomPersistentDiskProperties = new AppPlatformAzureFileVolume("/mypath1/mypath2","myFileShare")
-{
-MountOptions =
-{
+MountOptions = {},
 },
-},
-}
-},
+}},
                     IsEndToEndTlsEnabled = false,
-                    VnetAddons = new AppVnetAddons()
+                    VnetAddons = new AppVnetAddons
                     {
                         IsPublicEndpoint = true,
                     },
@@ -239,7 +229,7 @@ MountOptions =
                     UserAssignedIdentities =
 {
 [new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/samplegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1")] = new UserAssignedIdentity(),
-[new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/samplegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id2")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/samplegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id2")] = new UserAssignedIdentity()
 },
                 },
                 Location = new AzureLocation("eastus"),
@@ -303,12 +293,9 @@ MountOptions =
             AppPlatformAppResource appPlatformApp = client.GetAppPlatformAppResource(appPlatformAppResourceId);
 
             // invoke the operation
-            ActiveAppPlatformDeploymentsContent content = new ActiveAppPlatformDeploymentsContent()
+            ActiveAppPlatformDeploymentsContent content = new ActiveAppPlatformDeploymentsContent
             {
-                ActiveDeploymentNames =
-{
-"default"
-},
+                ActiveDeploymentNames = { "default" },
             };
             ArmOperation<AppPlatformAppResource> lro = await appPlatformApp.ActivateDeploymentsAsync(WaitUntil.Completed, content);
             AppPlatformAppResource result = lro.Value;
