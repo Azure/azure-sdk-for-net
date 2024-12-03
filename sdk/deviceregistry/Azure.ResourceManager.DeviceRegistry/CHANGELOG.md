@@ -8,6 +8,7 @@
 
 ### Features Added
 
+- Added `DiscoveredAssets` and `DiscoveredAssetEndpointProfiles` resource types from Microsoft.DeviceRegistry OpenAPI spec version `2024-09-01-preview`.
 - Added `SchemaRegistries`, `SchemaRegistries/Schemas` and `SchemaRegistries/Schemas/SchemaVersions` resource types from Microsoft.DeviceRegistry OpenAPI spec version `2024-09-01-preview`.
 - Added `BillingContainers` resource type from Microsoft.DeviceRegistry OpenAPI spec version `2024-09-01-preview`.
 
