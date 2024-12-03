@@ -1,8 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core;
+using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 
 namespace Azure.CloudMachine;
@@ -10,12 +13,25 @@ namespace Azure.CloudMachine;
 /// <summary>
 /// The cloud machine client.
 /// </summary>
-public partial class CloudMachineClient : CloudMachineWorkspace
+public partial class CloudMachineClient : ClientWorkspace
 {
+    /// <summary>
+    /// The cloud machine ID.
+    /// </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public string Id { get; }
+
+    /// <summary>
+    /// subclient connections.
+    /// </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public ConnectionCollection Connections { get; } = [];
+
     /// <summary>
     /// Initializes a new instance of the <see cref="CloudMachineClient"/> class for mocking purposes..
     /// </summary>
-    protected CloudMachineClient()
+    protected CloudMachineClient() :
+        this(BuildCredentail(default))
     {
         Messaging = new MessagingServices(this);
         Storage = new StorageServices(this);
@@ -29,8 +45,19 @@ public partial class CloudMachineClient : CloudMachineWorkspace
     /// <param name="connections"></param>
     public CloudMachineClient(TokenCredential credential = default, IConfiguration configuration = default, IEnumerable<ClientConnection> connections = default)
 #pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
-        : base(credential, configuration, connections)
+        : base(credential)
     {
+        if (connections != default)
+        {
+            Connections.AddRange(connections);
+        }
+
+        Id = configuration switch
+        {
+            null => AppConfigHelpers.ReadOrCreateCloudMachineId(),
+            _ => configuration["CloudMachine:ID"] ?? throw new Exception("CloudMachine:ID configuration value missing")
+        };
+
         Messaging = new MessagingServices(this);
         Storage = new StorageServices(this);
     }
@@ -44,4 +71,50 @@ public partial class CloudMachineClient : CloudMachineWorkspace
     /// Gets the storage services.
     /// </summary>
     public StorageServices Storage { get; }
+
+    /// <summary>
+    /// Retrieves the connection options for a specified client type and instance ID.
+    /// </summary>
+    /// <param name="connectionId"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override ClientConnection GetConnectionOptions(string connectionId)
+    {
+        return Connections[connectionId];
+    }
+
+    private static TokenCredential BuildCredentail(TokenCredential credential)
+    {
+        if (credential == default)
+        {
+            // This environment variable is set by the CloudMachine App Service feature during provisioning.
+            credential = Environment.GetEnvironmentVariable("CLOUDMACHINE_MANAGED_IDENTITY_CLIENT_ID") switch
+            {
+                string clientId when !string.IsNullOrEmpty(clientId) => new ManagedIdentityCredential(clientId),
+                _ => new ChainedTokenCredential(new AzureCliCredential(), new AzureDeveloperCliCredential())
+            };
+        }
+
+        return credential;
+    }
+
+    /// <summary>
+    /// Reads or creates the cloud machine ID.
+    /// </summary>
+    /// <returns></returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public static string ReadOrCreateCloudMachineId() => AppConfigHelpers.ReadOrCreateCloudMachineId();
+
+    /// <inheritdoc/>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override bool Equals(object obj) => base.Equals(obj);
+
+    /// <inheritdoc/>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override int GetHashCode() => base.GetHashCode();
+
+    /// <inheritdoc/>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override string ToString() => Id;
 }

@@ -20,7 +20,7 @@ public static class CloudMachineCommands
         if (args.Length < 1)
             return false;
 
-        string cmid = CloudMachineWorkspace.ReadOrCreateCloudMachineId();
+        string cmid = CloudMachineClient.ReadOrCreateCloudMachineId();
         CloudMachineInfrastructure cmi = new(cmid);
         if (configure != default)
         {
