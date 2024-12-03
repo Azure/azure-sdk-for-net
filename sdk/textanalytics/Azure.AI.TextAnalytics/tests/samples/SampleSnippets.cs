@@ -20,7 +20,7 @@ namespace Azure.AI.TextAnalytics.Samples
             AzureKeyCredential credential = new("<apiKey>");
 #else
             Uri endpoint = new(TestEnvironment.Endpoint);
-            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            var credential = TestEnvironment.Credential;
 #endif
             TextAnalyticsClient client = new(endpoint, credential);
             #endregion
@@ -32,10 +32,12 @@ namespace Azure.AI.TextAnalytics.Samples
             #region Snippet:CreateTextAnalyticsClientTokenCredential
 #if SNIPPET
             Uri endpoint = new("<endpoint>");
+            var credential = new DefaultAzureCredential()
 #else
             Uri endpoint = new(TestEnvironment.Endpoint);
+            var credential = TestEnvironment.Credential;
 #endif
-            TextAnalyticsClient client = new(endpoint, new DefaultAzureCredential());
+            TextAnalyticsClient client = new(endpoint, credential);
             #endregion
         }
 
