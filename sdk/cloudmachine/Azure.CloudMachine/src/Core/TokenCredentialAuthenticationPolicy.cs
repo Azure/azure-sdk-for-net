@@ -14,7 +14,7 @@ namespace Azure.AI.OpenAI;
 /// <summary>
 /// TokenCredentialAuthenticationPolicy is a pipeline policy that authenticates requests using a TokenCredential.
 /// </summary>
-public partial class TokenCredentialAuthenticationPolicy : PipelinePolicy
+internal partial class TokenCredentialAuthenticationPolicy : PipelinePolicy
 {
     private readonly TokenCredential _credential;
     private readonly string[] _scopes;
