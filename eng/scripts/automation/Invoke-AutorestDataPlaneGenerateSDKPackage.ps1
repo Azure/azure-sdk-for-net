@@ -31,10 +31,10 @@ The key to use if your library supports **Azure Key Credential** authentication.
 .EXAMPLE
 Run script with default parameters.
 
-Invoke-DataPlaneGenerateSDKPackage.ps1 -service <servicename> -namespace Azure.<group>.<service> -sdkPath <sdkrepoRootPath> [-inputfiles <inputfilelink>] [-readme <readmeFilelink>] [-securityScope <securityScope>] [-securityHeaderName <securityHeaderName>]
+Invoke-AutorestDataPlaneGenerateSDKPackage.ps1 -service <servicename> -namespace Azure.<group>.<service> -sdkPath <sdkrepoRootPath> [-inputfiles <inputfilelink>] [-readme <readmeFilelink>] [-securityScope <securityScope>] [-securityHeaderName <securityHeaderName>]
 
 e.g.
-Invoke-DataPlaneGenerateSDKPackage.ps1 -service webpubsub -namespace Azure.Messaging.WebPubSub -sdkPath /home/azure-sdk-for-net -inputfiles https://github.com/Azure/azure-rest-api-specs/blob/73a0fa453a93bdbe8885f87b9e4e9fef4f0452d0/specification/webpubsub/data-plane/WebPubSub/stable/2021-10-01/webpubsub.json -securityScope https://sample/.default
+Invoke-AutorestDataPlaneGenerateSDKPackage.ps1 -service webpubsub -namespace Azure.Messaging.WebPubSub -sdkPath /home/azure-sdk-for-net -inputfiles https://github.com/Azure/azure-rest-api-specs/blob/73a0fa453a93bdbe8885f87b9e4e9fef4f0452d0/specification/webpubsub/data-plane/WebPubSub/stable/2021-10-01/webpubsub.json -securityScope https://sample/.default
 
 #>
 param (
