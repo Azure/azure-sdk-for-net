@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text;
 using Azure.AI.Language.Text;
 using Azure.AI.Language.Text.Tests;
 using Azure.Core.TestFramework;
@@ -63,7 +64,15 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
 
                 foreach (LanguageDetectionDocumentResult document in analyzeTextLanguageDetectionResult.Results.Documents)
                 {
-                    Console.WriteLine($"For Document ID: {document.Id} detected language is {document.DetectedLanguage.Name} with a confidence score of {document.DetectedLanguage.ConfidenceScore}.");
+                    Console.WriteLine($"Result for document with Id = \"{document.Id}\":");
+                    Console.WriteLine($"    Name: {document.DetectedLanguage.Name}");
+                    Console.WriteLine($"    Iso6391Name: {document.DetectedLanguage.Iso6391Name}");
+                    if (document.DetectedLanguage.ScriptName != null)
+                    {
+                        Console.WriteLine($"    ScriptName: {document.DetectedLanguage.ScriptName}");
+                        Console.WriteLine($"    ScriptIso15924Code: {document.DetectedLanguage.ScriptIso15924Code}");
+                    }
+                    Console.WriteLine($"    ConfidenceScore: {document.DetectedLanguage.ConfidenceScore}");
                 }
             }
             catch (RequestFailedException exception)
@@ -126,7 +135,15 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
 
                 foreach (LanguageDetectionDocumentResult document in AnalyzeTextLanguageDetectionResult.Results.Documents)
                 {
-                    Console.WriteLine($"For Document ID: {document.Id} detected language is {document.DetectedLanguage.Name} with a confidence score of {document.DetectedLanguage.ConfidenceScore}.");
+                    Console.WriteLine($"Result for document with Id = \"{document.Id}\":");
+                    Console.WriteLine($"    Name: {document.DetectedLanguage.Name}");
+                    Console.WriteLine($"    Iso6391Name: {document.DetectedLanguage.Iso6391Name}");
+                    if (document.DetectedLanguage.ScriptName != null)
+                    {
+                        Console.WriteLine($"    ScriptName: {document.DetectedLanguage.ScriptName}");
+                        Console.WriteLine($"    ScriptIso15924Code: {document.DetectedLanguage.ScriptIso15924Code}");
+                    }
+                    Console.WriteLine($"    ConfidenceScore: {document.DetectedLanguage.ConfidenceScore}");
                 }
             }
             catch (RequestFailedException exception)

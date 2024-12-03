@@ -236,7 +236,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             {
                 Assert.IsNotNull(piiResult.Id);
                 Assert.IsNotNull(piiResult.Entities);
-                foreach (NamedEntity entity in piiResult.Entities)
+                foreach (PiiEntityWithTags entity in piiResult.Entities)
                 {
                     Assert.IsNotNull(entity);
                     Assert.IsNotNull(entity.Text);

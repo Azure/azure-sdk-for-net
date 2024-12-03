@@ -176,7 +176,15 @@ try
 
     foreach (LanguageDetectionDocumentResult document in AnalyzeTextLanguageDetectionResult.Results.Documents)
     {
-        Console.WriteLine($"For Document ID: {document.Id} detected language is {document.DetectedLanguage.Name} with a confidence score of {document.DetectedLanguage.ConfidenceScore}.");
+        Console.WriteLine($"Result for document with Id = \"{document.Id}\":");
+        Console.WriteLine($"    Name: {document.DetectedLanguage.Name}");
+        Console.WriteLine($"    Iso6391Name: {document.DetectedLanguage.Iso6391Name}");
+        if (document.DetectedLanguage.ScriptName != null)
+        {
+            Console.WriteLine($"    ScriptName: {document.DetectedLanguage.ScriptName}");
+            Console.WriteLine($"    ScriptIso15924Code: {document.DetectedLanguage.ScriptIso15924Code}");
+        }
+        Console.WriteLine($"    ConfidenceScore: {document.DetectedLanguage.ConfidenceScore}");
     }
 }
 catch (RequestFailedException exception)
@@ -577,8 +585,13 @@ foreach (EntitiesDocumentResultWithMetadataDetectedLanguage nerResult in entitie
         Console.WriteLine($"    Offset: {entity.Offset}");
         Console.WriteLine($"    Length: {entity.Length}");
         Console.WriteLine($"    Category: {entity.Category}");
-        if (!string.IsNullOrEmpty(entity.Subcategory))
-            Console.WriteLine($"    SubCategory: {entity.Subcategory}");
+        Console.WriteLine($"    Type: {entity.Type}");
+        Console.WriteLine($"    Tags:");
+        foreach (EntityTag tag in entity.Tags)
+        {
+            Console.WriteLine($"            TagName: {tag.Name}");
+            Console.WriteLine($"            TagConfidenceScore: {tag.ConfidenceScore}");
+        }
         Console.WriteLine($"    Confidence score: {entity.ConfidenceScore}");
         Console.WriteLine();
     }
@@ -698,7 +711,7 @@ foreach (PiiActionResult piiResult in piiTaskResult.Results.Documents)
     Console.WriteLine($"  Redacted Text: \"{piiResult.RedactedText}\":");
     Console.WriteLine($"  Recognized {piiResult.Entities.Count} entities:");
 
-    foreach (NamedEntity entity in piiResult.Entities)
+    foreach (PiiEntityWithTags entity in piiResult.Entities)
     {
         Console.WriteLine($"    Text: {entity.Text}");
         Console.WriteLine($"    Offset: {entity.Offset}");
@@ -2043,7 +2056,7 @@ foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.
         EntityRecognitionOperationResult entityRecognitionLROResult = (EntityRecognitionOperationResult)analyzeTextLROResult;
 
         // View the classifications recognized in the input documents.
-        foreach (EntitiesDocumentResultWithMetadataDetectedLanguage nerResult in entityRecognitionLROResult.Results.Documents)
+        foreach (EntitiesDocumentResultWithMetadata nerResult in entityRecognitionLROResult.Results.Documents)
         {
             Console.WriteLine($"Result for document with Id = \"{nerResult.Id}\":");
 
@@ -2055,9 +2068,13 @@ foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.
                 Console.WriteLine($"    Offset: {entity.Offset}");
                 Console.WriteLine($"    Length: {entity.Length}");
                 Console.WriteLine($"    Category: {entity.Category}");
-                if (!string.IsNullOrEmpty(entity.Subcategory))
-                    Console.WriteLine($"    SubCategory: {entity.Subcategory}");
-                Console.WriteLine($"    Confidence score: {entity.ConfidenceScore}");
+                Console.WriteLine($"    Type: {entity.Type}");
+                Console.WriteLine($"    Tags:");
+                foreach (EntityTag tag in entity.Tags)
+                {
+                    Console.WriteLine($"            TagName: {tag.Name}");
+                    Console.WriteLine($"            TagConfidenceScore: {tag.ConfidenceScore}");
+                }
                 Console.WriteLine();
             }
             Console.WriteLine();
