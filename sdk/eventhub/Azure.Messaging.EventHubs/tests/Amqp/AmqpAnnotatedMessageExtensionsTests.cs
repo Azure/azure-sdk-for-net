@@ -295,11 +295,11 @@ namespace Azure.Messaging.EventHubs.Tests
         public void SystemPropertiesCanBeRead()
         {
             var sequenceNumber = 123L;
-            var offset = 456L;
+            var offset = "456L";
             var enqueueTime = new DateTimeOffset(2015, 10, 27, 00, 00, 00, TimeSpan.Zero);
             var partitionKey = "fake-key";
             var lastSequence = 321L;
-            var lastOffset = 654L;
+            var lastOffset = "654L";
             var lastEnqueue = new DateTimeOffset(2012, 03, 04, 08, 00, 00, TimeSpan.Zero);
             var lastRetrieve = new DateTimeOffset(2020, 01, 01, 05, 15, 37, TimeSpan.Zero);
             var message = CreateDataBodyMessageWithSystemProperties(sequenceNumber, lastSequence, offset, lastOffset, partitionKey, enqueueTime, lastEnqueue, lastRetrieve);
@@ -330,11 +330,11 @@ namespace Azure.Messaging.EventHubs.Tests
             };
 
             var sequenceNumber = 123L;
-            var offset = 456L;
+            var offset = "456L";
             var enqueueTime = new DateTimeOffset(2015, 10, 27, 00, 00, 00, TimeSpan.Zero);
             var partitionKey = "fake-key";
             var lastSequence = 321L;
-            var lastOffset = 654L;
+            var lastOffset = "654L";
             var lastEnqueue = new DateTimeOffset(2012, 03, 04, 08, 00, 00, TimeSpan.Zero);
             var lastRetrieve = new DateTimeOffset(2020, 01, 01, 05, 15, 37, TimeSpan.Zero);
 
@@ -361,11 +361,11 @@ namespace Azure.Messaging.EventHubs.Tests
         public void SystemPropertiesReturnCustomDefaultValuesWhenNotInTheMessage()
         {
             var sequenceNumber = 123L;
-            var offset = 456L;
+            var offset = "456L";
             var enqueueTime = new DateTimeOffset(2015, 10, 27, 00, 00, 00, TimeSpan.Zero);
             var partitionKey = "fake-key";
             var lastSequence = 321L;
-            var lastOffset = 654L;
+            var lastOffset = "654L";
             var lastEnqueue = new DateTimeOffset(2012, 03, 04, 08, 00, 00, TimeSpan.Zero);
             var lastRetrieve = new DateTimeOffset(2020, 01, 01, 05, 15, 37, TimeSpan.Zero);
             var message = CreateDataBodyMessageWithSystemProperties(default, default, default, default, default, default, default, default);
@@ -391,7 +391,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var message = CreateDataBodyMessageWithSystemProperties(default, default, default, default, default, default, default, default);
 
             Assert.That(message.GetSequenceNumber(), Is.EqualTo(long.MinValue), "The sequence number should match.");
-            Assert.That(message.GetOffset(), Is.EqualTo(long.MinValue), "The offset should match.");
+            Assert.That(message.GetOffset(), Is.EqualTo(null), "The offset should match.");
             Assert.That(message.GetEnqueuedTime(), Is.EqualTo(default(DateTimeOffset)), "The enqueue time should match.");
             Assert.That(message.GetPartitionKey(), Is.EqualTo(null), "The partition key should match.");
             Assert.That(message.GetLastPartitionSequenceNumber(), Is.EqualTo(null), "The last sequence number should match.");
@@ -510,8 +510,8 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         private static AmqpAnnotatedMessage CreateDataBodyMessageWithSystemProperties(long? sequenceNumber,
                                                                                       long? lastSequenceNumber,
-                                                                                      long? offset,
-                                                                                      long? lastOffset,
+                                                                                      string offset,
+                                                                                      string lastOffset,
                                                                                       string partitionKey,
                                                                                       DateTimeOffset? enqueueTime,
                                                                                       DateTimeOffset? lastEnqueueTime,
@@ -526,9 +526,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 message.MessageAnnotations.Add(AmqpProperty.SequenceNumber.ToString(), sequenceNumber.Value);
             }
 
-            if (offset.HasValue)
+            if (!string.IsNullOrEmpty(offset))
             {
-                message.MessageAnnotations.Add(AmqpProperty.Offset.ToString(), offset.Value);
+                message.MessageAnnotations.Add(AmqpProperty.Offset.ToString(), offset);
             }
 
             if (enqueueTime.HasValue)
@@ -550,9 +550,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 message.DeliveryAnnotations.Add(AmqpProperty.PartitionLastEnqueuedSequenceNumber.ToString(), lastSequenceNumber.Value);
             }
 
-            if (lastOffset.HasValue)
+            if (!string.IsNullOrEmpty(lastOffset))
             {
-                message.DeliveryAnnotations.Add(AmqpProperty.PartitionLastEnqueuedOffset.ToString(), lastOffset.Value);
+                message.DeliveryAnnotations.Add(AmqpProperty.PartitionLastEnqueuedOffset.ToString(), lastOffset);
             }
 
             if (lastEnqueueTime.HasValue)
