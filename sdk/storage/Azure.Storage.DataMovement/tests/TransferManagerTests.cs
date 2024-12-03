@@ -158,6 +158,7 @@ public class TransferManagerTests
         foreach (MemoryTransferCheckpointer.Job job in checkpointer.Jobs.Values)
         {
             Assert.That(job.Parts.Count, Is.EqualTo(1), "Items should be single-part.");
+            Assert.That(job.Parts.Values.First().Status.State, Is.EqualTo(DataTransferState.Queued), "Bad part status.");
             Assert.That(job.Parts.Keys.First(), Is.EqualTo(0), "Parts should be zero-indexed.");
             Assert.That(job.EnumerationComplete, "Enumeration not marked comlete.");
             Assert.That(job.Status.State, Is.EqualTo(DataTransferState.InProgress), "Transfer state not updated.");
