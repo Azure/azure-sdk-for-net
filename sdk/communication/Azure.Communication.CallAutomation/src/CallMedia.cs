@@ -1270,7 +1270,7 @@ namespace Azure.Communication.CallAutomation
             {
                 var request = options == default
                     ? new StartTranscriptionRequestInternal()
-                    : new StartTranscriptionRequestInternal() { Locale = options.Locale, OperationContext = options.OperationContext };
+                    : new StartTranscriptionRequestInternal() { Locale = options.Locale, OperationContext = options.OperationContext, OperationCallbackUri=options.OperationCallbackUri, SpeechRecognitionModelEndpointId=options.SpeechRecognitionModelEndpointId };
 
                 return CallMediaRestClient.StartTranscription(CallConnectionId, request, cancellationToken);
             }
@@ -1295,7 +1295,7 @@ namespace Azure.Communication.CallAutomation
             {
                 var request = options == default
                     ? new StartTranscriptionRequestInternal()
-                    : new StartTranscriptionRequestInternal() { Locale = options.Locale, OperationContext = options.OperationContext };
+                    : new StartTranscriptionRequestInternal() { Locale = options.Locale, OperationContext = options.OperationContext, OperationCallbackUri = options.OperationCallbackUri, SpeechRecognitionModelEndpointId = options.SpeechRecognitionModelEndpointId };
 
                 return await CallMediaRestClient.StartTranscriptionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
@@ -1320,7 +1320,7 @@ namespace Azure.Communication.CallAutomation
             {
                 var request = options == default
                     ? new StopTranscriptionRequestInternal()
-                    : new StopTranscriptionRequestInternal() { OperationContext = options.OperationContext };
+                    : new StopTranscriptionRequestInternal() { OperationContext = options.OperationContext, OperationCallbackUri = options.OperationCallbackUri };
 
                 return CallMediaRestClient.StopTranscription(CallConnectionId, request, cancellationToken);
             }
@@ -1345,7 +1345,7 @@ namespace Azure.Communication.CallAutomation
             {
                 var request = options == default
                     ? new StopTranscriptionRequestInternal()
-                    : new StopTranscriptionRequestInternal() { OperationContext = options.OperationContext };
+                    : new StopTranscriptionRequestInternal() { OperationContext = options.OperationContext, OperationCallbackUri = options.OperationCallbackUri };
 
                 return await CallMediaRestClient.StopTranscriptionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
@@ -1390,11 +1390,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                UpdateTranscriptionRequestInternal request = new(options.Locale)
-                {
-                   // OperationContext = options.OperationContext,
-                   // SpeechRecognitionModelEndpointId = options.SpeechRecognitionModelEndpointId
-                };
+                UpdateTranscriptionRequestInternal request = new(options.Locale, options.SpeechRecognitionModelEndpointId, options.OperationContext, options.OperationCallbackUri);
 
                 return CallMediaRestClient.UpdateTranscription(CallConnectionId, request, cancellationToken);
             }
@@ -1439,11 +1435,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                UpdateTranscriptionRequestInternal request = new(options.Locale)
-                {
-                    // OperationContext = options.OperationContext,
-                    // SpeechRecognitionModelEndpointId = options.SpeechRecognitionModelEndpointId
-                };
+                UpdateTranscriptionRequestInternal request = new(options.Locale, options.SpeechRecognitionModelEndpointId, options.OperationContext, options.OperationCallbackUri);
 
                 return await CallMediaRestClient.UpdateTranscriptionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
@@ -1518,7 +1510,7 @@ namespace Azure.Communication.CallAutomation
             {
                 var request = options == default
                     ? new StopMediaStreamingRequestInternal()
-                    : new StopMediaStreamingRequestInternal() { OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri }; // OperationContext = options.OperationContext
+                    : new StopMediaStreamingRequestInternal() { OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri, OperationContext = options.OperationContext };
 
                 return CallMediaRestClient.StopMediaStreaming(CallConnectionId, request, cancellationToken);
             }
