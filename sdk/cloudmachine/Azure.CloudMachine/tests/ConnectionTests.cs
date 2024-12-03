@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text.Json;
 using Azure.CloudMachine.KeyVault;
 using Azure.CloudMachine.OpenAI;
+using Azure.Core;
 using Azure.Storage.Blobs;
 using NUnit.Framework;
 using OpenAI.Chat;

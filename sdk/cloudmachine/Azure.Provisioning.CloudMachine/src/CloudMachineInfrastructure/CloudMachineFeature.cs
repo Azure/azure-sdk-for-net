@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.CloudMachine;
+using Azure.Core;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CloudMachine;

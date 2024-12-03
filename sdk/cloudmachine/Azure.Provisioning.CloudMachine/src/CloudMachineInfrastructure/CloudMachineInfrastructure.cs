@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.Expressions;
