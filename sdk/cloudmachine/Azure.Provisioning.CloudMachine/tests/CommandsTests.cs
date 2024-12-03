@@ -13,4 +13,10 @@ public class CommandsTests
     {
         CloudMachineCommands.Execute(["-ai", "chat"], exitProcessIfHandled: false);
     }
+
+    [Test]
+    public void DoInit()
+    {
+        CloudMachineCommands.Execute(["-init", "demo.csproj"], exitProcessIfHandled: false);
+    }
 }

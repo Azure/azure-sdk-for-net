@@ -193,7 +193,7 @@ resource cm_eventgrid_topic 'Microsoft.EventGrid/systemTopics@2022-06-15' = {
 }
 
 resource cm_eventgrid_subscription_blob 'Microsoft.EventGrid/systemTopics/eventSubscriptions@2022-06-15' = {
-  name: 'cm_eventgrid_subscription_blob'
+  name: 'cm-eventgrid-subscription-blob'
   properties: {
     deliveryWithResourceIdentity: {
       identity: {
