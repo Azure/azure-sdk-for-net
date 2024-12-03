@@ -181,7 +181,7 @@ namespace Azure.Monitor.Query.Tests
 
             var resourceId = TestEnvironment.StorageAccountId;
             // If only starttime is specified, then endtime defaults to the current time.
-            DateTimeOffset start = new DateTimeOffset(TestStartTime).Subtract(TimeSpan.FromHours(4));
+            DateTimeOffset start = Recording.UtcNow.Subtract(TimeSpan.FromHours(4));
 
             Response<MetricsQueryResourcesResult> metricsResultsResponse = await client.QueryResourcesAsync(
                 resourceIds: new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) },
@@ -203,8 +203,8 @@ namespace Azure.Monitor.Query.Tests
 
             var resourceId = TestEnvironment.StorageAccountId;
 
-            DateTimeOffset start = new DateTimeOffset(TestStartTime).Subtract(TimeSpan.FromHours(4));
-            DateTimeOffset end = new DateTimeOffset(TestStartTime).Subtract(TimeSpan.FromHours(1));
+            DateTimeOffset start = Recording.UtcNow.Subtract(TimeSpan.FromHours(4));
+            DateTimeOffset end = Recording.UtcNow;
 
             Response<MetricsQueryResourcesResult> metricsResultsResponse = await client.QueryResourcesAsync(
                 resourceIds: new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) },
