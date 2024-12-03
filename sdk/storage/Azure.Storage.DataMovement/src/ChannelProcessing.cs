@@ -21,22 +21,25 @@ internal interface IProcessor<TItem> : IDisposable
 
 internal static class ChannelProcessing
 {
-    public static IProcessor<T> NewProcessor<T>(int readers, int capacity = -1)
+    public static IProcessor<T> NewProcessor<T>(int readers, int? capacity = null)
     {
         Argument.AssertInRange(readers, 1, int.MaxValue, nameof(readers));
-        Argument.AssertInRange(capacity, -1, int.MaxValue, nameof(capacity));
+        if (capacity.HasValue)
+        {
+            Argument.AssertInRange(capacity.Value, 1, int.MaxValue, nameof(capacity));
+        }
 
-        Channel<T> channel = capacity == -1
-            ? Channel.CreateUnbounded<T>(new UnboundedChannelOptions()
-            {
-                AllowSynchronousContinuations = true,
-                SingleReader = readers == 1,
-            })
-            : Channel.CreateBounded<T>(new BoundedChannelOptions(capacity)
+        Channel<T> channel = capacity.HasValue
+            ? Channel.CreateBounded<T>(new BoundedChannelOptions(capacity.Value)
             {
                 AllowSynchronousContinuations = true,
                 SingleReader = readers == 1,
                 FullMode = BoundedChannelFullMode.Wait,
+            })
+            : Channel.CreateUnbounded<T>(new UnboundedChannelOptions()
+            {
+                AllowSynchronousContinuations = true,
+                SingleReader = readers == 1,
             });
         return readers == 1
             ? new SequentialChannelProcessor<T>(channel)
@@ -82,8 +85,10 @@ internal static class ChannelProcessing
             _cancellationTokenSource = new();
         }
 
-        public ValueTask QueueAsync(TItem item, CancellationToken cancellationToken = default) =>
-            _channel.Writer.WriteAsync(item, cancellationToken);
+        public async ValueTask QueueAsync(TItem item, CancellationToken cancellationToken = default)
+        {
+            await _channel.Writer.WriteAsync(item, cancellationToken).ConfigureAwait(false);
+        }
 
         public bool TryComplete() => _channel.Writer.TryComplete();
 
