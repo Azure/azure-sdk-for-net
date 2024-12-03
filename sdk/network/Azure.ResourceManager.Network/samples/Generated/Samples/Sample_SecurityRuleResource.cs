@@ -18,33 +18,6 @@ namespace Azure.ResourceManager.Network.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Delete_DeleteNetworkSecurityRuleFromNetworkSecurityGroup()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkSecurityGroupRuleDelete.json
-            // this example is just showing the usage of "SecurityRules_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SecurityRuleResource created on azure
-            // for more information of creating SecurityRuleResource, please refer to the document of SecurityRuleResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string networkSecurityGroupName = "testnsg";
-            string securityRuleName = "rule1";
-            ResourceIdentifier securityRuleResourceId = SecurityRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkSecurityGroupName, securityRuleName);
-            SecurityRuleResource securityRule = client.GetSecurityRuleResource(securityRuleResourceId);
-
-            // invoke the operation
-            await securityRule.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetNetworkSecurityRuleInNetworkSecurityGroup()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkSecurityGroupRuleGet.json
@@ -76,6 +49,33 @@ namespace Azure.ResourceManager.Network.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteNetworkSecurityRuleFromNetworkSecurityGroup()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkSecurityGroupRuleDelete.json
+            // this example is just showing the usage of "SecurityRules_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SecurityRuleResource created on azure
+            // for more information of creating SecurityRuleResource, please refer to the document of SecurityRuleResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string networkSecurityGroupName = "testnsg";
+            string securityRuleName = "rule1";
+            ResourceIdentifier securityRuleResourceId = SecurityRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkSecurityGroupName, securityRuleName);
+            SecurityRuleResource securityRule = client.GetSecurityRuleResource(securityRuleResourceId);
+
+            // invoke the operation
+            await securityRule.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateSecurityRule()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkSecurityGroupRuleCreate.json
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network.Samples
             SecurityRuleResource securityRule = client.GetSecurityRuleResource(securityRuleResourceId);
 
             // invoke the operation
-            SecurityRuleData data = new SecurityRuleData()
+            SecurityRuleData data = new SecurityRuleData
             {
                 Protocol = SecurityRuleProtocol.Asterisk,
                 SourcePortRange = "*",

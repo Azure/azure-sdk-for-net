@@ -4,6 +4,11 @@
 
 ### Features Added
 
+- Please use the properties in `VirtualMachineScaleSetData.Properties` to set the properties of the VMSS, instead of using those properties at the root level of `VirtualMachineScaleSetData` class.
+- Please use the properties in `VirtualMachineScaleSetPatch.Properties` to set the properties of the VMSS, instead of using those properties at the root level of `VirtualMachineScaleSetPatch` class.
+- Added `VirtualMachineScaleSetProperties` which supports `AdditionalProperties` to send and receive private/internal properties supported by the service.
+- Added `AdditionalProperties` to `VirtualMachineSizeProperties` and `VirtualMachineScaleSetUpgradePolicy` classes to support private/internal properties supported by the service.
+
 ### Breaking Changes
 
 ### Bugs Fixed

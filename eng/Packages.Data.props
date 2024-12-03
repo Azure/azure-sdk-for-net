@@ -128,7 +128,7 @@
     <PackageReference Update="Azure.Storage.Blobs" Version="12.21.1" />
     <PackageReference Update="Azure.Storage.Queues" Version="12.19.1" />
     <PackageReference Update="Azure.Storage.Files.Shares" Version="12.19.1" />
-    <PackageReference Update="Azure.AI.Inference" Version="1.0.0-beta.2" />    
+    <PackageReference Update="Azure.AI.Inference" Version="1.0.0-beta.2" />
     <PackageReference Update="Azure.AI.OpenAI" Version="2.0.0" />
     <PackageReference Update="Azure.ResourceManager" Version="1.13.0" />
     <PackageReference Update="Azure.ResourceManager.AppConfiguration" Version="1.3.2" />
@@ -158,10 +158,11 @@
     <PackageReference Update="Azure.Provisioning.KeyVault" Version="1.0.0" />
     <PackageReference Update="Azure.Provisioning.ServiceBus" Version="1.0.0" />
     <PackageReference Update="Azure.Provisioning.Storage" Version="1.0.0" />
+    <PackageReference Update="Azure.Provisioning.AppService" Version="1.0.0" />
     <PackageReference Update="Microsoft.Bcl.Numerics" Version="8.0.0" />
 
     <!-- Other approved packages -->
-    <PackageReference Update="Microsoft.Azure.Amqp" Version="2.6.7" />
+    <PackageReference Update="Microsoft.Azure.Amqp" Version="2.6.9" />
     <PackageReference Update="Microsoft.Azure.WebPubSub.Common" Version="1.4.0" />
     <PackageReference Update="Microsoft.Identity.Client" Version="4.66.1" />
     <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="4.66.1" />
@@ -238,7 +239,7 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20241114.1" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20241201.1" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20240813.2" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="3.2.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0" PrivateAssets="All" />
@@ -253,7 +254,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsGeneratorLibrary)' == 'true'">
-    <PackageReference Update="Microsoft.Generator.CSharp.ClientModel" Version="1.0.0-alpha.20241113.8" />
+    <PackageReference Update="Microsoft.Generator.CSharp.ClientModel" Version="1.0.0-alpha.20241128.1" />
   </ItemGroup>
 
   <!--

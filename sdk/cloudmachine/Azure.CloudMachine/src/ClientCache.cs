@@ -12,7 +12,7 @@ namespace Azure.Core;
 /// </summary>
 public class ClientCache
 {
-    private readonly Dictionary<(Type, string), object> _clients = new Dictionary<(Type, string), object>();
+    private readonly Dictionary<(Type, string), object> _clients = [];
 
     /// <summary>
     /// Gets a client from the cache.
@@ -23,7 +23,7 @@ public class ClientCache
     /// <returns></returns>
     public T Get<T>(Func<T> value, string id = default) where T: class
     {
-        var client = (typeof(T), id);
+        (Type, string) client = (typeof(T), id);
         lock (_clients)
         {
             if (_clients.TryGetValue(client, out object cached))

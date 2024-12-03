@@ -102,7 +102,7 @@ namespace Azure.Core.Serialization
 
             return _cache.GetOrAdd(member, m =>
             {
-                if (_serializer.ContractResolver.ResolveContract(m.ReflectedType) is JsonObjectContract contract)
+                if (_serializer.ContractResolver.ResolveContract(m.ReflectedType!) is JsonObjectContract contract)
                 {
                     foreach (JsonProperty property in contract.Properties)
                     {

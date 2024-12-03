@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Sql.Samples
             ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource managedRestorableDroppedDbBackupShortTermRetentionPolicy = client.GetManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource(managedRestorableDroppedDbBackupShortTermRetentionPolicyResourceId);
 
             // invoke the operation
-            ManagedBackupShortTermRetentionPolicyData data = new ManagedBackupShortTermRetentionPolicyData()
+            ManagedBackupShortTermRetentionPolicyData data = new ManagedBackupShortTermRetentionPolicyData
             {
                 RetentionDays = 14,
             };

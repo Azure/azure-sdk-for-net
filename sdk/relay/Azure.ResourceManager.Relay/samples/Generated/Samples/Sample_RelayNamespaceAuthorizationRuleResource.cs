@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Relay.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_RelayNameSpaceAuthorizationRuleCreate()
+        public async Task Get_RelayNameSpaceAuthorizationRuleGet()
         {
-            // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/NameSpaces/RelayNameSpaceAuthorizationRuleCreate.json
-            // this example is just showing the usage of "Namespaces_CreateOrUpdateAuthorizationRule" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/NameSpaces/RelayNameSpaceAuthorizationRuleGet.json
+            // this example is just showing the usage of "Namespaces_GetAuthorizationRule" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -38,15 +38,7 @@ namespace Azure.ResourceManager.Relay.Samples
             RelayNamespaceAuthorizationRuleResource relayNamespaceAuthorizationRule = client.GetRelayNamespaceAuthorizationRuleResource(relayNamespaceAuthorizationRuleResourceId);
 
             // invoke the operation
-            RelayAuthorizationRuleData data = new RelayAuthorizationRuleData()
-            {
-                Rights =
-{
-RelayAccessRight.Listen,RelayAccessRight.Send
-},
-            };
-            ArmOperation<RelayNamespaceAuthorizationRuleResource> lro = await relayNamespaceAuthorizationRule.UpdateAsync(WaitUntil.Completed, data);
-            RelayNamespaceAuthorizationRuleResource result = lro.Value;
+            RelayNamespaceAuthorizationRuleResource result = await relayNamespaceAuthorizationRule.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -84,10 +76,10 @@ RelayAccessRight.Listen,RelayAccessRight.Send
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_RelayNameSpaceAuthorizationRuleGet()
+        public async Task Update_RelayNameSpaceAuthorizationRuleCreate()
         {
-            // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/NameSpaces/RelayNameSpaceAuthorizationRuleGet.json
-            // this example is just showing the usage of "Namespaces_GetAuthorizationRule" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/NameSpaces/RelayNameSpaceAuthorizationRuleCreate.json
+            // this example is just showing the usage of "Namespaces_CreateOrUpdateAuthorizationRule" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -104,7 +96,12 @@ RelayAccessRight.Listen,RelayAccessRight.Send
             RelayNamespaceAuthorizationRuleResource relayNamespaceAuthorizationRule = client.GetRelayNamespaceAuthorizationRuleResource(relayNamespaceAuthorizationRuleResourceId);
 
             // invoke the operation
-            RelayNamespaceAuthorizationRuleResource result = await relayNamespaceAuthorizationRule.GetAsync();
+            RelayAuthorizationRuleData data = new RelayAuthorizationRuleData
+            {
+                Rights = { RelayAccessRight.Listen, RelayAccessRight.Send },
+            };
+            ArmOperation<RelayNamespaceAuthorizationRuleResource> lro = await relayNamespaceAuthorizationRule.UpdateAsync(WaitUntil.Completed, data);
+            RelayNamespaceAuthorizationRuleResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

@@ -66,25 +66,19 @@ namespace Azure.ResourceManager.Advisor.Samples
 
             // invoke the operation
             ConfigurationName configurationName = ConfigurationName.Default;
-            ConfigData data = new ConfigData()
+            ConfigData data = new ConfigData
             {
                 Exclude = true,
                 LowCpuThreshold = CpuThreshold.Five,
-                Digests =
-{
-new DigestConfig()
+                Digests = {new DigestConfig
 {
 Name = "digestConfigName",
 ActionGroupResourceId = "/subscriptions/subscriptionId/resourceGroups/resourceGroup/providers/microsoft.insights/actionGroups/actionGroupName",
 Frequency = 30,
-Categories =
-{
-Category.HighAvailability,Category.Security,Category.Performance,Category.Cost,Category.OperationalExcellence
-},
+Categories = {Category.HighAvailability, Category.Security, Category.Performance, Category.Cost, Category.OperationalExcellence},
 Language = "en",
 State = DigestConfigState.Active,
-}
-},
+}},
             };
             ConfigData result = await resourceGroupResource.CreateConfigurationAsync(configurationName, data);
 

@@ -86,7 +86,7 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
             if (string.IsNullOrEmpty(runId?.ToString()))
                 _environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId, ReporterUtils.GetRunId(cIInfo));
             else
-                _environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId, runId!.ToString());
+                _environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId, runId!.ToString()!); // runId is checked above
         }
         else
         {
@@ -136,8 +136,8 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         }
 
         var cloudRunId = _environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId);
-        string baseUrl = _environment.GetEnvironmentVariable(ReporterConstants.s_pLAYWRIGHT_SERVICE_REPORTING_URL);
-        string accessToken = _environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken);
+        string? baseUrl = _environment.GetEnvironmentVariable(ReporterConstants.s_pLAYWRIGHT_SERVICE_REPORTING_URL);
+        string? accessToken = _environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken);
         if (string.IsNullOrEmpty(baseUrl))
         {
             _consoleWriter.WriteError(Constants.s_no_service_endpoint_error_message);

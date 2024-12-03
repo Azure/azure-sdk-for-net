@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    internal partial class UnknownInternalConnectionProperties : IUtf8JsonSerializable, IJsonModel<InternalConnectionProperties>
+    internal partial class UnknownInternalConnectionProperties : IUtf8JsonSerializable, IJsonModel<ConnectionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InternalConnectionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<InternalConnectionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ConnectionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,25 +28,25 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InternalConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InternalConnectionProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionProperties)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
         }
 
-        InternalConnectionProperties IJsonModel<InternalConnectionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ConnectionProperties IJsonModel<ConnectionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InternalConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InternalConnectionProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInternalConnectionProperties(document.RootElement, options);
+            return DeserializeConnectionProperties(document.RootElement, options);
         }
 
         internal static UnknownInternalConnectionProperties DeserializeUnknownInternalConnectionProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -88,36 +88,36 @@ namespace Azure.AI.Projects
             return new UnknownInternalConnectionProperties(authType, category, target, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<InternalConnectionProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ConnectionProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InternalConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InternalConnectionProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        InternalConnectionProperties IPersistableModel<InternalConnectionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ConnectionProperties IPersistableModel<ConnectionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InternalConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeInternalConnectionProperties(document.RootElement, options);
+                        return DeserializeConnectionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InternalConnectionProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<InternalConnectionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ConnectionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -131,7 +131,7 @@ namespace Azure.AI.Projects
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<InternalConnectionProperties>(this, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue<ConnectionProperties>(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }
