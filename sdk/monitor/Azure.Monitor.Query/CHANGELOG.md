@@ -3,7 +3,7 @@
 ## 1.6.0-beta.1 (Unreleased)
 
 ### Features Added
-
+- Add 'StartTime' and 'EndTime' parameters to 'MetricsQueryResourcesOptions' to allow for querying a specific time range
 ### Breaking Changes
 
 ### Bugs Fixed

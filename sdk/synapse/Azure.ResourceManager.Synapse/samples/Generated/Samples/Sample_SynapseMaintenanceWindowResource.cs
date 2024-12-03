@@ -72,17 +72,14 @@ namespace Azure.ResourceManager.Synapse.Samples
 
             // invoke the operation
             string maintenanceWindowName = "current";
-            SynapseMaintenanceWindowData data = new SynapseMaintenanceWindowData()
+            SynapseMaintenanceWindowData data = new SynapseMaintenanceWindowData
             {
-                TimeRanges =
-{
-new SynapseMaintenanceWindowTimeRange()
+                TimeRanges = {new SynapseMaintenanceWindowTimeRange
 {
 DayOfWeek = SynapseDayOfWeek.Saturday,
-StartOn = TimeSpan.Parse("00:00:00"),
+StartOn = XmlConvert.ToTimeSpan("00:00:00"),
 Duration = XmlConvert.ToTimeSpan("PT60M"),
-}
-},
+}},
             };
             await synapseMaintenanceWindow.CreateOrUpdateAsync(WaitUntil.Completed, maintenanceWindowName, data);
 

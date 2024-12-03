@@ -17,6 +17,41 @@ namespace Azure.ResourceManager.Avs.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Get_ScriptCmdletsGet()
+        {
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/ScriptCmdlets_Get.json
+            // this example is just showing the usage of "ScriptCmdlets_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ScriptPackageResource created on azure
+            // for more information of creating ScriptPackageResource, please refer to the document of ScriptPackageResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "group1";
+            string privateCloudName = "cloud1";
+            string scriptPackageName = "package@1.0.2";
+            ResourceIdentifier scriptPackageResourceId = ScriptPackageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName, scriptPackageName);
+            ScriptPackageResource scriptPackage = client.GetScriptPackageResource(scriptPackageResourceId);
+
+            // get the collection of this ScriptCmdletResource
+            ScriptCmdletCollection collection = scriptPackage.GetScriptCmdlets();
+
+            // invoke the operation
+            string scriptCmdletName = "New-ExternalSsoDomain";
+            ScriptCmdletResource result = await collection.GetAsync(scriptCmdletName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ScriptCmdletData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ScriptCmdletsList()
         {
             // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/ScriptCmdlets_List.json
@@ -50,41 +85,6 @@ namespace Azure.ResourceManager.Avs.Samples
             }
 
             Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Get_ScriptCmdletsGet()
-        {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/ScriptCmdlets_Get.json
-            // this example is just showing the usage of "ScriptCmdlets_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ScriptPackageResource created on azure
-            // for more information of creating ScriptPackageResource, please refer to the document of ScriptPackageResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "group1";
-            string privateCloudName = "cloud1";
-            string scriptPackageName = "package@1.0.2";
-            ResourceIdentifier scriptPackageResourceId = ScriptPackageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName, scriptPackageName);
-            ScriptPackageResource scriptPackage = client.GetScriptPackageResource(scriptPackageResourceId);
-
-            // get the collection of this ScriptCmdletResource
-            ScriptCmdletCollection collection = scriptPackage.GetScriptCmdlets();
-
-            // invoke the operation
-            string scriptCmdletName = "New-ExternalSsoDomain";
-            ScriptCmdletResource result = await collection.GetAsync(scriptCmdletName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ScriptCmdletData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]

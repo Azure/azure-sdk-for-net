@@ -82,6 +82,16 @@ namespace Azure.Search.Documents
         public static readonly JsonEncodedText SearchAnswersKeyJson = JsonEncodedText.Encode("@search.answers");
 
         /// <summary>
+        /// The @search.debugInfo key.
+        /// </summary>
+        public static readonly JsonEncodedText SearchDebugKeyJson = JsonEncodedText.Encode("@search.debug");
+
+        /// <summary>
+        /// The @search.semanticQueryRewritesResultType key.
+        /// </summary>
+        public static readonly JsonEncodedText SearchSemanticQueryRewritesResultTypeKeyJson = JsonEncodedText.Encode("@search.semanticQueryRewritesResultType");
+
+        /// <summary>
         /// The @search.highlights key.
         /// </summary>
         public static readonly JsonEncodedText SearchHighlightsKeyJson = JsonEncodedText.Encode("@search.highlights");
@@ -140,6 +150,11 @@ namespace Azure.Search.Documents
         /// The count key.
         /// </summary>
         public static readonly JsonEncodedText CountKeyJson = JsonEncodedText.Encode(CountKey);
+
+        /// <summary>
+        /// The facets key.
+        /// </summary>
+        public static readonly JsonEncodedText FacetsKeyJson = JsonEncodedText.Encode("@search.facets");
 
         /// <summary>
         /// The to key.
