@@ -1,16 +1,23 @@
 # Release History
 
+## 1.0.0-beta.3 (2024-12-14)
+
+### Features Added
+
+- Added support for analyze-text API Versions
+  - 2024-11-01
+  - 2024-11-15-preview
+
+### Breaking Changes
+
+- Removed support for analyze-text API Versions
+  - 2023-11-15-preview
+
 ## 1.0.0-beta.2 (Unreleased)
 
 ### Features Added
 
 - Exposed `JsonModelWriteCore` for model serialization procedure.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.1 (2024-08-06)
 
