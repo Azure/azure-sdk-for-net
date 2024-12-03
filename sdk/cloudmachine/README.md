@@ -4,6 +4,16 @@ Write Azure apps in 5 minutes
 
 ## Getting started
 
+### Install the package
+
+Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
+
+```dotnetcli
+dotnet add package Azure.CloudMachine.All --prerelease
+```
+
+### Authenticate the Client
+
 ### Prerequisites
 
 * You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/).
@@ -12,6 +22,10 @@ Write Azure apps in 5 minutes
 * You must have Azure Developer CLI (azd) installed
 * You must have npm installed
 * You must be logged into Azure CLI and Azure Developer CLI
+
+## Key concepts
+
+Write Azure apps in 5 minutes using simplified opinionated APIs and declarative resource provisioning.
 
 ### Walkthrough
 
@@ -38,7 +52,7 @@ using Azure.CloudMachine;
 
 if (CloudMachineInfrastructure.Configure(args)) return;
 ```
-The `CloudMachineInfrastructure.Configure` call allows running the app with a `-bicep` switch, which will generate bicep files required to provision CloudMachine resources in Azure. Let's generate these bicep files now. 
+The `CloudMachineInfrastructure.Configure` call allows running the app with a `-bicep` switch, which will generate bicep files required to provision CloudMachine resources in Azure. Let's generate these bicep files now.
 ```dotnetcli
 dotnet run -bicep
 ```
@@ -56,7 +70,7 @@ When provisioning finishes, you should see something like the following in the c
 ```dotnetcli
  (✓) Done: Resource group: cm125957681369428 (627ms)
 ```
-And if you go to your Azure portal, or execute the following az command, you can see the resource group created. The resource group will contain resources such as Storage, ServiceBus, and EventGrid. 
+And if you go to your Azure portal, or execute the following az command, you can see the resource group created. The resource group will contain resources such as Storage, ServiceBus, and EventGrid.
 ```dotnetcli
 az resource list --resource-group <resource_group_from_command_line> --output table
 ```
@@ -92,7 +106,7 @@ class AssistantService {
         var client = cm.GetOpenAIChatClient();
         ChatCompletion completion = await client.CompleteChatAsync(message);
         return completion.Content[0].Text;
-    } 
+    }
 }
 ```
 Lastly, create an instance of the service and call the `Chat` method when the user navigates to the root URL:
@@ -123,7 +137,7 @@ class AssistantService {
         var client = cm.GetOpenAIChatClient();
         ChatCompletion completion = await client.CompleteChatAsync(message);
         return completion.Content[0].Text;
-    } 
+    }
 
     internal static void Configure(CloudMachineInfrastructure cm) {
         cm.AddFeature(new OpenAIFeature() {
@@ -181,7 +195,7 @@ class AssistantService : IAssistantService {
         var client = cm.GetOpenAIChatClient();
         ChatCompletion completion = await client.CompleteChatAsync(message);
         return completion.Content[0].Text;
-    } 
+    }
 
     internal static void Configure(CloudMachineInfrastructure cm) {
         cm.AddFeature(new OpenAIFeature() {
@@ -270,3 +284,37 @@ Go back to the client project command window and start the client:
 dotnet run
 ```
 You can use the simple command line app to ask Azure OpenAI some questions.
+
+## Examples
+
+## Troubleshooting
+
+-   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
+-   Check [previous questions](https://stackoverflow.com/questions/tagged/azure+.net) or ask new ones on Stack Overflow using Azure and .NET tags.
+
+## Next steps
+
+## Contributing
+
+For details on contributing to this repository, see the [contributing
+guide][cg].
+
+This project welcomes contributions and suggestions. Most contributions
+require you to agree to a Contributor License Agreement (CLA) declaring
+that you have the right to, and actually do, grant us the rights to use
+your contribution. For details, visit <https://cla.microsoft.com>.
+
+When you submit a pull request, a CLA-bot will automatically determine
+whether you need to provide a CLA and decorate the PR appropriately
+(for example, label, comment). Follow the instructions provided by the
+bot. You'll only need to do this action once across all repositories
+using our CLA.
+
+This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For
+more information, see the [Code of Conduct FAQ][coc_faq] or contact
+<opencode@microsoft.com> with any other questions or comments.
+
+<!-- LINKS -->
+[cg]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/CONTRIBUTING.md
+[coc]: https://opensource.microsoft.com/codeofconduct/
+[coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
