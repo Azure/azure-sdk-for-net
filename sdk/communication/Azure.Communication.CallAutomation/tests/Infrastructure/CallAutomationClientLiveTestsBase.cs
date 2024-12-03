@@ -25,30 +25,6 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainRegEx) { Value = "https://sanitized.skype.com" });
     }
 
-        public bool SkipCallAutomationInteractionLiveTests
-            => TestEnvironment.Mode != RecordedTestMode.Playback && Environment.GetEnvironmentVariable("SKIP_CALLAUTOMATION_INTERACTION_LIVE_TESTS")== "TRUE";
-
-        /// <summary>
-        /// Creates a <see cref="CallAutomationClient" />
-        /// </summary>
-        /// <returns>The instrumented <see cref="CallAutomationClient" />.</returns>
-        protected CallAutomationClient CreateInstrumentedCallAutomationClientWithConnectionString()
-        {
-            var connectionString = TestEnvironment.LiveTestStaticConnectionString;
-
-            CallAutomationClient callAutomationClient;
-            if (TestEnvironment.PMAEndpoint == null || TestEnvironment.PMAEndpoint.Length == 0)
-            {
-                callAutomationClient = new CallAutomationClient(connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs());
-            }
-            else
-            {
-                callAutomationClient = new CallAutomationClient(new Uri(TestEnvironment.PMAEndpoint), connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs());
-            }
-
-            return InstrumentClient(callAutomationClient);
-        }
-
         /// <summary>
         /// Creates a <see cref="CallAutomationClientOptions" />
         /// </summary>

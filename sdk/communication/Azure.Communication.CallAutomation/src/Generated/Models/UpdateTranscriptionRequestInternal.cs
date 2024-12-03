@@ -13,7 +13,7 @@ namespace Azure.Communication.CallAutomation
     internal partial class UpdateTranscriptionRequestInternal
     {
         /// <summary> Initializes a new instance of <see cref="UpdateTranscriptionRequestInternal"/>. </summary>
-        /// <param name="locale"> Defines new locale for transcription. </param>
+        /// <param name="locale"> Sets new locale for transcription. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locale"/> is null. </exception>
         public UpdateTranscriptionRequestInternal(string locale)
         {
@@ -22,7 +22,22 @@ namespace Azure.Communication.CallAutomation
             Locale = locale;
         }
 
-        /// <summary> Defines new locale for transcription. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateTranscriptionRequestInternal"/>. </summary>
+        /// <param name="locale"> Sets new locale for transcription. </param>
+        /// <param name="speechRecognitionModelEndpointId"> Sets Endpoint id where the custom model was deployed. </param>
+        /// <param name="operationContext"> The value to identify context of the operation. </param>
+        internal UpdateTranscriptionRequestInternal(string locale, string speechRecognitionModelEndpointId, string operationContext)
+        {
+            Locale = locale;
+            SpeechRecognitionModelEndpointId = speechRecognitionModelEndpointId;
+            OperationContext = operationContext;
+        }
+
+        /// <summary> Sets new locale for transcription. </summary>
         public string Locale { get; }
+        /// <summary> Sets Endpoint id where the custom model was deployed. </summary>
+        public string SpeechRecognitionModelEndpointId { get; set; }
+        /// <summary> The value to identify context of the operation. </summary>
+        public string OperationContext { get; set; }
     }
 }

@@ -17,6 +17,16 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartObject();
             writer.WritePropertyName("locale"u8);
             writer.WriteStringValue(Locale);
+            if (Optional.IsDefined(SpeechRecognitionModelEndpointId))
+            {
+                writer.WritePropertyName("speechRecognitionModelEndpointId"u8);
+                writer.WriteStringValue(SpeechRecognitionModelEndpointId);
+            }
+            if (Optional.IsDefined(OperationContext))
+            {
+                writer.WritePropertyName("operationContext"u8);
+                writer.WriteStringValue(OperationContext);
+            }
             writer.WriteEndObject();
         }
 
