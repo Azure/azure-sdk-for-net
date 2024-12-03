@@ -87,6 +87,20 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
     [Test]
     [TestCase(true)]
     [TestCase(false)]
+    public async Task ContentIsNotLoggedByDefault(bool isError)
+    {
+        var response = new MockPipelineResponse(isError ? 500 : 200);
+        response.SetContent([1, 2, 3]);
+
+        await CreatePipelineAndSendRequest(response, requestContentBytes: Encoding.UTF8.GetBytes(("Hello world")));
+
+        TestLogger logger = _factory.GetLogger(LoggingPolicyCategoryName);
+        AssertNoContentLogged(logger);
+    }
+
+    [Test]
+    [TestCase(true)]
+    [TestCase(false)]
     public async Task ContentIsNotLoggedWhenDisabled(bool isError)
     {
         _loggingOptions.EnableMessageContentLogging = false;

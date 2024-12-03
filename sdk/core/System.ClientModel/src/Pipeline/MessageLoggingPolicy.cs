@@ -29,7 +29,7 @@ public class MessageLoggingPolicy : PipelinePolicy
     private PipelineMessageLogger? _messageLogger;
     private readonly string _clientAssembly = typeof(MessageLoggingPolicy).Assembly.GetName().Name!;
 
-    private bool _enableMessageContentLogging => _loggingOptions.EnableMessageContentLogging ?? ClientLoggingOptions.DefaultEnableLogging;
+    private bool _enableMessageContentLogging => _loggingOptions.EnableMessageContentLogging ?? ClientLoggingOptions.DefaultEnableMessageContentLogging;
     private int _maxLength => _loggingOptions.MessageContentSizeLimit ?? ClientLoggingOptions.DefaultMessageContentSizeLimit;
 
     /// <summary>
@@ -230,7 +230,7 @@ public class MessageLoggingPolicy : PipelinePolicy
 
         public override long Seek(long offset, SeekOrigin origin)
         {
-            return _originalStream.Seek(offset, origin);
+            throw new NotSupportedException("This stream does not support seek operations.");
         }
 
         public override int Read(byte[] buffer, int offset, int count)
@@ -278,9 +278,7 @@ public class MessageLoggingPolicy : PipelinePolicy
 
         public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
         {
-#pragma warning disable CA1835 // ReadAsync(Memory<>) overload is not available in netstandard2.0
             var result = await _originalStream.ReadAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
-#pragma warning restore // ReadAsync(Memory<>) overload is not available in netstandard2.0
 
             var countToLog = result;
             DecrementLength(ref countToLog);
@@ -288,6 +286,20 @@ public class MessageLoggingPolicy : PipelinePolicy
 
             return result;
         }
+
+#if !NETSTANDARD2_0
+
+        public override async ValueTask<int> ReadAsync(Memory<byte> buffer, CancellationToken cancellationToken = default)
+        {
+            var result = await _originalStream.ReadAsync(buffer, cancellationToken).ConfigureAwait(false);
+
+            var countToLog = result;
+            DecrementLength(ref countToLog);
+            LogBuffer(buffer.ToArray(), 0, countToLog, true);
+
+            return result;
+        }
+#endif
 
         public override bool CanRead => _originalStream.CanRead;
         public override bool CanSeek => _originalStream.CanSeek;
@@ -336,5 +348,5 @@ public class MessageLoggingPolicy : PipelinePolicy
             _maxLoggedBytes -= count;
         }
     }
-    #endregion
+#endregion
 }

@@ -64,6 +64,19 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
     [Test]
     [TestCase(true)]
     [TestCase(false)]
+    public async Task ContentIsNotLoggedByDefault(bool isError)
+    {
+        var response = new MockPipelineResponse(isError ? 500 : 200);
+        response.SetContent([1, 2, 3]);
+
+        await CreatePipelineAndSendRequest(response, requestContentBytes: Encoding.UTF8.GetBytes(("Hello world")));
+
+        AssertNoContentLogged();
+    }
+
+    [Test]
+    [TestCase(true)]
+    [TestCase(false)]
     public async Task ContentIsNotLoggedWhenDisabled(bool isError)
     {
         ClientLoggingOptions loggingOptions = new()
@@ -320,7 +333,7 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         StringAssert.Contains($"Custom-Response-Header:custom-response-header-value{Environment.NewLine}", log.GetProperty<string>("headers"));
 
         // Assert that no other log messages were written
-        Assert.AreEqual(_listener.EventData.Count(), 2);
+        Assert.AreEqual(2, _listener.EventData.Count());
     }
 
     [Test]
@@ -675,9 +688,15 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
 
         if (IsAsync)
         {
+#if NET462
             Assert.AreEqual(6, await response.ContentStream.ReadAsync(buffer, 5, 6));
             Assert.AreEqual(5, await response.ContentStream.ReadAsync(buffer, 6, 5));
             Assert.AreEqual(0, await response.ContentStream.ReadAsync(buffer, 0, 5));
+#else
+            Assert.AreEqual(6, await response.ContentStream.ReadAsync(buffer.AsMemory(5, 6)));
+            Assert.AreEqual(5, await response.ContentStream.ReadAsync(buffer.AsMemory(6, 5)));
+            Assert.AreEqual(0, await response.ContentStream.ReadAsync(buffer.AsMemory(0, 5)));
+#endif
         }
         else
         {
@@ -741,5 +760,5 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         await pipeline.SendSyncOrAsync(message, IsAsync);
     }
 
-    #endregion
+#endregion
 }
