@@ -13,22 +13,23 @@ internal class PipelineMessageSanitizer
     private const string LogAllValue = "*";
     private readonly bool _logAllHeaders;
     private readonly bool _logFullQueries;
-    private readonly string[] _allowedQueryParameters;
     private readonly string _redactedPlaceholder;
-    private readonly HashSet<string> _allowedHeaders;
 
     [ThreadStatic]
     private static StringBuilder? s_cachedStringBuilder;
     private const int MaxCachedStringBuilderCapacity = 1024;
 
-    public PipelineMessageSanitizer(string[] allowedQueryParameters, string[] allowedHeaders, string redactedPlaceholder = "REDACTED")
+    internal readonly HashSet<string> _allowedQueryParameters; //internal for testing
+    internal readonly HashSet<string> _allowedHeaders;
+
+    public PipelineMessageSanitizer(HashSet<string> allowedQueryParameters, HashSet<string> allowedHeaders, string redactedPlaceholder = "REDACTED")
     {
         _logAllHeaders = allowedHeaders.Contains(LogAllValue);
         _logFullQueries = allowedQueryParameters.Contains(LogAllValue);
 
         _allowedQueryParameters = allowedQueryParameters;
         _redactedPlaceholder = redactedPlaceholder;
-        _allowedHeaders = new HashSet<string>(allowedHeaders, StringComparer.InvariantCultureIgnoreCase);
+        _allowedHeaders = allowedHeaders;
     }
 
     public string SanitizeHeader(string name, string value)

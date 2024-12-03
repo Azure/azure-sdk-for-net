@@ -1,12 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Logging.Abstractions;
 using NUnit.Framework;
 
@@ -28,7 +23,7 @@ namespace System.ClientModel.Tests.Options
         [Test]
         public void CollectionPropertiesDefaultsAreSet()
         {
-            string[] expectedDefaultAllowedHeaderNames = new[] {
+            string[] expectedDefaultAllowedHeaderNames = [
             "traceparent",
             "Accept",
             "Cache-Control",
@@ -49,8 +44,8 @@ namespace System.ClientModel.Tests.Options
             "Server",
             "Transfer-Encoding",
             "User-Agent",
-            "WWW-Authenticate" };
-            string[] expectedDefaultAllowedQueryParameters = new[] { "api-version" };
+            "WWW-Authenticate" ];
+            string[] expectedDefaultAllowedQueryParameters = ["api-version"];
 
             ClientLoggingOptions options = new();
             CollectionAssert.AreEquivalent(expectedDefaultAllowedHeaderNames, options.AllowedHeaderNames);
@@ -86,8 +81,8 @@ namespace System.ClientModel.Tests.Options
 
             options.Freeze();
 
-            Assert.Throws<NotSupportedException>(() => options.AllowedHeaderNames.Add("ShouldNotAdd"));
-            Assert.Throws<NotSupportedException>(() => options.AllowedQueryParameters.Add("ShouldNotAdd"));
+            Assert.Throws<InvalidOperationException>(() => options.AllowedHeaderNames.Add("ShouldNotAdd"));
+            Assert.Throws<InvalidOperationException>(() => options.AllowedQueryParameters.Add("ShouldNotAdd"));
             Assert.Throws<InvalidOperationException>(() => options.EnableLogging = true);
             Assert.Throws<InvalidOperationException>(() => options.EnableMessageLogging = true);
             Assert.Throws<InvalidOperationException>(() => options.EnableMessageContentLogging = true);
@@ -109,43 +104,13 @@ namespace System.ClientModel.Tests.Options
 
             options.Freeze();
 
-            Assert.Throws<NotSupportedException>(() => options.AllowedHeaderNames.Add("ShouldNotAdd"));
-            Assert.Throws<NotSupportedException>(() => options.AllowedQueryParameters.Add("ShouldNotAdd"));
+            Assert.Throws<InvalidOperationException>(() => options.AllowedHeaderNames.Add("ShouldNotAdd"));
+            Assert.Throws<InvalidOperationException>(() => options.AllowedQueryParameters.Add("ShouldNotAdd"));
             Assert.Throws<InvalidOperationException>(() => options.EnableLogging = true);
             Assert.Throws<InvalidOperationException>(() => options.EnableMessageLogging = true);
             Assert.Throws<InvalidOperationException>(() => options.EnableMessageContentLogging = true);
             Assert.Throws<InvalidOperationException>(() => options.MessageContentSizeLimit = 10);
             Assert.Throws<InvalidOperationException>(() => options.LoggerFactory = new NullLoggerFactory());
-        }
-
-        [Test]
-        public void CanOverrideAssertFrozen()
-        {
-            throw new NotImplementedException();
-        }
-
-        [Test]
-        public void ValidOptionsAreConsideredValid()
-        {
-            throw new NotImplementedException();
-        }
-
-        [Test]
-        public void InValidOptionsAreConsideredInValid()
-        {
-            throw new NotImplementedException();
-        }
-
-        [Test]
-        public void CanGetDefaultSanitizer()
-        {
-            throw new NotImplementedException();
-        }
-
-        [Test]
-        public void CanGetCustomizedSanitizer()
-        {
-            throw new NotImplementedException();
         }
     }
 }

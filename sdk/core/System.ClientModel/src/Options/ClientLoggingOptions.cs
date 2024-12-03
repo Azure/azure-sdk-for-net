@@ -25,7 +25,7 @@ public class ClientLoggingOptions
     private ChangeTrackingStringList? _allowedHeaderNames;
     private ChangeTrackingStringList? _allowedQueryParameters;
 
-    private static string[] DefaultAllowedHeaderNames { get; } = [
+    private static HashSet<string> DefaultAllowedHeaderNames { get; } = [
             "traceparent",
             "Accept",
             "Cache-Control",
@@ -47,7 +47,7 @@ public class ClientLoggingOptions
             "Transfer-Encoding",
             "User-Agent",
             "WWW-Authenticate" ];
-    private static string[] DefaultAllowedQueryParameters { get; } = ["api-version"];
+    private static HashSet<string> DefaultAllowedQueryParameters { get; } = ["api-version"];
     private static PipelineMessageSanitizer DefaultSanitizer { get; } = new(DefaultAllowedQueryParameters, DefaultAllowedHeaderNames);
 
     internal const bool DefaultEnableLogging = true;
@@ -249,14 +249,6 @@ public class ClientLoggingOptions
         {
             throw new InvalidOperationException("HTTP Message content logging cannot be enabled when HTTP message logging is disabled.");
         }
-        if (EnableLogging == false && LoggerFactory != null) // TODO
-        {
-            throw new InvalidOperationException("An ILoggerFactory cannot be set if client-wide logging is disabled.");
-        }
-
-        // TODO - throw if content size is set but content logging is false?
-
-        // TODO - throw if allowed header names or allowed query parameters were changed?
     }
 
     internal PipelineMessageSanitizer GetPipelineMessageSanitizer()
@@ -266,8 +258,8 @@ public class ClientLoggingOptions
         {
             return DefaultSanitizer;
         }
-        string[] headers = _allowedHeaderNames == null ? DefaultAllowedHeaderNames : [.. _allowedHeaderNames];
-        string[] queryParams = _allowedQueryParameters == null ? DefaultAllowedQueryParameters : [.. _allowedQueryParameters];
+        HashSet<string> headers = _allowedHeaderNames == null ? DefaultAllowedHeaderNames : new HashSet<string>(_allowedHeaderNames, StringComparer.InvariantCultureIgnoreCase);
+        HashSet<string> queryParams = _allowedQueryParameters == null ? DefaultAllowedQueryParameters : new HashSet<string>(_allowedQueryParameters, StringComparer.InvariantCultureIgnoreCase);
 
         _sanitizer ??= new PipelineMessageSanitizer(queryParams, headers);
 

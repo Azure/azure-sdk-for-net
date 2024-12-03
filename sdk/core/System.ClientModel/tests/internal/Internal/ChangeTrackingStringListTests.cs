@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Internal;
@@ -11,7 +12,7 @@ internal class ChangeTrackingStringListTests
     [Test]
     public void ChangesPriorToTrackingAreNotDetected()
     {
-        ChangeTrackingStringList list = new() { "a" };
+        ChangeTrackingStringList list = ["a"];
 
         Assert.IsFalse(list.HasChanged);
 
@@ -23,7 +24,7 @@ internal class ChangeTrackingStringListTests
     [Test]
     public void ChangesAfterTrackingAreNotDetected()
     {
-        ChangeTrackingStringList list = new() { "a" };
+        ChangeTrackingStringList list = ["a"];
 
         Assert.IsFalse(list.HasChanged);
 
@@ -40,7 +41,7 @@ internal class ChangeTrackingStringListTests
     [Test]
     public void CanDetectAddChange()
     {
-        ChangeTrackingStringList list = new() { "a" };
+        ChangeTrackingStringList list = ["a"];
         list.StartTracking();
 
         Assert.IsFalse(list.HasChanged);
@@ -53,7 +54,7 @@ internal class ChangeTrackingStringListTests
     [Test]
     public void CanDetectSetChange()
     {
-        ChangeTrackingStringList list = new() { "a" };
+        ChangeTrackingStringList list = ["a"];
         list.StartTracking();
 
         Assert.IsFalse(list.HasChanged);
@@ -66,7 +67,7 @@ internal class ChangeTrackingStringListTests
     [Test]
     public void CanDetectClearChange()
     {
-        ChangeTrackingStringList list = new() { "a" };
+        ChangeTrackingStringList list = ["a"];
         list.StartTracking();
 
         Assert.IsFalse(list.HasChanged);
@@ -92,7 +93,7 @@ internal class ChangeTrackingStringListTests
     [Test]
     public void CanDetectInsertChange()
     {
-        ChangeTrackingStringList list = new() { "a" };
+        ChangeTrackingStringList list = ["a"];
         list.StartTracking();
 
         Assert.IsFalse(list.HasChanged);
@@ -105,7 +106,7 @@ internal class ChangeTrackingStringListTests
     [Test]
     public void CanDetectRemoveChange()
     {
-        ChangeTrackingStringList list = new() { "a" };
+        ChangeTrackingStringList list = ["a"];
         list.StartTracking();
 
         Assert.IsFalse(list.HasChanged);
@@ -118,7 +119,7 @@ internal class ChangeTrackingStringListTests
     [Test]
     public void RemoveNotAChangeIfNotRemoved()
     {
-        ChangeTrackingStringList list = new() { "a" };
+        ChangeTrackingStringList list = ["a"];
         list.StartTracking();
 
         Assert.IsFalse(list.HasChanged);
@@ -132,7 +133,7 @@ internal class ChangeTrackingStringListTests
     [Test]
     public void CanDetectRemoveAtChange()
     {
-        ChangeTrackingStringList list = new() { "a" };
+        ChangeTrackingStringList list = ["a"];
         list.StartTracking();
 
         Assert.IsFalse(list.HasChanged);
@@ -145,7 +146,7 @@ internal class ChangeTrackingStringListTests
     [Test]
     public void RemoveAtNotAChangeIfNotRemoved()
     {
-        ChangeTrackingStringList list = new() { "a" };
+        ChangeTrackingStringList list = ["a"];
         list.StartTracking();
 
         Assert.IsFalse(list.HasChanged);
@@ -153,5 +154,49 @@ internal class ChangeTrackingStringListTests
         Assert.Throws<ArgumentOutOfRangeException>(() => list.RemoveAt(1));
 
         Assert.IsFalse(list.HasChanged);
+    }
+
+    [Test]
+    public void CanCreateListFromCollection()
+    {
+        List<string> originalList = ["a", "b", "c"];
+        ChangeTrackingStringList changeTrackingList = new(originalList);
+
+        Assert.AreEqual(originalList.Count, changeTrackingList.Count);
+        Assert.IsTrue(changeTrackingList.Contains(originalList[0]));
+        Assert.IsTrue(changeTrackingList.Contains(originalList[1]));
+        Assert.IsTrue(changeTrackingList.Contains(originalList[2]));
+    }
+
+    [Test]
+    public void CanCreateListFromCollectionAndTrackChanges()
+    {
+        List<string> originalList = ["a", "b", "c"];
+        ChangeTrackingStringList changeTrackingList = new(originalList);
+        changeTrackingList.StartTracking();
+
+        changeTrackingList.Add("d");
+
+        Assert.IsTrue(changeTrackingList.HasChanged);
+    }
+
+    [Test]
+    public void CannotModifyFrozenList()
+    {
+        ChangeTrackingStringList list = ["a"];
+        list.StartTracking();
+
+        list.Add("b");
+        list.Add("c");
+
+        list.Freeze();
+
+        Assert.Throws<InvalidOperationException>(() => list.Add("d"));
+        Assert.Throws<InvalidOperationException>(() => list[0] = "d");
+        Assert.Throws<InvalidOperationException>(() => list.Clear());
+        Assert.Throws<InvalidOperationException>(() => list.Insert(0, "d"));
+        Assert.Throws<InvalidOperationException>(() => list.Remove("a"));
+        Assert.Throws<InvalidOperationException>(() => list.RemoveAt(0));
+        Assert.IsTrue(list.IsReadOnly);
     }
 }

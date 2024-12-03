@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Internal
@@ -25,7 +26,7 @@ namespace System.ClientModel.Tests.Internal
         [TestCase("?d", "?d")]
         public void QueryIsSanitized(string input, string expected)
         {
-            var sanitizer = new PipelineMessageSanitizer(new string[] { "A", "a1", "a-2" }, Array.Empty<string>(), "*");
+            var sanitizer = new PipelineMessageSanitizer(["A", "a1", "a-2"], [], "*");
 
             Assert.AreEqual("http://localhost/" + expected, sanitizer.SanitizeUrl("http://localhost/" + input));
         }
@@ -33,7 +34,7 @@ namespace System.ClientModel.Tests.Internal
         [Test]
         public void HeaderIsSanitized()
         {
-            var sanitizer = new PipelineMessageSanitizer(Array.Empty<string>(), new string[] { "header-1" }, "*");
+            var sanitizer = new PipelineMessageSanitizer([], [ "header-1" ], "*");
 
             Assert.AreEqual("value1", sanitizer.SanitizeHeader("header-1", "value1"));
             Assert.AreEqual("*", sanitizer.SanitizeHeader("header-2", "value2"));
@@ -42,7 +43,7 @@ namespace System.ClientModel.Tests.Internal
         [Test]
         public void EverythingIsSanitizedWithNoAllowedHeadersOrQueries()
         {
-            var sanitizer = new PipelineMessageSanitizer(Array.Empty<string>(), Array.Empty<string>(), "*");
+            var sanitizer = new PipelineMessageSanitizer([], [], "*");
 
             var uri = new Uri("http://localhost/?a=b");
 
