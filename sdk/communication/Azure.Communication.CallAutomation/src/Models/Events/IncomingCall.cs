@@ -15,8 +15,8 @@ namespace Azure.Communication.CallAutomation
         {
         }
 
-        /// <summary> Initializes a new instance of IncomingCallEvent. </summary>
-        /// <param name="internalEvent">Internal Representation of the AddParticipantFailedEvent. </param>
+        /// <summary> Initializes a new instance of <see cref="IncomingCall"/>. </summary>
+        /// <param name="internalEvent">Internal Representation of the IncomingCall. </param>
         internal IncomingCall(IncomingCallInternal internalEvent)
         {
             To = CommunicationIdentifierSerializer.Deserialize(internalEvent.To);
