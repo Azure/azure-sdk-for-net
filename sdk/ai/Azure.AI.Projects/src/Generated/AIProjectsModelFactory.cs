@@ -223,6 +223,14 @@ namespace Azure.AI.Projects
             return new RunError(code, message, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Projects.IncompleteRunDetails"/>. </summary>
+        /// <param name="reason"> The reason why the run is incomplete. This indicates which specific token limit was reached during the run. </param>
+        /// <returns> A new <see cref="Projects.IncompleteRunDetails"/> instance for mocking. </returns>
+        public static IncompleteRunDetails IncompleteRunDetails(IncompleteDetailsReason reason = default)
+        {
+            return new IncompleteRunDetails(reason, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Projects.RunCompletionUsage"/>. </summary>
         /// <param name="completionTokens"> Number of completion tokens used over the course of the run. </param>
         /// <param name="promptTokens"> Number of prompt tokens used over the course of the run. </param>
@@ -253,7 +261,7 @@ namespace Azure.AI.Projects
         /// <param name="toolCalls">
         /// A list of tool call details for this run step.
         /// Please note <see cref="Projects.RunStepToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Projects.RunStepAzureAISearchToolCall"/>, <see cref="Projects.RunStepBingGroundingToolCall"/>, <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="Projects.RunStepFileSearchToolCall"/>, <see cref="RunStepFunctionToolCall"/>, <see cref="Projects.RunStepMicrosoftFabricToolCall"/> and <see cref="Projects.RunStepSharepointToolCall"/>.
+        /// The available derived classes include <see cref="Projects.RunStepAzureAISearchToolCall"/>, <see cref="Projects.RunStepBingGroundingToolCall"/>, <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="Projects.RunStepMicrosoftFabricToolCall"/>, <see cref="Projects.RunStepFileSearchToolCall"/>, <see cref="RunStepFunctionToolCall"/> and <see cref="Projects.RunStepSharepointToolCall"/>.
         /// </param>
         /// <returns> A new <see cref="Projects.RunStepToolCallDetails"/> instance for mocking. </returns>
         public static RunStepToolCallDetails RunStepToolCallDetails(IEnumerable<RunStepToolCall> toolCalls = null)
@@ -348,7 +356,7 @@ namespace Azure.AI.Projects
         {
             microsoftFabric ??= new Dictionary<string, string>();
 
-            return new RunStepMicrosoftFabricToolCall("microsoft_fabric", id, serializedAdditionalRawData: null, microsoftFabric);
+            return new RunStepMicrosoftFabricToolCall("fabric_aiskill", id, serializedAdditionalRawData: null, microsoftFabric);
         }
 
         /// <summary> Initializes a new instance of <see cref="Projects.RunStepError"/>. </summary>
