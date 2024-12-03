@@ -7,9 +7,9 @@ using Azure.Core;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.ServiceBus;
 
-namespace Azure.CloudMachine;
+namespace Azure.CloudMachine.ServiceBus;
 
-public class ServiceBusSubscriptionFeature(string name, ServiceBusTopicFeature parent) : CloudMachineFeature
+internal class ServiceBusSubscriptionFeature(string name, ServiceBusTopicFeature parent) : CloudMachineFeature
 {
     protected override ProvisionableResource EmitResources(CloudMachineInfrastructure infrastructure)
     {

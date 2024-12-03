@@ -7,9 +7,9 @@ using Azure.Core;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.ServiceBus;
 
-namespace Azure.CloudMachine;
+namespace Azure.CloudMachine.ServiceBus;
 
-public class ServiceBusTopicFeature : CloudMachineFeature
+internal class ServiceBusTopicFeature : CloudMachineFeature
 {
     public ServiceBusTopicFeature(string name, ServiceBusNamespaceFeature parent)
     {

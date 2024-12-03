@@ -8,7 +8,7 @@ using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Storage;
 
-namespace Azure.CloudMachine;
+namespace Azure.CloudMachine.Storage;
 
 internal class StorageAccountFeature : CloudMachineFeature
 {

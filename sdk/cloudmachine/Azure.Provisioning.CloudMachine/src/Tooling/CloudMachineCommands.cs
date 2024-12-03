@@ -7,8 +7,8 @@ using System.ClientModel.TypeSpec;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
-using Azure.AI.OpenAI;
 using Azure.Core;
+using Azure.Core.Rest;
 using Azure.Identity;
 
 namespace Azure.CloudMachine;
