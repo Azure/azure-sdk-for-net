@@ -17,8 +17,8 @@ public class ChatTools
 {
     private static readonly BinaryData s_noparams = BinaryData.FromString("""{ "type" : "object", "properties" : {} }""");
 
-    private readonly Dictionary<string, MethodInfo> _methods = new Dictionary<string, MethodInfo>();
-    private readonly List<ChatTool> _definitions = new List<ChatTool>();
+    private readonly Dictionary<string, MethodInfo> _methods = [];
+    private readonly List<ChatTool> _definitions = [];
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ChatTools"/> class.
@@ -26,7 +26,7 @@ public class ChatTools
     /// <param name="tools"></param>
     public ChatTools(params Type[] tools)
     {
-        foreach (var functionHolder in tools)
+        foreach (Type functionHolder in tools)
             Add(functionHolder);
     }
 
@@ -42,7 +42,7 @@ public class ChatTools
     public static implicit operator ChatCompletionOptions(ChatTools tools)
     {
         ChatCompletionOptions options = new();
-        foreach (var tool in tools.Definitions)
+        foreach (ChatTool tool in tools.Definitions)
         {
             options.Tools.Add(tool);
         }
@@ -68,7 +68,7 @@ public class ChatTools
     public void Add(MethodInfo function)
     {
         var name = function.Name;
-        var chatTool = ChatTool.CreateFunctionTool(name, GetMethodInfoToDescription(function), ParametersToJson(function.GetParameters()));
+        var chatTool = ChatTool.CreateFunctionTool(name, MethodInfoToDescription(function), ChatTools.ParametersToJson(function.GetParameters()));
         _definitions.Add(chatTool);
         _methods[name] = function;
     }
@@ -98,10 +98,10 @@ public class ChatTools
         if (call.FunctionArguments != null)
         {
             var document = JsonDocument.Parse(call.FunctionArguments);
-            var json = document.RootElement;
+            JsonElement json = document.RootElement;
             foreach (JsonProperty argument in json.EnumerateObject())
             {
-                var value = argument.Value;
+                JsonElement value = argument.Value;
                 switch (value.ValueKind)
                 {
                     case JsonValueKind.String:
@@ -122,7 +122,7 @@ public class ChatTools
             }
         }
         var name = call.FunctionName;
-        var result = Call(name, arguments.ToArray());
+        var result = Call(name, [.. arguments]);
         return result;
     }
 
@@ -143,15 +143,10 @@ public class ChatTools
         return messages;
     }
 
-    /// <summary>
-    /// Gets the description of a <see cref="MethodInfo"/>.
-    /// </summary>
-    /// <param name="function"></param>
-    /// <returns></returns>
-    protected virtual string GetMethodInfoToDescription(MethodInfo function)
+    private static string MethodInfoToDescription(MethodInfo function)
     {
         var description = function.Name;
-        var attribute = function.GetCustomAttribute<DescriptionAttribute>();
+        DescriptionAttribute attribute = function.GetCustomAttribute<DescriptionAttribute>();
         if (attribute != null)
         {
             description = attribute.Description;
@@ -159,15 +154,10 @@ public class ChatTools
         return description;
     }
 
-    /// <summary>
-    /// Gets the description of a <see cref="ParameterInfo"/>.
-    /// </summary>
-    /// <param name="parameter"></param>
-    /// <returns></returns>
-    protected virtual string GetParameterInfoToDescription(ParameterInfo parameter)
+    private static string ParameterInfoToDescription(ParameterInfo parameter)
     {
         var description = parameter.Name;
-        var attribute = parameter.GetCustomAttribute<DescriptionAttribute>();
+        DescriptionAttribute attribute = parameter.GetCustomAttribute<DescriptionAttribute>();
         if (attribute != null)
         {
             description = attribute.Description;
@@ -175,29 +165,18 @@ public class ChatTools
         return description;
     }
 
-    /// <summary>
-    /// Gets the name of a <see cref="MethodInfo"/>.
-    /// </summary>
-    /// <param name="function"></param>
-    /// <returns></returns>
-    protected virtual string GetMethodInfoToName(MethodInfo function)
+    private static string GetMethodInfoToName(MethodInfo function)
     {
         var sb = new StringBuilder();
         sb.Append(function.Name);
-        foreach (var parameter in function.GetParameters())
+        foreach (ParameterInfo parameter in function.GetParameters())
         {
-            sb.Append($"_{ClrToJsonTypeUtf16(parameter.ParameterType)}");
+            sb.Append($"_{ChatTools.ClrToJsonTypeUtf16(parameter.ParameterType)}");
         }
         return sb.ToString();
     }
 
-    /// <summary>
-    /// Converts a CLR type to a JSON Utf8 type.
-    /// </summary>
-    /// <param name="clrType"></param>
-    /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
-    protected ReadOnlySpan<byte> ClrToJsonTypeUtf8(Type clrType)
+    private static ReadOnlySpan<byte> ClrToJsonTypeUtf8(Type clrType)
     {
         if (clrType == typeof(double))
             return "number"u8;
@@ -209,13 +188,7 @@ public class ChatTools
             throw new NotImplementedException();
     }
 
-    /// <summary>
-    /// Converts a CLR type to a JSON Utf16 type.
-    /// </summary>
-    /// <param name="clrType"></param>
-    /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
-    protected string ClrToJsonTypeUtf16(Type clrType)
+    private static string ClrToJsonTypeUtf16(Type clrType)
     {
         if (clrType == typeof(double))
             return "number";
@@ -227,13 +200,13 @@ public class ChatTools
             throw new NotImplementedException();
     }
 
-    private BinaryData ParametersToJson(ParameterInfo[] parameters)
+    private static BinaryData ParametersToJson(ParameterInfo[] parameters)
     {
         if (parameters.Length == 0)
             return s_noparams;
 
         var required = new List<string>();
-        MemoryStream stream = new MemoryStream();
+        MemoryStream stream = new();
         var writer = new Utf8JsonWriter(stream);
         writer.WriteStartObject();
         writer.WriteString("type"u8, "object"u8);
@@ -241,8 +214,8 @@ public class ChatTools
         foreach (ParameterInfo parameter in parameters)
         {
             writer.WriteStartObject(parameter.Name!);
-            writer.WriteString("type"u8, ClrToJsonTypeUtf8(parameter.ParameterType));
-            writer.WriteString("description"u8, GetParameterInfoToDescription(parameter));
+            writer.WriteString("type"u8, ChatTools.ClrToJsonTypeUtf8(parameter.ParameterType));
+            writer.WriteString("description"u8, ChatTools.ParameterInfoToDescription(parameter));
             writer.WriteEndObject();
             if (!parameter.IsOptional || (parameter.HasDefaultValue && parameter.DefaultValue is not null))
                 required.Add(parameter.Name!);

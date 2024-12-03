@@ -14,7 +14,7 @@ public class EmbeddingsVectorbase
 {
     private readonly EmbeddingClient _client;
     private readonly VectorbaseStore _store;
-    private readonly List<string> _todo = new List<string>();
+    private readonly List<string> _todo = [];
     private readonly int _chuckSize;
 
     /// <summary>
@@ -73,9 +73,9 @@ public class EmbeddingsVectorbase
     {
         lock (_todo)
         {
-            var embeddings = _client.GenerateEmbeddings(_todo);
+            OpenAIEmbeddingCollection embeddings = _client.GenerateEmbeddings(_todo);
 
-            foreach (var embedding in embeddings.Value)
+            foreach (OpenAIEmbedding embedding in embeddings)
             {
                 ReadOnlyMemory<float> vector = embedding.ToFloats();
                 string item = _todo[(int)embedding.Index];
@@ -87,8 +87,8 @@ public class EmbeddingsVectorbase
 
     private ReadOnlyMemory<float> GetEmbedding(string fact)
     {
-        var embedding = _client.GenerateEmbedding(fact);
-        return embedding.Value.ToFloats();
+        OpenAIEmbedding embedding = _client.GenerateEmbedding(fact);
+        return embedding.ToFloats();
     }
 
     private void ChunkFactAndAddToTodo(string text, int chunkSize)
