@@ -9,7 +9,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
 {
     internal static class DocumentAssert
     {
-        public static void AreEqual(AzureBlobContentSource expected, AzureBlobContentSource actual)
+        public static void AreEqual(BlobContentSource expected, BlobContentSource actual)
         {
             if (expected == null)
             {
@@ -21,14 +21,14 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             // The URI returned by the service does not include query parameters, so we're
             // making sure they're not included in our comparison.
-            string expectedContainerUrl = expected.ContainerUrl.GetLeftPart(UriPartial.Path);
-            string containerUrl = actual.ContainerUrl.GetLeftPart(UriPartial.Path);
+            string expectedContainerUrl = expected.ContainerUri.GetLeftPart(UriPartial.Path);
+            string containerUrl = actual.ContainerUri.GetLeftPart(UriPartial.Path);
 
             Assert.That(containerUrl, Is.EqualTo(expectedContainerUrl));
             Assert.That(actual.Prefix, Is.EqualTo(expected.Prefix));
         }
 
-        public static void AreEqual(AzureBlobFileListContentSource expected, AzureBlobFileListContentSource actual)
+        public static void AreEqual(BlobFileListContentSource expected, BlobFileListContentSource actual)
         {
             if (expected == null)
             {
@@ -40,8 +40,8 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             // The URI returned by the service does not include query parameters, so we're
             // making sure they're not included in our comparison.
-            string expectedContainerUrl = expected.ContainerUrl.GetLeftPart(UriPartial.Path);
-            string containerUrl = actual.ContainerUrl.GetLeftPart(UriPartial.Path);
+            string expectedContainerUrl = expected.ContainerUri.GetLeftPart(UriPartial.Path);
+            string containerUrl = actual.ContainerUri.GetLeftPart(UriPartial.Path);
 
             Assert.That(containerUrl, Is.EqualTo(expectedContainerUrl));
             Assert.That(actual.FileList, Is.EqualTo(expected.FileList));
@@ -56,7 +56,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
             Assert.AreEqual(expected.CreatedOn, actual.CreatedOn);
             Assert.AreEqual(expected.ExpiresOn, actual.ExpiresOn);
 
-            AreEquivalent(expected.DocTypes, actual.DocTypes);
+            AreEquivalent(expected.DocumentTypes, actual.DocumentTypes);
         }
 
         public static void AreEqual(DocumentFieldSchema expected, DocumentFieldSchema actual)
@@ -69,7 +69,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             Assert.That(actual, Is.Not.Null);
 
-            Assert.That(actual.Type, Is.EqualTo(expected.Type));
+            Assert.That(actual.FieldType, Is.EqualTo(expected.FieldType));
             Assert.That(actual.Description, Is.EqualTo(expected.Description));
             Assert.That(actual.Example, Is.EqualTo(expected.Example));
 
@@ -86,10 +86,10 @@ namespace Azure.AI.DocumentIntelligence.Tests
             Assert.That(actual.ExpiresOn, Is.EqualTo(expected.ExpiresOn));
             Assert.That(actual.Tags, Is.EquivalentTo(expected.Tags));
 
-            AreEqual(expected.AzureBlobSource, actual.AzureBlobSource);
-            AreEqual(expected.AzureBlobFileListSource, actual.AzureBlobFileListSource);
+            AreEqual(expected.BlobSource, actual.BlobSource);
+            AreEqual(expected.BlobFileListSource, actual.BlobFileListSource);
 
-            AreEquivalent(expected.DocTypes, actual.DocTypes);
+            AreEquivalent(expected.DocumentTypes, actual.DocumentTypes);
         }
 
         public static void AreEqual(DocumentTypeDetails expected, DocumentTypeDetails actual)
@@ -115,8 +115,8 @@ namespace Azure.AI.DocumentIntelligence.Tests
                     Assert.That(docType.SourceKind, Is.EqualTo(expectedDocType.SourceKind));
                 }
 
-                AreEqual(docType.AzureBlobSource, expectedDocType.AzureBlobSource);
-                AreEqual(docType.AzureBlobFileListSource, expectedDocType.AzureBlobFileListSource);
+                AreEqual(docType.BlobSource, expectedDocType.BlobSource);
+                AreEqual(docType.BlobFileListSource, expectedDocType.BlobFileListSource);
             }
         }
 

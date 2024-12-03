@@ -44,19 +44,19 @@ Uri blobContainerUri = new Uri("<blobContainerUri>");
 // build modes and their differences, see:
 // https://aka.ms/azsdk/formrecognizer/buildmode
 
-var content = new BuildDocumentModelContent(modelId, DocumentBuildMode.Template)
+var options = new BuildDocumentModelOptions(modelId, DocumentBuildMode.Template)
 {
-    AzureBlobSource = new AzureBlobContentSource(blobContainerUri)
+    BlobSource = new BlobContentSource(blobContainerUri)
 };
 
-Operation<DocumentModelDetails> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, content);
+Operation<DocumentModelDetails> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, options);
 DocumentModelDetails model = operation.Value;
 
 Console.WriteLine($"Model ID: {model.ModelId}");
 Console.WriteLine($"Created on: {model.CreatedOn}");
 
 Console.WriteLine("Document types the model can recognize:");
-foreach (KeyValuePair<string, DocumentTypeDetails> docType in model.DocTypes)
+foreach (KeyValuePair<string, DocumentTypeDetails> docType in model.DocumentTypes)
 {
     Console.WriteLine($"  Document type: '{docType.Key}', which has the following fields:");
     foreach (KeyValuePair<string, DocumentFieldSchema> schema in docType.Value.FieldSchema)

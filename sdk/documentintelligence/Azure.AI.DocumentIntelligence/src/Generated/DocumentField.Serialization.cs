@@ -35,7 +35,7 @@ namespace Azure.AI.DocumentIntelligence
             }
 
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(FieldType.ToString());
             if (Optional.IsDefined(ValueString))
             {
                 writer.WritePropertyName("valueString"u8);
@@ -61,10 +61,10 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WritePropertyName("valueNumber"u8);
                 writer.WriteNumberValue(ValueDouble.Value);
             }
-            if (Optional.IsDefined(ValueLong))
+            if (Optional.IsDefined(ValueInt64))
             {
                 writer.WritePropertyName("valueInteger"u8);
-                writer.WriteNumberValue(ValueLong.Value);
+                writer.WriteNumberValue(ValueInt64.Value);
             }
             if (Optional.IsDefined(ValueSelectionMark))
             {

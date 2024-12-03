@@ -118,6 +118,172 @@ namespace Azure.AI.DocumentIntelligence.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public void Example_DocumentIntelligenceClient_DeleteAnalyzeResult_DeleteAnalyzeResult()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+            Response response = client.DeleteAnalyzeResult("myCustomModel", Guid.Parse("3b31320d-8bab-4f88-b19c-2322a7f11034"));
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DocumentIntelligenceClient_DeleteAnalyzeResult_DeleteAnalyzeResult_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+            Response response = await client.DeleteAnalyzeResultAsync("myCustomModel", Guid.Parse("3b31320d-8bab-4f88-b19c-2322a7f11034"));
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DocumentIntelligenceClient_DeleteAnalyzeBatchResult_DeleteAnalyzeBatchDocumentsResult()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+            Response response = client.DeleteAnalyzeBatchResult("prebuilt-invoice", Guid.Parse("3b31320d-8bab-4f88-b19c-2322a7f11034"));
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DocumentIntelligenceClient_DeleteAnalyzeBatchResult_DeleteAnalyzeBatchDocumentsResult_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+            Response response = await client.DeleteAnalyzeBatchResultAsync("prebuilt-invoice", Guid.Parse("3b31320d-8bab-4f88-b19c-2322a7f11034"));
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DocumentIntelligenceClient_GetAnalyzeBatchResult_GetAnalyzeBatchDocumentsResult()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+            Response response = client.GetAnalyzeBatchResult("prebuilt-invoice", Guid.Parse("3b31320d-8bab-4f88-b19c-2322a7f11034"), null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DocumentIntelligenceClient_GetAnalyzeBatchResult_GetAnalyzeBatchDocumentsResult_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+            Response response = await client.GetAnalyzeBatchResultAsync("prebuilt-invoice", Guid.Parse("3b31320d-8bab-4f88-b19c-2322a7f11034"), null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DocumentIntelligenceClient_GetAnalyzeBatchResult_GetAnalyzeBatchDocumentsResult_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+            Response<AnalyzeBatchOperationDetails> response = client.GetAnalyzeBatchResult("prebuilt-invoice", Guid.Parse("3b31320d-8bab-4f88-b19c-2322a7f11034"));
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DocumentIntelligenceClient_GetAnalyzeBatchResult_GetAnalyzeBatchDocumentsResult_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+            Response<AnalyzeBatchOperationDetails> response = await client.GetAnalyzeBatchResultAsync("prebuilt-invoice", Guid.Parse("3b31320d-8bab-4f88-b19c-2322a7f11034"));
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DocumentIntelligenceClient_GetAnalyzeBatchResults_ListAnalyzeBatchDocumentsResults()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+            foreach (BinaryData item in client.GetAnalyzeBatchResults("prebuilt-invoice", null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DocumentIntelligenceClient_GetAnalyzeBatchResults_ListAnalyzeBatchDocumentsResults_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+            await foreach (BinaryData item in client.GetAnalyzeBatchResultsAsync("prebuilt-invoice", null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DocumentIntelligenceClient_GetAnalyzeBatchResults_ListAnalyzeBatchDocumentsResults_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+            foreach (AnalyzeBatchOperationDetails item in client.GetAnalyzeBatchResults("prebuilt-invoice"))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DocumentIntelligenceClient_GetAnalyzeBatchResults_ListAnalyzeBatchDocumentsResults_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+            await foreach (AnalyzeBatchOperationDetails item in client.GetAnalyzeBatchResultsAsync("prebuilt-invoice"))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_DocumentIntelligenceClient_AnalyzeDocument_AnalyzeDocumentFromBase64()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -290,8 +456,6 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Console.WriteLine(result.GetProperty("succeededCount").ToString());
             Console.WriteLine(result.GetProperty("failedCount").ToString());
             Console.WriteLine(result.GetProperty("skippedCount").ToString());
-            Console.WriteLine(result.GetProperty("details")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("details")[0].GetProperty("sourceUrl").ToString());
         }
 
         [Test]
@@ -320,8 +484,6 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Console.WriteLine(result.GetProperty("succeededCount").ToString());
             Console.WriteLine(result.GetProperty("failedCount").ToString());
             Console.WriteLine(result.GetProperty("skippedCount").ToString());
-            Console.WriteLine(result.GetProperty("details")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("details")[0].GetProperty("sourceUrl").ToString());
         }
 
         [Test]
@@ -406,9 +568,9 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-            ClassifyDocumentContent classifyRequest = new ClassifyDocumentContent
+            ClassifyDocumentOptions classifyRequest = new ClassifyDocumentOptions
             {
-                UrlSource = new Uri("http://host.com/doc.pdf"),
+                UriSource = new Uri("http://host.com/doc.pdf"),
             };
             Operation<AnalyzeResult> operation = client.ClassifyDocument(WaitUntil.Completed, "classifierId", classifyRequest);
             AnalyzeResult responseData = operation.Value;
@@ -422,9 +584,9 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-            ClassifyDocumentContent classifyRequest = new ClassifyDocumentContent
+            ClassifyDocumentOptions classifyRequest = new ClassifyDocumentOptions
             {
-                UrlSource = new Uri("http://host.com/doc.pdf"),
+                UriSource = new Uri("http://host.com/doc.pdf"),
             };
             Operation<AnalyzeResult> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, "classifierId", classifyRequest);
             AnalyzeResult responseData = operation.Value;

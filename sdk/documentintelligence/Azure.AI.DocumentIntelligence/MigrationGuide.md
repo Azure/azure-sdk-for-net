@@ -215,12 +215,12 @@ Analyzing documents with `Azure.AI.DocumentIntelligence`:
 ```C# Snippet:DocumentIntelligenceAnalyzeWithPrebuiltModelFromUriAsync
 Uri uriSource = new Uri("<uriSource>");
 
-var content = new AnalyzeDocumentContent()
+var options = new AnalyzeDocumentOptions()
 {
-    UrlSource = uriSource
+    UriSource = uriSource
 };
 
-Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", content);
+Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", options);
 AnalyzeResult result = operation.Value;
 
 // To see the list of all the supported fields returned by service and its corresponding types for the
@@ -234,39 +234,39 @@ for (int i = 0; i < result.Documents.Count; i++)
     AnalyzedDocument document = result.Documents[i];
 
     if (document.Fields.TryGetValue("VendorName", out DocumentField vendorNameField)
-        && vendorNameField.Type == DocumentFieldType.String)
+        && vendorNameField.FieldType == DocumentFieldType.String)
     {
         string vendorName = vendorNameField.ValueString;
         Console.WriteLine($"Vendor Name: '{vendorName}', with confidence {vendorNameField.Confidence}");
     }
 
     if (document.Fields.TryGetValue("CustomerName", out DocumentField customerNameField)
-        && customerNameField.Type == DocumentFieldType.String)
+        && customerNameField.FieldType == DocumentFieldType.String)
     {
         string customerName = customerNameField.ValueString;
         Console.WriteLine($"Customer Name: '{customerName}', with confidence {customerNameField.Confidence}");
     }
 
     if (document.Fields.TryGetValue("Items", out DocumentField itemsField)
-        && itemsField.Type == DocumentFieldType.List)
+        && itemsField.FieldType == DocumentFieldType.List)
     {
         foreach (DocumentField itemField in itemsField.ValueList)
         {
             Console.WriteLine("Item:");
 
-            if (itemField.Type == DocumentFieldType.Dictionary)
+            if (itemField.FieldType == DocumentFieldType.Dictionary)
             {
                 IReadOnlyDictionary<string, DocumentField> itemFields = itemField.ValueDictionary;
 
                 if (itemFields.TryGetValue("Description", out DocumentField itemDescriptionField)
-                    && itemDescriptionField.Type == DocumentFieldType.String)
+                    && itemDescriptionField.FieldType == DocumentFieldType.String)
                 {
                     string itemDescription = itemDescriptionField.ValueString;
                     Console.WriteLine($"  Description: '{itemDescription}', with confidence {itemDescriptionField.Confidence}");
                 }
 
                 if (itemFields.TryGetValue("Amount", out DocumentField itemAmountField)
-                    && itemAmountField.Type == DocumentFieldType.Currency)
+                    && itemAmountField.FieldType == DocumentFieldType.Currency)
                 {
                     CurrencyValue itemAmount = itemAmountField.ValueCurrency;
                     Console.WriteLine($"  Amount: '{itemAmount.CurrencySymbol}{itemAmount.Amount}', with confidence {itemAmountField.Confidence}");
@@ -276,21 +276,21 @@ for (int i = 0; i < result.Documents.Count; i++)
     }
 
     if (document.Fields.TryGetValue("SubTotal", out DocumentField subTotalField)
-        && subTotalField.Type == DocumentFieldType.Currency)
+        && subTotalField.FieldType == DocumentFieldType.Currency)
     {
         CurrencyValue subTotal = subTotalField.ValueCurrency;
         Console.WriteLine($"Sub Total: '{subTotal.CurrencySymbol}{subTotal.Amount}', with confidence {subTotalField.Confidence}");
     }
 
     if (document.Fields.TryGetValue("TotalTax", out DocumentField totalTaxField)
-        && totalTaxField.Type == DocumentFieldType.Currency)
+        && totalTaxField.FieldType == DocumentFieldType.Currency)
     {
         CurrencyValue totalTax = totalTaxField.ValueCurrency;
         Console.WriteLine($"Total Tax: '{totalTax.CurrencySymbol}{totalTax.Amount}', with confidence {totalTaxField.Confidence}");
     }
 
     if (document.Fields.TryGetValue("InvoiceTotal", out DocumentField invoiceTotalField)
-        && invoiceTotalField.Type == DocumentFieldType.Currency)
+        && invoiceTotalField.FieldType == DocumentFieldType.Currency)
     {
         CurrencyValue invoiceTotal = invoiceTotalField.ValueCurrency;
         Console.WriteLine($"Invoice Total: '{invoiceTotal.CurrencySymbol}{invoiceTotal.Amount}', with confidence {invoiceTotalField.Confidence}");
@@ -325,19 +325,19 @@ Classifying documents with `Azure.AI.DocumentIntelligence`:
 string classifierId = "<classifierId>";
 Uri uriSource = new Uri("<uriSource>");
 
-var content = new ClassifyDocumentContent()
+var options = new ClassifyDocumentOptions()
 {
-    UrlSource = uriSource
+    UriSource = uriSource
 };
 
-Operation<AnalyzeResult> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, classifierId, content);
+Operation<AnalyzeResult> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, classifierId, options);
 AnalyzeResult result = operation.Value;
 
 Console.WriteLine($"Input was classified by the classifier with ID '{result.ModelId}'.");
 
 foreach (AnalyzedDocument document in result.Documents)
 {
-    Console.WriteLine($"Found a document of type: {document.DocType}");
+    Console.WriteLine($"Found a document of type: {document.DocumentType}");
 }
 ```
 
@@ -386,19 +386,19 @@ Uri blobContainerUri = new Uri("<blobContainerUri>");
 // build modes and their differences, see:
 // https://aka.ms/azsdk/formrecognizer/buildmode
 
-var content = new BuildDocumentModelContent(modelId, DocumentBuildMode.Template)
+var options = new BuildDocumentModelOptions(modelId, DocumentBuildMode.Template)
 {
-    AzureBlobSource = new AzureBlobContentSource(blobContainerUri)
+    BlobSource = new BlobContentSource(blobContainerUri)
 };
 
-Operation<DocumentModelDetails> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, content);
+Operation<DocumentModelDetails> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, options);
 DocumentModelDetails model = operation.Value;
 
 Console.WriteLine($"Model ID: {model.ModelId}");
 Console.WriteLine($"Created on: {model.CreatedOn}");
 
 Console.WriteLine("Document types the model can recognize:");
-foreach (KeyValuePair<string, DocumentTypeDetails> docType in model.DocTypes)
+foreach (KeyValuePair<string, DocumentTypeDetails> docType in model.DocumentTypes)
 {
     Console.WriteLine($"  Document type: '{docType.Key}', which has the following fields:");
     foreach (KeyValuePair<string, DocumentFieldSchema> schema in docType.Value.FieldSchema)
@@ -418,12 +418,12 @@ Currently neither `AnalyzeDocument` nor `ClassifyDocument` support submitting a 
 string filePath = "<filePath>";
 byte[] fileBytes = File.ReadAllBytes(filePath);
 
-var content = new AnalyzeDocumentContent()
+var options = new AnalyzeDocumentOptions()
 {
     Base64Source = BinaryData.FromBytes(fileBytes)
 };
 
-Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", content);
+Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", options);
 AnalyzeResult result = operation.Value;
 
 // To see the list of all the supported fields returned by service and its corresponding types for the
@@ -437,39 +437,39 @@ for (int i = 0; i < result.Documents.Count; i++)
     AnalyzedDocument document = result.Documents[i];
 
     if (document.Fields.TryGetValue("VendorName", out DocumentField vendorNameField)
-        && vendorNameField.Type == DocumentFieldType.String)
+        && vendorNameField.FieldType == DocumentFieldType.String)
     {
         string vendorName = vendorNameField.ValueString;
         Console.WriteLine($"Vendor Name: '{vendorName}', with confidence {vendorNameField.Confidence}");
     }
 
     if (document.Fields.TryGetValue("CustomerName", out DocumentField customerNameField)
-        && customerNameField.Type == DocumentFieldType.String)
+        && customerNameField.FieldType == DocumentFieldType.String)
     {
         string customerName = customerNameField.ValueString;
         Console.WriteLine($"Customer Name: '{customerName}', with confidence {customerNameField.Confidence}");
     }
 
     if (document.Fields.TryGetValue("Items", out DocumentField itemsField)
-        && itemsField.Type == DocumentFieldType.List)
+        && itemsField.FieldType == DocumentFieldType.List)
     {
         foreach (DocumentField itemField in itemsField.ValueList)
         {
             Console.WriteLine("Item:");
 
-            if (itemField.Type == DocumentFieldType.Dictionary)
+            if (itemField.FieldType == DocumentFieldType.Dictionary)
             {
                 IReadOnlyDictionary<string, DocumentField> itemFields = itemField.ValueDictionary;
 
                 if (itemFields.TryGetValue("Description", out DocumentField itemDescriptionField)
-                    && itemDescriptionField.Type == DocumentFieldType.String)
+                    && itemDescriptionField.FieldType == DocumentFieldType.String)
                 {
                     string itemDescription = itemDescriptionField.ValueString;
                     Console.WriteLine($"  Description: '{itemDescription}', with confidence {itemDescriptionField.Confidence}");
                 }
 
                 if (itemFields.TryGetValue("Amount", out DocumentField itemAmountField)
-                    && itemAmountField.Type == DocumentFieldType.Currency)
+                    && itemAmountField.FieldType == DocumentFieldType.Currency)
                 {
                     CurrencyValue itemAmount = itemAmountField.ValueCurrency;
                     Console.WriteLine($"  Amount: '{itemAmount.CurrencySymbol}{itemAmount.Amount}', with confidence {itemAmountField.Confidence}");
@@ -479,21 +479,21 @@ for (int i = 0; i < result.Documents.Count; i++)
     }
 
     if (document.Fields.TryGetValue("SubTotal", out DocumentField subTotalField)
-        && subTotalField.Type == DocumentFieldType.Currency)
+        && subTotalField.FieldType == DocumentFieldType.Currency)
     {
         CurrencyValue subTotal = subTotalField.ValueCurrency;
         Console.WriteLine($"Sub Total: '{subTotal.CurrencySymbol}{subTotal.Amount}', with confidence {subTotalField.Confidence}");
     }
 
     if (document.Fields.TryGetValue("TotalTax", out DocumentField totalTaxField)
-        && totalTaxField.Type == DocumentFieldType.Currency)
+        && totalTaxField.FieldType == DocumentFieldType.Currency)
     {
         CurrencyValue totalTax = totalTaxField.ValueCurrency;
         Console.WriteLine($"Total Tax: '{totalTax.CurrencySymbol}{totalTax.Amount}', with confidence {totalTaxField.Confidence}");
     }
 
     if (document.Fields.TryGetValue("InvoiceTotal", out DocumentField invoiceTotalField)
-        && invoiceTotalField.Type == DocumentFieldType.Currency)
+        && invoiceTotalField.FieldType == DocumentFieldType.Currency)
     {
         CurrencyValue invoiceTotal = invoiceTotalField.ValueCurrency;
         Console.WriteLine($"Invoice Total: '{invoiceTotal.CurrencySymbol}{invoiceTotal.Amount}', with confidence {invoiceTotalField.Confidence}");
@@ -533,12 +533,12 @@ Note that it's necessary to pass the `DocumentPage` containing the line to the m
 ```C# Snippet:Migration_DocumentIntelligenceGetWordsUsage
 Uri uriSource = new Uri("<uriSource>");
 
-var content = new AnalyzeDocumentContent()
+var options = new AnalyzeDocumentOptions()
 {
-    UrlSource = uriSource
+    UriSource = uriSource
 };
 
-Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", content);
+Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", options);
 AnalyzeResult result = operation.Value;
 
 DocumentPage firstPage = result.Pages[0];

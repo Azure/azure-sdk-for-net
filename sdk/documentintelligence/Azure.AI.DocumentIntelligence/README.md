@@ -183,12 +183,12 @@ Extract text, selection marks, table structures, styles, and paragraphs, along w
 ```C# Snippet:DocumentIntelligenceExtractLayoutFromUriAsync
 Uri uriSource = new Uri("<uriSource>");
 
-var content = new AnalyzeDocumentContent()
+var options = new AnalyzeDocumentOptions()
 {
-    UrlSource = uriSource
+    UriSource = uriSource
 };
 
-Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content);
+Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", options);
 AnalyzeResult result = operation.Value;
 
 foreach (DocumentPage page in result.Pages)
@@ -255,8 +255,8 @@ foreach (DocumentStyle style in result.Styles)
 
         foreach (DocumentSpan span in style.Spans)
         {
-            var handwrittenContent = result.Content.Substring(span.Offset, span.Length);
-            Console.WriteLine($"  {handwrittenContent}");
+            var handwrittenOptions = result.Content.Substring(span.Offset, span.Length);
+            Console.WriteLine($"  {handwrittenOptions}");
         }
     }
 }
@@ -285,12 +285,12 @@ For example, to analyze fields from an invoice, use the prebuilt Invoice model p
 ```C# Snippet:DocumentIntelligenceAnalyzeWithPrebuiltModelFromUriAsync
 Uri uriSource = new Uri("<uriSource>");
 
-var content = new AnalyzeDocumentContent()
+var options = new AnalyzeDocumentOptions()
 {
-    UrlSource = uriSource
+    UriSource = uriSource
 };
 
-Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", content);
+Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", options);
 AnalyzeResult result = operation.Value;
 
 // To see the list of all the supported fields returned by service and its corresponding types for the
@@ -304,39 +304,39 @@ for (int i = 0; i < result.Documents.Count; i++)
     AnalyzedDocument document = result.Documents[i];
 
     if (document.Fields.TryGetValue("VendorName", out DocumentField vendorNameField)
-        && vendorNameField.Type == DocumentFieldType.String)
+        && vendorNameField.FieldType == DocumentFieldType.String)
     {
         string vendorName = vendorNameField.ValueString;
         Console.WriteLine($"Vendor Name: '{vendorName}', with confidence {vendorNameField.Confidence}");
     }
 
     if (document.Fields.TryGetValue("CustomerName", out DocumentField customerNameField)
-        && customerNameField.Type == DocumentFieldType.String)
+        && customerNameField.FieldType == DocumentFieldType.String)
     {
         string customerName = customerNameField.ValueString;
         Console.WriteLine($"Customer Name: '{customerName}', with confidence {customerNameField.Confidence}");
     }
 
     if (document.Fields.TryGetValue("Items", out DocumentField itemsField)
-        && itemsField.Type == DocumentFieldType.List)
+        && itemsField.FieldType == DocumentFieldType.List)
     {
         foreach (DocumentField itemField in itemsField.ValueList)
         {
             Console.WriteLine("Item:");
 
-            if (itemField.Type == DocumentFieldType.Dictionary)
+            if (itemField.FieldType == DocumentFieldType.Dictionary)
             {
                 IReadOnlyDictionary<string, DocumentField> itemFields = itemField.ValueDictionary;
 
                 if (itemFields.TryGetValue("Description", out DocumentField itemDescriptionField)
-                    && itemDescriptionField.Type == DocumentFieldType.String)
+                    && itemDescriptionField.FieldType == DocumentFieldType.String)
                 {
                     string itemDescription = itemDescriptionField.ValueString;
                     Console.WriteLine($"  Description: '{itemDescription}', with confidence {itemDescriptionField.Confidence}");
                 }
 
                 if (itemFields.TryGetValue("Amount", out DocumentField itemAmountField)
-                    && itemAmountField.Type == DocumentFieldType.Currency)
+                    && itemAmountField.FieldType == DocumentFieldType.Currency)
                 {
                     CurrencyValue itemAmount = itemAmountField.ValueCurrency;
                     Console.WriteLine($"  Amount: '{itemAmount.CurrencySymbol}{itemAmount.Amount}', with confidence {itemAmountField.Confidence}");
@@ -346,21 +346,21 @@ for (int i = 0; i < result.Documents.Count; i++)
     }
 
     if (document.Fields.TryGetValue("SubTotal", out DocumentField subTotalField)
-        && subTotalField.Type == DocumentFieldType.Currency)
+        && subTotalField.FieldType == DocumentFieldType.Currency)
     {
         CurrencyValue subTotal = subTotalField.ValueCurrency;
         Console.WriteLine($"Sub Total: '{subTotal.CurrencySymbol}{subTotal.Amount}', with confidence {subTotalField.Confidence}");
     }
 
     if (document.Fields.TryGetValue("TotalTax", out DocumentField totalTaxField)
-        && totalTaxField.Type == DocumentFieldType.Currency)
+        && totalTaxField.FieldType == DocumentFieldType.Currency)
     {
         CurrencyValue totalTax = totalTaxField.ValueCurrency;
         Console.WriteLine($"Total Tax: '{totalTax.CurrencySymbol}{totalTax.Amount}', with confidence {totalTaxField.Confidence}");
     }
 
     if (document.Fields.TryGetValue("InvoiceTotal", out DocumentField invoiceTotalField)
-        && invoiceTotalField.Type == DocumentFieldType.Currency)
+        && invoiceTotalField.FieldType == DocumentFieldType.Currency)
     {
         CurrencyValue invoiceTotal = invoiceTotalField.ValueCurrency;
         Console.WriteLine($"Invoice Total: '{invoiceTotal.CurrencySymbol}{invoiceTotal.Amount}', with confidence {invoiceTotalField.Confidence}");
@@ -392,19 +392,19 @@ Uri blobContainerUri = new Uri("<blobContainerUri>");
 // build modes and their differences, see:
 // https://aka.ms/azsdk/formrecognizer/buildmode
 
-var content = new BuildDocumentModelContent(modelId, DocumentBuildMode.Template)
+var options = new BuildDocumentModelOptions(modelId, DocumentBuildMode.Template)
 {
-    AzureBlobSource = new AzureBlobContentSource(blobContainerUri)
+    BlobSource = new BlobContentSource(blobContainerUri)
 };
 
-Operation<DocumentModelDetails> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, content);
+Operation<DocumentModelDetails> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, options);
 DocumentModelDetails model = operation.Value;
 
 Console.WriteLine($"Model ID: {model.ModelId}");
 Console.WriteLine($"Created on: {model.CreatedOn}");
 
 Console.WriteLine("Document types the model can recognize:");
-foreach (KeyValuePair<string, DocumentTypeDetails> docType in model.DocTypes)
+foreach (KeyValuePair<string, DocumentTypeDetails> docType in model.DocumentTypes)
 {
     Console.WriteLine($"  Document type: '{docType.Key}', which has the following fields:");
     foreach (KeyValuePair<string, DocumentFieldSchema> schema in docType.Value.FieldSchema)
@@ -424,7 +424,7 @@ Manage the models stored in your account.
 // Check number of custom models in the Document Intelligence resource, and the maximum number
 // of custom models that can be stored.
 
-ResourceDetails resourceDetails = await client.GetResourceInfoAsync();
+DocumentIntelligenceResourceDetails resourceDetails = await client.GetResourceDetailsAsync();
 
 Console.WriteLine($"Resource has {resourceDetails.CustomDocumentModels.Count} custom models.");
 Console.WriteLine($"It can have at most {resourceDetails.CustomDocumentModels.Limit} custom models.");
@@ -472,26 +472,26 @@ Build a document classifier by uploading custom training documents.
 
 string classifierId = "<classifierId>";
 Uri blobContainerUri = new Uri("<blobContainerUri>");
-var sourceA = new AzureBlobContentSource(blobContainerUri) { Prefix = "IRS-1040-A/train" };
-var sourceB = new AzureBlobContentSource(blobContainerUri) { Prefix = "IRS-1040-B/train" };
-var docTypeA = new ClassifierDocumentTypeDetails() { AzureBlobSource = sourceA };
-var docTypeB = new ClassifierDocumentTypeDetails() { AzureBlobSource = sourceB };
+var sourceA = new BlobContentSource(blobContainerUri) { Prefix = "IRS-1040-A/train" };
+var sourceB = new BlobContentSource(blobContainerUri) { Prefix = "IRS-1040-B/train" };
+var docTypeA = new ClassifierDocumentTypeDetails() { BlobSource = sourceA };
+var docTypeB = new ClassifierDocumentTypeDetails() { BlobSource = sourceB };
 var docTypes = new Dictionary<string, ClassifierDocumentTypeDetails>()
 {
     { "IRS-1040-A", docTypeA },
     { "IRS-1040-B", docTypeB }
 };
 
-var content = new BuildDocumentClassifierContent(classifierId, docTypes);
+var options = new BuildClassifierOptions(classifierId, docTypes);
 
-Operation<DocumentClassifierDetails> operation = await client.BuildClassifierAsync(WaitUntil.Completed, content);
+Operation<DocumentClassifierDetails> operation = await client.BuildClassifierAsync(WaitUntil.Completed, options);
 DocumentClassifierDetails classifier = operation.Value;
 
 Console.WriteLine($"Classifier ID: {classifier.ClassifierId}");
 Console.WriteLine($"Created on: {classifier.CreatedOn}");
 
 Console.WriteLine("Document types the classifier can recognize:");
-foreach (KeyValuePair<string, ClassifierDocumentTypeDetails> docType in classifier.DocTypes)
+foreach (KeyValuePair<string, ClassifierDocumentTypeDetails> docType in classifier.DocumentTypes)
 {
     Console.WriteLine($"  {docType.Key}");
 }
@@ -507,19 +507,19 @@ Use document classifiers to accurately detect and identify documents you process
 string classifierId = "<classifierId>";
 Uri uriSource = new Uri("<uriSource>");
 
-var content = new ClassifyDocumentContent()
+var options = new ClassifyDocumentOptions()
 {
-    UrlSource = uriSource
+    UriSource = uriSource
 };
 
-Operation<AnalyzeResult> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, classifierId, content);
+Operation<AnalyzeResult> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, classifierId, options);
 AnalyzeResult result = operation.Value;
 
 Console.WriteLine($"Input was classified by the classifier with ID '{result.ModelId}'.");
 
 foreach (AnalyzedDocument document in result.Documents)
 {
-    Console.WriteLine($"Found a document of type: {document.DocType}");
+    Console.WriteLine($"Found a document of type: {document.DocumentType}");
 }
 ```
 
@@ -534,14 +534,14 @@ When you interact with the Document Intelligence client library using the .NET S
 For example, if you submit a receipt image with an invalid `Uri`, a `400` error is returned, indicating "Bad Request".
 
 ```C# Snippet:DocumentIntelligenceBadRequest
-var content = new AnalyzeDocumentContent()
+var options = new AnalyzeDocumentOptions()
 {
-    UrlSource = new Uri("http://invalid.uri")
+    UriSource = new Uri("http://invalid.uri")
 };
 
 try
 {
-    Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-receipt", content);
+    Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-receipt", options);
 }
 catch (RequestFailedException e)
 {

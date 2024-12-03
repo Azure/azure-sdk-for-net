@@ -66,7 +66,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
         /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentIntelligenceError(string code, string message, string target, IReadOnlyList<DocumentIntelligenceError> details, InnerError innererror, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DocumentIntelligenceError(string code, string message, string target, IReadOnlyList<DocumentIntelligenceError> details, DocumentIntelligenceInnerError innererror, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
@@ -90,6 +90,6 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> An array of details about specific errors that led to this reported error. </summary>
         public IReadOnlyList<DocumentIntelligenceError> Details { get; }
         /// <summary> An object containing more specific information than the current object about the error. </summary>
-        public InnerError Innererror { get; }
+        public DocumentIntelligenceInnerError Innererror { get; }
     }
 }

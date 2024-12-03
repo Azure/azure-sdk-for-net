@@ -22,12 +22,12 @@ namespace Azure.AI.DocumentIntelligence.Tests
         {
             var client = CreateDocumentIntelligenceClient();
 
-            var content = new AnalyzeDocumentContent()
+            var options = new AnalyzeDocumentOptions()
             {
-                UrlSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.ContosoReceipt)
+                UriSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.ContosoReceipt)
             };
 
-            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-receipt", content);
+            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-receipt", options);
 
             Assert.That(operation.HasCompleted);
             Assert.That(operation.HasValue);
@@ -40,12 +40,12 @@ namespace Azure.AI.DocumentIntelligence.Tests
         {
             var client = CreateDocumentIntelligenceClient();
 
-            var content = new AnalyzeDocumentContent()
+            var options = new AnalyzeDocumentOptions()
             {
                 Base64Source = DocumentIntelligenceTestEnvironment.CreateBinaryData(TestFile.ContosoReceipt)
             };
 
-            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-receipt", content);
+            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-receipt", options);
 
             Assert.That(operation.HasCompleted);
             Assert.That(operation.HasValue);
@@ -58,12 +58,12 @@ namespace Azure.AI.DocumentIntelligence.Tests
         {
             var client = CreateDocumentIntelligenceClient();
 
-            var content = new AnalyzeDocumentContent()
+            var options = new AnalyzeDocumentOptions()
             {
-                UrlSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.Blank)
+                UriSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.Blank)
             };
 
-            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-receipt", content);
+            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-receipt", options);
 
             Assert.That(operation.HasCompleted);
             Assert.That(operation.HasValue);
@@ -99,13 +99,13 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var client = CreateDocumentIntelligenceClient();
 
             const string ModelId = "prebuilt-read";
-            var content = new AnalyzeDocumentContent()
+            var options = new AnalyzeDocumentOptions()
             {
                 Base64Source = DocumentIntelligenceTestEnvironment.CreateBinaryData(TestFile.LayoutSample)
             };
             var output = new[] { AnalyzeOutputOption.Pdf };
 
-            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, ModelId, content, output: output);
+            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, ModelId, options, output: output);
             var response = await client.GetAnalyzeResultPdfAsync(ModelId, Guid.Parse(operation.Id));
 
             BinaryData pdf = response.Value;
@@ -122,13 +122,13 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var client = CreateDocumentIntelligenceClient();
 
             const string ModelId = "prebuilt-layout";
-            var content = new AnalyzeDocumentContent()
+            var options = new AnalyzeDocumentOptions()
             {
                 Base64Source = DocumentIntelligenceTestEnvironment.CreateBinaryData(TestFile.LayoutSample)
             };
             var output = new[] { AnalyzeOutputOption.Figures };
 
-            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, ModelId, content, output: output);
+            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, ModelId, options, output: output);
             var result = operation.Value;
 
             Assert.That(result.Figures, Is.Not.Empty);
@@ -149,7 +149,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
             Assert.That(analyzeResult.ModelId, Is.EqualTo(modelId));
             Assert.That(analyzeResult.ApiVersion, Is.EqualTo(ServiceVersionString));
             Assert.That(analyzeResult.StringIndexType, Is.EqualTo(StringIndexType.TextElements));
-            Assert.That(analyzeResult.ContentFormat, Is.Not.EqualTo(default(ContentFormat)));
+            Assert.That(analyzeResult.ContentFormat, Is.Not.EqualTo(default(DocumentContentFormat)));
 
             for (int pageNumber = 1; pageNumber <= analyzeResult.Pages.Count; pageNumber++)
             {
@@ -165,8 +165,8 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             foreach (var document in analyzeResult.Documents)
             {
-                Assert.That(document.DocType, Is.Not.Null);
-                Assert.That(document.DocType, Is.Not.Empty);
+                Assert.That(document.DocumentType, Is.Not.Null);
+                Assert.That(document.DocumentType, Is.Not.Empty);
 
                 foreach (var region in document.BoundingRegions)
                 {
@@ -183,11 +183,11 @@ namespace Azure.AI.DocumentIntelligence.Tests
         {
             ValidateGenericAnalyzeResult(analyzeResult, "prebuilt-receipt");
 
-            Assert.That(analyzeResult.ContentFormat, Is.EqualTo(ContentFormat.Text));
+            Assert.That(analyzeResult.ContentFormat, Is.EqualTo(DocumentContentFormat.Text));
 
             var document = analyzeResult.Documents.Single();
 
-            Assert.That(document.DocType, Is.EqualTo("receipt.retailMeal"));
+            Assert.That(document.DocumentType, Is.EqualTo("receipt.retailMeal"));
 
             var documentSpan = document.Spans.Single();
 
@@ -201,12 +201,12 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var transactionTimeField = document.Fields["TransactionTime"];
             var totalField = document.Fields["Total"];
 
-            Assert.That(merchantAddressField.Type, Is.EqualTo(DocumentFieldType.Address));
-            Assert.That(merchantNameField.Type, Is.EqualTo(DocumentFieldType.String));
-            Assert.That(merchantPhoneNumberField.Type, Is.EqualTo(DocumentFieldType.PhoneNumber));
-            Assert.That(transactionDateField.Type, Is.EqualTo(DocumentFieldType.Date));
-            Assert.That(transactionTimeField.Type, Is.EqualTo(DocumentFieldType.Time));
-            Assert.That(totalField.Type, Is.EqualTo(DocumentFieldType.Currency));
+            Assert.That(merchantAddressField.FieldType, Is.EqualTo(DocumentFieldType.Address));
+            Assert.That(merchantNameField.FieldType, Is.EqualTo(DocumentFieldType.String));
+            Assert.That(merchantPhoneNumberField.FieldType, Is.EqualTo(DocumentFieldType.PhoneNumber));
+            Assert.That(transactionDateField.FieldType, Is.EqualTo(DocumentFieldType.Date));
+            Assert.That(transactionTimeField.FieldType, Is.EqualTo(DocumentFieldType.Time));
+            Assert.That(totalField.FieldType, Is.EqualTo(DocumentFieldType.Currency));
 
             var merchantAddress = merchantAddressField.ValueAddress;
             var merchantName = merchantNameField.ValueString;

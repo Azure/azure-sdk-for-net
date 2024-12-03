@@ -23,12 +23,12 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             await using var disposableClassifier = await BuildDisposableDocumentClassifierAsync();
 
-            var content = new ClassifyDocumentContent()
+            var options = new ClassifyDocumentOptions()
             {
-                UrlSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.Irs1040)
+                UriSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.Irs1040)
             };
 
-            var operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, disposableClassifier.ClassifierId, content);
+            var operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, disposableClassifier.ClassifierId, options);
 
             Assert.That(operation.HasCompleted);
             Assert.That(operation.HasValue);
@@ -43,12 +43,12 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             await using var disposableClassifier = await BuildDisposableDocumentClassifierAsync();
 
-            var content = new ClassifyDocumentContent()
+            var options = new ClassifyDocumentOptions()
             {
                 Base64Source = DocumentIntelligenceTestEnvironment.CreateBinaryData(TestFile.Irs1040)
             };
 
-            var operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, disposableClassifier.ClassifierId, content);
+            var operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, disposableClassifier.ClassifierId, options);
 
             Assert.That(operation.HasCompleted);
             Assert.That(operation.HasValue);
@@ -64,12 +64,12 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             await using var disposableClassifier = await BuildDisposableDocumentClassifierAsync();
 
-            var content = new ClassifyDocumentContent()
+            var options = new ClassifyDocumentOptions()
             {
-                UrlSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.Blank)
+                UriSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.Blank)
             };
 
-            var operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, disposableClassifier.ClassifierId, content);
+            var operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, disposableClassifier.ClassifierId, options);
 
             Assert.That(operation.HasCompleted);
             Assert.That(operation.HasValue);
@@ -82,7 +82,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
             Assert.That(analyzeResult.ModelId, Is.EqualTo(classifierId));
             Assert.That(analyzeResult.ApiVersion, Is.EqualTo(ServiceVersionString));
             Assert.That(analyzeResult.StringIndexType, Is.EqualTo(StringIndexType.TextElements));
-            Assert.That(analyzeResult.ContentFormat, Is.Not.EqualTo(default(ContentFormat)));
+            Assert.That(analyzeResult.ContentFormat, Is.Not.EqualTo(default(DocumentContentFormat)));
 
             Assert.That(analyzeResult.Content, Is.Empty);
             Assert.That(analyzeResult.Paragraphs, Is.Empty);
@@ -114,8 +114,8 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             foreach (var document in analyzeResult.Documents)
             {
-                Assert.That(document.DocType, Is.Not.Null);
-                Assert.That(document.DocType, Is.Not.Empty);
+                Assert.That(document.DocumentType, Is.Not.Null);
+                Assert.That(document.DocumentType, Is.Not.Empty);
                 Assert.That(document.Fields, Is.Empty);
                 Assert.That(document.Spans, Is.Empty);
 
@@ -134,7 +134,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
         {
             ValidateGenericClassifierResult(analyzeResult, classifierId);
 
-            Assert.That(analyzeResult.ContentFormat, Is.EqualTo(ContentFormat.Text));
+            Assert.That(analyzeResult.ContentFormat, Is.EqualTo(DocumentContentFormat.Text));
 
             Assert.That(analyzeResult.Pages.Count, Is.EqualTo(4));
 
@@ -148,7 +148,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             var document = analyzeResult.Documents.Single();
 
-            Assert.That(document.DocType, Is.EqualTo("IRS-1040-C"));
+            Assert.That(document.DocumentType, Is.EqualTo("IRS-1040-C"));
             Assert.That(document.BoundingRegions.Count, Is.EqualTo(4));
         }
     }

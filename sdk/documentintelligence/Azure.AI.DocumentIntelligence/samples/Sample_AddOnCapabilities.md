@@ -27,9 +27,9 @@ To extract formulas from a given file at a URI with the add-on formulas capabili
 ```C# Snippet:DocumentIntelligenceSampleFormulaExtraction
 Uri uriSource = new Uri("<uriSource>");
 
-var content = new AnalyzeDocumentContent()
+var options = new AnalyzeDocumentOptions()
 {
-    UrlSource = uriSource
+    UriSource = uriSource
 };
 
 List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>
@@ -37,7 +37,7 @@ List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>
     DocumentAnalysisFeature.Formulas
 };
 
-var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content, features: features);
+var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", options, features: features);
 AnalyzeResult result = operation.Value;
 
 foreach (DocumentPage page in result.Pages)
@@ -66,17 +66,17 @@ To extract font information from a given file at a URI with the add-on font styl
 ```C# Snippet:DocumentIntelligenceSampleFontStyling
 Uri uriSource = new Uri("<uriSource>");
 
-var content = new AnalyzeDocumentContent()
+var options = new AnalyzeDocumentOptions()
 {
-    UrlSource = uriSource
+    UriSource = uriSource
 };
 
 List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>
 {
-    DocumentAnalysisFeature.StyleFont
+    DocumentAnalysisFeature.FontStyling
 };
 
-var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content, features: features);
+var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", options, features: features);
 AnalyzeResult result = operation.Value;
 
 // Handwritten styles
@@ -220,9 +220,9 @@ To extract barcodes from a given file at a URI with the add-on barcodes capabili
 ```C# Snippet:DocumentIntelligenceSampleBarcodeExtraction
 Uri uriSource = new Uri("<uriSource>");
 
-var content = new AnalyzeDocumentContent()
+var options = new AnalyzeDocumentOptions()
 {
-    UrlSource = uriSource
+    UriSource = uriSource
 };
 
 List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>
@@ -230,7 +230,7 @@ List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>
     DocumentAnalysisFeature.Barcodes
 };
 
-var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content, features: features);
+var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", options, features: features);
 AnalyzeResult result = operation.Value;
 
 foreach (DocumentPage page in result.Pages)
@@ -261,9 +261,9 @@ To detect languages from a given file at a URI with the add-on languages capabil
 ```C# Snippet:DocumentIntelligenceSampleLanguageDetection
 Uri uriSource = new Uri("<uriSource>");
 
-var content = new AnalyzeDocumentContent()
+var options = new AnalyzeDocumentOptions()
 {
-    UrlSource = uriSource
+    UriSource = uriSource
 };
 
 List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>
@@ -271,7 +271,7 @@ List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>
     DocumentAnalysisFeature.Languages
 };
 
-var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content, features: features);
+var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", options, features: features);
 AnalyzeResult result = operation.Value;
 
 Console.WriteLine("----Languages detected in the document----");
@@ -294,9 +294,9 @@ To extract key-value pairs from a given file at a URI with the add-on keyValuePa
 ```C# Snippet:DocumentIntelligenceSampleKeyValuePairsExtraction
 Uri uriSource = new Uri("<uriSource>");
 
-var content = new AnalyzeDocumentContent()
+var options = new AnalyzeDocumentOptions()
 {
-    UrlSource = uriSource
+    UriSource = uriSource
 };
 
 List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>
@@ -304,7 +304,7 @@ List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>
     DocumentAnalysisFeature.KeyValuePairs
 };
 
-var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content, features: features);
+var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", options, features: features);
 AnalyzeResult result = operation.Value;
 
 Console.WriteLine("----Key Value Pair Options detected in the document----");

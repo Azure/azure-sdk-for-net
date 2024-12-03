@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    [CodeGenSuppress("FetchAnalyzeResultFromAnalyzeResultOperation", typeof(Response))]
+    [CodeGenSuppress("FetchAnalyzeResultFromAnalyzeOperation", typeof(Response))]
     public partial class DocumentIntelligenceClient
     {
         // CUSTOM CODE NOTE: we're overwriting the behavior of the AnalyzeDocument API to
@@ -28,7 +28,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AnalyzeDocumentAsync(WaitUntil,string,AnalyzeDocumentContent,string,string,StringIndexType?,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},ContentFormat?,IEnumerable{AnalyzeOutputOption},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AnalyzeDocumentAsync(WaitUntil,string,AnalyzeDocumentOptions,string,string,StringIndexType?,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},DocumentContentFormat?,IEnumerable{AnalyzeOutputOption},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -36,7 +36,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="pages"> List of 1-based page numbers to analyze.  Ex. "1-3,5,7-9". </param>
+        /// <param name="pages"> 1-based page numbers to analyze.  Ex. "1-3,5,7-9". </param>
         /// <param name="locale">
         /// Locale hint for text recognition and document analysis.  Value may contain only
         /// the language code (ex. "en", "fr") or BCP 47 language tag (ex. "en-US").
@@ -92,7 +92,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AnalyzeDocument(WaitUntil,string,AnalyzeDocumentContent,string,string,StringIndexType?,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},ContentFormat?,IEnumerable{AnalyzeOutputOption},CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AnalyzeDocument(WaitUntil,string,AnalyzeDocumentOptions,string,string,StringIndexType?,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},DocumentContentFormat?,IEnumerable{AnalyzeOutputOption},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -100,7 +100,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="pages"> List of 1-based page numbers to analyze.  Ex. "1-3,5,7-9". </param>
+        /// <param name="pages"> 1-based page numbers to analyze.  Ex. "1-3,5,7-9". </param>
         /// <param name="locale">
         /// Locale hint for text recognition and document analysis.  Value may contain only
         /// the language code (ex. "en", "fr") or BCP 47 language tag (ex. "en-US").
@@ -147,11 +147,11 @@ namespace Azure.AI.DocumentIntelligence
         }
 
         // CUSTOM CODE NOTE: code generation is mistakenly creating two copies of the
-        // FetchAnalyzeResultFromAnalyzeResultOperation method, breaking the build.
+        // FetchAnalyzeResultFromAnalyzeOperation method, breaking the build.
         // We're forcibly suppressing their creation with the CodeGenSuppress attribute
         // and adding a single copy here.
 
-        private AnalyzeResult FetchAnalyzeResultFromAnalyzeResultOperation(Response response)
+        private AnalyzeResult FetchAnalyzeResultFromAnalyzeOperation(Response response)
         {
             var resultJsonElement = JsonDocument.Parse(response.Content).RootElement.GetProperty("analyzeResult");
             return AnalyzeResult.DeserializeAnalyzeResult(resultJsonElement);
