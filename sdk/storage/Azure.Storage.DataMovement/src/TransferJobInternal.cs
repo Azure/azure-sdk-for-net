@@ -5,7 +5,6 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using System.Threading.Channels;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -492,7 +491,6 @@ namespace Azure.Storage.DataMovement
         {
             if (ex is not OperationCanceledException &&
                 ex is not TaskCanceledException &&
-                ex is not ChannelClosedException &&
                 !ex.Message.Contains("The request was canceled."))
             {
                 if (TransferFailedEventHandler != null)
@@ -549,6 +547,7 @@ namespace Azure.Storage.DataMovement
         {
             DataTransferStatus jobPartStatus = args.TransferStatus;
             DataTransferState jobState = _dataTransfer._state.GetTransferStatus().State;
+            Console.WriteLine($"{DateTime.Now}: JobPartEvent - {jobState}, {jobPartStatus.State}, {jobPartStatus.HasFailedItems}");
 
             // Keep track of paused, failed, and skipped which we will use to determine final job status
             // Since this is each Job Part coming in, the state of skipped or failed is mutually exclusive.
@@ -601,6 +600,7 @@ namespace Azure.Storage.DataMovement
 
         public async Task OnJobStateChangedAsync(DataTransferState state)
         {
+            Console.WriteLine($"{DateTime.Now}: Job status change = {state}");
             if (_dataTransfer._state.SetTransferState(state))
             {
                 // If we are in a final state, dispose the JobPartEvent handlers
@@ -674,6 +674,7 @@ namespace Azure.Storage.DataMovement
 
         internal async Task CheckAndUpdateStatusAsync()
         {
+            Console.WriteLine($"{DateTime.Now}: Checking status - {_jobParts.Count}, {_pendingJobParts}");
             // If we had a failure or pause during listing, we need to set the status correctly.
             // This is in the case that we weren't able to begin listing any job parts yet.
             if (_jobParts.Count == 0)
