@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppService.Models
 
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("HttpPerInstanceConcurrency", out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ConcurrentHttpPerInstanceConcurrency", out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  http: ");

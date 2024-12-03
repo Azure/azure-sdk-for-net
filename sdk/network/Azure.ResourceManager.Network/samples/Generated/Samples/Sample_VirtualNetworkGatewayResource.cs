@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
 
             // invoke the operation
-            NetworkTagsObject networkTagsObject = new NetworkTagsObject()
+            NetworkTagsObject networkTagsObject = new NetworkTagsObject
             {
                 Tags =
 {
 ["tag1"] = "value1",
-["tag2"] = "value2",
+["tag2"] = "value2"
 },
             };
             ArmOperation<VirtualNetworkGatewayResource> lro = await virtualNetworkGateway.UpdateAsync(WaitUntil.Completed, networkTagsObject);
@@ -439,7 +439,15 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
 
             // invoke the operation
-            VpnClientIPsecParameters vpnclientIPsecParams = new VpnClientIPsecParameters(86473, 429497, IPsecEncryption.Aes256, IPsecIntegrity.Sha256, IkeEncryption.Aes256, IkeIntegrity.Sha384, DHGroup.DHGroup2, PfsGroup.Pfs2);
+            VpnClientIPsecParameters vpnclientIPsecParams = new VpnClientIPsecParameters(
+                86473,
+                429497,
+                IPsecEncryption.Aes256,
+                IPsecIntegrity.Sha256,
+                IkeEncryption.Aes256,
+                IkeIntegrity.Sha384,
+                DHGroup.DHGroup2,
+                PfsGroup.Pfs2);
             ArmOperation<VpnClientIPsecParameters> lro = await virtualNetworkGateway.SetVpnclientIPsecParametersAsync(WaitUntil.Completed, vpnclientIPsecParams);
             VpnClientIPsecParameters result = lro.Value;
 
@@ -494,7 +502,7 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
 
             // invoke the operation
-            VpnPacketCaptureStartContent content = new VpnPacketCaptureStartContent()
+            VpnPacketCaptureStartContent content = new VpnPacketCaptureStartContent
             {
                 FilterData = "{'TracingFlags': 11,'MaxPacketBufferSize': 120,'MaxFileSize': 200,'Filters': [{'SourceSubnets': ['20.1.1.0/24'],'DestinationSubnets': ['10.1.1.0/24'],'SourcePort': [500],'DestinationPort': [4500],'Protocol': 6,'TcpFlags': 16,'CaptureSingleDirectionTrafficOnly': true}]}",
             };
@@ -552,7 +560,7 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
 
             // invoke the operation
-            VpnPacketCaptureStopContent content = new VpnPacketCaptureStopContent()
+            VpnPacketCaptureStopContent content = new VpnPacketCaptureStopContent
             {
                 SasUri = new Uri("https://teststorage.blob.core.windows.net/?sv=2018-03-28&ss=bfqt&srt=sco&sp=rwdlacup&se=2019-09-13T07:44:05Z&st=2019-09-06T23:44:05Z&spr=https&sig=V1h9D1riltvZMI69d6ihENnFo%2FrCvTqGgjO2lf%2FVBhE%3D"),
             };
@@ -610,12 +618,9 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
 
             // invoke the operation
-            P2SVpnConnectionRequest request = new P2SVpnConnectionRequest()
+            P2SVpnConnectionRequest request = new P2SVpnConnectionRequest
             {
-                VpnConnectionIds =
-{
-"vpnconnId1","vpnconnId2"
-},
+                VpnConnectionIds = { "vpnconnId1", "vpnconnId2" },
             };
             await virtualNetworkGateway.DisconnectVirtualNetworkGatewayVpnConnectionsAsync(WaitUntil.Completed, request);
 

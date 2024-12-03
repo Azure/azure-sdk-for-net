@@ -18,33 +18,6 @@ namespace Azure.ResourceManager.Network.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Delete_DeletePeering()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkPeeringDelete.json
-            // this example is just showing the usage of "VirtualNetworkPeerings_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this VirtualNetworkPeeringResource created on azure
-            // for more information of creating VirtualNetworkPeeringResource, please refer to the document of VirtualNetworkPeeringResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "peerTest";
-            string virtualNetworkName = "vnet1";
-            string virtualNetworkPeeringName = "peer";
-            ResourceIdentifier virtualNetworkPeeringResourceId = VirtualNetworkPeeringResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName, virtualNetworkPeeringName);
-            VirtualNetworkPeeringResource virtualNetworkPeering = client.GetVirtualNetworkPeeringResource(virtualNetworkPeeringResourceId);
-
-            // invoke the operation
-            await virtualNetworkPeering.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetV6SubnetPeering()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkV6SubnetPeeringGet.json
@@ -169,6 +142,33 @@ namespace Azure.ResourceManager.Network.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeletePeering()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkPeeringDelete.json
+            // this example is just showing the usage of "VirtualNetworkPeerings_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this VirtualNetworkPeeringResource created on azure
+            // for more information of creating VirtualNetworkPeeringResource, please refer to the document of VirtualNetworkPeeringResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "peerTest";
+            string virtualNetworkName = "vnet1";
+            string virtualNetworkPeeringName = "peer";
+            ResourceIdentifier virtualNetworkPeeringResourceId = VirtualNetworkPeeringResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName, virtualNetworkPeeringName);
+            VirtualNetworkPeeringResource virtualNetworkPeering = client.GetVirtualNetworkPeeringResource(virtualNetworkPeeringResourceId);
+
+            // invoke the operation
+            await virtualNetworkPeering.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateV6SubnetPeering()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/VirtualNetworkV6SubnetPeeringCreate.json
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkPeeringResource virtualNetworkPeering = client.GetVirtualNetworkPeeringResource(virtualNetworkPeeringResourceId);
 
             // invoke the operation
-            VirtualNetworkPeeringData data = new VirtualNetworkPeeringData()
+            VirtualNetworkPeeringData data = new VirtualNetworkPeeringData
             {
                 AllowVirtualNetworkAccess = true,
                 AllowForwardedTraffic = true,
@@ -198,14 +198,8 @@ namespace Azure.ResourceManager.Network.Samples
                 RemoteVirtualNetworkId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/peerTest/providers/Microsoft.Network/virtualNetworks/vnet2"),
                 AreCompleteVnetsPeered = false,
                 EnableOnlyIPv6Peering = true,
-                LocalSubnetNames =
-{
-"Subnet1","Subnet4"
-},
-                RemoteSubnetNames =
-{
-"Subnet2"
-},
+                LocalSubnetNames = { "Subnet1", "Subnet4" },
+                RemoteSubnetNames = { "Subnet2" },
             };
             ArmOperation<VirtualNetworkPeeringResource> lro = await virtualNetworkPeering.UpdateAsync(WaitUntil.Completed, data);
             VirtualNetworkPeeringResource result = lro.Value;
@@ -239,7 +233,7 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkPeeringResource virtualNetworkPeering = client.GetVirtualNetworkPeeringResource(virtualNetworkPeeringResourceId);
 
             // invoke the operation
-            VirtualNetworkPeeringData data = new VirtualNetworkPeeringData()
+            VirtualNetworkPeeringData data = new VirtualNetworkPeeringData
             {
                 AllowVirtualNetworkAccess = true,
                 AllowForwardedTraffic = true,
@@ -279,7 +273,7 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkPeeringResource virtualNetworkPeering = client.GetVirtualNetworkPeeringResource(virtualNetworkPeeringResourceId);
 
             // invoke the operation
-            VirtualNetworkPeeringData data = new VirtualNetworkPeeringData()
+            VirtualNetworkPeeringData data = new VirtualNetworkPeeringData
             {
                 AllowVirtualNetworkAccess = true,
                 AllowForwardedTraffic = true,
@@ -319,7 +313,7 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkPeeringResource virtualNetworkPeering = client.GetVirtualNetworkPeeringResource(virtualNetworkPeeringResourceId);
 
             // invoke the operation
-            VirtualNetworkPeeringData data = new VirtualNetworkPeeringData()
+            VirtualNetworkPeeringData data = new VirtualNetworkPeeringData
             {
                 AllowVirtualNetworkAccess = true,
                 AllowForwardedTraffic = true,
@@ -328,14 +322,8 @@ namespace Azure.ResourceManager.Network.Samples
                 RemoteVirtualNetworkId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/peerTest/providers/Microsoft.Network/virtualNetworks/vnet2"),
                 AreCompleteVnetsPeered = false,
                 EnableOnlyIPv6Peering = false,
-                LocalSubnetNames =
-{
-"Subnet1","Subnet4"
-},
-                RemoteSubnetNames =
-{
-"Subnet2"
-},
+                LocalSubnetNames = { "Subnet1", "Subnet4" },
+                RemoteSubnetNames = { "Subnet2" },
             };
             ArmOperation<VirtualNetworkPeeringResource> lro = await virtualNetworkPeering.UpdateAsync(WaitUntil.Completed, data);
             VirtualNetworkPeeringResource result = lro.Value;
@@ -369,7 +357,7 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkPeeringResource virtualNetworkPeering = client.GetVirtualNetworkPeeringResource(virtualNetworkPeeringResourceId);
 
             // invoke the operation
-            VirtualNetworkPeeringData data = new VirtualNetworkPeeringData()
+            VirtualNetworkPeeringData data = new VirtualNetworkPeeringData
             {
                 AllowVirtualNetworkAccess = true,
                 AllowForwardedTraffic = true,
@@ -410,7 +398,7 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkPeeringResource virtualNetworkPeering = client.GetVirtualNetworkPeeringResource(virtualNetworkPeeringResourceId);
 
             // invoke the operation
-            VirtualNetworkPeeringData data = new VirtualNetworkPeeringData()
+            VirtualNetworkPeeringData data = new VirtualNetworkPeeringData
             {
                 AllowVirtualNetworkAccess = true,
                 AllowForwardedTraffic = true,
@@ -453,7 +441,7 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkPeeringResource virtualNetworkPeering = client.GetVirtualNetworkPeeringResource(virtualNetworkPeeringResourceId);
 
             // invoke the operation
-            VirtualNetworkPeeringData data = new VirtualNetworkPeeringData()
+            VirtualNetworkPeeringData data = new VirtualNetworkPeeringData
             {
                 AllowVirtualNetworkAccess = true,
                 AllowForwardedTraffic = true,

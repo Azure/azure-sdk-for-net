@@ -78,6 +78,58 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_OrganizationsDelete()
+        {
+            // Generated from example definition: 2024-05-08/Organizations_Delete_MaximumSet_Gen.json
+            // this example is just showing the usage of "InformaticaOrganizationResource_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this InformaticaOrganizationResource created on azure
+            // for more information of creating InformaticaOrganizationResource, please refer to the document of InformaticaOrganizationResource
+            string subscriptionId = "3599DA28-E346-4D9F-811E-189C0445F0FE";
+            string resourceGroupName = "rgopenapi";
+            string organizationName = "_";
+            ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
+            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
+
+            // invoke the operation
+            await informaticaOrganization.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_OrganizationsDeleteMin()
+        {
+            // Generated from example definition: 2024-05-08/Organizations_Delete_MinimumSet_Gen.json
+            // this example is just showing the usage of "InformaticaOrganizationResource_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this InformaticaOrganizationResource created on azure
+            // for more information of creating InformaticaOrganizationResource, please refer to the document of InformaticaOrganizationResource
+            string subscriptionId = "3599DA28-E346-4D9F-811E-189C0445F0FE";
+            string resourceGroupName = "rgopenapi";
+            string organizationName = "_-";
+            ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
+            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
+
+            // invoke the operation
+            await informaticaOrganization.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_OrganizationsUpdate()
         {
             // Generated from example definition: 2024-05-08/Organizations_Update_MaximumSet_Gen.json
@@ -97,18 +149,18 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
 
             // invoke the operation
-            InformaticaOrganizationPatch patch = new InformaticaOrganizationPatch()
+            InformaticaOrganizationPatch patch = new InformaticaOrganizationPatch
             {
                 Tags =
 {
-["key1918"] = "fbjvtuvzsghpl",
+["key1918"] = "fbjvtuvzsghpl"
 },
-                Properties = new InformaticaOrganizationPropertiesUpdate()
+                Properties = new InformaticaOrganizationPropertiesUpdate
                 {
-                    MarketplaceDetails = new InformaticaMarketplaceDetailsUpdate()
+                    MarketplaceDetails = new InformaticaMarketplaceDetailsUpdate
                     {
                         MarketplaceSubscriptionId = "szhyxzgjtssjmlguivepc",
-                        OfferDetails = new InformaticaOfferDetailsUpdate()
+                        OfferDetails = new InformaticaOfferDetailsUpdate
                         {
                             PublisherId = "ktzfghsyjqbsswhltoaemgotmnorhdogvkaxplutbjjqzuepxizliynyakersobagvpwvpzwjtjjxigsqgcyqaahaxdijghnexliofhfjlqzjmmbvrhcvjxdodnexxizbgfhjopbwzjojxsluasnwwsgcajefglbcvzpaeblanhmurcculndtfwnfjyxol",
                             OfferId = "idaxbflabvjsippplyenvrpgeydsjxcmyubgukffkcdvlvrtwpdhnvdblxjsldiuswrchsibk",
@@ -118,7 +170,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
                             TermId = "eolmwogtgpdncqoigqcdomupwummaicwvdxgbskpdsmjizdfbdgbxbuekcpwmenqzbhqxpdnjtup",
                         },
                     },
-                    UserDetails = new InformaticaUserDetailsUpdate()
+                    UserDetails = new InformaticaUserDetailsUpdate
                     {
                         FirstName = "qguqrmanyupoi",
                         LastName = "ugzg",
@@ -126,7 +178,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
                         Upn = "viwjrkn",
                         PhoneNumber = "uxa",
                     },
-                    CompanyDetails = new InformaticaCompanyDetailsUpdate()
+                    CompanyDetails = new InformaticaCompanyDetailsUpdate
                     {
                         CompanyName = "xkrvbozrjcvappqeeyt",
                         OfficeAddress = "sfcx",
@@ -176,58 +228,6 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             InformaticaOrganizationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_OrganizationsDelete()
-        {
-            // Generated from example definition: 2024-05-08/Organizations_Delete_MaximumSet_Gen.json
-            // this example is just showing the usage of "InformaticaOrganizationResource_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this InformaticaOrganizationResource created on azure
-            // for more information of creating InformaticaOrganizationResource, please refer to the document of InformaticaOrganizationResource
-            string subscriptionId = "3599DA28-E346-4D9F-811E-189C0445F0FE";
-            string resourceGroupName = "rgopenapi";
-            string organizationName = "_";
-            ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
-            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
-
-            // invoke the operation
-            await informaticaOrganization.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_OrganizationsDeleteMin()
-        {
-            // Generated from example definition: 2024-05-08/Organizations_Delete_MinimumSet_Gen.json
-            // this example is just showing the usage of "InformaticaOrganizationResource_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this InformaticaOrganizationResource created on azure
-            // for more information of creating InformaticaOrganizationResource, please refer to the document of InformaticaOrganizationResource
-            string subscriptionId = "3599DA28-E346-4D9F-811E-189C0445F0FE";
-            string resourceGroupName = "rgopenapi";
-            string organizationName = "_-";
-            ResourceIdentifier informaticaOrganizationResourceId = InformaticaOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
-            InformaticaOrganizationResource informaticaOrganization = client.GetInformaticaOrganizationResource(informaticaOrganizationResourceId);
-
-            // invoke the operation
-            await informaticaOrganization.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
         }
 
         [Test]

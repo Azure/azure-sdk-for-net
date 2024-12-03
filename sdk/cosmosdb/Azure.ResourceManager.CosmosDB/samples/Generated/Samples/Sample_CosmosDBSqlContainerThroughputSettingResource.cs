@@ -72,14 +72,12 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             CosmosDBSqlContainerThroughputSettingResource cosmosDBSqlContainerThroughputSetting = client.GetCosmosDBSqlContainerThroughputSettingResource(cosmosDBSqlContainerThroughputSettingResourceId);
 
             // invoke the operation
-            ThroughputSettingsUpdateData data = new ThroughputSettingsUpdateData(new AzureLocation("West US"), new ThroughputSettingsResourceInfo()
+            ThroughputSettingsUpdateData data = new ThroughputSettingsUpdateData(new AzureLocation("West US"), new ThroughputSettingsResourceInfo
             {
                 Throughput = 400,
             })
             {
-                Tags =
-{
-},
+                Tags = { },
             };
             ArmOperation<CosmosDBSqlContainerThroughputSettingResource> lro = await cosmosDBSqlContainerThroughputSetting.CreateOrUpdateAsync(WaitUntil.Completed, data);
             CosmosDBSqlContainerThroughputSettingResource result = lro.Value;
@@ -180,12 +178,13 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             CosmosDBSqlContainerThroughputSettingResource cosmosDBSqlContainerThroughputSetting = client.GetCosmosDBSqlContainerThroughputSettingResource(cosmosDBSqlContainerThroughputSettingResourceId);
 
             // invoke the operation
-            RetrieveThroughputParameters retrieveThroughputParameters = new RetrieveThroughputParameters(new AzureLocation("placeholder"), new RetrieveThroughputPropertiesResource(new WritableSubResource[]
+            RetrieveThroughputParameters retrieveThroughputParameters = new RetrieveThroughputParameters(default, new RetrieveThroughputPropertiesResource(new WritableSubResource[]
             {
-new WritableSubResource()
+new WritableSubResource
 {
 Id = new ResourceIdentifier("0"),
-},new WritableSubResource()
+},
+new WritableSubResource
 {
 Id = new ResourceIdentifier("1"),
 }
@@ -219,12 +218,13 @@ Id = new ResourceIdentifier("1"),
             CosmosDBSqlContainerThroughputSettingResource cosmosDBSqlContainerThroughputSetting = client.GetCosmosDBSqlContainerThroughputSettingResource(cosmosDBSqlContainerThroughputSettingResourceId);
 
             // invoke the operation
-            RedistributeThroughputParameters redistributeThroughputParameters = new RedistributeThroughputParameters(new AzureLocation("placeholder"), new RedistributeThroughputPropertiesResource(ThroughputPolicyType.Custom, new PhysicalPartitionThroughputInfoResource[]
+            RedistributeThroughputParameters redistributeThroughputParameters = new RedistributeThroughputParameters(default, new RedistributeThroughputPropertiesResource(ThroughputPolicyType.Custom, new PhysicalPartitionThroughputInfoResource[]
             {
 new PhysicalPartitionThroughputInfoResource("0")
 {
 Throughput = 5000,
-},new PhysicalPartitionThroughputInfoResource("1")
+},
+new PhysicalPartitionThroughputInfoResource("1")
 {
 Throughput = 5000,
 }
@@ -233,7 +233,8 @@ Throughput = 5000,
 new PhysicalPartitionThroughputInfoResource("2")
 {
 Throughput = 5000,
-},new PhysicalPartitionThroughputInfoResource("3")
+},
+new PhysicalPartitionThroughputInfoResource("3")
             }));
             ArmOperation<PhysicalPartitionThroughputInfoResult> lro = await cosmosDBSqlContainerThroughputSetting.SqlContainerRedistributeThroughputAsync(WaitUntil.Completed, redistributeThroughputParameters);
             PhysicalPartitionThroughputInfoResult result = lro.Value;

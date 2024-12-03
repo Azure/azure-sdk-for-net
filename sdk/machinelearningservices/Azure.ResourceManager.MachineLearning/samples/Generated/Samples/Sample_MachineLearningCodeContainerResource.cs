@@ -18,33 +18,6 @@ namespace Azure.ResourceManager.MachineLearning.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Delete_DeleteWorkspaceCodeContainer()
-        {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/CodeContainer/delete.json
-            // this example is just showing the usage of "CodeContainers_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MachineLearningCodeContainerResource created on azure
-            // for more information of creating MachineLearningCodeContainerResource, please refer to the document of MachineLearningCodeContainerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "testrg123";
-            string workspaceName = "testworkspace";
-            string name = "testContainer";
-            ResourceIdentifier machineLearningCodeContainerResourceId = MachineLearningCodeContainerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, name);
-            MachineLearningCodeContainerResource machineLearningCodeContainer = client.GetMachineLearningCodeContainerResource(machineLearningCodeContainerResourceId);
-
-            // invoke the operation
-            await machineLearningCodeContainer.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetWorkspaceCodeContainer()
         {
             // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/CodeContainer/get.json
@@ -76,6 +49,33 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteWorkspaceCodeContainer()
+        {
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/CodeContainer/delete.json
+            // this example is just showing the usage of "CodeContainers_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MachineLearningCodeContainerResource created on azure
+            // for more information of creating MachineLearningCodeContainerResource, please refer to the document of MachineLearningCodeContainerResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "testrg123";
+            string workspaceName = "testworkspace";
+            string name = "testContainer";
+            ResourceIdentifier machineLearningCodeContainerResourceId = MachineLearningCodeContainerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, name);
+            MachineLearningCodeContainerResource machineLearningCodeContainer = client.GetMachineLearningCodeContainerResource(machineLearningCodeContainerResourceId);
+
+            // invoke the operation
+            await machineLearningCodeContainer.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateWorkspaceCodeContainer()
         {
             // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/CodeContainer/createOrUpdate.json
@@ -96,13 +96,13 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             MachineLearningCodeContainerResource machineLearningCodeContainer = client.GetMachineLearningCodeContainerResource(machineLearningCodeContainerResourceId);
 
             // invoke the operation
-            MachineLearningCodeContainerData data = new MachineLearningCodeContainerData(new MachineLearningCodeContainerProperties()
+            MachineLearningCodeContainerData data = new MachineLearningCodeContainerData(new MachineLearningCodeContainerProperties
             {
                 Description = "string",
                 Tags =
 {
 ["tag1"] = "value1",
-["tag2"] = "value2",
+["tag2"] = "value2"
 },
             });
             ArmOperation<MachineLearningCodeContainerResource> lro = await machineLearningCodeContainer.UpdateAsync(WaitUntil.Completed, data);

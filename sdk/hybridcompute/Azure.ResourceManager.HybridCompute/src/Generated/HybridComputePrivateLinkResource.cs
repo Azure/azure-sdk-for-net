@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-10</description>
+        /// <description>2024-07-31-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-10</description>
+        /// <description>2024-07-31-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

@@ -50,53 +50,6 @@ namespace Azure.ResourceManager.Avs.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_PlacementPoliciesUpdate()
-        {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/PlacementPolicies_Update.json
-            // this example is just showing the usage of "PlacementPolicies_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PlacementPolicyResource created on azure
-            // for more information of creating PlacementPolicyResource, please refer to the document of PlacementPolicyResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "group1";
-            string privateCloudName = "cloud1";
-            string clusterName = "cluster1";
-            string placementPolicyName = "policy1";
-            ResourceIdentifier placementPolicyResourceId = PlacementPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName, clusterName, placementPolicyName);
-            PlacementPolicyResource placementPolicy = client.GetPlacementPolicyResource(placementPolicyResourceId);
-
-            // invoke the operation
-            PlacementPolicyPatch patch = new PlacementPolicyPatch()
-            {
-                State = PlacementPolicyState.Disabled,
-                VmMembers =
-{
-new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/clusters/cluster1/virtualMachines/vm-128"),new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/clusters/cluster1/virtualMachines/vm-256")
-},
-                HostMembers =
-{
-"fakehost22.nyc1.kubernetes.center","fakehost23.nyc1.kubernetes.center","fakehost24.nyc1.kubernetes.center"
-},
-                AffinityStrength = VmHostPlacementPolicyAffinityStrength.Must,
-                AzureHybridBenefitType = AzureHybridBenefitType.SqlHost,
-            };
-            ArmOperation<PlacementPolicyResource> lro = await placementPolicy.UpdateAsync(WaitUntil.Completed, patch);
-            PlacementPolicyResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            PlacementPolicyData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Delete_PlacementPoliciesDelete()
         {
             // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/PlacementPolicies_Delete.json
@@ -121,6 +74,47 @@ new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/reso
             await placementPolicy.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_PlacementPoliciesUpdate()
+        {
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/PlacementPolicies_Update.json
+            // this example is just showing the usage of "PlacementPolicies_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PlacementPolicyResource created on azure
+            // for more information of creating PlacementPolicyResource, please refer to the document of PlacementPolicyResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "group1";
+            string privateCloudName = "cloud1";
+            string clusterName = "cluster1";
+            string placementPolicyName = "policy1";
+            ResourceIdentifier placementPolicyResourceId = PlacementPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName, clusterName, placementPolicyName);
+            PlacementPolicyResource placementPolicy = client.GetPlacementPolicyResource(placementPolicyResourceId);
+
+            // invoke the operation
+            PlacementPolicyPatch patch = new PlacementPolicyPatch
+            {
+                State = PlacementPolicyState.Disabled,
+                VmMembers = { new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/clusters/cluster1/virtualMachines/vm-128"), new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/clusters/cluster1/virtualMachines/vm-256") },
+                HostMembers = { "fakehost22.nyc1.kubernetes.center", "fakehost23.nyc1.kubernetes.center", "fakehost24.nyc1.kubernetes.center" },
+                AffinityStrength = VmHostPlacementPolicyAffinityStrength.Must,
+                AzureHybridBenefitType = AzureHybridBenefitType.SqlHost,
+            };
+            ArmOperation<PlacementPolicyResource> lro = await placementPolicy.UpdateAsync(WaitUntil.Completed, patch);
+            PlacementPolicyResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            PlacementPolicyData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

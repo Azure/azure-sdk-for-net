@@ -41,27 +41,18 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             string ruleCollectionName = "rule1";
-            InboundSecurityRuleData data = new InboundSecurityRuleData()
+            InboundSecurityRuleData data = new InboundSecurityRuleData
             {
                 RuleType = InboundSecurityRuleType.Permanent,
-                Rules =
-{
-new InboundSecurityRules()
+                Rules = {new InboundSecurityRules
 {
 Name = "inboundRule1",
 Protocol = InboundSecurityRulesProtocol.Tcp,
 SourceAddressPrefix = "50.20.121.5/32",
 DestinationPortRange = 22,
-DestinationPortRanges =
-{
-"80-100"
-},
-AppliesOn =
-{
-"slbip1"
-},
-}
-},
+DestinationPortRanges = {"80-100"},
+AppliesOn = {"slbip1"},
+}},
             };
             ArmOperation<InboundSecurityRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleCollectionName, data);
             InboundSecurityRuleResource result = lro.Value;
