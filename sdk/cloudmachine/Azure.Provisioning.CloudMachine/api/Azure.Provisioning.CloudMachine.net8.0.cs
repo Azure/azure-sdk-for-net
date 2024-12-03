@@ -4,6 +4,7 @@ namespace Azure.CloudMachine
     {
         public static void Init(Azure.CloudMachine.CloudMachineClient client, string? infraDirectory = null) { }
         public static void Init(Azure.CloudMachine.CloudMachineInfrastructure infra, string? infraDirectory = null) { }
+        public static void InitDeployment(Azure.CloudMachine.CloudMachineInfrastructure infra, string? webProjectName) { }
     }
     public static partial class CloudMachineClientExtensions
     {
