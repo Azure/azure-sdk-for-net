@@ -3,8 +3,8 @@
 
 using System;
 using System.ComponentModel;
+using Azure.CloudMachine.Core;
 using Azure.Core;
-using Azure.Provisioning.CloudMachine;
 
 namespace Azure.CloudMachine;
 

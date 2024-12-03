@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.CloudMachine.Core;
-using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.EventGrid;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;

@@ -3,7 +3,6 @@
 
 using Azure.CloudMachine.Core;
 using Azure.Core;
-using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.ServiceBus;
 

@@ -4,9 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Azure.CloudMachine.Core;
 using Azure.Core;
 using Azure.Provisioning;
-using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Roles;

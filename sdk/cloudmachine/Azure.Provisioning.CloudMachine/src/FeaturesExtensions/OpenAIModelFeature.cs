@@ -2,10 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics;
 using System.Linq;
+using Azure.CloudMachine.Core;
 using Azure.Core;
-using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.CognitiveServices;
 using Azure.Provisioning.Primitives;
 

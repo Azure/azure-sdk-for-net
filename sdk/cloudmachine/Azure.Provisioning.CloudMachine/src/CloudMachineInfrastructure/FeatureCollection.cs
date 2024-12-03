@@ -5,10 +5,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.Primitives;
 
-namespace Azure.CloudMachine;
+namespace Azure.CloudMachine.Core;
 
 public class FeatureCollection : IEnumerable<CloudMachineFeature>
 {
