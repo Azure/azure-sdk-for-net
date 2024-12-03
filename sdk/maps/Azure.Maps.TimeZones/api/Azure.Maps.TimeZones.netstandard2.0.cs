@@ -78,7 +78,6 @@ namespace Azure.Maps.TimeZones
     public static partial class MapsTimeZonesModelFactory
     {
         public static Azure.Maps.TimeZones.CountryRecord CountryRecord(string name = null, string code = null) { throw null; }
-        public static Azure.Maps.TimeZones.TimeTransition TimeTransition(string tag = null, string standardOffset = null, string daylightSavings = null, System.DateTimeOffset? utcStart = default(System.DateTimeOffset?), System.DateTimeOffset? utcEnd = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.Maps.TimeZones.TimeZoneIanaVersionResult TimeZoneIanaVersionResult(string version = null) { throw null; }
         public static Azure.Maps.TimeZones.TimeZoneName TimeZoneName(string iso6391LanguageCode = null, string generic = null, string standard = null, string daylight = null) { throw null; }
         public static Azure.Maps.TimeZones.TimeZoneResult TimeZoneResult(string version = null, System.DateTimeOffset? referenceUtcTimestamp = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.Maps.TimeZones.TimeZoneId> timeZones = null) { throw null; }
@@ -87,10 +86,10 @@ namespace Azure.Maps.TimeZones
     public partial class ReferenceTime
     {
         internal ReferenceTime() { }
-        public System.TimeSpan DaylightSavings { get { throw null; } }
+        public System.TimeSpan DaylightSavingsTimeSpan { get { throw null; } }
         public string PosixTimeZone { get { throw null; } }
         public int? PosixTimeZoneValidYear { get { throw null; } }
-        public System.TimeSpan StandardOffset { get { throw null; } }
+        public System.TimeSpan StandardOffsetTimeSpan { get { throw null; } }
         public System.DateTimeOffset? Sunrise { get { throw null; } }
         public System.DateTimeOffset? Sunset { get { throw null; } }
         public string Tag { get { throw null; } }
@@ -99,8 +98,8 @@ namespace Azure.Maps.TimeZones
     public partial class TimeTransition
     {
         internal TimeTransition() { }
-        public string DaylightSavings { get { throw null; } }
-        public string StandardOffset { get { throw null; } }
+        public System.TimeSpan DaylightSavingsTimeSpan { get { throw null; } }
+        public System.TimeSpan StandardOffsetTimeSpan { get { throw null; } }
         public string Tag { get { throw null; } }
         public System.DateTimeOffset? UtcEnd { get { throw null; } }
         public System.DateTimeOffset? UtcStart { get { throw null; } }

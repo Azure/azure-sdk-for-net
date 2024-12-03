@@ -46,18 +46,6 @@ namespace Azure.Maps.TimeZones
             return new TimeZoneName(iso6391LanguageCode, generic, standard, daylight);
         }
 
-        /// <summary> Initializes a new instance of <see cref="TimeZones.TimeTransition"/>. </summary>
-        /// <param name="tag"> Tag property. </param>
-        /// <param name="standardOffset"> StandardOffset property. </param>
-        /// <param name="daylightSavings"> DaylightSavings property. </param>
-        /// <param name="utcStart"> Start date, start time for this transition period. </param>
-        /// <param name="utcEnd"> End date, end time for this transition period. </param>
-        /// <returns> A new <see cref="TimeZones.TimeTransition"/> instance for mocking. </returns>
-        public static TimeTransition TimeTransition(string tag = null, string standardOffset = null, string daylightSavings = null, DateTimeOffset? utcStart = null, DateTimeOffset? utcEnd = null)
-        {
-            return new TimeTransition(tag, standardOffset, daylightSavings, utcStart, utcEnd);
-        }
-
         /// <summary> Initializes a new instance of <see cref="TimeZones.WindowsTimeZone"/>. </summary>
         /// <param name="windowsId"> Windows Id property. </param>
         /// <param name="territory"> Territory property. </param>

@@ -26,13 +26,13 @@ namespace Azure.Maps.TimeZones
             _standardOffset = standardOffset;
             if (TimeSpan.TryParse(standardOffset, out TimeSpan StandardOffsetValue))
             {
-                StandardOffset = StandardOffsetValue;
+                StandardOffsetTimeSpan = StandardOffsetValue;
             }
 
             _daylightSavings = daylightSavings;
             if (TimeSpan.TryParse(daylightSavings, out TimeSpan DaylightSavingsValue))
             {
-                DaylightSavings = DaylightSavingsValue;
+                DaylightSavingsTimeSpan = DaylightSavingsValue;
             }
 
             _wallTime = wallTime;
@@ -47,17 +47,15 @@ namespace Azure.Maps.TimeZones
             Sunset = sunset;
         }
 
-        /// <summary> UTC offset in effect at the <c>ReferenceUTCTimestamp</c>. </summary>
         [CodeGenMember("StandardOffset")]
         internal string _standardOffset { get; }
-        /// <summary> UTC offset in effect at the <c>ReferenceUTCTimestamp</c>. </summary>
-        public TimeSpan StandardOffset { get; }
+        /// <summary> UTC offset in <see cref="TimeSpan"/> format in effect at the <c>ReferenceUTCTimestamp</c>. </summary>
+        public TimeSpan StandardOffsetTimeSpan { get; }
 
-        /// <summary> Time saving in minutes in effect at the <c>ReferenceUTCTimestamp</c>. </summary>
         [CodeGenMember("DaylightSavings")]
         internal string _daylightSavings { get; }
-        /// <summary> Time saving in minutes in effect at the <c>ReferenceUTCTimestamp</c>. </summary>
-        public TimeSpan DaylightSavings { get; }
+        /// <summary> Time saving in <see cref="TimeSpan"/> format in effect at the <c>ReferenceUTCTimestamp</c>. </summary>
+        public TimeSpan DaylightSavingsTimeSpan { get; }
 
         /// <summary> Current wall time at the given time zone as shown in the <c>Tag</c> property. </summary>
         [CodeGenMember("WallTime")]
