@@ -69,6 +69,12 @@ namespace Azure.Communication.CallAutomation
         internal AnswerFailed() { }
         public static Azure.Communication.CallAutomation.AnswerFailed Deserialize(string content) { throw null; }
     }
+    [System.Text.Json.Serialization.JsonConverterAttribute(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
+    public enum AudioChannel
+    {
+        Unknown = 0,
+        Mono = 1,
+    }
     public partial class AudioData : Azure.Communication.CallAutomation.StreamingData
     {
         public AudioData(byte[] data) { }
@@ -97,16 +103,11 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class AudioMetadata : Azure.Communication.CallAutomation.StreamingData
     {
-        public AudioMetadata() { }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("channels")]
-        public int Channels { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("encoding")]
+        internal AudioMetadata() { }
+        public Azure.Communication.CallAutomation.AudioChannel Channels { get { throw null; } set { } }
         public string Encoding { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("length")]
         public int Length { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("subscriptionId")]
         public string MediaSubscriptionId { get { throw null; } set { } }
-        [System.Text.Json.Serialization.JsonPropertyNameAttribute("sampleRate")]
         public int SampleRate { get { throw null; } set { } }
     }
     public partial class AzureOpenAIDialog : Azure.Communication.CallAutomation.BaseDialog
@@ -1154,10 +1155,12 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class OutStreamingData
     {
-        public OutStreamingData(Azure.Communication.CallAutomation.MediaKind kind) { }
-        public Azure.Communication.CallAutomation.AudioData AudioData { get { throw null; } set { } }
+        internal OutStreamingData() { }
+        public Azure.Communication.CallAutomation.AudioData AudioData { get { throw null; } }
         public Azure.Communication.CallAutomation.MediaKind Kind { get { throw null; } }
-        public Azure.Communication.CallAutomation.StopAudio StopAudio { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.StopAudio StopAudio { get { throw null; } }
+        public static string GetAudioDataForOutbound(byte[] audioData) { throw null; }
+        public static string GetStopAudioForOutbound() { throw null; }
     }
     public partial class ParticipantsUpdated : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
@@ -1486,11 +1489,6 @@ namespace Azure.Communication.CallAutomation
         public string Message { get { throw null; } }
         public int? SubCode { get { throw null; } }
     }
-    public enum ResultStatus
-    {
-        Intermediate = 0,
-        Final = 1,
-    }
     public partial class RoomCallLocator : Azure.Communication.CallAutomation.CallLocator
     {
         public RoomCallLocator(string id) { }
@@ -1630,6 +1628,17 @@ namespace Azure.Communication.CallAutomation
     public abstract partial class StreamingData
     {
         protected StreamingData() { }
+        public static Azure.Communication.CallAutomation.StreamingDataKind Kind { get { throw null; } }
+        public static Azure.Communication.CallAutomation.StreamingData Parse(string data) { throw null; }
+        public static T Parse<T>(string data) where T : Azure.Communication.CallAutomation.StreamingData { throw null; }
+    }
+    [System.Text.Json.Serialization.JsonConverterAttribute(typeof(System.Text.Json.Serialization.JsonStringEnumConverter))]
+    public enum StreamingDataKind
+    {
+        AudioData = 0,
+        AudioMetadata = 1,
+        TranscriptionData = 2,
+        TranscriptionMetadata = 3,
     }
     public static partial class StreamingDataParser
     {
