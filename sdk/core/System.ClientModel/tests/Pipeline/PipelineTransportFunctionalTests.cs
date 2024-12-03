@@ -225,18 +225,6 @@ public class PipelineTransportFunctionalTests : SyncAsyncTestBase
         Assert.AreEqual("Custom ReasonPhrase", message.Response!.ReasonPhrase);
     }
 
-    [Test]
-    public Task ExceptionResponseIsLoggedByTheTransport()
-    {
-        throw new NotImplementedException();
-    }
-
-    [Test]
-    public Task ResponseDelayIsLoggedByTheTransport()
-    {
-        throw new NotImplementedException();
-    }
-
     #endregion
 
     #region Helpers

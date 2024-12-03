@@ -23,11 +23,11 @@ internal partial class PipelineMessageLogger
 
     /// <summary>
     ///  Whether the given log level or event level is enabled, depending
-    ///  on whether this handler logs to ILogger or Event Source. Can be
+    ///  on whether this handler logs to ILogger or Event Source. Should be
     ///  used to guard expensive operations.
     /// </summary>
-    /// <param name="logLevel"></param>
-    /// <param name="eventLevel"></param>
+    /// <param name="logLevel">The LogLevel to log to for ILogger. If an ILogger WAS NOT provided to the constructor, this value will be ignored.</param>
+    /// <param name="eventLevel">The EventLevel to log to for EventSource. If an ILogger WAS provided to the constructor, this value will be ignored.</param>
     public bool IsEnabled(LogLevel logLevel, EventLevel eventLevel)
     {
         return _logger is not null ? _logger.IsEnabled(logLevel) : ClientModelEventSource.Log.IsEnabled(eventLevel, EventKeywords.None);

@@ -25,10 +25,12 @@ public class MessageLoggingPolicy : PipelinePolicy
     /// </summary>
     public static MessageLoggingPolicy Default { get; } = new MessageLoggingPolicy();
 
-    private readonly bool _enableMessageContentLogging;
-    private readonly int _maxLength;
-    private readonly PipelineMessageLogger _messageLogger;
+    private readonly ClientLoggingOptions _loggingOptions;
+    private PipelineMessageLogger? _messageLogger;
     private readonly string _clientAssembly = typeof(MessageLoggingPolicy).Assembly.GetName().Name!;
+
+    private bool _enableMessageContentLogging => _loggingOptions.EnableMessageContentLogging ?? ClientLoggingOptions.DefaultEnableLogging;
+    private int _maxLength => _loggingOptions.MessageContentSizeLimit ?? ClientLoggingOptions.DefaultMessageContentSizeLimit;
 
     /// <summary>
     /// Creates a new instance of the <see cref="MessageLoggingPolicy"/> class.
@@ -36,13 +38,7 @@ public class MessageLoggingPolicy : PipelinePolicy
     /// <param name="options">The user-provided logging options object.</param>
     public MessageLoggingPolicy(ClientLoggingOptions? options = default)
     {
-        ClientLoggingOptions loggingOptions = options ?? new();
-        _enableMessageContentLogging = loggingOptions.EnableMessageContentLogging ?? ClientLoggingOptions.DefaultEnableMessageContentLogging;
-        _maxLength = loggingOptions.MessageContentSizeLimit ?? ClientLoggingOptions.DefaultMessageContentSizeLimit;
-
-        PipelineMessageSanitizer sanitizer = loggingOptions.GetPipelineMessageSanitizer();
-
-        _messageLogger = new PipelineMessageLogger(sanitizer, options?.LoggerFactory);
+        _loggingOptions = options ?? new();
     }
 
     /// <inheritdoc/>
@@ -55,6 +51,8 @@ public class MessageLoggingPolicy : PipelinePolicy
 
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex, bool async)
     {
+        _messageLogger ??= new PipelineMessageLogger(_loggingOptions.GetPipelineMessageSanitizer(), _loggingOptions.LoggerFactory);
+
         if (!_messageLogger.IsEnabled(LogLevel.Warning, EventLevel.Warning)) // Warning is the highest level logged
         {
             if (async)

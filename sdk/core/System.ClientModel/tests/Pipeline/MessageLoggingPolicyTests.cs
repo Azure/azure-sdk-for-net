@@ -39,7 +39,8 @@ public class MessageLoggingPolicyTests : SyncAsyncTestBase
         ClientPipelineOptions options = new()
         {
             Transport = new MockPipelineTransport("Transport", i => response),
-            ClientLoggingOptions = loggingOptions
+            ClientLoggingOptions = loggingOptions,
+
         };
 
         ClientPipeline pipeline = ClientPipeline.Create(options);

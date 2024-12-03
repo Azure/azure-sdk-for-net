@@ -29,8 +29,9 @@ public abstract class PipelineTransport : PipelinePolicy
     /// <summary>
     /// Creates a new instance of the <see cref="PipelineTransport"/> class.
     /// </summary>
-    /// <param name="enableLogging"></param>
-    /// <param name="loggerFactory"></param>
+    /// <param name="enableLogging">If client-wide logging is enabled for this pipeline.</param>
+    /// <param name="loggerFactory">The <see cref="ILoggerFactory"/> to use to create an <see cref="ILogger"/> instance for logging.
+    /// If one is not provided, logs are written to Event Source by default.</param>
     protected PipelineTransport(bool enableLogging, ILoggerFactory? loggerFactory)
     {
         if (enableLogging)

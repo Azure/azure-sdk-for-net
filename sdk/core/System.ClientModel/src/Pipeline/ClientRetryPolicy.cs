@@ -45,7 +45,8 @@ public class ClientRetryPolicy : PipelinePolicy
     /// </summary>
     /// <param name="maxRetries">The maximum number of retries to attempt.</param>
     /// <param name="enableLogging">If client-wide logging is enabled for this pipeline.</param>
-    /// <param name="loggerFactory">The <see cref="ILoggerFactory"/> to use to create an <see cref="ILogger"/> instance for logging.</param>
+    /// <param name="loggerFactory">The <see cref="ILoggerFactory"/> to use to create an <see cref="ILogger"/> instance for logging.
+    /// If one is not provided, logs are written to Event Source by default.</param>
     public ClientRetryPolicy(int maxRetries, bool enableLogging, ILoggerFactory? loggerFactory)
     {
         _maxRetries = maxRetries;
