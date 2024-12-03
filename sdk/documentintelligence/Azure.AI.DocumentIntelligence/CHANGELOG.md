@@ -10,7 +10,6 @@
 - Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
-- `DocumentIntelligenceClient` and `DocumentIntelligenceAdministrationClient` now target service API version `2024-11-30`. Support for `2024-07-31-preview` has been removed.
 - Renamed the following classes ending in `Content`:
   - `AnalyzeBatchDocumentsContent` to `AnalyzeBatchDocumentsOptions`.
   - `AnalyzeDocumentContent` to `AnalyzeDocumentOptions`.
