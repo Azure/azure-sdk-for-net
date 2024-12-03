@@ -38,17 +38,17 @@ namespace Azure.ResourceManager.Chaos.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Status))
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(StartedOn))
+            if (options.Format != "W" && Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startedAt"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (Optional.IsDefined(StoppedOn))
+            if (options.Format != "W" && Optional.IsDefined(StoppedOn))
             {
                 writer.WritePropertyName("stoppedAt"u8);
                 writer.WriteStringValue(StoppedOn.Value, "O");

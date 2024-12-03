@@ -96,6 +96,11 @@ namespace Azure.ResourceManager.Chaos.Samples
             // invoke the operation
             ChaosExperimentPatch patch = new ChaosExperimentPatch
             {
+                Tags =
+{
+["key1"] = "value1",
+["key2"] = "value2"
+},
                 Identity = new ManagedServiceIdentity("UserAssigned")
                 {
                     UserAssignedIdentities =
@@ -103,11 +108,6 @@ namespace Azure.ResourceManager.Chaos.Samples
 [new ResourceIdentifier("/subscriptions/6b052e15-03d3-4f17-b2e1-be7f07588291/resourceGroups/exampleRG/providers/Microsoft.ManagedIdentity/userAssignedIdentity/exampleUMI")] = new UserAssignedIdentity()
 },
                 },
-                Tags =
-{
-["key1"] = "value1",
-["key2"] = "value2"
-},
             };
             ArmOperation<ChaosExperimentResource> lro = await chaosExperiment.UpdateAsync(WaitUntil.Completed, patch);
             ChaosExperimentResource result = lro.Value;
