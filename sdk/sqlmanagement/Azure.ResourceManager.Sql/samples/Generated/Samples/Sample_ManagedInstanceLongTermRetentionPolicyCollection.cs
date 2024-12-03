@@ -18,6 +18,49 @@ namespace Azure.ResourceManager.Sql.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateOrUpdateTheLTRPolicyForTheManagedDatabase()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/ManagedInstanceLongTermRetentionPolicyCreateOrUpdate.json
+            // this example is just showing the usage of "ManagedInstanceLongTermRetentionPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ManagedDatabaseResource created on azure
+            // for more information of creating ManagedDatabaseResource, please refer to the document of ManagedDatabaseResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "testResourceGroup";
+            string managedInstanceName = "testInstance";
+            string databaseName = "testDatabase";
+            ResourceIdentifier managedDatabaseResourceId = ManagedDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName, databaseName);
+            ManagedDatabaseResource managedDatabase = client.GetManagedDatabaseResource(managedDatabaseResourceId);
+
+            // get the collection of this ManagedInstanceLongTermRetentionPolicyResource
+            ManagedInstanceLongTermRetentionPolicyCollection collection = managedDatabase.GetManagedInstanceLongTermRetentionPolicies();
+
+            // invoke the operation
+            ManagedInstanceLongTermRetentionPolicyName policyName = ManagedInstanceLongTermRetentionPolicyName.Default;
+            ManagedInstanceLongTermRetentionPolicyData data = new ManagedInstanceLongTermRetentionPolicyData
+            {
+                WeeklyRetention = "P1M",
+                MonthlyRetention = "P1Y",
+                YearlyRetention = "P5Y",
+                WeekOfYear = 5,
+            };
+            ArmOperation<ManagedInstanceLongTermRetentionPolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, policyName, data);
+            ManagedInstanceLongTermRetentionPolicyResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ManagedInstanceLongTermRetentionPolicyData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetTheLongTermRetentionPolicyForTheManagedDatabase()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/ManagedInstanceLongTermRetentionPolicyGet.json
@@ -49,6 +92,43 @@ namespace Azure.ResourceManager.Sql.Samples
             ManagedInstanceLongTermRetentionPolicyData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_GetTheLongTermRetentionPoliciesForTheManagedDatabase()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/ManagedInstanceLongTermRetentionPolicyListByDatabase.json
+            // this example is just showing the usage of "ManagedInstanceLongTermRetentionPolicies_ListByDatabase" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ManagedDatabaseResource created on azure
+            // for more information of creating ManagedDatabaseResource, please refer to the document of ManagedDatabaseResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "testResourceGroup";
+            string managedInstanceName = "testInstance";
+            string databaseName = "testDatabase";
+            ResourceIdentifier managedDatabaseResourceId = ManagedDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName, databaseName);
+            ManagedDatabaseResource managedDatabase = client.GetManagedDatabaseResource(managedDatabaseResourceId);
+
+            // get the collection of this ManagedInstanceLongTermRetentionPolicyResource
+            ManagedInstanceLongTermRetentionPolicyCollection collection = managedDatabase.GetManagedInstanceLongTermRetentionPolicies();
+
+            // invoke the operation and iterate over the result
+            await foreach (ManagedInstanceLongTermRetentionPolicyResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ManagedInstanceLongTermRetentionPolicyData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -123,86 +203,6 @@ namespace Azure.ResourceManager.Sql.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_CreateOrUpdateTheLTRPolicyForTheManagedDatabase()
-        {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/ManagedInstanceLongTermRetentionPolicyCreateOrUpdate.json
-            // this example is just showing the usage of "ManagedInstanceLongTermRetentionPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ManagedDatabaseResource created on azure
-            // for more information of creating ManagedDatabaseResource, please refer to the document of ManagedDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "testResourceGroup";
-            string managedInstanceName = "testInstance";
-            string databaseName = "testDatabase";
-            ResourceIdentifier managedDatabaseResourceId = ManagedDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName, databaseName);
-            ManagedDatabaseResource managedDatabase = client.GetManagedDatabaseResource(managedDatabaseResourceId);
-
-            // get the collection of this ManagedInstanceLongTermRetentionPolicyResource
-            ManagedInstanceLongTermRetentionPolicyCollection collection = managedDatabase.GetManagedInstanceLongTermRetentionPolicies();
-
-            // invoke the operation
-            ManagedInstanceLongTermRetentionPolicyName policyName = ManagedInstanceLongTermRetentionPolicyName.Default;
-            ManagedInstanceLongTermRetentionPolicyData data = new ManagedInstanceLongTermRetentionPolicyData()
-            {
-                WeeklyRetention = "P1M",
-                MonthlyRetention = "P1Y",
-                YearlyRetention = "P5Y",
-                WeekOfYear = 5,
-            };
-            ArmOperation<ManagedInstanceLongTermRetentionPolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, policyName, data);
-            ManagedInstanceLongTermRetentionPolicyResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ManagedInstanceLongTermRetentionPolicyData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_GetTheLongTermRetentionPoliciesForTheManagedDatabase()
-        {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/ManagedInstanceLongTermRetentionPolicyListByDatabase.json
-            // this example is just showing the usage of "ManagedInstanceLongTermRetentionPolicies_ListByDatabase" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ManagedDatabaseResource created on azure
-            // for more information of creating ManagedDatabaseResource, please refer to the document of ManagedDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "testResourceGroup";
-            string managedInstanceName = "testInstance";
-            string databaseName = "testDatabase";
-            ResourceIdentifier managedDatabaseResourceId = ManagedDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName, databaseName);
-            ManagedDatabaseResource managedDatabase = client.GetManagedDatabaseResource(managedDatabaseResourceId);
-
-            // get the collection of this ManagedInstanceLongTermRetentionPolicyResource
-            ManagedInstanceLongTermRetentionPolicyCollection collection = managedDatabase.GetManagedInstanceLongTermRetentionPolicies();
-
-            // invoke the operation and iterate over the result
-            await foreach (ManagedInstanceLongTermRetentionPolicyResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ManagedInstanceLongTermRetentionPolicyData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
         }
     }
 }

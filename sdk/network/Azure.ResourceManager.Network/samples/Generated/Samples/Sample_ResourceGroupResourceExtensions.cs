@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             AzureLocation location = new AzureLocation("westus");
-            CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest = new CheckPrivateLinkServiceVisibilityRequest()
+            CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest = new CheckPrivateLinkServiceVisibilityRequest
             {
                 PrivateLinkServiceAlias = "mypls.00000000-0000-0000-0000-000000000000.azure.privatelinkservice",
             };

@@ -48,13 +48,8 @@ namespace Azure.ResourceManager.Storage.Samples
                 NetworkRuleSet = new StorageAccountNetworkRuleSet(StorageNetworkDefaultAction.Allow)
                 {
                     Bypass = StorageNetworkBypass.AzureServices,
-                    VirtualNetworkRules =
-{
-new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/res9101/providers/Microsoft.Network/virtualNetworks/net123/subnets/subnet12"))
-},
-                    IPRules =
-{
-},
+                    VirtualNetworkRules = { new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/res9101/providers/Microsoft.Network/virtualNetworks/net123/subnets/subnet12")) },
+                    IPRules = { },
                 },
                 EnableHttpsTrafficOnly = false,
                 IsExtendedGroupEnabled = true,
@@ -97,27 +92,27 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
             string accountName = "sto4445";
             StorageAccountCreateOrUpdateContent content = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardGrs), StorageKind.Storage, new AzureLocation("eastus"))
             {
-                ExtendedLocation = new ExtendedLocation()
+                ExtendedLocation = new ExtendedLocation
                 {
                     Name = "losangeles001",
                 },
                 Tags =
 {
 ["key1"] = "value1",
-["key2"] = "value2",
+["key2"] = "value2"
 },
                 SasPolicy = new StorageAccountSasPolicy("1.15:59:59", ExpirationAction.Log),
                 KeyExpirationPeriodInDays = 20,
-                Encryption = new StorageAccountEncryption()
+                Encryption = new StorageAccountEncryption
                 {
-                    Services = new StorageAccountEncryptionServices()
+                    Services = new StorageAccountEncryptionServices
                     {
-                        Blob = new StorageEncryptionService()
+                        Blob = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
-                        File = new StorageEncryptionService()
+                        File = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
@@ -128,7 +123,7 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
                 },
                 IsSftpEnabled = true,
                 IsHnsEnabled = true,
-                RoutingPreference = new StorageRoutingPreference()
+                RoutingPreference = new StorageRoutingPreference
                 {
                     RoutingChoice = StorageRoutingChoice.MicrosoftRouting,
                     IsMicrosoftEndpointsPublished = true,
@@ -178,21 +173,21 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
                 Tags =
 {
 ["key1"] = "value1",
-["key2"] = "value2",
+["key2"] = "value2"
 },
                 AllowedCopyScope = AllowedCopyScope.Aad,
                 SasPolicy = new StorageAccountSasPolicy("1.15:59:59", ExpirationAction.Log),
                 KeyExpirationPeriodInDays = 20,
-                Encryption = new StorageAccountEncryption()
+                Encryption = new StorageAccountEncryption
                 {
-                    Services = new StorageAccountEncryptionServices()
+                    Services = new StorageAccountEncryptionServices
                     {
-                        Blob = new StorageEncryptionService()
+                        Blob = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
-                        File = new StorageEncryptionService()
+                        File = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
@@ -202,7 +197,7 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
                     RequireInfrastructureEncryption = false,
                 },
                 IsHnsEnabled = true,
-                RoutingPreference = new StorageRoutingPreference()
+                RoutingPreference = new StorageRoutingPreference
                 {
                     RoutingChoice = StorageRoutingChoice.MicrosoftRouting,
                     IsMicrosoftEndpointsPublished = true,
@@ -251,21 +246,21 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
                 Tags =
 {
 ["key1"] = "value1",
-["key2"] = "value2",
+["key2"] = "value2"
 },
                 AllowedCopyScope = AllowedCopyScope.PrivateLink,
                 SasPolicy = new StorageAccountSasPolicy("1.15:59:59", ExpirationAction.Log),
                 KeyExpirationPeriodInDays = 20,
-                Encryption = new StorageAccountEncryption()
+                Encryption = new StorageAccountEncryption
                 {
-                    Services = new StorageAccountEncryptionServices()
+                    Services = new StorageAccountEncryptionServices
                     {
-                        Blob = new StorageEncryptionService()
+                        Blob = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
-                        File = new StorageEncryptionService()
+                        File = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
@@ -275,7 +270,7 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
                     RequireInfrastructureEncryption = false,
                 },
                 IsHnsEnabled = true,
-                RoutingPreference = new StorageRoutingPreference()
+                RoutingPreference = new StorageRoutingPreference
                 {
                     RoutingChoice = StorageRoutingChoice.MicrosoftRouting,
                     IsMicrosoftEndpointsPublished = true,
@@ -321,28 +316,28 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
             string accountName = "sto4445";
             StorageAccountCreateOrUpdateContent content = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardGrs), StorageKind.Storage, new AzureLocation("eastus"))
             {
-                ExtendedLocation = new ExtendedLocation()
+                ExtendedLocation = new ExtendedLocation
                 {
                     Name = "losangeles001",
                 },
                 Tags =
 {
 ["key1"] = "value1",
-["key2"] = "value2",
+["key2"] = "value2"
 },
                 PublicNetworkAccess = StoragePublicNetworkAccess.Disabled,
                 SasPolicy = new StorageAccountSasPolicy("1.15:59:59", ExpirationAction.Log),
                 KeyExpirationPeriodInDays = 20,
-                Encryption = new StorageAccountEncryption()
+                Encryption = new StorageAccountEncryption
                 {
-                    Services = new StorageAccountEncryptionServices()
+                    Services = new StorageAccountEncryptionServices
                     {
-                        Blob = new StorageEncryptionService()
+                        Blob = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
-                        File = new StorageEncryptionService()
+                        File = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
@@ -352,7 +347,7 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
                     RequireInfrastructureEncryption = false,
                 },
                 IsHnsEnabled = true,
-                RoutingPreference = new StorageRoutingPreference()
+                RoutingPreference = new StorageRoutingPreference
                 {
                     RoutingChoice = StorageRoutingChoice.MicrosoftRouting,
                     IsMicrosoftEndpointsPublished = true,
@@ -398,27 +393,27 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
             string accountName = "sto4445";
             StorageAccountCreateOrUpdateContent content = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardGrs), StorageKind.Storage, new AzureLocation("eastus"))
             {
-                ExtendedLocation = new ExtendedLocation()
+                ExtendedLocation = new ExtendedLocation
                 {
                     Name = "losangeles001",
                 },
                 Tags =
 {
 ["key1"] = "value1",
-["key2"] = "value2",
+["key2"] = "value2"
 },
                 SasPolicy = new StorageAccountSasPolicy("1.15:59:59", ExpirationAction.Log),
                 KeyExpirationPeriodInDays = 20,
-                Encryption = new StorageAccountEncryption()
+                Encryption = new StorageAccountEncryption
                 {
-                    Services = new StorageAccountEncryptionServices()
+                    Services = new StorageAccountEncryptionServices
                     {
-                        Blob = new StorageEncryptionService()
+                        Blob = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
-                        File = new StorageEncryptionService()
+                        File = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
@@ -429,7 +424,7 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
                 },
                 IsSftpEnabled = true,
                 IsHnsEnabled = true,
-                RoutingPreference = new StorageRoutingPreference()
+                RoutingPreference = new StorageRoutingPreference
                 {
                     RoutingChoice = StorageRoutingChoice.MicrosoftRouting,
                     IsMicrosoftEndpointsPublished = true,
@@ -477,27 +472,27 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
             string accountName = "sto4445";
             StorageAccountCreateOrUpdateContent content = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardGrs), StorageKind.Storage, new AzureLocation("eastus"))
             {
-                ExtendedLocation = new ExtendedLocation()
+                ExtendedLocation = new ExtendedLocation
                 {
                     Name = "losangeles001",
                 },
                 Tags =
 {
 ["key1"] = "value1",
-["key2"] = "value2",
+["key2"] = "value2"
 },
                 SasPolicy = new StorageAccountSasPolicy("1.15:59:59", ExpirationAction.Log),
                 KeyExpirationPeriodInDays = 20,
-                Encryption = new StorageAccountEncryption()
+                Encryption = new StorageAccountEncryption
                 {
-                    Services = new StorageAccountEncryptionServices()
+                    Services = new StorageAccountEncryptionServices
                     {
-                        Blob = new StorageEncryptionService()
+                        Blob = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
-                        File = new StorageEncryptionService()
+                        File = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
@@ -508,7 +503,7 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
                 },
                 IsSftpEnabled = true,
                 IsHnsEnabled = true,
-                RoutingPreference = new StorageRoutingPreference()
+                RoutingPreference = new StorageRoutingPreference
                 {
                     RoutingChoice = StorageRoutingChoice.MicrosoftRouting,
                     IsMicrosoftEndpointsPublished = true,
@@ -556,28 +551,28 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
             string accountName = "sto4445";
             StorageAccountCreateOrUpdateContent content = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardGrs), StorageKind.Storage, new AzureLocation("eastus"))
             {
-                ExtendedLocation = new ExtendedLocation()
+                ExtendedLocation = new ExtendedLocation
                 {
                     Name = "losangeles001",
                 },
                 Tags =
 {
 ["key1"] = "value1",
-["key2"] = "value2",
+["key2"] = "value2"
 },
                 PublicNetworkAccess = StoragePublicNetworkAccess.Enabled,
                 SasPolicy = new StorageAccountSasPolicy("1.15:59:59", ExpirationAction.Log),
                 KeyExpirationPeriodInDays = 20,
-                Encryption = new StorageAccountEncryption()
+                Encryption = new StorageAccountEncryption
                 {
-                    Services = new StorageAccountEncryptionServices()
+                    Services = new StorageAccountEncryptionServices
                     {
-                        Blob = new StorageEncryptionService()
+                        Blob = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
-                        File = new StorageEncryptionService()
+                        File = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
@@ -587,7 +582,7 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
                     RequireInfrastructureEncryption = false,
                 },
                 IsHnsEnabled = true,
-                RoutingPreference = new StorageRoutingPreference()
+                RoutingPreference = new StorageRoutingPreference
                 {
                     RoutingChoice = StorageRoutingChoice.MicrosoftRouting,
                     IsMicrosoftEndpointsPublished = true,
@@ -636,18 +631,18 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
                 Tags =
 {
 ["key1"] = "value1",
-["key2"] = "value2",
+["key2"] = "value2"
 },
-                Encryption = new StorageAccountEncryption()
+                Encryption = new StorageAccountEncryption
                 {
-                    Services = new StorageAccountEncryptionServices()
+                    Services = new StorageAccountEncryptionServices
                     {
-                        Blob = new StorageEncryptionService()
+                        Blob = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
-                        File = new StorageEncryptionService()
+                        File = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
@@ -699,32 +694,32 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
                 {
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/res9101/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{managed-identity-name}")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/res9101/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{managed-identity-name}")] = new UserAssignedIdentity()
 },
                 },
-                Encryption = new StorageAccountEncryption()
+                Encryption = new StorageAccountEncryption
                 {
-                    Services = new StorageAccountEncryptionServices()
+                    Services = new StorageAccountEncryptionServices
                     {
-                        Blob = new StorageEncryptionService()
+                        Blob = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
-                        File = new StorageEncryptionService()
+                        File = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
                     },
                     KeySource = StorageAccountKeySource.KeyVault,
-                    KeyVaultProperties = new StorageAccountKeyVaultProperties()
+                    KeyVaultProperties = new StorageAccountKeyVaultProperties
                     {
                         KeyName = "wrappingKey",
                         KeyVersion = "",
                         KeyVaultUri = new Uri("https://myvault8569.vault.azure.net"),
                     },
-                    EncryptionIdentity = new StorageAccountEncryptionIdentity()
+                    EncryptionIdentity = new StorageAccountEncryptionIdentity
                     {
                         EncryptionUserAssignedIdentity = "/subscriptions/{subscription-id}/resourceGroups/res9101/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{managed-identity-name}",
                     },
@@ -770,32 +765,32 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
                 {
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/res9101/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{managed-identity-name}")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/res9101/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{managed-identity-name}")] = new UserAssignedIdentity()
 },
                 },
-                Encryption = new StorageAccountEncryption()
+                Encryption = new StorageAccountEncryption
                 {
-                    Services = new StorageAccountEncryptionServices()
+                    Services = new StorageAccountEncryptionServices
                     {
-                        Blob = new StorageEncryptionService()
+                        Blob = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
-                        File = new StorageEncryptionService()
+                        File = new StorageEncryptionService
                         {
                             IsEnabled = true,
                             KeyType = StorageEncryptionKeyType.Account,
                         },
                     },
                     KeySource = StorageAccountKeySource.KeyVault,
-                    KeyVaultProperties = new StorageAccountKeyVaultProperties()
+                    KeyVaultProperties = new StorageAccountKeyVaultProperties
                     {
                         KeyName = "wrappingKey",
                         KeyVersion = "",
                         KeyVaultUri = new Uri("https://myvault8569.vault.azure.net"),
                     },
-                    EncryptionIdentity = new StorageAccountEncryptionIdentity()
+                    EncryptionIdentity = new StorageAccountEncryptionIdentity
                     {
                         EncryptionUserAssignedIdentity = "/subscriptions/{subscription-id}/resourceGroups/res9101/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{managed-identity-name}",
                         EncryptionFederatedIdentityClientId = "f83c6b1b-4d34-47e4-bb34-9d83df58b540",
@@ -838,14 +833,14 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
             string accountName = "sto4445";
             StorageAccountCreateOrUpdateContent content = new StorageAccountCreateOrUpdateContent(new StorageSku(StorageSkuName.StandardGrs), StorageKind.Storage, new AzureLocation("eastus"))
             {
-                ExtendedLocation = new ExtendedLocation()
+                ExtendedLocation = new ExtendedLocation
                 {
                     Name = "losangeles001",
                 },
-                ImmutableStorageWithVersioning = new ImmutableStorageAccount()
+                ImmutableStorageWithVersioning = new ImmutableStorageAccount
                 {
                     IsEnabled = true,
-                    ImmutabilityPolicy = new AccountImmutabilityPolicy()
+                    ImmutabilityPolicy = new AccountImmutabilityPolicy
                     {
                         ImmutabilityPeriodSinceCreationInDays = 15,
                         State = AccountImmutabilityPolicyState.Unlocked,
@@ -898,6 +893,208 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Get_StorageAccountGetProperties()
+        {
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetProperties.json
+            // this example is just showing the usage of "StorageAccounts_GetProperties" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "res9407";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this StorageAccountResource
+            StorageAccountCollection collection = resourceGroupResource.GetStorageAccounts();
+
+            // invoke the operation
+            string accountName = "sto8596";
+            StorageAccountResource result = await collection.GetAsync(accountName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            StorageAccountData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_StorageAccountGetPropertiesCMKEnabled()
+        {
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetPropertiesCMKEnabled.json
+            // this example is just showing the usage of "StorageAccounts_GetProperties" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "res9407";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this StorageAccountResource
+            StorageAccountCollection collection = resourceGroupResource.GetStorageAccounts();
+
+            // invoke the operation
+            string accountName = "sto8596";
+            StorageAccountResource result = await collection.GetAsync(accountName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            StorageAccountData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_StorageAccountGetPropertiesCMKVersionExpirationTime()
+        {
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetPropertiesCMKVersionExpirationTime.json
+            // this example is just showing the usage of "StorageAccounts_GetProperties" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "res9407";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this StorageAccountResource
+            StorageAccountCollection collection = resourceGroupResource.GetStorageAccounts();
+
+            // invoke the operation
+            string accountName = "sto8596";
+            StorageAccountResource result = await collection.GetAsync(accountName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            StorageAccountData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_StorageAccountGetPropertiesGeoReplicationStatscanFailoverFalse()
+        {
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetPropertiesGeoReplicationStatscanFailoverFalse.json
+            // this example is just showing the usage of "StorageAccounts_GetProperties" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "res9407";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this StorageAccountResource
+            StorageAccountCollection collection = resourceGroupResource.GetStorageAccounts();
+
+            // invoke the operation
+            string accountName = "sto8596";
+            StorageAccountExpand? expand = StorageAccountExpand.GeoReplicationStats;
+            StorageAccountResource result = await collection.GetAsync(accountName, expand: expand);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            StorageAccountData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_StorageAccountGetPropertiesGeoReplicationStatscanFailoverTrue()
+        {
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetPropertiesGeoReplicationStatscanFailoverTrue.json
+            // this example is just showing the usage of "StorageAccounts_GetProperties" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "res9407";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this StorageAccountResource
+            StorageAccountCollection collection = resourceGroupResource.GetStorageAccounts();
+
+            // invoke the operation
+            string accountName = "sto8596";
+            StorageAccountExpand? expand = StorageAccountExpand.GeoReplicationStats;
+            StorageAccountResource result = await collection.GetAsync(accountName, expand: expand);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            StorageAccountData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_StorageAccountListByResourceGroup()
+        {
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountListByResourceGroup.json
+            // this example is just showing the usage of "StorageAccounts_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "res6117";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this StorageAccountResource
+            StorageAccountCollection collection = resourceGroupResource.GetStorageAccounts();
+
+            // invoke the operation and iterate over the result
+            await foreach (StorageAccountResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                StorageAccountData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_StorageAccountGetAsyncSkuConversionStatus()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetAsyncSkuConversionStatus.json
@@ -921,6 +1118,153 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
             // invoke the operation
             string accountName = "sto8596";
             bool result = await collection.ExistsAsync(accountName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_StorageAccountGetProperties()
+        {
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetProperties.json
+            // this example is just showing the usage of "StorageAccounts_GetProperties" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "res9407";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this StorageAccountResource
+            StorageAccountCollection collection = resourceGroupResource.GetStorageAccounts();
+
+            // invoke the operation
+            string accountName = "sto8596";
+            bool result = await collection.ExistsAsync(accountName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_StorageAccountGetPropertiesCMKEnabled()
+        {
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetPropertiesCMKEnabled.json
+            // this example is just showing the usage of "StorageAccounts_GetProperties" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "res9407";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this StorageAccountResource
+            StorageAccountCollection collection = resourceGroupResource.GetStorageAccounts();
+
+            // invoke the operation
+            string accountName = "sto8596";
+            bool result = await collection.ExistsAsync(accountName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_StorageAccountGetPropertiesCMKVersionExpirationTime()
+        {
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetPropertiesCMKVersionExpirationTime.json
+            // this example is just showing the usage of "StorageAccounts_GetProperties" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "res9407";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this StorageAccountResource
+            StorageAccountCollection collection = resourceGroupResource.GetStorageAccounts();
+
+            // invoke the operation
+            string accountName = "sto8596";
+            bool result = await collection.ExistsAsync(accountName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_StorageAccountGetPropertiesGeoReplicationStatscanFailoverFalse()
+        {
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetPropertiesGeoReplicationStatscanFailoverFalse.json
+            // this example is just showing the usage of "StorageAccounts_GetProperties" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "res9407";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this StorageAccountResource
+            StorageAccountCollection collection = resourceGroupResource.GetStorageAccounts();
+
+            // invoke the operation
+            string accountName = "sto8596";
+            StorageAccountExpand? expand = StorageAccountExpand.GeoReplicationStats;
+            bool result = await collection.ExistsAsync(accountName, expand: expand);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_StorageAccountGetPropertiesGeoReplicationStatscanFailoverTrue()
+        {
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetPropertiesGeoReplicationStatscanFailoverTrue.json
+            // this example is just showing the usage of "StorageAccounts_GetProperties" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "res9407";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this StorageAccountResource
+            StorageAccountCollection collection = resourceGroupResource.GetStorageAccounts();
+
+            // invoke the operation
+            string accountName = "sto8596";
+            StorageAccountExpand? expand = StorageAccountExpand.GeoReplicationStats;
+            bool result = await collection.ExistsAsync(accountName, expand: expand);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -968,68 +1312,6 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_StorageAccountGetProperties()
-        {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetProperties.json
-            // this example is just showing the usage of "StorageAccounts_GetProperties" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "res9407";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this StorageAccountResource
-            StorageAccountCollection collection = resourceGroupResource.GetStorageAccounts();
-
-            // invoke the operation
-            string accountName = "sto8596";
-            StorageAccountResource result = await collection.GetAsync(accountName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            StorageAccountData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Exists_StorageAccountGetProperties()
-        {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetProperties.json
-            // this example is just showing the usage of "StorageAccounts_GetProperties" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "res9407";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this StorageAccountResource
-            StorageAccountCollection collection = resourceGroupResource.GetStorageAccounts();
-
-            // invoke the operation
-            string accountName = "sto8596";
-            bool result = await collection.ExistsAsync(accountName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_StorageAccountGetProperties()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetProperties.json
@@ -1067,68 +1349,6 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Get_StorageAccountGetPropertiesCMKEnabled()
-        {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetPropertiesCMKEnabled.json
-            // this example is just showing the usage of "StorageAccounts_GetProperties" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "res9407";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this StorageAccountResource
-            StorageAccountCollection collection = resourceGroupResource.GetStorageAccounts();
-
-            // invoke the operation
-            string accountName = "sto8596";
-            StorageAccountResource result = await collection.GetAsync(accountName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            StorageAccountData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Exists_StorageAccountGetPropertiesCMKEnabled()
-        {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetPropertiesCMKEnabled.json
-            // this example is just showing the usage of "StorageAccounts_GetProperties" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "res9407";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this StorageAccountResource
-            StorageAccountCollection collection = resourceGroupResource.GetStorageAccounts();
-
-            // invoke the operation
-            string accountName = "sto8596";
-            bool result = await collection.ExistsAsync(accountName);
-
-            Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
@@ -1174,68 +1394,6 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_StorageAccountGetPropertiesCMKVersionExpirationTime()
-        {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetPropertiesCMKVersionExpirationTime.json
-            // this example is just showing the usage of "StorageAccounts_GetProperties" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "res9407";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this StorageAccountResource
-            StorageAccountCollection collection = resourceGroupResource.GetStorageAccounts();
-
-            // invoke the operation
-            string accountName = "sto8596";
-            StorageAccountResource result = await collection.GetAsync(accountName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            StorageAccountData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Exists_StorageAccountGetPropertiesCMKVersionExpirationTime()
-        {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetPropertiesCMKVersionExpirationTime.json
-            // this example is just showing the usage of "StorageAccounts_GetProperties" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "res9407";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this StorageAccountResource
-            StorageAccountCollection collection = resourceGroupResource.GetStorageAccounts();
-
-            // invoke the operation
-            string accountName = "sto8596";
-            bool result = await collection.ExistsAsync(accountName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_StorageAccountGetPropertiesCMKVersionExpirationTime()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetPropertiesCMKVersionExpirationTime.json
@@ -1273,70 +1431,6 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Get_StorageAccountGetPropertiesGeoReplicationStatscanFailoverFalse()
-        {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetPropertiesGeoReplicationStatscanFailoverFalse.json
-            // this example is just showing the usage of "StorageAccounts_GetProperties" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "res9407";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this StorageAccountResource
-            StorageAccountCollection collection = resourceGroupResource.GetStorageAccounts();
-
-            // invoke the operation
-            string accountName = "sto8596";
-            StorageAccountExpand? expand = StorageAccountExpand.GeoReplicationStats;
-            StorageAccountResource result = await collection.GetAsync(accountName, expand: expand);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            StorageAccountData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Exists_StorageAccountGetPropertiesGeoReplicationStatscanFailoverFalse()
-        {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetPropertiesGeoReplicationStatscanFailoverFalse.json
-            // this example is just showing the usage of "StorageAccounts_GetProperties" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "res9407";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this StorageAccountResource
-            StorageAccountCollection collection = resourceGroupResource.GetStorageAccounts();
-
-            // invoke the operation
-            string accountName = "sto8596";
-            StorageAccountExpand? expand = StorageAccountExpand.GeoReplicationStats;
-            bool result = await collection.ExistsAsync(accountName, expand: expand);
-
-            Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
@@ -1383,70 +1477,6 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_StorageAccountGetPropertiesGeoReplicationStatscanFailoverTrue()
-        {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetPropertiesGeoReplicationStatscanFailoverTrue.json
-            // this example is just showing the usage of "StorageAccounts_GetProperties" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "res9407";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this StorageAccountResource
-            StorageAccountCollection collection = resourceGroupResource.GetStorageAccounts();
-
-            // invoke the operation
-            string accountName = "sto8596";
-            StorageAccountExpand? expand = StorageAccountExpand.GeoReplicationStats;
-            StorageAccountResource result = await collection.GetAsync(accountName, expand: expand);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            StorageAccountData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Exists_StorageAccountGetPropertiesGeoReplicationStatscanFailoverTrue()
-        {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetPropertiesGeoReplicationStatscanFailoverTrue.json
-            // this example is just showing the usage of "StorageAccounts_GetProperties" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "res9407";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this StorageAccountResource
-            StorageAccountCollection collection = resourceGroupResource.GetStorageAccounts();
-
-            // invoke the operation
-            string accountName = "sto8596";
-            StorageAccountExpand? expand = StorageAccountExpand.GeoReplicationStats;
-            bool result = await collection.ExistsAsync(accountName, expand: expand);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_StorageAccountGetPropertiesGeoReplicationStatscanFailoverTrue()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountGetPropertiesGeoReplicationStatscanFailoverTrue.json
@@ -1485,41 +1515,6 @@ new StorageAccountVirtualNetworkRule(new ResourceIdentifier("/subscriptions/{sub
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_StorageAccountListByResourceGroup()
-        {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/StorageAccountListByResourceGroup.json
-            // this example is just showing the usage of "StorageAccounts_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "res6117";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this StorageAccountResource
-            StorageAccountCollection collection = resourceGroupResource.GetStorageAccounts();
-
-            // invoke the operation and iterate over the result
-            await foreach (StorageAccountResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                StorageAccountData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
         }
     }
 }

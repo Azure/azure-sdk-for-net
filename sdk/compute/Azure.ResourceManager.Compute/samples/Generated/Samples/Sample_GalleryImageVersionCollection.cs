@@ -44,64 +44,55 @@ namespace Azure.ResourceManager.Compute.Samples
             string galleryImageVersionName = "1.0.0";
             GalleryImageVersionData data = new GalleryImageVersionData(new AzureLocation("West US"))
             {
-                PublishingProfile = new GalleryImageVersionPublishingProfile()
+                PublishingProfile = new GalleryImageVersionPublishingProfile
                 {
-                    TargetRegions =
-{
-new TargetRegion("West US")
+                    TargetRegions = {new TargetRegion("West US")
 {
 RegionalReplicaCount = 2,
-Encryption = new EncryptionImages()
+Encryption = new EncryptionImages
 {
-OSDiskImage = new OSDiskImageEncryption()
+OSDiskImage = new OSDiskImageEncryption
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
 },
-DataDiskImages =
-{
-new DataDiskImageEncryption(0)
+DataDiskImages = {new DataDiskImageEncryption(0)
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherWestUSDiskEncryptionSet"),
-},new DataDiskImageEncryption(1)
+}, new DataDiskImageEncryption(1)
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
-}
-},
+}},
 },
 IsExcludedFromLatest = false,
-},new TargetRegion("East US")
+}, new TargetRegion("East US")
 {
 RegionalReplicaCount = 2,
 StorageAccountType = ImageStorageAccountType.StandardZrs,
-Encryption = new EncryptionImages()
+Encryption = new EncryptionImages
 {
-OSDiskImage = new OSDiskImageEncryption()
+OSDiskImage = new OSDiskImageEncryption
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
 },
-DataDiskImages =
-{
-new DataDiskImageEncryption(0)
+DataDiskImages = {new DataDiskImageEncryption(0)
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherEastUSDiskEncryptionSet"),
-},new DataDiskImageEncryption(1)
+}, new DataDiskImageEncryption(1)
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
-}
-},
+}},
 },
 IsExcludedFromLatest = false,
-}
-},
+}},
                 },
-                StorageProfile = new GalleryImageVersionStorageProfile()
+                StorageProfile = new GalleryImageVersionStorageProfile
                 {
-                    GallerySource = new GalleryArtifactVersionFullSource()
+                    GallerySource = new GalleryArtifactVersionFullSource
                     {
                         VirtualMachineId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/virtualMachines/{vmName}"),
                     },
                 },
-                SafetyProfile = new GalleryImageVersionSafetyProfile()
+                SafetyProfile = new GalleryImageVersionSafetyProfile
                 {
                     AllowDeletionOfReplicatedLocations = false,
                 },
@@ -144,64 +135,55 @@ IsExcludedFromLatest = false,
             string galleryImageVersionName = "1.0.0";
             GalleryImageVersionData data = new GalleryImageVersionData(new AzureLocation("West US"))
             {
-                PublishingProfile = new GalleryImageVersionPublishingProfile()
+                PublishingProfile = new GalleryImageVersionPublishingProfile
                 {
-                    TargetRegions =
-{
-new TargetRegion("West US")
+                    TargetRegions = {new TargetRegion("West US")
 {
 RegionalReplicaCount = 1,
-Encryption = new EncryptionImages()
+Encryption = new EncryptionImages
 {
-OSDiskImage = new OSDiskImageEncryption()
+OSDiskImage = new OSDiskImageEncryption
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
 },
-DataDiskImages =
-{
-new DataDiskImageEncryption(0)
+DataDiskImages = {new DataDiskImageEncryption(0)
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherWestUSDiskEncryptionSet"),
-},new DataDiskImageEncryption(1)
+}, new DataDiskImageEncryption(1)
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
-}
-},
+}},
 },
 IsExcludedFromLatest = false,
-},new TargetRegion("East US")
+}, new TargetRegion("East US")
 {
 RegionalReplicaCount = 2,
 StorageAccountType = ImageStorageAccountType.StandardZrs,
-Encryption = new EncryptionImages()
+Encryption = new EncryptionImages
 {
-OSDiskImage = new OSDiskImageEncryption()
+OSDiskImage = new OSDiskImageEncryption
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
 },
-DataDiskImages =
-{
-new DataDiskImageEncryption(0)
+DataDiskImages = {new DataDiskImageEncryption(0)
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherEastUSDiskEncryptionSet"),
-},new DataDiskImageEncryption(1)
+}, new DataDiskImageEncryption(1)
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
-}
-},
+}},
 },
 IsExcludedFromLatest = false,
-}
-},
+}},
                 },
-                StorageProfile = new GalleryImageVersionStorageProfile()
+                StorageProfile = new GalleryImageVersionStorageProfile
                 {
-                    GallerySource = new GalleryArtifactVersionFullSource()
+                    GallerySource = new GalleryArtifactVersionFullSource
                     {
                         CommunityGalleryImageId = "/communityGalleries/{communityGalleryName}/images/{communityGalleryImageName}",
                     },
                 },
-                SafetyProfile = new GalleryImageVersionSafetyProfile()
+                SafetyProfile = new GalleryImageVersionSafetyProfile
                 {
                     AllowDeletionOfReplicatedLocations = false,
                 },
@@ -244,64 +226,55 @@ IsExcludedFromLatest = false,
             string galleryImageVersionName = "1.0.0";
             GalleryImageVersionData data = new GalleryImageVersionData(new AzureLocation("West US"))
             {
-                PublishingProfile = new GalleryImageVersionPublishingProfile()
+                PublishingProfile = new GalleryImageVersionPublishingProfile
                 {
-                    TargetRegions =
-{
-new TargetRegion("West US")
+                    TargetRegions = {new TargetRegion("West US")
 {
 RegionalReplicaCount = 1,
-Encryption = new EncryptionImages()
+Encryption = new EncryptionImages
 {
-OSDiskImage = new OSDiskImageEncryption()
+OSDiskImage = new OSDiskImageEncryption
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
 },
-DataDiskImages =
-{
-new DataDiskImageEncryption(0)
+DataDiskImages = {new DataDiskImageEncryption(0)
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherWestUSDiskEncryptionSet"),
-},new DataDiskImageEncryption(1)
+}, new DataDiskImageEncryption(1)
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
-}
-},
+}},
 },
 IsExcludedFromLatest = false,
-},new TargetRegion("East US")
+}, new TargetRegion("East US")
 {
 RegionalReplicaCount = 2,
 StorageAccountType = ImageStorageAccountType.StandardZrs,
-Encryption = new EncryptionImages()
+Encryption = new EncryptionImages
 {
-OSDiskImage = new OSDiskImageEncryption()
+OSDiskImage = new OSDiskImageEncryption
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
 },
-DataDiskImages =
-{
-new DataDiskImageEncryption(0)
+DataDiskImages = {new DataDiskImageEncryption(0)
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherEastUSDiskEncryptionSet"),
-},new DataDiskImageEncryption(1)
+}, new DataDiskImageEncryption(1)
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
-}
-},
+}},
 },
 IsExcludedFromLatest = false,
-}
-},
+}},
                 },
-                StorageProfile = new GalleryImageVersionStorageProfile()
+                StorageProfile = new GalleryImageVersionStorageProfile
                 {
-                    GallerySource = new GalleryArtifactVersionFullSource()
+                    GallerySource = new GalleryArtifactVersionFullSource
                     {
                         Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}"),
                     },
                 },
-                SafetyProfile = new GalleryImageVersionSafetyProfile()
+                SafetyProfile = new GalleryImageVersionSafetyProfile
                 {
                     AllowDeletionOfReplicatedLocations = false,
                 },
@@ -344,73 +317,61 @@ IsExcludedFromLatest = false,
             string galleryImageVersionName = "1.0.0";
             GalleryImageVersionData data = new GalleryImageVersionData(new AzureLocation("West US"))
             {
-                PublishingProfile = new GalleryImageVersionPublishingProfile()
+                PublishingProfile = new GalleryImageVersionPublishingProfile
                 {
-                    TargetRegions =
-{
-new TargetRegion("West US")
+                    TargetRegions = {new TargetRegion("West US")
 {
 RegionalReplicaCount = 1,
-Encryption = new EncryptionImages()
+Encryption = new EncryptionImages
 {
-OSDiskImage = new OSDiskImageEncryption()
+OSDiskImage = new OSDiskImageEncryption
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
 },
-DataDiskImages =
-{
-new DataDiskImageEncryption(1)
+DataDiskImages = {new DataDiskImageEncryption(1)
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
-}
-},
+}},
 },
 IsExcludedFromLatest = false,
-},new TargetRegion("East US")
+}, new TargetRegion("East US")
 {
 RegionalReplicaCount = 2,
 StorageAccountType = ImageStorageAccountType.StandardZrs,
-Encryption = new EncryptionImages()
+Encryption = new EncryptionImages
 {
-OSDiskImage = new OSDiskImageEncryption()
+OSDiskImage = new OSDiskImageEncryption
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
 },
-DataDiskImages =
-{
-new DataDiskImageEncryption(1)
+DataDiskImages = {new DataDiskImageEncryption(1)
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
-}
-},
+}},
 },
 IsExcludedFromLatest = false,
-}
-},
+}},
                 },
-                StorageProfile = new GalleryImageVersionStorageProfile()
+                StorageProfile = new GalleryImageVersionStorageProfile
                 {
-                    OSDiskImage = new GalleryOSDiskImage()
+                    OSDiskImage = new GalleryOSDiskImage
                     {
                         HostCaching = HostCaching.ReadOnly,
-                        GallerySource = new GalleryDiskImageSource()
+                        GallerySource = new GalleryDiskImageSource
                         {
                             Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/snapshots/{osSnapshotName}"),
                         },
                     },
-                    DataDiskImages =
-{
-new GalleryDataDiskImage(1)
+                    DataDiskImages = {new GalleryDataDiskImage(1)
 {
 HostCaching = HostCaching.None,
-GallerySource = new GalleryDiskImageSource()
+GallerySource = new GalleryDiskImageSource
 {
 Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/disks/{dataDiskName}"),
 },
-}
-},
+}},
                 },
-                SafetyProfile = new GalleryImageVersionSafetyProfile()
+                SafetyProfile = new GalleryImageVersionSafetyProfile
                 {
                     AllowDeletionOfReplicatedLocations = false,
                 },
@@ -453,26 +414,23 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
             string galleryImageVersionName = "1.0.0";
             GalleryImageVersionData data = new GalleryImageVersionData(new AzureLocation("West US"))
             {
-                PublishingProfile = new GalleryImageVersionPublishingProfile()
+                PublishingProfile = new GalleryImageVersionPublishingProfile
                 {
-                    TargetRegions =
-{
-new TargetRegion("West US")
+                    TargetRegions = {new TargetRegion("West US")
 {
 RegionalReplicaCount = 1,
 IsExcludedFromLatest = false,
-}
-},
+}},
                     ReplicationMode = GalleryReplicationMode.Shallow,
                 },
-                StorageProfile = new GalleryImageVersionStorageProfile()
+                StorageProfile = new GalleryImageVersionStorageProfile
                 {
-                    GallerySource = new GalleryArtifactVersionFullSource()
+                    GallerySource = new GalleryArtifactVersionFullSource
                     {
                         Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}"),
                     },
                 },
-                SafetyProfile = new GalleryImageVersionSafetyProfile()
+                SafetyProfile = new GalleryImageVersionSafetyProfile
                 {
                     AllowDeletionOfReplicatedLocations = false,
                 },
@@ -515,64 +473,55 @@ IsExcludedFromLatest = false,
             string galleryImageVersionName = "1.0.0";
             GalleryImageVersionData data = new GalleryImageVersionData(new AzureLocation("West US"))
             {
-                PublishingProfile = new GalleryImageVersionPublishingProfile()
+                PublishingProfile = new GalleryImageVersionPublishingProfile
                 {
-                    TargetRegions =
-{
-new TargetRegion("West US")
+                    TargetRegions = {new TargetRegion("West US")
 {
 RegionalReplicaCount = 1,
-Encryption = new EncryptionImages()
+Encryption = new EncryptionImages
 {
-OSDiskImage = new OSDiskImageEncryption()
+OSDiskImage = new OSDiskImageEncryption
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
 },
-DataDiskImages =
-{
-new DataDiskImageEncryption(0)
+DataDiskImages = {new DataDiskImageEncryption(0)
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherWestUSDiskEncryptionSet"),
-},new DataDiskImageEncryption(1)
+}, new DataDiskImageEncryption(1)
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
-}
-},
+}},
 },
 IsExcludedFromLatest = false,
-},new TargetRegion("East US")
+}, new TargetRegion("East US")
 {
 RegionalReplicaCount = 2,
 StorageAccountType = ImageStorageAccountType.StandardZrs,
-Encryption = new EncryptionImages()
+Encryption = new EncryptionImages
 {
-OSDiskImage = new OSDiskImageEncryption()
+OSDiskImage = new OSDiskImageEncryption
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
 },
-DataDiskImages =
-{
-new DataDiskImageEncryption(0)
+DataDiskImages = {new DataDiskImageEncryption(0)
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherEastUSDiskEncryptionSet"),
-},new DataDiskImageEncryption(1)
+}, new DataDiskImageEncryption(1)
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
-}
-},
+}},
 },
 IsExcludedFromLatest = false,
-}
-},
+}},
                 },
-                StorageProfile = new GalleryImageVersionStorageProfile()
+                StorageProfile = new GalleryImageVersionStorageProfile
                 {
-                    GallerySource = new GalleryArtifactVersionFullSource()
+                    GallerySource = new GalleryArtifactVersionFullSource
                     {
                         Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageDefinitionName}/versions/{versionName}"),
                     },
                 },
-                SafetyProfile = new GalleryImageVersionSafetyProfile()
+                SafetyProfile = new GalleryImageVersionSafetyProfile
                 {
                     AllowDeletionOfReplicatedLocations = false,
                 },
@@ -615,73 +564,61 @@ IsExcludedFromLatest = false,
             string galleryImageVersionName = "1.0.0";
             GalleryImageVersionData data = new GalleryImageVersionData(new AzureLocation("West US"))
             {
-                PublishingProfile = new GalleryImageVersionPublishingProfile()
+                PublishingProfile = new GalleryImageVersionPublishingProfile
                 {
-                    TargetRegions =
-{
-new TargetRegion("West US")
+                    TargetRegions = {new TargetRegion("West US")
 {
 RegionalReplicaCount = 1,
-Encryption = new EncryptionImages()
+Encryption = new EncryptionImages
 {
-OSDiskImage = new OSDiskImageEncryption()
+OSDiskImage = new OSDiskImageEncryption
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
 },
-DataDiskImages =
-{
-new DataDiskImageEncryption(1)
+DataDiskImages = {new DataDiskImageEncryption(1)
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
-}
-},
+}},
 },
 IsExcludedFromLatest = false,
-},new TargetRegion("East US")
+}, new TargetRegion("East US")
 {
 RegionalReplicaCount = 2,
 StorageAccountType = ImageStorageAccountType.StandardZrs,
-Encryption = new EncryptionImages()
+Encryption = new EncryptionImages
 {
-OSDiskImage = new OSDiskImageEncryption()
+OSDiskImage = new OSDiskImageEncryption
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
 },
-DataDiskImages =
-{
-new DataDiskImageEncryption(1)
+DataDiskImages = {new DataDiskImageEncryption(1)
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
-}
-},
+}},
 },
 IsExcludedFromLatest = false,
-}
-},
+}},
                 },
-                StorageProfile = new GalleryImageVersionStorageProfile()
+                StorageProfile = new GalleryImageVersionStorageProfile
                 {
-                    OSDiskImage = new GalleryOSDiskImage()
+                    OSDiskImage = new GalleryOSDiskImage
                     {
                         HostCaching = HostCaching.ReadOnly,
-                        GallerySource = new GalleryDiskImageSource()
+                        GallerySource = new GalleryDiskImageSource
                         {
                             Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/snapshots/{osSnapshotName}"),
                         },
                     },
-                    DataDiskImages =
-{
-new GalleryDataDiskImage(1)
+                    DataDiskImages = {new GalleryDataDiskImage(1)
 {
 HostCaching = HostCaching.None,
-GallerySource = new GalleryDiskImageSource()
+GallerySource = new GalleryDiskImageSource
 {
 Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/disks/{dataDiskName}"),
 },
-}
-},
+}},
                 },
-                SafetyProfile = new GalleryImageVersionSafetyProfile()
+                SafetyProfile = new GalleryImageVersionSafetyProfile
                 {
                     AllowDeletionOfReplicatedLocations = false,
                 },
@@ -724,105 +661,75 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
             string galleryImageVersionName = "1.0.0";
             GalleryImageVersionData data = new GalleryImageVersionData(new AzureLocation("West US"))
             {
-                PublishingProfile = new GalleryImageVersionPublishingProfile()
+                PublishingProfile = new GalleryImageVersionPublishingProfile
                 {
-                    TargetRegions =
-{
-new TargetRegion("West US")
+                    TargetRegions = {new TargetRegion("West US")
 {
 RegionalReplicaCount = 1,
-Encryption = new EncryptionImages()
+Encryption = new EncryptionImages
 {
-OSDiskImage = new OSDiskImageEncryption()
+OSDiskImage = new OSDiskImageEncryption
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myDiskEncryptionSet"),
 },
-DataDiskImages =
-{
-new DataDiskImageEncryption(1)
+DataDiskImages = {new DataDiskImageEncryption(1)
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherDiskEncryptionSet"),
-}
-},
+}},
 },
 IsExcludedFromLatest = false,
-},new TargetRegion("East US")
+}, new TargetRegion("East US")
 {
 RegionalReplicaCount = 2,
 StorageAccountType = ImageStorageAccountType.StandardZrs,
 IsExcludedFromLatest = false,
-}
-},
+}},
                 },
-                StorageProfile = new GalleryImageVersionStorageProfile()
+                StorageProfile = new GalleryImageVersionStorageProfile
                 {
-                    OSDiskImage = new GalleryOSDiskImage()
+                    OSDiskImage = new GalleryOSDiskImage
                     {
                         HostCaching = HostCaching.ReadOnly,
-                        GallerySource = new GalleryDiskImageSource()
+                        GallerySource = new GalleryDiskImageSource
                         {
                             Uri = new Uri("https://gallerysourcencus.blob.core.windows.net/myvhds/Windows-Server-2012-R2-20171216-en.us-128GB.vhd"),
                             StorageAccountId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Storage/storageAccounts/{storageAccount}"),
                         },
                     },
-                    DataDiskImages =
-{
-new GalleryDataDiskImage(1)
+                    DataDiskImages = {new GalleryDataDiskImage(1)
 {
 HostCaching = HostCaching.None,
-GallerySource = new GalleryDiskImageSource()
+GallerySource = new GalleryDiskImageSource
 {
 Uri = new Uri("https://gallerysourcencus.blob.core.windows.net/myvhds/Windows-Server-2012-R2-20171216-en.us-128GB.vhd"),
 StorageAccountId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Storage/storageAccounts/{storageAccount}"),
 },
-}
-},
+}},
                 },
-                SafetyProfile = new GalleryImageVersionSafetyProfile()
+                SafetyProfile = new GalleryImageVersionSafetyProfile
                 {
                     AllowDeletionOfReplicatedLocations = false,
                 },
-                SecurityUefiSettings = new GalleryImageVersionUefiSettings()
+                SecurityUefiSettings = new GalleryImageVersionUefiSettings
                 {
-                    SignatureTemplateNames =
-{
-UefiSignatureTemplateName.MicrosoftUefiCertificateAuthorityTemplate
-},
-                    AdditionalSignatures = new UefiKeySignatures()
+                    SignatureTemplateNames = { UefiSignatureTemplateName.MicrosoftUefiCertificateAuthorityTemplate },
+                    AdditionalSignatures = new UefiKeySignatures
                     {
-                        Kek =
-{
-new UefiKey()
+                        Kek = {new UefiKey
 {
 KeyType = UefiKeyType.Sha256,
-Value =
-{
-"<sha256 value>"
-},
-}
-},
-                        Db =
-{
-new UefiKey()
+Value = {"<sha256 value>"},
+}},
+                        Db = {new UefiKey
 {
 KeyType = UefiKeyType.X509,
-Value =
-{
-"<x509 value>"
-},
-}
-},
-                        Dbx =
-{
-new UefiKey()
+Value = {"<x509 value>"},
+}},
+                        Dbx = {new UefiKey
 {
 KeyType = UefiKeyType.X509,
-Value =
-{
-"<x509 value>"
-},
-}
-},
+Value = {"<x509 value>"},
+}},
                     },
                 },
             };
@@ -864,61 +771,52 @@ Value =
             string galleryImageVersionName = "1.0.0";
             GalleryImageVersionData data = new GalleryImageVersionData(new AzureLocation("West US"))
             {
-                PublishingProfile = new GalleryImageVersionPublishingProfile()
+                PublishingProfile = new GalleryImageVersionPublishingProfile
                 {
-                    TargetRegions =
-{
-new TargetRegion("West US")
+                    TargetRegions = {new TargetRegion("West US")
 {
 RegionalReplicaCount = 1,
-Encryption = new EncryptionImages()
+Encryption = new EncryptionImages
 {
-OSDiskImage = new OSDiskImageEncryption()
+OSDiskImage = new OSDiskImageEncryption
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myDiskEncryptionSet"),
 },
-DataDiskImages =
-{
-new DataDiskImageEncryption(1)
+DataDiskImages = {new DataDiskImageEncryption(1)
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherDiskEncryptionSet"),
-}
-},
+}},
 },
 IsExcludedFromLatest = false,
-},new TargetRegion("East US")
+}, new TargetRegion("East US")
 {
 RegionalReplicaCount = 2,
 StorageAccountType = ImageStorageAccountType.StandardZrs,
 IsExcludedFromLatest = false,
-}
-},
+}},
                 },
-                StorageProfile = new GalleryImageVersionStorageProfile()
+                StorageProfile = new GalleryImageVersionStorageProfile
                 {
-                    OSDiskImage = new GalleryOSDiskImage()
+                    OSDiskImage = new GalleryOSDiskImage
                     {
                         HostCaching = HostCaching.ReadOnly,
-                        GallerySource = new GalleryDiskImageSource()
+                        GallerySource = new GalleryDiskImageSource
                         {
                             Uri = new Uri("https://gallerysourcencus.blob.core.windows.net/myvhds/Windows-Server-2012-R2-20171216-en.us-128GB.vhd"),
                             StorageAccountId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Storage/storageAccounts/{storageAccount}"),
                         },
                     },
-                    DataDiskImages =
-{
-new GalleryDataDiskImage(1)
+                    DataDiskImages = {new GalleryDataDiskImage(1)
 {
 HostCaching = HostCaching.None,
-GallerySource = new GalleryDiskImageSource()
+GallerySource = new GalleryDiskImageSource
 {
 Uri = new Uri("https://gallerysourcencus.blob.core.windows.net/myvhds/Windows-Server-2012-R2-20171216-en.us-128GB.vhd"),
 StorageAccountId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Storage/storageAccounts/{storageAccount}"),
 },
-}
-},
+}},
                 },
-                SafetyProfile = new GalleryImageVersionSafetyProfile()
+                SafetyProfile = new GalleryImageVersionSafetyProfile
                 {
                     AllowDeletionOfReplicatedLocations = false,
                 },
@@ -961,64 +859,55 @@ StorageAccountId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resou
             string galleryImageVersionName = "1.0.0";
             GalleryImageVersionData data = new GalleryImageVersionData(new AzureLocation("West US"))
             {
-                PublishingProfile = new GalleryImageVersionPublishingProfile()
+                PublishingProfile = new GalleryImageVersionPublishingProfile
                 {
-                    TargetRegions =
-{
-new TargetRegion("West US")
+                    TargetRegions = {new TargetRegion("West US")
 {
 RegionalReplicaCount = 1,
-Encryption = new EncryptionImages()
+Encryption = new EncryptionImages
 {
-OSDiskImage = new OSDiskImageEncryption()
+OSDiskImage = new OSDiskImageEncryption
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
 },
-DataDiskImages =
-{
-new DataDiskImageEncryption(0)
+DataDiskImages = {new DataDiskImageEncryption(0)
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherWestUSDiskEncryptionSet"),
-},new DataDiskImageEncryption(1)
+}, new DataDiskImageEncryption(1)
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myWestUSDiskEncryptionSet"),
-}
-},
+}},
 },
 IsExcludedFromLatest = false,
-},new TargetRegion("East US")
+}, new TargetRegion("East US")
 {
 RegionalReplicaCount = 2,
 StorageAccountType = ImageStorageAccountType.StandardZrs,
-Encryption = new EncryptionImages()
+Encryption = new EncryptionImages
 {
-OSDiskImage = new OSDiskImageEncryption()
+OSDiskImage = new OSDiskImageEncryption
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
 },
-DataDiskImages =
-{
-new DataDiskImageEncryption(0)
+DataDiskImages = {new DataDiskImageEncryption(0)
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myOtherEastUSDiskEncryptionSet"),
-},new DataDiskImageEncryption(1)
+}, new DataDiskImageEncryption(1)
 {
 DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSet/myEastUSDiskEncryptionSet"),
-}
-},
+}},
 },
 IsExcludedFromLatest = false,
-}
-},
+}},
                 },
-                StorageProfile = new GalleryImageVersionStorageProfile()
+                StorageProfile = new GalleryImageVersionStorageProfile
                 {
-                    GallerySource = new GalleryArtifactVersionFullSource()
+                    GallerySource = new GalleryArtifactVersionFullSource
                     {
                         Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/images/{imageName}"),
                     },
                 },
-                SafetyProfile = new GalleryImageVersionSafetyProfile()
+                SafetyProfile = new GalleryImageVersionSafetyProfile
                 {
                     AllowDeletionOfReplicatedLocations = false,
                 },
@@ -1071,6 +960,148 @@ IsExcludedFromLatest = false,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetAGalleryImageVersionWithSnapshotsAsASource()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2023-07-03/examples/galleryExamples/GalleryImageVersion_Get_WithSnapshotsAsSource.json
+            // this example is just showing the usage of "GalleryImageVersions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this GalleryImageResource created on azure
+            // for more information of creating GalleryImageResource, please refer to the document of GalleryImageResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string galleryName = "myGalleryName";
+            string galleryImageName = "myGalleryImageName";
+            ResourceIdentifier galleryImageResourceId = GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
+            GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
+
+            // get the collection of this GalleryImageVersionResource
+            GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
+
+            // invoke the operation
+            string galleryImageVersionName = "1.0.0";
+            GalleryImageVersionResource result = await collection.GetAsync(galleryImageVersionName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            GalleryImageVersionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetAGalleryImageVersionWithVhdAsASource()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2023-07-03/examples/galleryExamples/GalleryImageVersion_Get_WithVhdAsSource.json
+            // this example is just showing the usage of "GalleryImageVersions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this GalleryImageResource created on azure
+            // for more information of creating GalleryImageResource, please refer to the document of GalleryImageResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string galleryName = "myGalleryName";
+            string galleryImageName = "myGalleryImageName";
+            ResourceIdentifier galleryImageResourceId = GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
+            GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
+
+            // get the collection of this GalleryImageVersionResource
+            GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
+
+            // invoke the operation
+            string galleryImageVersionName = "1.0.0";
+            GalleryImageVersionResource result = await collection.GetAsync(galleryImageVersionName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            GalleryImageVersionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetAGalleryImageVersion()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2023-07-03/examples/galleryExamples/GalleryImageVersion_Get.json
+            // this example is just showing the usage of "GalleryImageVersions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this GalleryImageResource created on azure
+            // for more information of creating GalleryImageResource, please refer to the document of GalleryImageResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string galleryName = "myGalleryName";
+            string galleryImageName = "myGalleryImageName";
+            ResourceIdentifier galleryImageResourceId = GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
+            GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
+
+            // get the collection of this GalleryImageVersionResource
+            GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
+
+            // invoke the operation
+            string galleryImageVersionName = "1.0.0";
+            GalleryImageVersionResource result = await collection.GetAsync(galleryImageVersionName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            GalleryImageVersionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListGalleryImageVersionsInAGalleryImageDefinition()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2023-07-03/examples/galleryExamples/GalleryImageVersion_ListByGalleryImage.json
+            // this example is just showing the usage of "GalleryImageVersions_ListByGalleryImage" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this GalleryImageResource created on azure
+            // for more information of creating GalleryImageResource, please refer to the document of GalleryImageResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string galleryName = "myGalleryName";
+            string galleryImageName = "myGalleryImageName";
+            ResourceIdentifier galleryImageResourceId = GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
+            GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
+
+            // get the collection of this GalleryImageVersionResource
+            GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
+
+            // invoke the operation and iterate over the result
+            await foreach (GalleryImageVersionResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                GalleryImageVersionData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAGalleryImageVersionWithReplicationStatus()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2023-07-03/examples/galleryExamples/GalleryImageVersion_Get_WithReplicationStatus.json
@@ -1097,6 +1128,99 @@ IsExcludedFromLatest = false,
             string galleryImageVersionName = "1.0.0";
             ReplicationStatusType? expand = ReplicationStatusType.ReplicationStatus;
             bool result = await collection.ExistsAsync(galleryImageVersionName, expand: expand);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetAGalleryImageVersionWithSnapshotsAsASource()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2023-07-03/examples/galleryExamples/GalleryImageVersion_Get_WithSnapshotsAsSource.json
+            // this example is just showing the usage of "GalleryImageVersions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this GalleryImageResource created on azure
+            // for more information of creating GalleryImageResource, please refer to the document of GalleryImageResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string galleryName = "myGalleryName";
+            string galleryImageName = "myGalleryImageName";
+            ResourceIdentifier galleryImageResourceId = GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
+            GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
+
+            // get the collection of this GalleryImageVersionResource
+            GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
+
+            // invoke the operation
+            string galleryImageVersionName = "1.0.0";
+            bool result = await collection.ExistsAsync(galleryImageVersionName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetAGalleryImageVersionWithVhdAsASource()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2023-07-03/examples/galleryExamples/GalleryImageVersion_Get_WithVhdAsSource.json
+            // this example is just showing the usage of "GalleryImageVersions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this GalleryImageResource created on azure
+            // for more information of creating GalleryImageResource, please refer to the document of GalleryImageResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string galleryName = "myGalleryName";
+            string galleryImageName = "myGalleryImageName";
+            ResourceIdentifier galleryImageResourceId = GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
+            GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
+
+            // get the collection of this GalleryImageVersionResource
+            GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
+
+            // invoke the operation
+            string galleryImageVersionName = "1.0.0";
+            bool result = await collection.ExistsAsync(galleryImageVersionName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetAGalleryImageVersion()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2023-07-03/examples/galleryExamples/GalleryImageVersion_Get.json
+            // this example is just showing the usage of "GalleryImageVersions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this GalleryImageResource created on azure
+            // for more information of creating GalleryImageResource, please refer to the document of GalleryImageResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string galleryName = "myGalleryName";
+            string galleryImageName = "myGalleryImageName";
+            ResourceIdentifier galleryImageResourceId = GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
+            GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
+
+            // get the collection of this GalleryImageVersionResource
+            GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
+
+            // invoke the operation
+            string galleryImageVersionName = "1.0.0";
+            bool result = await collection.ExistsAsync(galleryImageVersionName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -1147,72 +1271,6 @@ IsExcludedFromLatest = false,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_GetAGalleryImageVersionWithSnapshotsAsASource()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2023-07-03/examples/galleryExamples/GalleryImageVersion_Get_WithSnapshotsAsSource.json
-            // this example is just showing the usage of "GalleryImageVersions_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this GalleryImageResource created on azure
-            // for more information of creating GalleryImageResource, please refer to the document of GalleryImageResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            string galleryName = "myGalleryName";
-            string galleryImageName = "myGalleryImageName";
-            ResourceIdentifier galleryImageResourceId = GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
-            GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
-
-            // get the collection of this GalleryImageVersionResource
-            GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
-
-            // invoke the operation
-            string galleryImageVersionName = "1.0.0";
-            GalleryImageVersionResource result = await collection.GetAsync(galleryImageVersionName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            GalleryImageVersionData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Exists_GetAGalleryImageVersionWithSnapshotsAsASource()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2023-07-03/examples/galleryExamples/GalleryImageVersion_Get_WithSnapshotsAsSource.json
-            // this example is just showing the usage of "GalleryImageVersions_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this GalleryImageResource created on azure
-            // for more information of creating GalleryImageResource, please refer to the document of GalleryImageResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            string galleryName = "myGalleryName";
-            string galleryImageName = "myGalleryImageName";
-            ResourceIdentifier galleryImageResourceId = GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
-            GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
-
-            // get the collection of this GalleryImageVersionResource
-            GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
-
-            // invoke the operation
-            string galleryImageVersionName = "1.0.0";
-            bool result = await collection.ExistsAsync(galleryImageVersionName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAGalleryImageVersionWithSnapshotsAsASource()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2023-07-03/examples/galleryExamples/GalleryImageVersion_Get_WithSnapshotsAsSource.json
@@ -1252,72 +1310,6 @@ IsExcludedFromLatest = false,
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Get_GetAGalleryImageVersionWithVhdAsASource()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2023-07-03/examples/galleryExamples/GalleryImageVersion_Get_WithVhdAsSource.json
-            // this example is just showing the usage of "GalleryImageVersions_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this GalleryImageResource created on azure
-            // for more information of creating GalleryImageResource, please refer to the document of GalleryImageResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            string galleryName = "myGalleryName";
-            string galleryImageName = "myGalleryImageName";
-            ResourceIdentifier galleryImageResourceId = GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
-            GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
-
-            // get the collection of this GalleryImageVersionResource
-            GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
-
-            // invoke the operation
-            string galleryImageVersionName = "1.0.0";
-            GalleryImageVersionResource result = await collection.GetAsync(galleryImageVersionName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            GalleryImageVersionData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Exists_GetAGalleryImageVersionWithVhdAsASource()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2023-07-03/examples/galleryExamples/GalleryImageVersion_Get_WithVhdAsSource.json
-            // this example is just showing the usage of "GalleryImageVersions_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this GalleryImageResource created on azure
-            // for more information of creating GalleryImageResource, please refer to the document of GalleryImageResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            string galleryName = "myGalleryName";
-            string galleryImageName = "myGalleryImageName";
-            ResourceIdentifier galleryImageResourceId = GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
-            GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
-
-            // get the collection of this GalleryImageVersionResource
-            GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
-
-            // invoke the operation
-            string galleryImageVersionName = "1.0.0";
-            bool result = await collection.ExistsAsync(galleryImageVersionName);
-
-            Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
@@ -1365,72 +1357,6 @@ IsExcludedFromLatest = false,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_GetAGalleryImageVersion()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2023-07-03/examples/galleryExamples/GalleryImageVersion_Get.json
-            // this example is just showing the usage of "GalleryImageVersions_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this GalleryImageResource created on azure
-            // for more information of creating GalleryImageResource, please refer to the document of GalleryImageResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            string galleryName = "myGalleryName";
-            string galleryImageName = "myGalleryImageName";
-            ResourceIdentifier galleryImageResourceId = GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
-            GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
-
-            // get the collection of this GalleryImageVersionResource
-            GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
-
-            // invoke the operation
-            string galleryImageVersionName = "1.0.0";
-            GalleryImageVersionResource result = await collection.GetAsync(galleryImageVersionName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            GalleryImageVersionData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Exists_GetAGalleryImageVersion()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2023-07-03/examples/galleryExamples/GalleryImageVersion_Get.json
-            // this example is just showing the usage of "GalleryImageVersions_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this GalleryImageResource created on azure
-            // for more information of creating GalleryImageResource, please refer to the document of GalleryImageResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            string galleryName = "myGalleryName";
-            string galleryImageName = "myGalleryImageName";
-            ResourceIdentifier galleryImageResourceId = GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
-            GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
-
-            // get the collection of this GalleryImageVersionResource
-            GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
-
-            // invoke the operation
-            string galleryImageVersionName = "1.0.0";
-            bool result = await collection.ExistsAsync(galleryImageVersionName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAGalleryImageVersion()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2023-07-03/examples/galleryExamples/GalleryImageVersion_Get.json
@@ -1470,43 +1396,6 @@ IsExcludedFromLatest = false,
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ListGalleryImageVersionsInAGalleryImageDefinition()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2023-07-03/examples/galleryExamples/GalleryImageVersion_ListByGalleryImage.json
-            // this example is just showing the usage of "GalleryImageVersions_ListByGalleryImage" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this GalleryImageResource created on azure
-            // for more information of creating GalleryImageResource, please refer to the document of GalleryImageResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            string galleryName = "myGalleryName";
-            string galleryImageName = "myGalleryImageName";
-            ResourceIdentifier galleryImageResourceId = GalleryImageResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryImageName);
-            GalleryImageResource galleryImage = client.GetGalleryImageResource(galleryImageResourceId);
-
-            // get the collection of this GalleryImageVersionResource
-            GalleryImageVersionCollection collection = galleryImage.GetGalleryImageVersions();
-
-            // invoke the operation and iterate over the result
-            await foreach (GalleryImageVersionResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                GalleryImageVersionData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
         }
     }
 }

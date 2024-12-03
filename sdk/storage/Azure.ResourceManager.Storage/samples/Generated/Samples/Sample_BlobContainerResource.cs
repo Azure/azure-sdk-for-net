@@ -18,45 +18,6 @@ namespace Azure.ResourceManager.Storage.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_UpdateContainers()
-        {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/BlobContainersPatch.json
-            // this example is just showing the usage of "BlobContainers_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BlobContainerResource created on azure
-            // for more information of creating BlobContainerResource, please refer to the document of BlobContainerResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "res3376";
-            string accountName = "sto328";
-            string containerName = "container6185";
-            ResourceIdentifier blobContainerResourceId = BlobContainerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, containerName);
-            BlobContainerResource blobContainer = client.GetBlobContainerResource(blobContainerResourceId);
-
-            // invoke the operation
-            BlobContainerData data = new BlobContainerData()
-            {
-                PublicAccess = StoragePublicAccessType.Container,
-                Metadata =
-{
-["metadata"] = "true",
-},
-            };
-            BlobContainerResource result = await blobContainer.UpdateAsync(data);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            BlobContainerData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetBlobContainersGetWithAllowProtectedAppendWritesAll()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/BlobContainersGetWithAllowProtectedAppendWritesAll.json
@@ -146,6 +107,45 @@ namespace Azure.ResourceManager.Storage.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateContainers()
+        {
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/BlobContainersPatch.json
+            // this example is just showing the usage of "BlobContainers_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BlobContainerResource created on azure
+            // for more information of creating BlobContainerResource, please refer to the document of BlobContainerResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "res3376";
+            string accountName = "sto328";
+            string containerName = "container6185";
+            ResourceIdentifier blobContainerResourceId = BlobContainerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, containerName);
+            BlobContainerResource blobContainer = client.GetBlobContainerResource(blobContainerResourceId);
+
+            // invoke the operation
+            BlobContainerData data = new BlobContainerData
+            {
+                PublicAccess = StoragePublicAccessType.Container,
+                Metadata =
+{
+["metadata"] = "true"
+},
+            };
+            BlobContainerResource result = await blobContainer.UpdateAsync(data);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BlobContainerData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SetLegalHold_SetLegalHoldContainers()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/BlobContainersSetLegalHold.json
@@ -166,10 +166,7 @@ namespace Azure.ResourceManager.Storage.Samples
             BlobContainerResource blobContainer = client.GetBlobContainerResource(blobContainerResourceId);
 
             // invoke the operation
-            LegalHold legalHold = new LegalHold(new string[]
-            {
-"tag1","tag2","tag3"
-            });
+            LegalHold legalHold = new LegalHold(new string[] { "tag1", "tag2", "tag3" });
             LegalHold result = await blobContainer.SetLegalHoldAsync(legalHold);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -197,10 +194,7 @@ namespace Azure.ResourceManager.Storage.Samples
             BlobContainerResource blobContainer = client.GetBlobContainerResource(blobContainerResourceId);
 
             // invoke the operation
-            LegalHold legalHold = new LegalHold(new string[]
-            {
-"tag1","tag2","tag3"
-            })
+            LegalHold legalHold = new LegalHold(new string[] { "tag1", "tag2", "tag3" })
             {
                 AllowProtectedAppendWritesAll = true,
             };
@@ -231,10 +225,7 @@ namespace Azure.ResourceManager.Storage.Samples
             BlobContainerResource blobContainer = client.GetBlobContainerResource(blobContainerResourceId);
 
             // invoke the operation
-            LegalHold legalHold = new LegalHold(new string[]
-            {
-"tag1","tag2","tag3"
-            });
+            LegalHold legalHold = new LegalHold(new string[] { "tag1", "tag2", "tag3" });
             LegalHold result = await blobContainer.ClearLegalHoldAsync(legalHold);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -265,7 +256,7 @@ namespace Azure.ResourceManager.Storage.Samples
             LeaseContainerContent content = new LeaseContainerContent(LeaseContainerAction.Acquire)
             {
                 LeaseId = null,
-                BreakPeriod = null,
+                BreakPeriod = default,
                 LeaseDuration = -1,
                 ProposedLeaseId = null,
             };
@@ -299,8 +290,8 @@ namespace Azure.ResourceManager.Storage.Samples
             LeaseContainerContent content = new LeaseContainerContent(LeaseContainerAction.Break)
             {
                 LeaseId = "8698f513-fa75-44a1-b8eb-30ba336af27d",
-                BreakPeriod = null,
-                LeaseDuration = null,
+                BreakPeriod = default,
+                LeaseDuration = default,
                 ProposedLeaseId = null,
             };
             LeaseContainerResponse result = await blobContainer.LeaseAsync(content: content);

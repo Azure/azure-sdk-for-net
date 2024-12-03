@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_AccountsListByResourceGroup()
+        public async Task CreateOrUpdate_AccountsCreateOrUpdate()
         {
             // Generated from example definition: specification/playwrighttesting/resource-manager/Microsoft.AzurePlaywrightService/stable/2024-12-01/examples/Accounts_ListByResourceGroup.json
             // this example is just showing the usage of "Accounts_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
@@ -39,17 +39,24 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             // get the collection of this PlaywrightTestingAccountResource
             PlaywrightTestingAccountCollection collection = resourceGroupResource.GetPlaywrightTestingAccounts();
 
-            // invoke the operation and iterate over the result
-            await foreach (PlaywrightTestingAccountResource item in collection.GetAllAsync())
+            // invoke the operation
+            string name = "myPlaywrightAccount";
+            PlaywrightTestingAccountData data = new PlaywrightTestingAccountData(new AzureLocation("westus"))
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                PlaywrightTestingAccountData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                RegionalAffinity = EnablementStatus.Enabled,
+                Tags =
+{
+["Team"] = "Dev Exp"
+},
+            };
+            ArmOperation<PlaywrightTestingAccountResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
+            PlaywrightTestingAccountResource result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            PlaywrightTestingAccountData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
@@ -83,6 +90,41 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             PlaywrightTestingAccountData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_AccountsListByResourceGroup()
+        {
+            // Generated from example definition: specification/playwrighttesting/resource-manager/Microsoft.AzurePlaywrightService/preview/2023-10-01-preview/examples/Accounts_ListByResourceGroup.json
+            // this example is just showing the usage of "Accounts_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "dummyrg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this PlaywrightTestingAccountResource
+            PlaywrightTestingAccountCollection collection = resourceGroupResource.GetPlaywrightTestingAccounts();
+
+            // invoke the operation and iterate over the result
+            await foreach (PlaywrightTestingAccountResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                PlaywrightTestingAccountData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
 
         [Test]

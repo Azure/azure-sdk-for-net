@@ -11,459 +11,12 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 {
     public partial class Sample_PostgreSqlFlexibleServerResource
     {
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetServerCapabilities_ServerCapabilitiesList()
-        {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/ServerCapabilities.json
-            // this example is just showing the usage of "ServerCapabilities_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
-            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "testrg";
-            string serverName = "pgtestsvc4";
-            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (PostgreSqlFlexibleServerCapabilityProperties item in postgreSqlFlexibleServer.GetServerCapabilitiesAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Update_PromoteAReplicaServerAsAStandaloneServerAsForcedIEItWillPromoteAReplicaServerImmediatelyWithoutWaitingForPrimaryAndReplicaToBeInSync()
-        {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/PromoteReplicaAsForcedStandaloneServer.json
-            // this example is just showing the usage of "Servers_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
-            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "testResourceGroup";
-            string serverName = "pgtestsvc4-replica";
-            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
-
-            // invoke the operation
-            PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch()
-            {
-                Replica = new PostgreSqlFlexibleServersReplica()
-                {
-                    PromoteMode = ReadReplicaPromoteMode.Standalone,
-                    PromoteOption = ReplicationPromoteOption.Forced,
-                },
-            };
-            ArmOperation<PostgreSqlFlexibleServerResource> lro = await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
-            PostgreSqlFlexibleServerResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            PostgreSqlFlexibleServerData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Update_PromoteAReplicaServerAsAStandaloneServerAsPlannedIEItWillWaitForReplicationToComplete()
-        {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/PromoteReplicaAsPlannedStandaloneServer.json
-            // this example is just showing the usage of "Servers_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
-            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "testResourceGroup";
-            string serverName = "pgtestsvc4-replica";
-            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
-
-            // invoke the operation
-            PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch()
-            {
-                Replica = new PostgreSqlFlexibleServersReplica()
-                {
-                    PromoteMode = ReadReplicaPromoteMode.Standalone,
-                    PromoteOption = ReplicationPromoteOption.Planned,
-                },
-            };
-            ArmOperation<PostgreSqlFlexibleServerResource> lro = await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
-            PostgreSqlFlexibleServerResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            PostgreSqlFlexibleServerData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Update_ServerUpdate()
-        {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/ServerUpdate.json
-            // this example is just showing the usage of "Servers_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
-            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "TestGroup";
-            string serverName = "pgtestsvc4";
-            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
-
-            // invoke the operation
-            PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch()
-            {
-                Sku = new PostgreSqlFlexibleServerSku("Standard_D8s_v3", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
-                AdministratorLoginPassword = "newpassword",
-                Storage = new PostgreSqlFlexibleServerStorage()
-                {
-                    StorageSizeInGB = 1024,
-                    AutoGrow = StorageAutoGrow.Enabled,
-                    Tier = PostgreSqlManagedDiskPerformanceTier.P30,
-                },
-                Backup = new PostgreSqlFlexibleServerBackupProperties()
-                {
-                    BackupRetentionDays = 20,
-                },
-                CreateMode = PostgreSqlFlexibleServerCreateModeForUpdate.Update,
-            };
-            ArmOperation<PostgreSqlFlexibleServerResource> lro = await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
-            PostgreSqlFlexibleServerResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            PostgreSqlFlexibleServerData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Update_ServerUpdateWithAadAuthEnabled()
-        {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/ServerUpdateWithAadAuthEnabled.json
-            // this example is just showing the usage of "Servers_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
-            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "TestGroup";
-            string serverName = "pgtestsvc4";
-            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
-
-            // invoke the operation
-            PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch()
-            {
-                Sku = new PostgreSqlFlexibleServerSku("Standard_D8s_v3", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
-                AdministratorLoginPassword = "newpassword",
-                Storage = new PostgreSqlFlexibleServerStorage()
-                {
-                    StorageSizeInGB = 1024,
-                    AutoGrow = StorageAutoGrow.Disabled,
-                    Tier = PostgreSqlManagedDiskPerformanceTier.P30,
-                },
-                Backup = new PostgreSqlFlexibleServerBackupProperties()
-                {
-                    BackupRetentionDays = 20,
-                },
-                AuthConfig = new PostgreSqlFlexibleServerAuthConfig()
-                {
-                    ActiveDirectoryAuth = PostgreSqlFlexibleServerActiveDirectoryAuthEnum.Enabled,
-                    PasswordAuth = PostgreSqlFlexibleServerPasswordAuthEnum.Enabled,
-                    TenantId = Guid.Parse("tttttt-tttt-tttt-tttt-tttttttttttt"),
-                },
-                CreateMode = PostgreSqlFlexibleServerCreateModeForUpdate.Update,
-            };
-            ArmOperation<PostgreSqlFlexibleServerResource> lro = await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
-            PostgreSqlFlexibleServerResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            PostgreSqlFlexibleServerData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Update_ServerUpdateWithCustomerMaintenanceWindow()
-        {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/ServerUpdateWithCustomerMaintenanceWindow.json
-            // this example is just showing the usage of "Servers_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
-            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "testrg";
-            string serverName = "pgtestsvc4";
-            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
-
-            // invoke the operation
-            PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch()
-            {
-                MaintenanceWindow = new PostgreSqlFlexibleServerMaintenanceWindow()
-                {
-                    CustomWindow = "Enabled",
-                    StartHour = 8,
-                    StartMinute = 0,
-                    DayOfWeek = 0,
-                },
-                CreateMode = PostgreSqlFlexibleServerCreateModeForUpdate.Update,
-            };
-            ArmOperation<PostgreSqlFlexibleServerResource> lro = await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
-            PostgreSqlFlexibleServerResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            PostgreSqlFlexibleServerData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Update_ServerUpdateWithDataEncryptionEnabled()
-        {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/ServerUpdateWithDataEncryptionEnabled.json
-            // this example is just showing the usage of "Servers_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
-            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "TestGroup";
-            string serverName = "pgtestsvc4";
-            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
-
-            // invoke the operation
-            PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch()
-            {
-                Sku = new PostgreSqlFlexibleServerSku("Standard_D8s_v3", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
-                Identity = new PostgreSqlFlexibleServerUserAssignedIdentity(PostgreSqlFlexibleServerIdentityType.UserAssigned)
-                {
-                    UserAssignedIdentities =
-{
-["/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/testresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-geo-usermanagedidentity"] = new UserAssignedIdentity(),
-["/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/testresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-usermanagedidentity"] = new UserAssignedIdentity(),
-},
-                },
-                AdministratorLoginPassword = "newpassword",
-                Backup = new PostgreSqlFlexibleServerBackupProperties()
-                {
-                    BackupRetentionDays = 20,
-                },
-                DataEncryption = new PostgreSqlFlexibleServerDataEncryption()
-                {
-                    PrimaryKeyUri = new Uri("https://test-kv.vault.azure.net/keys/test-key1/77f57315bab34b0189daa113fbc78787"),
-                    PrimaryUserAssignedIdentityId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/testresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-usermanagedidentity"),
-                    GeoBackupKeyUri = new Uri("https://test-geo-kv.vault.azure.net/keys/test-key1/66f57315bab34b0189daa113fbc78787"),
-                    GeoBackupUserAssignedIdentityId = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/testresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-geo-usermanagedidentity",
-                    KeyType = PostgreSqlFlexibleServerKeyType.AzureKeyVault,
-                },
-                CreateMode = PostgreSqlFlexibleServerCreateModeForUpdate.Update,
-            };
-            ArmOperation<PostgreSqlFlexibleServerResource> lro = await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
-            PostgreSqlFlexibleServerResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            PostgreSqlFlexibleServerData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Update_ServerUpdateWithMajorVersionUpgrade()
-        {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/ServerUpdateWithMajorVersionUpgrade.json
-            // this example is just showing the usage of "Servers_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
-            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "testrg";
-            string serverName = "pgtestsvc4";
-            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
-
-            // invoke the operation
-            PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch()
-            {
-                Version = PostgreSqlFlexibleServerVersion.Ver14,
-                CreateMode = PostgreSqlFlexibleServerCreateModeForUpdate.Update,
-            };
-            ArmOperation<PostgreSqlFlexibleServerResource> lro = await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
-            PostgreSqlFlexibleServerResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            PostgreSqlFlexibleServerData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Update_SwitchOverAReplicaServerAsForcedIEItWillReplicaAsPrimaryAndOriginalPrimaryAsReplicaImmediatelyWithoutWaitingForPrimaryAndReplicaToBeInSync()
-        {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/PromoteReplicaAsForcedSwitchover.json
-            // this example is just showing the usage of "Servers_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
-            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "testResourceGroup";
-            string serverName = "pgtestsvc4-replica";
-            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
-
-            // invoke the operation
-            PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch()
-            {
-                Replica = new PostgreSqlFlexibleServersReplica()
-                {
-                    PromoteMode = ReadReplicaPromoteMode.Switchover,
-                    PromoteOption = ReplicationPromoteOption.Forced,
-                },
-            };
-            ArmOperation<PostgreSqlFlexibleServerResource> lro = await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
-            PostgreSqlFlexibleServerResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            PostgreSqlFlexibleServerData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Update_SwitchOverAReplicaServerAsPlannedIEItWillWaitForReplicationToCompleteBeforePromotingReplicaAsPrimaryAndOriginalPrimaryAsReplica()
-        {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/PromoteReplicaAsPlannedSwitchover.json
-            // this example is just showing the usage of "Servers_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
-            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "testResourceGroup";
-            string serverName = "pgtestsvc4-replica";
-            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
-
-            // invoke the operation
-            PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch()
-            {
-                Replica = new PostgreSqlFlexibleServersReplica()
-                {
-                    PromoteMode = ReadReplicaPromoteMode.Switchover,
-                    PromoteOption = ReplicationPromoteOption.Planned,
-                },
-            };
-            ArmOperation<PostgreSqlFlexibleServerResource> lro = await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
-            PostgreSqlFlexibleServerResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            PostgreSqlFlexibleServerData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_ServerDelete()
-        {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/ServerDelete.json
-            // this example is just showing the usage of "Servers_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
-            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "testrg";
-            string serverName = "testserver";
-            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
-
-            // invoke the operation
-            await postgreSqlFlexibleServer.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
-        }
-
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ServerGet()
@@ -556,30 +109,445 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetPostgreSqlFlexibleServers_ServerList()
+        public async Task Delete_ServerDelete()
         {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/ServerList.json
-            // this example is just showing the usage of "Servers_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/ServerDelete.json
+            // this example is just showing the usage of "Servers_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
+            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+            string resourceGroupName = "testrg";
+            string serverName = "testserver";
+            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+
+            // invoke the operation
+            await postgreSqlFlexibleServer.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_PromoteAReplicaServerAsAStandaloneServerAsForcedIEItWillPromoteAReplicaServerImmediatelyWithoutWaitingForPrimaryAndReplicaToBeInSync()
+        {
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/PromoteReplicaAsForcedStandaloneServer.json
+            // this example is just showing the usage of "Servers_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
+            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "testResourceGroup";
+            string serverName = "pgtestsvc4-replica";
+            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+
+            // invoke the operation
+            PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch
+            {
+                Replica = new PostgreSqlFlexibleServersReplica
+                {
+                    PromoteMode = ReadReplicaPromoteMode.Standalone,
+                    PromoteOption = ReplicationPromoteOption.Forced,
+                },
+            };
+            ArmOperation<PostgreSqlFlexibleServerResource> lro = await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
+            PostgreSqlFlexibleServerResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            PostgreSqlFlexibleServerData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_PromoteAReplicaServerAsAStandaloneServerAsPlannedIEItWillWaitForReplicationToComplete()
+        {
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/PromoteReplicaAsPlannedStandaloneServer.json
+            // this example is just showing the usage of "Servers_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
+            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "testResourceGroup";
+            string serverName = "pgtestsvc4-replica";
+            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+
+            // invoke the operation
+            PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch
+            {
+                Replica = new PostgreSqlFlexibleServersReplica
+                {
+                    PromoteMode = ReadReplicaPromoteMode.Standalone,
+                    PromoteOption = ReplicationPromoteOption.Planned,
+                },
+            };
+            ArmOperation<PostgreSqlFlexibleServerResource> lro = await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
+            PostgreSqlFlexibleServerResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            PostgreSqlFlexibleServerData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_ServerUpdate()
+        {
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/ServerUpdate.json
+            // this example is just showing the usage of "Servers_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
+            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "TestGroup";
+            string serverName = "pgtestsvc4";
+            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+
+            // invoke the operation
+            PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch
+            {
+                Sku = new PostgreSqlFlexibleServerSku("Standard_D8s_v3", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
+                AdministratorLoginPassword = "newpassword",
+                Storage = new PostgreSqlFlexibleServerStorage
+                {
+                    StorageSizeInGB = 1024,
+                    AutoGrow = StorageAutoGrow.Enabled,
+                    Tier = PostgreSqlManagedDiskPerformanceTier.P30,
+                },
+                Backup = new PostgreSqlFlexibleServerBackupProperties
+                {
+                    BackupRetentionDays = 20,
+                },
+                CreateMode = PostgreSqlFlexibleServerCreateModeForUpdate.Update,
+            };
+            ArmOperation<PostgreSqlFlexibleServerResource> lro = await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
+            PostgreSqlFlexibleServerResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            PostgreSqlFlexibleServerData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_ServerUpdateWithAadAuthEnabled()
+        {
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/ServerUpdateWithAadAuthEnabled.json
+            // this example is just showing the usage of "Servers_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
+            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "TestGroup";
+            string serverName = "pgtestsvc4";
+            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+
+            // invoke the operation
+            PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch
+            {
+                Sku = new PostgreSqlFlexibleServerSku("Standard_D8s_v3", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
+                AdministratorLoginPassword = "newpassword",
+                Storage = new PostgreSqlFlexibleServerStorage
+                {
+                    StorageSizeInGB = 1024,
+                    AutoGrow = StorageAutoGrow.Disabled,
+                    Tier = PostgreSqlManagedDiskPerformanceTier.P30,
+                },
+                Backup = new PostgreSqlFlexibleServerBackupProperties
+                {
+                    BackupRetentionDays = 20,
+                },
+                AuthConfig = new PostgreSqlFlexibleServerAuthConfig
+                {
+                    ActiveDirectoryAuth = PostgreSqlFlexibleServerActiveDirectoryAuthEnum.Enabled,
+                    PasswordAuth = PostgreSqlFlexibleServerPasswordAuthEnum.Enabled,
+                    TenantId = Guid.Parse("tttttt-tttt-tttt-tttt-tttttttttttt"),
+                },
+                CreateMode = PostgreSqlFlexibleServerCreateModeForUpdate.Update,
+            };
+            ArmOperation<PostgreSqlFlexibleServerResource> lro = await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
+            PostgreSqlFlexibleServerResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            PostgreSqlFlexibleServerData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_ServerUpdateWithCustomerMaintenanceWindow()
+        {
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/ServerUpdateWithCustomerMaintenanceWindow.json
+            // this example is just showing the usage of "Servers_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
+            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "testrg";
+            string serverName = "pgtestsvc4";
+            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+
+            // invoke the operation
+            PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch
+            {
+                MaintenanceWindow = new PostgreSqlFlexibleServerMaintenanceWindow
+                {
+                    CustomWindow = "Enabled",
+                    StartHour = 8,
+                    StartMinute = 0,
+                    DayOfWeek = 0,
+                },
+                CreateMode = PostgreSqlFlexibleServerCreateModeForUpdate.Update,
+            };
+            ArmOperation<PostgreSqlFlexibleServerResource> lro = await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
+            PostgreSqlFlexibleServerResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            PostgreSqlFlexibleServerData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_ServerUpdateWithDataEncryptionEnabled()
+        {
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/ServerUpdateWithDataEncryptionEnabled.json
+            // this example is just showing the usage of "Servers_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
+            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "TestGroup";
+            string serverName = "pgtestsvc4";
+            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+
+            // invoke the operation
+            PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch
+            {
+                Sku = new PostgreSqlFlexibleServerSku("Standard_D8s_v3", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
+                Identity = new PostgreSqlFlexibleServerUserAssignedIdentity(PostgreSqlFlexibleServerIdentityType.UserAssigned)
+                {
+                    UserAssignedIdentities =
+{
+["/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/testresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-geo-usermanagedidentity"] = new UserAssignedIdentity(),
+["/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/testresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-usermanagedidentity"] = new UserAssignedIdentity()
+},
+                },
+                AdministratorLoginPassword = "newpassword",
+                Backup = new PostgreSqlFlexibleServerBackupProperties
+                {
+                    BackupRetentionDays = 20,
+                },
+                DataEncryption = new PostgreSqlFlexibleServerDataEncryption
+                {
+                    PrimaryKeyUri = new Uri("https://test-kv.vault.azure.net/keys/test-key1/77f57315bab34b0189daa113fbc78787"),
+                    PrimaryUserAssignedIdentityId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/testresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-usermanagedidentity"),
+                    GeoBackupKeyUri = new Uri("https://test-geo-kv.vault.azure.net/keys/test-key1/66f57315bab34b0189daa113fbc78787"),
+                    GeoBackupUserAssignedIdentityId = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/testresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-geo-usermanagedidentity",
+                    KeyType = PostgreSqlFlexibleServerKeyType.AzureKeyVault,
+                },
+                CreateMode = PostgreSqlFlexibleServerCreateModeForUpdate.Update,
+            };
+            ArmOperation<PostgreSqlFlexibleServerResource> lro = await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
+            PostgreSqlFlexibleServerResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            PostgreSqlFlexibleServerData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_ServerUpdateWithMajorVersionUpgrade()
+        {
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/ServerUpdateWithMajorVersionUpgrade.json
+            // this example is just showing the usage of "Servers_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
+            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "testrg";
+            string serverName = "pgtestsvc4";
+            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+
+            // invoke the operation
+            PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch
+            {
+                Version = PostgreSqlFlexibleServerVersion.Ver14,
+                CreateMode = PostgreSqlFlexibleServerCreateModeForUpdate.Update,
+            };
+            ArmOperation<PostgreSqlFlexibleServerResource> lro = await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
+            PostgreSqlFlexibleServerResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            PostgreSqlFlexibleServerData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_SwitchOverAReplicaServerAsForcedIEItWillReplicaAsPrimaryAndOriginalPrimaryAsReplicaImmediatelyWithoutWaitingForPrimaryAndReplicaToBeInSync()
+        {
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/PromoteReplicaAsForcedSwitchover.json
+            // this example is just showing the usage of "Servers_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
+            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "testResourceGroup";
+            string serverName = "pgtestsvc4-replica";
+            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+
+            // invoke the operation
+            PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch
+            {
+                Replica = new PostgreSqlFlexibleServersReplica
+                {
+                    PromoteMode = ReadReplicaPromoteMode.Switchover,
+                    PromoteOption = ReplicationPromoteOption.Forced,
+                },
+            };
+            ArmOperation<PostgreSqlFlexibleServerResource> lro = await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
+            PostgreSqlFlexibleServerResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            PostgreSqlFlexibleServerData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_SwitchOverAReplicaServerAsPlannedIEItWillWaitForReplicationToCompleteBeforePromotingReplicaAsPrimaryAndOriginalPrimaryAsReplica()
+        {
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/PromoteReplicaAsPlannedSwitchover.json
+            // this example is just showing the usage of "Servers_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
+            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "testResourceGroup";
+            string serverName = "pgtestsvc4-replica";
+            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+
+            // invoke the operation
+            PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch
+            {
+                Replica = new PostgreSqlFlexibleServersReplica
+                {
+                    PromoteMode = ReadReplicaPromoteMode.Switchover,
+                    PromoteOption = ReplicationPromoteOption.Planned,
+                },
+            };
+            ArmOperation<PostgreSqlFlexibleServerResource> lro = await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
+            PostgreSqlFlexibleServerResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            PostgreSqlFlexibleServerData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetServerCapabilities_ServerCapabilitiesList()
+        {
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/ServerCapabilities.json
+            // this example is just showing the usage of "ServerCapabilities_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
+            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "testrg";
+            string serverName = "pgtestsvc4";
+            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (PostgreSqlFlexibleServerResource item in subscriptionResource.GetPostgreSqlFlexibleServersAsync())
+            await foreach (PostgreSqlFlexibleServerCapabilityProperties item in postgreSqlFlexibleServer.GetServerCapabilitiesAsync())
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                PostgreSqlFlexibleServerData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+                Console.WriteLine($"Succeeded: {item}");
             }
 
             Console.WriteLine("Succeeded");
@@ -632,7 +600,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
 
             // invoke the operation
-            PostgreSqlFlexibleServerRestartParameter postgreSqlFlexibleServerRestartParameter = new PostgreSqlFlexibleServerRestartParameter()
+            PostgreSqlFlexibleServerRestartParameter postgreSqlFlexibleServerRestartParameter = new PostgreSqlFlexibleServerRestartParameter
             {
                 RestartWithFailover = true,
                 FailoverMode = PostgreSqlFlexibleServerFailoverMode.ForcedFailover,
@@ -742,10 +710,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
 
             // invoke the operation
-            PostgreSqlFlexibleServerLtrBackupContent content = new PostgreSqlFlexibleServerLtrBackupContent(new PostgreSqlFlexibleServerBackupSettings("backup1"), new PostgreSqlFlexibleServerBackupStoreDetails(new string[]
-            {
-"sasuri"
-            }));
+            PostgreSqlFlexibleServerLtrBackupContent content = new PostgreSqlFlexibleServerLtrBackupContent(new PostgreSqlFlexibleServerBackupSettings("backup1"), new PostgreSqlFlexibleServerBackupStoreDetails(new string[] { "sasuri" }));
             ArmOperation<PostgreSqlFlexibleServerLtrBackupResult> lro = await postgreSqlFlexibleServer.StartLtrBackupFlexibleServerAsync(WaitUntil.Completed, content);
             PostgreSqlFlexibleServerLtrBackupResult result = lro.Value;
 

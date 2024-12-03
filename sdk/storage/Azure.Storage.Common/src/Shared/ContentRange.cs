@@ -153,7 +153,8 @@ namespace Azure.Storage
             {
                 // Because constructing HttpRange is the start value, and the length of the range
                 // increment 1 on the end value, since the end value is the end index (not the length).
-                return new HttpRange(contentRange.Start.Value, contentRange.End.Value + 1);
+                long length = contentRange.End.Value - contentRange.Start.Value + 1;
+                return new HttpRange(contentRange.Start.Value, length);
             }
             return default;
         }

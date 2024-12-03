@@ -18,6 +18,199 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Get_FirmwaresGetMaximumSetGen()
+        {
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "Firmwares_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this IotFirmwareResource created on azure
+            // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
+            string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
+            string resourceGroupName = "rgworkspaces-firmwares";
+            string workspaceName = "A7";
+            string firmwareId = "umrkdttp";
+            ResourceIdentifier iotFirmwareResourceId = IotFirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
+
+            // invoke the operation
+            IotFirmwareResource result = await iotFirmware.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            IotFirmwareData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_FirmwaresGetMinimumSetGen()
+        {
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "Firmwares_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this IotFirmwareResource created on azure
+            // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
+            string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
+            string resourceGroupName = "rgworkspaces-firmwares";
+            string workspaceName = "A7";
+            string firmwareId = "umrkdttp";
+            ResourceIdentifier iotFirmwareResourceId = IotFirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
+
+            // invoke the operation
+            IotFirmwareResource result = await iotFirmware.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            IotFirmwareData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_FirmwaresDeleteMaximumSetGen()
+        {
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_Delete_MaximumSet_Gen.json
+            // this example is just showing the usage of "Firmwares_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this IotFirmwareResource created on azure
+            // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
+            string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
+            string resourceGroupName = "rgworkspaces-firmwares";
+            string workspaceName = "A7";
+            string firmwareId = "umrkdttp";
+            ResourceIdentifier iotFirmwareResourceId = IotFirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
+
+            // invoke the operation
+            await iotFirmware.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_FirmwaresDeleteMinimumSetGen()
+        {
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_Delete_MinimumSet_Gen.json
+            // this example is just showing the usage of "Firmwares_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this IotFirmwareResource created on azure
+            // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
+            string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
+            string resourceGroupName = "rgworkspaces-firmwares";
+            string workspaceName = "A7";
+            string firmwareId = "umrkdttp";
+            ResourceIdentifier iotFirmwareResourceId = IotFirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
+
+            // invoke the operation
+            await iotFirmware.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_FirmwaresUpdateMaximumSetGen()
+        {
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_Update_MaximumSet_Gen.json
+            // this example is just showing the usage of "Firmwares_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this IotFirmwareResource created on azure
+            // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
+            string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
+            string resourceGroupName = "rgworkspaces-firmwares";
+            string workspaceName = "A7";
+            string firmwareId = "umrkdttp";
+            ResourceIdentifier iotFirmwareResourceId = IotFirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
+
+            // invoke the operation
+            IotFirmwarePatch patch = new IotFirmwarePatch
+            {
+                FileName = "wresexxulcdsdd",
+                Vendor = "vycmdhgtmepcptyoubztiuudpkcpd",
+                Model = "f",
+                Version = "s",
+                Description = "uz",
+                FileSize = 17L,
+                Status = FirmwareAnalysisStatus.Pending,
+                StatusMessages = {new FirmwareAnalysisStatusMessage
+{
+Message = "ulvhmhokezathzzauiitu",
+}},
+            };
+            IotFirmwareResource result = await iotFirmware.UpdateAsync(patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            IotFirmwareData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_FirmwaresUpdateMinimumSetGen()
+        {
+            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_Update_MinimumSet_Gen.json
+            // this example is just showing the usage of "Firmwares_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this IotFirmwareResource created on azure
+            // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
+            string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
+            string resourceGroupName = "rgworkspaces-firmwares";
+            string workspaceName = "A7";
+            string firmwareId = "umrkdttp";
+            ResourceIdentifier iotFirmwareResourceId = IotFirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
+            IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
+
+            // invoke the operation
+            IotFirmwarePatch patch = new IotFirmwarePatch();
+            IotFirmwareResource result = await iotFirmware.UpdateAsync(patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            IotFirmwareData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBinaryHardeningResults_BinaryHardeningListByFirmwareMaximumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/BinaryHardening_ListByFirmware_MaximumSet_Gen.json
@@ -254,202 +447,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             }
 
             Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Update_FirmwaresUpdateMaximumSetGen()
-        {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_Update_MaximumSet_Gen.json
-            // this example is just showing the usage of "Firmwares_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this IotFirmwareResource created on azure
-            // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
-            string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
-            string resourceGroupName = "rgworkspaces-firmwares";
-            string workspaceName = "A7";
-            string firmwareId = "umrkdttp";
-            ResourceIdentifier iotFirmwareResourceId = IotFirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
-            IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
-
-            // invoke the operation
-            IotFirmwarePatch patch = new IotFirmwarePatch()
-            {
-                FileName = "wresexxulcdsdd",
-                Vendor = "vycmdhgtmepcptyoubztiuudpkcpd",
-                Model = "f",
-                Version = "s",
-                Description = "uz",
-                FileSize = 17L,
-                Status = FirmwareAnalysisStatus.Pending,
-                StatusMessages =
-{
-new FirmwareAnalysisStatusMessage()
-{
-Message = "ulvhmhokezathzzauiitu",
-}
-},
-            };
-            IotFirmwareResource result = await iotFirmware.UpdateAsync(patch);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            IotFirmwareData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Update_FirmwaresUpdateMinimumSetGen()
-        {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_Update_MinimumSet_Gen.json
-            // this example is just showing the usage of "Firmwares_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this IotFirmwareResource created on azure
-            // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
-            string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
-            string resourceGroupName = "rgworkspaces-firmwares";
-            string workspaceName = "A7";
-            string firmwareId = "umrkdttp";
-            ResourceIdentifier iotFirmwareResourceId = IotFirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
-            IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
-
-            // invoke the operation
-            IotFirmwarePatch patch = new IotFirmwarePatch();
-            IotFirmwareResource result = await iotFirmware.UpdateAsync(patch);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            IotFirmwareData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_FirmwaresDeleteMaximumSetGen()
-        {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_Delete_MaximumSet_Gen.json
-            // this example is just showing the usage of "Firmwares_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this IotFirmwareResource created on azure
-            // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
-            string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
-            string resourceGroupName = "rgworkspaces-firmwares";
-            string workspaceName = "A7";
-            string firmwareId = "umrkdttp";
-            ResourceIdentifier iotFirmwareResourceId = IotFirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
-            IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
-
-            // invoke the operation
-            await iotFirmware.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_FirmwaresDeleteMinimumSetGen()
-        {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_Delete_MinimumSet_Gen.json
-            // this example is just showing the usage of "Firmwares_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this IotFirmwareResource created on azure
-            // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
-            string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
-            string resourceGroupName = "rgworkspaces-firmwares";
-            string workspaceName = "A7";
-            string firmwareId = "umrkdttp";
-            ResourceIdentifier iotFirmwareResourceId = IotFirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
-            IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
-
-            // invoke the operation
-            await iotFirmware.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Get_FirmwaresGetMaximumSetGen()
-        {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "Firmwares_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this IotFirmwareResource created on azure
-            // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
-            string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
-            string resourceGroupName = "rgworkspaces-firmwares";
-            string workspaceName = "A7";
-            string firmwareId = "umrkdttp";
-            ResourceIdentifier iotFirmwareResourceId = IotFirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
-            IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
-
-            // invoke the operation
-            IotFirmwareResource result = await iotFirmware.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            IotFirmwareData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Get_FirmwaresGetMinimumSetGen()
-        {
-            // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/Firmwares_Get_MinimumSet_Gen.json
-            // this example is just showing the usage of "Firmwares_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this IotFirmwareResource created on azure
-            // for more information of creating IotFirmwareResource, please refer to the document of IotFirmwareResource
-            string subscriptionId = "685C0C6F-9867-4B1C-A534-AA3A05B54BCE";
-            string resourceGroupName = "rgworkspaces-firmwares";
-            string workspaceName = "A7";
-            string firmwareId = "umrkdttp";
-            ResourceIdentifier iotFirmwareResourceId = IotFirmwareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, firmwareId);
-            IotFirmwareResource iotFirmware = client.GetIotFirmwareResource(iotFirmwareResourceId);
-
-            // invoke the operation
-            IotFirmwareResource result = await iotFirmware.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            IotFirmwareData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]

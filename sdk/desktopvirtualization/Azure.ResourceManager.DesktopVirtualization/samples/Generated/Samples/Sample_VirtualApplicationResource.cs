@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
             VirtualApplicationResource virtualApplication = client.GetVirtualApplicationResource(virtualApplicationResourceId);
 
             // invoke the operation
-            VirtualApplicationPatch patch = new VirtualApplicationPatch()
+            VirtualApplicationPatch patch = new VirtualApplicationPatch
             {
                 Description = "des1",
                 FriendlyName = "friendly",

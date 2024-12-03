@@ -96,9 +96,9 @@ namespace Azure.ResourceManager.Media.Samples
             MediaServicesAccountFilterResource mediaServicesAccountFilter = client.GetMediaServicesAccountFilterResource(mediaServicesAccountFilterResourceId);
 
             // invoke the operation
-            MediaServicesAccountFilterData data = new MediaServicesAccountFilterData()
+            MediaServicesAccountFilterData data = new MediaServicesAccountFilterData
             {
-                PresentationTimeRange = new PresentationTimeRange()
+                PresentationTimeRange = new PresentationTimeRange
                 {
                     StartTimestamp = 10L,
                     EndTimestamp = 170000000L,

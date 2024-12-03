@@ -142,6 +142,33 @@ namespace Azure.ResourceManager.Avs.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_AddonsDelete()
+        {
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/Addons_Delete.json
+            // this example is just showing the usage of "Addons_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AvsPrivateCloudAddonResource created on azure
+            // for more information of creating AvsPrivateCloudAddonResource, please refer to the document of AvsPrivateCloudAddonResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "group1";
+            string privateCloudName = "cloud1";
+            string addonName = "srm";
+            ResourceIdentifier avsPrivateCloudAddonResourceId = AvsPrivateCloudAddonResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName, addonName);
+            AvsPrivateCloudAddonResource avsPrivateCloudAddon = client.GetAvsPrivateCloudAddonResource(avsPrivateCloudAddonResourceId);
+
+            // invoke the operation
+            await avsPrivateCloudAddon.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_AddonsCreateOrUpdateArcReg()
         {
             // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/Addons_CreateOrUpdate_ArcReg.json
@@ -162,9 +189,9 @@ namespace Azure.ResourceManager.Avs.Samples
             AvsPrivateCloudAddonResource avsPrivateCloudAddon = client.GetAvsPrivateCloudAddonResource(avsPrivateCloudAddonResourceId);
 
             // invoke the operation
-            AvsPrivateCloudAddonData data = new AvsPrivateCloudAddonData()
+            AvsPrivateCloudAddonData data = new AvsPrivateCloudAddonData
             {
-                Properties = new AddonArcProperties()
+                Properties = new AddonArcProperties
                 {
                     VCenter = "subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg_test/providers/Microsoft.ConnectedVMwarevSphere/VCenters/test-vcenter",
                 },
@@ -201,7 +228,7 @@ namespace Azure.ResourceManager.Avs.Samples
             AvsPrivateCloudAddonResource avsPrivateCloudAddon = client.GetAvsPrivateCloudAddonResource(avsPrivateCloudAddonResourceId);
 
             // invoke the operation
-            AvsPrivateCloudAddonData data = new AvsPrivateCloudAddonData()
+            AvsPrivateCloudAddonData data = new AvsPrivateCloudAddonData
             {
                 Properties = new AddonHcxProperties("VMware MaaS Cloud Provider (Enterprise)"),
             };
@@ -237,9 +264,9 @@ namespace Azure.ResourceManager.Avs.Samples
             AvsPrivateCloudAddonResource avsPrivateCloudAddon = client.GetAvsPrivateCloudAddonResource(avsPrivateCloudAddonResourceId);
 
             // invoke the operation
-            AvsPrivateCloudAddonData data = new AvsPrivateCloudAddonData()
+            AvsPrivateCloudAddonData data = new AvsPrivateCloudAddonData
             {
-                Properties = new AddonSrmProperties()
+                Properties = new AddonSrmProperties
                 {
                     LicenseKey = "41915178-A8FF-4A4D-B683-6D735AF5E3F5",
                 },
@@ -276,7 +303,7 @@ namespace Azure.ResourceManager.Avs.Samples
             AvsPrivateCloudAddonResource avsPrivateCloudAddon = client.GetAvsPrivateCloudAddonResource(avsPrivateCloudAddonResourceId);
 
             // invoke the operation
-            AvsPrivateCloudAddonData data = new AvsPrivateCloudAddonData()
+            AvsPrivateCloudAddonData data = new AvsPrivateCloudAddonData
             {
                 Properties = new AddonVrProperties(1),
             };
@@ -288,33 +315,6 @@ namespace Azure.ResourceManager.Avs.Samples
             AvsPrivateCloudAddonData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_AddonsDelete()
-        {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/Addons_Delete.json
-            // this example is just showing the usage of "Addons_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AvsPrivateCloudAddonResource created on azure
-            // for more information of creating AvsPrivateCloudAddonResource, please refer to the document of AvsPrivateCloudAddonResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "group1";
-            string privateCloudName = "cloud1";
-            string addonName = "srm";
-            ResourceIdentifier avsPrivateCloudAddonResourceId = AvsPrivateCloudAddonResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName, addonName);
-            AvsPrivateCloudAddonResource avsPrivateCloudAddon = client.GetAvsPrivateCloudAddonResource(avsPrivateCloudAddonResourceId);
-
-            // invoke the operation
-            await avsPrivateCloudAddon.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
         }
     }
 }
