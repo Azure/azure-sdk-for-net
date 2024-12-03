@@ -4,6 +4,16 @@
 
 - This is a stable SDK version based on the 2024-07-01 API.
 
+## 1.1.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.1.0-beta.1 (2024-11-06)
 
 ### Features Added
