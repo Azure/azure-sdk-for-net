@@ -63,10 +63,10 @@ namespace Azure.Storage.DataMovement
             ChannelProcessing.NewProcessor<TransferJobInternal>(readers: 1),
             ChannelProcessing.NewProcessor<JobPartInternal>(
                 readers: DataMovementConstants.Channels.MaxJobPartReaders,
-                capactiy: DataMovementConstants.Channels.JobPartCapacity),
+                capacity: DataMovementConstants.Channels.JobPartCapacity),
             ChannelProcessing.NewProcessor<Func<Task>>(
                 readers: options?.MaximumConcurrency ?? DataMovementConstants.Channels.MaxJobChunkReaders,
-                capactiy: DataMovementConstants.Channels.JobChunkCapactiy),
+                capacity: DataMovementConstants.Channels.JobChunkCapacity),
             new(ArrayPool<byte>.Shared,
                 options?.ErrorHandling ?? DataTransferErrorMode.StopOnAnyFailure,
                 new ClientDiagnostics(options?.ClientOptions ?? ClientOptions.Default)),

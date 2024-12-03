@@ -87,7 +87,7 @@ namespace Azure.Storage.DataMovement
 
             _downloadRangeProcessor = ChannelProcessing.NewProcessor<QueueDownloadChunkArgs>(
                 readers: 1,
-                capactiy: DataMovementConstants.Channels.DownloadChunkCapacity);
+                capacity: DataMovementConstants.Channels.DownloadChunkCapacity);
             _downloadRangeProcessor.Process = ProcessDownloadRange;
         }
 

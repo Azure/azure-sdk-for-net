@@ -18,7 +18,7 @@ namespace Azure.Storage.DataMovement
             internal const int MaxJobPartReaders = 32;
             internal static int MaxJobChunkReaders = Environment.ProcessorCount * 8;
             internal const int JobPartCapacity = 1000;
-            internal const int JobChunkCapactiy = 1000;
+            internal const int JobChunkCapacity = 1000;
             internal const int DownloadChunkCapacity = 16;
         }
 

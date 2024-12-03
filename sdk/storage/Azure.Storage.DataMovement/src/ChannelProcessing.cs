@@ -21,18 +21,18 @@ internal interface IProcessor<TItem> : IDisposable
 
 internal static class ChannelProcessing
 {
-    public static IProcessor<T> NewProcessor<T>(int readers, int capactiy = -1)
+    public static IProcessor<T> NewProcessor<T>(int readers, int capacity = -1)
     {
         Argument.AssertInRange(readers, 1, int.MaxValue, nameof(readers));
-        Argument.AssertInRange(capactiy, -1, int.MaxValue, nameof(capactiy));
+        Argument.AssertInRange(capacity, -1, int.MaxValue, nameof(capacity));
 
-        Channel<T> channel = capactiy == -1
+        Channel<T> channel = capacity == -1
             ? Channel.CreateUnbounded<T>(new UnboundedChannelOptions()
             {
                 AllowSynchronousContinuations = true,
                 SingleReader = readers == 1,
             })
-            : Channel.CreateBounded<T>(new BoundedChannelOptions(capactiy)
+            : Channel.CreateBounded<T>(new BoundedChannelOptions(capacity)
             {
                 AllowSynchronousContinuations = true,
                 SingleReader = readers == 1,
