@@ -18,13 +18,13 @@ namespace Azure.Maps.TimeZones
         /// <summary> Initializes a new instance of <see cref="IanaId"/>. </summary>
         /// <param name="id"> Id property. </param>
         /// <param name="isAlias"> IsAlias property. </param>
-        /// <param name="alias"> AliasOf property. </param>
+        /// <param name="aliasOf"> AliasOf property. </param>
         /// <param name="hasZone1970Location"> This attribute returns `True` if the IanaId has any country/zone associated with it. </param>
-        internal IanaId(string id, bool? isAlias, string @alias, bool? hasZone1970Location)
+        internal IanaId(string id, bool? isAlias, string aliasOf, bool? hasZone1970Location)
         {
             Id = id;
             IsAlias = isAlias;
-            Alias = @alias;
+            AliasOf = aliasOf;
             HasZone1970Location = hasZone1970Location;
         }
 

@@ -38,7 +38,7 @@ namespace Azure.Maps.TimeZones
     public partial class IanaId
     {
         internal IanaId() { }
-        public string Alias { get { throw null; } }
+        public string AliasOf { get { throw null; } }
         public bool? HasZone1970Location { get { throw null; } }
         public string Id { get { throw null; } }
     }

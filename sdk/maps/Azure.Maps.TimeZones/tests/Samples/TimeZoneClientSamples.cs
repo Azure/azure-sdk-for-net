@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.GeoJson;
 using Azure.Core.TestFramework;
+#region Snippet:TimeZoneImportNamespaces
+using Azure.Maps.TimeZones;
+#endregion
 using Azure.ResourceManager;
 using Azure.ResourceManager.Maps;
 using Azure.ResourceManager.Maps.Models;
@@ -18,7 +21,7 @@ namespace Azure.Maps.TimeZones.Tests.Samples
         public void TimeZoneClientViaSubscriptionKey()
         {
             #region Snippet:InstantiateTimeZoneClientViaSubscriptionKey
-            // Create a TimeZoneClient that will authenticate through Subscription Key (Shared key)
+            // Create a MapsTimeZoneClient that will authenticate through Subscription Key (Shared key)
             AzureKeyCredential credential = new AzureKeyCredential("<My Subscription Key>");
             MapsTimeZoneClient client = new MapsTimeZoneClient(credential);
             #endregion
@@ -63,7 +66,7 @@ namespace Azure.Maps.TimeZones.Tests.Samples
             MapsAccountSasContent sasContent = new MapsAccountSasContent(MapsSigningKey.PrimaryKey, principalId, maxRatePerSecond, start, expiry);
             Response<MapsAccountSasToken> sas = mapsAccount.GetSas(sasContent);
 
-            // Create a TimeZoneClient that will authenticate via SAS token
+            // Create a MapsTimeZoneClient that will authenticate via SAS token
             AzureSasCredential sasCredential = new AzureSasCredential(sas.Value.AccountSasToken);
             MapsTimeZoneClient client = new MapsTimeZoneClient(sasCredential);
             #endregion
@@ -144,9 +147,9 @@ namespace Azure.Maps.TimeZones.Tests.Samples
             var client = new MapsTimeZoneClient(TestEnvironment.Credential, clientId, clientOptions);
             #region Snippet:GetTimeZoneIanaIds
             Response<IReadOnlyList<IanaId>> response = client.GetTimeZoneIanaIds();
-            if (response.Value[0].Alias != null)
+            if (response.Value[0].AliasOf != null)
             {
-                Console.WriteLine("It is an alias: " + response.Value[0].Alias);
+                Console.WriteLine("It is an alias: " + response.Value[0].AliasOf);
             }
             else
             {

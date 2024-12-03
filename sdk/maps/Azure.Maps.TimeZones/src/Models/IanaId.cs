@@ -15,8 +15,7 @@ namespace Azure.Maps.TimeZones
         /// <summary> IsAlias property. </summary>
         internal bool? IsAlias { get; }
 
-        /// <summary> Alias of the IANA ID. Will be null if there's no alias for the IANA ID. </summary>
-        [CodeGenMember("AliasOf")]
-        public string Alias { get; }
+        /// <summary> Alias of the IANA ID. Will be <c>null</c> if there's no alias for the IANA ID. </summary>
+        public string AliasOf { get; }
     }
 }

@@ -34,7 +34,7 @@ There are 3  ways to authenticate the client: Shared key authentication, Microso
 * Copy `Primary Key` or `Secondary Key` under **Shared Key authentication** section
 
 ```C# Snippet:InstantiateTimeZoneClientViaSubscriptionKey
-// Create a TimeZoneClient that will authenticate through Subscription Key (Shared key)
+// Create a MapsTimeZoneClient that will authenticate through Subscription Key (Shared key)
 AzureKeyCredential credential = new AzureKeyCredential("<My Subscription Key>");
 MapsTimeZoneClient client = new MapsTimeZoneClient(credential);
 ```
@@ -62,9 +62,8 @@ Before integrating SAS token authentication, we need to install `Azure.ResourceM
 
 ```powershell
 dotnet add package Azure.ResourceManager
-dotnet add package Azure.ResourceManager.Maps --prerelease
+dotnet add package Azure.ResourceManager.Maps
 ```
-
 
 And then we can get SAS token via [List Sas](https://learn.microsoft.com/rest/api/maps-management/accounts/list-sas?tabs=HTTP) API and assign it to `MapsTimeZoneClient`. In the follow code sample, we fetch a specific maps account resource, and create a SAS token for 1 day expiry time when the code is executed.
 
@@ -95,7 +94,7 @@ string expiry = now.AddDays(1).ToString("O");
 MapsAccountSasContent sasContent = new MapsAccountSasContent(MapsSigningKey.PrimaryKey, principalId, maxRatePerSecond, start, expiry);
 Response<MapsAccountSasToken> sas = mapsAccount.GetSas(sasContent);
 
-// Create a TimeZoneClient that will authenticate via SAS token
+// Create a MapsTimeZoneClient that will authenticate via SAS token
 AzureSasCredential sasCredential = new AzureSasCredential(sas.Value.AccountSasToken);
 MapsTimeZoneClient client = new MapsTimeZoneClient(sasCredential);
 ```
@@ -165,9 +164,9 @@ foreach (WindowsTimeZone timeZone in response.Value.WindowsTimeZones)
 
 ```C# Snippet:GetTimeZoneIanaIds
 Response<IReadOnlyList<IanaId>> response = client.GetTimeZoneIanaIds();
-if (response.Value[0].Alias != null)
+if (response.Value[0].AliasOf != null)
 {
-    Console.WriteLine("It is an alias: " + response.Value[0].Alias);
+    Console.WriteLine("It is an alias: " + response.Value[0].AliasOf);
 }
 else
 {
@@ -190,15 +189,13 @@ Response<IReadOnlyList<IanaId>> response = client.ConvertWindowsTimeZoneToIana("
 Console.WriteLine("IANA Id: " + response.Value[0].Id);
 ```
 
-
 ## Troubleshooting
 
 ### General
 
 When you interact with the Azure Maps services, errors returned by the service correspond to the same HTTP status codes returned for [REST API requests](https://docs.microsoft.com/rest/api/maps/timezone).
 
-For example, if you search with an invalid coordinate, a error is returned, indicating "Bad Request".400
-
+For example, if you search with an invalid coordinate, a error is returned, indicating "Bad Request".
 
 ## Next steps
 
