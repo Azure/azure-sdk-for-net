@@ -156,13 +156,13 @@ namespace Azure.Monitor.Query
                 else
                 {
                     // Use values from Start and End TimeRange properties if they are set
-                    if (options.Start.HasValue)
+                    if (options.StartTime.HasValue)
                     {
-                        startTime = options.Start.Value.ToIsoString();
+                        startTime = options.StartTime.Value.ToIsoString();
                     }
-                    if (options.End.HasValue)
+                    if (options.EndTime.HasValue)
                     {
-                        endTime = options.End.Value.ToIsoString();
+                        endTime = options.EndTime.Value.ToIsoString();
                     }
                 }
 

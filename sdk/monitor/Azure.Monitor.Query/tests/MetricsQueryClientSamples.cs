@@ -330,8 +330,8 @@ namespace Azure.Monitor.Query.Tests
 #endif
             var options = new MetricsQueryResourcesOptions
             {
-                Start = DateTimeOffset.Now.AddHours(-4),
-                End = DateTimeOffset.Now.AddHours(-1),
+                StartTime = DateTimeOffset.Now.AddHours(-4),
+                EndTime = DateTimeOffset.Now.AddHours(-1),
                 OrderBy = "sum asc",
                 Size = 10
             };

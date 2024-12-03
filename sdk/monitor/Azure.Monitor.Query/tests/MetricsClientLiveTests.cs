@@ -187,7 +187,7 @@ namespace Azure.Monitor.Query.Tests
                 resourceIds: new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) },
                 metricNames: new List<string> { "Ingress" },
                 metricNamespace: "Microsoft.Storage/storageAccounts",
-                options: new MetricsQueryResourcesOptions { Start = start }).ConfigureAwait(false);
+                options: new MetricsQueryResourcesOptions { StartTime = start }).ConfigureAwait(false);
 
             Assert.AreEqual(200, metricsResultsResponse.GetRawResponse().Status);
             MetricsQueryResourcesResult metricsQueryResults = metricsResultsResponse.Value;
@@ -210,7 +210,7 @@ namespace Azure.Monitor.Query.Tests
                 resourceIds: new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) },
                 metricNames: new List<string> { "Ingress" },
                 metricNamespace: "Microsoft.Storage/storageAccounts",
-                options: new MetricsQueryResourcesOptions { Start = start, End = end }).ConfigureAwait(false);
+                options: new MetricsQueryResourcesOptions { StartTime = start, EndTime = end }).ConfigureAwait(false);
 
             Assert.AreEqual(200, metricsResultsResponse.GetRawResponse().Status);
             MetricsQueryResourcesResult metricsQueryResults = metricsResultsResponse.Value;
@@ -235,7 +235,7 @@ namespace Azure.Monitor.Query.Tests
                 resourceIds: new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) },
                 metricNames: new List<string> { "Ingress" },
                 metricNamespace: "Microsoft.Storage/storageAccounts",
-                options: new MetricsQueryResourcesOptions { End = end }));
+                options: new MetricsQueryResourcesOptions { EndTime = end }));
         }
     }
 }

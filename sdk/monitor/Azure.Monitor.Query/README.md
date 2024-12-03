@@ -721,7 +721,7 @@ foreach (MetricsQueryResult value in metricsQueryResults.Values)
 }
 ```
 
-The `MetricsQueryResourcesOptions`-typed argument also has a `StartTime` and `EndTime` property to allow for querying a specific time range. If only the starttime is set, the endtime default becomes the current time. When the endtime is specified, the starttime is necessary as well. The following example demonstrates the use of these properties:
+The `MetricsQueryResourcesOptions`-typed argument also has a `StartTime` and `EndTime` property to allow for querying a specific time range. If only the `StartTime` is set, the `EndTime` default becomes the current time. When the `EndTime` is specified, the `StartTime` is necessary as well. The following example demonstrates the use of these properties:
 ```C# Snippet:QueryResourcesMetricsWithOptionsStartTimeEndTime
 string resourceId =
     "/subscriptions/<id>/resourceGroups/<rg-name>/providers/<source>/storageAccounts/<resource-name-1>";
@@ -730,8 +730,8 @@ var client = new MetricsClient(
     new DefaultAzureCredential());
 var options = new MetricsQueryResourcesOptions
 {
-    Start = DateTimeOffset.Now.AddHours(-4),
-    End = DateTimeOffset.Now.AddHours(-1),
+    StartTime = DateTimeOffset.Now.AddHours(-4),
+    EndTime = DateTimeOffset.Now.AddHours(-1),
     OrderBy = "sum asc",
     Size = 10
 };

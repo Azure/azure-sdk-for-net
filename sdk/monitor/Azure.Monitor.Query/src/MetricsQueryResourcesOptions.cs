@@ -19,18 +19,17 @@ namespace Azure.Monitor.Query
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [CodeGenMember("TimeSpan")]
-        // TODO: https://github.com/Azure/azure-sdk-for-net/issues/46454
         public QueryTimeRange? TimeRange { get; set; }
 
         /// <summary>
-        /// Gets the start time of the query. If only the starttime is set, the endtime default becomes the current time. When the endtime is specified, the starttime is necessary as well.
+        /// Gets the <see cref="StartTime"/> of the query. If only the <see cref="StartTime"/> is set, the <see cref="EndTime"/> default becomes the current time. When the <see cref="EndTime"/> is specified, the <see cref="StartTime"/> is necessary as well.
         /// </summary>
-        public DateTimeOffset? Start { get; set; }
+        public DateTimeOffset? StartTime { get; set; }
 
         /// <summary>
-        /// Gets the end time of the query. If only the starttime is set, the endtime default becomes the current time. When the endtime is specified, the starttime is necessary as well.
+        /// Gets the <see cref="EndTime"/> of the query. If only the <see cref="StartTime"/> is set, the <see cref="EndTime"/> default becomes the current time. When the <see cref="EndTime"/> is specified, the <see cref="StartTime"/> is necessary as well.
         /// </summary>
-        public DateTimeOffset? End { get; set; }
+        public DateTimeOffset? EndTime { get; set; }
 
         /// <summary>
         /// <para>
