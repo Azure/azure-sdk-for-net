@@ -38,7 +38,7 @@
             "defaultValue": ".cognitiveservices.azure.com",
             "type": "string",
             "metadata": {
-                "description": "Endpoint suffix for sovereign clouds, requies the preceeding '.'. The default uses the public Azure Cloud (.cognitiveservices.azure.com)"
+                "description": "Endpoint suffix for sovereign clouds, requires the preceding '.'. The default uses the public Azure Cloud (.cognitiveservices.azure.com)"
             }
         },
         "textAnalyticsSku": {

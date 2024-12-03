@@ -93,7 +93,8 @@ Set the values of the client ID, tenant ID, and client secret of the AAD applica
 
 ```C# Snippet:CreateTextAnalyticsClientTokenCredential
 Uri endpoint = new("<endpoint>");
-TextAnalyticsClient client = new(endpoint, new DefaultAzureCredential());
+var credential = new DefaultAzureCredential()
+TextAnalyticsClient client = new(endpoint, credential);
 ```
 
 ## Key concepts
