@@ -6,18 +6,26 @@ using System.Text.Json.Serialization;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// Messages sent from websocket server
+    /// Kind of streaming data when websocket receives the data
     /// </summary>
     [JsonConverter(typeof(JsonStringEnumConverter))]
-    public enum MediaKind
+    public enum StreamingDataKind
     {
         /// <summary>
         /// Audio data type
-        /// </summary>F
+        /// </summary>
         AudioData,
         /// <summary>
-        /// stop audio data type
+        /// Audio metadata type
         /// </summary>
-        StopAudio
+        AudioMetadata,
+        /// <summary>
+        /// Transcription data type
+        /// </summary>
+        TranscriptionData,
+        /// <summary>
+        /// Transcription metadata type
+        /// </summary>
+        TranscriptionMetadata
     }
 }

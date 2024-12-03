@@ -265,6 +265,9 @@ namespace Azure.Communication.CallAutomation
             request.TranscriptionOptions = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
             request.AnsweredBy = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id);
             request.OperationContext = options.OperationContext;
+            request.CustomCallingContext = new CustomCallingContextInternal(
+                options.CustomCallingContext?.SipHeaders ?? new ChangeTrackingDictionary<string, string>(),
+                options.CustomCallingContext?.VoipHeaders ?? new ChangeTrackingDictionary<string, string>());
 
             return request;
         }
@@ -826,8 +829,9 @@ namespace Azure.Communication.CallAutomation
         {
             return configuration == default
                 ? default
-                : new MediaStreamingOptionsInternal(configuration.TransportUri.AbsoluteUri, configuration.MediaStreamingTransport, configuration.MediaStreamingContent,
-                configuration.MediaStreamingAudioChannel, configuration.StartMediaStreaming, configuration.EnableBidirectional, configuration.AudioFormat);
+                : new MediaStreamingOptionsInternal(configuration.TransportUri.AbsoluteUri, configuration.MediaStreamingTransport,
+                configuration.MediaStreamingContent, configuration.MediaStreamingAudioChannel, configuration.StartMediaStreaming,
+                configuration.EnableBidirectional, configuration.AudioFormat == null ? AudioFormat.Pcm24KMono : configuration.AudioFormat);
         }
         private static TranscriptionOptionsInternal CreateTranscriptionOptionsInternal(TranscriptionOptions configuration)
         {
