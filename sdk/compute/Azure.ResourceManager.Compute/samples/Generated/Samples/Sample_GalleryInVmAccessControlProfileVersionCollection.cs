@@ -44,49 +44,28 @@ namespace Azure.ResourceManager.Compute.Samples
             string inVmAccessControlProfileVersionName = "1.0.0";
             GalleryInVmAccessControlProfileVersionData data = new GalleryInVmAccessControlProfileVersionData(new AzureLocation("West US"))
             {
-                TargetLocations =
-{
-new TargetRegion("West US"),new TargetRegion("South Central US")
-},
+                TargetLocations = { new TargetRegion("West US"), new TargetRegion("South Central US") },
                 ExcludeFromLatest = false,
                 Mode = AccessControlRulesMode.Audit,
                 DefaultAccess = EndpointAccess.Allow,
-                Rules = new AccessControlRules()
+                Rules = new AccessControlRules
                 {
-                    Privileges =
-{
-new AccessControlRulesPrivilege("GoalState","/machine")
+                    Privileges = {new AccessControlRulesPrivilege("GoalState", "/machine")
 {
 QueryParameters =
 {
-["comp"] = "goalstate",
+["comp"] = "goalstate"
 },
-}
-},
-                    Roles =
-{
-new AccessControlRulesRole("Provisioning",new string[]
-{
-"GoalState"
-})
-},
-                    Identities =
-{
-new AccessControlRulesIdentity("WinPA")
+}},
+                    Roles = { new AccessControlRulesRole("Provisioning", new string[] { "GoalState" }) },
+                    Identities = {new AccessControlRulesIdentity("WinPA")
 {
 UserName = "SYSTEM",
 GroupName = "Administrators",
 ExePath = "C:\\Windows\\System32\\cscript.exe",
 ProcessName = "cscript",
-}
-},
-                    RoleAssignments =
-{
-new AccessControlRulesRoleAssignment("Provisioning",new string[]
-{
-"WinPA"
-})
-},
+}},
+                    RoleAssignments = { new AccessControlRulesRoleAssignment("Provisioning", new string[] { "WinPA" }) },
                 },
             };
             ArmOperation<GalleryInVmAccessControlProfileVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, inVmAccessControlProfileVersionName, data);
@@ -132,6 +111,43 @@ new AccessControlRulesRoleAssignment("Provisioning",new string[]
             GalleryInVmAccessControlProfileVersionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListGalleryInVMAccessControlProfileVersionsInAGalleryInVMAccessControlProfile()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2024-03-03/examples/galleryResourceProfileExamples/GalleryInVMAccessControlProfileVersion_ListByGalleryInVMAccessControlProfile.json
+            // this example is just showing the usage of "GalleryInVMAccessControlProfileVersions_ListByGalleryInVmAccessControlProfile" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this GalleryInVmAccessControlProfileResource created on azure
+            // for more information of creating GalleryInVmAccessControlProfileResource, please refer to the document of GalleryInVmAccessControlProfileResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string galleryName = "myGalleryName";
+            string inVmAccessControlProfileName = "myInVMAccessControlProfileName";
+            ResourceIdentifier galleryInVmAccessControlProfileResourceId = GalleryInVmAccessControlProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, inVmAccessControlProfileName);
+            GalleryInVmAccessControlProfileResource galleryInVmAccessControlProfile = client.GetGalleryInVmAccessControlProfileResource(galleryInVmAccessControlProfileResourceId);
+
+            // get the collection of this GalleryInVmAccessControlProfileVersionResource
+            GalleryInVmAccessControlProfileVersionCollection collection = galleryInVmAccessControlProfile.GetGalleryInVmAccessControlProfileVersions();
+
+            // invoke the operation and iterate over the result
+            await foreach (GalleryInVmAccessControlProfileVersionResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                GalleryInVmAccessControlProfileVersionData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -206,43 +222,6 @@ new AccessControlRulesRoleAssignment("Provisioning",new string[]
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ListGalleryInVMAccessControlProfileVersionsInAGalleryInVMAccessControlProfile()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2024-03-03/examples/galleryResourceProfileExamples/GalleryInVMAccessControlProfileVersion_ListByGalleryInVMAccessControlProfile.json
-            // this example is just showing the usage of "GalleryInVMAccessControlProfileVersions_ListByGalleryInVmAccessControlProfile" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this GalleryInVmAccessControlProfileResource created on azure
-            // for more information of creating GalleryInVmAccessControlProfileResource, please refer to the document of GalleryInVmAccessControlProfileResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            string galleryName = "myGalleryName";
-            string inVmAccessControlProfileName = "myInVMAccessControlProfileName";
-            ResourceIdentifier galleryInVmAccessControlProfileResourceId = GalleryInVmAccessControlProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, inVmAccessControlProfileName);
-            GalleryInVmAccessControlProfileResource galleryInVmAccessControlProfile = client.GetGalleryInVmAccessControlProfileResource(galleryInVmAccessControlProfileResourceId);
-
-            // get the collection of this GalleryInVmAccessControlProfileVersionResource
-            GalleryInVmAccessControlProfileVersionCollection collection = galleryInVmAccessControlProfile.GetGalleryInVmAccessControlProfileVersions();
-
-            // invoke the operation and iterate over the result
-            await foreach (GalleryInVmAccessControlProfileVersionResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                GalleryInVmAccessControlProfileVersionData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
         }
     }
 }
