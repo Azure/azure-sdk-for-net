@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetBillingContainer()
         {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2024-09-01-preview/examples/Get_BillingContainer.json
-            // this example is just showing the usage of "BillingContainers_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01-preview/Get_BillingContainer.json
+            // this example is just showing the usage of "BillingContainer_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListBillingContainersSubscription()
         {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2024-09-01-preview/examples/List_BillingContainers_Subscription.json
-            // this example is just showing the usage of "BillingContainers_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01-preview/List_BillingContainers_Subscription.json
+            // this example is just showing the usage of "BillingContainer_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetBillingContainer()
         {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2024-09-01-preview/examples/Get_BillingContainer.json
-            // this example is just showing the usage of "BillingContainers_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01-preview/Get_BillingContainer.json
+            // this example is just showing the usage of "BillingContainer_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetBillingContainer()
         {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2024-09-01-preview/examples/Get_BillingContainer.json
-            // this example is just showing the usage of "BillingContainers_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01-preview/Get_BillingContainer.json
+            // this example is just showing the usage of "BillingContainer_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
-    /// <summary> An indication of how the event should be mapped to OpenTelemetry. </summary>
+    /// <summary> Defines the event observability mode. </summary>
     public readonly partial struct EventObservabilityMode : IEquatable<EventObservabilityMode>
     {
         private readonly string _value;

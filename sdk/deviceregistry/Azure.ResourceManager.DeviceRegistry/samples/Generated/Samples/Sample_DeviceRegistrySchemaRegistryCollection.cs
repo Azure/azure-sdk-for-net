@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateSchemaRegistry()
         {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2024-09-01-preview/examples/Create_SchemaRegistry.json
-            // this example is just showing the usage of "SchemaRegistries_CreateOrReplace" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01-preview/Create_SchemaRegistry.json
+            // this example is just showing the usage of "SchemaRegistry_CreateOrReplace" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             string schemaRegistryName = "my-schema-registry";
             DeviceRegistrySchemaRegistryData data = new DeviceRegistrySchemaRegistryData(new AzureLocation("West Europe"))
             {
-                Properties = new SchemaRegistryProperties("sr-namespace-001", new Uri("my-blob-storage.blob.core.windows.net/my-container"))
+                Properties = new DeviceRegistrySchemaRegistryProperties("sr-namespace-001", new Uri("my-blob-storage.blob.core.windows.net/my-container"))
                 {
                     DisplayName = "Schema Registry namespace 001",
                     Description = "This is a sample Schema Registry",
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSchemaRegistry()
         {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2024-09-01-preview/examples/Get_SchemaRegistry.json
-            // this example is just showing the usage of "SchemaRegistries_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01-preview/Get_SchemaRegistry.json
+            // this example is just showing the usage of "SchemaRegistry_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -99,8 +99,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListSchemaRegistriesResourceGroup()
         {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2024-09-01-preview/examples/List_SchemaRegistries_ResourceGroup.json
-            // this example is just showing the usage of "SchemaRegistries_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01-preview/List_SchemaRegistries_ResourceGroup.json
+            // this example is just showing the usage of "SchemaRegistry_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetSchemaRegistry()
         {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2024-09-01-preview/examples/Get_SchemaRegistry.json
-            // this example is just showing the usage of "SchemaRegistries_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01-preview/Get_SchemaRegistry.json
+            // this example is just showing the usage of "SchemaRegistry_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -163,8 +163,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetSchemaRegistry()
         {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2024-09-01-preview/examples/Get_SchemaRegistry.json
-            // this example is just showing the usage of "SchemaRegistries_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01-preview/Get_SchemaRegistry.json
+            // this example is just showing the usage of "SchemaRegistry_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

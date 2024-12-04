@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 return null;
             }
-            SchemaRegistryProperties properties = default;
+            DeviceRegistrySchemaRegistryProperties properties = default;
             ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                     {
                         continue;
                     }
-                    properties = SchemaRegistryProperties.DeserializeSchemaRegistryProperties(property.Value, options);
+                    properties = DeviceRegistrySchemaRegistryProperties.DeserializeDeviceRegistrySchemaRegistryProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))

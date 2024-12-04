@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="authentication"> Defines the client authentication mechanism to the server. </param>
         /// <param name="additionalConfiguration"> Stringified JSON that contains connectivity type specific further configuration (e.g. OPC UA, Modbus, ONVIF). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssetEndpointProfileUpdateProperties(Uri targetAddress, string endpointProfileType, AuthenticationUpdate authentication, string additionalConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AssetEndpointProfileUpdateProperties(Uri targetAddress, string endpointProfileType, DeviceRegistryUserAuthentication authentication, string additionalConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TargetAddress = targetAddress;
             EndpointProfileType = endpointProfileType;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <summary> Defines the configuration for the connector type that is being used with the endpoint profile. </summary>
         public string EndpointProfileType { get; set; }
         /// <summary> Defines the client authentication mechanism to the server. </summary>
-        public AuthenticationUpdate Authentication { get; set; }
+        public DeviceRegistryUserAuthentication Authentication { get; set; }
         /// <summary> Stringified JSON that contains connectivity type specific further configuration (e.g. OPC UA, Modbus, ONVIF). </summary>
         public string AdditionalConfiguration { get; set; }
     }

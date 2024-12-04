@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAssetEndpointProfile()
         {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2024-09-01-preview/examples/Create_AssetEndpointProfile.json
-            // this example is just showing the usage of "AssetEndpointProfiles_CreateOrReplace" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01-preview/Create_AssetEndpointProfile.json
+            // this example is just showing the usage of "AssetEndpointProfile_CreateOrReplace" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             string assetEndpointProfileName = "my-assetendpointprofile";
             DeviceRegistryAssetEndpointProfileData data = new DeviceRegistryAssetEndpointProfileData(new AzureLocation("West Europe"), new DeviceRegistryExtendedLocation("CustomLocation", "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/location1"))
             {
-                Properties = new AssetEndpointProfileProperties(new Uri("https://www.example.com/myTargetAddress"), "myEndpointProfileType")
+                Properties = new DeviceRegistryAssetEndpointProfileProperties(new Uri("https://www.example.com/myTargetAddress"), "myEndpointProfileType")
                 {
-                    Authentication = new Authentication(AuthenticationMethod.Anonymous),
+                    Authentication = new DeviceRegistryUserAuthentication(AuthenticationMethod.Anonymous),
                 },
                 Tags =
 {
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAssetEndpointProfileWithDiscoveredAepRef()
         {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2024-09-01-preview/examples/Create_AssetEndpointProfile_With_DiscoveredAepRef.json
-            // this example is just showing the usage of "AssetEndpointProfiles_CreateOrReplace" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01-preview/Create_AssetEndpointProfile_With_DiscoveredAepRef.json
+            // this example is just showing the usage of "AssetEndpointProfile_CreateOrReplace" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -88,9 +88,9 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             string assetEndpointProfileName = "my-assetendpointprofile";
             DeviceRegistryAssetEndpointProfileData data = new DeviceRegistryAssetEndpointProfileData(new AzureLocation("West Europe"), new DeviceRegistryExtendedLocation("CustomLocation", "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/location1"))
             {
-                Properties = new AssetEndpointProfileProperties(new Uri("https://www.example.com/myTargetAddress"), "myEndpointProfileType")
+                Properties = new DeviceRegistryAssetEndpointProfileProperties(new Uri("https://www.example.com/myTargetAddress"), "myEndpointProfileType")
                 {
-                    Authentication = new Authentication(AuthenticationMethod.Anonymous),
+                    Authentication = new DeviceRegistryUserAuthentication(AuthenticationMethod.Anonymous),
                     DiscoveredAssetEndpointProfileRef = "discoveredAssetEndpointProfile1",
                 },
                 Tags =
@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAssetEndpointProfile()
         {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2024-09-01-preview/examples/Get_AssetEndpointProfile.json
-            // this example is just showing the usage of "AssetEndpointProfiles_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01-preview/Get_AssetEndpointProfile.json
+            // this example is just showing the usage of "AssetEndpointProfile_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -145,8 +145,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAssetEndpointProfileWithSyncStatus()
         {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2024-09-01-preview/examples/Get_AssetEndpointProfile_With_SyncStatus.json
-            // this example is just showing the usage of "AssetEndpointProfiles_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01-preview/Get_AssetEndpointProfile_With_SyncStatus.json
+            // this example is just showing the usage of "AssetEndpointProfile_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -178,8 +178,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAssetEndpointProfilesResourceGroup()
         {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2024-09-01-preview/examples/List_AssetEndpointProfiles_ResourceGroup.json
-            // this example is just showing the usage of "AssetEndpointProfiles_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01-preview/List_AssetEndpointProfiles_ResourceGroup.json
+            // this example is just showing the usage of "AssetEndpointProfile_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -213,8 +213,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAssetEndpointProfile()
         {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2024-09-01-preview/examples/Get_AssetEndpointProfile.json
-            // this example is just showing the usage of "AssetEndpointProfiles_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01-preview/Get_AssetEndpointProfile.json
+            // this example is just showing the usage of "AssetEndpointProfile_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -242,8 +242,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAssetEndpointProfileWithSyncStatus()
         {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2024-09-01-preview/examples/Get_AssetEndpointProfile_With_SyncStatus.json
-            // this example is just showing the usage of "AssetEndpointProfiles_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01-preview/Get_AssetEndpointProfile_With_SyncStatus.json
+            // this example is just showing the usage of "AssetEndpointProfile_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -271,8 +271,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAssetEndpointProfile()
         {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2024-09-01-preview/examples/Get_AssetEndpointProfile.json
-            // this example is just showing the usage of "AssetEndpointProfiles_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01-preview/Get_AssetEndpointProfile.json
+            // this example is just showing the usage of "AssetEndpointProfile_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -312,8 +312,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAssetEndpointProfileWithSyncStatus()
         {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2024-09-01-preview/examples/Get_AssetEndpointProfile_With_SyncStatus.json
-            // this example is just showing the usage of "AssetEndpointProfiles_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01-preview/Get_AssetEndpointProfile_With_SyncStatus.json
+            // this example is just showing the usage of "AssetEndpointProfile_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

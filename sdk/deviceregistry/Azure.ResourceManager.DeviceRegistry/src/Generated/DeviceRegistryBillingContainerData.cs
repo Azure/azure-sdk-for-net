@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DeviceRegistryBillingContainerData"/>. </summary>
-        public DeviceRegistryBillingContainerData()
+        internal DeviceRegistryBillingContainerData()
         {
         }
 
@@ -72,11 +72,11 @@ namespace Azure.ResourceManager.DeviceRegistry
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        internal BillingContainerProperties Properties { get; set; }
+        internal BillingContainerProperties Properties { get; }
         /// <summary> Provisioning state of the resource. </summary>
         public DeviceRegistryProvisioningState? BillingContainerProvisioningState
         {
-            get => Properties is null ? default : Properties.ProvisioningState;
+            get => Properties?.ProvisioningState;
         }
 
         /// <summary> Resource ETag. </summary>

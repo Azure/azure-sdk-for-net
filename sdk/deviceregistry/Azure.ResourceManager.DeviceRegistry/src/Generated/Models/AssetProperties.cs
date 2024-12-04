@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             AssetEndpointProfileRef = assetEndpointProfileRef;
             Attributes = new ChangeTrackingDictionary<string, BinaryData>();
             DiscoveredAssetRefs = new ChangeTrackingList<string>();
-            Datasets = new ChangeTrackingList<Dataset>();
-            Events = new ChangeTrackingList<Event>();
+            Datasets = new ChangeTrackingList<DeviceRegistryDataset>();
+            Events = new ChangeTrackingList<DeviceRegistryEvent>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AssetProperties"/>. </summary>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="status"> Read only object to reflect changes that have occurred on the Edge. Similar to Kubernetes status property for custom resources. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssetProperties(string uuid, bool? enabled, string externalAssetId, string displayName, string description, string assetEndpointProfileRef, long? version, string manufacturer, Uri manufacturerUri, string model, string productCode, string hardwareRevision, string softwareRevision, Uri documentationUri, string serialNumber, IDictionary<string, BinaryData> attributes, IList<string> discoveredAssetRefs, string defaultDatasetsConfiguration, string defaultEventsConfiguration, Topic defaultTopic, IList<Dataset> datasets, IList<Event> events, AssetStatus status, DeviceRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AssetProperties(string uuid, bool? enabled, string externalAssetId, string displayName, string description, string assetEndpointProfileRef, long? version, string manufacturer, Uri manufacturerUri, string model, string productCode, string hardwareRevision, string softwareRevision, Uri documentationUri, string serialNumber, IDictionary<string, BinaryData> attributes, IList<string> discoveredAssetRefs, string defaultDatasetsConfiguration, string defaultEventsConfiguration, DeviceRegistryMqttTopic defaultTopic, IList<DeviceRegistryDataset> datasets, IList<DeviceRegistryEvent> events, DeviceRegistryAssetStatus status, DeviceRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Uuid = uuid;
             Enabled = enabled;
@@ -187,13 +187,13 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <summary> Stringified JSON that contains connector-specific default configuration for all events. Each event can have its own configuration that overrides the default settings here. </summary>
         public string DefaultEventsConfiguration { get; set; }
         /// <summary> Object that describes the default topic information for the asset. </summary>
-        public Topic DefaultTopic { get; set; }
+        public DeviceRegistryMqttTopic DefaultTopic { get; set; }
         /// <summary> Array of datasets that are part of the asset. Each dataset describes the data points that make up the set. </summary>
-        public IList<Dataset> Datasets { get; }
+        public IList<DeviceRegistryDataset> Datasets { get; }
         /// <summary> Array of events that are part of the asset. Each event can have per-event configuration. </summary>
-        public IList<Event> Events { get; }
+        public IList<DeviceRegistryEvent> Events { get; }
         /// <summary> Read only object to reflect changes that have occurred on the Edge. Similar to Kubernetes status property for custom resources. </summary>
-        public AssetStatus Status { get; }
+        public DeviceRegistryAssetStatus Status { get; }
         /// <summary> Provisioning state of the resource. </summary>
         public DeviceRegistryProvisioningState? ProvisioningState { get; }
     }

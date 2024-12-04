@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_SchemasGet()
         {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2024-09-01-preview/examples/Get_Schema.json
-            // this example is just showing the usage of "Schemas_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01-preview/Get_Schema.json
+            // this example is just showing the usage of "Schema_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteSchema()
         {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2024-09-01-preview/examples/Delete_Schema.json
-            // this example is just showing the usage of "Schemas_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01-preview/Delete_Schema.json
+            // this example is just showing the usage of "Schema_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateSchema()
         {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2024-09-01-preview/examples/Create_Schema.json
-            // this example is just showing the usage of "Schemas_CreateOrReplace" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01-preview/Create_Schema.json
+            // this example is just showing the usage of "Schema_CreateOrReplace" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             // invoke the operation
             DeviceRegistrySchemaData data = new DeviceRegistrySchemaData
             {
-                Properties = new SchemaProperties(Format.JsonSchemaDraft7, SchemaType.MessageSchema)
+                Properties = new DeviceRegistrySchemaProperties(DeviceRegistrySchemaFormat.JsonSchemaDraft7, DeviceRegistrySchemaType.MessageSchema)
                 {
                     DisplayName = "My Schema",
                     Description = "This is a sample Schema",

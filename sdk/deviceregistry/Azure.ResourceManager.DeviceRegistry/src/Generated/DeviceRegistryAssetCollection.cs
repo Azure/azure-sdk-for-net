@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Assets_CreateOrReplace</description>
+        /// <description>Asset_CreateOrReplace</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Assets_CreateOrReplace</description>
+        /// <description>Asset_CreateOrReplace</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Assets_Get</description>
+        /// <description>Asset_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Assets_Get</description>
+        /// <description>Asset_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Assets_ListByResourceGroup</description>
+        /// <description>Asset_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Assets_ListByResourceGroup</description>
+        /// <description>Asset_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Assets_Get</description>
+        /// <description>Asset_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Assets_Get</description>
+        /// <description>Asset_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Assets_Get</description>
+        /// <description>Asset_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Assets_Get</description>
+        /// <description>Asset_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

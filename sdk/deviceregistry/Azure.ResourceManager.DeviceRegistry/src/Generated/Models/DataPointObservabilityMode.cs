@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
-    /// <summary> An indication of how the data point should be mapped to OpenTelemetry. </summary>
+    /// <summary> Defines the data point observability mode. </summary>
     public readonly partial struct DataPointObservabilityMode : IEquatable<DataPointObservabilityMode>
     {
         private readonly string _value;

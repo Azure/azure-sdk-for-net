@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Schemas_Get</description>
+        /// <description>Schema_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Schemas_Get</description>
+        /// <description>Schema_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SchemaRegistries_Get</description>
+        /// <description>SchemaRegistry_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SchemaRegistries_Get</description>
+        /// <description>SchemaRegistry_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SchemaRegistries_Delete</description>
+        /// <description>SchemaRegistry_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SchemaRegistries_Delete</description>
+        /// <description>SchemaRegistry_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SchemaRegistries_Update</description>
+        /// <description>SchemaRegistry_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SchemaRegistries_Update</description>
+        /// <description>SchemaRegistry_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SchemaRegistries_Get</description>
+        /// <description>SchemaRegistry_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SchemaRegistries_Get</description>
+        /// <description>SchemaRegistry_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SchemaRegistries_Get</description>
+        /// <description>SchemaRegistry_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SchemaRegistries_Get</description>
+        /// <description>SchemaRegistry_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -662,7 +662,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SchemaRegistries_Get</description>
+        /// <description>SchemaRegistry_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -722,7 +722,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SchemaRegistries_Get</description>
+        /// <description>SchemaRegistry_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

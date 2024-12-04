@@ -198,9 +198,9 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             IDictionary<string, BinaryData> attributes = default;
             string defaultDatasetsConfiguration = default;
             string defaultEventsConfiguration = default;
-            TopicUpdate defaultTopic = default;
-            IList<Dataset> datasets = default;
-            IList<Event> events = default;
+            DeviceRegistryMqttTopic defaultTopic = default;
+            IList<DeviceRegistryDataset> datasets = default;
+            IList<DeviceRegistryEvent> events = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     {
                         continue;
                     }
-                    defaultTopic = TopicUpdate.DeserializeTopicUpdate(property.Value, options);
+                    defaultTopic = DeviceRegistryMqttTopic.DeserializeDeviceRegistryMqttTopic(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("datasets"u8))
@@ -318,10 +318,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     {
                         continue;
                     }
-                    List<Dataset> array = new List<Dataset>();
+                    List<DeviceRegistryDataset> array = new List<DeviceRegistryDataset>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Dataset.DeserializeDataset(item, options));
+                        array.Add(DeviceRegistryDataset.DeserializeDeviceRegistryDataset(item, options));
                     }
                     datasets = array;
                     continue;
@@ -332,10 +332,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     {
                         continue;
                     }
-                    List<Event> array = new List<Event>();
+                    List<DeviceRegistryEvent> array = new List<DeviceRegistryEvent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Event.DeserializeEvent(item, options));
+                        array.Add(DeviceRegistryEvent.DeserializeDeviceRegistryEvent(item, options));
                     }
                     events = array;
                     continue;
@@ -362,8 +362,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 defaultDatasetsConfiguration,
                 defaultEventsConfiguration,
                 defaultTopic,
-                datasets ?? new ChangeTrackingList<Dataset>(),
-                events ?? new ChangeTrackingList<Event>(),
+                datasets ?? new ChangeTrackingList<DeviceRegistryDataset>(),
+                events ?? new ChangeTrackingList<DeviceRegistryEvent>(),
                 serializedAdditionalRawData);
         }
 

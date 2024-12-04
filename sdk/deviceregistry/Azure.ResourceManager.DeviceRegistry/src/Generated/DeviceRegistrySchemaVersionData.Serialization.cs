@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 return null;
             }
-            SchemaVersionProperties properties = default;
+            DeviceRegistrySchemaVersionProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                     {
                         continue;
                     }
-                    properties = SchemaVersionProperties.DeserializeSchemaVersionProperties(property.Value, options);
+                    properties = DeviceRegistrySchemaVersionProperties.DeserializeDeviceRegistrySchemaVersionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. Current supported identity types: None, SystemAssigned. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceRegistrySchemaRegistryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SchemaRegistryProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal DeviceRegistrySchemaRegistryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DeviceRegistrySchemaRegistryProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Identity = identity;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public SchemaRegistryProperties Properties { get; set; }
+        public DeviceRegistrySchemaRegistryProperties Properties { get; set; }
         /// <summary> The managed service identities assigned to this resource. Current supported identity types: None, SystemAssigned. </summary>
         public ManagedServiceIdentity Identity { get; set; }
     }

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BillingContainerProperties"/>. </summary>
-        public BillingContainerProperties()
+        internal BillingContainerProperties()
         {
         }
 

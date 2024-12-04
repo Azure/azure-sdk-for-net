@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> The extended location. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceRegistryAssetEndpointProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AssetEndpointProfileProperties properties, DeviceRegistryExtendedLocation extendedLocation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal DeviceRegistryAssetEndpointProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DeviceRegistryAssetEndpointProfileProperties properties, DeviceRegistryExtendedLocation extendedLocation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             ExtendedLocation = extendedLocation;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public AssetEndpointProfileProperties Properties { get; set; }
+        public DeviceRegistryAssetEndpointProfileProperties Properties { get; set; }
         /// <summary> The extended location. </summary>
         public DeviceRegistryExtendedLocation ExtendedLocation { get; set; }
     }

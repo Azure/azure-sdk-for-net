@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="datasets"> Array of datasets that are part of the asset. Each dataset spec describes the data points that make up the set. </param>
         /// <param name="events"> Array of events that are part of the asset. Each event can have per-event configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiscoveredAssetUpdateProperties(string discoveryId, long? version, string manufacturer, Uri manufacturerUri, string model, string productCode, string hardwareRevision, string softwareRevision, Uri documentationUri, string serialNumber, string defaultDatasetsConfiguration, string defaultEventsConfiguration, TopicUpdate defaultTopic, IList<DiscoveredDataset> datasets, IList<DiscoveredEvent> events, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DiscoveredAssetUpdateProperties(string discoveryId, long? version, string manufacturer, Uri manufacturerUri, string model, string productCode, string hardwareRevision, string softwareRevision, Uri documentationUri, string serialNumber, string defaultDatasetsConfiguration, string defaultEventsConfiguration, DeviceRegistryMqttTopic defaultTopic, IList<DiscoveredDataset> datasets, IList<DiscoveredEvent> events, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DiscoveryId = discoveryId;
             Version = version;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <summary> Stringified JSON that contains connector-specific default configuration for all events. Each event can have its own configuration that overrides the default settings here. </summary>
         public string DefaultEventsConfiguration { get; set; }
         /// <summary> Object that describes the default topic information for the asset. </summary>
-        public TopicUpdate DefaultTopic { get; set; }
+        public DeviceRegistryMqttTopic DefaultTopic { get; set; }
         /// <summary> Array of datasets that are part of the asset. Each dataset spec describes the data points that make up the set. </summary>
         public IList<DiscoveredDataset> Datasets { get; }
         /// <summary> Array of events that are part of the asset. Each event can have per-event configuration. </summary>

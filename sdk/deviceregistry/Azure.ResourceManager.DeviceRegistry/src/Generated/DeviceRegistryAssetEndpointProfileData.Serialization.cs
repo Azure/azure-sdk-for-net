@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 return null;
             }
-            AssetEndpointProfileProperties properties = default;
+            DeviceRegistryAssetEndpointProfileProperties properties = default;
             DeviceRegistryExtendedLocation extendedLocation = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                     {
                         continue;
                     }
-                    properties = AssetEndpointProfileProperties.DeserializeAssetEndpointProfileProperties(property.Value, options);
+                    properties = DeviceRegistryAssetEndpointProfileProperties.DeserializeDeviceRegistryAssetEndpointProfileProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("extendedLocation"u8))

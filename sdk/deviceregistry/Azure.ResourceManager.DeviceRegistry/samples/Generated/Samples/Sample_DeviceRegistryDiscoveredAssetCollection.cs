@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateDiscoveredAsset()
         {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2024-09-01-preview/examples/Create_DiscoveredAsset.json
-            // this example is just showing the usage of "DiscoveredAssets_CreateOrReplace" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01-preview/Create_DiscoveredAsset.json
+            // this example is just showing the usage of "DiscoveredAsset_CreateOrReplace" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             string discoveredAssetName = "my-discoveredasset";
             DeviceRegistryDiscoveredAssetData data = new DeviceRegistryDiscoveredAssetData(new AzureLocation("West Europe"), new DeviceRegistryExtendedLocation("CustomLocation", "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/location1"))
             {
-                Properties = new DiscoveredAssetProperties("myAssetEndpointProfile", "11111111-1111-1111-1111-111111111111", 73766L)
+                Properties = new DeviceRegistryDiscoveredAssetProperties("myAssetEndpointProfile", "11111111-1111-1111-1111-111111111111", 73766L)
                 {
                     Manufacturer = "Contoso",
                     ManufacturerUri = new Uri("https://www.contoso.com/manufacturerUri"),
@@ -55,16 +55,16 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
                     SerialNumber = "64-103816-519918-8",
                     DefaultDatasetsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
                     DefaultEventsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
-                    DefaultTopic = new Topic("/path/defaultTopic")
+                    DefaultTopic = new DeviceRegistryMqttTopic("/path/defaultTopic")
                     {
-                        Retain = TopicRetainType.Keep,
+                        Retain = DeviceRegistryTopicRetainType.Keep,
                     },
                     Datasets = {new DiscoveredDataset("dataset1")
 {
 DatasetConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
-Topic = new Topic("/path/dataset1")
+Topic = new DeviceRegistryMqttTopic("/path/dataset1")
 {
-Retain = TopicRetainType.Keep,
+Retain = DeviceRegistryTopicRetainType.Keep,
 },
 DataPoints = {new DiscoveredDataPoint("dataPoint1", "nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt1")
 {
@@ -77,9 +77,9 @@ DataPointConfiguration = "{\"publishingInterval\":4,\"samplingInterval\":4,\"que
                     Events = {new DiscoveredEvent("event1", "nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt3")
 {
 EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":1,\"queueSize\":8}",
-Topic = new Topic("/path/event1")
+Topic = new DeviceRegistryMqttTopic("/path/event1")
 {
-Retain = TopicRetainType.Keep,
+Retain = DeviceRegistryTopicRetainType.Keep,
 },
 }, new DiscoveredEvent("event2", "nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt4")
 {
@@ -105,8 +105,8 @@ EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSi
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetDiscoveredAsset()
         {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2024-09-01-preview/examples/Get_DiscoveredAsset.json
-            // this example is just showing the usage of "DiscoveredAssets_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01-preview/Get_DiscoveredAsset.json
+            // this example is just showing the usage of "DiscoveredAsset_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -138,8 +138,8 @@ EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSi
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListDiscoveredAssetsResourceGroup()
         {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2024-09-01-preview/examples/List_DiscoveredAssets_ResourceGroup.json
-            // this example is just showing the usage of "DiscoveredAssets_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01-preview/List_DiscoveredAssets_ResourceGroup.json
+            // this example is just showing the usage of "DiscoveredAsset_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -173,8 +173,8 @@ EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSi
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetDiscoveredAsset()
         {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2024-09-01-preview/examples/Get_DiscoveredAsset.json
-            // this example is just showing the usage of "DiscoveredAssets_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01-preview/Get_DiscoveredAsset.json
+            // this example is just showing the usage of "DiscoveredAsset_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -202,8 +202,8 @@ EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSi
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetDiscoveredAsset()
         {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2024-09-01-preview/examples/Get_DiscoveredAsset.json
-            // this example is just showing the usage of "DiscoveredAssets_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01-preview/Get_DiscoveredAsset.json
+            // this example is just showing the usage of "DiscoveredAsset_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

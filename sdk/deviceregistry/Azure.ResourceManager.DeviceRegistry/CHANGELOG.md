@@ -1,27 +1,13 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
-
-### Breaking Changes
-
-- Updated `Assets` and `AssetEndpointProfiles` resource types to align to Microsoft.DeviceRegistry OpenAPI spec version `2024-09-01-preview`.
+## 1.0.0-beta.2 (Unreleased)
 
 ### Features Added
 
 - Added `SchemaRegistries`, `SchemaRegistries/Schemas` and `SchemaRegistries/Schemas/SchemaVersions` resource types from Microsoft.DeviceRegistry OpenAPI spec version `2024-09-01-preview`.
 - Added `BillingContainers` resource type from Microsoft.DeviceRegistry OpenAPI spec version `2024-09-01-preview`.
-
-## 1.0.0-beta.2 (Unreleased)
-
-### Features Added
-
+- Updated `Assets` and `AssetEndpointProfiles` resource types to align to Microsoft.DeviceRegistry OpenAPI spec version `2024-09-01-preview`.
 - Exposed `JsonModelWriteCore` for model serialization procedure.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.1 (2024-03-27)
 

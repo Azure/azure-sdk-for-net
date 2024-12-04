@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetDiscoveredAsset()
         {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2024-09-01-preview/examples/Get_DiscoveredAsset.json
-            // this example is just showing the usage of "DiscoveredAssets_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01-preview/Get_DiscoveredAsset.json
+            // this example is just showing the usage of "DiscoveredAsset_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteDiscoveredAsset()
         {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2024-09-01-preview/examples/Delete_DiscoveredAsset.json
-            // this example is just showing the usage of "DiscoveredAssets_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01-preview/Delete_DiscoveredAsset.json
+            // this example is just showing the usage of "DiscoveredAsset_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateDiscoveredAsset()
         {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2024-09-01-preview/examples/Update_DiscoveredAsset.json
-            // this example is just showing the usage of "DiscoveredAssets_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01-preview/Update_DiscoveredAsset.json
+            // this example is just showing the usage of "DiscoveredAsset_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -98,10 +98,9 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
                 Properties = new DiscoveredAssetUpdateProperties
                 {
                     DocumentationUri = new Uri("https://www.example.com/manual-2"),
-                    DefaultTopic = new TopicUpdate
+                    DefaultTopic = new DeviceRegistryMqttTopic("/path/defaultTopic")
                     {
-                        Path = "/path/defaultTopic",
-                        Retain = TopicRetainType.Never,
+                        Retain = DeviceRegistryTopicRetainType.Never,
                     },
                 },
             };

@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SchemaVersions_Get</description>
+        /// <description>SchemaVersion_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SchemaVersions_Get</description>
+        /// <description>SchemaVersion_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SchemaVersions_Delete</description>
+        /// <description>SchemaVersion_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SchemaVersions_Delete</description>
+        /// <description>SchemaVersion_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SchemaVersions_CreateOrReplace</description>
+        /// <description>SchemaVersion_CreateOrReplace</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SchemaVersions_CreateOrReplace</description>
+        /// <description>SchemaVersion_CreateOrReplace</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

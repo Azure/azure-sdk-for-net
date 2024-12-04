@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
-    /// <summary> Defines the method to authenticate the user of the client at the server. </summary>
+    /// <summary> The method to authenticate the user of the client at the server. </summary>
     public readonly partial struct AuthenticationMethod : IEquatable<AuthenticationMethod>
     {
         private readonly string _value;
