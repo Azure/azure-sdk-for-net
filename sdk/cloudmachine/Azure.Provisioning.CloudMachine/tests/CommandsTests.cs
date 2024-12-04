@@ -23,4 +23,10 @@ public class CommandsTests
         cm.AddFeature(new KeyVaultFeature());
         cm.TryExecuteCommand(["-bicep"]);
     }
+
+    [Test]
+    public void DoInit()
+    {
+        CloudMachineCommands.Execute(["-init", "demo.csproj"], exitProcessIfHandled: false);
+    }
 }

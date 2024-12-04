@@ -28,6 +28,19 @@ public static class CloudMachineCommands
             return true;
         }
 
+        if (args[0] == "-init")
+        {
+            Azd.Init(cmi);
+
+            string? projName = default;
+            if (args.Length > 1)
+            {
+                projName = args[1];
+            }
+            Azd.InitDeployment(cmi, projName);
+            return Handled(exitProcessIfHandled);
+        }
+
         if (args[0] == "-tsp")
         {
             GenerateTsp(cmi.Endpoints);

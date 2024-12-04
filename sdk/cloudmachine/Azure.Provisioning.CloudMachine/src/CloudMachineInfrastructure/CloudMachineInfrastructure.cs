@@ -66,7 +66,7 @@ public class CloudMachineInfrastructure
         AddFeature(new ServiceBusSubscriptionFeature("cm_servicebus_subscription_private", sbTopicPrivate)); // TODO: should private connections not be in the Connections collection?
         AddFeature(new ServiceBusSubscriptionFeature("cm_servicebus_subscription_default", sbTopicDefault));
         var systemTopic = AddFeature(new EventGridSystemTopicFeature(Id, storage, "Microsoft.Storage.StorageAccounts"));
-        AddFeature(new SystemTopicEventSubscriptionFeature("cm_eventgrid_subscription_blob", systemTopic, sbTopicPrivate, sbNamespace));
+        AddFeature(new SystemTopicEventSubscriptionFeature("cm-eventgrid-subscription-blob", systemTopic, sbTopicPrivate, sbNamespace));
     }
 
     public T AddFeature<T>(T feature) where T: CloudMachineFeature
