@@ -10,7 +10,7 @@
 
 ### Other Changes
 
-## 1.1.0 (Unreleased)
+## 1.1.0 (2025-01-02)
 
 - This is a stable SDK version based on the 2024-07-01 API.
 
