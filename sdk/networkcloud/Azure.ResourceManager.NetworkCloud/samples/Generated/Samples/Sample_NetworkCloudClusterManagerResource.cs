@@ -11,7 +11,6 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetworkCloud.Samples
@@ -100,20 +99,20 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudClusterManagerResource networkCloudClusterManager = client.GetNetworkCloudClusterManagerResource(networkCloudClusterManagerResourceId);
 
             // invoke the operation
-            NetworkCloudClusterManagerPatch patch = new NetworkCloudClusterManagerPatch()
+            NetworkCloudClusterManagerPatch patch = new NetworkCloudClusterManagerPatch
             {
                 Identity = new ManagedServiceIdentity("UserAssigned")
                 {
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ManagedIdentity/userAssignedIdentities/userIdentity1")] = null,
-[new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ManagedIdentity/userAssignedIdentities/userIdentity2")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ManagedIdentity/userAssignedIdentities/userIdentity1")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ManagedIdentity/userAssignedIdentities/userIdentity2")] = new UserAssignedIdentity()
 },
                 },
                 Tags =
 {
 ["key1"] = "myvalue1",
-["key2"] = "myvalue2",
+["key2"] = "myvalue2"
 },
             };
             NetworkCloudClusterManagerResource result = await networkCloudClusterManager.UpdateAsync(patch);

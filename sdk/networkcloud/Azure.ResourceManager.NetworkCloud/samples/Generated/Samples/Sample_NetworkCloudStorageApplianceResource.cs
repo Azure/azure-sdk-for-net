@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.NetworkCloud.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetworkCloud.Samples
@@ -99,12 +98,12 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudStorageApplianceResource networkCloudStorageAppliance = client.GetNetworkCloudStorageApplianceResource(networkCloudStorageApplianceResourceId);
 
             // invoke the operation
-            NetworkCloudStorageAppliancePatch patch = new NetworkCloudStorageAppliancePatch()
+            NetworkCloudStorageAppliancePatch patch = new NetworkCloudStorageAppliancePatch
             {
                 Tags =
 {
 ["key1"] = "myvalue1",
-["key2"] = "myvalue2",
+["key2"] = "myvalue2"
 },
                 SerialNumber = "BM1219XXX",
             };
@@ -166,12 +165,9 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudStorageApplianceResource networkCloudStorageAppliance = client.GetNetworkCloudStorageApplianceResource(networkCloudStorageApplianceResourceId);
 
             // invoke the operation
-            StorageApplianceEnableRemoteVendorManagementContent content = new StorageApplianceEnableRemoteVendorManagementContent()
+            StorageApplianceEnableRemoteVendorManagementContent content = new StorageApplianceEnableRemoteVendorManagementContent
             {
-                SupportEndpoints =
-{
-"10.0.0.0/24"
-},
+                SupportEndpoints = { "10.0.0.0/24" },
             };
             ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudStorageAppliance.EnableRemoteVendorManagementAsync(WaitUntil.Completed, content: content);
             NetworkCloudOperationStatusResult result = lro.Value;

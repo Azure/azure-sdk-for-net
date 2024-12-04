@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.NetworkCloud.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetworkCloud.Samples
@@ -99,12 +98,12 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudBareMetalMachineResource networkCloudBareMetalMachine = client.GetNetworkCloudBareMetalMachineResource(networkCloudBareMetalMachineResourceId);
 
             // invoke the operation
-            NetworkCloudBareMetalMachinePatch patch = new NetworkCloudBareMetalMachinePatch()
+            NetworkCloudBareMetalMachinePatch patch = new NetworkCloudBareMetalMachinePatch
             {
                 Tags =
 {
 ["key1"] = "myvalue1",
-["key2"] = "myvalue2",
+["key2"] = "myvalue2"
 },
                 MachineDetails = "machinedetails",
             };
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudBareMetalMachineResource networkCloudBareMetalMachine = client.GetNetworkCloudBareMetalMachineResource(networkCloudBareMetalMachineResourceId);
 
             // invoke the operation
-            BareMetalMachineCordonContent content = new BareMetalMachineCordonContent()
+            BareMetalMachineCordonContent content = new BareMetalMachineCordonContent
             {
                 Evacuate = BareMetalMachineEvacuate.True,
             };
@@ -170,7 +169,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudBareMetalMachineResource networkCloudBareMetalMachine = client.GetNetworkCloudBareMetalMachineResource(networkCloudBareMetalMachineResourceId);
 
             // invoke the operation
-            BareMetalMachinePowerOffContent content = new BareMetalMachinePowerOffContent()
+            BareMetalMachinePowerOffContent content = new BareMetalMachinePowerOffContent
             {
                 SkipShutdown = BareMetalMachineSkipShutdown.True,
             };
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudBareMetalMachineResource networkCloudBareMetalMachine = client.GetNetworkCloudBareMetalMachineResource(networkCloudBareMetalMachineResourceId);
 
             // invoke the operation
-            BareMetalMachineReplaceContent content = new BareMetalMachineReplaceContent()
+            BareMetalMachineReplaceContent content = new BareMetalMachineReplaceContent
             {
                 BmcCredentials = new AdministrativeCredentials("bmcuser")
                 {
@@ -295,10 +294,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             // invoke the operation
             BareMetalMachineRunCommandContent content = new BareMetalMachineRunCommandContent(60L, "cHdkCg==")
             {
-                Arguments =
-{
-"--argument1","argument2"
-},
+                Arguments = { "--argument1", "argument2" },
             };
             ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudBareMetalMachine.RunCommandAsync(WaitUntil.Completed, content);
             NetworkCloudOperationStatusResult result = lro.Value;
@@ -331,10 +327,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             {
 new BareMetalMachineCommandSpecification("hardware-support-data-collection")
 {
-Arguments =
-{
-"SysInfo","TTYLog"
-},
+Arguments = {"SysInfo", "TTYLog"},
 }
             }, 60L);
             ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudBareMetalMachine.RunDataExtractsAsync(WaitUntil.Completed, content);
@@ -368,16 +361,11 @@ Arguments =
             {
 new BareMetalMachineCommandSpecification("kubectl get")
 {
-Arguments =
-{
-"pods","-A"
+Arguments = {"pods", "-A"},
 },
-},new BareMetalMachineCommandSpecification("ping")
+new BareMetalMachineCommandSpecification("ping")
 {
-Arguments =
-{
-"192.168.0.99","-c","3"
-},
+Arguments = {"192.168.0.99", "-c", "3"},
 }
             }, 60L);
             ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudBareMetalMachine.RunReadCommandsAsync(WaitUntil.Completed, content);

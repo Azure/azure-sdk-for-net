@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.NetworkCloud.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetworkCloud.Samples
@@ -99,12 +98,12 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudL2NetworkResource networkCloudL2Network = client.GetNetworkCloudL2NetworkResource(networkCloudL2NetworkResourceId);
 
             // invoke the operation
-            NetworkCloudL2NetworkPatch patch = new NetworkCloudL2NetworkPatch()
+            NetworkCloudL2NetworkPatch patch = new NetworkCloudL2NetworkPatch
             {
                 Tags =
 {
 ["key1"] = "myvalue1",
-["key2"] = "myvalue2",
+["key2"] = "myvalue2"
 },
             };
             NetworkCloudL2NetworkResource result = await networkCloudL2Network.UpdateAsync(patch);

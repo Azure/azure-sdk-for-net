@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.NetworkCloud.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetworkCloud.Samples
@@ -99,23 +98,20 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudCloudServicesNetworkResource networkCloudCloudServicesNetwork = client.GetNetworkCloudCloudServicesNetworkResource(networkCloudCloudServicesNetworkResourceId);
 
             // invoke the operation
-            NetworkCloudCloudServicesNetworkPatch patch = new NetworkCloudCloudServicesNetworkPatch()
+            NetworkCloudCloudServicesNetworkPatch patch = new NetworkCloudCloudServicesNetworkPatch
             {
                 Tags =
 {
 ["key1"] = "myvalue1",
-["key2"] = "myvalue2",
+["key2"] = "myvalue2"
 },
-                AdditionalEgressEndpoints =
-{
-new EgressEndpoint("azure-resource-management",new EndpointDependency[]
+                AdditionalEgressEndpoints = {new EgressEndpoint("azure-resource-management", new EndpointDependency[]
 {
 new EndpointDependency("storageaccountex.blob.core.windows.net")
 {
 Port = 443L,
 }
-})
-},
+})},
                 EnableDefaultEgressEndpoints = CloudServicesNetworkEnableDefaultEgressEndpoint.False,
             };
             ArmOperation<NetworkCloudCloudServicesNetworkResource> lro = await networkCloudCloudServicesNetwork.UpdateAsync(WaitUntil.Completed, patch);

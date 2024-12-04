@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ListConsolesOfTheVirtualMachine()
+        public async Task CreateOrUpdate_CreateOrUpdateVirtualMachineConsole()
         {
             // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2024-07-01/examples/Consoles_ListByVirtualMachine.json
             // this example is just showing the usage of "Consoles_ListByVirtualMachine" operation, for the dependent resources, they will have to be created separately.
@@ -39,17 +39,25 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             // get the collection of this NetworkCloudVirtualMachineConsoleResource
             NetworkCloudVirtualMachineConsoleCollection collection = networkCloudVirtualMachine.GetNetworkCloudVirtualMachineConsoles();
 
-            // invoke the operation and iterate over the result
-            await foreach (NetworkCloudVirtualMachineConsoleResource item in collection.GetAllAsync())
+            // invoke the operation
+            string consoleName = "default";
+            NetworkCloudVirtualMachineConsoleData data = new NetworkCloudVirtualMachineConsoleData(new AzureLocation("location"), new ExtendedLocation("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ExtendedLocation/customLocations/clusterManagerExtendedLocationName", "CustomLocation"), ConsoleEnabled.True, new NetworkCloudSshPublicKey("ssh-rsa AAtsE3njSONzDYRIZv/WLjVuMfrUSByHp+jfaaOLHTIIB4fJvo6dQUZxE20w2iDHV3tEkmnTo84eba97VMueQD6OzJPEyWZMRpz8UYWOd0IXeRqiFu1lawNblZhwNT/ojNZfpB3af/YDzwQCZgTcTRyNNhL4o/blKUmug0daSsSXISTRnIDpcf5qytjs1Xo+yYyJMvzLL59mhAyb3p/cD+Y3/s3WhAx+l0XOKpzXnblrv9d3q4c2tWmm/SyFqthaqd0= admin@vm"))
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                NetworkCloudVirtualMachineConsoleData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                ExpireOn = DateTimeOffset.Parse("2022-06-01T01:27:03.008Z"),
+                Tags =
+{
+["key1"] = "myvalue1",
+["key2"] = "myvalue2"
+},
+            };
+            ArmOperation<NetworkCloudVirtualMachineConsoleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, consoleName, data);
+            NetworkCloudVirtualMachineConsoleResource result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            NetworkCloudVirtualMachineConsoleData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
@@ -84,6 +92,42 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudVirtualMachineConsoleData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListConsolesOfTheVirtualMachine()
+        {
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/Consoles_ListByVirtualMachine.json
+            // this example is just showing the usage of "Consoles_ListByVirtualMachine" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetworkCloudVirtualMachineResource created on azure
+            // for more information of creating NetworkCloudVirtualMachineResource, please refer to the document of NetworkCloudVirtualMachineResource
+            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
+            string resourceGroupName = "resourceGroupName";
+            string virtualMachineName = "virtualMachineName";
+            ResourceIdentifier networkCloudVirtualMachineResourceId = NetworkCloudVirtualMachineResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineName);
+            NetworkCloudVirtualMachineResource networkCloudVirtualMachine = client.GetNetworkCloudVirtualMachineResource(networkCloudVirtualMachineResourceId);
+
+            // get the collection of this NetworkCloudVirtualMachineConsoleResource
+            NetworkCloudVirtualMachineConsoleCollection collection = networkCloudVirtualMachine.GetNetworkCloudVirtualMachineConsoles();
+
+            // invoke the operation and iterate over the result
+            await foreach (NetworkCloudVirtualMachineConsoleResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                NetworkCloudVirtualMachineConsoleData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
 
         [Test]

@@ -17,8 +17,8 @@ sdk\<service name>\<package name>\<package name>.sln
 - `<package name>` -  Should be the name of the shipping package, or an abbreviation that distinguishes the given shipping artifact for the given service. It will be `Azure.<group>.<service>`, e.g. Azure.IoT.DeviceUpdate
 
 ## Create sdk package
-  
-We will use the Azure SDK template [Azure.Template](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template) to create the initial project skeleton.
+
+We will use the Azure SDK template [Azure.Template](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template) to create the initial project skeleton for SDKs generated from TypeSpec.
 
 You can run `eng\scripts\automation\Invoke-TypeSpecDataPlaneGenerateSDKPackage.ps1` to generate the starting SDK client library package directly as following:
 
@@ -26,7 +26,7 @@ You can run `eng\scripts\automation\Invoke-TypeSpecDataPlaneGenerateSDKPackage.p
 eng/scripts/automation/Invoke-TypeSpecDataPlaneGenerateSDKPackage.ps1 -sdkFolder <sdk-folder-path> -typespecSpecDirectory <relativeTypeSpecProjectFolderPath> -commit <commitId> [-repo <specRepo>] [-additionalSubDirectories <relativeFolders>]
 ```
 
-e.g. 
+e.g.
 Use git url
 
 ```powershell

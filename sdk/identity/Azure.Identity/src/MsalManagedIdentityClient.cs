@@ -99,8 +99,8 @@ namespace Azure.Identity
             }
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
             return async ?
-                await builder.ExecuteAsync().ConfigureAwait(false) :
-                builder.ExecuteAsync().GetAwaiter().GetResult();
+                await builder.ExecuteAsync(cancellationToken).ConfigureAwait(false) :
+                builder.ExecuteAsync(cancellationToken).GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
         }
     }

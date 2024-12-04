@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.NetworkCloud.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetworkCloud.Samples
@@ -99,12 +98,12 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudTrunkedNetworkResource networkCloudTrunkedNetwork = client.GetNetworkCloudTrunkedNetworkResource(networkCloudTrunkedNetworkResourceId);
 
             // invoke the operation
-            NetworkCloudTrunkedNetworkPatch patch = new NetworkCloudTrunkedNetworkPatch()
+            NetworkCloudTrunkedNetworkPatch patch = new NetworkCloudTrunkedNetworkPatch
             {
                 Tags =
 {
 ["key1"] = "myvalue1",
-["key2"] = "myvalue2",
+["key2"] = "myvalue2"
 },
             };
             NetworkCloudTrunkedNetworkResource result = await networkCloudTrunkedNetwork.UpdateAsync(patch);

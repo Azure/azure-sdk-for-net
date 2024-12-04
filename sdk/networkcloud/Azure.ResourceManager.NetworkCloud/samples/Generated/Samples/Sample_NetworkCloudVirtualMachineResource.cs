@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.NetworkCloud.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetworkCloud.Samples
@@ -99,12 +98,12 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudVirtualMachineResource networkCloudVirtualMachine = client.GetNetworkCloudVirtualMachineResource(networkCloudVirtualMachineResourceId);
 
             // invoke the operation
-            NetworkCloudVirtualMachinePatch patch = new NetworkCloudVirtualMachinePatch()
+            NetworkCloudVirtualMachinePatch patch = new NetworkCloudVirtualMachinePatch
             {
                 Tags =
 {
 ["key1"] = "myvalue1",
-["key2"] = "myvalue2",
+["key2"] = "myvalue2"
 },
                 VmImageRepositoryCredentials = new ImageRepositoryCredentials("myacr.azurecr.io", "myuser")
                 {
@@ -142,7 +141,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudVirtualMachineResource networkCloudVirtualMachine = client.GetNetworkCloudVirtualMachineResource(networkCloudVirtualMachineResourceId);
 
             // invoke the operation
-            VirtualMachinePowerOffContent content = new VirtualMachinePowerOffContent()
+            VirtualMachinePowerOffContent content = new VirtualMachinePowerOffContent
             {
                 SkipShutdown = SkipShutdown.True,
             };

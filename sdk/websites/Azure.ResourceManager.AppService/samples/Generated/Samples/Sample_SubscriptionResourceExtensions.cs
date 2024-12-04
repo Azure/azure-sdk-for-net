@@ -19,9 +19,40 @@ namespace Azure.ResourceManager.AppService.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task GetAppServiceCertificateOrders_ListAppServiceCertificateOrdersBySubscription()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2024-04-01/examples/ListAppServiceCertificateOrdersBySubscription.json
+            // this example is just showing the usage of "AppServiceCertificateOrders_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (AppServiceCertificateOrderResource item in subscriptionResource.GetAppServiceCertificateOrdersAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                AppServiceCertificateOrderData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ValidateAppServiceCertificateOrderPurchaseInformation_ValidateAppServiceCertificatePurchaseInformationBySubscription()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2023-12-01/examples/ValidateAppServiceCertificatePurchaseInformationBySubscription.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.CertificateRegistration/stable/2024-04-01/examples/ValidateAppServiceCertificatePurchaseInformationBySubscription.json
             // this example is just showing the usage of "AppServiceCertificateOrders_ValidatePurchaseInformation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -40,16 +71,16 @@ namespace Azure.ResourceManager.AppService.Samples
             {
                 Certificates =
 {
-["SampleCertName1"] = new AppServiceCertificateProperties()
+["SampleCertName1"] = new AppServiceCertificateProperties
 {
 KeyVaultId = new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourcegroups/testrg123/providers/microsoft.keyvault/vaults/SamplevaultName"),
 KeyVaultSecretName = "SampleSecretName1",
 },
-["SampleCertName2"] = new AppServiceCertificateProperties()
+["SampleCertName2"] = new AppServiceCertificateProperties
 {
 KeyVaultId = new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourcegroups/testrg123/providers/microsoft.keyvault/vaults/SamplevaultName"),
 KeyVaultSecretName = "SampleSecretName2",
-},
+}
 },
                 DistinguishedName = "CN=SampleCustomDomain.com",
                 ValidityInYears = 2,
@@ -66,7 +97,7 @@ KeyVaultSecretName = "SampleSecretName2",
         [Ignore("Only validating compilation of examples")]
         public async Task CheckAppServiceDomainRegistrationAvailability_CheckDomainAvailability()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2023-12-01/examples/CheckDomainAvailability.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2024-04-01/examples/CheckDomainAvailability.json
             // this example is just showing the usage of "Domains_CheckAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -81,7 +112,7 @@ KeyVaultSecretName = "SampleSecretName2",
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            AppServiceDomainNameIdentifier identifier = new AppServiceDomainNameIdentifier()
+            AppServiceDomainNameIdentifier identifier = new AppServiceDomainNameIdentifier
             {
                 Name = "abcd.com",
             };
@@ -92,9 +123,40 @@ KeyVaultSecretName = "SampleSecretName2",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task GetAppServiceDomains_ListDomainsBySubscription()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2024-04-01/examples/ListDomainsBySubscription.json
+            // this example is just showing the usage of "Domains_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (AppServiceDomainResource item in subscriptionResource.GetAppServiceDomainsAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                AppServiceDomainData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetControlCenterSsoRequestDomain_GetDomainControlCenterSsoRequest()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2023-12-01/examples/GetDomainControlCenterSsoRequest.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2024-04-01/examples/GetDomainControlCenterSsoRequest.json
             // this example is just showing the usage of "Domains_GetControlCenterSsoRequest" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -118,7 +180,7 @@ KeyVaultSecretName = "SampleSecretName2",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAppServiceDomainRecommendations_ListDomainRecommendations()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2023-12-01/examples/ListDomainRecommendations.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2024-04-01/examples/ListDomainRecommendations.json
             // this example is just showing the usage of "Domains_ListRecommendations" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -133,7 +195,7 @@ KeyVaultSecretName = "SampleSecretName2",
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            DomainRecommendationSearchContent content = new DomainRecommendationSearchContent()
+            DomainRecommendationSearchContent content = new DomainRecommendationSearchContent
             {
                 Keywords = "example1",
                 MaxDomainRecommendations = 10,
@@ -148,9 +210,195 @@ KeyVaultSecretName = "SampleSecretName2",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task GetAppServiceEnvironments_GetAllAppServiceEnvironmentsForASubscription()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/AppServiceEnvironments_List.json
+            // this example is just showing the usage of "AppServiceEnvironments_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (AppServiceEnvironmentResource item in subscriptionResource.GetAppServiceEnvironmentsAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                AppServiceEnvironmentData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAppServicePlans_ListAppServicePlans()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/ListAppServicePlans.json
+            // this example is just showing the usage of "AppServicePlans_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (AppServicePlanResource item in subscriptionResource.GetAppServicePlansAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                AppServicePlanData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAppCertificates_ListCertificatesForSubscription()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/ListCertificates.json
+            // this example is just showing the usage of "Certificates_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (AppCertificateResource item in subscriptionResource.GetAppCertificatesAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                AppCertificateData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetDeletedSitesByLocation_ListDeletedWebAppByLocation()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/ListDeletedWebAppsByLocation.json
+            // this example is just showing the usage of "DeletedWebApps_ListByLocation" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            AzureLocation location = new AzureLocation("West US 2");
+            await foreach (DeletedSiteResource item in subscriptionResource.GetDeletedSitesByLocationAsync(location))
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                DeletedSiteData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetDeletedWebAppByLocationDeletedWebApp_GetDeletedWebAppByLocation()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/GetDeletedWebAppByLocation.json
+            // this example is just showing the usage of "DeletedWebApps_GetDeletedWebAppByLocation" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation
+            AzureLocation location = new AzureLocation("West US 2");
+            string deletedSiteId = "9";
+            DeletedSiteResource result = await subscriptionResource.GetDeletedWebAppByLocationDeletedWebAppAsync(location, deletedSiteId);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DeletedSiteData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetKubeEnvironments_ListKubeEnvironmentsBySubscription()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/KubeEnvironments_ListBySubscription.json
+            // this example is just showing the usage of "KubeEnvironments_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "8efdecc5-919e-44eb-b179-915dca89ebf9";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (KubeEnvironmentResource item in subscriptionResource.GetKubeEnvironmentsAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                KubeEnvironmentData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAllResourceHealthMetadata_ListResourceHealthMetadataForASubscription()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListResourceHealthMetadataBySubscription.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/ListResourceHealthMetadataBySubscription.json
             // this example is just showing the usage of "ResourceHealthMetadata_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -178,7 +426,7 @@ KeyVaultSecretName = "SampleSecretName2",
         [Ignore("Only validating compilation of examples")]
         public async Task GetCustomHostNameSites_GetCustomHostnamesUnderSubscription()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListCustomHostNameSites.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/ListCustomHostNameSites.json
             // this example is just showing the usage of "ListCustomHostNameSites" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -205,7 +453,7 @@ KeyVaultSecretName = "SampleSecretName2",
         [Ignore("Only validating compilation of examples")]
         public async Task GetCustomHostNameSites_GetSpecificCustomHostnameUnderSubscription()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListCustomSpecificHostNameSites.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/ListCustomSpecificHostNameSites.json
             // this example is just showing the usage of "ListCustomHostNameSites" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -233,7 +481,7 @@ KeyVaultSecretName = "SampleSecretName2",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAseRegions_ListAseregions()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListAseRegions.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/ListAseRegions.json
             // this example is just showing the usage of "ListAseRegions" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -260,7 +508,7 @@ KeyVaultSecretName = "SampleSecretName2",
         [Ignore("Only validating compilation of examples")]
         public async Task VerifyHostingEnvironmentVnet_VerifyHostingEnvironmentVnet()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/VerifyHostingEnvironmentVnet.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/VerifyHostingEnvironmentVnet.json
             // this example is just showing the usage of "VerifyHostingEnvironmentVnet" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -275,7 +523,7 @@ KeyVaultSecretName = "SampleSecretName2",
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            AppServiceVirtualNetworkValidationContent content = new AppServiceVirtualNetworkValidationContent()
+            AppServiceVirtualNetworkValidationContent content = new AppServiceVirtualNetworkValidationContent
             {
                 VnetResourceGroup = "vNet123rg",
                 VnetName = "vNet123",
@@ -290,7 +538,7 @@ KeyVaultSecretName = "SampleSecretName2",
         [Ignore("Only validating compilation of examples")]
         public async Task GetGetUsagesInLocations_GetUsagesInLocationForSubscription()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetUsagesInLocation.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/GetUsagesInLocation.json
             // this example is just showing the usage of "GetUsagesInLocation_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -318,7 +566,7 @@ KeyVaultSecretName = "SampleSecretName2",
         [Ignore("Only validating compilation of examples")]
         public async Task PreviewStaticSiteWorkflow_GeneratesAPreviewWorkflowFileForTheStaticSite()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GenerateStaticSiteWorkflowPreview.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/GenerateStaticSiteWorkflowPreview.json
             // this example is just showing the usage of "StaticSites_PreviewWorkflow" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -334,11 +582,11 @@ KeyVaultSecretName = "SampleSecretName2",
 
             // invoke the operation
             AzureLocation location = new AzureLocation("West US 2");
-            StaticSitesWorkflowPreviewContent content = new StaticSitesWorkflowPreviewContent()
+            StaticSitesWorkflowPreviewContent content = new StaticSitesWorkflowPreviewContent
             {
                 RepositoryUri = new Uri("https://github.com/username/RepoName"),
                 Branch = "master",
-                BuildProperties = new StaticSiteBuildProperties()
+                BuildProperties = new StaticSiteBuildProperties
                 {
                     AppLocation = "app",
                     ApiLocation = "api",
@@ -348,6 +596,68 @@ KeyVaultSecretName = "SampleSecretName2",
             StaticSitesWorkflowPreview result = await subscriptionResource.PreviewStaticSiteWorkflowAsync(location, content);
 
             Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetStaticSites_GetAllStaticSitesInASubscription()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/GetAllStaticSites.json
+            // this example is just showing the usage of "StaticSites_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (StaticSiteResource item in subscriptionResource.GetStaticSitesAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                StaticSiteData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetWebSites_ListWebAppsForSubscription()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/ListWebApps.json
+            // this example is just showing the usage of "WebApps_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (WebSiteResource item in subscriptionResource.GetWebSitesAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                WebSiteData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
     }
 }

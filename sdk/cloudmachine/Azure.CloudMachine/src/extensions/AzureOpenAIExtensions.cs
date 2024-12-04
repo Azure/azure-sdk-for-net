@@ -3,6 +3,7 @@
 
 using System.ClientModel;
 using System.Collections.Generic;
+using System.Text;
 using Azure.AI.OpenAI;
 using Azure.Core;
 using OpenAI.Chat;
@@ -47,30 +48,68 @@ public static class AzureOpenAIExtensions
         return embeddingsClient;
     }
 
+    /// <summary>
+    /// returns full text of all parts.
+    /// </summary>
+    /// <returns></returns>
+    public static string AsText(this ClientResult<ChatCompletion> completionResult)
+        => AsText(completionResult.Value);
+
+    /// <summary>
+    /// returns full text of all parts.
+    /// </summary>
+    /// <param name="completion"></param>
+    /// <returns></returns>
+    public static string AsText(this ChatCompletion completion)
+        => completion.Content.AsText();
+
+    /// <summary>
+    /// returns full text of all parts.
+    /// </summary>
+    /// <param name="content"></param>
+    /// <returns></returns>
+    public static string AsText(this ChatMessageContent content)
+    {
+        StringBuilder sb = new();
+        foreach (ChatMessageContentPart part in content)
+        {
+            switch (part.Kind)
+            {
+                case ChatMessageContentPartKind.Text:
+                    sb.AppendLine(part.Text);
+                    break;
+                default:
+                    sb.AppendLine($"<{part.Kind}>");
+                    break;
+            }
+        }
+        return sb.ToString();
+    }
+
     private static AzureOpenAIClient CreateAzureOpenAIClient(this ClientWorkspace workspace)
     {
-        ClientConnectionOptions connection = workspace.GetConnectionOptions(typeof(AzureOpenAIClient));
-        if (connection.ConnectionKind == ClientConnectionKind.EntraId)
+        ClientConnection connection = workspace.GetConnectionOptions(typeof(AzureOpenAIClient).FullName);
+        if (connection.Authentication == ClientAuthenticationMethod.EntraId)
         {
-            return new(connection.Endpoint, connection.TokenCredential);
+            return new(connection.ToUri(), workspace.Credential);
         }
         else
         {
-            return new(connection.Endpoint, new ApiKeyCredential(connection.ApiKeyCredential!));
+            return new(connection.ToUri(), new ApiKeyCredential(connection.ApiKeyCredential!));
         }
     }
 
     private static ChatClient CreateChatClient(this ClientWorkspace workspace, AzureOpenAIClient client)
     {
-        ClientConnectionOptions connection = workspace.GetConnectionOptions(typeof(ChatClient));
-        ChatClient chat = client.GetChatClient(connection.Id);
+        ClientConnection connection = workspace.GetConnectionOptions(typeof(ChatClient).FullName);
+        ChatClient chat = client.GetChatClient(connection.Locator);
         return chat;
     }
 
     private static EmbeddingClient CreateEmbeddingsClient(this ClientWorkspace workspace, AzureOpenAIClient client)
     {
-        ClientConnectionOptions connection = workspace.GetConnectionOptions(typeof(EmbeddingClient));
-        EmbeddingClient embeddings = client.GetEmbeddingClient(connection.Id);
+        ClientConnection connection = workspace.GetConnectionOptions(typeof(EmbeddingClient).FullName);
+        EmbeddingClient embeddings = client.GetEmbeddingClient(connection.Locator);
         return embeddings;
     }
 

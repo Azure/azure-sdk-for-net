@@ -97,17 +97,14 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudKubernetesClusterFeatureResource networkCloudKubernetesClusterFeature = client.GetNetworkCloudKubernetesClusterFeatureResource(networkCloudKubernetesClusterFeatureResourceId);
 
             // invoke the operation
-            NetworkCloudKubernetesClusterFeaturePatch patch = new NetworkCloudKubernetesClusterFeaturePatch()
+            NetworkCloudKubernetesClusterFeaturePatch patch = new NetworkCloudKubernetesClusterFeaturePatch
             {
                 Tags =
 {
 ["key1"] = "myvalue1",
-["key2"] = "myvalue2",
+["key2"] = "myvalue2"
 },
-                Options =
-{
-new StringKeyValuePair("featureOptionName","featureOptionValue")
-},
+                Options = { new StringKeyValuePair("featureOptionName", "featureOptionValue") },
             };
             ArmOperation<NetworkCloudKubernetesClusterFeatureResource> lro = await networkCloudKubernetesClusterFeature.UpdateAsync(WaitUntil.Completed, patch);
             NetworkCloudKubernetesClusterFeatureResource result = lro.Value;

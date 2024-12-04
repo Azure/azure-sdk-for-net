@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.NetworkCloud.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetworkCloud.Samples
@@ -99,12 +98,12 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudRackResource networkCloudRack = client.GetNetworkCloudRackResource(networkCloudRackResourceId);
 
             // invoke the operation
-            NetworkCloudRackPatch patch = new NetworkCloudRackPatch()
+            NetworkCloudRackPatch patch = new NetworkCloudRackPatch
             {
                 Tags =
 {
 ["key1"] = "myvalue1",
-["key2"] = "myvalue2",
+["key2"] = "myvalue2"
 },
                 RackLocation = "Rack 2B",
                 RackSerialNumber = "RACK_SERIAL_NUMBER",

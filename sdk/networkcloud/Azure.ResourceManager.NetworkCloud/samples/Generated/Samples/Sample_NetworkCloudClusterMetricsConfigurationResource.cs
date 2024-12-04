@@ -69,18 +69,15 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudClusterMetricsConfigurationResource networkCloudClusterMetricsConfiguration = client.GetNetworkCloudClusterMetricsConfigurationResource(networkCloudClusterMetricsConfigurationResourceId);
 
             // invoke the operation
-            NetworkCloudClusterMetricsConfigurationPatch patch = new NetworkCloudClusterMetricsConfigurationPatch()
+            NetworkCloudClusterMetricsConfigurationPatch patch = new NetworkCloudClusterMetricsConfigurationPatch
             {
                 Tags =
 {
 ["key1"] = "myvalue1",
-["key2"] = "myvalue2",
+["key2"] = "myvalue2"
 },
                 CollectionInterval = 15L,
-                EnabledMetrics =
-{
-"metric1","metric2"
-},
+                EnabledMetrics = { "metric1", "metric2" },
             };
             ArmOperation<NetworkCloudClusterMetricsConfigurationResource> lro = await networkCloudClusterMetricsConfiguration.UpdateAsync(WaitUntil.Completed, patch);
             NetworkCloudClusterMetricsConfigurationResource result = lro.Value;

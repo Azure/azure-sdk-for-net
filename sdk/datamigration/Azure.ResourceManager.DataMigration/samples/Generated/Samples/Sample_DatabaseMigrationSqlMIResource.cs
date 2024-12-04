@@ -101,34 +101,34 @@ namespace Azure.ResourceManager.DataMigration.Samples
             DatabaseMigrationSqlMIResource databaseMigrationSqlMI = client.GetDatabaseMigrationSqlMIResource(databaseMigrationSqlMIResourceId);
 
             // invoke the operation
-            DatabaseMigrationSqlMIData data = new DatabaseMigrationSqlMIData()
+            DatabaseMigrationSqlMIData data = new DatabaseMigrationSqlMIData
             {
-                Properties = new DatabaseMigrationSqlMIProperties()
+                Properties = new DatabaseMigrationSqlMIProperties
                 {
-                    BackupConfiguration = new BackupConfiguration()
+                    BackupConfiguration = new BackupConfiguration
                     {
-                        SourceLocation = new SourceLocation()
+                        SourceLocation = new SourceLocation
                         {
-                            FileShare = new SqlFileShare()
+                            FileShare = new SqlFileShare
                             {
                                 Path = "C:\\aaa\\bbb\\ccc",
                                 Username = "name",
                                 Password = "placeholder",
                             },
                         },
-                        TargetLocation = new TargetLocation()
+                        TargetLocation = new TargetLocation
                         {
                             StorageAccountResourceId = "account.database.windows.net",
                             AccountKey = "abcd",
                         },
                     },
-                    OfflineConfiguration = new OfflineConfiguration()
+                    OfflineConfiguration = new OfflineConfiguration
                     {
                         Offline = true,
                         LastBackupName = "last_backup_file_name",
                     },
                     Scope = "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.Sql/managedInstances/instance",
-                    SourceSqlConnection = new SqlConnectionInformation()
+                    SourceSqlConnection = new SqlConnectionInformation
                     {
                         DataSource = "aaa",
                         Authentication = "WindowsAuthentication",
@@ -173,29 +173,29 @@ namespace Azure.ResourceManager.DataMigration.Samples
             DatabaseMigrationSqlMIResource databaseMigrationSqlMI = client.GetDatabaseMigrationSqlMIResource(databaseMigrationSqlMIResourceId);
 
             // invoke the operation
-            DatabaseMigrationSqlMIData data = new DatabaseMigrationSqlMIData()
+            DatabaseMigrationSqlMIData data = new DatabaseMigrationSqlMIData
             {
-                Properties = new DatabaseMigrationSqlMIProperties()
+                Properties = new DatabaseMigrationSqlMIProperties
                 {
-                    BackupConfiguration = new BackupConfiguration()
+                    BackupConfiguration = new BackupConfiguration
                     {
-                        SourceLocation = new SourceLocation()
+                        SourceLocation = new SourceLocation
                         {
-                            FileShare = new SqlFileShare()
+                            FileShare = new SqlFileShare
                             {
                                 Path = "C:\\aaa\\bbb\\ccc",
                                 Username = "name",
                                 Password = "placeholder",
                             },
                         },
-                        TargetLocation = new TargetLocation()
+                        TargetLocation = new TargetLocation
                         {
                             StorageAccountResourceId = "account.database.windows.net",
                             AccountKey = "abcd",
                         },
                     },
                     Scope = "/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.Sql/managedInstances/instance",
-                    SourceSqlConnection = new SqlConnectionInformation()
+                    SourceSqlConnection = new SqlConnectionInformation
                     {
                         DataSource = "aaa",
                         Authentication = "WindowsAuthentication",
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
             DatabaseMigrationSqlMIResource databaseMigrationSqlMI = client.GetDatabaseMigrationSqlMIResource(databaseMigrationSqlMIResourceId);
 
             // invoke the operation
-            MigrationOperationInput input = new MigrationOperationInput()
+            MigrationOperationInput input = new MigrationOperationInput
             {
                 MigrationOperationId = Guid.Parse("4124fe90-d1b6-4b50-b4d9-46d02381f59a"),
             };
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
             DatabaseMigrationSqlMIResource databaseMigrationSqlMI = client.GetDatabaseMigrationSqlMIResource(databaseMigrationSqlMIResourceId);
 
             // invoke the operation
-            MigrationOperationInput input = new MigrationOperationInput()
+            MigrationOperationInput input = new MigrationOperationInput
             {
                 MigrationOperationId = Guid.Parse("4124fe90-d1b6-4b50-b4d9-46d02381f59a"),
             };

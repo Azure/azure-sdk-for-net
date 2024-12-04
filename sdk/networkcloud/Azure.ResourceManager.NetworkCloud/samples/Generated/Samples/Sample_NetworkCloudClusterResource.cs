@@ -11,7 +11,6 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetworkCloud.Samples
@@ -100,44 +99,38 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudClusterResource networkCloudCluster = client.GetNetworkCloudClusterResource(networkCloudClusterResourceId);
 
             // invoke the operation
-            NetworkCloudClusterPatch patch = new NetworkCloudClusterPatch()
+            NetworkCloudClusterPatch patch = new NetworkCloudClusterPatch
             {
                 Tags =
 {
 ["key1"] = "myvalue1",
-["key2"] = "myvalue2",
+["key2"] = "myvalue2"
 },
                 AggregatorOrSingleRackDefinition = new NetworkCloudRackDefinition(new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/networkRacks/networkRackName"), "newSerialNumber", new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/providers/Microsoft.NetworkCloud/rackSkus/rackSkuName"))
                 {
-                    BareMetalMachineConfigurationData =
-{
-new BareMetalMachineConfiguration(new AdministrativeCredentials("username")
+                    BareMetalMachineConfigurationData = {new BareMetalMachineConfiguration(new AdministrativeCredentials("username")
 {
 Password = "{password}",
-},"AA:BB:CC:DD:EE:FF","00:BB:CC:DD:EE:FF",1L,"BM1219XXX")
+}, "AA:BB:CC:DD:EE:FF", "00:BB:CC:DD:EE:FF", 1L, "BM1219XXX")
 {
 MachineDetails = "extraDetails",
 MachineName = "bmmName1",
-},new BareMetalMachineConfiguration(new AdministrativeCredentials("username")
+}, new BareMetalMachineConfiguration(new AdministrativeCredentials("username")
 {
 Password = "{password}",
-},"AA:BB:CC:DD:EE:00","00:BB:CC:DD:EE:00",2L,"BM1219YYY")
+}, "AA:BB:CC:DD:EE:00", "00:BB:CC:DD:EE:00", 2L, "BM1219YYY")
 {
 MachineDetails = "extraDetails",
 MachineName = "bmmName2",
-}
-},
+}},
                     RackLocation = "Foo Datacenter, Floor 3, Aisle 9, Rack 2",
-                    StorageApplianceConfigurationData =
-{
-new StorageApplianceConfiguration(new AdministrativeCredentials("username")
+                    StorageApplianceConfigurationData = {new StorageApplianceConfiguration(new AdministrativeCredentials("username")
 {
 Password = "{password}",
-},1L,"BM1219XXX")
+}, 1L, "BM1219XXX")
 {
 StorageApplianceName = "vmName",
-}
-},
+}},
                 },
                 ComputeDeploymentThreshold = new ValidationThreshold(ValidationThresholdGrouping.PerCluster, ValidationThresholdType.PercentSuccess, 90L),
             };
@@ -172,24 +165,24 @@ StorageApplianceName = "vmName",
             NetworkCloudClusterResource networkCloudCluster = client.GetNetworkCloudClusterResource(networkCloudClusterResourceId);
 
             // invoke the operation
-            NetworkCloudClusterPatch patch = new NetworkCloudClusterPatch()
+            NetworkCloudClusterPatch patch = new NetworkCloudClusterPatch
             {
                 Identity = new ManagedServiceIdentity("UserAssigned")
                 {
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ManagedIdentity/userAssignedIdentities/userIdentity1")] = null,
-[new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ManagedIdentity/userAssignedIdentities/userIdentity2")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ManagedIdentity/userAssignedIdentities/userIdentity1")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ManagedIdentity/userAssignedIdentities/userIdentity2")] = new UserAssignedIdentity()
 },
                 },
                 Tags =
 {
 ["key1"] = "myvalue1",
-["key2"] = "myvalue2",
+["key2"] = "myvalue2"
 },
-                CommandOutputSettings = new CommandOutputSettings()
+                CommandOutputSettings = new CommandOutputSettings
                 {
-                    AssociatedIdentity = new IdentitySelector()
+                    AssociatedIdentity = new IdentitySelector
                     {
                         IdentityType = ManagedServiceIdentitySelectorType.UserAssignedIdentity,
                         UserAssignedIdentityResourceId = new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ManagedIdentity/userAssignedIdentities/userIdentity2"),
@@ -228,12 +221,12 @@ StorageApplianceName = "vmName",
             NetworkCloudClusterResource networkCloudCluster = client.GetNetworkCloudClusterResource(networkCloudClusterResourceId);
 
             // invoke the operation
-            NetworkCloudClusterPatch patch = new NetworkCloudClusterPatch()
+            NetworkCloudClusterPatch patch = new NetworkCloudClusterPatch
             {
                 Tags =
 {
 ["key1"] = "myvalue1",
-["key2"] = "myvalue2",
+["key2"] = "myvalue2"
 },
                 ClusterLocation = "Foo Street, 3rd Floor, row 9",
             };
@@ -268,12 +261,12 @@ StorageApplianceName = "vmName",
             NetworkCloudClusterResource networkCloudCluster = client.GetNetworkCloudClusterResource(networkCloudClusterResourceId);
 
             // invoke the operation
-            NetworkCloudClusterPatch patch = new NetworkCloudClusterPatch()
+            NetworkCloudClusterPatch patch = new NetworkCloudClusterPatch
             {
                 Tags =
 {
 ["key1"] = "myvalue1",
-["key2"] = "myvalue2",
+["key2"] = "myvalue2"
 },
                 RuntimeProtectionEnforcementLevel = RuntimeProtectionEnforcementLevel.OnDemand,
             };
@@ -308,12 +301,12 @@ StorageApplianceName = "vmName",
             NetworkCloudClusterResource networkCloudCluster = client.GetNetworkCloudClusterResource(networkCloudClusterResourceId);
 
             // invoke the operation
-            NetworkCloudClusterPatch patch = new NetworkCloudClusterPatch()
+            NetworkCloudClusterPatch patch = new NetworkCloudClusterPatch
             {
                 Tags =
 {
 ["key1"] = "myvalue1",
-["key2"] = "myvalue2",
+["key2"] = "myvalue2"
 },
                 SecretArchive = new ClusterSecretArchive(new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.KeyVault/vaults/keyVaultName"))
                 {
@@ -351,12 +344,12 @@ StorageApplianceName = "vmName",
             NetworkCloudClusterResource networkCloudCluster = client.GetNetworkCloudClusterResource(networkCloudClusterResourceId);
 
             // invoke the operation
-            NetworkCloudClusterPatch patch = new NetworkCloudClusterPatch()
+            NetworkCloudClusterPatch patch = new NetworkCloudClusterPatch
             {
                 Tags =
 {
 ["key1"] = "myvalue1",
-["key2"] = "myvalue2",
+["key2"] = "myvalue2"
 },
                 UpdateStrategy = new ClusterUpdateStrategy(ClusterUpdateStrategyType.Rack, ValidationThresholdType.CountSuccess, 4L)
                 {
@@ -395,7 +388,7 @@ StorageApplianceName = "vmName",
             NetworkCloudClusterResource networkCloudCluster = client.GetNetworkCloudClusterResource(networkCloudClusterResourceId);
 
             // invoke the operation
-            ClusterContinueUpdateVersionContent content = new ClusterContinueUpdateVersionContent()
+            ClusterContinueUpdateVersionContent content = new ClusterContinueUpdateVersionContent
             {
                 MachineGroupTargetingMode = ClusterContinueUpdateVersionMachineGroupTargetingMode.AlphaByRack,
             };
@@ -454,12 +447,9 @@ StorageApplianceName = "vmName",
             NetworkCloudClusterResource networkCloudCluster = client.GetNetworkCloudClusterResource(networkCloudClusterResourceId);
 
             // invoke the operation
-            ClusterDeployContent content = new ClusterDeployContent()
+            ClusterDeployContent content = new ClusterDeployContent
             {
-                SkipValidationsForMachines =
-{
-"bmmName1"
-},
+                SkipValidationsForMachines = { "bmmName1" },
             };
             ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudCluster.DeployAsync(WaitUntil.Completed, content: content);
             NetworkCloudOperationStatusResult result = lro.Value;
@@ -488,7 +478,7 @@ StorageApplianceName = "vmName",
             NetworkCloudClusterResource networkCloudCluster = client.GetNetworkCloudClusterResource(networkCloudClusterResourceId);
 
             // invoke the operation
-            ClusterScanRuntimeContent content = new ClusterScanRuntimeContent()
+            ClusterScanRuntimeContent content = new ClusterScanRuntimeContent
             {
                 ScanActivity = ClusterScanRuntimeParametersScanActivity.Scan,
             };

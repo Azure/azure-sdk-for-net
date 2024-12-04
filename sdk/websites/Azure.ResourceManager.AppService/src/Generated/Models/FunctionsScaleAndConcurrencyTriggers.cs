@@ -63,14 +63,14 @@ namespace Azure.ResourceManager.AppService.Models
         internal FunctionsScaleAndConcurrencyTriggersHttp Http { get; set; }
         /// <summary> The maximum number of concurrent HTTP trigger invocations per instance. </summary>
         [WirePath("http.perInstanceConcurrency")]
-        public float? HttpPerInstanceConcurrency
+        public int? ConcurrentHttpPerInstanceConcurrency
         {
-            get => Http is null ? default : Http.PerInstanceConcurrency;
+            get => Http is null ? default : Http.ConcurrentHttpPerInstanceConcurrency;
             set
             {
                 if (Http is null)
                     Http = new FunctionsScaleAndConcurrencyTriggersHttp();
-                Http.PerInstanceConcurrency = value;
+                Http.ConcurrentHttpPerInstanceConcurrency = value;
             }
         }
     }

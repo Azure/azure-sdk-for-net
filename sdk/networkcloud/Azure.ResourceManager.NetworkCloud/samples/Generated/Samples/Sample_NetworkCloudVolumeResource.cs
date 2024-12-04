@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.NetworkCloud.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetworkCloud.Samples
@@ -99,12 +98,12 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudVolumeResource networkCloudVolume = client.GetNetworkCloudVolumeResource(networkCloudVolumeResourceId);
 
             // invoke the operation
-            NetworkCloudVolumePatch patch = new NetworkCloudVolumePatch()
+            NetworkCloudVolumePatch patch = new NetworkCloudVolumePatch
             {
                 Tags =
 {
 ["key1"] = "myvalue1",
-["key2"] = "myvalue2",
+["key2"] = "myvalue2"
 },
             };
             NetworkCloudVolumeResource result = await networkCloudVolume.UpdateAsync(patch);
