@@ -601,21 +601,21 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         }
 
         [TestCaseSource(nameof(TestData_HoldOperationsAsync))]
-        public async Task HoldMusicAsyncOperations_Return200Ok(Func<CallMedia, Task<Response>> operation)
+        public async Task HoldMusicAsyncOperations_Return200Ok(Func<CallMedia, Task<Response<HoldResult>>> operation)
         {
             _callMedia = GetCallMedia(200);
             var result = await operation(_callMedia);
             Assert.IsNotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+            Assert.AreEqual((int)HttpStatusCode.OK, result.GetRawResponse().Status);
         }
 
         [TestCaseSource(nameof(TestData_HoldOperations))]
-        public void HoldMusicOperations_Return200Ok(Func<CallMedia, Response> operation)
+        public void HoldMusicOperations_Return200Ok(Func<CallMedia, Response<HoldResult>> operation)
         {
             _callMedia = GetCallMedia(200);
             var result = operation(_callMedia);
             Assert.IsNotNull(result);
-            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+            Assert.AreEqual((int)HttpStatusCode.OK, result.GetRawResponse().Status);
         }
 
         private static IEnumerable<object?[]> TestData_PlayOperationsAsync()
@@ -992,15 +992,15 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             return new[]
             {
-                new Func<CallMedia, Task<Response>>?[]
+                new Func<CallMedia, Task<Response<HoldResult>>>?[]
                 {
                    callMedia => callMedia.HoldAsync(_holdOptions)
                 },
-                new Func<CallMedia, Task<Response>>?[]
+                new Func<CallMedia, Task<Response<HoldResult>>>?[]
                 {
                    callMedia => callMedia.HoldAsync(_holdOptionsNoMusic)
                 },
-                new Func<CallMedia, Task<Response>>?[]
+                new Func<CallMedia, Task<Response<HoldResult>>>?[]
                 {
                    callMedia => callMedia.UnholdAsync(_unholdOptions)
                 }
@@ -1011,15 +1011,15 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             return new[]
             {
-                new Func<CallMedia, Response>?[]
+                new Func<CallMedia, Response<HoldResult>>?[]
                 {
                    callMedia => callMedia.Hold(_holdOptions)
                 },
-                new Func<CallMedia, Response>?[]
+                new Func<CallMedia, Response<HoldResult>>?[]
                 {
                    callMedia => callMedia.Hold(_holdOptionsNoMusic)
                 },
-                new Func<CallMedia, Response>?[]
+                new Func<CallMedia, Response<HoldResult>>?[]
                 {
                    callMedia => callMedia.Unhold(_unholdOptions)
                 }
