@@ -6,7 +6,6 @@
 using System;
 using System.Linq;
 using System.Text.Json;
-using Azure.CloudMachine.KeyVault;
 using Azure.CloudMachine.OpenAI;
 using Azure.Core;
 using Azure.Storage.Blobs;
@@ -61,20 +60,6 @@ public class ConnectionTests
         if (args.Contains("-azd")) Azd.Init(client);
 
         ChatClient chat = client.GetOpenAIChatClient();
-    }
-
-    [Test]
-    public void SingleClientConfigure()
-    {
-        CloudMachineClient client = new();
-        client.Configure((infrastructure) =>
-        {
-            infrastructure.AddFeature(new KeyVaultFeature());
-            infrastructure.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
-            infrastructure.AddFeature(new OpenAIModelFeature("text-embedding-ada-002", "2", AIModelKind.Embedding));
-        });
-        ValidateClient(client);
-        var embeddings = client.GetOpenAIEmbeddingsClient();
     }
 
     private static void ValidateClient(CloudMachineClient client)

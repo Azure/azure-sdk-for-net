@@ -10,7 +10,7 @@ namespace Azure.CloudMachine;
 
 public static class CloudMachineClientExtensions
 {
-    public static void Configure(this CloudMachineClient client, Action<CloudMachineInfrastructure>? configure = default)
+    private static void Configure(this CloudMachineClient client, Action<CloudMachineInfrastructure>? configure = default)
     {
         CloudMachineInfrastructure cmi = new(client.Id);
         if (configure != default)

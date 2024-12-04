@@ -45,7 +45,7 @@ public partial class CloudMachineClient : ClientWorkspace
     /// <param name="connections"></param>
     public CloudMachineClient(TokenCredential credential = default, IConfiguration configuration = default, IEnumerable<ClientConnection> connections = default)
 #pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
-        : base(credential)
+        : base(BuildCredentail(credential))
     {
         if (connections != default)
         {

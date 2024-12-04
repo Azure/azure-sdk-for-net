@@ -15,45 +15,33 @@ namespace Azure.CloudMachine;
 
 public static class CloudMachineCommands
 {
-    public static bool Execute(string[] args, Action<CloudMachineInfrastructure>? configure = default, bool exitProcessIfHandled = true)
+    public static bool TryExecuteCommand(this CloudMachineInfrastructure cmi, string[] args)
     {
         if (args.Length < 1)
             return false;
 
         string cmid = CloudMachineClient.ReadOrCreateCloudMachineId();
-        CloudMachineInfrastructure cmi = new(cmid);
-        if (configure != default)
-        {
-            configure(cmi);
-        }
 
         if (args[0] == "-bicep")
         {
             Azd.Init(cmi);
-            return Handled(exitProcessIfHandled);
+            return true;
         }
 
         if (args[0] == "-tsp")
         {
             GenerateTsp(cmi.Endpoints);
-            return Handled(exitProcessIfHandled);
+            return true;
         }
 
         if (args[0] == "-ai")
         {
             string? option = (args.Length > 1) ? args[1] : default;
             ListAzureOpenaAIModels(cmid, option);
-            return Handled(exitProcessIfHandled);
+            return true;
         }
 
         return false;
-
-        static bool Handled(bool exitProcessIfHandled)
-        {
-            if (exitProcessIfHandled)
-                Environment.Exit(0);
-            return true;
-        }
     }
 
     // this implements: https://learn.microsoft.com/en-us/rest/api/azureopenai/models/list

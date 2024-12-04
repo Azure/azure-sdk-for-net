@@ -17,16 +17,15 @@ public partial class CloudMachineTests
     [TestCase([new string[] { "-azd" }])]
     public void GettingStarted(string[] args)
     {
-        CloudMachineInfrastructure infra = new();
-        infra.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
+        CloudMachineInfrastructure cm = new();
+        cm.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
 
         if (args.Contains("-azd")) {
-            Azd.Init(infra);
+            Azd.Init(cm);
             return;
         }
 
-        // TODO: we need to allow newing up the client.
-        CloudMachineClient client = infra.GetClient();
+        CloudMachineClient client = new(connections: cm.Connections);
 
         ChatClient chat = client.GetOpenAIChatClient();
         string completion = chat.CompleteChat("List all noble gases.").AsText();
