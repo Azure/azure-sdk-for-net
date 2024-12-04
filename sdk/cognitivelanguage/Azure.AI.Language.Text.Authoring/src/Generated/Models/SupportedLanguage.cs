@@ -46,10 +46,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SupportedLanguage"/>. </summary>
-        /// <param name="languageCode">
-        /// The language code. This is BCP-47 representation of a language. For example,
-        /// "en" for English, "en-gb" for English (UK), "es" for Spanish etc.
-        /// </param>
+        /// <param name="languageCode"> The language code. This is BCP-47 representation of a language. For example, "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="languageCode"/> is null. </exception>
         internal SupportedLanguage(string languageCode)
         {
@@ -60,10 +57,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
 
         /// <summary> Initializes a new instance of <see cref="SupportedLanguage"/>. </summary>
         /// <param name="languageName"> The language name. </param>
-        /// <param name="languageCode">
-        /// The language code. This is BCP-47 representation of a language. For example,
-        /// "en" for English, "en-gb" for English (UK), "es" for Spanish etc.
-        /// </param>
+        /// <param name="languageCode"> The language code. This is BCP-47 representation of a language. For example, "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SupportedLanguage(string languageName, string languageCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -79,10 +73,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
 
         /// <summary> The language name. </summary>
         public string LanguageName { get; }
-        /// <summary>
-        /// The language code. This is BCP-47 representation of a language. For example,
-        /// "en" for English, "en-gb" for English (UK), "es" for Spanish etc.
-        /// </summary>
+        /// <summary> The language code. This is BCP-47 representation of a language. For example, "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </summary>
         public string LanguageCode { get; }
     }
 }

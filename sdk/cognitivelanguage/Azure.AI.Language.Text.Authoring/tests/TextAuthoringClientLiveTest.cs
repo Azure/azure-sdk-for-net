@@ -53,7 +53,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests
             // Arrange
             string projectName = "MyImportTextProject";
 
-            var projectMetadata = new CreateProjectConfig(
+            var projectMetadata = new CreateProjectDetails(
                 projectKind: "CustomSingleLabelClassification",
                 storageInputContainerName: "test-data",
                 projectName: projectName,
@@ -171,12 +171,12 @@ namespace Azure.AI.Language.Text.Authoring.Tests
             // Arrange
             string projectName = "MyTextProject";
 
-            var trainingJobConfig = new TrainingJobConfig(
+            var trainingJobDetails = new TrainingJobDetails(
                 modelLabel: "model1",
                 trainingConfigVersion: "2022-05-01"
             )
             {
-                EvaluationOptions = new EvaluationConfig
+                EvaluationOptions = new EvaluationDetails
                 {
                     Kind = EvaluationKind.Percentage,
                     TestingSplitPercentage = 20,
@@ -188,7 +188,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests
             Operation<TrainingJobResult> operation = await client.TrainAsync(
                 waitUntil: WaitUntil.Started,
                 projectName: projectName,
-                body: trainingJobConfig
+                body: trainingJobDetails
             );
 
             // Assert
@@ -348,14 +348,14 @@ namespace Azure.AI.Language.Text.Authoring.Tests
             // Arrange
             string projectName = "MyTextProject";
             string deploymentName = "deployment1";
-            var deploymentConfig = new CreateDeploymentConfig(trainedModelLabel: "m2");
+            var deploymentDetails = new CreateDeploymentDetails(trainedModelLabel: "m2");
 
             // Act
             Operation operation = await client.DeployProjectAsync(
                 waitUntil: WaitUntil.Completed,
                 projectName: projectName,
                 deploymentName: deploymentName,
-                body: deploymentConfig
+                body: deploymentDetails
             );
 
             // Assert
@@ -371,7 +371,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests
         {
             // Arrange
             string projectName = "MyTextProject";
-            var swapConfig = new SwapDeploymentsConfig(
+            var swapDetails = new SwapDeploymentsDetails(
                 firstDeploymentName: "deployment1",
                 secondDeploymentName: "deployment2"
             );
@@ -380,7 +380,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests
             Operation operation = await client.SwapDeploymentsAsync(
                 waitUntil: WaitUntil.Completed,
                 projectName: projectName,
-                body: swapConfig
+                body: swapDetails
             );
 
             // Assert

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text.Authoring.Models
 {
     /// <summary> Represents the options for creating or updating a project deployment. </summary>
-    public partial class CreateDeploymentConfig
+    public partial class CreateDeploymentDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,10 +45,10 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CreateDeploymentConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateDeploymentDetails"/>. </summary>
         /// <param name="trainedModelLabel"> Represents the trained model label. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trainedModelLabel"/> is null. </exception>
-        public CreateDeploymentConfig(string trainedModelLabel)
+        public CreateDeploymentDetails(string trainedModelLabel)
         {
             Argument.AssertNotNull(trainedModelLabel, nameof(trainedModelLabel));
 
@@ -56,33 +56,25 @@ namespace Azure.AI.Language.Text.Authoring.Models
             AssignedResourceIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreateDeploymentConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateDeploymentDetails"/>. </summary>
         /// <param name="trainedModelLabel"> Represents the trained model label. </param>
-        /// <param name="assignedResourceIds">
-        /// Represents the resource IDs to be assigned to the deployment.
-        /// If provided, the deployment will be rolled out to the resources
-        /// provided here as well as the original resource in which the project is created.
-        /// </param>
+        /// <param name="assignedResourceIds"> Represents the resource IDs to be assigned to the deployment. If provided, the deployment will be rolled out to the resources provided here as well as the original resource in which the project is created. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CreateDeploymentConfig(string trainedModelLabel, IList<string> assignedResourceIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CreateDeploymentDetails(string trainedModelLabel, IList<string> assignedResourceIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TrainedModelLabel = trainedModelLabel;
             AssignedResourceIds = assignedResourceIds;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreateDeploymentConfig"/> for deserialization. </summary>
-        internal CreateDeploymentConfig()
+        /// <summary> Initializes a new instance of <see cref="CreateDeploymentDetails"/> for deserialization. </summary>
+        internal CreateDeploymentDetails()
         {
         }
 
         /// <summary> Represents the trained model label. </summary>
         public string TrainedModelLabel { get; }
-        /// <summary>
-        /// Represents the resource IDs to be assigned to the deployment.
-        /// If provided, the deployment will be rolled out to the resources
-        /// provided here as well as the original resource in which the project is created.
-        /// </summary>
+        /// <summary> Represents the resource IDs to be assigned to the deployment. If provided, the deployment will be rolled out to the resources provided here as well as the original resource in which the project is created. </summary>
         public IList<string> AssignedResourceIds { get; }
     }
 }

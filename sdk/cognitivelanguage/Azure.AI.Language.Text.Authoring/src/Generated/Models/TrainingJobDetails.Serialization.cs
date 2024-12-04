@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text.Authoring.Models
 {
-    public partial class TrainingJobConfig : IUtf8JsonSerializable, IJsonModel<TrainingJobConfig>
+    public partial class TrainingJobDetails : IUtf8JsonSerializable, IJsonModel<TrainingJobDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrainingJobConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrainingJobDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<TrainingJobConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TrainingJobDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TrainingJobConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TrainingJobDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrainingJobConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TrainingJobDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,19 +58,19 @@ namespace Azure.AI.Language.Text.Authoring.Models
             writer.WriteEndObject();
         }
 
-        TrainingJobConfig IJsonModel<TrainingJobConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        TrainingJobDetails IJsonModel<TrainingJobDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TrainingJobConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TrainingJobDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrainingJobConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TrainingJobDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTrainingJobConfig(document.RootElement, options);
+            return DeserializeTrainingJobDetails(document.RootElement, options);
         }
 
-        internal static TrainingJobConfig DeserializeTrainingJobConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static TrainingJobDetails DeserializeTrainingJobDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -80,7 +80,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
             }
             string modelLabel = default;
             string trainingConfigVersion = default;
-            EvaluationConfig evaluationOptions = default;
+            EvaluationDetails evaluationOptions = default;
             DataGenerationSettings dataGenerationSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -102,7 +102,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
                     {
                         continue;
                     }
-                    evaluationOptions = EvaluationConfig.DeserializeEvaluationConfig(property.Value, options);
+                    evaluationOptions = EvaluationDetails.DeserializeEvaluationDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataGenerationSettings"u8))
@@ -120,46 +120,46 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TrainingJobConfig(modelLabel, trainingConfigVersion, evaluationOptions, dataGenerationSettings, serializedAdditionalRawData);
+            return new TrainingJobDetails(modelLabel, trainingConfigVersion, evaluationOptions, dataGenerationSettings, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<TrainingJobConfig>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<TrainingJobDetails>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TrainingJobConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TrainingJobDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TrainingJobConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrainingJobDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
-        TrainingJobConfig IPersistableModel<TrainingJobConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        TrainingJobDetails IPersistableModel<TrainingJobDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TrainingJobConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TrainingJobDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeTrainingJobConfig(document.RootElement, options);
+                        return DeserializeTrainingJobDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TrainingJobConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrainingJobDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<TrainingJobConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TrainingJobDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static TrainingJobConfig FromResponse(Response response)
+        internal static TrainingJobDetails FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeTrainingJobConfig(document.RootElement);
+            return DeserializeTrainingJobDetails(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

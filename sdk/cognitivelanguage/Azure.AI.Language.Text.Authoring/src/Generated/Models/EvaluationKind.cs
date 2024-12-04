@@ -25,10 +25,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         private const string PercentageValue = "percentage";
         private const string ManualValue = "manual";
 
-        /// <summary>
-        /// Split the data into training and test sets according to user-defined
-        /// percentages.
-        /// </summary>
+        /// <summary> Split the data into training and test sets according to user-defined percentages. </summary>
         public static EvaluationKind Percentage { get; } = new EvaluationKind(PercentageValue);
         /// <summary> Split the data according to the chosen dataset for every example in the data. </summary>
         public static EvaluationKind Manual { get; } = new EvaluationKind(ManualValue);

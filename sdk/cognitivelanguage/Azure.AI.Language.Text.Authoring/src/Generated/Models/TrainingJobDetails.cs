@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text.Authoring.Models
 {
     /// <summary> Represents the options for starting a new training job. </summary>
-    public partial class TrainingJobConfig
+    public partial class TrainingJobDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,11 +45,11 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="TrainingJobConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrainingJobDetails"/>. </summary>
         /// <param name="modelLabel"> Represents the output model label. </param>
         /// <param name="trainingConfigVersion"> Represents training config version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelLabel"/> or <paramref name="trainingConfigVersion"/> is null. </exception>
-        public TrainingJobConfig(string modelLabel, string trainingConfigVersion)
+        public TrainingJobDetails(string modelLabel, string trainingConfigVersion)
         {
             Argument.AssertNotNull(modelLabel, nameof(modelLabel));
             Argument.AssertNotNull(trainingConfigVersion, nameof(trainingConfigVersion));
@@ -58,17 +58,13 @@ namespace Azure.AI.Language.Text.Authoring.Models
             TrainingConfigVersion = trainingConfigVersion;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TrainingJobConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrainingJobDetails"/>. </summary>
         /// <param name="modelLabel"> Represents the output model label. </param>
         /// <param name="trainingConfigVersion"> Represents training config version. </param>
-        /// <param name="evaluationOptions">
-        /// Represents the evaluation options. By default, the evaluation kind is
-        /// percentage, with training split percentage as 80, and testing split percentage
-        /// as 20.
-        /// </param>
+        /// <param name="evaluationOptions"> Represents the evaluation options. By default, the evaluation kind is percentage, with training split percentage as 80, and testing split percentage as 20. </param>
         /// <param name="dataGenerationSettings"> Represents the settings for using data generation as part of training a custom model. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrainingJobConfig(string modelLabel, string trainingConfigVersion, EvaluationConfig evaluationOptions, DataGenerationSettings dataGenerationSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TrainingJobDetails(string modelLabel, string trainingConfigVersion, EvaluationDetails evaluationOptions, DataGenerationSettings dataGenerationSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ModelLabel = modelLabel;
             TrainingConfigVersion = trainingConfigVersion;
@@ -77,8 +73,8 @@ namespace Azure.AI.Language.Text.Authoring.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TrainingJobConfig"/> for deserialization. </summary>
-        internal TrainingJobConfig()
+        /// <summary> Initializes a new instance of <see cref="TrainingJobDetails"/> for deserialization. </summary>
+        internal TrainingJobDetails()
         {
         }
 
@@ -86,12 +82,8 @@ namespace Azure.AI.Language.Text.Authoring.Models
         public string ModelLabel { get; }
         /// <summary> Represents training config version. </summary>
         public string TrainingConfigVersion { get; }
-        /// <summary>
-        /// Represents the evaluation options. By default, the evaluation kind is
-        /// percentage, with training split percentage as 80, and testing split percentage
-        /// as 20.
-        /// </summary>
-        public EvaluationConfig EvaluationOptions { get; set; }
+        /// <summary> Represents the evaluation options. By default, the evaluation kind is percentage, with training split percentage as 80, and testing split percentage as 20. </summary>
+        public EvaluationDetails EvaluationOptions { get; set; }
         /// <summary> Represents the settings for using data generation as part of training a custom model. </summary>
         public DataGenerationSettings DataGenerationSettings { get; set; }
     }

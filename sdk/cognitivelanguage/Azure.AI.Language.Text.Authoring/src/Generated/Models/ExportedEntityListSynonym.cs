@@ -52,11 +52,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ExportedEntityListSynonym"/>. </summary>
-        /// <param name="language">
-        /// Represents the language of the synonyms. This is BCP-47 representation of a
-        /// language. For example, use "en" for English, "en-gb" for English (UK), "es" for
-        /// Spanish etc.
-        /// </param>
+        /// <param name="language"> Represents the language of the synonyms. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="values"> The list of synonyms. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ExportedEntityListSynonym(string language, IList<string> values, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -66,11 +62,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Represents the language of the synonyms. This is BCP-47 representation of a
-        /// language. For example, use "en" for English, "en-gb" for English (UK), "es" for
-        /// Spanish etc.
-        /// </summary>
+        /// <summary> Represents the language of the synonyms. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </summary>
         public string Language { get; set; }
         /// <summary> The list of synonyms. </summary>
         public IList<string> Values { get; }

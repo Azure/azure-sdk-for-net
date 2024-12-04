@@ -15,11 +15,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
     {
         /// <summary> Initializes a new instance of <see cref="CustomTextSentimentDocumentEvaluationResult"/>. </summary>
         /// <param name="location"> Represents the document path. </param>
-        /// <param name="language">
-        /// Represents the document language. This is BCP-47 representation of a language.
-        /// For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish
-        /// etc.
-        /// </param>
+        /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="customTextSentimentResult"> Represents the evaluation prediction for text sentiment. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="language"/> or <paramref name="customTextSentimentResult"/> is null. </exception>
         internal CustomTextSentimentDocumentEvaluationResult(string location, string language, DocumentTextSentimentEvaluationResult customTextSentimentResult) : base(location, language)
@@ -35,11 +31,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <summary> Initializes a new instance of <see cref="CustomTextSentimentDocumentEvaluationResult"/>. </summary>
         /// <param name="projectKind"> Represents the project kind. </param>
         /// <param name="location"> Represents the document path. </param>
-        /// <param name="language">
-        /// Represents the document language. This is BCP-47 representation of a language.
-        /// For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish
-        /// etc.
-        /// </param>
+        /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="customTextSentimentResult"> Represents the evaluation prediction for text sentiment. </param>
         internal CustomTextSentimentDocumentEvaluationResult(ProjectKind projectKind, string location, string language, IDictionary<string, BinaryData> serializedAdditionalRawData, DocumentTextSentimentEvaluationResult customTextSentimentResult) : base(projectKind, location, language, serializedAdditionalRawData)

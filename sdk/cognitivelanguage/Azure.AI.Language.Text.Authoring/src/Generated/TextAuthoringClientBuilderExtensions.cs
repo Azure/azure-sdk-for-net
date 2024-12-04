@@ -15,10 +15,7 @@ namespace Azure.AI.Language.Text.Authoring
     {
         /// <summary> Registers a <see cref="AuthoringClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint">
-        /// Supported Cognitive Services endpoint (e.g.,
-        /// https://&lt;resource-name&gt;.api.cognitiveservices.azure.com).
-        /// </param>
+        /// <param name="endpoint"> Supported Cognitive Services endpoint e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         public static IAzureClientBuilder<AuthoringClient, AuthoringClientOptions> AddAuthoringClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
         where TBuilder : IAzureClientFactoryBuilder
@@ -28,10 +25,7 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <summary> Registers a <see cref="AuthoringClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint">
-        /// Supported Cognitive Services endpoint (e.g.,
-        /// https://&lt;resource-name&gt;.api.cognitiveservices.azure.com).
-        /// </param>
+        /// <param name="endpoint"> Supported Cognitive Services endpoint e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com. </param>
         public static IAzureClientBuilder<AuthoringClient, AuthoringClientOptions> AddAuthoringClient<TBuilder>(this TBuilder builder, Uri endpoint)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {

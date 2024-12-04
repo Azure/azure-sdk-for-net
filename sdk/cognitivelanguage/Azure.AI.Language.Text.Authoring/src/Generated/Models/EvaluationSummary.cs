@@ -52,7 +52,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <summary> Initializes a new instance of <see cref="EvaluationSummary"/>. </summary>
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="evaluationOptions"/> is null. </exception>
-        protected EvaluationSummary(EvaluationConfig evaluationOptions)
+        protected EvaluationSummary(EvaluationDetails evaluationOptions)
         {
             Argument.AssertNotNull(evaluationOptions, nameof(evaluationOptions));
 
@@ -63,7 +63,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="projectKind"> Represents the project type that the evaluation ran on. </param>
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluationSummary(ProjectKind projectKind, EvaluationConfig evaluationOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EvaluationSummary(ProjectKind projectKind, EvaluationDetails evaluationOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProjectKind = projectKind;
             EvaluationOptions = evaluationOptions;
@@ -78,6 +78,6 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <summary> Represents the project type that the evaluation ran on. </summary>
         internal ProjectKind ProjectKind { get; set; }
         /// <summary> Represents the options used running the evaluation. </summary>
-        public EvaluationConfig EvaluationOptions { get; }
+        public EvaluationDetails EvaluationOptions { get; }
     }
 }

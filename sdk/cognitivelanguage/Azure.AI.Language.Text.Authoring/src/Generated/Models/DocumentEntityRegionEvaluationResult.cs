@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.AI.Language.Text.Authoring.Models
 {
-    /// <summary>
-    /// Represents the evaluation comparison between the expected and predicted
-    /// entities of a document region.
-    /// </summary>
+    /// <summary> Represents the evaluation comparison between the expected and predicted entities of a document region. </summary>
     public partial class DocumentEntityRegionEvaluationResult
     {
         /// <summary>

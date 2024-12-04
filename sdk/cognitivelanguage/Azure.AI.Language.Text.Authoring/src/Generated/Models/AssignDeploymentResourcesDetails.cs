@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.Language.Text.Authoring.Models
 {
     /// <summary> Represents the options for assigning Azure resources to a project. </summary>
-    public partial class AssignDeploymentResourcesConfig
+    public partial class AssignDeploymentResourcesDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,27 +46,27 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AssignDeploymentResourcesConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssignDeploymentResourcesDetails"/>. </summary>
         /// <param name="resourcesMetadata"> Represents the metadata for the resources to be assigned. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourcesMetadata"/> is null. </exception>
-        public AssignDeploymentResourcesConfig(IEnumerable<ResourceMetadata> resourcesMetadata)
+        public AssignDeploymentResourcesDetails(IEnumerable<ResourceMetadata> resourcesMetadata)
         {
             Argument.AssertNotNull(resourcesMetadata, nameof(resourcesMetadata));
 
             ResourcesMetadata = resourcesMetadata.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AssignDeploymentResourcesConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssignDeploymentResourcesDetails"/>. </summary>
         /// <param name="resourcesMetadata"> Represents the metadata for the resources to be assigned. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssignDeploymentResourcesConfig(IList<ResourceMetadata> resourcesMetadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AssignDeploymentResourcesDetails(IList<ResourceMetadata> resourcesMetadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourcesMetadata = resourcesMetadata;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AssignDeploymentResourcesConfig"/> for deserialization. </summary>
-        internal AssignDeploymentResourcesConfig()
+        /// <summary> Initializes a new instance of <see cref="AssignDeploymentResourcesDetails"/> for deserialization. </summary>
+        internal AssignDeploymentResourcesDetails()
         {
         }
 

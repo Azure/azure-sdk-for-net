@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.AI.Language.Text.Authoring.Models
 {
-    /// <summary> Represents the options to unassign Azure resources from a project. </summary>
-    public partial class UnassignDeploymentResourcesConfig
+    /// <summary> Represents the options for deleting a project deployment. </summary>
+    public partial class DeleteDeploymentDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,31 +45,22 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="UnassignDeploymentResourcesConfig"/>. </summary>
-        /// <param name="assignedResourceIds"> Represents the assigned resource IDs to be unassigned. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assignedResourceIds"/> is null. </exception>
-        public UnassignDeploymentResourcesConfig(IEnumerable<string> assignedResourceIds)
+        /// <summary> Initializes a new instance of <see cref="DeleteDeploymentDetails"/>. </summary>
+        public DeleteDeploymentDetails()
         {
-            Argument.AssertNotNull(assignedResourceIds, nameof(assignedResourceIds));
-
-            AssignedResourceIds = assignedResourceIds.ToList();
+            AssignedResourceIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="UnassignDeploymentResourcesConfig"/>. </summary>
-        /// <param name="assignedResourceIds"> Represents the assigned resource IDs to be unassigned. </param>
+        /// <summary> Initializes a new instance of <see cref="DeleteDeploymentDetails"/>. </summary>
+        /// <param name="assignedResourceIds"> Represents the resource IDs to delete the deployment from. If not provided, the deployment will be rolled out from all the resources it is deployed to. If provided, it will delete the deployment only from the specified assigned resources, and leave it for the rest. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnassignDeploymentResourcesConfig(IList<string> assignedResourceIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeleteDeploymentDetails(IList<string> assignedResourceIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AssignedResourceIds = assignedResourceIds;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UnassignDeploymentResourcesConfig"/> for deserialization. </summary>
-        internal UnassignDeploymentResourcesConfig()
-        {
-        }
-
-        /// <summary> Represents the assigned resource IDs to be unassigned. </summary>
+        /// <summary> Represents the resource IDs to delete the deployment from. If not provided, the deployment will be rolled out from all the resources it is deployed to. If provided, it will delete the deployment only from the specified assigned resources, and leave it for the rest. </summary>
         public IList<string> AssignedResourceIds { get; }
     }
 }

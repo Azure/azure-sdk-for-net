@@ -271,7 +271,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<CopyProjectConfig> response = await client.CopyProjectAuthorizationAsync("<projectName>", ProjectKind.CustomSingleLabelClassification);
+Response<CopyProjectDetails> response = await client.CopyProjectAuthorizationAsync("<projectName>", ProjectKind.CustomSingleLabelClassification);
 ]]></code>
 This sample shows how to call CopyProjectAuthorizationAsync with all parameters.
 <code><![CDATA[
@@ -279,7 +279,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<CopyProjectConfig> response = await client.CopyProjectAuthorizationAsync("<projectName>", ProjectKind.CustomSingleLabelClassification, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
+Response<CopyProjectDetails> response = await client.CopyProjectAuthorizationAsync("<projectName>", ProjectKind.CustomSingleLabelClassification, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
 ]]></code></example>
     </member>
     <member name="CopyProjectAuthorization(string,ProjectKind,string,bool?,CancellationToken)">
@@ -290,7 +290,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<CopyProjectConfig> response = client.CopyProjectAuthorization("<projectName>", ProjectKind.CustomSingleLabelClassification);
+Response<CopyProjectDetails> response = client.CopyProjectAuthorization("<projectName>", ProjectKind.CustomSingleLabelClassification);
 ]]></code>
 This sample shows how to call CopyProjectAuthorization with all parameters.
 <code><![CDATA[
@@ -298,7 +298,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-Response<CopyProjectConfig> response = client.CopyProjectAuthorization("<projectName>", ProjectKind.CustomSingleLabelClassification, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
+Response<CopyProjectDetails> response = client.CopyProjectAuthorization("<projectName>", ProjectKind.CustomSingleLabelClassification, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
 ]]></code></example>
     </member>
     <member name="CopyProjectAuthorizationAsync(string,RequestContent,RequestContext)">
@@ -4119,7 +4119,7 @@ TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetText
 Operation operation = client.DeleteProject(WaitUntil.Completed, "<projectName>");
 ]]></code></example>
     </member>
-    <member name="CopyProjectAsync(WaitUntil,string,CopyProjectConfig,CancellationToken)">
+    <member name="CopyProjectAsync(WaitUntil,string,CopyProjectDetails,CancellationToken)">
       <example>
 This sample shows how to call CopyProjectAsync.
 <code><![CDATA[
@@ -4127,7 +4127,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-CopyProjectConfig body = new CopyProjectConfig(
+CopyProjectDetails body = new CopyProjectDetails(
 ProjectKind.CustomSingleLabelClassification,
 "<targetProjectName>",
 "<accessToken>",
@@ -4142,7 +4142,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-CopyProjectConfig body = new CopyProjectConfig(
+CopyProjectDetails body = new CopyProjectDetails(
 ProjectKind.CustomSingleLabelClassification,
 "<targetProjectName>",
 "<accessToken>",
@@ -4152,7 +4152,7 @@ DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
 Operation operation = await client.CopyProjectAsync(WaitUntil.Completed, "<projectName>", body);
 ]]></code></example>
     </member>
-    <member name="CopyProject(WaitUntil,string,CopyProjectConfig,CancellationToken)">
+    <member name="CopyProject(WaitUntil,string,CopyProjectDetails,CancellationToken)">
       <example>
 This sample shows how to call CopyProject.
 <code><![CDATA[
@@ -4160,7 +4160,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-CopyProjectConfig body = new CopyProjectConfig(
+CopyProjectDetails body = new CopyProjectDetails(
 ProjectKind.CustomSingleLabelClassification,
 "<targetProjectName>",
 "<accessToken>",
@@ -4175,7 +4175,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-CopyProjectConfig body = new CopyProjectConfig(
+CopyProjectDetails body = new CopyProjectDetails(
 ProjectKind.CustomSingleLabelClassification,
 "<targetProjectName>",
 "<accessToken>",
@@ -4343,7 +4343,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectConfig(ProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>"));
+ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(ProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>"));
 Operation operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", body);
 ]]></code>
 This sample shows how to call ImportAsync with all parameters.
@@ -4352,7 +4352,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectConfig(ProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>")
+ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(ProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>")
 {
     Settings = new ProjectSettings
     {
@@ -4387,7 +4387,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectConfig(ProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>"));
+ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(ProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>"));
 Operation operation = client.Import(WaitUntil.Completed, "<projectName>", body);
 ]]></code>
 This sample shows how to call Import with all parameters.
@@ -4396,7 +4396,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectConfig(ProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>")
+ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(ProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>")
 {
     Settings = new ProjectSettings
     {
@@ -4557,7 +4557,7 @@ using RequestContent content = RequestContent.Create(new
 Operation operation = client.Import(WaitUntil.Completed, "<projectName>", content, format: "<format>");
 ]]></code></example>
     </member>
-    <member name="TrainAsync(WaitUntil,string,TrainingJobConfig,CancellationToken)">
+    <member name="TrainAsync(WaitUntil,string,TrainingJobDetails,CancellationToken)">
       <example>
 This sample shows how to call TrainAsync.
 <code><![CDATA[
@@ -4565,7 +4565,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-TrainingJobConfig body = new TrainingJobConfig("<modelLabel>", "<trainingConfigVersion>");
+TrainingJobDetails body = new TrainingJobDetails("<modelLabel>", "<trainingConfigVersion>");
 Operation<TrainingJobResult> operation = await client.TrainAsync(WaitUntil.Completed, "<projectName>", body);
 TrainingJobResult responseData = operation.Value;
 ]]></code>
@@ -4575,9 +4575,9 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-TrainingJobConfig body = new TrainingJobConfig("<modelLabel>", "<trainingConfigVersion>")
+TrainingJobDetails body = new TrainingJobDetails("<modelLabel>", "<trainingConfigVersion>")
 {
-    EvaluationOptions = new EvaluationConfig
+    EvaluationOptions = new EvaluationDetails
     {
         Kind = EvaluationKind.Percentage,
         TrainingSplitPercentage = 1234,
@@ -4589,7 +4589,7 @@ Operation<TrainingJobResult> operation = await client.TrainAsync(WaitUntil.Compl
 TrainingJobResult responseData = operation.Value;
 ]]></code></example>
     </member>
-    <member name="Train(WaitUntil,string,TrainingJobConfig,CancellationToken)">
+    <member name="Train(WaitUntil,string,TrainingJobDetails,CancellationToken)">
       <example>
 This sample shows how to call Train.
 <code><![CDATA[
@@ -4597,7 +4597,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-TrainingJobConfig body = new TrainingJobConfig("<modelLabel>", "<trainingConfigVersion>");
+TrainingJobDetails body = new TrainingJobDetails("<modelLabel>", "<trainingConfigVersion>");
 Operation<TrainingJobResult> operation = client.Train(WaitUntil.Completed, "<projectName>", body);
 TrainingJobResult responseData = operation.Value;
 ]]></code>
@@ -4607,9 +4607,9 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-TrainingJobConfig body = new TrainingJobConfig("<modelLabel>", "<trainingConfigVersion>")
+TrainingJobDetails body = new TrainingJobDetails("<modelLabel>", "<trainingConfigVersion>")
 {
-    EvaluationOptions = new EvaluationConfig
+    EvaluationOptions = new EvaluationDetails
     {
         Kind = EvaluationKind.Percentage,
         TrainingSplitPercentage = 1234,
@@ -4753,7 +4753,7 @@ Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("status").T
 Console.WriteLine(result.GetProperty("estimatedEndDateTime").ToString());
 ]]></code></example>
     </member>
-    <member name="DeployProjectAsync(WaitUntil,string,string,CreateDeploymentConfig,CancellationToken)">
+    <member name="DeployProjectAsync(WaitUntil,string,string,CreateDeploymentDetails,CancellationToken)">
       <example>
 This sample shows how to call DeployProjectAsync.
 <code><![CDATA[
@@ -4761,7 +4761,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-CreateDeploymentConfig body = new CreateDeploymentConfig("<trainedModelLabel>");
+CreateDeploymentDetails body = new CreateDeploymentDetails("<trainedModelLabel>");
 Operation operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
 ]]></code>
 This sample shows how to call DeployProjectAsync with all parameters.
@@ -4770,14 +4770,14 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-CreateDeploymentConfig body = new CreateDeploymentConfig("<trainedModelLabel>")
+CreateDeploymentDetails body = new CreateDeploymentDetails("<trainedModelLabel>")
 {
     AssignedResourceIds = { "<assignedResourceIds>" },
 };
 Operation operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
 ]]></code></example>
     </member>
-    <member name="DeployProject(WaitUntil,string,string,CreateDeploymentConfig,CancellationToken)">
+    <member name="DeployProject(WaitUntil,string,string,CreateDeploymentDetails,CancellationToken)">
       <example>
 This sample shows how to call DeployProject.
 <code><![CDATA[
@@ -4785,7 +4785,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-CreateDeploymentConfig body = new CreateDeploymentConfig("<trainedModelLabel>");
+CreateDeploymentDetails body = new CreateDeploymentDetails("<trainedModelLabel>");
 Operation operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
 ]]></code>
 This sample shows how to call DeployProject with all parameters.
@@ -4794,7 +4794,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-CreateDeploymentConfig body = new CreateDeploymentConfig("<trainedModelLabel>")
+CreateDeploymentDetails body = new CreateDeploymentDetails("<trainedModelLabel>")
 {
     AssignedResourceIds = { "<assignedResourceIds>" },
 };
@@ -4901,7 +4901,7 @@ TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetText
 Operation operation = client.DeleteDeployment(WaitUntil.Completed, "<projectName>", "<deploymentName>");
 ]]></code></example>
     </member>
-    <member name="DeleteDeploymentFromResourcesAsync(WaitUntil,string,string,DeleteDeploymentConfig,CancellationToken)">
+    <member name="DeleteDeploymentFromResourcesAsync(WaitUntil,string,string,DeleteDeploymentDetails,CancellationToken)">
       <example>
 This sample shows how to call DeleteDeploymentFromResourcesAsync.
 <code><![CDATA[
@@ -4909,7 +4909,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-DeleteDeploymentConfig body = new DeleteDeploymentConfig();
+DeleteDeploymentDetails body = new DeleteDeploymentDetails();
 Operation operation = await client.DeleteDeploymentFromResourcesAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
 ]]></code>
 This sample shows how to call DeleteDeploymentFromResourcesAsync with all parameters.
@@ -4918,14 +4918,14 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-DeleteDeploymentConfig body = new DeleteDeploymentConfig
+DeleteDeploymentDetails body = new DeleteDeploymentDetails
 {
     AssignedResourceIds = { "<assignedResourceIds>" },
 };
 Operation operation = await client.DeleteDeploymentFromResourcesAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
 ]]></code></example>
     </member>
-    <member name="DeleteDeploymentFromResources(WaitUntil,string,string,DeleteDeploymentConfig,CancellationToken)">
+    <member name="DeleteDeploymentFromResources(WaitUntil,string,string,DeleteDeploymentDetails,CancellationToken)">
       <example>
 This sample shows how to call DeleteDeploymentFromResources.
 <code><![CDATA[
@@ -4933,7 +4933,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-DeleteDeploymentConfig body = new DeleteDeploymentConfig();
+DeleteDeploymentDetails body = new DeleteDeploymentDetails();
 Operation operation = client.DeleteDeploymentFromResources(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
 ]]></code>
 This sample shows how to call DeleteDeploymentFromResources with all parameters.
@@ -4942,7 +4942,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-DeleteDeploymentConfig body = new DeleteDeploymentConfig
+DeleteDeploymentDetails body = new DeleteDeploymentDetails
 {
     AssignedResourceIds = { "<assignedResourceIds>" },
 };
@@ -5003,7 +5003,7 @@ using RequestContent content = RequestContent.Create(new
 Operation operation = client.DeleteDeploymentFromResources(WaitUntil.Completed, "<projectName>", "<deploymentName>", content);
 ]]></code></example>
     </member>
-    <member name="SwapDeploymentsAsync(WaitUntil,string,SwapDeploymentsConfig,CancellationToken)">
+    <member name="SwapDeploymentsAsync(WaitUntil,string,SwapDeploymentsDetails,CancellationToken)">
       <example>
 This sample shows how to call SwapDeploymentsAsync.
 <code><![CDATA[
@@ -5011,7 +5011,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-SwapDeploymentsConfig body = new SwapDeploymentsConfig("<firstDeploymentName>", "<secondDeploymentName>");
+SwapDeploymentsDetails body = new SwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
 Operation operation = await client.SwapDeploymentsAsync(WaitUntil.Completed, "<projectName>", body);
 ]]></code>
 This sample shows how to call SwapDeploymentsAsync with all parameters.
@@ -5020,11 +5020,11 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-SwapDeploymentsConfig body = new SwapDeploymentsConfig("<firstDeploymentName>", "<secondDeploymentName>");
+SwapDeploymentsDetails body = new SwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
 Operation operation = await client.SwapDeploymentsAsync(WaitUntil.Completed, "<projectName>", body);
 ]]></code></example>
     </member>
-    <member name="SwapDeployments(WaitUntil,string,SwapDeploymentsConfig,CancellationToken)">
+    <member name="SwapDeployments(WaitUntil,string,SwapDeploymentsDetails,CancellationToken)">
       <example>
 This sample shows how to call SwapDeployments.
 <code><![CDATA[
@@ -5032,7 +5032,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-SwapDeploymentsConfig body = new SwapDeploymentsConfig("<firstDeploymentName>", "<secondDeploymentName>");
+SwapDeploymentsDetails body = new SwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
 Operation operation = client.SwapDeployments(WaitUntil.Completed, "<projectName>", body);
 ]]></code>
 This sample shows how to call SwapDeployments with all parameters.
@@ -5041,7 +5041,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-SwapDeploymentsConfig body = new SwapDeploymentsConfig("<firstDeploymentName>", "<secondDeploymentName>");
+SwapDeploymentsDetails body = new SwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
 Operation operation = client.SwapDeployments(WaitUntil.Completed, "<projectName>", body);
 ]]></code></example>
     </member>
@@ -5103,7 +5103,7 @@ using RequestContent content = RequestContent.Create(new
 Operation operation = client.SwapDeployments(WaitUntil.Completed, "<projectName>", content);
 ]]></code></example>
     </member>
-    <member name="CreateOrUpdateExportedModelAsync(WaitUntil,string,string,ExportedModelConfig,CancellationToken)">
+    <member name="CreateOrUpdateExportedModelAsync(WaitUntil,string,string,ExportedModelDetails,CancellationToken)">
       <example>
 This sample shows how to call CreateOrUpdateExportedModelAsync.
 <code><![CDATA[
@@ -5111,7 +5111,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-ExportedModelConfig body = new ExportedModelConfig("<trainedModelLabel>");
+ExportedModelDetails body = new ExportedModelDetails("<trainedModelLabel>");
 Operation operation = await client.CreateOrUpdateExportedModelAsync(WaitUntil.Completed, "<projectName>", "<exportedModelName>", body);
 ]]></code>
 This sample shows how to call CreateOrUpdateExportedModelAsync with all parameters.
@@ -5120,11 +5120,11 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-ExportedModelConfig body = new ExportedModelConfig("<trainedModelLabel>");
+ExportedModelDetails body = new ExportedModelDetails("<trainedModelLabel>");
 Operation operation = await client.CreateOrUpdateExportedModelAsync(WaitUntil.Completed, "<projectName>", "<exportedModelName>", body);
 ]]></code></example>
     </member>
-    <member name="CreateOrUpdateExportedModel(WaitUntil,string,string,ExportedModelConfig,CancellationToken)">
+    <member name="CreateOrUpdateExportedModel(WaitUntil,string,string,ExportedModelDetails,CancellationToken)">
       <example>
 This sample shows how to call CreateOrUpdateExportedModel.
 <code><![CDATA[
@@ -5132,7 +5132,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-ExportedModelConfig body = new ExportedModelConfig("<trainedModelLabel>");
+ExportedModelDetails body = new ExportedModelDetails("<trainedModelLabel>");
 Operation operation = client.CreateOrUpdateExportedModel(WaitUntil.Completed, "<projectName>", "<exportedModelName>", body);
 ]]></code>
 This sample shows how to call CreateOrUpdateExportedModel with all parameters.
@@ -5141,7 +5141,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-ExportedModelConfig body = new ExportedModelConfig("<trainedModelLabel>");
+ExportedModelDetails body = new ExportedModelDetails("<trainedModelLabel>");
 Operation operation = client.CreateOrUpdateExportedModel(WaitUntil.Completed, "<projectName>", "<exportedModelName>", body);
 ]]></code></example>
     </member>
@@ -5237,7 +5237,7 @@ TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetText
 Operation operation = client.DeleteExportedModel(WaitUntil.Completed, "<projectName>", "<exportedModelName>");
 ]]></code></example>
     </member>
-    <member name="EvaluateModelAsync(WaitUntil,string,string,EvaluationConfig,CancellationToken)">
+    <member name="EvaluateModelAsync(WaitUntil,string,string,EvaluationDetails,CancellationToken)">
       <example>
 This sample shows how to call EvaluateModelAsync.
 <code><![CDATA[
@@ -5245,7 +5245,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-EvaluationConfig body = new EvaluationConfig();
+EvaluationDetails body = new EvaluationDetails();
 Operation<EvaluationJobResult> operation = await client.EvaluateModelAsync(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>", body);
 EvaluationJobResult responseData = operation.Value;
 ]]></code>
@@ -5255,7 +5255,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-EvaluationConfig body = new EvaluationConfig
+EvaluationDetails body = new EvaluationDetails
 {
     Kind = EvaluationKind.Percentage,
     TrainingSplitPercentage = 1234,
@@ -5265,7 +5265,7 @@ Operation<EvaluationJobResult> operation = await client.EvaluateModelAsync(WaitU
 EvaluationJobResult responseData = operation.Value;
 ]]></code></example>
     </member>
-    <member name="EvaluateModel(WaitUntil,string,string,EvaluationConfig,CancellationToken)">
+    <member name="EvaluateModel(WaitUntil,string,string,EvaluationDetails,CancellationToken)">
       <example>
 This sample shows how to call EvaluateModel.
 <code><![CDATA[
@@ -5273,7 +5273,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-EvaluationConfig body = new EvaluationConfig();
+EvaluationDetails body = new EvaluationDetails();
 Operation<EvaluationJobResult> operation = client.EvaluateModel(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>", body);
 EvaluationJobResult responseData = operation.Value;
 ]]></code>
@@ -5283,7 +5283,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-EvaluationConfig body = new EvaluationConfig
+EvaluationDetails body = new EvaluationDetails
 {
     Kind = EvaluationKind.Percentage,
     TrainingSplitPercentage = 1234,
@@ -5415,7 +5415,7 @@ TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetText
 Operation operation = client.LoadSnapshot(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>");
 ]]></code></example>
     </member>
-    <member name="AssignDeploymentResourcesAsync(WaitUntil,string,AssignDeploymentResourcesConfig,CancellationToken)">
+    <member name="AssignDeploymentResourcesAsync(WaitUntil,string,AssignDeploymentResourcesDetails,CancellationToken)">
       <example>
 This sample shows how to call AssignDeploymentResourcesAsync.
 <code><![CDATA[
@@ -5423,7 +5423,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-AssignDeploymentResourcesConfig body = new AssignDeploymentResourcesConfig(new ResourceMetadata[]
+AssignDeploymentResourcesDetails body = new AssignDeploymentResourcesDetails(new ResourceMetadata[]
 {
     new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
 });
@@ -5435,14 +5435,14 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-AssignDeploymentResourcesConfig body = new AssignDeploymentResourcesConfig(new ResourceMetadata[]
+AssignDeploymentResourcesDetails body = new AssignDeploymentResourcesDetails(new ResourceMetadata[]
 {
     new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
 });
 Operation operation = await client.AssignDeploymentResourcesAsync(WaitUntil.Completed, "<projectName>", body);
 ]]></code></example>
     </member>
-    <member name="AssignDeploymentResources(WaitUntil,string,AssignDeploymentResourcesConfig,CancellationToken)">
+    <member name="AssignDeploymentResources(WaitUntil,string,AssignDeploymentResourcesDetails,CancellationToken)">
       <example>
 This sample shows how to call AssignDeploymentResources.
 <code><![CDATA[
@@ -5450,7 +5450,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-AssignDeploymentResourcesConfig body = new AssignDeploymentResourcesConfig(new ResourceMetadata[]
+AssignDeploymentResourcesDetails body = new AssignDeploymentResourcesDetails(new ResourceMetadata[]
 {
     new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
 });
@@ -5462,7 +5462,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-AssignDeploymentResourcesConfig body = new AssignDeploymentResourcesConfig(new ResourceMetadata[]
+AssignDeploymentResourcesDetails body = new AssignDeploymentResourcesDetails(new ResourceMetadata[]
 {
     new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
 });
@@ -5555,7 +5555,7 @@ using RequestContent content = RequestContent.Create(new
 Operation operation = client.AssignDeploymentResources(WaitUntil.Completed, "<projectName>", content);
 ]]></code></example>
     </member>
-    <member name="UnassignDeploymentResourcesAsync(WaitUntil,string,UnassignDeploymentResourcesConfig,CancellationToken)">
+    <member name="UnassignDeploymentResourcesAsync(WaitUntil,string,UnassignDeploymentResourcesDetails,CancellationToken)">
       <example>
 This sample shows how to call UnassignDeploymentResourcesAsync.
 <code><![CDATA[
@@ -5563,7 +5563,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-UnassignDeploymentResourcesConfig body = new UnassignDeploymentResourcesConfig(new string[] { "<assignedResourceIds>" });
+UnassignDeploymentResourcesDetails body = new UnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
 Operation operation = await client.UnassignDeploymentResourcesAsync(WaitUntil.Completed, "<projectName>", body);
 ]]></code>
 This sample shows how to call UnassignDeploymentResourcesAsync with all parameters.
@@ -5572,11 +5572,11 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-UnassignDeploymentResourcesConfig body = new UnassignDeploymentResourcesConfig(new string[] { "<assignedResourceIds>" });
+UnassignDeploymentResourcesDetails body = new UnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
 Operation operation = await client.UnassignDeploymentResourcesAsync(WaitUntil.Completed, "<projectName>", body);
 ]]></code></example>
     </member>
-    <member name="UnassignDeploymentResources(WaitUntil,string,UnassignDeploymentResourcesConfig,CancellationToken)">
+    <member name="UnassignDeploymentResources(WaitUntil,string,UnassignDeploymentResourcesDetails,CancellationToken)">
       <example>
 This sample shows how to call UnassignDeploymentResources.
 <code><![CDATA[
@@ -5584,7 +5584,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-UnassignDeploymentResourcesConfig body = new UnassignDeploymentResourcesConfig(new string[] { "<assignedResourceIds>" });
+UnassignDeploymentResourcesDetails body = new UnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
 Operation operation = client.UnassignDeploymentResources(WaitUntil.Completed, "<projectName>", body);
 ]]></code>
 This sample shows how to call UnassignDeploymentResources with all parameters.
@@ -5593,7 +5593,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-UnassignDeploymentResourcesConfig body = new UnassignDeploymentResourcesConfig(new string[] { "<assignedResourceIds>" });
+UnassignDeploymentResourcesDetails body = new UnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
 Operation operation = client.UnassignDeploymentResources(WaitUntil.Completed, "<projectName>", body);
 ]]></code></example>
     </member>

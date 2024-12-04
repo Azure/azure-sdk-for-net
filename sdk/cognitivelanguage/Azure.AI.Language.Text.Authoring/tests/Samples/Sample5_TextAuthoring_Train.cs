@@ -26,12 +26,12 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             #region Snippet:Sample5_TextAuthoring_Train
             string projectName = "LoanAgreements";
 
-            var trainingJobConfig = new TrainingJobConfig(
+            var trainingJobDetails = new TrainingJobDetails(
                 modelLabel: "model1",
                 trainingConfigVersion: "latest"
             )
             {
-                EvaluationOptions = new EvaluationConfig
+                EvaluationOptions = new EvaluationDetails
                 {
                     Kind = EvaluationKind.Percentage,
                     TestingSplitPercentage = 20,
@@ -42,7 +42,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             Operation<TrainingJobResult> operation = authoringClient.Train(
                 waitUntil: WaitUntil.Completed,
                 projectName: projectName,
-                body: trainingJobConfig
+                body: trainingJobDetails
             );
 
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;

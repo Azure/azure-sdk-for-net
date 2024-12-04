@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text.Authoring.Models
 {
-    public partial class SwapDeploymentsConfig : IUtf8JsonSerializable, IJsonModel<SwapDeploymentsConfig>
+    public partial class SwapDeploymentsDetails : IUtf8JsonSerializable, IJsonModel<SwapDeploymentsDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SwapDeploymentsConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SwapDeploymentsDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SwapDeploymentsConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SwapDeploymentsDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SwapDeploymentsConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SwapDeploymentsDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SwapDeploymentsConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SwapDeploymentsDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -48,19 +48,19 @@ namespace Azure.AI.Language.Text.Authoring.Models
             writer.WriteEndObject();
         }
 
-        SwapDeploymentsConfig IJsonModel<SwapDeploymentsConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SwapDeploymentsDetails IJsonModel<SwapDeploymentsDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SwapDeploymentsConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SwapDeploymentsDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SwapDeploymentsConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SwapDeploymentsDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSwapDeploymentsConfig(document.RootElement, options);
+            return DeserializeSwapDeploymentsDetails(document.RootElement, options);
         }
 
-        internal static SwapDeploymentsConfig DeserializeSwapDeploymentsConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SwapDeploymentsDetails DeserializeSwapDeploymentsDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -90,46 +90,46 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SwapDeploymentsConfig(firstDeploymentName, secondDeploymentName, serializedAdditionalRawData);
+            return new SwapDeploymentsDetails(firstDeploymentName, secondDeploymentName, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SwapDeploymentsConfig>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SwapDeploymentsDetails>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SwapDeploymentsConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SwapDeploymentsDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SwapDeploymentsConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SwapDeploymentsDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SwapDeploymentsConfig IPersistableModel<SwapDeploymentsConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SwapDeploymentsDetails IPersistableModel<SwapDeploymentsDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SwapDeploymentsConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SwapDeploymentsDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeSwapDeploymentsConfig(document.RootElement, options);
+                        return DeserializeSwapDeploymentsDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SwapDeploymentsConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SwapDeploymentsDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SwapDeploymentsConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SwapDeploymentsDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static SwapDeploymentsConfig FromResponse(Response response)
+        internal static SwapDeploymentsDetails FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeSwapDeploymentsConfig(document.RootElement);
+            return DeserializeSwapDeploymentsDetails(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

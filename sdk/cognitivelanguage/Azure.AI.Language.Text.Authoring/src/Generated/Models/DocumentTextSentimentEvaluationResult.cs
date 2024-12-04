@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.AI.Language.Text.Authoring.Models
 {
-    /// <summary>
-    /// Represents the comparison between the expected and predicted sentiment that
-    /// result from an evaluation operation.
-    /// </summary>
+    /// <summary> Represents the comparison between the expected and predicted sentiment that result from an evaluation operation. </summary>
     public partial class DocumentTextSentimentEvaluationResult
     {
         /// <summary>

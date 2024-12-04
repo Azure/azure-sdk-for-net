@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.AI.Language.Text.Authoring.Models
 {
-    /// <summary>
-    /// Represents the comparison between the expected and predicted classes that are
-    /// result from the evaluation operation.
-    /// </summary>
+    /// <summary> Represents the comparison between the expected and predicted classes that are result from the evaluation operation. </summary>
     public partial class DocumentMultiLabelClassificationEvaluationResult
     {
         /// <summary>

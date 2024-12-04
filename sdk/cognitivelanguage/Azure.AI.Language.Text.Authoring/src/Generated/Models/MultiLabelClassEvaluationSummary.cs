@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Language.Text.Authoring.Models
 {
-    /// <summary>
-    /// Represents the evaluation summary of a class in a multi-label classification
-    /// project.
-    /// </summary>
+    /// <summary> Represents the evaluation summary of a class in a multi-label classification project. </summary>
     public partial class MultiLabelClassEvaluationSummary
     {
         /// <summary>

@@ -351,7 +351,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<CopyProjectConfig> response = client.CopyProjectAuthorization("<projectName>", ProjectKind.CustomSingleLabelClassification);
+            Response<CopyProjectDetails> response = client.CopyProjectAuthorization("<projectName>", ProjectKind.CustomSingleLabelClassification);
         }
 
         [Test]
@@ -362,7 +362,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<CopyProjectConfig> response = await client.CopyProjectAuthorizationAsync("<projectName>", ProjectKind.CustomSingleLabelClassification);
+            Response<CopyProjectDetails> response = await client.CopyProjectAuthorizationAsync("<projectName>", ProjectKind.CustomSingleLabelClassification);
         }
 
         [Test]
@@ -423,7 +423,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<CopyProjectConfig> response = client.CopyProjectAuthorization("<projectName>", ProjectKind.CustomSingleLabelClassification, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
+            Response<CopyProjectDetails> response = client.CopyProjectAuthorization("<projectName>", ProjectKind.CustomSingleLabelClassification, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
         }
 
         [Test]
@@ -434,7 +434,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            Response<CopyProjectConfig> response = await client.CopyProjectAuthorizationAsync("<projectName>", ProjectKind.CustomSingleLabelClassification, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
+            Response<CopyProjectDetails> response = await client.CopyProjectAuthorizationAsync("<projectName>", ProjectKind.CustomSingleLabelClassification, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
         }
 
         [Test]
@@ -4573,7 +4573,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            CopyProjectConfig body = new CopyProjectConfig(
+            CopyProjectDetails body = new CopyProjectDetails(
                 ProjectKind.CustomSingleLabelClassification,
                 "<targetProjectName>",
                 "<accessToken>",
@@ -4591,7 +4591,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            CopyProjectConfig body = new CopyProjectConfig(
+            CopyProjectDetails body = new CopyProjectDetails(
                 ProjectKind.CustomSingleLabelClassification,
                 "<targetProjectName>",
                 "<accessToken>",
@@ -4649,7 +4649,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            CopyProjectConfig body = new CopyProjectConfig(
+            CopyProjectDetails body = new CopyProjectDetails(
                 ProjectKind.CustomSingleLabelClassification,
                 "<targetProjectName>",
                 "<accessToken>",
@@ -4667,7 +4667,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            CopyProjectConfig body = new CopyProjectConfig(
+            CopyProjectDetails body = new CopyProjectDetails(
                 ProjectKind.CustomSingleLabelClassification,
                 "<targetProjectName>",
                 "<accessToken>",
@@ -4819,7 +4819,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectConfig(ProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>"));
+            ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(ProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>"));
             Operation operation = client.Import(WaitUntil.Completed, "<projectName>", body);
         }
 
@@ -4831,7 +4831,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectConfig(ProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>"));
+            ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(ProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>"));
             Operation operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", body);
         }
 
@@ -4937,7 +4937,7 @@ dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectConfig(ProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>")
+            ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(ProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>")
             {
                 Settings = new ProjectSettings
                 {
@@ -4972,7 +4972,7 @@ Dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectConfig(ProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>")
+            ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(ProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>")
             {
                 Settings = new ProjectSettings
                 {
@@ -5053,7 +5053,7 @@ Dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            TrainingJobConfig body = new TrainingJobConfig("<modelLabel>", "<trainingConfigVersion>");
+            TrainingJobDetails body = new TrainingJobDetails("<modelLabel>", "<trainingConfigVersion>");
             Operation<TrainingJobResult> operation = client.Train(WaitUntil.Completed, "<projectName>", body);
             TrainingJobResult responseData = operation.Value;
         }
@@ -5066,7 +5066,7 @@ Dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            TrainingJobConfig body = new TrainingJobConfig("<modelLabel>", "<trainingConfigVersion>");
+            TrainingJobDetails body = new TrainingJobDetails("<modelLabel>", "<trainingConfigVersion>");
             Operation<TrainingJobResult> operation = await client.TrainAsync(WaitUntil.Completed, "<projectName>", body);
             TrainingJobResult responseData = operation.Value;
         }
@@ -5171,9 +5171,9 @@ Dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            TrainingJobConfig body = new TrainingJobConfig("<modelLabel>", "<trainingConfigVersion>")
+            TrainingJobDetails body = new TrainingJobDetails("<modelLabel>", "<trainingConfigVersion>")
             {
-                EvaluationOptions = new EvaluationConfig
+                EvaluationOptions = new EvaluationDetails
                 {
                     Kind = EvaluationKind.Percentage,
                     TrainingSplitPercentage = 1234,
@@ -5193,9 +5193,9 @@ Dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            TrainingJobConfig body = new TrainingJobConfig("<modelLabel>", "<trainingConfigVersion>")
+            TrainingJobDetails body = new TrainingJobDetails("<modelLabel>", "<trainingConfigVersion>")
             {
-                EvaluationOptions = new EvaluationConfig
+                EvaluationOptions = new EvaluationDetails
                 {
                     Kind = EvaluationKind.Percentage,
                     TrainingSplitPercentage = 1234,
@@ -5245,7 +5245,7 @@ Dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            CreateDeploymentConfig body = new CreateDeploymentConfig("<trainedModelLabel>");
+            CreateDeploymentDetails body = new CreateDeploymentDetails("<trainedModelLabel>");
             Operation operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
         }
 
@@ -5257,7 +5257,7 @@ Dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            CreateDeploymentConfig body = new CreateDeploymentConfig("<trainedModelLabel>");
+            CreateDeploymentDetails body = new CreateDeploymentDetails("<trainedModelLabel>");
             Operation operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
         }
 
@@ -5307,7 +5307,7 @@ Dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            CreateDeploymentConfig body = new CreateDeploymentConfig("<trainedModelLabel>")
+            CreateDeploymentDetails body = new CreateDeploymentDetails("<trainedModelLabel>")
             {
                 AssignedResourceIds = { "<assignedResourceIds>" },
             };
@@ -5322,7 +5322,7 @@ Dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            CreateDeploymentConfig body = new CreateDeploymentConfig("<trainedModelLabel>")
+            CreateDeploymentDetails body = new CreateDeploymentDetails("<trainedModelLabel>")
             {
                 AssignedResourceIds = { "<assignedResourceIds>" },
             };
@@ -5405,7 +5405,7 @@ Dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            DeleteDeploymentConfig body = new DeleteDeploymentConfig();
+            DeleteDeploymentDetails body = new DeleteDeploymentDetails();
             Operation operation = client.DeleteDeploymentFromResources(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
         }
 
@@ -5417,7 +5417,7 @@ Dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            DeleteDeploymentConfig body = new DeleteDeploymentConfig();
+            DeleteDeploymentDetails body = new DeleteDeploymentDetails();
             Operation operation = await client.DeleteDeploymentFromResourcesAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
         }
 
@@ -5465,7 +5465,7 @@ Dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            DeleteDeploymentConfig body = new DeleteDeploymentConfig
+            DeleteDeploymentDetails body = new DeleteDeploymentDetails
             {
                 AssignedResourceIds = { "<assignedResourceIds>" },
             };
@@ -5480,7 +5480,7 @@ Dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            DeleteDeploymentConfig body = new DeleteDeploymentConfig
+            DeleteDeploymentDetails body = new DeleteDeploymentDetails
             {
                 AssignedResourceIds = { "<assignedResourceIds>" },
             };
@@ -5527,7 +5527,7 @@ Dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            SwapDeploymentsConfig body = new SwapDeploymentsConfig("<firstDeploymentName>", "<secondDeploymentName>");
+            SwapDeploymentsDetails body = new SwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
             Operation operation = client.SwapDeployments(WaitUntil.Completed, "<projectName>", body);
         }
 
@@ -5539,7 +5539,7 @@ Dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            SwapDeploymentsConfig body = new SwapDeploymentsConfig("<firstDeploymentName>", "<secondDeploymentName>");
+            SwapDeploymentsDetails body = new SwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
             Operation operation = await client.SwapDeploymentsAsync(WaitUntil.Completed, "<projectName>", body);
         }
 
@@ -5583,7 +5583,7 @@ Dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            SwapDeploymentsConfig body = new SwapDeploymentsConfig("<firstDeploymentName>", "<secondDeploymentName>");
+            SwapDeploymentsDetails body = new SwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
             Operation operation = client.SwapDeployments(WaitUntil.Completed, "<projectName>", body);
         }
 
@@ -5595,7 +5595,7 @@ Dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            SwapDeploymentsConfig body = new SwapDeploymentsConfig("<firstDeploymentName>", "<secondDeploymentName>");
+            SwapDeploymentsDetails body = new SwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
             Operation operation = await client.SwapDeploymentsAsync(WaitUntil.Completed, "<projectName>", body);
         }
 
@@ -5637,7 +5637,7 @@ Dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            ExportedModelConfig body = new ExportedModelConfig("<trainedModelLabel>");
+            ExportedModelDetails body = new ExportedModelDetails("<trainedModelLabel>");
             Operation operation = client.CreateOrUpdateExportedModel(WaitUntil.Completed, "<projectName>", "<exportedModelName>", body);
         }
 
@@ -5649,7 +5649,7 @@ Dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            ExportedModelConfig body = new ExportedModelConfig("<trainedModelLabel>");
+            ExportedModelDetails body = new ExportedModelDetails("<trainedModelLabel>");
             Operation operation = await client.CreateOrUpdateExportedModelAsync(WaitUntil.Completed, "<projectName>", "<exportedModelName>", body);
         }
 
@@ -5691,7 +5691,7 @@ Dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            ExportedModelConfig body = new ExportedModelConfig("<trainedModelLabel>");
+            ExportedModelDetails body = new ExportedModelDetails("<trainedModelLabel>");
             Operation operation = client.CreateOrUpdateExportedModel(WaitUntil.Completed, "<projectName>", "<exportedModelName>", body);
         }
 
@@ -5703,7 +5703,7 @@ Dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            ExportedModelConfig body = new ExportedModelConfig("<trainedModelLabel>");
+            ExportedModelDetails body = new ExportedModelDetails("<trainedModelLabel>");
             Operation operation = await client.CreateOrUpdateExportedModelAsync(WaitUntil.Completed, "<projectName>", "<exportedModelName>", body);
         }
 
@@ -5797,7 +5797,7 @@ Dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            EvaluationConfig body = new EvaluationConfig();
+            EvaluationDetails body = new EvaluationDetails();
             Operation<EvaluationJobResult> operation = client.EvaluateModel(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>", body);
             EvaluationJobResult responseData = operation.Value;
         }
@@ -5810,7 +5810,7 @@ Dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            EvaluationConfig body = new EvaluationConfig();
+            EvaluationDetails body = new EvaluationDetails();
             Operation<EvaluationJobResult> operation = await client.EvaluateModelAsync(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>", body);
             EvaluationJobResult responseData = operation.Value;
         }
@@ -5875,7 +5875,7 @@ Dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            EvaluationConfig body = new EvaluationConfig
+            EvaluationDetails body = new EvaluationDetails
             {
                 Kind = EvaluationKind.Percentage,
                 TrainingSplitPercentage = 1234,
@@ -5893,7 +5893,7 @@ Dataset = "<dataset>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            EvaluationConfig body = new EvaluationConfig
+            EvaluationDetails body = new EvaluationDetails
             {
                 Kind = EvaluationKind.Percentage,
                 TrainingSplitPercentage = 1234,
@@ -6001,7 +6001,7 @@ region = "<region>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            AssignDeploymentResourcesConfig body = new AssignDeploymentResourcesConfig(new ResourceMetadata[]
+            AssignDeploymentResourcesDetails body = new AssignDeploymentResourcesDetails(new ResourceMetadata[]
             {
 new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
             });
@@ -6016,7 +6016,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            AssignDeploymentResourcesConfig body = new AssignDeploymentResourcesConfig(new ResourceMetadata[]
+            AssignDeploymentResourcesDetails body = new AssignDeploymentResourcesDetails(new ResourceMetadata[]
             {
 new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
             });
@@ -6077,7 +6077,7 @@ region = "<region>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            AssignDeploymentResourcesConfig body = new AssignDeploymentResourcesConfig(new ResourceMetadata[]
+            AssignDeploymentResourcesDetails body = new AssignDeploymentResourcesDetails(new ResourceMetadata[]
             {
 new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
             });
@@ -6092,7 +6092,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            AssignDeploymentResourcesConfig body = new AssignDeploymentResourcesConfig(new ResourceMetadata[]
+            AssignDeploymentResourcesDetails body = new AssignDeploymentResourcesDetails(new ResourceMetadata[]
             {
 new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
             });
@@ -6143,7 +6143,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            UnassignDeploymentResourcesConfig body = new UnassignDeploymentResourcesConfig(new string[] { "<assignedResourceIds>" });
+            UnassignDeploymentResourcesDetails body = new UnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
             Operation operation = client.UnassignDeploymentResources(WaitUntil.Completed, "<projectName>", body);
         }
 
@@ -6155,7 +6155,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            UnassignDeploymentResourcesConfig body = new UnassignDeploymentResourcesConfig(new string[] { "<assignedResourceIds>" });
+            UnassignDeploymentResourcesDetails body = new UnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
             Operation operation = await client.UnassignDeploymentResourcesAsync(WaitUntil.Completed, "<projectName>", body);
         }
 
@@ -6203,7 +6203,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            UnassignDeploymentResourcesConfig body = new UnassignDeploymentResourcesConfig(new string[] { "<assignedResourceIds>" });
+            UnassignDeploymentResourcesDetails body = new UnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
             Operation operation = client.UnassignDeploymentResources(WaitUntil.Completed, "<projectName>", body);
         }
 
@@ -6215,7 +6215,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
-            UnassignDeploymentResourcesConfig body = new UnassignDeploymentResourcesConfig(new string[] { "<assignedResourceIds>" });
+            UnassignDeploymentResourcesDetails body = new UnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
             Operation operation = await client.UnassignDeploymentResourcesAsync(WaitUntil.Completed, "<projectName>", body);
         }
 

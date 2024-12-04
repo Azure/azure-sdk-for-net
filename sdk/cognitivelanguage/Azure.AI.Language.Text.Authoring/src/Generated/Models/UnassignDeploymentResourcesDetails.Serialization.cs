@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text.Authoring.Models
 {
-    public partial class UnassignDeploymentResourcesConfig : IUtf8JsonSerializable, IJsonModel<UnassignDeploymentResourcesConfig>
+    public partial class UnassignDeploymentResourcesDetails : IUtf8JsonSerializable, IJsonModel<UnassignDeploymentResourcesDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UnassignDeploymentResourcesConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UnassignDeploymentResourcesDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<UnassignDeploymentResourcesConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<UnassignDeploymentResourcesDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UnassignDeploymentResourcesConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UnassignDeploymentResourcesDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UnassignDeploymentResourcesConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(UnassignDeploymentResourcesDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,19 +51,19 @@ namespace Azure.AI.Language.Text.Authoring.Models
             writer.WriteEndObject();
         }
 
-        UnassignDeploymentResourcesConfig IJsonModel<UnassignDeploymentResourcesConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        UnassignDeploymentResourcesDetails IJsonModel<UnassignDeploymentResourcesDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UnassignDeploymentResourcesConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UnassignDeploymentResourcesDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UnassignDeploymentResourcesConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(UnassignDeploymentResourcesDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnassignDeploymentResourcesConfig(document.RootElement, options);
+            return DeserializeUnassignDeploymentResourcesDetails(document.RootElement, options);
         }
 
-        internal static UnassignDeploymentResourcesConfig DeserializeUnassignDeploymentResourcesConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnassignDeploymentResourcesDetails DeserializeUnassignDeploymentResourcesDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -92,46 +92,46 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnassignDeploymentResourcesConfig(assignedResourceIds, serializedAdditionalRawData);
+            return new UnassignDeploymentResourcesDetails(assignedResourceIds, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<UnassignDeploymentResourcesConfig>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<UnassignDeploymentResourcesDetails>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UnassignDeploymentResourcesConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UnassignDeploymentResourcesDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UnassignDeploymentResourcesConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UnassignDeploymentResourcesDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
-        UnassignDeploymentResourcesConfig IPersistableModel<UnassignDeploymentResourcesConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        UnassignDeploymentResourcesDetails IPersistableModel<UnassignDeploymentResourcesDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UnassignDeploymentResourcesConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UnassignDeploymentResourcesDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnassignDeploymentResourcesConfig(document.RootElement, options);
+                        return DeserializeUnassignDeploymentResourcesDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UnassignDeploymentResourcesConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UnassignDeploymentResourcesDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<UnassignDeploymentResourcesConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<UnassignDeploymentResourcesDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static UnassignDeploymentResourcesConfig FromResponse(Response response)
+        internal static UnassignDeploymentResourcesDetails FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeUnassignDeploymentResourcesConfig(document.RootElement);
+            return DeserializeUnassignDeploymentResourcesDetails(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

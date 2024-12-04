@@ -17,7 +17,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
         /// <param name="customTextSentimentEvaluation"> Contains the data related to custom sentiment evaluation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="evaluationOptions"/> or <paramref name="customTextSentimentEvaluation"/> is null. </exception>
-        internal CustomTextSentimentEvaluationSummary(EvaluationConfig evaluationOptions, TextSentimentEvaluationSummary customTextSentimentEvaluation) : base(evaluationOptions)
+        internal CustomTextSentimentEvaluationSummary(EvaluationDetails evaluationOptions, TextSentimentEvaluationSummary customTextSentimentEvaluation) : base(evaluationOptions)
         {
             Argument.AssertNotNull(evaluationOptions, nameof(evaluationOptions));
             Argument.AssertNotNull(customTextSentimentEvaluation, nameof(customTextSentimentEvaluation));
@@ -31,7 +31,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="customTextSentimentEvaluation"> Contains the data related to custom sentiment evaluation. </param>
-        internal CustomTextSentimentEvaluationSummary(ProjectKind projectKind, EvaluationConfig evaluationOptions, IDictionary<string, BinaryData> serializedAdditionalRawData, TextSentimentEvaluationSummary customTextSentimentEvaluation) : base(projectKind, evaluationOptions, serializedAdditionalRawData)
+        internal CustomTextSentimentEvaluationSummary(ProjectKind projectKind, EvaluationDetails evaluationOptions, IDictionary<string, BinaryData> serializedAdditionalRawData, TextSentimentEvaluationSummary customTextSentimentEvaluation) : base(projectKind, evaluationOptions, serializedAdditionalRawData)
         {
             CustomTextSentimentEvaluation = customTextSentimentEvaluation;
         }

@@ -26,7 +26,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
 
             #region Snippet:Sample11_TextAuthoring_SwapDeploymentsAsync
             string projectName = "LoanAgreements";
-            var swapConfig = new SwapDeploymentsConfig
+            var swapDetails = new SwapDeploymentsDetails
             (
                 firstDeploymentName: "DeploymentA",
                 secondDeploymentName: "DeploymentB"
@@ -35,7 +35,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             Operation operation = await authoringClient.SwapDeploymentsAsync(
                 waitUntil: WaitUntil.Completed,
                 projectName: projectName,
-                body: swapConfig
+                body: swapDetails
             );
 
             Console.WriteLine($"Swap operation completed with status: {operation.GetRawResponse().Status}");

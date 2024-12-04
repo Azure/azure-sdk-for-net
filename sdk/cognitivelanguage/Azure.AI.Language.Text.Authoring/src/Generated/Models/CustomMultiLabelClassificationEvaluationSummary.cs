@@ -10,17 +10,14 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Language.Text.Authoring.Models
 {
-    /// <summary>
-    /// Represents the evaluation summary for a custom multi-label classification
-    /// project.
-    /// </summary>
+    /// <summary> Represents the evaluation summary for a custom multi-label classification project. </summary>
     public partial class CustomMultiLabelClassificationEvaluationSummary : EvaluationSummary
     {
         /// <summary> Initializes a new instance of <see cref="CustomMultiLabelClassificationEvaluationSummary"/>. </summary>
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
         /// <param name="customMultiLabelClassificationEvaluation"> Contains the data related to multi label classification evaluation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="evaluationOptions"/> or <paramref name="customMultiLabelClassificationEvaluation"/> is null. </exception>
-        internal CustomMultiLabelClassificationEvaluationSummary(EvaluationConfig evaluationOptions, MultiLabelClassificationEvaluationSummary customMultiLabelClassificationEvaluation) : base(evaluationOptions)
+        internal CustomMultiLabelClassificationEvaluationSummary(EvaluationDetails evaluationOptions, MultiLabelClassificationEvaluationSummary customMultiLabelClassificationEvaluation) : base(evaluationOptions)
         {
             Argument.AssertNotNull(evaluationOptions, nameof(evaluationOptions));
             Argument.AssertNotNull(customMultiLabelClassificationEvaluation, nameof(customMultiLabelClassificationEvaluation));
@@ -34,7 +31,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="customMultiLabelClassificationEvaluation"> Contains the data related to multi label classification evaluation. </param>
-        internal CustomMultiLabelClassificationEvaluationSummary(ProjectKind projectKind, EvaluationConfig evaluationOptions, IDictionary<string, BinaryData> serializedAdditionalRawData, MultiLabelClassificationEvaluationSummary customMultiLabelClassificationEvaluation) : base(projectKind, evaluationOptions, serializedAdditionalRawData)
+        internal CustomMultiLabelClassificationEvaluationSummary(ProjectKind projectKind, EvaluationDetails evaluationOptions, IDictionary<string, BinaryData> serializedAdditionalRawData, MultiLabelClassificationEvaluationSummary customMultiLabelClassificationEvaluation) : base(projectKind, evaluationOptions, serializedAdditionalRawData)
         {
             CustomMultiLabelClassificationEvaluation = customMultiLabelClassificationEvaluation;
         }

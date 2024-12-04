@@ -21,13 +21,13 @@ To deploy a project, call DeployProjectAsync on the TextAnalysisAuthoring client
 ```C# Snippet:Sample10_TextAuthoring_DeployProjectAsync
 string projectName = "LoanAgreements";
 string deploymentName = "DeploymentName";
-var deploymentConfig = new CreateDeploymentConfig(trainedModelLabel: "29886710a2ae49259d62cffca977db66");
+var deploymentDetails = new CreateDeploymentDetails(trainedModelLabel: "29886710a2ae49259d62cffca977db66");
 
 Operation operation = await authoringClient.DeployProjectAsync(
     waitUntil: WaitUntil.Completed,
     projectName: projectName,
     deploymentName: deploymentName,
-    body: deploymentConfig
+    body: deploymentDetails
 );
 
 Console.WriteLine($"Deployment operation status: {operation.GetRawResponse().Status}");

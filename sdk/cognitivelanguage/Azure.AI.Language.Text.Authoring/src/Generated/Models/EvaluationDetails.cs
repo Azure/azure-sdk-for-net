@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text.Authoring.Models
 {
     /// <summary> Represents the options used running the evaluation. </summary>
-    public partial class EvaluationConfig
+    public partial class EvaluationDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +45,17 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="EvaluationConfig"/>. </summary>
-        public EvaluationConfig()
+        /// <summary> Initializes a new instance of <see cref="EvaluationDetails"/>. </summary>
+        public EvaluationDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EvaluationConfig"/>. </summary>
-        /// <param name="kind">
-        /// Represents the evaluation kind. By default, the evaluation kind is set to
-        /// percentage.
-        /// </param>
-        /// <param name="trainingSplitPercentage">
-        /// Represents the training dataset split percentage. Only needed in case the
-        /// evaluation kind is percentage.
-        /// </param>
-        /// <param name="testingSplitPercentage">
-        /// Represents the testing dataset split percentage. Only needed in case the
-        /// evaluation kind is percentage.
-        /// </param>
+        /// <summary> Initializes a new instance of <see cref="EvaluationDetails"/>. </summary>
+        /// <param name="kind"> Represents the evaluation kind. By default, the evaluation kind is set to percentage. </param>
+        /// <param name="trainingSplitPercentage"> Represents the training dataset split percentage. Only needed in case the evaluation kind is percentage. </param>
+        /// <param name="testingSplitPercentage"> Represents the testing dataset split percentage. Only needed in case the evaluation kind is percentage. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluationConfig(EvaluationKind? kind, int? trainingSplitPercentage, int? testingSplitPercentage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EvaluationDetails(EvaluationKind? kind, int? trainingSplitPercentage, int? testingSplitPercentage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Kind = kind;
             TrainingSplitPercentage = trainingSplitPercentage;
@@ -72,20 +63,11 @@ namespace Azure.AI.Language.Text.Authoring.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Represents the evaluation kind. By default, the evaluation kind is set to
-        /// percentage.
-        /// </summary>
+        /// <summary> Represents the evaluation kind. By default, the evaluation kind is set to percentage. </summary>
         public EvaluationKind? Kind { get; set; }
-        /// <summary>
-        /// Represents the training dataset split percentage. Only needed in case the
-        /// evaluation kind is percentage.
-        /// </summary>
+        /// <summary> Represents the training dataset split percentage. Only needed in case the evaluation kind is percentage. </summary>
         public int? TrainingSplitPercentage { get; set; }
-        /// <summary>
-        /// Represents the testing dataset split percentage. Only needed in case the
-        /// evaluation kind is percentage.
-        /// </summary>
+        /// <summary> Represents the testing dataset split percentage. Only needed in case the evaluation kind is percentage. </summary>
         public int? TestingSplitPercentage { get; set; }
     }
 }

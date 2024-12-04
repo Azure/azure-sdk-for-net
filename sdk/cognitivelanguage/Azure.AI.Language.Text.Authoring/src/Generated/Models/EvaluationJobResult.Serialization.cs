@@ -72,7 +72,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
             {
                 return null;
             }
-            EvaluationConfig evaluationOptions = default;
+            EvaluationDetails evaluationOptions = default;
             string modelLabel = default;
             string trainingConfigVersion = default;
             int percentComplete = default;
@@ -82,7 +82,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
             {
                 if (property.NameEquals("evaluationOptions"u8))
                 {
-                    evaluationOptions = EvaluationConfig.DeserializeEvaluationConfig(property.Value, options);
+                    evaluationOptions = EvaluationDetails.DeserializeEvaluationDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("modelLabel"u8))

@@ -26,10 +26,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="projectName"> The new project name. </param>
         /// <param name="multilingual"> Whether the project would be used for multiple languages or not. </param>
         /// <param name="description"> The project description. </param>
-        /// <param name="language">
-        /// The project language. This is BCP-47 representation of a language. For example,
-        /// use "en" for English, "en-gb" for English (UK), "es" for Spanish etc.
-        /// </param>
+        /// <param name="language"> The project language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <returns> A new <see cref="Models.ProjectMetadata"/> instance for mocking. </returns>
         public static ProjectMetadata ProjectMetadata(DateTimeOffset createdDateTime = default, DateTimeOffset lastModifiedDateTime = default, DateTimeOffset? lastTrainedDateTime = null, DateTimeOffset? lastDeployedDateTime = null, ProjectKind projectKind = default, string storageInputContainerName = null, ProjectSettings settings = null, string projectName = null, bool? multilingual = null, string description = null, string language = null)
         {
@@ -53,10 +50,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <param name="target"> The target of the error. </param>
         /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
-        /// <param name="innererror">
-        /// An object containing more specific information than the current object about
-        /// the error.
-        /// </param>
+        /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
         /// <returns> A new <see cref="Models.TextAnalysisAuthoringError"/> instance for mocking. </returns>
         public static TextAnalysisAuthoringError TextAnalysisAuthoringError(ErrorCode code = default, string message = null, string target = null, IEnumerable<TextAnalysisAuthoringError> details = null, InnerErrorModel innererror = null)
         {
@@ -76,10 +70,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="message"> Error message. </param>
         /// <param name="details"> Error details. </param>
         /// <param name="target"> Error target. </param>
-        /// <param name="innererror">
-        /// An object containing more specific information than the current object about
-        /// the error.
-        /// </param>
+        /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
         /// <returns> A new <see cref="Models.InnerErrorModel"/> instance for mocking. </returns>
         public static InnerErrorModel InnerErrorModel(InnerErrorCode code = default, string message = null, IReadOnlyDictionary<string, string> details = null, string target = null, InnerErrorModel innererror = null)
         {
@@ -94,21 +85,18 @@ namespace Azure.AI.Language.Text.Authoring
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CreateProjectConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CreateProjectDetails"/>. </summary>
         /// <param name="projectKind"> The project kind. </param>
         /// <param name="storageInputContainerName"> The storage container name. </param>
         /// <param name="settings"> The project settings. </param>
         /// <param name="projectName"> The new project name. </param>
         /// <param name="multilingual"> Whether the project would be used for multiple languages or not. </param>
         /// <param name="description"> The project description. </param>
-        /// <param name="language">
-        /// The project language. This is BCP-47 representation of a language. For example,
-        /// use "en" for English, "en-gb" for English (UK), "es" for Spanish etc.
-        /// </param>
-        /// <returns> A new <see cref="Models.CreateProjectConfig"/> instance for mocking. </returns>
-        public static CreateProjectConfig CreateProjectConfig(ProjectKind projectKind = default, string storageInputContainerName = null, ProjectSettings settings = null, string projectName = null, bool? multilingual = null, string description = null, string language = null)
+        /// <param name="language"> The project language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
+        /// <returns> A new <see cref="Models.CreateProjectDetails"/> instance for mocking. </returns>
+        public static CreateProjectDetails CreateProjectDetails(ProjectKind projectKind = default, string storageInputContainerName = null, ProjectSettings settings = null, string projectName = null, bool? multilingual = null, string description = null, string language = null)
         {
-            return new CreateProjectConfig(
+            return new CreateProjectDetails(
                 projectKind,
                 storageInputContainerName,
                 settings,
@@ -121,10 +109,7 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <summary> Initializes a new instance of <see cref="Models.ExportedProject"/>. </summary>
         /// <param name="projectFileVersion"> The version of the exported file. </param>
-        /// <param name="stringIndexType">
-        /// Specifies the method used to interpret string offsets. For additional
-        /// information see https://aka.ms/text-analytics-offsets.
-        /// </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="metadata"> Represents the project metadata. </param>
         /// <param name="assets">
         /// Represents the project assets.
@@ -132,22 +117,15 @@ namespace Azure.AI.Language.Text.Authoring
         /// The available derived classes include <see cref="ExportedCustomAbstractiveSummarizationProjectAssets"/>, <see cref="ExportedCustomEntityRecognitionProjectAssets"/>, <see cref="ExportedCustomHealthcareProjectAssets"/>, <see cref="ExportedCustomMultiLabelClassificationProjectAssets"/>, <see cref="ExportedCustomSingleLabelClassificationProjectAssets"/> and <see cref="ExportedCustomTextSentimentProjectAssets"/>.
         /// </param>
         /// <returns> A new <see cref="Models.ExportedProject"/> instance for mocking. </returns>
-        public static ExportedProject ExportedProject(string projectFileVersion = null, StringIndexType stringIndexType = default, CreateProjectConfig metadata = null, ExportedProjectAssets assets = null)
+        public static ExportedProject ExportedProject(string projectFileVersion = null, StringIndexType stringIndexType = default, CreateProjectDetails metadata = null, ExportedProjectAssets assets = null)
         {
             return new ExportedProject(projectFileVersion, stringIndexType, metadata, assets, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExportedCustomAbstractiveSummarizationDocument"/>. </summary>
-        /// <param name="summaryLocation">
-        /// Represents the summary file location in the blob store container associated
-        /// with the project.
-        /// </param>
+        /// <param name="summaryLocation"> Represents the summary file location in the blob store container associated with the project. </param>
         /// <param name="location"> The location of the document in the storage. </param>
-        /// <param name="language">
-        /// Represents the document language. This is BCP-47 representation of a language.
-        /// For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish
-        /// etc.
-        /// </param>
+        /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="dataset"> The dataset for this document. Allowed values are 'Train' and 'Test'. </param>
         /// <returns> A new <see cref="Models.ExportedCustomAbstractiveSummarizationDocument"/> instance for mocking. </returns>
         public static ExportedCustomAbstractiveSummarizationDocument ExportedCustomAbstractiveSummarizationDocument(string summaryLocation = null, string location = null, string language = null, string dataset = null)
@@ -155,19 +133,15 @@ namespace Azure.AI.Language.Text.Authoring
             return new ExportedCustomAbstractiveSummarizationDocument(summaryLocation, location, language, dataset, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TrainingJobConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TrainingJobDetails"/>. </summary>
         /// <param name="modelLabel"> Represents the output model label. </param>
         /// <param name="trainingConfigVersion"> Represents training config version. </param>
-        /// <param name="evaluationOptions">
-        /// Represents the evaluation options. By default, the evaluation kind is
-        /// percentage, with training split percentage as 80, and testing split percentage
-        /// as 20.
-        /// </param>
+        /// <param name="evaluationOptions"> Represents the evaluation options. By default, the evaluation kind is percentage, with training split percentage as 80, and testing split percentage as 20. </param>
         /// <param name="dataGenerationSettings"> Represents the settings for using data generation as part of training a custom model. </param>
-        /// <returns> A new <see cref="Models.TrainingJobConfig"/> instance for mocking. </returns>
-        public static TrainingJobConfig TrainingJobConfig(string modelLabel = null, string trainingConfigVersion = null, EvaluationConfig evaluationOptions = null, DataGenerationSettings dataGenerationSettings = null)
+        /// <returns> A new <see cref="Models.TrainingJobDetails"/> instance for mocking. </returns>
+        public static TrainingJobDetails TrainingJobDetails(string modelLabel = null, string trainingConfigVersion = null, EvaluationDetails evaluationOptions = null, DataGenerationSettings dataGenerationSettings = null)
         {
-            return new TrainingJobConfig(modelLabel, trainingConfigVersion, evaluationOptions, dataGenerationSettings, serializedAdditionalRawData: null);
+            return new TrainingJobDetails(modelLabel, trainingConfigVersion, evaluationOptions, dataGenerationSettings, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataGenerationConnectionInfo"/>. </summary>
@@ -303,19 +277,15 @@ namespace Azure.AI.Language.Text.Authoring
             return new DeploymentResource(resourceId, region, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CreateDeploymentConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CreateDeploymentDetails"/>. </summary>
         /// <param name="trainedModelLabel"> Represents the trained model label. </param>
-        /// <param name="assignedResourceIds">
-        /// Represents the resource IDs to be assigned to the deployment.
-        /// If provided, the deployment will be rolled out to the resources
-        /// provided here as well as the original resource in which the project is created.
-        /// </param>
-        /// <returns> A new <see cref="Models.CreateDeploymentConfig"/> instance for mocking. </returns>
-        public static CreateDeploymentConfig CreateDeploymentConfig(string trainedModelLabel = null, IEnumerable<string> assignedResourceIds = null)
+        /// <param name="assignedResourceIds"> Represents the resource IDs to be assigned to the deployment. If provided, the deployment will be rolled out to the resources provided here as well as the original resource in which the project is created. </param>
+        /// <returns> A new <see cref="Models.CreateDeploymentDetails"/> instance for mocking. </returns>
+        public static CreateDeploymentDetails CreateDeploymentDetails(string trainedModelLabel = null, IEnumerable<string> assignedResourceIds = null)
         {
             assignedResourceIds ??= new List<string>();
 
-            return new CreateDeploymentConfig(trainedModelLabel, assignedResourceIds?.ToList(), serializedAdditionalRawData: null);
+            return new CreateDeploymentDetails(trainedModelLabel, assignedResourceIds?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DeploymentDeleteFromResourcesJobState"/>. </summary>
@@ -537,7 +507,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="trainingConfigVersion"> Represents training config version. </param>
         /// <param name="percentComplete"> Represents progress percentage. </param>
         /// <returns> A new <see cref="Models.EvaluationJobResult"/> instance for mocking. </returns>
-        public static EvaluationJobResult EvaluationJobResult(EvaluationConfig evaluationOptions = null, string modelLabel = null, string trainingConfigVersion = null, int percentComplete = default)
+        public static EvaluationJobResult EvaluationJobResult(EvaluationDetails evaluationOptions = null, string modelLabel = null, string trainingConfigVersion = null, int percentComplete = default)
         {
             return new EvaluationJobResult(evaluationOptions, modelLabel, trainingConfigVersion, percentComplete, serializedAdditionalRawData: null);
         }
@@ -572,11 +542,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Initializes a new instance of <see cref="Models.DocumentEvaluationResult"/>. </summary>
         /// <param name="projectKind"> Represents the project kind. </param>
         /// <param name="location"> Represents the document path. </param>
-        /// <param name="language">
-        /// Represents the document language. This is BCP-47 representation of a language.
-        /// For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish
-        /// etc.
-        /// </param>
+        /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <returns> A new <see cref="Models.DocumentEvaluationResult"/> instance for mocking. </returns>
         public static DocumentEvaluationResult DocumentEvaluationResult(string projectKind = null, string location = null, string language = null)
         {
@@ -585,11 +551,7 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <summary> Initializes a new instance of <see cref="Models.CustomEntityRecognitionDocumentEvaluationResult"/>. </summary>
         /// <param name="location"> Represents the document path. </param>
-        /// <param name="language">
-        /// Represents the document language. This is BCP-47 representation of a language.
-        /// For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish
-        /// etc.
-        /// </param>
+        /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="customEntityRecognitionResult"> Represents the evaluation prediction for entity recognition. </param>
         /// <returns> A new <see cref="Models.CustomEntityRecognitionDocumentEvaluationResult"/> instance for mocking. </returns>
         public static CustomEntityRecognitionDocumentEvaluationResult CustomEntityRecognitionDocumentEvaluationResult(string location = null, string language = null, DocumentEntityRecognitionEvaluationResult customEntityRecognitionResult = null)
@@ -633,11 +595,7 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <summary> Initializes a new instance of <see cref="Models.CustomHealthcareDocumentEvaluationResult"/>. </summary>
         /// <param name="location"> Represents the document path. </param>
-        /// <param name="language">
-        /// Represents the document language. This is BCP-47 representation of a language.
-        /// For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish
-        /// etc.
-        /// </param>
+        /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="customHealthcareResult"> Represents the evaluation prediction for entity recognition. </param>
         /// <returns> A new <see cref="Models.CustomHealthcareDocumentEvaluationResult"/> instance for mocking. </returns>
         public static CustomHealthcareDocumentEvaluationResult CustomHealthcareDocumentEvaluationResult(string location = null, string language = null, DocumentHealthcareEvaluationResult customHealthcareResult = null)
@@ -657,11 +615,7 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <summary> Initializes a new instance of <see cref="Models.CustomMultiLabelClassificationDocumentEvaluationResult"/>. </summary>
         /// <param name="location"> Represents the document path. </param>
-        /// <param name="language">
-        /// Represents the document language. This is BCP-47 representation of a language.
-        /// For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish
-        /// etc.
-        /// </param>
+        /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="customMultiLabelClassificationResult"> Represents the evaluation prediction for multi label classification. </param>
         /// <returns> A new <see cref="Models.CustomMultiLabelClassificationDocumentEvaluationResult"/> instance for mocking. </returns>
         public static CustomMultiLabelClassificationDocumentEvaluationResult CustomMultiLabelClassificationDocumentEvaluationResult(string location = null, string language = null, DocumentMultiLabelClassificationEvaluationResult customMultiLabelClassificationResult = null)
@@ -683,11 +637,7 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <summary> Initializes a new instance of <see cref="Models.CustomSingleLabelClassificationDocumentEvaluationResult"/>. </summary>
         /// <param name="location"> Represents the document path. </param>
-        /// <param name="language">
-        /// Represents the document language. This is BCP-47 representation of a language.
-        /// For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish
-        /// etc.
-        /// </param>
+        /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="customSingleLabelClassificationResult"> Represents the evaluation prediction for single label classification. </param>
         /// <returns> A new <see cref="Models.CustomSingleLabelClassificationDocumentEvaluationResult"/> instance for mocking. </returns>
         public static CustomSingleLabelClassificationDocumentEvaluationResult CustomSingleLabelClassificationDocumentEvaluationResult(string location = null, string language = null, DocumentSingleLabelClassificationEvaluationResult customSingleLabelClassificationResult = null)
@@ -706,11 +656,7 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <summary> Initializes a new instance of <see cref="Models.CustomTextSentimentDocumentEvaluationResult"/>. </summary>
         /// <param name="location"> Represents the document path. </param>
-        /// <param name="language">
-        /// Represents the document language. This is BCP-47 representation of a language.
-        /// For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish
-        /// etc.
-        /// </param>
+        /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="customTextSentimentResult"> Represents the evaluation prediction for text sentiment. </param>
         /// <returns> A new <see cref="Models.CustomTextSentimentDocumentEvaluationResult"/> instance for mocking. </returns>
         public static CustomTextSentimentDocumentEvaluationResult CustomTextSentimentDocumentEvaluationResult(string location = null, string language = null, DocumentTextSentimentEvaluationResult customTextSentimentResult = null)
@@ -744,7 +690,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="projectKind"> Represents the project type that the evaluation ran on. </param>
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
         /// <returns> A new <see cref="Models.EvaluationSummary"/> instance for mocking. </returns>
-        public static EvaluationSummary EvaluationSummary(string projectKind = null, EvaluationConfig evaluationOptions = null)
+        public static EvaluationSummary EvaluationSummary(string projectKind = null, EvaluationDetails evaluationOptions = null)
         {
             return new UnknownEvaluationSummary(projectKind == null ? default : new ProjectKind(projectKind), evaluationOptions, serializedAdditionalRawData: null);
         }
@@ -753,36 +699,20 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
         /// <param name="customEntityRecognitionEvaluation"> Contains the data related to extraction evaluation. </param>
         /// <returns> A new <see cref="Models.CustomEntityRecognitionEvaluationSummary"/> instance for mocking. </returns>
-        public static CustomEntityRecognitionEvaluationSummary CustomEntityRecognitionEvaluationSummary(EvaluationConfig evaluationOptions = null, EntityRecognitionEvaluationSummary customEntityRecognitionEvaluation = null)
+        public static CustomEntityRecognitionEvaluationSummary CustomEntityRecognitionEvaluationSummary(EvaluationDetails evaluationOptions = null, EntityRecognitionEvaluationSummary customEntityRecognitionEvaluation = null)
         {
             return new CustomEntityRecognitionEvaluationSummary(ProjectKind.CustomEntityRecognition, evaluationOptions, serializedAdditionalRawData: null, customEntityRecognitionEvaluation);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EntityRecognitionEvaluationSummary"/>. </summary>
-        /// <param name="confusionMatrix">
-        /// Represents the confusion matrix between two entities (the two entities can be
-        /// the same). The matrix is between the entity that was labelled and the entity
-        /// that was predicted.
-        /// </param>
+        /// <param name="confusionMatrix"> Represents the confusion matrix between two entities (the two entities can be the same). The matrix is between the entity that was labelled and the entity that was predicted. </param>
         /// <param name="entities"> Represents the entities evaluation. </param>
         /// <param name="microF1"> Represents the micro F1. Expected value is a float between 0 and 1 inclusive. </param>
-        /// <param name="microPrecision">
-        /// Represents the micro precision. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
-        /// <param name="microRecall">
-        /// Represents the micro recall. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
+        /// <param name="microPrecision"> Represents the micro precision. Expected value is a float between 0 and 1 inclusive. </param>
+        /// <param name="microRecall"> Represents the micro recall. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroF1"> Represents the macro F1. Expected value is a float between 0 and 1 inclusive. </param>
-        /// <param name="macroPrecision">
-        /// Represents the macro precision. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
-        /// <param name="macroRecall">
-        /// Represents the macro recall. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
+        /// <param name="macroPrecision"> Represents the macro precision. Expected value is a float between 0 and 1 inclusive. </param>
+        /// <param name="macroRecall"> Represents the macro recall. Expected value is a float between 0 and 1 inclusive. </param>
         /// <returns> A new <see cref="Models.EntityRecognitionEvaluationSummary"/> instance for mocking. </returns>
         public static EntityRecognitionEvaluationSummary EntityRecognitionEvaluationSummary(ConfusionMatrix confusionMatrix = null, IReadOnlyDictionary<string, EntityEvaluationSummary> entities = null, float microF1 = default, float microPrecision = default, float microRecall = default, float macroF1 = default, float macroPrecision = default, float macroRecall = default)
         {
@@ -855,7 +785,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
         /// <param name="customHealthcareEvaluation"> Contains the data related to health care evaluation. </param>
         /// <returns> A new <see cref="Models.CustomHealthcareEvaluationSummary"/> instance for mocking. </returns>
-        public static CustomHealthcareEvaluationSummary CustomHealthcareEvaluationSummary(EvaluationConfig evaluationOptions = null, EntityRecognitionEvaluationSummary customHealthcareEvaluation = null)
+        public static CustomHealthcareEvaluationSummary CustomHealthcareEvaluationSummary(EvaluationDetails evaluationOptions = null, EntityRecognitionEvaluationSummary customHealthcareEvaluation = null)
         {
             return new CustomHealthcareEvaluationSummary(ProjectKind.CustomHealthcare, evaluationOptions, serializedAdditionalRawData: null, customHealthcareEvaluation);
         }
@@ -864,7 +794,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
         /// <param name="customMultiLabelClassificationEvaluation"> Contains the data related to multi label classification evaluation. </param>
         /// <returns> A new <see cref="Models.CustomMultiLabelClassificationEvaluationSummary"/> instance for mocking. </returns>
-        public static CustomMultiLabelClassificationEvaluationSummary CustomMultiLabelClassificationEvaluationSummary(EvaluationConfig evaluationOptions = null, MultiLabelClassificationEvaluationSummary customMultiLabelClassificationEvaluation = null)
+        public static CustomMultiLabelClassificationEvaluationSummary CustomMultiLabelClassificationEvaluationSummary(EvaluationDetails evaluationOptions = null, MultiLabelClassificationEvaluationSummary customMultiLabelClassificationEvaluation = null)
         {
             return new CustomMultiLabelClassificationEvaluationSummary(ProjectKind.CustomMultiLabelClassification, evaluationOptions, serializedAdditionalRawData: null, customMultiLabelClassificationEvaluation);
         }
@@ -872,23 +802,11 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Initializes a new instance of <see cref="Models.MultiLabelClassificationEvaluationSummary"/>. </summary>
         /// <param name="classes"> Represents the classes evaluation. </param>
         /// <param name="microF1"> Represents the micro F1. Expected value is a float between 0 and 1 inclusive. </param>
-        /// <param name="microPrecision">
-        /// Represents the micro precision. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
-        /// <param name="microRecall">
-        /// Represents the micro recall. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
+        /// <param name="microPrecision"> Represents the micro precision. Expected value is a float between 0 and 1 inclusive. </param>
+        /// <param name="microRecall"> Represents the micro recall. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroF1"> Represents the macro F1. Expected value is a float between 0 and 1 inclusive. </param>
-        /// <param name="macroPrecision">
-        /// Represents the macro precision. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
-        /// <param name="macroRecall">
-        /// Represents the macro recall. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
+        /// <param name="macroPrecision"> Represents the macro precision. Expected value is a float between 0 and 1 inclusive. </param>
+        /// <param name="macroRecall"> Represents the macro recall. Expected value is a float between 0 and 1 inclusive. </param>
         /// <returns> A new <see cref="Models.MultiLabelClassificationEvaluationSummary"/> instance for mocking. </returns>
         public static MultiLabelClassificationEvaluationSummary MultiLabelClassificationEvaluationSummary(IReadOnlyDictionary<string, MultiLabelClassEvaluationSummary> classes = null, float microF1 = default, float microPrecision = default, float microRecall = default, float macroF1 = default, float macroPrecision = default, float macroRecall = default)
         {
@@ -931,36 +849,20 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
         /// <param name="customSingleLabelClassificationEvaluation"> Contains the data related to single label classification evaluation. </param>
         /// <returns> A new <see cref="Models.CustomSingleLabelClassificationEvaluationSummary"/> instance for mocking. </returns>
-        public static CustomSingleLabelClassificationEvaluationSummary CustomSingleLabelClassificationEvaluationSummary(EvaluationConfig evaluationOptions = null, SingleLabelClassificationEvaluationSummary customSingleLabelClassificationEvaluation = null)
+        public static CustomSingleLabelClassificationEvaluationSummary CustomSingleLabelClassificationEvaluationSummary(EvaluationDetails evaluationOptions = null, SingleLabelClassificationEvaluationSummary customSingleLabelClassificationEvaluation = null)
         {
             return new CustomSingleLabelClassificationEvaluationSummary(ProjectKind.CustomSingleLabelClassification, evaluationOptions, serializedAdditionalRawData: null, customSingleLabelClassificationEvaluation);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SingleLabelClassificationEvaluationSummary"/>. </summary>
-        /// <param name="confusionMatrix">
-        /// Represents the confusion matrix between two classes (the two classes can be the
-        /// same). The matrix is between the class that was labelled and the class that was
-        /// predicted.
-        /// </param>
+        /// <param name="confusionMatrix"> Represents the confusion matrix between two classes (the two classes can be the same). The matrix is between the class that was labelled and the class that was predicted. </param>
         /// <param name="classes"> Represents the classes evaluation. </param>
         /// <param name="microF1"> Represents the micro F1. Expected value is a float between 0 and 1 inclusive. </param>
-        /// <param name="microPrecision">
-        /// Represents the micro precision. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
-        /// <param name="microRecall">
-        /// Represents the micro recall. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
+        /// <param name="microPrecision"> Represents the micro precision. Expected value is a float between 0 and 1 inclusive. </param>
+        /// <param name="microRecall"> Represents the micro recall. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroF1"> Represents the macro F1. Expected value is a float between 0 and 1 inclusive. </param>
-        /// <param name="macroPrecision">
-        /// Represents the macro precision. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
-        /// <param name="macroRecall">
-        /// Represents the macro recall. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
+        /// <param name="macroPrecision"> Represents the macro precision. Expected value is a float between 0 and 1 inclusive. </param>
+        /// <param name="macroRecall"> Represents the macro recall. Expected value is a float between 0 and 1 inclusive. </param>
         /// <returns> A new <see cref="Models.SingleLabelClassificationEvaluationSummary"/> instance for mocking. </returns>
         public static SingleLabelClassificationEvaluationSummary SingleLabelClassificationEvaluationSummary(ConfusionMatrix confusionMatrix = null, IReadOnlyDictionary<string, SingleLabelClassEvaluationSummary> classes = null, float microF1 = default, float microPrecision = default, float microRecall = default, float macroF1 = default, float macroPrecision = default, float macroRecall = default)
         {
@@ -1004,7 +906,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
         /// <param name="customTextSentimentEvaluation"> Contains the data related to custom sentiment evaluation. </param>
         /// <returns> A new <see cref="Models.CustomTextSentimentEvaluationSummary"/> instance for mocking. </returns>
-        public static CustomTextSentimentEvaluationSummary CustomTextSentimentEvaluationSummary(EvaluationConfig evaluationOptions = null, TextSentimentEvaluationSummary customTextSentimentEvaluation = null)
+        public static CustomTextSentimentEvaluationSummary CustomTextSentimentEvaluationSummary(EvaluationDetails evaluationOptions = null, TextSentimentEvaluationSummary customTextSentimentEvaluation = null)
         {
             return new CustomTextSentimentEvaluationSummary(ProjectKind.CustomTextSentiment, evaluationOptions, serializedAdditionalRawData: null, customTextSentimentEvaluation);
         }
@@ -1012,23 +914,11 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Initializes a new instance of <see cref="Models.TextSentimentEvaluationSummary"/>. </summary>
         /// <param name="spanSentimentsEvaluation"> Represents evaluation of span level sentiments. </param>
         /// <param name="microF1"> Represents the micro F1. Expected value is a float between 0 and 1 inclusive. </param>
-        /// <param name="microPrecision">
-        /// Represents the micro precision. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
-        /// <param name="microRecall">
-        /// Represents the micro recall. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
+        /// <param name="microPrecision"> Represents the micro precision. Expected value is a float between 0 and 1 inclusive. </param>
+        /// <param name="microRecall"> Represents the micro recall. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroF1"> Represents the macro F1. Expected value is a float between 0 and 1 inclusive. </param>
-        /// <param name="macroPrecision">
-        /// Represents the macro precision. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
-        /// <param name="macroRecall">
-        /// Represents the macro recall. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
+        /// <param name="macroPrecision"> Represents the macro precision. Expected value is a float between 0 and 1 inclusive. </param>
+        /// <param name="macroRecall"> Represents the macro recall. Expected value is a float between 0 and 1 inclusive. </param>
         /// <returns> A new <see cref="Models.TextSentimentEvaluationSummary"/> instance for mocking. </returns>
         public static TextSentimentEvaluationSummary TextSentimentEvaluationSummary(SpanSentimentEvaluationSummary spanSentimentsEvaluation = null, float microF1 = default, float microPrecision = default, float microRecall = default, float macroF1 = default, float macroPrecision = default, float macroRecall = default)
         {
@@ -1044,30 +934,14 @@ namespace Azure.AI.Language.Text.Authoring
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SpanSentimentEvaluationSummary"/>. </summary>
-        /// <param name="confusionMatrix">
-        /// Represents the confusion matrix between two sentiments (the two sentiments can
-        /// be the same). The matrix is between the sentiment that was labelled and the
-        /// sentiment that was predicted.
-        /// </param>
+        /// <param name="confusionMatrix"> Represents the confusion matrix between two sentiments (the two sentiments can be the same). The matrix is between the sentiment that was labelled and the sentiment that was predicted. </param>
         /// <param name="sentiments"> Represents the sentiment evaluation. </param>
         /// <param name="microF1"> Represents the micro F1. Expected value is a float between 0 and 1 inclusive. </param>
-        /// <param name="microPrecision">
-        /// Represents the micro precision. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
-        /// <param name="microRecall">
-        /// Represents the micro recall. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
+        /// <param name="microPrecision"> Represents the micro precision. Expected value is a float between 0 and 1 inclusive. </param>
+        /// <param name="microRecall"> Represents the micro recall. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroF1"> Represents the macro F1. Expected value is a float between 0 and 1 inclusive. </param>
-        /// <param name="macroPrecision">
-        /// Represents the macro precision. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
-        /// <param name="macroRecall">
-        /// Represents the macro recall. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
+        /// <param name="macroPrecision"> Represents the macro precision. Expected value is a float between 0 and 1 inclusive. </param>
+        /// <param name="macroRecall"> Represents the macro recall. Expected value is a float between 0 and 1 inclusive. </param>
         /// <returns> A new <see cref="Models.SpanSentimentEvaluationSummary"/> instance for mocking. </returns>
         public static SpanSentimentEvaluationSummary SpanSentimentEvaluationSummary(ConfusionMatrix confusionMatrix = null, IReadOnlyDictionary<string, SentimentEvaluationSummary> sentiments = null, float microF1 = default, float microPrecision = default, float microRecall = default, float macroF1 = default, float macroPrecision = default, float macroRecall = default)
         {
@@ -1239,10 +1113,7 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <summary> Initializes a new instance of <see cref="Models.SupportedLanguage"/>. </summary>
         /// <param name="languageName"> The language name. </param>
-        /// <param name="languageCode">
-        /// The language code. This is BCP-47 representation of a language. For example,
-        /// "en" for English, "en-gb" for English (UK), "es" for Spanish etc.
-        /// </param>
+        /// <param name="languageCode"> The language code. This is BCP-47 representation of a language. For example, "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <returns> A new <see cref="Models.SupportedLanguage"/> instance for mocking. </returns>
         public static SupportedLanguage SupportedLanguage(string languageName = null, string languageCode = null)
         {

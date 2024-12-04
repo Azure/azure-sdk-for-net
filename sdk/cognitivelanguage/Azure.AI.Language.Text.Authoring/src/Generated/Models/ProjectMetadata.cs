@@ -50,10 +50,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="lastModifiedDateTime"> Represents the project last modification datetime. </param>
         /// <param name="projectKind"> The project kind. </param>
         /// <param name="storageInputContainerName"> The storage container name. </param>
-        /// <param name="language">
-        /// The project language. This is BCP-47 representation of a language. For example,
-        /// use "en" for English, "en-gb" for English (UK), "es" for Spanish etc.
-        /// </param>
+        /// <param name="language"> The project language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageInputContainerName"/> or <paramref name="language"/> is null. </exception>
         internal ProjectMetadata(DateTimeOffset createdDateTime, DateTimeOffset lastModifiedDateTime, ProjectKind projectKind, string storageInputContainerName, string language)
         {
@@ -78,10 +75,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="projectName"> The new project name. </param>
         /// <param name="multilingual"> Whether the project would be used for multiple languages or not. </param>
         /// <param name="description"> The project description. </param>
-        /// <param name="language">
-        /// The project language. This is BCP-47 representation of a language. For example,
-        /// use "en" for English, "en-gb" for English (UK), "es" for Spanish etc.
-        /// </param>
+        /// <param name="language"> The project language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ProjectMetadata(DateTimeOffset createdDateTime, DateTimeOffset lastModifiedDateTime, DateTimeOffset? lastTrainedDateTime, DateTimeOffset? lastDeployedDateTime, ProjectKind projectKind, string storageInputContainerName, ProjectSettings settings, string projectName, bool? multilingual, string description, string language, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -124,10 +118,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         public bool? Multilingual { get; }
         /// <summary> The project description. </summary>
         public string Description { get; }
-        /// <summary>
-        /// The project language. This is BCP-47 representation of a language. For example,
-        /// use "en" for English, "en-gb" for English (UK), "es" for Spanish etc.
-        /// </summary>
+        /// <summary> The project language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </summary>
         public string Language { get; }
     }
 }

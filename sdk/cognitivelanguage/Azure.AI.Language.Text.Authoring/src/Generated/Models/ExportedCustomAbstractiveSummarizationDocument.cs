@@ -46,10 +46,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ExportedCustomAbstractiveSummarizationDocument"/>. </summary>
-        /// <param name="summaryLocation">
-        /// Represents the summary file location in the blob store container associated
-        /// with the project.
-        /// </param>
+        /// <param name="summaryLocation"> Represents the summary file location in the blob store container associated with the project. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="summaryLocation"/> is null. </exception>
         public ExportedCustomAbstractiveSummarizationDocument(string summaryLocation)
         {
@@ -59,16 +56,9 @@ namespace Azure.AI.Language.Text.Authoring.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ExportedCustomAbstractiveSummarizationDocument"/>. </summary>
-        /// <param name="summaryLocation">
-        /// Represents the summary file location in the blob store container associated
-        /// with the project.
-        /// </param>
+        /// <param name="summaryLocation"> Represents the summary file location in the blob store container associated with the project. </param>
         /// <param name="location"> The location of the document in the storage. </param>
-        /// <param name="language">
-        /// Represents the document language. This is BCP-47 representation of a language.
-        /// For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish
-        /// etc.
-        /// </param>
+        /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="dataset"> The dataset for this document. Allowed values are 'Train' and 'Test'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ExportedCustomAbstractiveSummarizationDocument(string summaryLocation, string location, string language, string dataset, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -85,18 +75,11 @@ namespace Azure.AI.Language.Text.Authoring.Models
         {
         }
 
-        /// <summary>
-        /// Represents the summary file location in the blob store container associated
-        /// with the project.
-        /// </summary>
+        /// <summary> Represents the summary file location in the blob store container associated with the project. </summary>
         public string SummaryLocation { get; }
         /// <summary> The location of the document in the storage. </summary>
         public string Location { get; set; }
-        /// <summary>
-        /// Represents the document language. This is BCP-47 representation of a language.
-        /// For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish
-        /// etc.
-        /// </summary>
+        /// <summary> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </summary>
         public string Language { get; set; }
         /// <summary> The dataset for this document. Allowed values are 'Train' and 'Test'. </summary>
         public string Dataset { get; set; }

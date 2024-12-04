@@ -45,10 +45,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="keyCredential"> The key credential to copy. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
-        /// <param name="endpoint">
-        /// Supported Cognitive Services endpoint (e.g.,
-        /// https://&lt;resource-name&gt;.api.cognitiveservices.azure.com).
-        /// </param>
+        /// <param name="endpoint"> Supported Cognitive Services endpoint e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         internal TextAnalysisAuthoring(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
@@ -244,59 +241,46 @@ namespace Azure.AI.Language.Text.Authoring
             }
         }
 
-        /// <summary>
-        /// Generates a copy project operation authorization to the current target Azure
-        /// resource.
-        /// </summary>
+        /// <summary> Generates a copy project operation authorization to the current target Azure resource. </summary>
         /// <param name="projectName"> The new project name. </param>
         /// <param name="projectKind"> Represents the project kind. </param>
         /// <param name="storageInputContainerName"> The name of the storage container. </param>
-        /// <param name="allowOverwrite">
-        /// Whether to allow an existing project to be overwritten using the resulting copy
-        /// authorization.
-        /// </param>
+        /// <param name="allowOverwrite"> Whether to allow an existing project to be overwritten using the resulting copy authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='CopyProjectAuthorizationAsync(string,ProjectKind,string,bool?,CancellationToken)']/*" />
-        public virtual async Task<Response<CopyProjectConfig>> CopyProjectAuthorizationAsync(string projectName, ProjectKind projectKind, string storageInputContainerName = null, bool? allowOverwrite = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CopyProjectDetails>> CopyProjectAuthorizationAsync(string projectName, ProjectKind projectKind, string storageInputContainerName = null, bool? allowOverwrite = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             CopyProjectAuthorizationRequest copyProjectAuthorizationRequest = new CopyProjectAuthorizationRequest(projectKind, storageInputContainerName, allowOverwrite, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CopyProjectAuthorizationAsync(projectName, copyProjectAuthorizationRequest.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(CopyProjectConfig.FromResponse(response), response);
+            return Response.FromValue(CopyProjectDetails.FromResponse(response), response);
         }
 
-        /// <summary>
-        /// Generates a copy project operation authorization to the current target Azure
-        /// resource.
-        /// </summary>
+        /// <summary> Generates a copy project operation authorization to the current target Azure resource. </summary>
         /// <param name="projectName"> The new project name. </param>
         /// <param name="projectKind"> Represents the project kind. </param>
         /// <param name="storageInputContainerName"> The name of the storage container. </param>
-        /// <param name="allowOverwrite">
-        /// Whether to allow an existing project to be overwritten using the resulting copy
-        /// authorization.
-        /// </param>
+        /// <param name="allowOverwrite"> Whether to allow an existing project to be overwritten using the resulting copy authorization. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='CopyProjectAuthorization(string,ProjectKind,string,bool?,CancellationToken)']/*" />
-        public virtual Response<CopyProjectConfig> CopyProjectAuthorization(string projectName, ProjectKind projectKind, string storageInputContainerName = null, bool? allowOverwrite = null, CancellationToken cancellationToken = default)
+        public virtual Response<CopyProjectDetails> CopyProjectAuthorization(string projectName, ProjectKind projectKind, string storageInputContainerName = null, bool? allowOverwrite = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             CopyProjectAuthorizationRequest copyProjectAuthorizationRequest = new CopyProjectAuthorizationRequest(projectKind, storageInputContainerName, allowOverwrite, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CopyProjectAuthorization(projectName, copyProjectAuthorizationRequest.ToRequestContent(), context);
-            return Response.FromValue(CopyProjectConfig.FromResponse(response), response);
+            return Response.FromValue(CopyProjectDetails.FromResponse(response), response);
         }
 
         /// <summary>
-        /// [Protocol Method] Generates a copy project operation authorization to the current target Azure
-        /// resource.
+        /// [Protocol Method] Generates a copy project operation authorization to the current target Azure resource.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -338,8 +322,7 @@ namespace Azure.AI.Language.Text.Authoring
         }
 
         /// <summary>
-        /// [Protocol Method] Generates a copy project operation authorization to the current target Azure
-        /// resource.
+        /// [Protocol Method] Generates a copy project operation authorization to the current target Azure resource.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -986,10 +969,7 @@ namespace Azure.AI.Language.Text.Authoring
             }
         }
 
-        /// <summary>
-        /// Gets the status of an export job. Once job completes, returns the project
-        /// metadata, and assets.
-        /// </summary>
+        /// <summary> Gets the status of an export job. Once job completes, returns the project metadata, and assets. </summary>
         /// <param name="projectName"> The new project name. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1006,10 +986,7 @@ namespace Azure.AI.Language.Text.Authoring
             return Response.FromValue(ExportProjectJobState.FromResponse(response), response);
         }
 
-        /// <summary>
-        /// Gets the status of an export job. Once job completes, returns the project
-        /// metadata, and assets.
-        /// </summary>
+        /// <summary> Gets the status of an export job. Once job completes, returns the project metadata, and assets. </summary>
         /// <param name="projectName"> The new project name. </param>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1027,8 +1004,7 @@ namespace Azure.AI.Language.Text.Authoring
         }
 
         /// <summary>
-        /// [Protocol Method] Gets the status of an export job. Once job completes, returns the project
-        /// metadata, and assets.
+        /// [Protocol Method] Gets the status of an export job. Once job completes, returns the project metadata, and assets.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1070,8 +1046,7 @@ namespace Azure.AI.Language.Text.Authoring
         }
 
         /// <summary>
-        /// [Protocol Method] Gets the status of an export job. Once job completes, returns the project
-        /// metadata, and assets.
+        /// [Protocol Method] Gets the status of an export job. Once job completes, returns the project metadata, and assets.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1912,10 +1887,7 @@ namespace Azure.AI.Language.Text.Authoring
             }
         }
 
-        /// <summary>
-        /// Gets the evaluation summary of a trained model. The summary includes high level
-        /// performance measurements of the model e.g., F1, Precision, Recall, etc.
-        /// </summary>
+        /// <summary> Gets the evaluation summary of a trained model. The summary includes high level performance measurements of the model e.g., F1, Precision, Recall, etc. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1932,10 +1904,7 @@ namespace Azure.AI.Language.Text.Authoring
             return Response.FromValue(EvaluationSummary.FromResponse(response), response);
         }
 
-        /// <summary>
-        /// Gets the evaluation summary of a trained model. The summary includes high level
-        /// performance measurements of the model e.g., F1, Precision, Recall, etc.
-        /// </summary>
+        /// <summary> Gets the evaluation summary of a trained model. The summary includes high level performance measurements of the model e.g., F1, Precision, Recall, etc. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1953,8 +1922,7 @@ namespace Azure.AI.Language.Text.Authoring
         }
 
         /// <summary>
-        /// [Protocol Method] Gets the evaluation summary of a trained model. The summary includes high level
-        /// performance measurements of the model e.g., F1, Precision, Recall, etc.
+        /// [Protocol Method] Gets the evaluation summary of a trained model. The summary includes high level performance measurements of the model e.g., F1, Precision, Recall, etc.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1996,8 +1964,7 @@ namespace Azure.AI.Language.Text.Authoring
         }
 
         /// <summary>
-        /// [Protocol Method] Gets the evaluation summary of a trained model. The summary includes high level
-        /// performance measurements of the model e.g., F1, Precision, Recall, etc.
+        /// [Protocol Method] Gets the evaluation summary of a trained model. The summary includes high level performance measurements of the model e.g., F1, Precision, Recall, etc.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -3032,16 +2999,10 @@ namespace Azure.AI.Language.Text.Authoring
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "TextAnalysisAuthoring.GetTrainedModels", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// Gets the detailed results of the evaluation for a trained model. This includes
-        /// the raw inference results for the data included in the evaluation process.
-        /// </summary>
+        /// <summary> Gets the detailed results of the evaluation for a trained model. This includes the raw inference results for the data included in the evaluation process. </summary>
         /// <param name="projectName"> The new project name. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
-        /// <param name="stringIndexType">
-        /// Specifies the method used to interpret string offsets. For additional
-        /// information see https://aka.ms/text-analytics-offsets.
-        /// </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
@@ -3060,16 +3021,10 @@ namespace Azure.AI.Language.Text.Authoring
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DocumentEvaluationResult.DeserializeDocumentEvaluationResult(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoring.GetModelEvaluationResults", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// Gets the detailed results of the evaluation for a trained model. This includes
-        /// the raw inference results for the data included in the evaluation process.
-        /// </summary>
+        /// <summary> Gets the detailed results of the evaluation for a trained model. This includes the raw inference results for the data included in the evaluation process. </summary>
         /// <param name="projectName"> The new project name. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
-        /// <param name="stringIndexType">
-        /// Specifies the method used to interpret string offsets. For additional
-        /// information see https://aka.ms/text-analytics-offsets.
-        /// </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
@@ -3089,8 +3044,7 @@ namespace Azure.AI.Language.Text.Authoring
         }
 
         /// <summary>
-        /// [Protocol Method] Gets the detailed results of the evaluation for a trained model. This includes
-        /// the raw inference results for the data included in the evaluation process.
+        /// [Protocol Method] Gets the detailed results of the evaluation for a trained model. This includes the raw inference results for the data included in the evaluation process.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -3106,10 +3060,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </summary>
         /// <param name="projectName"> The new project name. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
-        /// <param name="stringIndexType">
-        /// Specifies the method used to interpret string offsets. For additional
-        /// information see https://aka.ms/text-analytics-offsets. Allowed values: "Utf16CodeUnit"
-        /// </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. Allowed values: "Utf16CodeUnit". </param>
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
@@ -3131,8 +3082,7 @@ namespace Azure.AI.Language.Text.Authoring
         }
 
         /// <summary>
-        /// [Protocol Method] Gets the detailed results of the evaluation for a trained model. This includes
-        /// the raw inference results for the data included in the evaluation process.
+        /// [Protocol Method] Gets the detailed results of the evaluation for a trained model. This includes the raw inference results for the data included in the evaluation process.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -3148,10 +3098,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </summary>
         /// <param name="projectName"> The new project name. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
-        /// <param name="stringIndexType">
-        /// Specifies the method used to interpret string offsets. For additional
-        /// information see https://aka.ms/text-analytics-offsets. Allowed values: "Utf16CodeUnit"
-        /// </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. Allowed values: "Utf16CodeUnit". </param>
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
@@ -3384,11 +3331,7 @@ namespace Azure.AI.Language.Text.Authoring
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "TextAnalysisAuthoring.GetTrainingJobs", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// Lists the deployments to which an Azure resource is assigned. This doesn't
-        /// return deployments belonging to projects owned by this resource. It only
-        /// returns deployments belonging to projects owned by other resources.
-        /// </summary>
+        /// <summary> Lists the deployments to which an Azure resource is assigned. This doesn't return deployments belonging to projects owned by this resource. It only returns deployments belonging to projects owned by other resources. </summary>
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
@@ -3402,11 +3345,7 @@ namespace Azure.AI.Language.Text.Authoring
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AssignedProjectDeploymentsMetadata.DeserializeAssignedProjectDeploymentsMetadata(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoring.GetAssignedResourceDeployments", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// Lists the deployments to which an Azure resource is assigned. This doesn't
-        /// return deployments belonging to projects owned by this resource. It only
-        /// returns deployments belonging to projects owned by other resources.
-        /// </summary>
+        /// <summary> Lists the deployments to which an Azure resource is assigned. This doesn't return deployments belonging to projects owned by this resource. It only returns deployments belonging to projects owned by other resources. </summary>
         /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
@@ -3421,9 +3360,7 @@ namespace Azure.AI.Language.Text.Authoring
         }
 
         /// <summary>
-        /// [Protocol Method] Lists the deployments to which an Azure resource is assigned. This doesn't
-        /// return deployments belonging to projects owned by this resource. It only
-        /// returns deployments belonging to projects owned by other resources.
+        /// [Protocol Method] Lists the deployments to which an Azure resource is assigned. This doesn't return deployments belonging to projects owned by this resource. It only returns deployments belonging to projects owned by other resources.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -3452,9 +3389,7 @@ namespace Azure.AI.Language.Text.Authoring
         }
 
         /// <summary>
-        /// [Protocol Method] Lists the deployments to which an Azure resource is assigned. This doesn't
-        /// return deployments belonging to projects owned by this resource. It only
-        /// returns deployments belonging to projects owned by other resources.
+        /// [Protocol Method] Lists the deployments to which an Azure resource is assigned. This doesn't return deployments belonging to projects owned by this resource. It only returns deployments belonging to projects owned by other resources.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -3572,10 +3507,7 @@ namespace Azure.AI.Language.Text.Authoring
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "TextAnalysisAuthoring.GetSupportedLanguages", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// Lists the supported prebuilt entities that can be used while creating composed
-        /// entities.
-        /// </summary>
+        /// <summary> Lists the supported prebuilt entities that can be used while creating composed entities. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='GetSupportedPrebuiltEntitiesAsync(CancellationToken)']/*" />
         public virtual AsyncPageable<PrebuiltEntity> GetSupportedPrebuiltEntitiesAsync(CancellationToken cancellationToken = default)
@@ -3586,10 +3518,7 @@ namespace Azure.AI.Language.Text.Authoring
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PrebuiltEntity.DeserializePrebuiltEntity(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoring.GetSupportedPrebuiltEntities", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// Lists the supported prebuilt entities that can be used while creating composed
-        /// entities.
-        /// </summary>
+        /// <summary> Lists the supported prebuilt entities that can be used while creating composed entities. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='GetSupportedPrebuiltEntities(CancellationToken)']/*" />
         public virtual Pageable<PrebuiltEntity> GetSupportedPrebuiltEntities(CancellationToken cancellationToken = default)
@@ -3601,8 +3530,7 @@ namespace Azure.AI.Language.Text.Authoring
         }
 
         /// <summary>
-        /// [Protocol Method] Lists the supported prebuilt entities that can be used while creating composed
-        /// entities.
+        /// [Protocol Method] Lists the supported prebuilt entities that can be used while creating composed entities.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -3628,8 +3556,7 @@ namespace Azure.AI.Language.Text.Authoring
         }
 
         /// <summary>
-        /// [Protocol Method] Lists the supported prebuilt entities that can be used while creating composed
-        /// entities.
+        /// [Protocol Method] Lists the supported prebuilt entities that can be used while creating composed entities.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -3825,8 +3752,8 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='CopyProjectAsync(WaitUntil,string,CopyProjectConfig,CancellationToken)']/*" />
-        public virtual async Task<Operation> CopyProjectAsync(WaitUntil waitUntil, string projectName, CopyProjectConfig body, CancellationToken cancellationToken = default)
+        /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='CopyProjectAsync(WaitUntil,string,CopyProjectDetails,CancellationToken)']/*" />
+        public virtual async Task<Operation> CopyProjectAsync(WaitUntil waitUntil, string projectName, CopyProjectDetails body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(body, nameof(body));
@@ -3843,8 +3770,8 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='CopyProject(WaitUntil,string,CopyProjectConfig,CancellationToken)']/*" />
-        public virtual Operation CopyProject(WaitUntil waitUntil, string projectName, CopyProjectConfig body, CancellationToken cancellationToken = default)
+        /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='CopyProject(WaitUntil,string,CopyProjectDetails,CancellationToken)']/*" />
+        public virtual Operation CopyProject(WaitUntil waitUntil, string projectName, CopyProjectDetails body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(body, nameof(body));
@@ -3864,7 +3791,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CopyProjectAsync(WaitUntil,string,CopyProjectConfig,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CopyProjectAsync(WaitUntil,string,CopyProjectDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -3907,7 +3834,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CopyProject(WaitUntil,string,CopyProjectConfig,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CopyProject(WaitUntil,string,CopyProjectDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -3943,15 +3870,9 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Triggers a job to export a project's data. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="stringIndexType">
-        /// Specifies the method used to interpret string offsets. For additional
-        /// information see https://aka.ms/text-analytics-offsets.
-        /// </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="assetKind"> Kind of asset to export. </param>
-        /// <param name="trainedModelLabel">
-        /// Trained model label to export. If the trainedModelLabel is null, the default
-        /// behavior is to export the current working copy.
-        /// </param>
+        /// <param name="trainedModelLabel"> Trained model label to export. If the trainedModelLabel is null, the default behavior is to export the current working copy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -3967,15 +3888,9 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Triggers a job to export a project's data. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="stringIndexType">
-        /// Specifies the method used to interpret string offsets. For additional
-        /// information see https://aka.ms/text-analytics-offsets.
-        /// </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="assetKind"> Kind of asset to export. </param>
-        /// <param name="trainedModelLabel">
-        /// Trained model label to export. If the trainedModelLabel is null, the default
-        /// behavior is to export the current working copy.
-        /// </param>
+        /// <param name="trainedModelLabel"> Trained model label to export. If the trainedModelLabel is null, the default behavior is to export the current working copy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -4005,15 +3920,9 @@ namespace Azure.AI.Language.Text.Authoring
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="stringIndexType">
-        /// Specifies the method used to interpret string offsets. For additional
-        /// information see https://aka.ms/text-analytics-offsets. Allowed values: "Utf16CodeUnit"
-        /// </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. Allowed values: "Utf16CodeUnit". </param>
         /// <param name="assetKind"> Kind of asset to export. </param>
-        /// <param name="trainedModelLabel">
-        /// Trained model label to export. If the trainedModelLabel is null, the default
-        /// behavior is to export the current working copy.
-        /// </param>
+        /// <param name="trainedModelLabel"> Trained model label to export. If the trainedModelLabel is null, the default behavior is to export the current working copy. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="stringIndexType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -4056,15 +3965,9 @@ namespace Azure.AI.Language.Text.Authoring
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="stringIndexType">
-        /// Specifies the method used to interpret string offsets. For additional
-        /// information see https://aka.ms/text-analytics-offsets. Allowed values: "Utf16CodeUnit"
-        /// </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. Allowed values: "Utf16CodeUnit". </param>
         /// <param name="assetKind"> Kind of asset to export. </param>
-        /// <param name="trainedModelLabel">
-        /// Trained model label to export. If the trainedModelLabel is null, the default
-        /// behavior is to export the current working copy.
-        /// </param>
+        /// <param name="trainedModelLabel"> Trained model label to export. If the trainedModelLabel is null, the default behavior is to export the current working copy. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="stringIndexType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -4090,17 +3993,11 @@ namespace Azure.AI.Language.Text.Authoring
             }
         }
 
-        /// <summary>
-        /// Triggers a job to import a project. If a project with the same name already
-        /// exists, the data of that project is replaced.
-        /// </summary>
+        /// <summary> Triggers a job to import a project. If a project with the same name already exists, the data of that project is replaced. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="body"> The project data to import. </param>
-        /// <param name="format">
-        /// The format of the project to import. The currently supported formats are json
-        /// and aml formats. If not provided, the default is set to json.
-        /// </param>
+        /// <param name="format"> The format of the project to import. The currently supported formats are json and aml formats. If not provided, the default is set to json. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -4115,17 +4012,11 @@ namespace Azure.AI.Language.Text.Authoring
             return await ImportAsync(waitUntil, projectName, content, format, context).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Triggers a job to import a project. If a project with the same name already
-        /// exists, the data of that project is replaced.
-        /// </summary>
+        /// <summary> Triggers a job to import a project. If a project with the same name already exists, the data of that project is replaced. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="body"> The project data to import. </param>
-        /// <param name="format">
-        /// The format of the project to import. The currently supported formats are json
-        /// and aml formats. If not provided, the default is set to json.
-        /// </param>
+        /// <param name="format"> The format of the project to import. The currently supported formats are json and aml formats. If not provided, the default is set to json. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -4141,8 +4032,7 @@ namespace Azure.AI.Language.Text.Authoring
         }
 
         /// <summary>
-        /// [Protocol Method] Triggers a job to import a project. If a project with the same name already
-        /// exists, the data of that project is replaced.
+        /// [Protocol Method] Triggers a job to import a project. If a project with the same name already exists, the data of that project is replaced.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -4159,10 +4049,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="format">
-        /// The format of the project to import. The currently supported formats are json
-        /// and aml formats. If not provided, the default is set to json.
-        /// </param>
+        /// <param name="format"> The format of the project to import. The currently supported formats are json and aml formats. If not provided, the default is set to json. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -4189,8 +4076,7 @@ namespace Azure.AI.Language.Text.Authoring
         }
 
         /// <summary>
-        /// [Protocol Method] Triggers a job to import a project. If a project with the same name already
-        /// exists, the data of that project is replaced.
+        /// [Protocol Method] Triggers a job to import a project. If a project with the same name already exists, the data of that project is replaced.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -4207,10 +4093,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="format">
-        /// The format of the project to import. The currently supported formats are json
-        /// and aml formats. If not provided, the default is set to json.
-        /// </param>
+        /// <param name="format"> The format of the project to import. The currently supported formats are json and aml formats. If not provided, the default is set to json. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -4243,8 +4126,8 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='TrainAsync(WaitUntil,string,TrainingJobConfig,CancellationToken)']/*" />
-        public virtual async Task<Operation<TrainingJobResult>> TrainAsync(WaitUntil waitUntil, string projectName, TrainingJobConfig body, CancellationToken cancellationToken = default)
+        /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='TrainAsync(WaitUntil,string,TrainingJobDetails,CancellationToken)']/*" />
+        public virtual async Task<Operation<TrainingJobResult>> TrainAsync(WaitUntil waitUntil, string projectName, TrainingJobDetails body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(body, nameof(body));
@@ -4262,8 +4145,8 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='Train(WaitUntil,string,TrainingJobConfig,CancellationToken)']/*" />
-        public virtual Operation<TrainingJobResult> Train(WaitUntil waitUntil, string projectName, TrainingJobConfig body, CancellationToken cancellationToken = default)
+        /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='Train(WaitUntil,string,TrainingJobDetails,CancellationToken)']/*" />
+        public virtual Operation<TrainingJobResult> Train(WaitUntil waitUntil, string projectName, TrainingJobDetails body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(body, nameof(body));
@@ -4284,7 +4167,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="TrainAsync(WaitUntil,string,TrainingJobConfig,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="TrainAsync(WaitUntil,string,TrainingJobDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -4327,7 +4210,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Train(WaitUntil,string,TrainingJobConfig,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Train(WaitUntil,string,TrainingJobDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -4368,8 +4251,8 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='DeployProjectAsync(WaitUntil,string,string,CreateDeploymentConfig,CancellationToken)']/*" />
-        public virtual async Task<Operation> DeployProjectAsync(WaitUntil waitUntil, string projectName, string deploymentName, CreateDeploymentConfig body, CancellationToken cancellationToken = default)
+        /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='DeployProjectAsync(WaitUntil,string,string,CreateDeploymentDetails,CancellationToken)']/*" />
+        public virtual async Task<Operation> DeployProjectAsync(WaitUntil waitUntil, string projectName, string deploymentName, CreateDeploymentDetails body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -4388,8 +4271,8 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='DeployProject(WaitUntil,string,string,CreateDeploymentConfig,CancellationToken)']/*" />
-        public virtual Operation DeployProject(WaitUntil waitUntil, string projectName, string deploymentName, CreateDeploymentConfig body, CancellationToken cancellationToken = default)
+        /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='DeployProject(WaitUntil,string,string,CreateDeploymentDetails,CancellationToken)']/*" />
+        public virtual Operation DeployProject(WaitUntil waitUntil, string projectName, string deploymentName, CreateDeploymentDetails body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -4410,7 +4293,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="DeployProjectAsync(WaitUntil,string,string,CreateDeploymentConfig,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="DeployProjectAsync(WaitUntil,string,string,CreateDeploymentDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -4455,7 +4338,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="DeployProject(WaitUntil,string,string,CreateDeploymentConfig,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="DeployProject(WaitUntil,string,string,CreateDeploymentDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -4576,8 +4459,8 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='DeleteDeploymentFromResourcesAsync(WaitUntil,string,string,DeleteDeploymentConfig,CancellationToken)']/*" />
-        public virtual async Task<Operation> DeleteDeploymentFromResourcesAsync(WaitUntil waitUntil, string projectName, string deploymentName, DeleteDeploymentConfig body, CancellationToken cancellationToken = default)
+        /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='DeleteDeploymentFromResourcesAsync(WaitUntil,string,string,DeleteDeploymentDetails,CancellationToken)']/*" />
+        public virtual async Task<Operation> DeleteDeploymentFromResourcesAsync(WaitUntil waitUntil, string projectName, string deploymentName, DeleteDeploymentDetails body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -4596,8 +4479,8 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='DeleteDeploymentFromResources(WaitUntil,string,string,DeleteDeploymentConfig,CancellationToken)']/*" />
-        public virtual Operation DeleteDeploymentFromResources(WaitUntil waitUntil, string projectName, string deploymentName, DeleteDeploymentConfig body, CancellationToken cancellationToken = default)
+        /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='DeleteDeploymentFromResources(WaitUntil,string,string,DeleteDeploymentDetails,CancellationToken)']/*" />
+        public virtual Operation DeleteDeploymentFromResources(WaitUntil waitUntil, string projectName, string deploymentName, DeleteDeploymentDetails body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
@@ -4618,7 +4501,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="DeleteDeploymentFromResourcesAsync(WaitUntil,string,string,DeleteDeploymentConfig,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="DeleteDeploymentFromResourcesAsync(WaitUntil,string,string,DeleteDeploymentDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -4663,7 +4546,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="DeleteDeploymentFromResources(WaitUntil,string,string,DeleteDeploymentConfig,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="DeleteDeploymentFromResources(WaitUntil,string,string,DeleteDeploymentDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -4705,8 +4588,8 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='SwapDeploymentsAsync(WaitUntil,string,SwapDeploymentsConfig,CancellationToken)']/*" />
-        public virtual async Task<Operation> SwapDeploymentsAsync(WaitUntil waitUntil, string projectName, SwapDeploymentsConfig body, CancellationToken cancellationToken = default)
+        /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='SwapDeploymentsAsync(WaitUntil,string,SwapDeploymentsDetails,CancellationToken)']/*" />
+        public virtual async Task<Operation> SwapDeploymentsAsync(WaitUntil waitUntil, string projectName, SwapDeploymentsDetails body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(body, nameof(body));
@@ -4723,8 +4606,8 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='SwapDeployments(WaitUntil,string,SwapDeploymentsConfig,CancellationToken)']/*" />
-        public virtual Operation SwapDeployments(WaitUntil waitUntil, string projectName, SwapDeploymentsConfig body, CancellationToken cancellationToken = default)
+        /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='SwapDeployments(WaitUntil,string,SwapDeploymentsDetails,CancellationToken)']/*" />
+        public virtual Operation SwapDeployments(WaitUntil waitUntil, string projectName, SwapDeploymentsDetails body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(body, nameof(body));
@@ -4744,7 +4627,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="SwapDeploymentsAsync(WaitUntil,string,SwapDeploymentsConfig,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="SwapDeploymentsAsync(WaitUntil,string,SwapDeploymentsDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -4787,7 +4670,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="SwapDeployments(WaitUntil,string,SwapDeploymentsConfig,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="SwapDeployments(WaitUntil,string,SwapDeploymentsDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -4828,8 +4711,8 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="exportedModelName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='CreateOrUpdateExportedModelAsync(WaitUntil,string,string,ExportedModelConfig,CancellationToken)']/*" />
-        public virtual async Task<Operation> CreateOrUpdateExportedModelAsync(WaitUntil waitUntil, string projectName, string exportedModelName, ExportedModelConfig body, CancellationToken cancellationToken = default)
+        /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='CreateOrUpdateExportedModelAsync(WaitUntil,string,string,ExportedModelDetails,CancellationToken)']/*" />
+        public virtual async Task<Operation> CreateOrUpdateExportedModelAsync(WaitUntil waitUntil, string projectName, string exportedModelName, ExportedModelDetails body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
@@ -4848,8 +4731,8 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="exportedModelName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='CreateOrUpdateExportedModel(WaitUntil,string,string,ExportedModelConfig,CancellationToken)']/*" />
-        public virtual Operation CreateOrUpdateExportedModel(WaitUntil waitUntil, string projectName, string exportedModelName, ExportedModelConfig body, CancellationToken cancellationToken = default)
+        /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='CreateOrUpdateExportedModel(WaitUntil,string,string,ExportedModelDetails,CancellationToken)']/*" />
+        public virtual Operation CreateOrUpdateExportedModel(WaitUntil waitUntil, string projectName, string exportedModelName, ExportedModelDetails body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
@@ -4870,7 +4753,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateOrUpdateExportedModelAsync(WaitUntil,string,string,ExportedModelConfig,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateOrUpdateExportedModelAsync(WaitUntil,string,string,ExportedModelDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -4915,7 +4798,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateOrUpdateExportedModel(WaitUntil,string,string,ExportedModelConfig,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateOrUpdateExportedModel(WaitUntil,string,string,ExportedModelDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -5036,8 +4919,8 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='EvaluateModelAsync(WaitUntil,string,string,EvaluationConfig,CancellationToken)']/*" />
-        public virtual async Task<Operation<EvaluationJobResult>> EvaluateModelAsync(WaitUntil waitUntil, string projectName, string trainedModelLabel, EvaluationConfig body, CancellationToken cancellationToken = default)
+        /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='EvaluateModelAsync(WaitUntil,string,string,EvaluationDetails,CancellationToken)']/*" />
+        public virtual async Task<Operation<EvaluationJobResult>> EvaluateModelAsync(WaitUntil waitUntil, string projectName, string trainedModelLabel, EvaluationDetails body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
@@ -5057,8 +4940,8 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='EvaluateModel(WaitUntil,string,string,EvaluationConfig,CancellationToken)']/*" />
-        public virtual Operation<EvaluationJobResult> EvaluateModel(WaitUntil waitUntil, string projectName, string trainedModelLabel, EvaluationConfig body, CancellationToken cancellationToken = default)
+        /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='EvaluateModel(WaitUntil,string,string,EvaluationDetails,CancellationToken)']/*" />
+        public virtual Operation<EvaluationJobResult> EvaluateModel(WaitUntil waitUntil, string projectName, string trainedModelLabel, EvaluationDetails body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
@@ -5080,7 +4963,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="EvaluateModelAsync(WaitUntil,string,string,EvaluationConfig,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="EvaluateModelAsync(WaitUntil,string,string,EvaluationDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -5125,7 +5008,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="EvaluateModel(WaitUntil,string,string,EvaluationConfig,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="EvaluateModel(WaitUntil,string,string,EvaluationDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -5238,21 +5121,15 @@ namespace Azure.AI.Language.Text.Authoring
             }
         }
 
-        /// <summary>
-        /// Assign new Azure resources to a project to allow deploying new deployments to
-        /// them. This API is available only via AAD authentication and not supported via
-        /// subscription key authentication. For more details about AAD authentication,
-        /// check here:
-        /// https://learn.microsoft.com/en-us/azure/cognitive-services/authentication?tabs=powershell#authenticate-with-azure-active-directory
-        /// </summary>
+        /// <summary> Assign new Azure resources to a project to allow deploying new deployments to them. This API is available only via AAD authentication and not supported via subscription key authentication. For more details about AAD authentication, check here: https://learn.microsoft.com/en-us/azure/cognitive-services/authentication?tabs=powershell#authenticate-with-azure-active-directory. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="body"> The new project resources info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='AssignDeploymentResourcesAsync(WaitUntil,string,AssignDeploymentResourcesConfig,CancellationToken)']/*" />
-        public virtual async Task<Operation> AssignDeploymentResourcesAsync(WaitUntil waitUntil, string projectName, AssignDeploymentResourcesConfig body, CancellationToken cancellationToken = default)
+        /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='AssignDeploymentResourcesAsync(WaitUntil,string,AssignDeploymentResourcesDetails,CancellationToken)']/*" />
+        public virtual async Task<Operation> AssignDeploymentResourcesAsync(WaitUntil waitUntil, string projectName, AssignDeploymentResourcesDetails body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(body, nameof(body));
@@ -5262,21 +5139,15 @@ namespace Azure.AI.Language.Text.Authoring
             return await AssignDeploymentResourcesAsync(waitUntil, projectName, content, context).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Assign new Azure resources to a project to allow deploying new deployments to
-        /// them. This API is available only via AAD authentication and not supported via
-        /// subscription key authentication. For more details about AAD authentication,
-        /// check here:
-        /// https://learn.microsoft.com/en-us/azure/cognitive-services/authentication?tabs=powershell#authenticate-with-azure-active-directory
-        /// </summary>
+        /// <summary> Assign new Azure resources to a project to allow deploying new deployments to them. This API is available only via AAD authentication and not supported via subscription key authentication. For more details about AAD authentication, check here: https://learn.microsoft.com/en-us/azure/cognitive-services/authentication?tabs=powershell#authenticate-with-azure-active-directory. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="body"> The new project resources info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='AssignDeploymentResources(WaitUntil,string,AssignDeploymentResourcesConfig,CancellationToken)']/*" />
-        public virtual Operation AssignDeploymentResources(WaitUntil waitUntil, string projectName, AssignDeploymentResourcesConfig body, CancellationToken cancellationToken = default)
+        /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='AssignDeploymentResources(WaitUntil,string,AssignDeploymentResourcesDetails,CancellationToken)']/*" />
+        public virtual Operation AssignDeploymentResources(WaitUntil waitUntil, string projectName, AssignDeploymentResourcesDetails body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(body, nameof(body));
@@ -5287,11 +5158,7 @@ namespace Azure.AI.Language.Text.Authoring
         }
 
         /// <summary>
-        /// [Protocol Method] Assign new Azure resources to a project to allow deploying new deployments to
-        /// them. This API is available only via AAD authentication and not supported via
-        /// subscription key authentication. For more details about AAD authentication,
-        /// check here:
-        /// https://learn.microsoft.com/en-us/azure/cognitive-services/authentication?tabs=powershell#authenticate-with-azure-active-directory
+        /// [Protocol Method] Assign new Azure resources to a project to allow deploying new deployments to them. This API is available only via AAD authentication and not supported via subscription key authentication. For more details about AAD authentication, check here: https://learn.microsoft.com/en-us/azure/cognitive-services/authentication?tabs=powershell#authenticate-with-azure-active-directory
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -5300,7 +5167,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AssignDeploymentResourcesAsync(WaitUntil,string,AssignDeploymentResourcesConfig,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AssignDeploymentResourcesAsync(WaitUntil,string,AssignDeploymentResourcesDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -5334,11 +5201,7 @@ namespace Azure.AI.Language.Text.Authoring
         }
 
         /// <summary>
-        /// [Protocol Method] Assign new Azure resources to a project to allow deploying new deployments to
-        /// them. This API is available only via AAD authentication and not supported via
-        /// subscription key authentication. For more details about AAD authentication,
-        /// check here:
-        /// https://learn.microsoft.com/en-us/azure/cognitive-services/authentication?tabs=powershell#authenticate-with-azure-active-directory
+        /// [Protocol Method] Assign new Azure resources to a project to allow deploying new deployments to them. This API is available only via AAD authentication and not supported via subscription key authentication. For more details about AAD authentication, check here: https://learn.microsoft.com/en-us/azure/cognitive-services/authentication?tabs=powershell#authenticate-with-azure-active-directory
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -5347,7 +5210,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AssignDeploymentResources(WaitUntil,string,AssignDeploymentResourcesConfig,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AssignDeploymentResources(WaitUntil,string,AssignDeploymentResourcesDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -5380,18 +5243,15 @@ namespace Azure.AI.Language.Text.Authoring
             }
         }
 
-        /// <summary>
-        /// Unassign resources from a project. This disallows deploying new deployments to
-        /// these resources, and deletes existing deployments assigned to them.
-        /// </summary>
+        /// <summary> Unassign resources from a project. This disallows deploying new deployments to these resources, and deletes existing deployments assigned to them. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="body"> The info for the deployment resources to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='UnassignDeploymentResourcesAsync(WaitUntil,string,UnassignDeploymentResourcesConfig,CancellationToken)']/*" />
-        public virtual async Task<Operation> UnassignDeploymentResourcesAsync(WaitUntil waitUntil, string projectName, UnassignDeploymentResourcesConfig body, CancellationToken cancellationToken = default)
+        /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='UnassignDeploymentResourcesAsync(WaitUntil,string,UnassignDeploymentResourcesDetails,CancellationToken)']/*" />
+        public virtual async Task<Operation> UnassignDeploymentResourcesAsync(WaitUntil waitUntil, string projectName, UnassignDeploymentResourcesDetails body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(body, nameof(body));
@@ -5401,18 +5261,15 @@ namespace Azure.AI.Language.Text.Authoring
             return await UnassignDeploymentResourcesAsync(waitUntil, projectName, content, context).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Unassign resources from a project. This disallows deploying new deployments to
-        /// these resources, and deletes existing deployments assigned to them.
-        /// </summary>
+        /// <summary> Unassign resources from a project. This disallows deploying new deployments to these resources, and deletes existing deployments assigned to them. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="body"> The info for the deployment resources to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='UnassignDeploymentResources(WaitUntil,string,UnassignDeploymentResourcesConfig,CancellationToken)']/*" />
-        public virtual Operation UnassignDeploymentResources(WaitUntil waitUntil, string projectName, UnassignDeploymentResourcesConfig body, CancellationToken cancellationToken = default)
+        /// <include file="Docs/TextAnalysisAuthoring.xml" path="doc/members/member[@name='UnassignDeploymentResources(WaitUntil,string,UnassignDeploymentResourcesDetails,CancellationToken)']/*" />
+        public virtual Operation UnassignDeploymentResources(WaitUntil waitUntil, string projectName, UnassignDeploymentResourcesDetails body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(body, nameof(body));
@@ -5423,8 +5280,7 @@ namespace Azure.AI.Language.Text.Authoring
         }
 
         /// <summary>
-        /// [Protocol Method] Unassign resources from a project. This disallows deploying new deployments to
-        /// these resources, and deletes existing deployments assigned to them.
+        /// [Protocol Method] Unassign resources from a project. This disallows deploying new deployments to these resources, and deletes existing deployments assigned to them.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -5433,7 +5289,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="UnassignDeploymentResourcesAsync(WaitUntil,string,UnassignDeploymentResourcesConfig,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="UnassignDeploymentResourcesAsync(WaitUntil,string,UnassignDeploymentResourcesDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -5467,8 +5323,7 @@ namespace Azure.AI.Language.Text.Authoring
         }
 
         /// <summary>
-        /// [Protocol Method] Unassign resources from a project. This disallows deploying new deployments to
-        /// these resources, and deletes existing deployments assigned to them.
+        /// [Protocol Method] Unassign resources from a project. This disallows deploying new deployments to these resources, and deletes existing deployments assigned to them.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -5477,7 +5332,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="UnassignDeploymentResources(WaitUntil,string,UnassignDeploymentResourcesConfig,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="UnassignDeploymentResources(WaitUntil,string,UnassignDeploymentResourcesDetails,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>

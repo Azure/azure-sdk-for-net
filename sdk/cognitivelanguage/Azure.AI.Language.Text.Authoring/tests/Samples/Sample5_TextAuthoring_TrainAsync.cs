@@ -27,12 +27,12 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             #region Snippet:Sample5_TextAuthoring_TrainAsync
             string projectName = "LoanAgreements";
 
-            var trainingJobConfig = new TrainingJobConfig(
+            var trainingJobConfig = new TrainingJobDetails(
                 modelLabel: "model1",
                 trainingConfigVersion: "latest"
             )
             {
-                EvaluationOptions = new EvaluationConfig
+                EvaluationOptions = new EvaluationDetails
                 {
                     Kind = EvaluationKind.Percentage,
                     TestingSplitPercentage = 20,

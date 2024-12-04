@@ -27,7 +27,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             #region Snippet:Sample10_TextAuthoring_DeployProjectAsync
             string projectName = "LoanAgreements";
             string deploymentName = "DeploymentName";
-            var deploymentConfig = new CreateDeploymentConfig(trainedModelLabel: "29886710a2ae49259d62cffca977db66");
+            var deploymentConfig = new CreateDeploymentDetails(trainedModelLabel: "29886710a2ae49259d62cffca977db66");
 
             Operation operation = await authoringClient.DeployProjectAsync(
                 waitUntil: WaitUntil.Completed,

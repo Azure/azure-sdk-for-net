@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text.Authoring.Models
 {
-    public partial class CopyProjectConfig : IUtf8JsonSerializable, IJsonModel<CopyProjectConfig>
+    public partial class CopyProjectDetails : IUtf8JsonSerializable, IJsonModel<CopyProjectDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CopyProjectConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CopyProjectDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CopyProjectConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CopyProjectDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CopyProjectConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CopyProjectDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CopyProjectConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CopyProjectDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,19 +56,19 @@ namespace Azure.AI.Language.Text.Authoring.Models
             writer.WriteEndObject();
         }
 
-        CopyProjectConfig IJsonModel<CopyProjectConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CopyProjectDetails IJsonModel<CopyProjectDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CopyProjectConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CopyProjectDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CopyProjectConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CopyProjectDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCopyProjectConfig(document.RootElement, options);
+            return DeserializeCopyProjectDetails(document.RootElement, options);
         }
 
-        internal static CopyProjectConfig DeserializeCopyProjectConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CopyProjectDetails DeserializeCopyProjectDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -122,7 +122,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CopyProjectConfig(
+            return new CopyProjectDetails(
                 projectKind,
                 targetProjectName,
                 accessToken,
@@ -132,43 +132,43 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CopyProjectConfig>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CopyProjectDetails>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CopyProjectConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CopyProjectDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CopyProjectConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CopyProjectDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CopyProjectConfig IPersistableModel<CopyProjectConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CopyProjectDetails IPersistableModel<CopyProjectDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CopyProjectConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CopyProjectDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeCopyProjectConfig(document.RootElement, options);
+                        return DeserializeCopyProjectDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CopyProjectConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CopyProjectDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CopyProjectConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CopyProjectDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static CopyProjectConfig FromResponse(Response response)
+        internal static CopyProjectDetails FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeCopyProjectConfig(document.RootElement);
+            return DeserializeCopyProjectDetails(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

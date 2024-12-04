@@ -25,15 +25,9 @@ namespace Azure.AI.Language.Text.Authoring.Models
         private const string SeparateComponentsValue = "separateComponents";
         private const string CombineComponentsValue = "combineComponents";
 
-        /// <summary>
-        /// Every component's match or prediction is returned as a separate instance of the
-        /// entity.
-        /// </summary>
+        /// <summary> Every component's match or prediction is returned as a separate instance of the entity. </summary>
         public static CompositionSetting SeparateComponents { get; } = new CompositionSetting(SeparateComponentsValue);
-        /// <summary>
-        /// When two or more components are found in the text and overlap, the components'
-        /// spans are merged together into one span combining all of them.
-        /// </summary>
+        /// <summary> When two or more components are found in the text and overlap, the components' spans are merged together into one span combining all of them. </summary>
         public static CompositionSetting CombineComponents { get; } = new CompositionSetting(CombineComponentsValue);
         /// <summary> Determines if two <see cref="CompositionSetting"/> values are the same. </summary>
         public static bool operator ==(CompositionSetting left, CompositionSetting right) => left.Equals(right);

@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text.Authoring.Models
 {
-    public partial class ExportedModelConfig : IUtf8JsonSerializable, IJsonModel<ExportedModelConfig>
+    public partial class ExportedModelDetails : IUtf8JsonSerializable, IJsonModel<ExportedModelDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExportedModelConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExportedModelDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ExportedModelConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ExportedModelDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExportedModelConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExportedModelDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExportedModelConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ExportedModelDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -46,19 +46,19 @@ namespace Azure.AI.Language.Text.Authoring.Models
             writer.WriteEndObject();
         }
 
-        ExportedModelConfig IJsonModel<ExportedModelConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ExportedModelDetails IJsonModel<ExportedModelDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExportedModelConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExportedModelDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExportedModelConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ExportedModelDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExportedModelConfig(document.RootElement, options);
+            return DeserializeExportedModelDetails(document.RootElement, options);
         }
 
-        internal static ExportedModelConfig DeserializeExportedModelConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ExportedModelDetails DeserializeExportedModelDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -82,46 +82,46 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ExportedModelConfig(trainedModelLabel, serializedAdditionalRawData);
+            return new ExportedModelDetails(trainedModelLabel, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ExportedModelConfig>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ExportedModelDetails>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExportedModelConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExportedModelDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExportedModelConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExportedModelDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ExportedModelConfig IPersistableModel<ExportedModelConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ExportedModelDetails IPersistableModel<ExportedModelDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExportedModelConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExportedModelDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeExportedModelConfig(document.RootElement, options);
+                        return DeserializeExportedModelDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExportedModelConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExportedModelDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ExportedModelConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ExportedModelDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ExportedModelConfig FromResponse(Response response)
+        internal static ExportedModelDetails FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeExportedModelConfig(document.RootElement);
+            return DeserializeExportedModelDetails(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

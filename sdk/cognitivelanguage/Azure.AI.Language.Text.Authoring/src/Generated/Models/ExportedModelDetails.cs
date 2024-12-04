@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text.Authoring.Models
 {
     /// <summary> Represents the options for creating or replacing an exported model. </summary>
-    public partial class ExportedModelConfig
+    public partial class ExportedModelDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,27 +45,27 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ExportedModelConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportedModelDetails"/>. </summary>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="trainedModelLabel"/> is null. </exception>
-        public ExportedModelConfig(string trainedModelLabel)
+        public ExportedModelDetails(string trainedModelLabel)
         {
             Argument.AssertNotNull(trainedModelLabel, nameof(trainedModelLabel));
 
             TrainedModelLabel = trainedModelLabel;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExportedModelConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportedModelDetails"/>. </summary>
         /// <param name="trainedModelLabel"> The trained model label. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExportedModelConfig(string trainedModelLabel, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExportedModelDetails(string trainedModelLabel, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TrainedModelLabel = trainedModelLabel;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExportedModelConfig"/> for deserialization. </summary>
-        internal ExportedModelConfig()
+        /// <summary> Initializes a new instance of <see cref="ExportedModelDetails"/> for deserialization. </summary>
+        internal ExportedModelDetails()
         {
         }
 

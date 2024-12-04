@@ -69,7 +69,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 return null;
             }
             ProjectKind projectKind = "Unknown";
-            EvaluationConfig evaluationOptions = default;
+            EvaluationDetails evaluationOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -81,7 +81,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 }
                 if (property.NameEquals("evaluationOptions"u8))
                 {
-                    evaluationOptions = EvaluationConfig.DeserializeEvaluationConfig(property.Value, options);
+                    evaluationOptions = EvaluationDetails.DeserializeEvaluationDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

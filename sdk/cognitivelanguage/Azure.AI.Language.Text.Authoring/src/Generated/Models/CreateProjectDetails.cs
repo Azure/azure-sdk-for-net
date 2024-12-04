@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text.Authoring.Models
 {
     /// <summary> Represents the options used to create or update a project. </summary>
-    public partial class CreateProjectConfig
+    public partial class CreateProjectDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,13 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CreateProjectConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateProjectDetails"/>. </summary>
         /// <param name="projectKind"> The project kind. </param>
         /// <param name="storageInputContainerName"> The storage container name. </param>
         /// <param name="projectName"> The new project name. </param>
-        /// <param name="language">
-        /// The project language. This is BCP-47 representation of a language. For example,
-        /// use "en" for English, "en-gb" for English (UK), "es" for Spanish etc.
-        /// </param>
+        /// <param name="language"> The project language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageInputContainerName"/>, <paramref name="projectName"/> or <paramref name="language"/> is null. </exception>
-        public CreateProjectConfig(ProjectKind projectKind, string storageInputContainerName, string projectName, string language)
+        public CreateProjectDetails(ProjectKind projectKind, string storageInputContainerName, string projectName, string language)
         {
             Argument.AssertNotNull(storageInputContainerName, nameof(storageInputContainerName));
             Argument.AssertNotNull(projectName, nameof(projectName));
@@ -66,19 +63,16 @@ namespace Azure.AI.Language.Text.Authoring.Models
             Language = language;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreateProjectConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateProjectDetails"/>. </summary>
         /// <param name="projectKind"> The project kind. </param>
         /// <param name="storageInputContainerName"> The storage container name. </param>
         /// <param name="settings"> The project settings. </param>
         /// <param name="projectName"> The new project name. </param>
         /// <param name="multilingual"> Whether the project would be used for multiple languages or not. </param>
         /// <param name="description"> The project description. </param>
-        /// <param name="language">
-        /// The project language. This is BCP-47 representation of a language. For example,
-        /// use "en" for English, "en-gb" for English (UK), "es" for Spanish etc.
-        /// </param>
+        /// <param name="language"> The project language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CreateProjectConfig(ProjectKind projectKind, string storageInputContainerName, ProjectSettings settings, string projectName, bool? multilingual, string description, string language, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CreateProjectDetails(ProjectKind projectKind, string storageInputContainerName, ProjectSettings settings, string projectName, bool? multilingual, string description, string language, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProjectKind = projectKind;
             StorageInputContainerName = storageInputContainerName;
@@ -90,8 +84,8 @@ namespace Azure.AI.Language.Text.Authoring.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreateProjectConfig"/> for deserialization. </summary>
-        internal CreateProjectConfig()
+        /// <summary> Initializes a new instance of <see cref="CreateProjectDetails"/> for deserialization. </summary>
+        internal CreateProjectDetails()
         {
         }
 
@@ -107,10 +101,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         public bool? Multilingual { get; set; }
         /// <summary> The project description. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// The project language. This is BCP-47 representation of a language. For example,
-        /// use "en" for English, "en-gb" for English (UK), "es" for Spanish etc.
-        /// </summary>
+        /// <summary> The project language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </summary>
         public string Language { get; }
     }
 }

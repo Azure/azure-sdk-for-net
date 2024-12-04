@@ -12,14 +12,7 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Language.Text.Authoring
 {
     // Data plane generated client.
-    /// <summary>
-    /// The language service API is a suite of natural language processing (NLP) skills
-    /// built with best-in-class Microsoft machine learning algorithms. The API can be
-    /// used to analyze unstructured text for tasks such as sentiment analysis, key
-    /// phrase extraction, language detection and question answering. Further
-    /// documentation can be found in &lt;a
-    /// href="https://docs.microsoft.com/en-us/azure/cognitive-services/language-service/overview"&gt;https://docs.microsoft.com/en-us/azure/cognitive-services/language-service/overview&lt;/a&gt;.
-    /// </summary>
+    /// <summary> The language service API is a suite of natural language processing (NLP) skills built with best-in-class Microsoft machine learning algorithms. The API can be used to analyze unstructured text for tasks such as sentiment analysis, key phrase extraction, language detection and question answering. Further documentation can be found in &lt;a href="https://docs.microsoft.com/en-us/azure/cognitive-services/language-service/overview"&gt;https://docs.microsoft.com/en-us/azure/cognitive-services/language-service/overview&lt;/a&gt;. </summary>
     public partial class AuthoringClient
     {
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
@@ -41,10 +34,7 @@ namespace Azure.AI.Language.Text.Authoring
         }
 
         /// <summary> Initializes a new instance of AuthoringClient. </summary>
-        /// <param name="endpoint">
-        /// Supported Cognitive Services endpoint (e.g.,
-        /// https://&lt;resource-name&gt;.api.cognitiveservices.azure.com).
-        /// </param>
+        /// <param name="endpoint"> Supported Cognitive Services endpoint e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public AuthoringClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new AuthoringClientOptions())
@@ -52,10 +42,7 @@ namespace Azure.AI.Language.Text.Authoring
         }
 
         /// <summary> Initializes a new instance of AuthoringClient. </summary>
-        /// <param name="endpoint">
-        /// Supported Cognitive Services endpoint (e.g.,
-        /// https://&lt;resource-name&gt;.api.cognitiveservices.azure.com).
-        /// </param>
+        /// <param name="endpoint"> Supported Cognitive Services endpoint e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public AuthoringClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AuthoringClientOptions())
@@ -63,10 +50,7 @@ namespace Azure.AI.Language.Text.Authoring
         }
 
         /// <summary> Initializes a new instance of AuthoringClient. </summary>
-        /// <param name="endpoint">
-        /// Supported Cognitive Services endpoint (e.g.,
-        /// https://&lt;resource-name&gt;.api.cognitiveservices.azure.com).
-        /// </param>
+        /// <param name="endpoint"> Supported Cognitive Services endpoint e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
@@ -83,10 +67,7 @@ namespace Azure.AI.Language.Text.Authoring
         }
 
         /// <summary> Initializes a new instance of AuthoringClient. </summary>
-        /// <param name="endpoint">
-        /// Supported Cognitive Services endpoint (e.g.,
-        /// https://&lt;resource-name&gt;.api.cognitiveservices.azure.com).
-        /// </param>
+        /// <param name="endpoint"> Supported Cognitive Services endpoint e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Language.Text.Authoring.Models
 {
-    /// <summary>
-    /// Represents an exported document for a custom single-label classification
-    /// project.
-    /// </summary>
+    /// <summary> Represents an exported document for a custom single-label classification project. </summary>
     public partial class ExportedCustomSingleLabelClassificationDocument
     {
         /// <summary>
@@ -56,11 +53,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <summary> Initializes a new instance of <see cref="ExportedCustomSingleLabelClassificationDocument"/>. </summary>
         /// <param name="class"> The class of the documents. </param>
         /// <param name="location"> The location of the document in the storage. </param>
-        /// <param name="language">
-        /// Represents the document language. This is BCP-47 representation of a language.
-        /// For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish
-        /// etc.
-        /// </param>
+        /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="dataset"> The dataset for this document. Allowed values are 'Train' and 'Test'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ExportedCustomSingleLabelClassificationDocument(ExportedDocumentClass @class, string location, string language, string dataset, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -76,11 +69,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         public ExportedDocumentClass Class { get; set; }
         /// <summary> The location of the document in the storage. </summary>
         public string Location { get; set; }
-        /// <summary>
-        /// Represents the document language. This is BCP-47 representation of a language.
-        /// For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish
-        /// etc.
-        /// </summary>
+        /// <summary> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </summary>
         public string Language { get; set; }
         /// <summary> The dataset for this document. Allowed values are 'Train' and 'Test'. </summary>
         public string Dataset { get; set; }

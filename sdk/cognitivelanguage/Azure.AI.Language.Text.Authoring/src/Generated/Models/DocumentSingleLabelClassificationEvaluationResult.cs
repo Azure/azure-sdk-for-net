@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Language.Text.Authoring.Models
 {
-    /// <summary>
-    /// Represents the comparison between the expected and predicted class that result
-    /// from an evaluation operation.
-    /// </summary>
+    /// <summary> Represents the comparison between the expected and predicted class that result from an evaluation operation. </summary>
     public partial class DocumentSingleLabelClassificationEvaluationResult
     {
         /// <summary>

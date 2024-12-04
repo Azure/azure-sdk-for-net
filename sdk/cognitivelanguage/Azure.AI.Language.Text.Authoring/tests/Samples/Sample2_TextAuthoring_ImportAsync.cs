@@ -27,7 +27,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
             #region Snippet:Sample2_TextAuthoring_ImportAsync
             string projectName = "LoanAgreements";
 
-            var projectMetadata = new CreateProjectConfig(
+            var projectMetadata = new CreateProjectDetails(
                 projectKind: "CustomEntityRecognition",
                 storageInputContainerName: "loanagreements",
                 projectName: projectName,

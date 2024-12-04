@@ -20,7 +20,7 @@ To swap deployments, call SwapDeploymentsAsync on the TextAnalysisAuthoring clie
 
 ```C# Snippet:Sample11_TextAuthoring_SwapDeploymentsAsync
 string projectName = "LoanAgreements";
-var swapConfig = new SwapDeploymentsConfig
+var swapDetails = new SwapDeploymentsDetails
 (
     firstDeploymentName: "DeploymentA",
     secondDeploymentName: "DeploymentB"
@@ -29,7 +29,7 @@ var swapConfig = new SwapDeploymentsConfig
 Operation operation = await authoringClient.SwapDeploymentsAsync(
     waitUntil: WaitUntil.Completed,
     projectName: projectName,
-    body: swapConfig
+    body: swapDetails
 );
 
 Console.WriteLine($"Swap operation completed with status: {operation.GetRawResponse().Status}");

@@ -51,11 +51,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ProjectSettings"/>. </summary>
-        /// <param name="confidenceThreshold">
-        /// The threshold of the class with the highest confidence, at which the prediction
-        /// will automatically be changed to "None". The value of the threshold should be
-        /// between 0 and 1 inclusive.
-        /// </param>
+        /// <param name="confidenceThreshold"> The threshold of the class with the highest confidence, at which the prediction will automatically be changed to "None". The value of the threshold should be between 0 and 1 inclusive. </param>
         /// <param name="amlProjectPath"> The path to the AML connected project. </param>
         /// <param name="isLabelingLocked"> Indicates whether the labeling experience can be modified or not. </param>
         /// <param name="runGptPredictions"> Indicates whether to run GPT predictions or not. </param>
@@ -71,11 +67,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The threshold of the class with the highest confidence, at which the prediction
-        /// will automatically be changed to "None". The value of the threshold should be
-        /// between 0 and 1 inclusive.
-        /// </summary>
+        /// <summary> The threshold of the class with the highest confidence, at which the prediction will automatically be changed to "None". The value of the threshold should be between 0 and 1 inclusive. </summary>
         public float? ConfidenceThreshold { get; set; }
         /// <summary> The path to the AML connected project. </summary>
         public string AmlProjectPath { get; set; }

@@ -13,19 +13,21 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text.Authoring.Models
 {
-    public partial class DeleteDeploymentConfig : IUtf8JsonSerializable, IJsonModel<DeleteDeploymentConfig>
+    public partial class CreateDeploymentDetails : IUtf8JsonSerializable, IJsonModel<CreateDeploymentDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeleteDeploymentConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CreateDeploymentDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DeleteDeploymentConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CreateDeploymentDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeleteDeploymentConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CreateDeploymentDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeleteDeploymentConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CreateDeploymentDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("trainedModelLabel"u8);
+            writer.WriteStringValue(TrainedModelLabel);
             if (Optional.IsCollectionDefined(AssignedResourceIds))
             {
                 writer.WritePropertyName("assignedResourceIds"u8);
@@ -54,19 +56,19 @@ namespace Azure.AI.Language.Text.Authoring.Models
             writer.WriteEndObject();
         }
 
-        DeleteDeploymentConfig IJsonModel<DeleteDeploymentConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CreateDeploymentDetails IJsonModel<CreateDeploymentDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeleteDeploymentConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CreateDeploymentDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeleteDeploymentConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CreateDeploymentDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDeleteDeploymentConfig(document.RootElement, options);
+            return DeserializeCreateDeploymentDetails(document.RootElement, options);
         }
 
-        internal static DeleteDeploymentConfig DeserializeDeleteDeploymentConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CreateDeploymentDetails DeserializeCreateDeploymentDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -74,11 +76,17 @@ namespace Azure.AI.Language.Text.Authoring.Models
             {
                 return null;
             }
+            string trainedModelLabel = default;
             IList<string> assignedResourceIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("trainedModelLabel"u8))
+                {
+                    trainedModelLabel = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("assignedResourceIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -99,46 +107,46 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DeleteDeploymentConfig(assignedResourceIds ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new CreateDeploymentDetails(trainedModelLabel, assignedResourceIds ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DeleteDeploymentConfig>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CreateDeploymentDetails>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeleteDeploymentConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CreateDeploymentDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeleteDeploymentConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CreateDeploymentDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DeleteDeploymentConfig IPersistableModel<DeleteDeploymentConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CreateDeploymentDetails IPersistableModel<CreateDeploymentDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeleteDeploymentConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CreateDeploymentDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDeleteDeploymentConfig(document.RootElement, options);
+                        return DeserializeCreateDeploymentDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeleteDeploymentConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CreateDeploymentDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DeleteDeploymentConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CreateDeploymentDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static DeleteDeploymentConfig FromResponse(Response response)
+        internal static CreateDeploymentDetails FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeDeleteDeploymentConfig(document.RootElement);
+            return DeserializeCreateDeploymentDetails(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

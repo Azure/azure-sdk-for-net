@@ -63,10 +63,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <param name="target"> The target of the error. </param>
         /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
-        /// <param name="innererror">
-        /// An object containing more specific information than the current object about
-        /// the error.
-        /// </param>
+        /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TextAnalysisAuthoringError(ErrorCode code, string message, string target, IReadOnlyList<TextAnalysisAuthoringError> details, InnerErrorModel innererror, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -91,10 +88,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         public string Target { get; }
         /// <summary> An array of details about specific errors that led to this reported error. </summary>
         public IReadOnlyList<TextAnalysisAuthoringError> Details { get; }
-        /// <summary>
-        /// An object containing more specific information than the current object about
-        /// the error.
-        /// </summary>
+        /// <summary> An object containing more specific information than the current object about the error. </summary>
         public InnerErrorModel Innererror { get; }
     }
 }

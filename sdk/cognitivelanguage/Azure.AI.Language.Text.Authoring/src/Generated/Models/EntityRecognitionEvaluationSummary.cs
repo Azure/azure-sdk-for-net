@@ -46,30 +46,14 @@ namespace Azure.AI.Language.Text.Authoring.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="EntityRecognitionEvaluationSummary"/>. </summary>
-        /// <param name="confusionMatrix">
-        /// Represents the confusion matrix between two entities (the two entities can be
-        /// the same). The matrix is between the entity that was labelled and the entity
-        /// that was predicted.
-        /// </param>
+        /// <param name="confusionMatrix"> Represents the confusion matrix between two entities (the two entities can be the same). The matrix is between the entity that was labelled and the entity that was predicted. </param>
         /// <param name="entities"> Represents the entities evaluation. </param>
         /// <param name="microF1"> Represents the micro F1. Expected value is a float between 0 and 1 inclusive. </param>
-        /// <param name="microPrecision">
-        /// Represents the micro precision. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
-        /// <param name="microRecall">
-        /// Represents the micro recall. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
+        /// <param name="microPrecision"> Represents the micro precision. Expected value is a float between 0 and 1 inclusive. </param>
+        /// <param name="microRecall"> Represents the micro recall. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroF1"> Represents the macro F1. Expected value is a float between 0 and 1 inclusive. </param>
-        /// <param name="macroPrecision">
-        /// Represents the macro precision. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
-        /// <param name="macroRecall">
-        /// Represents the macro recall. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
+        /// <param name="macroPrecision"> Represents the macro precision. Expected value is a float between 0 and 1 inclusive. </param>
+        /// <param name="macroRecall"> Represents the macro recall. Expected value is a float between 0 and 1 inclusive. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="confusionMatrix"/> or <paramref name="entities"/> is null. </exception>
         internal EntityRecognitionEvaluationSummary(ConfusionMatrix confusionMatrix, IReadOnlyDictionary<string, EntityEvaluationSummary> entities, float microF1, float microPrecision, float microRecall, float macroF1, float macroPrecision, float macroRecall)
         {
@@ -87,30 +71,14 @@ namespace Azure.AI.Language.Text.Authoring.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EntityRecognitionEvaluationSummary"/>. </summary>
-        /// <param name="confusionMatrix">
-        /// Represents the confusion matrix between two entities (the two entities can be
-        /// the same). The matrix is between the entity that was labelled and the entity
-        /// that was predicted.
-        /// </param>
+        /// <param name="confusionMatrix"> Represents the confusion matrix between two entities (the two entities can be the same). The matrix is between the entity that was labelled and the entity that was predicted. </param>
         /// <param name="entities"> Represents the entities evaluation. </param>
         /// <param name="microF1"> Represents the micro F1. Expected value is a float between 0 and 1 inclusive. </param>
-        /// <param name="microPrecision">
-        /// Represents the micro precision. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
-        /// <param name="microRecall">
-        /// Represents the micro recall. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
+        /// <param name="microPrecision"> Represents the micro precision. Expected value is a float between 0 and 1 inclusive. </param>
+        /// <param name="microRecall"> Represents the micro recall. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroF1"> Represents the macro F1. Expected value is a float between 0 and 1 inclusive. </param>
-        /// <param name="macroPrecision">
-        /// Represents the macro precision. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
-        /// <param name="macroRecall">
-        /// Represents the macro recall. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
+        /// <param name="macroPrecision"> Represents the macro precision. Expected value is a float between 0 and 1 inclusive. </param>
+        /// <param name="macroRecall"> Represents the macro recall. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EntityRecognitionEvaluationSummary(ConfusionMatrix confusionMatrix, IReadOnlyDictionary<string, EntityEvaluationSummary> entities, float microF1, float microPrecision, float microRecall, float macroF1, float macroPrecision, float macroRecall, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -130,37 +98,21 @@ namespace Azure.AI.Language.Text.Authoring.Models
         {
         }
 
-        /// <summary>
-        /// Represents the confusion matrix between two entities (the two entities can be
-        /// the same). The matrix is between the entity that was labelled and the entity
-        /// that was predicted.
-        /// </summary>
+        /// <summary> Represents the confusion matrix between two entities (the two entities can be the same). The matrix is between the entity that was labelled and the entity that was predicted. </summary>
         public ConfusionMatrix ConfusionMatrix { get; }
         /// <summary> Represents the entities evaluation. </summary>
         public IReadOnlyDictionary<string, EntityEvaluationSummary> Entities { get; }
         /// <summary> Represents the micro F1. Expected value is a float between 0 and 1 inclusive. </summary>
         public float MicroF1 { get; }
-        /// <summary>
-        /// Represents the micro precision. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </summary>
+        /// <summary> Represents the micro precision. Expected value is a float between 0 and 1 inclusive. </summary>
         public float MicroPrecision { get; }
-        /// <summary>
-        /// Represents the micro recall. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </summary>
+        /// <summary> Represents the micro recall. Expected value is a float between 0 and 1 inclusive. </summary>
         public float MicroRecall { get; }
         /// <summary> Represents the macro F1. Expected value is a float between 0 and 1 inclusive. </summary>
         public float MacroF1 { get; }
-        /// <summary>
-        /// Represents the macro precision. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </summary>
+        /// <summary> Represents the macro precision. Expected value is a float between 0 and 1 inclusive. </summary>
         public float MacroPrecision { get; }
-        /// <summary>
-        /// Represents the macro recall. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </summary>
+        /// <summary> Represents the macro recall. Expected value is a float between 0 and 1 inclusive. </summary>
         public float MacroRecall { get; }
     }
 }

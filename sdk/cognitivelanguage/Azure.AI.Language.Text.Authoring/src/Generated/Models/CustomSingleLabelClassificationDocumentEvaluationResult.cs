@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Language.Text.Authoring.Models
 {
-    /// <summary>
-    /// Represents the document evaluation result for a custom single-label
-    /// classification project.
-    /// </summary>
+    /// <summary> Represents the document evaluation result for a custom single-label classification project. </summary>
     public partial class CustomSingleLabelClassificationDocumentEvaluationResult : DocumentEvaluationResult
     {
         /// <summary> Initializes a new instance of <see cref="CustomSingleLabelClassificationDocumentEvaluationResult"/>. </summary>
         /// <param name="location"> Represents the document path. </param>
-        /// <param name="language">
-        /// Represents the document language. This is BCP-47 representation of a language.
-        /// For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish
-        /// etc.
-        /// </param>
+        /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="customSingleLabelClassificationResult"> Represents the evaluation prediction for single label classification. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="language"/> or <paramref name="customSingleLabelClassificationResult"/> is null. </exception>
         internal CustomSingleLabelClassificationDocumentEvaluationResult(string location, string language, DocumentSingleLabelClassificationEvaluationResult customSingleLabelClassificationResult) : base(location, language)
@@ -38,11 +31,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <summary> Initializes a new instance of <see cref="CustomSingleLabelClassificationDocumentEvaluationResult"/>. </summary>
         /// <param name="projectKind"> Represents the project kind. </param>
         /// <param name="location"> Represents the document path. </param>
-        /// <param name="language">
-        /// Represents the document language. This is BCP-47 representation of a language.
-        /// For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish
-        /// etc.
-        /// </param>
+        /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="customSingleLabelClassificationResult"> Represents the evaluation prediction for single label classification. </param>
         internal CustomSingleLabelClassificationDocumentEvaluationResult(ProjectKind projectKind, string location, string language, IDictionary<string, BinaryData> serializedAdditionalRawData, DocumentSingleLabelClassificationEvaluationResult customSingleLabelClassificationResult) : base(projectKind, location, language, serializedAdditionalRawData)

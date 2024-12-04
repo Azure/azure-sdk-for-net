@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text.Authoring.Models
 {
-    public partial class EvaluationConfig : IUtf8JsonSerializable, IJsonModel<EvaluationConfig>
+    public partial class EvaluationDetails : IUtf8JsonSerializable, IJsonModel<EvaluationDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EvaluationConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EvaluationDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<EvaluationConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EvaluationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EvaluationConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EvaluationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EvaluationConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EvaluationDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,19 +59,19 @@ namespace Azure.AI.Language.Text.Authoring.Models
             writer.WriteEndObject();
         }
 
-        EvaluationConfig IJsonModel<EvaluationConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        EvaluationDetails IJsonModel<EvaluationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EvaluationConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EvaluationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EvaluationConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EvaluationDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEvaluationConfig(document.RootElement, options);
+            return DeserializeEvaluationDetails(document.RootElement, options);
         }
 
-        internal static EvaluationConfig DeserializeEvaluationConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static EvaluationDetails DeserializeEvaluationDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -119,46 +119,46 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new EvaluationConfig(kind, trainingSplitPercentage, testingSplitPercentage, serializedAdditionalRawData);
+            return new EvaluationDetails(kind, trainingSplitPercentage, testingSplitPercentage, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<EvaluationConfig>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<EvaluationDetails>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EvaluationConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EvaluationDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EvaluationConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EvaluationDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
-        EvaluationConfig IPersistableModel<EvaluationConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        EvaluationDetails IPersistableModel<EvaluationDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EvaluationConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EvaluationDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeEvaluationConfig(document.RootElement, options);
+                        return DeserializeEvaluationDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EvaluationConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EvaluationDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<EvaluationConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EvaluationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static EvaluationConfig FromResponse(Response response)
+        internal static EvaluationDetails FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeEvaluationConfig(document.RootElement);
+            return DeserializeEvaluationDetails(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

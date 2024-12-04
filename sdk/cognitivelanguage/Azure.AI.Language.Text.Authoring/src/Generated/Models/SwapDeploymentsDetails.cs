@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text.Authoring.Models
 {
     /// <summary> Represents the options for swapping two deployments together. </summary>
-    public partial class SwapDeploymentsConfig
+    public partial class SwapDeploymentsDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,11 +45,11 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SwapDeploymentsConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwapDeploymentsDetails"/>. </summary>
         /// <param name="firstDeploymentName"> Represents the first deployment name. </param>
         /// <param name="secondDeploymentName"> Represents the second deployment name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firstDeploymentName"/> or <paramref name="secondDeploymentName"/> is null. </exception>
-        public SwapDeploymentsConfig(string firstDeploymentName, string secondDeploymentName)
+        public SwapDeploymentsDetails(string firstDeploymentName, string secondDeploymentName)
         {
             Argument.AssertNotNull(firstDeploymentName, nameof(firstDeploymentName));
             Argument.AssertNotNull(secondDeploymentName, nameof(secondDeploymentName));
@@ -58,19 +58,19 @@ namespace Azure.AI.Language.Text.Authoring.Models
             SecondDeploymentName = secondDeploymentName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SwapDeploymentsConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwapDeploymentsDetails"/>. </summary>
         /// <param name="firstDeploymentName"> Represents the first deployment name. </param>
         /// <param name="secondDeploymentName"> Represents the second deployment name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SwapDeploymentsConfig(string firstDeploymentName, string secondDeploymentName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SwapDeploymentsDetails(string firstDeploymentName, string secondDeploymentName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FirstDeploymentName = firstDeploymentName;
             SecondDeploymentName = secondDeploymentName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SwapDeploymentsConfig"/> for deserialization. </summary>
-        internal SwapDeploymentsConfig()
+        /// <summary> Initializes a new instance of <see cref="SwapDeploymentsDetails"/> for deserialization. </summary>
+        internal SwapDeploymentsDetails()
         {
         }
 

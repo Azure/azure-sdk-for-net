@@ -10,11 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Language.Text.Authoring.Models
 {
-    /// <summary>
-    /// Represents the options for copying an existing project to another Azure
-    /// resource.
-    /// </summary>
-    public partial class CopyProjectConfig
+    /// <summary> Represents the options for copying an existing project to another Azure resource. </summary>
+    public partial class CopyProjectDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,7 +45,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CopyProjectConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyProjectDetails"/>. </summary>
         /// <param name="projectKind"> Represents the project kind. </param>
         /// <param name="targetProjectName"> The project name to be copied-into. </param>
         /// <param name="accessToken"> The access token. </param>
@@ -56,7 +53,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="targetResourceId"> Represents the target Azure resource ID. </param>
         /// <param name="targetResourceRegion"> Represents the target Azure resource region. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetProjectName"/>, <paramref name="accessToken"/>, <paramref name="targetResourceId"/> or <paramref name="targetResourceRegion"/> is null. </exception>
-        public CopyProjectConfig(ProjectKind projectKind, string targetProjectName, string accessToken, DateTimeOffset expiresAt, string targetResourceId, string targetResourceRegion)
+        public CopyProjectDetails(ProjectKind projectKind, string targetProjectName, string accessToken, DateTimeOffset expiresAt, string targetResourceId, string targetResourceRegion)
         {
             Argument.AssertNotNull(targetProjectName, nameof(targetProjectName));
             Argument.AssertNotNull(accessToken, nameof(accessToken));
@@ -71,7 +68,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
             TargetResourceRegion = targetResourceRegion;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CopyProjectConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyProjectDetails"/>. </summary>
         /// <param name="projectKind"> Represents the project kind. </param>
         /// <param name="targetProjectName"> The project name to be copied-into. </param>
         /// <param name="accessToken"> The access token. </param>
@@ -79,7 +76,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="targetResourceId"> Represents the target Azure resource ID. </param>
         /// <param name="targetResourceRegion"> Represents the target Azure resource region. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CopyProjectConfig(ProjectKind projectKind, string targetProjectName, string accessToken, DateTimeOffset expiresAt, string targetResourceId, string targetResourceRegion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CopyProjectDetails(ProjectKind projectKind, string targetProjectName, string accessToken, DateTimeOffset expiresAt, string targetResourceId, string targetResourceRegion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProjectKind = projectKind;
             TargetProjectName = targetProjectName;
@@ -90,8 +87,8 @@ namespace Azure.AI.Language.Text.Authoring.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CopyProjectConfig"/> for deserialization. </summary>
-        internal CopyProjectConfig()
+        /// <summary> Initializes a new instance of <see cref="CopyProjectDetails"/> for deserialization. </summary>
+        internal CopyProjectDetails()
         {
         }
 

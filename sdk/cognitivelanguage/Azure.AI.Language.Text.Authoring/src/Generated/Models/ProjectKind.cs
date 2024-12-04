@@ -29,37 +29,17 @@ namespace Azure.AI.Language.Text.Authoring.Models
         private const string CustomHealthcareValue = "CustomHealthcare";
         private const string CustomTextSentimentValue = "CustomTextSentiment";
 
-        /// <summary>
-        /// For building a classification model to classify text using your own data. Each
-        /// file will have only one label. For example, file 1 is classified as A and file
-        /// 2 is classified as B.
-        /// </summary>
+        /// <summary> For building a classification model to classify text using your own data. Each file will have only one label. For example, file 1 is classified as A and file 2 is classified as B. </summary>
         public static ProjectKind CustomSingleLabelClassification { get; } = new ProjectKind(CustomSingleLabelClassificationValue);
-        /// <summary>
-        /// For building a classification model to classify text using your own data. Each
-        /// file can have one or many labels. For example, file 1 is classified as A, B,
-        /// and C and file 2 is classified as B and C.
-        /// </summary>
+        /// <summary> For building a classification model to classify text using your own data. Each file can have one or many labels. For example, file 1 is classified as A, B, and C and file 2 is classified as B and C. </summary>
         public static ProjectKind CustomMultiLabelClassification { get; } = new ProjectKind(CustomMultiLabelClassificationValue);
-        /// <summary>
-        /// For building an extraction model to identify your domain categories using your
-        /// own data.
-        /// </summary>
+        /// <summary> For building an extraction model to identify your domain categories using your own data. </summary>
         public static ProjectKind CustomEntityRecognition { get; } = new ProjectKind(CustomEntityRecognitionValue);
-        /// <summary>
-        /// For building an abstractive summarization models which are able to summarize
-        /// long documents.
-        /// </summary>
+        /// <summary> For building an abstractive summarization models which are able to summarize long documents. </summary>
         public static ProjectKind CustomAbstractiveSummarization { get; } = new ProjectKind(CustomAbstractiveSummarizationValue);
-        /// <summary>
-        /// For building an text analytics for health model to identify your health domain
-        /// data.
-        /// </summary>
+        /// <summary> For building an text analytics for health model to identify your health domain data. </summary>
         public static ProjectKind CustomHealthcare { get; } = new ProjectKind(CustomHealthcareValue);
-        /// <summary>
-        /// For building a sentiment models which are able to extract sentiment for long
-        /// documents.
-        /// </summary>
+        /// <summary> For building a sentiment models which are able to extract sentiment for long documents. </summary>
         public static ProjectKind CustomTextSentiment { get; } = new ProjectKind(CustomTextSentimentValue);
         /// <summary> Determines if two <see cref="ProjectKind"/> values are the same. </summary>
         public static bool operator ==(ProjectKind left, ProjectKind right) => left.Equals(right);

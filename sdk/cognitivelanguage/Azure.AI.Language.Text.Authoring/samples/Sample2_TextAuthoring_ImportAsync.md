@@ -23,7 +23,7 @@ To import project data, call ImportAsync on the TextAnalysisAuthoring client.
 ```C# Snippet:Sample2_TextAuthoring_ImportAsync
 string projectName = "LoanAgreements";
 
-var projectMetadata = new CreateProjectConfig(
+var projectMetadata = new CreateProjectDetails(
     projectKind: "CustomEntityRecognition",
     storageInputContainerName: "loanagreements",
     projectName: projectName,

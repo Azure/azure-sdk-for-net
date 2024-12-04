@@ -47,13 +47,10 @@ namespace Azure.AI.Language.Text.Authoring.Models
 
         /// <summary> Initializes a new instance of <see cref="ExportedProject"/>. </summary>
         /// <param name="projectFileVersion"> The version of the exported file. </param>
-        /// <param name="stringIndexType">
-        /// Specifies the method used to interpret string offsets. For additional
-        /// information see https://aka.ms/text-analytics-offsets.
-        /// </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="metadata"> Represents the project metadata. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectFileVersion"/> or <paramref name="metadata"/> is null. </exception>
-        public ExportedProject(string projectFileVersion, StringIndexType stringIndexType, CreateProjectConfig metadata)
+        public ExportedProject(string projectFileVersion, StringIndexType stringIndexType, CreateProjectDetails metadata)
         {
             Argument.AssertNotNull(projectFileVersion, nameof(projectFileVersion));
             Argument.AssertNotNull(metadata, nameof(metadata));
@@ -65,10 +62,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
 
         /// <summary> Initializes a new instance of <see cref="ExportedProject"/>. </summary>
         /// <param name="projectFileVersion"> The version of the exported file. </param>
-        /// <param name="stringIndexType">
-        /// Specifies the method used to interpret string offsets. For additional
-        /// information see https://aka.ms/text-analytics-offsets.
-        /// </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="metadata"> Represents the project metadata. </param>
         /// <param name="assets">
         /// Represents the project assets.
@@ -76,7 +70,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// The available derived classes include <see cref="ExportedCustomAbstractiveSummarizationProjectAssets"/>, <see cref="ExportedCustomEntityRecognitionProjectAssets"/>, <see cref="ExportedCustomHealthcareProjectAssets"/>, <see cref="ExportedCustomMultiLabelClassificationProjectAssets"/>, <see cref="ExportedCustomSingleLabelClassificationProjectAssets"/> and <see cref="ExportedCustomTextSentimentProjectAssets"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExportedProject(string projectFileVersion, StringIndexType stringIndexType, CreateProjectConfig metadata, ExportedProjectAssets assets, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExportedProject(string projectFileVersion, StringIndexType stringIndexType, CreateProjectDetails metadata, ExportedProjectAssets assets, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProjectFileVersion = projectFileVersion;
             StringIndexType = stringIndexType;
@@ -92,13 +86,10 @@ namespace Azure.AI.Language.Text.Authoring.Models
 
         /// <summary> The version of the exported file. </summary>
         public string ProjectFileVersion { get; }
-        /// <summary>
-        /// Specifies the method used to interpret string offsets. For additional
-        /// information see https://aka.ms/text-analytics-offsets.
-        /// </summary>
+        /// <summary> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. </summary>
         public StringIndexType StringIndexType { get; }
         /// <summary> Represents the project metadata. </summary>
-        public CreateProjectConfig Metadata { get; }
+        public CreateProjectDetails Metadata { get; }
         /// <summary>
         /// Represents the project assets.
         /// Please note <see cref="ExportedProjectAssets"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

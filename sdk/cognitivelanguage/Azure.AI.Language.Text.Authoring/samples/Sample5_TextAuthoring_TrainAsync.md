@@ -21,12 +21,12 @@ To train a project, call TrainAsync on the TextAnalysisAuthoring client.
 ```C# Snippet:Sample5_TextAuthoring_TrainAsync
 string projectName = "LoanAgreements";
 
-var trainingJobConfig = new TrainingJobConfig(
+var trainingJobDetails = new TrainingJobDetails(
     modelLabel: "model1",
     trainingConfigVersion: "latest"
 )
 {
-    EvaluationOptions = new EvaluationConfig
+    EvaluationOptions = new EvaluationDetails
     {
         Kind = EvaluationKind.Percentage,
         TestingSplitPercentage = 20,
@@ -37,7 +37,7 @@ var trainingJobConfig = new TrainingJobConfig(
 Operation<TrainingJobResult> operation = await authoringClient.TrainAsync(
     waitUntil: WaitUntil.Completed,
     projectName: projectName,
-    body: trainingJobConfig
+    body: trainingJobDetails
 );
 
 string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;

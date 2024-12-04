@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text.Authoring.Models
 {
-    public partial class CreateProjectConfig : IUtf8JsonSerializable, IJsonModel<CreateProjectConfig>
+    public partial class CreateProjectDetails : IUtf8JsonSerializable, IJsonModel<CreateProjectDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CreateProjectConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CreateProjectDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CreateProjectConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CreateProjectDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CreateProjectConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CreateProjectDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CreateProjectConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CreateProjectDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,19 +67,19 @@ namespace Azure.AI.Language.Text.Authoring.Models
             writer.WriteEndObject();
         }
 
-        CreateProjectConfig IJsonModel<CreateProjectConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CreateProjectDetails IJsonModel<CreateProjectDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CreateProjectConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CreateProjectDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CreateProjectConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CreateProjectDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCreateProjectConfig(document.RootElement, options);
+            return DeserializeCreateProjectDetails(document.RootElement, options);
         }
 
-        internal static CreateProjectConfig DeserializeCreateProjectConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CreateProjectDetails DeserializeCreateProjectDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -147,7 +147,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CreateProjectConfig(
+            return new CreateProjectDetails(
                 projectKind,
                 storageInputContainerName,
                 settings,
@@ -158,43 +158,43 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CreateProjectConfig>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CreateProjectDetails>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CreateProjectConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CreateProjectDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CreateProjectConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CreateProjectDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CreateProjectConfig IPersistableModel<CreateProjectConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CreateProjectDetails IPersistableModel<CreateProjectDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CreateProjectConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CreateProjectDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeCreateProjectConfig(document.RootElement, options);
+                        return DeserializeCreateProjectDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CreateProjectConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CreateProjectDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CreateProjectConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CreateProjectDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static CreateProjectConfig FromResponse(Response response)
+        internal static CreateProjectDetails FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeCreateProjectConfig(document.RootElement);
+            return DeserializeCreateProjectDetails(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
