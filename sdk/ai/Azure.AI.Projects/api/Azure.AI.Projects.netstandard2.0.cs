@@ -391,6 +391,7 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.AgentStreamEvent ThreadRunCreated { get { throw null; } }
         public static Azure.AI.Projects.AgentStreamEvent ThreadRunExpired { get { throw null; } }
         public static Azure.AI.Projects.AgentStreamEvent ThreadRunFailed { get { throw null; } }
+        public static Azure.AI.Projects.AgentStreamEvent ThreadRunIncomplete { get { throw null; } }
         public static Azure.AI.Projects.AgentStreamEvent ThreadRunInProgress { get { throw null; } }
         public static Azure.AI.Projects.AgentStreamEvent ThreadRunQueued { get { throw null; } }
         public static Azure.AI.Projects.AgentStreamEvent ThreadRunRequiresAction { get { throw null; } }
@@ -454,7 +455,7 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.RunStepFunctionToolCall RunStepFunctionToolCall(string id, string name, string arguments, string output) { throw null; }
         public static Azure.AI.Projects.SubmitToolOutputsAction SubmitToolOutputsAction(System.Collections.Generic.IEnumerable<Azure.AI.Projects.RequiredToolCall> toolCalls) { throw null; }
         public static Azure.AI.Projects.ThreadMessage ThreadMessage(string id = null, System.DateTimeOffset createdAt = default(System.DateTimeOffset), string threadId = null, Azure.AI.Projects.MessageStatus status = default(Azure.AI.Projects.MessageStatus), Azure.AI.Projects.MessageIncompleteDetails incompleteDetails = null, System.DateTimeOffset? completedAt = default(System.DateTimeOffset?), System.DateTimeOffset? incompleteAt = default(System.DateTimeOffset?), Azure.AI.Projects.MessageRole role = default(Azure.AI.Projects.MessageRole), System.Collections.Generic.IEnumerable<Azure.AI.Projects.MessageContent> contentItems = null, string agentId = null, string runId = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.MessageAttachment> attachments = null, System.Collections.Generic.IDictionary<string, string> metadata = null) { throw null; }
-        public static Azure.AI.Projects.ThreadRun ThreadRun(string id = null, string threadId = null, string agentId = null, Azure.AI.Projects.RunStatus status = default(Azure.AI.Projects.RunStatus), Azure.AI.Projects.RequiredAction requiredAction = null, Azure.AI.Projects.RunError lastError = null, string model = null, string instructions = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.ToolDefinition> tools = null, System.DateTimeOffset createdAt = default(System.DateTimeOffset), System.DateTimeOffset? expiresAt = default(System.DateTimeOffset?), System.DateTimeOffset? startedAt = default(System.DateTimeOffset?), System.DateTimeOffset? completedAt = default(System.DateTimeOffset?), System.DateTimeOffset? cancelledAt = default(System.DateTimeOffset?), System.DateTimeOffset? failedAt = default(System.DateTimeOffset?), Azure.AI.Projects.IncompleteRunDetails? incompleteDetails = default(Azure.AI.Projects.IncompleteRunDetails?), Azure.AI.Projects.RunCompletionUsage usage = null, float? temperature = default(float?), float? topP = default(float?), int? maxPromptTokens = default(int?), int? maxCompletionTokens = default(int?), Azure.AI.Projects.TruncationObject truncationStrategy = null, System.BinaryData toolChoice = null, System.BinaryData responseFormat = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, Azure.AI.Projects.UpdateToolResourcesOptions toolResources = null, bool? parallelToolCalls = default(bool?)) { throw null; }
+        public static Azure.AI.Projects.ThreadRun ThreadRun(string id = null, string threadId = null, string agentId = null, Azure.AI.Projects.RunStatus status = default(Azure.AI.Projects.RunStatus), Azure.AI.Projects.RequiredAction requiredAction = null, Azure.AI.Projects.RunError lastError = null, string model = null, string instructions = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.ToolDefinition> tools = null, System.DateTimeOffset createdAt = default(System.DateTimeOffset), System.DateTimeOffset? expiresAt = default(System.DateTimeOffset?), System.DateTimeOffset? startedAt = default(System.DateTimeOffset?), System.DateTimeOffset? completedAt = default(System.DateTimeOffset?), System.DateTimeOffset? cancelledAt = default(System.DateTimeOffset?), System.DateTimeOffset? failedAt = default(System.DateTimeOffset?), Azure.AI.Projects.IncompleteRunDetails incompleteDetails = null, Azure.AI.Projects.RunCompletionUsage usage = null, float? temperature = default(float?), float? topP = default(float?), int? maxPromptTokens = default(int?), int? maxCompletionTokens = default(int?), Azure.AI.Projects.TruncationObject truncationStrategy = null, System.BinaryData toolChoice = null, System.BinaryData responseFormat = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, Azure.AI.Projects.UpdateToolResourcesOptions toolResources = null, bool? parallelToolCalls = default(bool?)) { throw null; }
     }
     public partial class AIProjectClient
     {
@@ -490,6 +491,7 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.Evaluation Evaluation(string id = null, Azure.AI.Projects.InputData data = null, string displayName = null, string description = null, Azure.AI.Projects.SystemData systemData = null, string status = null, System.Collections.Generic.IDictionary<string, string> tags = null, System.Collections.Generic.IDictionary<string, string> properties = null, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.EvaluatorConfiguration> evaluators = null) { throw null; }
         public static Azure.AI.Projects.EvaluationSchedule EvaluationSchedule(string name = null, Azure.AI.Projects.ApplicationInsightsConfiguration data = null, string description = null, Azure.AI.Projects.SystemData systemData = null, string provisioningState = null, System.Collections.Generic.IDictionary<string, string> tags = null, System.Collections.Generic.IDictionary<string, string> properties = null, string isEnabled = null, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.EvaluatorConfiguration> evaluators = null, Azure.AI.Projects.Trigger trigger = null) { throw null; }
         public static Azure.AI.Projects.GetWorkspaceResponse GetWorkspaceResponse(string id = null, string name = null, Azure.AI.Projects.WorkspaceProperties properties = null) { throw null; }
+        public static Azure.AI.Projects.IncompleteRunDetails IncompleteRunDetails(Azure.AI.Projects.IncompleteDetailsReason reason = default(Azure.AI.Projects.IncompleteDetailsReason)) { throw null; }
         public static Azure.AI.Projects.ListConnectionsResponse ListConnectionsResponse(System.Collections.Generic.IEnumerable<Azure.AI.Projects.ConnectionResponse> value = null) { throw null; }
         public static Azure.AI.Projects.MessageDelta MessageDelta(Azure.AI.Projects.MessageRole role = default(Azure.AI.Projects.MessageRole), System.Collections.Generic.IEnumerable<Azure.AI.Projects.MessageDeltaContent> content = null) { throw null; }
         public static Azure.AI.Projects.MessageDeltaChunk MessageDeltaChunk(string id = null, Azure.AI.Projects.MessageDeltaChunkObject @object = default(Azure.AI.Projects.MessageDeltaChunkObject), Azure.AI.Projects.MessageDelta delta = null) { throw null; }
@@ -1059,22 +1061,33 @@ namespace Azure.AI.Projects
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.GetWorkspaceResponse>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct IncompleteRunDetails : System.IEquatable<Azure.AI.Projects.IncompleteRunDetails>
+    public readonly partial struct IncompleteDetailsReason : System.IEquatable<Azure.AI.Projects.IncompleteDetailsReason>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public IncompleteRunDetails(string value) { throw null; }
-        public static Azure.AI.Projects.IncompleteRunDetails MaxCompletionTokens { get { throw null; } }
-        public static Azure.AI.Projects.IncompleteRunDetails MaxPromptTokens { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.IncompleteRunDetails other) { throw null; }
+        public IncompleteDetailsReason(string value) { throw null; }
+        public static Azure.AI.Projects.IncompleteDetailsReason MaxCompletionTokens { get { throw null; } }
+        public static Azure.AI.Projects.IncompleteDetailsReason MaxPromptTokens { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.IncompleteDetailsReason other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.IncompleteRunDetails left, Azure.AI.Projects.IncompleteRunDetails right) { throw null; }
-        public static implicit operator Azure.AI.Projects.IncompleteRunDetails (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.IncompleteRunDetails left, Azure.AI.Projects.IncompleteRunDetails right) { throw null; }
+        public static bool operator ==(Azure.AI.Projects.IncompleteDetailsReason left, Azure.AI.Projects.IncompleteDetailsReason right) { throw null; }
+        public static implicit operator Azure.AI.Projects.IncompleteDetailsReason (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.IncompleteDetailsReason left, Azure.AI.Projects.IncompleteDetailsReason right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class IncompleteRunDetails : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.IncompleteRunDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.IncompleteRunDetails>
+    {
+        internal IncompleteRunDetails() { }
+        public Azure.AI.Projects.IncompleteDetailsReason Reason { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.IncompleteRunDetails System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.IncompleteRunDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.IncompleteRunDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.IncompleteRunDetails System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.IncompleteRunDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.IncompleteRunDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.IncompleteRunDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class IndexResource : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.IndexResource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.IndexResource>
     {
@@ -2150,6 +2163,7 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.RunStreamEvent ThreadRunCreated { get { throw null; } }
         public static Azure.AI.Projects.RunStreamEvent ThreadRunExpired { get { throw null; } }
         public static Azure.AI.Projects.RunStreamEvent ThreadRunFailed { get { throw null; } }
+        public static Azure.AI.Projects.RunStreamEvent ThreadRunIncomplete { get { throw null; } }
         public static Azure.AI.Projects.RunStreamEvent ThreadRunInProgress { get { throw null; } }
         public static Azure.AI.Projects.RunStreamEvent ThreadRunQueued { get { throw null; } }
         public static Azure.AI.Projects.RunStreamEvent ThreadRunRequiresAction { get { throw null; } }
@@ -2309,7 +2323,7 @@ namespace Azure.AI.Projects
         public System.DateTimeOffset? ExpiresAt { get { throw null; } }
         public System.DateTimeOffset? FailedAt { get { throw null; } }
         public string Id { get { throw null; } }
-        public Azure.AI.Projects.IncompleteRunDetails? IncompleteDetails { get { throw null; } }
+        public Azure.AI.Projects.IncompleteRunDetails IncompleteDetails { get { throw null; } }
         public string Instructions { get { throw null; } }
         public Azure.AI.Projects.RunError LastError { get { throw null; } }
         public int? MaxCompletionTokens { get { throw null; } }
@@ -2594,10 +2608,23 @@ namespace Azure.AI.Projects
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.VectorStoreDataSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.VectorStoreDataSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public enum VectorStoreDataSourceAssetType
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct VectorStoreDataSourceAssetType : System.IEquatable<Azure.AI.Projects.VectorStoreDataSourceAssetType>
     {
-        UriAsset = 0,
-        IdAsset = 1,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public VectorStoreDataSourceAssetType(string value) { throw null; }
+        public static Azure.AI.Projects.VectorStoreDataSourceAssetType IdAsset { get { throw null; } }
+        public static Azure.AI.Projects.VectorStoreDataSourceAssetType UriAsset { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.VectorStoreDataSourceAssetType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.VectorStoreDataSourceAssetType left, Azure.AI.Projects.VectorStoreDataSourceAssetType right) { throw null; }
+        public static implicit operator Azure.AI.Projects.VectorStoreDataSourceAssetType (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.VectorStoreDataSourceAssetType left, Azure.AI.Projects.VectorStoreDataSourceAssetType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class VectorStoreDeletionStatus : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.VectorStoreDeletionStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.VectorStoreDeletionStatus>
     {

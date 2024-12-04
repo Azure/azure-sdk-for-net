@@ -11,7 +11,6 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Samples
@@ -95,12 +94,12 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkWatcherResource networkWatcher = client.GetNetworkWatcherResource(networkWatcherResourceId);
 
             // invoke the operation
-            NetworkTagsObject networkTagsObject = new NetworkTagsObject()
+            NetworkTagsObject networkTagsObject = new NetworkTagsObject
             {
                 Tags =
 {
 ["tag1"] = "value1",
-["tag2"] = "value2",
+["tag2"] = "value2"
 },
             };
             NetworkWatcherResource result = await networkWatcher.UpdateAsync(networkTagsObject);
@@ -110,37 +109,6 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkWatcherData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetNetworkWatchers_ListAllNetworkWatchers()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkWatcherListAll.json
-            // this example is just showing the usage of "NetworkWatchers_ListAll" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (NetworkWatcherResource item in subscriptionResource.GetNetworkWatchersAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                NetworkWatcherData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -164,7 +132,7 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkWatcherResource networkWatcher = client.GetNetworkWatcherResource(networkWatcherResourceId);
 
             // invoke the operation
-            TopologyContent content = new TopologyContent()
+            TopologyContent content = new TopologyContent
             {
                 TargetResourceGroupName = "rg2",
             };
@@ -194,7 +162,14 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkWatcherResource networkWatcher = client.GetNetworkWatcherResource(networkWatcherResourceId);
 
             // invoke the operation
-            VerificationIPFlowContent content = new VerificationIPFlowContent(new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg2/providers/Microsoft.Compute/virtualMachines/vm1"), NetworkTrafficDirection.Outbound, IPFlowProtocol.Tcp, "80", "80", "10.2.0.4", "121.10.1.1");
+            VerificationIPFlowContent content = new VerificationIPFlowContent(
+                new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg2/providers/Microsoft.Compute/virtualMachines/vm1"),
+                NetworkTrafficDirection.Outbound,
+                IPFlowProtocol.Tcp,
+                "80",
+                "80",
+                "10.2.0.4",
+                "121.10.1.1");
             ArmOperation<VerificationIPFlowResult> lro = await networkWatcher.VerifyIPFlowAsync(WaitUntil.Completed, content);
             VerificationIPFlowResult result = lro.Value;
 
@@ -343,7 +318,7 @@ namespace Azure.ResourceManager.Network.Samples
                 {
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1")] = new UserAssignedIdentity()
 },
                 },
             };
@@ -402,7 +377,7 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkWatcherResource networkWatcher = client.GetNetworkWatcherResource(networkWatcherResourceId);
 
             // invoke the operation
-            ConnectivityContent content = new ConnectivityContent(new ConnectivitySource(new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg2/providers/Microsoft.Compute/virtualMachines/vm1")), new ConnectivityDestination()
+            ConnectivityContent content = new ConnectivityContent(new ConnectivitySource(new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg2/providers/Microsoft.Compute/virtualMachines/vm1")), new ConnectivityDestination
             {
                 Address = "192.168.100.4",
                 Port = 3389,
@@ -442,14 +417,8 @@ namespace Azure.ResourceManager.Network.Samples
                 State = "washington",
             }, DateTimeOffset.Parse("2017-09-07T00:00:00Z"), DateTimeOffset.Parse("2017-09-10T00:00:00Z"))
             {
-                Providers =
-{
-"Frontier Communications of America, Inc. - ASN 5650"
-},
-                AzureLocations =
-{
-new AzureLocation("West US")
-},
+                Providers = { "Frontier Communications of America, Inc. - ASN 5650" },
+                AzureLocations = { new AzureLocation("West US") },
             };
             ArmOperation<AzureReachabilityReport> lro = await networkWatcher.GetAzureReachabilityReportAsync(WaitUntil.Completed, content);
             AzureReachabilityReport result = lro.Value;
@@ -478,12 +447,9 @@ new AzureLocation("West US")
             NetworkWatcherResource networkWatcher = client.GetNetworkWatcherResource(networkWatcherResourceId);
 
             // invoke the operation
-            AvailableProvidersListContent content = new AvailableProvidersListContent()
+            AvailableProvidersListContent content = new AvailableProvidersListContent
             {
-                AzureLocations =
-{
-new AzureLocation("West US")
-},
+                AzureLocations = { new AzureLocation("West US") },
                 Country = "United States",
                 State = "washington",
                 City = "seattle",
@@ -517,7 +483,7 @@ new AzureLocation("West US")
             // invoke the operation
             NetworkConfigurationDiagnosticContent content = new NetworkConfigurationDiagnosticContent(new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg2/providers/Microsoft.Compute/virtualMachines/vm1"), new NetworkConfigurationDiagnosticProfile[]
             {
-new NetworkConfigurationDiagnosticProfile(NetworkTrafficDirection.Inbound,"TCP","10.1.0.4","12.11.12.14","12100")
+new NetworkConfigurationDiagnosticProfile(NetworkTrafficDirection.Inbound, "TCP", "10.1.0.4", "12.11.12.14", "12100")
             });
             ArmOperation<NetworkConfigurationDiagnosticResponse> lro = await networkWatcher.GetNetworkConfigurationDiagnosticAsync(WaitUntil.Completed, content);
             NetworkConfigurationDiagnosticResponse result = lro.Value;

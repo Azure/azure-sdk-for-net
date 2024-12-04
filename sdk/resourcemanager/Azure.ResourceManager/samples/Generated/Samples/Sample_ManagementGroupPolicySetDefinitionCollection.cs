@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
@@ -41,42 +40,43 @@ namespace Azure.ResourceManager.Resources.Samples
 
             // invoke the operation
             string policySetDefinitionName = "CostManagement";
-            PolicySetDefinitionData data = new PolicySetDefinitionData()
+            PolicySetDefinitionData data = new PolicySetDefinitionData
             {
                 DisplayName = "Cost Management",
                 Description = "Policies to enforce low cost storage SKUs",
-                Metadata = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+                Metadata = BinaryData.FromObjectAsJson(new
                 {
-                    ["category"] = "Cost Management"
+                    category = "Cost Management",
                 }),
-                PolicyDefinitions =
-{
-new PolicyDefinitionReference("/providers/Microsoft.Management/managementgroups/MyManagementGroup/providers/Microsoft.Authorization/policyDefinitions/7433c107-6db4-4ad1-b57a-a76dce0154a1")
+                PolicyDefinitions = {new PolicyDefinitionReference("/providers/Microsoft.Management/managementgroups/MyManagementGroup/providers/Microsoft.Authorization/policyDefinitions/7433c107-6db4-4ad1-b57a-a76dce0154a1")
 {
 Parameters =
 {
-["listOfAllowedSKUs"] = new ArmPolicyParameterValue()
+["listOfAllowedSKUs"] = new ArmPolicyParameterValue
 {
-Value = BinaryData.FromObjectAsJson(new object[] { "Standard_GRS", "Standard_LRS" }),
-},
-},
-PolicyDefinitionReferenceId = "Limit_Skus",
-},new PolicyDefinitionReference("/providers/Microsoft.Management/managementgroups/MyManagementGroup/providers/Microsoft.Authorization/policyDefinitions/ResourceNaming")
+Value = BinaryData.FromObjectAsJson(new object[]
 {
-Parameters =
-{
-["prefix"] = new ArmPolicyParameterValue()
-{
-Value = BinaryData.FromString("\"DeptA\""),
-},
-["suffix"] = new ArmPolicyParameterValue()
-{
-Value = BinaryData.FromString("\"-LC\""),
-},
-},
-PolicyDefinitionReferenceId = "Resource_Naming",
+"Standard_GRS",
+"Standard_LRS"
+}),
 }
 },
+PolicyDefinitionReferenceId = "Limit_Skus",
+}, new PolicyDefinitionReference("/providers/Microsoft.Management/managementgroups/MyManagementGroup/providers/Microsoft.Authorization/policyDefinitions/ResourceNaming")
+{
+Parameters =
+{
+["prefix"] = new ArmPolicyParameterValue
+{
+Value = BinaryData.FromObjectAsJson("DeptA"),
+},
+["suffix"] = new ArmPolicyParameterValue
+{
+Value = BinaryData.FromObjectAsJson("-LC"),
+}
+},
+PolicyDefinitionReferenceId = "Resource_Naming",
+}},
             };
             ArmOperation<ManagementGroupPolicySetDefinitionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, policySetDefinitionName, data);
             ManagementGroupPolicySetDefinitionResource result = lro.Value;
@@ -111,62 +111,54 @@ PolicyDefinitionReferenceId = "Resource_Naming",
 
             // invoke the operation
             string policySetDefinitionName = "CostManagement";
-            PolicySetDefinitionData data = new PolicySetDefinitionData()
+            PolicySetDefinitionData data = new PolicySetDefinitionData
             {
                 DisplayName = "Cost Management",
                 Description = "Policies to enforce low cost storage SKUs",
-                Metadata = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+                Metadata = BinaryData.FromObjectAsJson(new
                 {
-                    ["category"] = "Cost Management"
+                    category = "Cost Management",
                 }),
-                PolicyDefinitions =
-{
-new PolicyDefinitionReference("/subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2/providers/Microsoft.Authorization/policyDefinitions/7433c107-6db4-4ad1-b57a-a76dce0154a1")
+                PolicyDefinitions = {new PolicyDefinitionReference("/subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2/providers/Microsoft.Authorization/policyDefinitions/7433c107-6db4-4ad1-b57a-a76dce0154a1")
 {
 Parameters =
 {
-["listOfAllowedSKUs"] = new ArmPolicyParameterValue()
+["listOfAllowedSKUs"] = new ArmPolicyParameterValue
 {
-Value = BinaryData.FromObjectAsJson(new object[] { "Standard_GRS", "Standard_LRS" }),
-},
-},
-PolicyDefinitionReferenceId = "Limit_Skus",
-GroupNames =
+Value = BinaryData.FromObjectAsJson(new object[]
 {
-"CostSaving"
-},
-},new PolicyDefinitionReference("/subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2/providers/Microsoft.Authorization/policyDefinitions/ResourceNaming")
-{
-Parameters =
-{
-["prefix"] = new ArmPolicyParameterValue()
-{
-Value = BinaryData.FromString("\"DeptA\""),
-},
-["suffix"] = new ArmPolicyParameterValue()
-{
-Value = BinaryData.FromString("\"-LC\""),
-},
-},
-PolicyDefinitionReferenceId = "Resource_Naming",
-GroupNames =
-{
-"Organizational"
-},
+"Standard_GRS",
+"Standard_LRS"
+}),
 }
 },
-                PolicyDefinitionGroups =
+PolicyDefinitionReferenceId = "Limit_Skus",
+GroupNames = {"CostSaving"},
+}, new PolicyDefinitionReference("/subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2/providers/Microsoft.Authorization/policyDefinitions/ResourceNaming")
 {
-new PolicyDefinitionGroup("CostSaving")
+Parameters =
+{
+["prefix"] = new ArmPolicyParameterValue
+{
+Value = BinaryData.FromObjectAsJson("DeptA"),
+},
+["suffix"] = new ArmPolicyParameterValue
+{
+Value = BinaryData.FromObjectAsJson("-LC"),
+}
+},
+PolicyDefinitionReferenceId = "Resource_Naming",
+GroupNames = {"Organizational"},
+}},
+                PolicyDefinitionGroups = {new PolicyDefinitionGroup("CostSaving")
 {
 DisplayName = "Cost Management Policies",
 Description = "Policies designed to control spend within a subscription.",
-},new PolicyDefinitionGroup("Organizational")
+}, new PolicyDefinitionGroup("Organizational")
 {
 DisplayName = "Organizational Policies",
 Description = "Policies that help enforce resource organization standards within a subscription.",
-}
-},
+}},
             };
             ArmOperation<ManagementGroupPolicySetDefinitionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, policySetDefinitionName, data);
             ManagementGroupPolicySetDefinitionResource result = lro.Value;
@@ -208,6 +200,40 @@ Description = "Policies that help enforce resource organization standards within
             PolicySetDefinitionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListPolicySetDefinitionsAtManagementGroupLevel()
+        {
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/listPolicySetDefinitionsByManagementGroup.json
+            // this example is just showing the usage of "PolicySetDefinitions_ListByManagementGroup" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ManagementGroupResource created on azure
+            // for more information of creating ManagementGroupResource, please refer to the document of ManagementGroupResource
+            string managementGroupId = "MyManagementGroup";
+            ResourceIdentifier managementGroupResourceId = ManagementGroupResource.CreateResourceIdentifier(managementGroupId);
+            ManagementGroupResource managementGroupResource = client.GetManagementGroupResource(managementGroupResourceId);
+
+            // get the collection of this ManagementGroupPolicySetDefinitionResource
+            ManagementGroupPolicySetDefinitionCollection collection = managementGroupResource.GetManagementGroupPolicySetDefinitions();
+
+            // invoke the operation and iterate over the result
+            await foreach (ManagementGroupPolicySetDefinitionResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                PolicySetDefinitionData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -276,40 +302,6 @@ Description = "Policies that help enforce resource organization standards within
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ListPolicySetDefinitionsAtManagementGroupLevel()
-        {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/listPolicySetDefinitionsByManagementGroup.json
-            // this example is just showing the usage of "PolicySetDefinitions_ListByManagementGroup" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ManagementGroupResource created on azure
-            // for more information of creating ManagementGroupResource, please refer to the document of ManagementGroupResource
-            string managementGroupId = "MyManagementGroup";
-            ResourceIdentifier managementGroupResourceId = ManagementGroupResource.CreateResourceIdentifier(managementGroupId);
-            ManagementGroupResource managementGroupResource = client.GetManagementGroupResource(managementGroupResourceId);
-
-            // get the collection of this ManagementGroupPolicySetDefinitionResource
-            ManagementGroupPolicySetDefinitionCollection collection = managementGroupResource.GetManagementGroupPolicySetDefinitions();
-
-            // invoke the operation and iterate over the result
-            await foreach (ManagementGroupPolicySetDefinitionResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                PolicySetDefinitionData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
         }
     }
 }

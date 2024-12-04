@@ -870,6 +870,17 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.PlaySource PlaySourceInfo { get { throw null; } set { } }
         public Azure.Communication.CommunicationIdentifier TargetParticipant { get { throw null; } }
     }
+    public partial class IncomingCall : Azure.Communication.CallAutomation.CallAutomationEventBase
+    {
+        internal IncomingCall() { }
+        public string CallerDisplayName { get { throw null; } }
+        public Azure.Communication.CallAutomation.CustomCallingContext CustomContext { get { throw null; } }
+        public Azure.Communication.CommunicationIdentifier From { get { throw null; } }
+        public string IncomingCallContext { get { throw null; } }
+        public Azure.Communication.CommunicationIdentifier OnBehalfOfCallee { get { throw null; } }
+        public Azure.Communication.CommunicationIdentifier To { get { throw null; } }
+        public static Azure.Communication.CallAutomation.IncomingCall Deserialize(string content) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MediaEventReasonCode : System.IEquatable<Azure.Communication.CallAutomation.MediaEventReasonCode>
     {

@@ -18,79 +18,6 @@ namespace Azure.ResourceManager.Storage.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ListContainers()
-        {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/BlobContainersList.json
-            // this example is just showing the usage of "BlobContainers_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BlobServiceResource created on azure
-            // for more information of creating BlobServiceResource, please refer to the document of BlobServiceResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "res9290";
-            string accountName = "sto1590";
-            ResourceIdentifier blobServiceResourceId = BlobServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            BlobServiceResource blobService = client.GetBlobServiceResource(blobServiceResourceId);
-
-            // get the collection of this BlobContainerResource
-            BlobContainerCollection collection = blobService.GetBlobContainers();
-
-            // invoke the operation and iterate over the result
-            await foreach (BlobContainerResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                BlobContainerData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ListDeletedContainers()
-        {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/DeletedBlobContainersList.json
-            // this example is just showing the usage of "BlobContainers_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BlobServiceResource created on azure
-            // for more information of creating BlobServiceResource, please refer to the document of BlobServiceResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "res9290";
-            string accountName = "sto1590";
-            ResourceIdentifier blobServiceResourceId = BlobServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            BlobServiceResource blobService = client.GetBlobServiceResource(blobServiceResourceId);
-
-            // get the collection of this BlobContainerResource
-            BlobContainerCollection collection = blobService.GetBlobContainers();
-
-            // invoke the operation and iterate over the result
-            BlobContainerState? include = BlobContainerState.Deleted;
-            await foreach (BlobContainerResource item in collection.GetAllAsync(include: include))
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                BlobContainerData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutContainerWithDefaultEncryptionScope()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/BlobContainersPutDefaultEncryptionScope.json
@@ -114,7 +41,7 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // invoke the operation
             string containerName = "container6185";
-            BlobContainerData data = new BlobContainerData()
+            BlobContainerData data = new BlobContainerData
             {
                 DefaultEncryptionScope = "encryptionscope185",
                 PreventEncryptionScopeOverride = true,
@@ -154,9 +81,9 @@ namespace Azure.ResourceManager.Storage.Samples
 
             // invoke the operation
             string containerName = "container6185";
-            BlobContainerData data = new BlobContainerData()
+            BlobContainerData data = new BlobContainerData
             {
-                ImmutableStorageWithVersioning = new ImmutableStorageWithVersioning()
+                ImmutableStorageWithVersioning = new ImmutableStorageWithVersioning
                 {
                     IsEnabled = true,
                 },
@@ -243,9 +170,146 @@ namespace Azure.ResourceManager.Storage.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetContainers()
+        {
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/BlobContainersGet.json
+            // this example is just showing the usage of "BlobContainers_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BlobServiceResource created on azure
+            // for more information of creating BlobServiceResource, please refer to the document of BlobServiceResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "res9871";
+            string accountName = "sto6217";
+            ResourceIdentifier blobServiceResourceId = BlobServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BlobServiceResource blobService = client.GetBlobServiceResource(blobServiceResourceId);
+
+            // get the collection of this BlobContainerResource
+            BlobContainerCollection collection = blobService.GetBlobContainers();
+
+            // invoke the operation
+            string containerName = "container1634";
+            BlobContainerResource result = await collection.GetAsync(containerName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BlobContainerData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListContainers()
+        {
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/BlobContainersList.json
+            // this example is just showing the usage of "BlobContainers_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BlobServiceResource created on azure
+            // for more information of creating BlobServiceResource, please refer to the document of BlobServiceResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "res9290";
+            string accountName = "sto1590";
+            ResourceIdentifier blobServiceResourceId = BlobServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BlobServiceResource blobService = client.GetBlobServiceResource(blobServiceResourceId);
+
+            // get the collection of this BlobContainerResource
+            BlobContainerCollection collection = blobService.GetBlobContainers();
+
+            // invoke the operation and iterate over the result
+            await foreach (BlobContainerResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                BlobContainerData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListDeletedContainers()
+        {
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/DeletedBlobContainersList.json
+            // this example is just showing the usage of "BlobContainers_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BlobServiceResource created on azure
+            // for more information of creating BlobServiceResource, please refer to the document of BlobServiceResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "res9290";
+            string accountName = "sto1590";
+            ResourceIdentifier blobServiceResourceId = BlobServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BlobServiceResource blobService = client.GetBlobServiceResource(blobServiceResourceId);
+
+            // get the collection of this BlobContainerResource
+            BlobContainerCollection collection = blobService.GetBlobContainers();
+
+            // invoke the operation and iterate over the result
+            BlobContainerState? include = BlobContainerState.Deleted;
+            await foreach (BlobContainerResource item in collection.GetAllAsync(include: include))
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                BlobContainerData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetBlobContainersGetWithAllowProtectedAppendWritesAll()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/BlobContainersGetWithAllowProtectedAppendWritesAll.json
+            // this example is just showing the usage of "BlobContainers_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BlobServiceResource created on azure
+            // for more information of creating BlobServiceResource, please refer to the document of BlobServiceResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "res9871";
+            string accountName = "sto6217";
+            ResourceIdentifier blobServiceResourceId = BlobServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BlobServiceResource blobService = client.GetBlobServiceResource(blobServiceResourceId);
+
+            // get the collection of this BlobContainerResource
+            BlobContainerCollection collection = blobService.GetBlobContainers();
+
+            // invoke the operation
+            string containerName = "container1634";
+            bool result = await collection.ExistsAsync(containerName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetContainers()
+        {
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/BlobContainersGet.json
             // this example is just showing the usage of "BlobContainers_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -311,70 +375,6 @@ namespace Azure.ResourceManager.Storage.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Get_GetContainers()
-        {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/BlobContainersGet.json
-            // this example is just showing the usage of "BlobContainers_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BlobServiceResource created on azure
-            // for more information of creating BlobServiceResource, please refer to the document of BlobServiceResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "res9871";
-            string accountName = "sto6217";
-            ResourceIdentifier blobServiceResourceId = BlobServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            BlobServiceResource blobService = client.GetBlobServiceResource(blobServiceResourceId);
-
-            // get the collection of this BlobContainerResource
-            BlobContainerCollection collection = blobService.GetBlobContainers();
-
-            // invoke the operation
-            string containerName = "container1634";
-            BlobContainerResource result = await collection.GetAsync(containerName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            BlobContainerData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Exists_GetContainers()
-        {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/BlobContainersGet.json
-            // this example is just showing the usage of "BlobContainers_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BlobServiceResource created on azure
-            // for more information of creating BlobServiceResource, please refer to the document of BlobServiceResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "res9871";
-            string accountName = "sto6217";
-            ResourceIdentifier blobServiceResourceId = BlobServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            BlobServiceResource blobService = client.GetBlobServiceResource(blobServiceResourceId);
-
-            // get the collection of this BlobContainerResource
-            BlobContainerCollection collection = blobService.GetBlobContainers();
-
-            // invoke the operation
-            string containerName = "container1634";
-            bool result = await collection.ExistsAsync(containerName);
-
-            Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]

@@ -223,6 +223,14 @@ namespace Azure.AI.Projects
             return new RunError(code, message, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Projects.IncompleteRunDetails"/>. </summary>
+        /// <param name="reason"> The reason why the run is incomplete. This indicates which specific token limit was reached during the run. </param>
+        /// <returns> A new <see cref="Projects.IncompleteRunDetails"/> instance for mocking. </returns>
+        public static IncompleteRunDetails IncompleteRunDetails(IncompleteDetailsReason reason = default)
+        {
+            return new IncompleteRunDetails(reason, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Projects.RunCompletionUsage"/>. </summary>
         /// <param name="completionTokens"> Number of completion tokens used over the course of the run. </param>
         /// <param name="promptTokens"> Number of prompt tokens used over the course of the run. </param>

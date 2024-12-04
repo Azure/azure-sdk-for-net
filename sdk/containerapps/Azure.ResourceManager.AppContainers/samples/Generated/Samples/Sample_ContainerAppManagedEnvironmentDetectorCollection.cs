@@ -17,6 +17,40 @@ namespace Azure.ResourceManager.AppContainers.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetDiagnosticDataForAManagedEnvironments()
+        {
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/ManagedEnvironmentDiagnostics_Get.json
+            // this example is just showing the usage of "ManagedEnvironmentDiagnostics_GetDetector" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ContainerAppManagedEnvironmentResource created on azure
+            // for more information of creating ContainerAppManagedEnvironmentResource, please refer to the document of ContainerAppManagedEnvironmentResource
+            string subscriptionId = "f07f3711-b45e-40fe-a941-4e6d93f851e6";
+            string resourceGroupName = "mikono-workerapp-test-rg";
+            string environmentName = "mikonokubeenv";
+            ResourceIdentifier containerAppManagedEnvironmentResourceId = ContainerAppManagedEnvironmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, environmentName);
+            ContainerAppManagedEnvironmentResource containerAppManagedEnvironment = client.GetContainerAppManagedEnvironmentResource(containerAppManagedEnvironmentResourceId);
+
+            // get the collection of this ContainerAppManagedEnvironmentDetectorResource
+            ContainerAppManagedEnvironmentDetectorCollection collection = containerAppManagedEnvironment.GetContainerAppManagedEnvironmentDetectors();
+
+            // invoke the operation
+            string detectorName = "ManagedEnvAvailabilityMetrics";
+            ContainerAppManagedEnvironmentDetectorResource result = await collection.GetAsync(detectorName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ContainerAppDiagnosticData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetTheListOfAvailableDiagnosticDataForAManagedEnvironments()
         {
             // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/ManagedEnvironmentDiagnostics_List.json
@@ -49,40 +83,6 @@ namespace Azure.ResourceManager.AppContainers.Samples
             }
 
             Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Get_GetDiagnosticDataForAManagedEnvironments()
-        {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/ManagedEnvironmentDiagnostics_Get.json
-            // this example is just showing the usage of "ManagedEnvironmentDiagnostics_GetDetector" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ContainerAppManagedEnvironmentResource created on azure
-            // for more information of creating ContainerAppManagedEnvironmentResource, please refer to the document of ContainerAppManagedEnvironmentResource
-            string subscriptionId = "f07f3711-b45e-40fe-a941-4e6d93f851e6";
-            string resourceGroupName = "mikono-workerapp-test-rg";
-            string environmentName = "mikonokubeenv";
-            ResourceIdentifier containerAppManagedEnvironmentResourceId = ContainerAppManagedEnvironmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, environmentName);
-            ContainerAppManagedEnvironmentResource containerAppManagedEnvironment = client.GetContainerAppManagedEnvironmentResource(containerAppManagedEnvironmentResourceId);
-
-            // get the collection of this ContainerAppManagedEnvironmentDetectorResource
-            ContainerAppManagedEnvironmentDetectorCollection collection = containerAppManagedEnvironment.GetContainerAppManagedEnvironmentDetectors();
-
-            // invoke the operation
-            string detectorName = "ManagedEnvAvailabilityMetrics";
-            ContainerAppManagedEnvironmentDetectorResource result = await collection.GetAsync(detectorName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ContainerAppDiagnosticData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]

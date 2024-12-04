@@ -57,9 +57,9 @@ namespace Azure.Messaging.EventHubs
         {
             // Build the filter expression, in the order of significance.
 
-            if (!string.IsNullOrEmpty(eventPosition.Offset))
+            if (!string.IsNullOrEmpty(eventPosition.OffsetString))
             {
-                return $"{ OffsetName } { (eventPosition.IsInclusive ? ">=" : ">") } { eventPosition.Offset }";
+                return $"{ OffsetName } { (eventPosition.IsInclusive ? ">=" : ">") } { eventPosition.OffsetString }";
             }
 
             if (!string.IsNullOrEmpty(eventPosition.SequenceNumber))
@@ -72,7 +72,7 @@ namespace Azure.Messaging.EventHubs
                 return $"{ EnqueuedTimeName } > { eventPosition.EnqueuedTime.Value.ToUnixTimeMilliseconds() }";
             }
 
-            // If no filter was built, than the event position is not valid for filtering.
+            // If no filter was built, then the event position is not valid for filtering.
 
             throw new ArgumentException(Resources.InvalidEventPositionForFilter, nameof(eventPosition));
         }

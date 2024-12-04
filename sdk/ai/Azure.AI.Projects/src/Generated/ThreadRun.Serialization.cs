@@ -126,7 +126,7 @@ namespace Azure.AI.Projects
             if (IncompleteDetails != null)
             {
                 writer.WritePropertyName("incomplete_details"u8);
-                writer.WriteStringValue(IncompleteDetails.Value.ToString());
+                writer.WriteObjectValue(IncompleteDetails, options);
             }
             else
             {
@@ -309,7 +309,7 @@ namespace Azure.AI.Projects
             DateTimeOffset? completedAt = default;
             DateTimeOffset? cancelledAt = default;
             DateTimeOffset? failedAt = default;
-            IncompleteRunDetails? incompleteDetails = default;
+            IncompleteRunDetails incompleteDetails = default;
             RunCompletionUsage usage = default;
             float? temperature = default;
             float? topP = default;
@@ -427,7 +427,7 @@ namespace Azure.AI.Projects
                         incompleteDetails = null;
                         continue;
                     }
-                    incompleteDetails = new IncompleteRunDetails(property.Value.GetString());
+                    incompleteDetails = IncompleteRunDetails.DeserializeIncompleteRunDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("usage"u8))

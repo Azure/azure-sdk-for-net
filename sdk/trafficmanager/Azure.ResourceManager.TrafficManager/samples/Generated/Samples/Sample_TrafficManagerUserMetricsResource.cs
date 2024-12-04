@@ -45,6 +45,30 @@ namespace Azure.ResourceManager.TrafficManager.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_TrafficManagerUserMetricsKeysDELETE()
+        {
+            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/TrafficManagerUserMetricsKeys-DELETE.json
+            // this example is just showing the usage of "TrafficManagerUserMetricsKeys_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this TrafficManagerUserMetricsResource created on azure
+            // for more information of creating TrafficManagerUserMetricsResource, please refer to the document of TrafficManagerUserMetricsResource
+            string subscriptionId = "{subscription-id}";
+            ResourceIdentifier trafficManagerUserMetricsResourceId = TrafficManagerUserMetricsResource.CreateResourceIdentifier(subscriptionId);
+            TrafficManagerUserMetricsResource trafficManagerUserMetrics = client.GetTrafficManagerUserMetricsResource(trafficManagerUserMetricsResourceId);
+
+            // invoke the operation
+            await trafficManagerUserMetrics.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_TrafficManagerUserMetricsKeysPUT()
         {
             // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/TrafficManagerUserMetricsKeys-PUT.json
@@ -70,30 +94,6 @@ namespace Azure.ResourceManager.TrafficManager.Samples
             TrafficManagerUserMetricData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_TrafficManagerUserMetricsKeysDELETE()
-        {
-            // Generated from example definition: specification/trafficmanager/resource-manager/Microsoft.Network/stable/2022-04-01/examples/TrafficManagerUserMetricsKeys-DELETE.json
-            // this example is just showing the usage of "TrafficManagerUserMetricsKeys_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this TrafficManagerUserMetricsResource created on azure
-            // for more information of creating TrafficManagerUserMetricsResource, please refer to the document of TrafficManagerUserMetricsResource
-            string subscriptionId = "{subscription-id}";
-            ResourceIdentifier trafficManagerUserMetricsResourceId = TrafficManagerUserMetricsResource.CreateResourceIdentifier(subscriptionId);
-            TrafficManagerUserMetricsResource trafficManagerUserMetrics = client.GetTrafficManagerUserMetricsResource(trafficManagerUserMetricsResourceId);
-
-            // invoke the operation
-            await trafficManagerUserMetrics.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
         }
     }
 }
