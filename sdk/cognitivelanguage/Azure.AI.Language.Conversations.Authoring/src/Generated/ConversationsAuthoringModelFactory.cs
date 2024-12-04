@@ -73,10 +73,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="message"> Error message. </param>
         /// <param name="details"> Error details. </param>
         /// <param name="target"> Error target. </param>
-        /// <param name="innererror">
-        /// An object containing more specific information than the current object about
-        /// the error.
-        /// </param>
+        /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
         /// <returns> A new <see cref="Models.InnerErrorModel"/> instance for mocking. </returns>
         public static InnerErrorModel InnerErrorModel(InnerErrorCode code = default, string message = null, IReadOnlyDictionary<string, string> details = null, string target = null, InnerErrorModel innererror = null)
         {
@@ -91,7 +88,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CreateProjectConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CreateProjectDetails"/>. </summary>
         /// <param name="projectKind"> Represents the project kind. </param>
         /// <param name="settings"> The project settings. </param>
         /// <param name="storageInputContainerName"> The storage container name in case of conversation summarization. </param>
@@ -99,10 +96,10 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="multilingual"> Whether the project would be used for multiple languages or not. </param>
         /// <param name="description"> The project description. </param>
         /// <param name="language"> The project language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
-        /// <returns> A new <see cref="Models.CreateProjectConfig"/> instance for mocking. </returns>
-        public static CreateProjectConfig CreateProjectConfig(ProjectKind projectKind = default, ProjectSettings settings = null, string storageInputContainerName = null, string projectName = null, bool? multilingual = null, string description = null, string language = null)
+        /// <returns> A new <see cref="Models.CreateProjectDetails"/> instance for mocking. </returns>
+        public static CreateProjectDetails CreateProjectDetails(ProjectKind projectKind = default, ProjectSettings settings = null, string storageInputContainerName = null, string projectName = null, bool? multilingual = null, string description = null, string language = null)
         {
-            return new CreateProjectConfig(
+            return new CreateProjectDetails(
                 projectKind,
                 settings,
                 storageInputContainerName,
@@ -115,10 +112,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <summary> Initializes a new instance of <see cref="Models.ExportedProject"/>. </summary>
         /// <param name="projectFileVersion"> The version of the exported file. </param>
-        /// <param name="stringIndexType">
-        /// Specifies the method used to interpret string offsets. For additional
-        /// information see https://aka.ms/text-analytics-offsets.
-        /// </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="metadata"> Represents the project metadata. </param>
         /// <param name="assets">
         /// Represents the project assets.
@@ -126,7 +120,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// The available derived classes include <see cref="ConversationExportedProjectAssets"/> and <see cref="OrchestrationExportedProjectAssets"/>.
         /// </param>
         /// <returns> A new <see cref="Models.ExportedProject"/> instance for mocking. </returns>
-        public static ExportedProject ExportedProject(string projectFileVersion = null, StringIndexType stringIndexType = default, CreateProjectConfig metadata = null, ExportedProjectAssets assets = null)
+        public static ExportedProject ExportedProject(string projectFileVersion = null, StringIndexType stringIndexType = default, CreateProjectDetails metadata = null, ExportedProjectAssets assets = null)
         {
             return new ExportedProject(projectFileVersion, stringIndexType, metadata, assets, serializedAdditionalRawData: null);
         }
@@ -157,11 +151,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> Initializes a new instance of <see cref="Models.ConversationExportedUtterance"/>. </summary>
         /// <param name="entities"> Represents the entity labels of the utterance. </param>
         /// <param name="text"> The utterance text. </param>
-        /// <param name="language">
-        /// Represents the utterance's language. This is BCP-47 representation of a
-        /// language. For example, use "en" for English, "en-gb" for English (UK), "es" for
-        /// Spanish etc.
-        /// </param>
+        /// <param name="language"> Represents the utterance's language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="intent"> The intent of the utterance. </param>
         /// <param name="dataset"> The dataset for this utterance. Allowed values are 'Train' and 'Test'. </param>
         /// <returns> A new <see cref="Models.ConversationExportedUtterance"/> instance for mocking. </returns>
@@ -181,30 +171,30 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> Initializes a new instance of <see cref="Models.OrchestrationExportedIntent"/>. </summary>
         /// <param name="orchestration">
         /// Specifies the behavior of this intent in the orchestration flow.
-        /// Please note <see cref="ExportedOrchestrationConfig"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.ExportedConversationOrchestrationConfig"/>, <see cref="Models.ExportedLuisOrchestrationConfig"/> and <see cref="Models.ExportedQuestionAnsweringOrchestrationConfig"/>.
+        /// Please note <see cref="ExportedOrchestrationDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.ExportedConversationOrchestrationDetails"/>, <see cref="Models.ExportedLuisOrchestrationDetails"/> and <see cref="Models.ExportedQuestionAnsweringOrchestrationDetails"/>.
         /// </param>
         /// <param name="category"> The intent category. </param>
         /// <returns> A new <see cref="Models.OrchestrationExportedIntent"/> instance for mocking. </returns>
-        public static OrchestrationExportedIntent OrchestrationExportedIntent(ExportedOrchestrationConfig orchestration = null, string category = null)
+        public static OrchestrationExportedIntent OrchestrationExportedIntent(ExportedOrchestrationDetails orchestration = null, string category = null)
         {
             return new OrchestrationExportedIntent(orchestration, category, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ExportedConversationOrchestrationConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ExportedConversationOrchestrationDetails"/>. </summary>
         /// <param name="conversationOrchestration"> The Conversational project target details. </param>
-        /// <returns> A new <see cref="Models.ExportedConversationOrchestrationConfig"/> instance for mocking. </returns>
-        public static ExportedConversationOrchestrationConfig ExportedConversationOrchestrationConfig(ExportedConversationOrchestration conversationOrchestration = null)
+        /// <returns> A new <see cref="Models.ExportedConversationOrchestrationDetails"/> instance for mocking. </returns>
+        public static ExportedConversationOrchestrationDetails ExportedConversationOrchestrationDetails(ExportedConversationOrchestration conversationOrchestration = null)
         {
-            return new ExportedConversationOrchestrationConfig(OrchestrationTargetProjectKind.Conversation, serializedAdditionalRawData: null, conversationOrchestration);
+            return new ExportedConversationOrchestrationDetails(OrchestrationTargetProjectKind.Conversation, serializedAdditionalRawData: null, conversationOrchestration);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ExportedLuisOrchestrationConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ExportedLuisOrchestrationDetails"/>. </summary>
         /// <param name="luisOrchestration"> The LUIS application target details. </param>
-        /// <returns> A new <see cref="Models.ExportedLuisOrchestrationConfig"/> instance for mocking. </returns>
-        public static ExportedLuisOrchestrationConfig ExportedLuisOrchestrationConfig(ExportedLuisOrchestration luisOrchestration = null)
+        /// <returns> A new <see cref="Models.ExportedLuisOrchestrationDetails"/> instance for mocking. </returns>
+        public static ExportedLuisOrchestrationDetails ExportedLuisOrchestrationDetails(ExportedLuisOrchestration luisOrchestration = null)
         {
-            return new ExportedLuisOrchestrationConfig(OrchestrationTargetProjectKind.Luis, serializedAdditionalRawData: null, luisOrchestration);
+            return new ExportedLuisOrchestrationDetails(OrchestrationTargetProjectKind.Luis, serializedAdditionalRawData: null, luisOrchestration);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExportedLuisOrchestration"/>. </summary>
@@ -217,21 +207,17 @@ namespace Azure.AI.Language.Conversations.Authoring
             return new ExportedLuisOrchestration(appId, appVersion, slotName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ExportedQuestionAnsweringOrchestrationConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ExportedQuestionAnsweringOrchestrationDetails"/>. </summary>
         /// <param name="questionAnsweringOrchestration"> The Question Answering project details. </param>
-        /// <returns> A new <see cref="Models.ExportedQuestionAnsweringOrchestrationConfig"/> instance for mocking. </returns>
-        public static ExportedQuestionAnsweringOrchestrationConfig ExportedQuestionAnsweringOrchestrationConfig(ExportedQuestionAnsweringOrchestration questionAnsweringOrchestration = null)
+        /// <returns> A new <see cref="Models.ExportedQuestionAnsweringOrchestrationDetails"/> instance for mocking. </returns>
+        public static ExportedQuestionAnsweringOrchestrationDetails ExportedQuestionAnsweringOrchestrationDetails(ExportedQuestionAnsweringOrchestration questionAnsweringOrchestration = null)
         {
-            return new ExportedQuestionAnsweringOrchestrationConfig(OrchestrationTargetProjectKind.QuestionAnswering, serializedAdditionalRawData: null, questionAnsweringOrchestration);
+            return new ExportedQuestionAnsweringOrchestrationDetails(OrchestrationTargetProjectKind.QuestionAnswering, serializedAdditionalRawData: null, questionAnsweringOrchestration);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OrchestrationExportedUtterance"/>. </summary>
         /// <param name="text"> The utterance text. </param>
-        /// <param name="language">
-        /// Represents the utterance's language. This is BCP-47 representation of a
-        /// language. For example, use "en" for English, "en-gb" for English (UK), "es" for
-        /// Spanish etc.
-        /// </param>
+        /// <param name="language"> Represents the utterance's language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="intent"> The intent of the utterance. </param>
         /// <param name="dataset"> The dataset for this utterance. Allowed values are 'Train' and 'Test'. </param>
         /// <returns> A new <see cref="Models.OrchestrationExportedUtterance"/> instance for mocking. </returns>
@@ -240,22 +226,15 @@ namespace Azure.AI.Language.Conversations.Authoring
             return new OrchestrationExportedUtterance(text, language, intent, dataset, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TrainingJobConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TrainingJobDetails"/>. </summary>
         /// <param name="modelLabel"> Represents the output model label. </param>
-        /// <param name="trainingConfigVersion">
-        /// Represents training config version. By default, "latest" value is used which
-        /// uses the latest released training config version.
-        /// </param>
+        /// <param name="trainingConfigVersion"> Represents training config version. By default, "latest" value is used which uses the latest released training config version. </param>
         /// <param name="trainingMode"> Represents the mode of the training operation. </param>
-        /// <param name="evaluationOptions">
-        /// Represents the evaluation options. By default, the evaluation kind is
-        /// percentage, with training split percentage as 80, and testing split percentage
-        /// as 20.
-        /// </param>
-        /// <returns> A new <see cref="Models.TrainingJobConfig"/> instance for mocking. </returns>
-        public static TrainingJobConfig TrainingJobConfig(string modelLabel = null, string trainingConfigVersion = null, TrainingMode trainingMode = default, EvaluationConfig evaluationOptions = null)
+        /// <param name="evaluationOptions"> Represents the evaluation options. By default, the evaluation kind is percentage, with training split percentage as 80, and testing split percentage as 20. </param>
+        /// <returns> A new <see cref="Models.TrainingJobDetails"/> instance for mocking. </returns>
+        public static TrainingJobDetails TrainingJobDetails(string modelLabel = null, string trainingConfigVersion = null, TrainingMode trainingMode = default, EvaluationDetails evaluationOptions = null)
         {
-            return new TrainingJobConfig(modelLabel, trainingConfigVersion, trainingMode, evaluationOptions, serializedAdditionalRawData: null);
+            return new TrainingJobDetails(modelLabel, trainingConfigVersion, trainingMode, evaluationOptions, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TrainingJobResult"/>. </summary>
@@ -383,19 +362,15 @@ namespace Azure.AI.Language.Conversations.Authoring
             return new DeploymentResource(resourceId, region, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CreateDeploymentConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CreateDeploymentDetails"/>. </summary>
         /// <param name="trainedModelLabel"> Represents the trained model label. </param>
-        /// <param name="assignedResourceIds">
-        /// Represents the resource IDs to be assigned to the deployment.
-        /// If provided, the deployment will be rolled out to the resources
-        /// provided here as well as the original resource in which the project is created.
-        /// </param>
-        /// <returns> A new <see cref="Models.CreateDeploymentConfig"/> instance for mocking. </returns>
-        public static CreateDeploymentConfig CreateDeploymentConfig(string trainedModelLabel = null, IEnumerable<string> assignedResourceIds = null)
+        /// <param name="assignedResourceIds"> Represents the resource IDs to be assigned to the deployment. If provided, the deployment will be rolled out to the resources provided here as well as the original resource in which the project is created. </param>
+        /// <returns> A new <see cref="Models.CreateDeploymentDetails"/> instance for mocking. </returns>
+        public static CreateDeploymentDetails CreateDeploymentDetails(string trainedModelLabel = null, IEnumerable<string> assignedResourceIds = null)
         {
             assignedResourceIds ??= new List<string>();
 
-            return new CreateDeploymentConfig(trainedModelLabel, assignedResourceIds?.ToList(), serializedAdditionalRawData: null);
+            return new CreateDeploymentDetails(trainedModelLabel, assignedResourceIds?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DeploymentDeleteFromResourcesJobState"/>. </summary>
@@ -553,7 +528,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="trainingConfigVersion"> Represents training config version. </param>
         /// <param name="percentComplete"> Represents progress percentage. </param>
         /// <returns> A new <see cref="Models.EvaluationJobResult"/> instance for mocking. </returns>
-        public static EvaluationJobResult EvaluationJobResult(EvaluationConfig evaluationOptions = null, string modelLabel = null, string trainingConfigVersion = null, int percentComplete = default)
+        public static EvaluationJobResult EvaluationJobResult(EvaluationDetails evaluationOptions = null, string modelLabel = null, string trainingConfigVersion = null, int percentComplete = default)
         {
             return new EvaluationJobResult(evaluationOptions, modelLabel, trainingConfigVersion, percentComplete, serializedAdditionalRawData: null);
         }
@@ -587,11 +562,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <summary> Initializes a new instance of <see cref="Models.UtteranceEvaluationResult"/>. </summary>
         /// <param name="text"> Represents the utterance text. </param>
-        /// <param name="language">
-        /// Represents the utterance language. This is BCP-47 representation of a language.
-        /// For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish
-        /// etc.
-        /// </param>
+        /// <param name="language"> Represents the utterance language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="entitiesResult"> Represents the entities results for the utterance. </param>
         /// <param name="intentsResult"> Represents the intents results for the utterance. </param>
         /// <returns> A new <see cref="Models.UtteranceEvaluationResult"/> instance for mocking. </returns>
@@ -636,36 +607,20 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="intentsEvaluation"> Contains the data related to intents evaluation. </param>
         /// <param name="evaluationOptions"> The options that were used while running the evaluation. </param>
         /// <returns> A new <see cref="Models.EvaluationSummary"/> instance for mocking. </returns>
-        public static EvaluationSummary EvaluationSummary(EntitiesEvaluationSummary entitiesEvaluation = null, IntentsEvaluationSummary intentsEvaluation = null, EvaluationConfig evaluationOptions = null)
+        public static EvaluationSummary EvaluationSummary(EntitiesEvaluationSummary entitiesEvaluation = null, IntentsEvaluationSummary intentsEvaluation = null, EvaluationDetails evaluationOptions = null)
         {
             return new EvaluationSummary(entitiesEvaluation, intentsEvaluation, evaluationOptions, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EntitiesEvaluationSummary"/>. </summary>
-        /// <param name="confusionMatrix">
-        /// Represents the confusion matrix between two entities (the two entities can be
-        /// the same). The matrix is between the entity that was labelled and the entity
-        /// that was predicted.
-        /// </param>
+        /// <param name="confusionMatrix"> Represents the confusion matrix between two entities (the two entities can be the same). The matrix is between the entity that was labelled and the entity that was predicted. </param>
         /// <param name="entities"> Represents the entities evaluation summary. </param>
         /// <param name="microF1"> Represents the micro F1. Expected value is a float between 0 and 1 inclusive. </param>
-        /// <param name="microPrecision">
-        /// Represents the micro precision. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
-        /// <param name="microRecall">
-        /// Represents the micro recall. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
+        /// <param name="microPrecision"> Represents the micro precision. Expected value is a float between 0 and 1 inclusive. </param>
+        /// <param name="microRecall"> Represents the micro recall. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroF1"> Represents the macro F1. Expected value is a float between 0 and 1 inclusive. </param>
-        /// <param name="macroPrecision">
-        /// Represents the macro precision. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
-        /// <param name="macroRecall">
-        /// Represents the macro recall. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
+        /// <param name="macroPrecision"> Represents the macro precision. Expected value is a float between 0 and 1 inclusive. </param>
+        /// <param name="macroRecall"> Represents the macro recall. Expected value is a float between 0 and 1 inclusive. </param>
         /// <returns> A new <see cref="Models.EntitiesEvaluationSummary"/> instance for mocking. </returns>
         public static EntitiesEvaluationSummary EntitiesEvaluationSummary(ConfusionMatrix confusionMatrix = null, IReadOnlyDictionary<string, EntityEvaluationSummary> entities = null, float microF1 = default, float microPrecision = default, float microRecall = default, float macroF1 = default, float macroPrecision = default, float macroRecall = default)
         {
@@ -735,30 +690,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IntentsEvaluationSummary"/>. </summary>
-        /// <param name="confusionMatrix">
-        /// Represents the confusion matrix between two intents (the two intents can be the
-        /// same). The matrix is between the intent that was labelled and the intent that
-        /// was predicted.
-        /// </param>
+        /// <param name="confusionMatrix"> Represents the confusion matrix between two intents (the two intents can be the same). The matrix is between the intent that was labelled and the intent that was predicted. </param>
         /// <param name="intents"> Represents the intents evaluation summary. </param>
         /// <param name="microF1"> Represents the micro F1. Expected value is a float between 0 and 1 inclusive. </param>
-        /// <param name="microPrecision">
-        /// Represents the micro precision. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
-        /// <param name="microRecall">
-        /// Represents the micro recall. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
+        /// <param name="microPrecision"> Represents the micro precision. Expected value is a float between 0 and 1 inclusive. </param>
+        /// <param name="microRecall"> Represents the micro recall. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroF1"> Represents the macro F1. Expected value is a float between 0 and 1 inclusive. </param>
-        /// <param name="macroPrecision">
-        /// Represents the macro precision. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
-        /// <param name="macroRecall">
-        /// Represents the macro recall. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
+        /// <param name="macroPrecision"> Represents the macro precision. Expected value is a float between 0 and 1 inclusive. </param>
+        /// <param name="macroRecall"> Represents the macro recall. Expected value is a float between 0 and 1 inclusive. </param>
         /// <returns> A new <see cref="Models.IntentsEvaluationSummary"/> instance for mocking. </returns>
         public static IntentsEvaluationSummary IntentsEvaluationSummary(ConfusionMatrix confusionMatrix = null, IReadOnlyDictionary<string, IntentEvaluationSummary> intents = null, float microF1 = default, float microPrecision = default, float microRecall = default, float macroF1 = default, float macroPrecision = default, float macroRecall = default)
         {
@@ -927,10 +866,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <summary> Initializes a new instance of <see cref="Models.SupportedLanguage"/>. </summary>
         /// <param name="languageName"> The language name. </param>
-        /// <param name="languageCode">
-        /// The language code. This is BCP-47 representation of a language. For example,
-        /// "en" for English, "en-gb" for English (UK), "es" for Spanish etc.
-        /// </param>
+        /// <param name="languageCode"> The language code. This is BCP-47 representation of a language. For example, "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <returns> A new <see cref="Models.SupportedLanguage"/> instance for mocking. </returns>
         public static SupportedLanguage SupportedLanguage(string languageName = null, string languageCode = null)
         {

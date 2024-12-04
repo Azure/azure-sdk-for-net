@@ -8,7 +8,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         public AuthoringClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public AuthoringClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Language.Conversations.Authoring.AuthoringClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.AI.Language.Conversations.Authoring.ConversationalAnalysisAuthoring GetConversationalAnalysisAuthoringClient(string apiVersion = "2024-11-15-preview") { throw null; }
+        public virtual Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoring GetAnalyzeConversationAuthoringClient(string apiVersion = "2024-11-15-preview") { throw null; }
     }
     public partial class AuthoringClientOptions : Azure.Core.ClientOptions
     {
@@ -20,9 +20,9 @@ namespace Azure.AI.Language.Conversations.Authoring
             V2024_11_15_Preview = 3,
         }
     }
-    public partial class ConversationalAnalysisAuthoring
+    public partial class AnalyzeConversationAuthoring
     {
-        protected ConversationalAnalysisAuthoring() { }
+        protected AnalyzeConversationAuthoring() { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Operation AssignDeploymentResources(Azure.WaitUntil waitUntil, string projectName, Azure.AI.Language.Conversations.Authoring.Models.AssignDeploymentResourcesConfig body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation AssignDeploymentResources(Azure.WaitUntil waitUntil, string projectName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }

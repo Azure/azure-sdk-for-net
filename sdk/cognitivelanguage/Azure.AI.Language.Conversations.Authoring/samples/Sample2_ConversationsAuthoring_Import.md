@@ -11,19 +11,19 @@ Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your-api-key");
 AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
 AuthoringClient client = new AuthoringClient(endpoint, credential, options);
-ConversationalAnalysisAuthoring authoringClient = client.GetConversationalAnalysisAuthoringClient();
+AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
 ```
 
 The values of the endpoint and apiKey variables can be retrieved from: Environment variables, configuration settings, or any other secure approach that works for your application.
 
 ## Import a New Project
 
-To import a project synchronously, call Import on the ConversationalAnalysisAuthoring client.
+To import a project synchronously, call Import on the AnalyzeConversationAuthoring client.
 
 ```C# Snippet:Sample2_ConversationsAuthoring_Import
 string projectName = "MyImportedProject";
 
-var projectMetadata = new CreateProjectConfig(
+var projectMetadata = new CreateProjectDetails(
     projectKind: "Conversation",
     projectName: projectName,
     language: "en"
@@ -88,4 +88,4 @@ Console.WriteLine($"Operation Location: {operationLocation}");
 Console.WriteLine($"Project import completed with status: {operation.GetRawResponse().Status}");
 ```
 
-To import a project, call Import on the ConversationalAnalysisAuthoring client. The method returns an Operation object, which you can use to track the status of the operation. The operation-location header contains the location of the operation for further tracking.
+To import a project, call Import on the AnalyzeConversationAuthoring client. The method returns an Operation object, which you can use to track the status of the operation. The operation-location header contains the location of the operation for further tracking.

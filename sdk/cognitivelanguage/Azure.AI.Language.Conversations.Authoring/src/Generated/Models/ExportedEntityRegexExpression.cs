@@ -10,11 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Language.Conversations.Authoring.Models
 {
-    /// <summary>
-    /// Represents a regex expression inside a regex component. This expression follows
-    /// the .NET regex syntax. For reference, check here:
-    /// https://learn.microsoft.com/dotnet/standard/base-types/regular-expressions
-    /// </summary>
+    /// <summary> Represents a regex expression inside a regex component. This expression follows the .NET regex syntax. For reference, check here: https://learn.microsoft.com/dotnet/standard/base-types/regular-expressions. </summary>
     public partial class ExportedEntityRegexExpression
     {
         /// <summary>
@@ -56,11 +52,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
 
         /// <summary> Initializes a new instance of <see cref="ExportedEntityRegexExpression"/>. </summary>
         /// <param name="regexKey"> The key of the regex expression. </param>
-        /// <param name="language">
-        /// Represents the language of the regex expression. This is BCP-47 representation
-        /// of a language. For example, use "en" for English, "en-gb" for English (UK),
-        /// "es" for Spanish etc.
-        /// </param>
+        /// <param name="language"> Represents the language of the regex expression. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="regexPattern"> The regex pattern. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ExportedEntityRegexExpression(string regexKey, string language, string regexPattern, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -73,11 +65,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
 
         /// <summary> The key of the regex expression. </summary>
         public string RegexKey { get; set; }
-        /// <summary>
-        /// Represents the language of the regex expression. This is BCP-47 representation
-        /// of a language. For example, use "en" for English, "en-gb" for English (UK),
-        /// "es" for Spanish etc.
-        /// </summary>
+        /// <summary> Represents the language of the regex expression. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </summary>
         public string Language { get; set; }
         /// <summary> The regex pattern. </summary>
         public string RegexPattern { get; set; }

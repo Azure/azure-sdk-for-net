@@ -23,12 +23,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             AuthoringClient client = new AuthoringClient(endpoint, credential);
-            ConversationalAnalysisAuthoring authoringClient = client.GetConversationalAnalysisAuthoringClient();
+            AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
 
             #region Snippet:Sample2_ConversationsAuthoring_Import
             string projectName = "MyImportedProject";
 
-            var projectMetadata = new CreateProjectConfig(
+            var projectMetadata = new CreateProjectDetails(
                 projectKind: "Conversation",
                 projectName: projectName,
                 language: "en"

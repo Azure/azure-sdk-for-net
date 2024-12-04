@@ -21,7 +21,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             AuthoringClient client = new AuthoringClient(endpoint, credential);
-            ConversationalAnalysisAuthoring authoringClient = client.GetConversationalAnalysisAuthoringClient();
+            AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
 
             #region Snippet:Sample1_ConversationsAuthoring_CreateProjectAsync
             string projectName = "MyNewProjectAsync";

@@ -63,7 +63,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="intentsEvaluation"> Contains the data related to intents evaluation. </param>
         /// <param name="evaluationOptions"> The options that were used while running the evaluation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluationSummary(EntitiesEvaluationSummary entitiesEvaluation, IntentsEvaluationSummary intentsEvaluation, EvaluationConfig evaluationOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EvaluationSummary(EntitiesEvaluationSummary entitiesEvaluation, IntentsEvaluationSummary intentsEvaluation, EvaluationDetails evaluationOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EntitiesEvaluation = entitiesEvaluation;
             IntentsEvaluation = intentsEvaluation;
@@ -81,6 +81,6 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <summary> Contains the data related to intents evaluation. </summary>
         public IntentsEvaluationSummary IntentsEvaluation { get; }
         /// <summary> The options that were used while running the evaluation. </summary>
-        public EvaluationConfig EvaluationOptions { get; }
+        public EvaluationDetails EvaluationOptions { get; }
     }
 }

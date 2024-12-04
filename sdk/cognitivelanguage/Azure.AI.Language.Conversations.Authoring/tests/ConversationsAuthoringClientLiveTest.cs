@@ -54,7 +54,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             string projectName = "Test-data-labels";
 
             // Create metadata based on JSON data
-            var projectMetadata = new CreateProjectConfig(
+            var projectMetadata = new CreateProjectDetails(
                 projectKind: "Conversation",
                 projectName: projectName,
                 language: "en-us"
@@ -218,13 +218,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             // Arrange
             string projectName = "Test-data-labels";
 
-            var trainingJobConfig = new TrainingJobConfig(
+            var trainingJobDetails = new TrainingJobDetails(
                 modelLabel: "MyModel",
                 trainingMode: TrainingMode.Standard
             )
             {
                 TrainingConfigVersion = "2023-04-15",
-                EvaluationOptions = new EvaluationConfig
+                EvaluationOptions = new EvaluationDetails
                 {
                     Kind = EvaluationKind.Percentage,
                     TestingSplitPercentage = 20,
@@ -236,7 +236,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             Operation<TrainingJobResult> operation = await client.TrainAsync(
                 waitUntil: WaitUntil.Completed,
                 projectName: projectName,
-                body: trainingJobConfig
+                body: trainingJobDetails
             );
 
             // Assert
@@ -431,13 +431,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
         {
             // Arrange
             string projectName = "Test-data-labels";
-            var swapConfig = new SwapDeploymentsConfig("deployment1", "deployment2");
+            var swapDetails = new SwapDeploymentsDetails("deployment1", "deployment2");
 
             // Act
             Operation operation = await client.SwapDeploymentsAsync(
                 waitUntil: WaitUntil.Completed,
                 projectName: projectName,
-                body: swapConfig
+                body: swapDetails
             );
 
             // Assert

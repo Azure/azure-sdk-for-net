@@ -10,11 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Language.Conversations.Authoring.Models
 {
-    /// <summary>
-    /// An object containing more specific information about the error. As per
-    /// Microsoft One API guidelines -
-    /// https://github.com/Microsoft/api-guidelines/blob/vNext/Guidelines.md#7102-error-condition-responses.
-    /// </summary>
+    /// <summary> An object containing more specific information about the error. As per Microsoft One API guidelines - https://github.com/Microsoft/api-guidelines/blob/vNext/Guidelines.md#7102-error-condition-responses. </summary>
     public partial class InnerErrorModel
     {
         /// <summary>
@@ -67,10 +63,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="message"> Error message. </param>
         /// <param name="details"> Error details. </param>
         /// <param name="target"> Error target. </param>
-        /// <param name="innererror">
-        /// An object containing more specific information than the current object about
-        /// the error.
-        /// </param>
+        /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal InnerErrorModel(InnerErrorCode code, string message, IReadOnlyDictionary<string, string> details, string target, InnerErrorModel innererror, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -95,10 +88,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         public IReadOnlyDictionary<string, string> Details { get; }
         /// <summary> Error target. </summary>
         public string Target { get; }
-        /// <summary>
-        /// An object containing more specific information than the current object about
-        /// the error.
-        /// </summary>
+        /// <summary> An object containing more specific information than the current object about the error. </summary>
         public InnerErrorModel Innererror { get; }
     }
 }

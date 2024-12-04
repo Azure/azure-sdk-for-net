@@ -11,14 +11,14 @@ Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
 AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
 AuthoringClient client = new AuthoringClient(endpoint, credential, options);
-ConversationalAnalysisAuthoring authoringClient = client.GetConversationalAnalysisAuthoringClient();
+AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
 ```
 
 The values of the `endpoint` and apiKey variables can be retrieved from: Environment variables, configuration settings, or any other secure approach that works for your application.
 
 ## Create a New Project
 
-To create a new project synchronously, call CreateProject on the ConversationalAnalysisAuthoring client.
+To create a new project synchronously, call CreateProject on the AnalyzeConversationAuthoring client.
 
 ```C# Snippet:Sample1_ConversationsAuthoring_CreateProject
 string projectName = "MyNewProject";
@@ -37,4 +37,4 @@ Response response = authoringClient.CreateProject(projectName, content);
 Console.WriteLine($"Project created with status: {response.Status}");
 ```
 
-To create a project, call CreateProject on the ConversationalAnalysisAuthoring client, which returns a Response object containing the status of the creation request.
+To create a project, call CreateProject on the AnalyzeConversationAuthoring client, which returns a Response object containing the status of the creation request.

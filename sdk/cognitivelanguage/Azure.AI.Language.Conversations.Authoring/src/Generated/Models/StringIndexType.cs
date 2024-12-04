@@ -24,11 +24,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
 
         private const string Utf16CodeUnitValue = "Utf16CodeUnit";
 
-        /// <summary>
-        /// The offset and length values will correspond to UTF-16 code units. Use this
-        /// option if your application is written in a language that support Unicode, for
-        /// example Java, JavaScript.
-        /// </summary>
+        /// <summary> The offset and length values will correspond to UTF-16 code units. Use this option if your application is written in a language that support Unicode, for example Java, JavaScript. </summary>
         public static StringIndexType Utf16CodeUnit { get; } = new StringIndexType(Utf16CodeUnitValue);
         /// <summary> Determines if two <see cref="StringIndexType"/> values are the same. </summary>
         public static bool operator ==(StringIndexType left, StringIndexType right) => left.Equals(right);

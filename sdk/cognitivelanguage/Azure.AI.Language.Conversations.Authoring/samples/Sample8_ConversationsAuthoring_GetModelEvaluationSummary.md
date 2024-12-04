@@ -11,14 +11,14 @@ Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
 AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
 AuthoringClient client = new AuthoringClient(endpoint, credential, options);
-ConversationalAnalysisAuthoring authoringClient = client.GetConversationalAnalysisAuthoringClient();
+AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
 ```
 
 The values of the endpoint and apiKey variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
 
 ## Get Model Evaluation Summary
 
-To retrieve a model evaluation summary, call GetModelEvaluationSummary on the ConversationalAnalysisAuthoring client.
+To retrieve a model evaluation summary, call GetModelEvaluationSummary on the AnalyzeConversationAuthoring client.
 
 ```C# Snippet:Sample8_ConversationsAuthoring_GetModelEvaluationSummary
 string projectName = "MyProject";
@@ -56,4 +56,4 @@ foreach (var intent in intentsEval.Intents)
 }
 ```
 
-To retrieve a model evaluation summary, call GetModelEvaluationSummary on the ConversationalAnalysisAuthoring client, which returns a Response<EvaluationSummary> containing evaluation metrics for intents and entities.
+To retrieve a model evaluation summary, call GetModelEvaluationSummary on the AnalyzeConversationAuthoring client, which returns a Response<EvaluationSummary> containing evaluation metrics for intents and entities.

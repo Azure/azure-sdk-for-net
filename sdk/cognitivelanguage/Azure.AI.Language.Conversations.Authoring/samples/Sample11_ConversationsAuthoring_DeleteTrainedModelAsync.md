@@ -11,11 +11,11 @@ Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
 AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
 AuthoringClient client = new AuthoringClient(endpoint, credential, options);
-ConversationalAnalysisAuthoring authoringClient = client.GetConversationalAnalysisAuthoringClient();
+AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
 ```
 ## Delete a Trained Model
 
-To delete a trained model asynchronously, call DeleteTrainedModelAsync on the ConversationalAnalysisAuthoring client.
+To delete a trained model asynchronously, call DeleteTrainedModelAsync on the AnalyzeConversationAuthoring client.
 
 ```C# Snippet:Sample11_ConversationsAuthoring_DeleteTrainedModelAsync
 Response response = await authoringClient.DeleteTrainedModelAsync(
@@ -26,4 +26,4 @@ Response response = await authoringClient.DeleteTrainedModelAsync(
 Console.WriteLine($"Delete Trained Model Async Response Status: {response.Status}");
 ```
 
-To delete a trained model asynchronously, use the DeleteTrainedModelAsync method on the ConversationalAnalysisAuthoring client. A successful response will typically return a 204 (No Content) status, indicating the deletion was completed successfully.
+To delete a trained model asynchronously, use the DeleteTrainedModelAsync method on the AnalyzeConversationAuthoring client. A successful response will typically return a 204 (No Content) status, indicating the deletion was completed successfully.

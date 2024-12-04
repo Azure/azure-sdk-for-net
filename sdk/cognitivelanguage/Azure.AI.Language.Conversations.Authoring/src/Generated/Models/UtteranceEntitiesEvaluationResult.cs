@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.AI.Language.Conversations.Authoring.Models
 {
-    /// <summary>
-    /// Represents the comparison between the expected and predicted entities for an
-    /// utterance.
-    /// </summary>
+    /// <summary> Represents the comparison between the expected and predicted entities for an utterance. </summary>
     public partial class UtteranceEntitiesEvaluationResult
     {
         /// <summary>

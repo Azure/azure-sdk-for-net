@@ -75,7 +75,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             }
             EntitiesEvaluationSummary entitiesEvaluation = default;
             IntentsEvaluationSummary intentsEvaluation = default;
-            EvaluationConfig evaluationOptions = default;
+            EvaluationDetails evaluationOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                     {
                         continue;
                     }
-                    evaluationOptions = EvaluationConfig.DeserializeEvaluationConfig(property.Value, options);
+                    evaluationOptions = EvaluationDetails.DeserializeEvaluationDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

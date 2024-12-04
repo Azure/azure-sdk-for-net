@@ -11,14 +11,14 @@ Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
 AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
 AuthoringClient client = new AuthoringClient(endpoint, credential, options);
-ConversationalAnalysisAuthoring authoringClient = client.GetConversationalAnalysisAuthoringClient();
+AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
 ```
 
 The values of the endpoint and apiKey variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
 
 ## Retrieve Project Metadata Asynchronously
 
-To retrieve metadata of a project, call GetProjectAsync on the ConversationalAnalysisAuthoring client.
+To retrieve metadata of a project, call GetProjectAsync on the AnalyzeConversationAuthoring client.
 
 ```C# Snippet:Sample4_ConversationsAuthoring_GetProjectAsync
 string projectName = "MySampleProjectAsync";
@@ -37,4 +37,4 @@ Console.WriteLine($"Description: {projectMetadata.Description}");
 Console.WriteLine($"Language: {projectMetadata.Language}");
 ```
 
-To retrieve project metadata asynchronously, call GetProjectAsync on the ConversationalAnalysisAuthoring client. The method returns a ProjectMetadata object that contains detailed information about the project, such as its creation date, last modification date, description, and more.
+To retrieve project metadata asynchronously, call GetProjectAsync on the AnalyzeConversationAuthoring client. The method returns a ProjectMetadata object that contains detailed information about the project, such as its creation date, last modification date, description, and more.

@@ -11,14 +11,14 @@ Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
 AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
 AuthoringClient client = new AuthoringClient(endpoint, credential, options);
-ConversationalAnalysisAuthoring authoringClient = client.GetConversationalAnalysisAuthoringClient();
+AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
 ```
 
 The values of the endpoint and apiKey variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
 
 ## Delete a Project
 
-To delete a project, call DeleteProject on the ConversationalAnalysisAuthoring client.
+To delete a project, call DeleteProject on the AnalyzeConversationAuthoring client.
 
 ```C# Snippet:Sample5_ConversationsAuthoring_DeleteProject
 string projectName = "MySampleProject";
@@ -35,4 +35,4 @@ Console.WriteLine($"Operation Location: {operationLocation}");
 Console.WriteLine($"Project deletion completed with status: {operation.GetRawResponse().Status}");
 ```
 
-To delete a project, call DeleteProject on the ConversationalAnalysisAuthoring client. The method returns an Operation object containing the status of the deletion request, and the operation-location header can be used to track the deletion process.
+To delete a project, call DeleteProject on the AnalyzeConversationAuthoring client. The method returns an Operation object containing the status of the deletion request, and the operation-location header can be used to track the deletion process.

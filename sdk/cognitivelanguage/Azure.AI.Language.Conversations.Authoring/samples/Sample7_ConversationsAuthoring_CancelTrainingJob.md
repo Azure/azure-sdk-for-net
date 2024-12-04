@@ -11,14 +11,14 @@ Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
 AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
 AuthoringClient client = new AuthoringClient(endpoint, credential, options);
-ConversationalAnalysisAuthoring authoringClient = client.GetConversationalAnalysisAuthoringClient();
+AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
 ```
 
 The values of the endpoint and apiKey variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
 
 ## Cancel a Training Job
 
-To cancel a training job, call CancelTrainingJob on the ConversationalAnalysisAuthoring client.
+To cancel a training job, call CancelTrainingJob on the AnalyzeConversationAuthoring client.
 
 ```C# Snippet:Sample7_ConversationsAuthoring_CancelTrainingJob
 string projectName = "MyProject";
@@ -37,4 +37,4 @@ Console.WriteLine($"Operation Location: {operationLocation}");
 Console.WriteLine($"Training job cancellation completed with status: {cancelOperation.GetRawResponse().Status}");
 ```
 
-To cancel a training job, call CancelTrainingJob on the ConversationalAnalysisAuthoring client. The method returns an Operation<TrainingJobResult> object, which contains the cancellation status, and the operation-location header can be used to track the cancellation process.
+To cancel a training job, call CancelTrainingJob on the AnalyzeConversationAuthoring client. The method returns an Operation<TrainingJobResult> object, which contains the cancellation status, and the operation-location header can be used to track the cancellation process.

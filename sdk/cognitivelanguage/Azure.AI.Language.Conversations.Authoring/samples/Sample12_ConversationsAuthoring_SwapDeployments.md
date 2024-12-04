@@ -11,18 +11,18 @@ Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
 AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
 AuthoringClient client = new AuthoringClient(endpoint, credential, options);
-ConversationalAnalysisAuthoring authoringClient = client.GetConversationalAnalysisAuthoringClient();
+AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
 ```
 
 ## Swap Deployments
 
-To swap two deployments, call SwapDeployments on the ConversationalAnalysisAuthoring client.
+To swap two deployments, call SwapDeployments on the AnalyzeConversationAuthoring client.
 
 ```C# Snippet:Sample14_ConversationsAuthoring_SwapDeployments
 Operation operation = authoringClient.SwapDeployments(
     waitUntil: WaitUntil.Completed,
     projectName: projectName,
-    body: swapConfig
+    body: swapDetails
 );
 
 // Extract operation-location from response headers

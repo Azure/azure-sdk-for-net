@@ -22,18 +22,18 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             AuthoringClient client = new AuthoringClient(endpoint, credential);
-            ConversationalAnalysisAuthoring authoringClient = client.GetConversationalAnalysisAuthoringClient();
+            AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
 
             #region Snippet:Sample6_ConversationsAuthoring_TrainAsync
             string projectName = "MySampleProjectAsync";
 
-            var trainingJobConfig = new TrainingJobConfig(
+            var trainingJobDetails = new TrainingJobDetails(
                 modelLabel: "MyModel",
                 trainingMode: TrainingMode.Standard
             )
             {
                 TrainingConfigVersion = "1.0",
-                EvaluationOptions = new EvaluationConfig
+                EvaluationOptions = new EvaluationDetails
                 {
                     Kind = EvaluationKind.Percentage,
                     TestingSplitPercentage = 20,
@@ -44,7 +44,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             Operation<TrainingJobResult> operation = await authoringClient.TrainAsync(
                 waitUntil: WaitUntil.Completed,
                 projectName: projectName,
-                body: trainingJobConfig
+                body: trainingJobDetails
             );
 
              // Extract the operation-location header

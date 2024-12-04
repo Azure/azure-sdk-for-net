@@ -27,21 +27,21 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 #endif
             AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
             AuthoringClient client = new AuthoringClient(endpoint, credential, options);
-            ConversationalAnalysisAuthoring authoringClient = client.GetConversationalAnalysisAuthoringClient();
+            AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
             #endregion
         }
 
         [Test]
         public void AuthoringClient_CreateWithDefaultAzureCredential()
         {
-            #region Snippet:ConversationalAnalysisAuthoring_CreateWithDefaultAzureCredential
+            #region Snippet:AnalyzeConversationAuthoring_CreateWithDefaultAzureCredential
             Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 #if !SNIPPET
             endpoint = TestEnvironment.Endpoint;
 #endif
             DefaultAzureCredential credential = new DefaultAzureCredential();
             AuthoringClient client = new AuthoringClient(endpoint, credential);
-            ConversationalAnalysisAuthoring authoringClient = client.GetConversationalAnalysisAuthoringClient();
+            AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
             #endregion
         }
 
@@ -51,7 +51,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
             AuthoringClient client = new AuthoringClient(endpoint, credential);
-            ConversationalAnalysisAuthoring authoringClient = client.GetConversationalAnalysisAuthoringClient();
+            AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
 
             #region Snippet:AuthoringClient_BadRequest
             try

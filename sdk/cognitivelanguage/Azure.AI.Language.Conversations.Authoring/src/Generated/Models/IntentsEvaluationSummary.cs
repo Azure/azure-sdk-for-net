@@ -46,30 +46,14 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="IntentsEvaluationSummary"/>. </summary>
-        /// <param name="confusionMatrix">
-        /// Represents the confusion matrix between two intents (the two intents can be the
-        /// same). The matrix is between the intent that was labelled and the intent that
-        /// was predicted.
-        /// </param>
+        /// <param name="confusionMatrix"> Represents the confusion matrix between two intents (the two intents can be the same). The matrix is between the intent that was labelled and the intent that was predicted. </param>
         /// <param name="intents"> Represents the intents evaluation summary. </param>
         /// <param name="microF1"> Represents the micro F1. Expected value is a float between 0 and 1 inclusive. </param>
-        /// <param name="microPrecision">
-        /// Represents the micro precision. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
-        /// <param name="microRecall">
-        /// Represents the micro recall. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
+        /// <param name="microPrecision"> Represents the micro precision. Expected value is a float between 0 and 1 inclusive. </param>
+        /// <param name="microRecall"> Represents the micro recall. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroF1"> Represents the macro F1. Expected value is a float between 0 and 1 inclusive. </param>
-        /// <param name="macroPrecision">
-        /// Represents the macro precision. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
-        /// <param name="macroRecall">
-        /// Represents the macro recall. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
+        /// <param name="macroPrecision"> Represents the macro precision. Expected value is a float between 0 and 1 inclusive. </param>
+        /// <param name="macroRecall"> Represents the macro recall. Expected value is a float between 0 and 1 inclusive. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="confusionMatrix"/> or <paramref name="intents"/> is null. </exception>
         internal IntentsEvaluationSummary(ConfusionMatrix confusionMatrix, IReadOnlyDictionary<string, IntentEvaluationSummary> intents, float microF1, float microPrecision, float microRecall, float macroF1, float macroPrecision, float macroRecall)
         {
@@ -87,30 +71,14 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IntentsEvaluationSummary"/>. </summary>
-        /// <param name="confusionMatrix">
-        /// Represents the confusion matrix between two intents (the two intents can be the
-        /// same). The matrix is between the intent that was labelled and the intent that
-        /// was predicted.
-        /// </param>
+        /// <param name="confusionMatrix"> Represents the confusion matrix between two intents (the two intents can be the same). The matrix is between the intent that was labelled and the intent that was predicted. </param>
         /// <param name="intents"> Represents the intents evaluation summary. </param>
         /// <param name="microF1"> Represents the micro F1. Expected value is a float between 0 and 1 inclusive. </param>
-        /// <param name="microPrecision">
-        /// Represents the micro precision. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
-        /// <param name="microRecall">
-        /// Represents the micro recall. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
+        /// <param name="microPrecision"> Represents the micro precision. Expected value is a float between 0 and 1 inclusive. </param>
+        /// <param name="microRecall"> Represents the micro recall. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroF1"> Represents the macro F1. Expected value is a float between 0 and 1 inclusive. </param>
-        /// <param name="macroPrecision">
-        /// Represents the macro precision. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
-        /// <param name="macroRecall">
-        /// Represents the macro recall. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </param>
+        /// <param name="macroPrecision"> Represents the macro precision. Expected value is a float between 0 and 1 inclusive. </param>
+        /// <param name="macroRecall"> Represents the macro recall. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal IntentsEvaluationSummary(ConfusionMatrix confusionMatrix, IReadOnlyDictionary<string, IntentEvaluationSummary> intents, float microF1, float microPrecision, float microRecall, float macroF1, float macroPrecision, float macroRecall, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -130,37 +98,21 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         {
         }
 
-        /// <summary>
-        /// Represents the confusion matrix between two intents (the two intents can be the
-        /// same). The matrix is between the intent that was labelled and the intent that
-        /// was predicted.
-        /// </summary>
+        /// <summary> Represents the confusion matrix between two intents (the two intents can be the same). The matrix is between the intent that was labelled and the intent that was predicted. </summary>
         public ConfusionMatrix ConfusionMatrix { get; }
         /// <summary> Represents the intents evaluation summary. </summary>
         public IReadOnlyDictionary<string, IntentEvaluationSummary> Intents { get; }
         /// <summary> Represents the micro F1. Expected value is a float between 0 and 1 inclusive. </summary>
         public float MicroF1 { get; }
-        /// <summary>
-        /// Represents the micro precision. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </summary>
+        /// <summary> Represents the micro precision. Expected value is a float between 0 and 1 inclusive. </summary>
         public float MicroPrecision { get; }
-        /// <summary>
-        /// Represents the micro recall. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </summary>
+        /// <summary> Represents the micro recall. Expected value is a float between 0 and 1 inclusive. </summary>
         public float MicroRecall { get; }
         /// <summary> Represents the macro F1. Expected value is a float between 0 and 1 inclusive. </summary>
         public float MacroF1 { get; }
-        /// <summary>
-        /// Represents the macro precision. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </summary>
+        /// <summary> Represents the macro precision. Expected value is a float between 0 and 1 inclusive. </summary>
         public float MacroPrecision { get; }
-        /// <summary>
-        /// Represents the macro recall. Expected value is a float between 0 and 1
-        /// inclusive.
-        /// </summary>
+        /// <summary> Represents the macro recall. Expected value is a float between 0 and 1 inclusive. </summary>
         public float MacroRecall { get; }
     }
 }

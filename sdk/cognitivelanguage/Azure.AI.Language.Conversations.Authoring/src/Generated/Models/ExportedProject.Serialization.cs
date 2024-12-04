@@ -77,7 +77,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             }
             string projectFileVersion = default;
             StringIndexType stringIndexType = default;
-            CreateProjectConfig metadata = default;
+            CreateProjectDetails metadata = default;
             ExportedProjectAssets assets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 }
                 if (property.NameEquals("metadata"u8))
                 {
-                    metadata = CreateProjectConfig.DeserializeCreateProjectConfig(property.Value, options);
+                    metadata = CreateProjectDetails.DeserializeCreateProjectDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("assets"u8))

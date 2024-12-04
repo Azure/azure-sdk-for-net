@@ -11,12 +11,12 @@ Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
 AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
 AuthoringClient client = new AuthoringClient(endpoint, credential, options);
-ConversationalAnalysisAuthoring authoringClient = client.GetConversationalAnalysisAuthoringClient();
+AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
 ```
 
 ## Delete a Trained Model
 
-To delete a trained model, call DeleteTrainedModel on the ConversationalAnalysisAuthoring client.
+To delete a trained model, call DeleteTrainedModel on the AnalyzeConversationAuthoring client.
 
 ```C# Snippet:Sample11_ConversationsAuthoring_DeleteTrainedModel
 Response response = authoringClient.DeleteTrainedModel(
@@ -27,4 +27,4 @@ Response response = authoringClient.DeleteTrainedModel(
 Console.WriteLine($"Delete Trained Model Response Status: {response.Status}");
 ```
 
-To delete a trained model, use the DeleteTrainedModel method on the ConversationalAnalysisAuthoring client. A successful response will typically return a 204 (No Content) status, indicating the deletion was completed successfully.
+To delete a trained model, use the DeleteTrainedModel method on the AnalyzeConversationAuthoring client. A successful response will typically return a 204 (No Content) status, indicating the deletion was completed successfully.

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Language.Conversations.Authoring.Models
 {
-    /// <summary>
-    /// Represents the comparison between the expected and the predicted intent for an
-    /// utterance.
-    /// </summary>
+    /// <summary> Represents the comparison between the expected and the predicted intent for an utterance. </summary>
     public partial class UtteranceIntentsEvaluationResult
     {
         /// <summary>

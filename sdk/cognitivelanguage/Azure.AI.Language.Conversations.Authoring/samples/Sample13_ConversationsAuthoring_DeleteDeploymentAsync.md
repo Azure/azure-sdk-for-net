@@ -11,12 +11,12 @@ Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
 AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
 AuthoringClient client = new AuthoringClient(endpoint, credential, options);
-ConversationalAnalysisAuthoring authoringClient = client.GetConversationalAnalysisAuthoringClient();
+AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
 ```
 
 ## Delete a Deployment Asynchronously
 
-To delete a deployment, call DeleteDeploymentAsync on the ConversationalAnalysisAuthoring client.
+To delete a deployment, call DeleteDeploymentAsync on the AnalyzeConversationAuthoring client.
 
 ```C# Snippet:Sample13_ConversationsAuthoring_DeleteDeploymentAsync
 Operation operation = await authoringClient.DeleteDeploymentAsync(

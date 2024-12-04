@@ -58,12 +58,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <summary> Initializes a new instance of <see cref="OrchestrationExportedIntent"/>. </summary>
         /// <param name="orchestration">
         /// Specifies the behavior of this intent in the orchestration flow.
-        /// Please note <see cref="ExportedOrchestrationConfig"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ExportedConversationOrchestrationConfig"/>, <see cref="ExportedLuisOrchestrationConfig"/> and <see cref="ExportedQuestionAnsweringOrchestrationConfig"/>.
+        /// Please note <see cref="ExportedOrchestrationDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ExportedConversationOrchestrationDetails"/>, <see cref="ExportedLuisOrchestrationDetails"/> and <see cref="ExportedQuestionAnsweringOrchestrationDetails"/>.
         /// </param>
         /// <param name="category"> The intent category. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OrchestrationExportedIntent(ExportedOrchestrationConfig orchestration, string category, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OrchestrationExportedIntent(ExportedOrchestrationDetails orchestration, string category, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Orchestration = orchestration;
             Category = category;
@@ -77,10 +77,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
 
         /// <summary>
         /// Specifies the behavior of this intent in the orchestration flow.
-        /// Please note <see cref="ExportedOrchestrationConfig"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ExportedConversationOrchestrationConfig"/>, <see cref="ExportedLuisOrchestrationConfig"/> and <see cref="ExportedQuestionAnsweringOrchestrationConfig"/>.
+        /// Please note <see cref="ExportedOrchestrationDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ExportedConversationOrchestrationDetails"/>, <see cref="ExportedLuisOrchestrationDetails"/> and <see cref="ExportedQuestionAnsweringOrchestrationDetails"/>.
         /// </summary>
-        public ExportedOrchestrationConfig Orchestration { get; set; }
+        public ExportedOrchestrationDetails Orchestration { get; set; }
         /// <summary> The intent category. </summary>
         public string Category { get; }
     }

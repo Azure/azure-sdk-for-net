@@ -25,10 +25,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         private const string AdvancedValue = "advanced";
         private const string StandardValue = "standard";
 
-        /// <summary>
-        /// Trains using fine-tuned neural network transformer models. Can train
-        /// multilingual projects.
-        /// </summary>
+        /// <summary> Trains using fine-tuned neural network transformer models. Can train multilingual projects. </summary>
         public static TrainingMode Advanced { get; } = new TrainingMode(AdvancedValue);
         /// <summary> Faster training times for quicker iterations. </summary>
         public static TrainingMode Standard { get; } = new TrainingMode(StandardValue);

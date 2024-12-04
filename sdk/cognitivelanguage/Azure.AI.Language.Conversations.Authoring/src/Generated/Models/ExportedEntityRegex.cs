@@ -52,11 +52,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ExportedEntityRegex"/>. </summary>
-        /// <param name="expressions">
-        /// The regex expressions of the regex component. These expressions follow the .NET
-        /// regex syntax. For reference, check here:
-        /// https://learn.microsoft.com/dotnet/standard/base-types/regular-expressions
-        /// </param>
+        /// <param name="expressions"> The regex expressions of the regex component. These expressions follow the .NET regex syntax. For reference, check here: https://learn.microsoft.com/dotnet/standard/base-types/regular-expressions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ExportedEntityRegex(IList<ExportedEntityRegexExpression> expressions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,11 +60,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The regex expressions of the regex component. These expressions follow the .NET
-        /// regex syntax. For reference, check here:
-        /// https://learn.microsoft.com/dotnet/standard/base-types/regular-expressions
-        /// </summary>
+        /// <summary> The regex expressions of the regex component. These expressions follow the .NET regex syntax. For reference, check here: https://learn.microsoft.com/dotnet/standard/base-types/regular-expressions. </summary>
         public IList<ExportedEntityRegexExpression> Expressions { get; }
     }
 }

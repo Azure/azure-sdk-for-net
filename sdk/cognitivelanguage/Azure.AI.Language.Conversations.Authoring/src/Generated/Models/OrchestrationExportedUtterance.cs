@@ -60,11 +60,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
 
         /// <summary> Initializes a new instance of <see cref="OrchestrationExportedUtterance"/>. </summary>
         /// <param name="text"> The utterance text. </param>
-        /// <param name="language">
-        /// Represents the utterance's language. This is BCP-47 representation of a
-        /// language. For example, use "en" for English, "en-gb" for English (UK), "es" for
-        /// Spanish etc.
-        /// </param>
+        /// <param name="language"> Represents the utterance's language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="intent"> The intent of the utterance. </param>
         /// <param name="dataset"> The dataset for this utterance. Allowed values are 'Train' and 'Test'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -84,11 +80,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
 
         /// <summary> The utterance text. </summary>
         public string Text { get; }
-        /// <summary>
-        /// Represents the utterance's language. This is BCP-47 representation of a
-        /// language. For example, use "en" for English, "en-gb" for English (UK), "es" for
-        /// Spanish etc.
-        /// </summary>
+        /// <summary> Represents the utterance's language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </summary>
         public string Language { get; set; }
         /// <summary> The intent of the utterance. </summary>
         public string Intent { get; }
