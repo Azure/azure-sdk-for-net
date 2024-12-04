@@ -108,16 +108,16 @@ foreach (WindowsTimeZone timeZone in response.Value.WindowsTimeZones)
 ### Get Iana TimeZone Ids
 
 ```C# Snippet:GetTimeZoneIanaIds
-Response<IReadOnlyList<IanaId>> response = client.GetTimeZoneIanaIds();
-if (response.Value[0].AliasOf != null)
+Response<IanaIdData> response = client.GetTimeZoneIanaIds();
+if (response.Value.IanaIds[0].AliasOf != null)
 {
-    Console.WriteLine("It is an alias: " + response.Value[0].AliasOf);
+    Console.WriteLine("It is an alias: " + response.Value.IanaIds[0].AliasOf);
 }
 else
 {
     Console.WriteLine("It is not an alias");
 }
-Console.WriteLine("IANA Id: " + response.Value[0].Id);
+Console.WriteLine("IANA Id: " + response.Value.IanaIds[0].Id);
 ```
 
 ### Get Iana Version
@@ -130,6 +130,6 @@ Console.WriteLine("IANA Version: " + response.Value.Version);
 ### Convert Windows TimeZone To Iana
 
 ```C# Snippet:ConvertWindowsTimeZoneToIana
-Response<IReadOnlyList<IanaId>> response = client.ConvertWindowsTimeZoneToIana("Dateline Standard Time");
-Console.WriteLine("IANA Id: " + response.Value[0].Id);
+Response<IanaIdData> response = client.ConvertWindowsTimeZoneToIana("Dateline Standard Time");
+Console.WriteLine("IANA Id: " + response.Value.IanaIds[0].Id);
 ```

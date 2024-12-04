@@ -6,7 +6,6 @@ using Azure.Core;
 namespace Azure.Maps.TimeZones
 {
     /// <summary> The JsonFormat. </summary>
-    [CodeGenModel("JsonFormat")]
     internal readonly partial struct JsonFormat
     {
     }

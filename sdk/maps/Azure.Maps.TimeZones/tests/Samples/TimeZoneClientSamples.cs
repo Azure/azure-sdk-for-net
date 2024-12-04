@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.GeoJson;
 using Azure.Core.TestFramework;
@@ -146,16 +145,16 @@ namespace Azure.Maps.TimeZones.Tests.Samples
             var clientId = TestEnvironment.MapAccountClientId;
             var client = new MapsTimeZoneClient(TestEnvironment.Credential, clientId, clientOptions);
             #region Snippet:GetTimeZoneIanaIds
-            Response<IReadOnlyList<IanaId>> response = client.GetTimeZoneIanaIds();
-            if (response.Value[0].AliasOf != null)
+            Response<IanaIdData> response = client.GetTimeZoneIanaIds();
+            if (response.Value.IanaIds[0].AliasOf != null)
             {
-                Console.WriteLine("It is an alias: " + response.Value[0].AliasOf);
+                Console.WriteLine("It is an alias: " + response.Value.IanaIds[0].AliasOf);
             }
             else
             {
                 Console.WriteLine("It is not an alias");
             }
-            Console.WriteLine("IANA Id: " + response.Value[0].Id);
+            Console.WriteLine("IANA Id: " + response.Value.IanaIds[0].Id);
             #endregion
         }
 
@@ -184,8 +183,8 @@ namespace Azure.Maps.TimeZones.Tests.Samples
             var clientId = TestEnvironment.MapAccountClientId;
             var client = new MapsTimeZoneClient(TestEnvironment.Credential, clientId, clientOptions);
             #region Snippet:ConvertWindowsTimeZoneToIana
-            Response<IReadOnlyList<IanaId>> response = client.ConvertWindowsTimeZoneToIana("Dateline Standard Time");
-            Console.WriteLine("IANA Id: " + response.Value[0].Id);
+            Response<IanaIdData> response = client.ConvertWindowsTimeZoneToIana("Dateline Standard Time");
+            Console.WriteLine("IANA Id: " + response.Value.IanaIds[0].Id);
             #endregion
         }
     }

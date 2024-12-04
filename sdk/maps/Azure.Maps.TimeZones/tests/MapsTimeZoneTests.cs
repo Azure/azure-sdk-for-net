@@ -3,11 +3,10 @@
 
 using System;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using NUnit.Framework;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Core.GeoJson;
-using Azure.Maps.TimeZones;
 
 namespace Azure.Maps.TimeZones.Tests
 {
@@ -81,7 +80,7 @@ namespace Azure.Maps.TimeZones.Tests
         {
             var client = CreateClient();
             var response = await client.GetTimeZoneIanaIdsAsync();
-            Assert.AreEqual(596, response.Value.Count);
+            Assert.AreEqual(596, response.Value.IanaIds.Count);
         }
 
         [RecordedTest]
@@ -97,8 +96,8 @@ namespace Azure.Maps.TimeZones.Tests
         {
             var client = CreateClient();
             var response = await client.ConvertWindowsTimeZoneToIanaAsync("Dateline Standard Time");
-            Assert.AreEqual(1, response.Value.Count);
-            Assert.AreEqual("Etc/GMT+12", response.Value[0].Id);
+            Assert.AreEqual(1, response.Value.IanaIds.Count);
+            Assert.AreEqual("Etc/GMT+12", response.Value.IanaIds[0].Id);
         }
 
         [RecordedTest]

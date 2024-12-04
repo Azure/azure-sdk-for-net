@@ -288,13 +288,15 @@ namespace Azure.Maps.TimeZones
         /// <remarks>
         /// The <c>Get IANA Time Zones</c> API is an HTTP <c>GET</c> request that returns a full list of Internet Assigned Numbers Authority (IANA) time zone IDs. Updates to the IANA service are reflected in the system within one day.
         /// </remarks>
-        public virtual async Task<Response<IReadOnlyList<IanaId>>> GetTimeZoneIanaIdsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IanaIdData>> GetTimeZoneIanaIdsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsTimeZoneClient.GetTimeZoneIanaIds");
             scope.Start();
             try
             {
-                return await restClient.GetIanaTimezoneIdsAsync(JsonFormat.Json, cancellationToken).ConfigureAwait(false);
+                Response<IReadOnlyList<IanaId>> response = await restClient.GetIanaTimezoneIdsAsync(JsonFormat.Json, cancellationToken).ConfigureAwait(false);
+                var value = new IanaIdData(response.Value);
+                return Response.FromValue(value, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -310,13 +312,15 @@ namespace Azure.Maps.TimeZones
         /// <remarks>
         /// The <c>Get IANA Time Zones</c> API is an HTTP <c>GET</c> request that returns a full list of Internet Assigned Numbers Authority (IANA) time zone IDs. Updates to the IANA service are reflected in the system within one day.
         /// </remarks>
-        public virtual Response<IReadOnlyList<IanaId>> GetTimeZoneIanaIds(CancellationToken cancellationToken = default)
+        public virtual Response<IanaIdData> GetTimeZoneIanaIds(CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsTimeZoneClient.GetTimeZoneIanaIds");
             scope.Start();
             try
             {
-                return restClient.GetIanaTimezoneIds(JsonFormat.Json, cancellationToken);
+                Response<IReadOnlyList<IanaId>> response = restClient.GetIanaTimezoneIds(JsonFormat.Json, cancellationToken);
+                var value = new IanaIdData(response.Value);
+                return Response.FromValue(value, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -379,13 +383,15 @@ namespace Azure.Maps.TimeZones
         /// <remarks>
         /// The `Get Windows to IANA Time Zone` API is an HTTP `GET` request that returns a corresponding Internet Assigned Numbers Authority (IANA) ID, given a valid Windows Time Zone ID. Multiple IANA IDs may be returned for a single Windows ID. It is possible to narrow these results by adding an optional territory parameter.
         /// </remarks>
-        public virtual async Task<Response<IReadOnlyList<IanaId>>> ConvertWindowsTimeZoneToIanaAsync(string windowsTimeZoneId, string windowsTerritoryCode = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IanaIdData>> ConvertWindowsTimeZoneToIanaAsync(string windowsTimeZoneId, string windowsTerritoryCode = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsTimeZoneClient.ConvertWindowsTimeZoneToIana");
             scope.Start();
             try
             {
-                return await restClient.ConvertWindowsTimezoneToIanaAsync(JsonFormat.Json, windowsTimeZoneId, windowsTerritoryCode, cancellationToken).ConfigureAwait(false);
+                Response<IReadOnlyList<IanaId>> response = await restClient.ConvertWindowsTimezoneToIanaAsync(JsonFormat.Json, windowsTimeZoneId, windowsTerritoryCode, cancellationToken).ConfigureAwait(false);
+                var value = new IanaIdData(response.Value);
+                return Response.FromValue(value, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -404,13 +410,15 @@ namespace Azure.Maps.TimeZones
         /// <remarks>
         /// The <c>Get Windows to IANA Time Zone</c> API is an HTTP <c>GET</c> request that returns a corresponding Internet Assigned Numbers Authority (IANA) ID, given a valid Windows Time Zone ID. Multiple IANA IDs may be returned for a single Windows ID. It is possible to narrow these results by adding an optional territory parameter.
         /// </remarks>
-        public virtual Response<IReadOnlyList<IanaId>> ConvertWindowsTimeZoneToIana(string windowsTimeZoneId, string windowsTerritoryCode = null, CancellationToken cancellationToken = default)
+        public virtual Response<IanaIdData> ConvertWindowsTimeZoneToIana(string windowsTimeZoneId, string windowsTerritoryCode = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MapsTimeZoneClient.ConvertWindowsTimeZoneToIana");
             scope.Start();
             try
             {
-                return restClient.ConvertWindowsTimezoneToIana(JsonFormat.Json, windowsTimeZoneId, windowsTerritoryCode, cancellationToken);
+                Response<IReadOnlyList<IanaId>> response = restClient.ConvertWindowsTimezoneToIana(JsonFormat.Json, windowsTimeZoneId, windowsTerritoryCode, cancellationToken);
+                var value = new IanaIdData(response.Value);
+                return Response.FromValue(value, response.GetRawResponse());
             }
             catch (Exception e)
             {

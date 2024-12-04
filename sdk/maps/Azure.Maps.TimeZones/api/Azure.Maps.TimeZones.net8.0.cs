@@ -42,6 +42,11 @@ namespace Azure.Maps.TimeZones
         public bool? HasZone1970Location { get { throw null; } }
         public string Id { get { throw null; } }
     }
+    public partial class IanaIdData
+    {
+        internal IanaIdData() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.Maps.TimeZones.IanaId> IanaIds { get { throw null; } }
+    }
     public partial class MapsTimeZoneClient
     {
         protected MapsTimeZoneClient() { }
@@ -50,16 +55,16 @@ namespace Azure.Maps.TimeZones
         public MapsTimeZoneClient(Azure.AzureSasCredential credential, Azure.Maps.TimeZones.MapsTimeZoneClientOptions options = null) { }
         public MapsTimeZoneClient(Azure.Core.TokenCredential credential, string clientId) { }
         public MapsTimeZoneClient(Azure.Core.TokenCredential credential, string clientId, Azure.Maps.TimeZones.MapsTimeZoneClientOptions options) { }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Maps.TimeZones.IanaId>> ConvertWindowsTimeZoneToIana(string windowsTimeZoneId, string windowsTerritoryCode = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Maps.TimeZones.IanaId>>> ConvertWindowsTimeZoneToIanaAsync(string windowsTimeZoneId, string windowsTerritoryCode = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.TimeZones.IanaIdData> ConvertWindowsTimeZoneToIana(string windowsTimeZoneId, string windowsTerritoryCode = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.TimeZones.IanaIdData>> ConvertWindowsTimeZoneToIanaAsync(string windowsTimeZoneId, string windowsTerritoryCode = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.TimeZones.TimeZoneIanaVersionResult> GetIanaVersion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.TimeZones.TimeZoneIanaVersionResult>> GetIanaVersionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.TimeZones.TimeZoneResult> GetTimeZoneByCoordinates(Azure.Core.GeoJson.GeoPosition coordinates, Azure.Maps.TimeZones.GetTimeZoneOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.TimeZones.TimeZoneResult>> GetTimeZoneByCoordinatesAsync(Azure.Core.GeoJson.GeoPosition coordinates, Azure.Maps.TimeZones.GetTimeZoneOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.TimeZones.TimeZoneResult> GetTimeZoneById(string timeZoneId, Azure.Maps.TimeZones.GetTimeZoneOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.TimeZones.TimeZoneResult>> GetTimeZoneByIdAsync(string timeZoneId, Azure.Maps.TimeZones.GetTimeZoneOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Maps.TimeZones.IanaId>> GetTimeZoneIanaIds(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Maps.TimeZones.IanaId>>> GetTimeZoneIanaIdsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Maps.TimeZones.IanaIdData> GetTimeZoneIanaIds(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.TimeZones.IanaIdData>> GetTimeZoneIanaIdsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Maps.TimeZones.WindowsTimeZoneData> GetWindowsTimeZoneIds(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Maps.TimeZones.WindowsTimeZoneData>> GetWindowsTimeZoneIdsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
