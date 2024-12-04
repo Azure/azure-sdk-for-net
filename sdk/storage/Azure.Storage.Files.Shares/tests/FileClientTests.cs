@@ -6834,7 +6834,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 options: options);
 
             // Assert
-            Assert.AreEqual(NfsFileType.Symlink, response.Value.PosixProperties.FileType);
+            Assert.AreEqual(NfsFileType.SymLink, response.Value.PosixProperties.FileType);
             Assert.AreEqual(owner, response.Value.PosixProperties.Owner);
             Assert.AreEqual(group, response.Value.PosixProperties.Group);
             Assert.AreEqual(fileCreatedOn, response.Value.SmbProperties.FileCreatedOn);
