@@ -24,14 +24,14 @@ namespace Azure.Storage.Files.Shares.Models
 
         private const string RegularValue = "Regular";
         private const string DirectoryValue = "Directory";
-        private const string SymlinkValue = "Symlink";
+        private const string SymLinkValue = "SymLink";
 
         /// <summary> Regular. </summary>
         public static NfsFileType Regular { get; } = new NfsFileType(RegularValue);
         /// <summary> Directory. </summary>
         public static NfsFileType Directory { get; } = new NfsFileType(DirectoryValue);
-        /// <summary> Symlink. </summary>
-        public static NfsFileType Symlink { get; } = new NfsFileType(SymlinkValue);
+        /// <summary> SymLink. </summary>
+        public static NfsFileType SymLink { get; } = new NfsFileType(SymLinkValue);
         /// <summary> Determines if two <see cref="NfsFileType"/> values are the same. </summary>
         public static bool operator ==(NfsFileType left, NfsFileType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NfsFileType"/> values are not the same. </summary>
