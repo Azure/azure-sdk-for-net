@@ -15,17 +15,17 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Permissions the owner has over the file or directory.
         /// </summary>
-        public RolePermissions Owner { get; set; }
+        public PosixRolePermissions Owner { get; set; }
 
         /// <summary>
         /// Permissions the group has over the file or directory.
         /// </summary>
-        public RolePermissions Group { get; set; }
+        public PosixRolePermissions Group { get; set; }
 
         /// <summary>
         /// Permissions other have over the file or directory.
         /// </summary>
-        public RolePermissions Other { get; set; }
+        public PosixRolePermissions Other { get; set; }
 
         /// <summary>
         /// Set effective user ID (setuid) on the file or directory.
@@ -201,5 +201,8 @@ namespace Azure.Storage.Files.Shares.Models
 
             return nfsFileMode;
         }
+
+        /// <inheritdoc />
+        public override string ToString() => ToSymbolicFileMode();
     }
 }

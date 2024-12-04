@@ -116,7 +116,7 @@ namespace Azure.Storage.Files.Shares
                     FileId = response.Headers.FileId,
                     ParentId = response.Headers.FileParentId
                 },
-                NfsProperties = new FilePosixProperties
+                PosixProperties = new FilePosixProperties
                 {
                     FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
                     Owner = response.Headers.Owner,
@@ -148,7 +148,7 @@ namespace Azure.Storage.Files.Shares
                     FileId = response.Headers.FileId,
                     ParentId = response.Headers.FileParentId
                 },
-                NfsProperties = new FilePosixProperties()
+                PosixProperties = new FilePosixProperties()
                 {
                     FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
                     Owner = response.Headers.Owner,
@@ -178,7 +178,7 @@ namespace Azure.Storage.Files.Shares
                     FileId = response.Headers.FileId,
                     ParentId = response.Headers.FileParentId
                 },
-                NfsProperties = new FilePosixProperties
+                PosixProperties = new FilePosixProperties
                 {
                     FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
                     Owner = response.Headers.Owner,
@@ -316,7 +316,7 @@ namespace Azure.Storage.Files.Shares
                     FileId = response.Headers.FileId,
                     ParentId = response.Headers.FileParentId
                 },
-                NfsProperties = new FilePosixProperties()
+                PosixProperties = new FilePosixProperties()
                 {
                     FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
                     Owner = response.Headers.Owner,
@@ -379,7 +379,7 @@ namespace Azure.Storage.Files.Shares
                 LeaseDuration = response.Headers.LeaseDuration.GetValueOrDefault(),
                 LeaseState = response.Headers.LeaseState.GetValueOrDefault(),
                 LeaseStatus = response.Headers.LeaseStatus.GetValueOrDefault(),
-                NfsProperties = new FilePosixProperties()
+                PosixProperties = new FilePosixProperties()
                 {
                     FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
                     Owner = response.Headers.Owner,
@@ -423,7 +423,7 @@ namespace Azure.Storage.Files.Shares
                     FileId = response.Headers.FileId,
                     ParentId = response.Headers.FileParentId
                 },
-                NfsProperties = new FilePosixProperties()
+                PosixProperties = new FilePosixProperties()
                 {
                     FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
                     Owner = response.Headers.Owner,
@@ -930,7 +930,7 @@ namespace Azure.Storage.Files.Shares
                         FileId = response.Headers.FileId,
                         ParentId = response.Headers.FileParentId
                     },
-                    NfsProperties = new FilePosixProperties
+                    PosixProperties = new FilePosixProperties
                     {
                         FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
                         Owner = response.Headers.Owner,
@@ -1086,7 +1086,7 @@ namespace Azure.Storage.Files.Shares
                     FileId = response.Headers.FileId,
                     ParentId = response.Headers.FileParentId
                 },
-                NfsProperties = new FilePosixProperties()
+                PosixProperties = new FilePosixProperties()
                 {
                     FileType = response.Headers.NfsFileType,
                     FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
@@ -1114,7 +1114,7 @@ namespace Azure.Storage.Files.Shares
                     FileId = response.Headers.FileId,
                     ParentId = response.Headers.FileParentId
                 },
-                NfsProperties = new FilePosixProperties()
+                PosixProperties = new FilePosixProperties()
                 {
                     FileMode = NfsFileMode.ParseOctalFileMode(response.Headers.FileMode),
                     Owner = response.Headers.Owner,

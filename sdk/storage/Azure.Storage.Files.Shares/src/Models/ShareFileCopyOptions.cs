@@ -68,6 +68,6 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Only applicable to NFS Files.  NFS properties to set on the destination file.
         /// </summary>
-        public FilePosixProperties NfsProperties { get; set; }
+        public FilePosixProperties PosixProperties { get; set; }
     }
 }

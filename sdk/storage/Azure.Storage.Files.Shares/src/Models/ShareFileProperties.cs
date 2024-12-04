@@ -124,7 +124,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// NFS properties.
         /// Note that this property is only applicable to files created in NFS shares.
         /// </summary>
-        public FilePosixProperties NfsProperties { get; internal set; }
+        public FilePosixProperties PosixProperties { get; internal set; }
 
         /// <summary>
         /// Constructor.
@@ -159,7 +159,7 @@ namespace Azure.Storage.Files.Shares.Models
             CopyStatus copyStatus = default,
             bool isServerEncrypted = default,
             FileSmbProperties smbProperties = default,
-            FilePosixProperties nfsProperties = default
+            FilePosixProperties posixProperties = default
             ) => new ShareFileProperties
             {
                 LastModified = lastModified,
@@ -180,7 +180,7 @@ namespace Azure.Storage.Files.Shares.Models
                 CopyStatus = copyStatus,
                 IsServerEncrypted = isServerEncrypted,
                 SmbProperties = smbProperties,
-                NfsProperties = nfsProperties,
+                PosixProperties = posixProperties,
             };
 
         /// <summary>

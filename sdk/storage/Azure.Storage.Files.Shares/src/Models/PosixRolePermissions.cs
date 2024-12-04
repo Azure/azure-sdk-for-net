@@ -9,7 +9,7 @@ namespace Azure.Storage.Files.Shares.Models
     /// Represents file permissions for a specific role.
     /// </summary>
     [Flags]
-    public enum RolePermissions
+    public enum PosixRolePermissions
     {
         /// <summary>
         /// No permissions.

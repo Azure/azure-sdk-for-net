@@ -35,7 +35,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// The directory's NFS properties.
         /// Only applicable to files in a NFS share.
         /// </summary>
-        public FilePosixProperties NfsProperties { get; internal set; }
+        public FilePosixProperties PosixProperties { get; internal set; }
 
         /// <summary>
         /// Constructor.
@@ -46,7 +46,7 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary>
     /// FilesModelFactory provides utilities for mocking.
     /// </summary>
-    public static partial class SharesModelFactory
+    public static partial class FilesModelFactory
     {
         /// <summary>
         /// Creates a new StorageDirectoryInfo instance for mocking.
@@ -55,15 +55,21 @@ namespace Azure.Storage.Files.Shares.Models
             ETag eTag = default,
             DateTimeOffset lastModified = default,
             FileSmbProperties smbProperties = default,
-            FilePosixProperties nfsProperties = default)
+            FilePosixProperties posixProperties = default)
             => new ShareDirectoryInfo
             {
                 ETag = eTag,
                 LastModified = lastModified,
                 SmbProperties = smbProperties,
-                NfsProperties = nfsProperties,
+                PosixProperties = posixProperties,
             };
+    }
 
+    /// <summary>
+    /// FilesModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class SharesModelFactory
+    {
         /// <summary>
         /// Creates a new StorageDirectoryInfo instance for mocking.
         /// </summary>
