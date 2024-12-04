@@ -38,7 +38,7 @@ public static class CloudMachineCommands
                 projName = args[1];
             }
             Azd.InitDeployment(cmi, projName);
-            return Handled(exitProcessIfHandled);
+            return true;
         }
 
         if (args[0] == "-tsp")

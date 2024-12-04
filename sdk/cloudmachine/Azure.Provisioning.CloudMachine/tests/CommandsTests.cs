@@ -27,6 +27,7 @@ public class CommandsTests
     [Test]
     public void DoInit()
     {
-        CloudMachineCommands.Execute(["-init", "demo.csproj"], exitProcessIfHandled: false);
+        CloudMachineInfrastructure cm = new();
+        cm.TryExecuteCommand(["-init", "demo.csproj"]);
     }
 }

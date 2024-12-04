@@ -19,13 +19,9 @@ public partial class CloudMachineTests
     {
         CloudMachineInfrastructure cm = new();
         cm.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
+        if (cm.TryExecuteCommand(args)) return;
 
-        if (args.Contains("-azd")) {
-            Azd.Init(cm);
-            return;
-        }
-
-        CloudMachineClient client = new(connections: cm.Connections);
+        CloudMachineClient client = cm.GetClient();
 
         ChatClient chat = client.GetOpenAIChatClient();
         string completion = chat.CompleteChat("List all noble gases.").AsText();
