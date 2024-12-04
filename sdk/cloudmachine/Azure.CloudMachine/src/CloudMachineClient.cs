@@ -36,6 +36,7 @@ public partial class CloudMachineClient : ClientWorkspace
         Messaging = new MessagingServices(this);
         Storage = new StorageServices(this);
     }
+
 #pragma warning disable AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
     /// <summary>
     /// Initializes a new instance of the <see cref="CloudMachineClient"/> class.
@@ -43,6 +44,7 @@ public partial class CloudMachineClient : ClientWorkspace
     /// <param name="credential">The token credential.</param>
     /// <param name="configuration">The configuration settings.</param>
     /// <param name="connections"></param>
+    // TODO: we need to combine the configuration and the connections into a single parameter.
     public CloudMachineClient(TokenCredential credential = default, IConfiguration configuration = default, IEnumerable<ClientConnection> connections = default)
 #pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
         : base(BuildCredentail(credential))
