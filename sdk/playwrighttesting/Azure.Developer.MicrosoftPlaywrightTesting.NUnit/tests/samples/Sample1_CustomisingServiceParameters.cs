@@ -6,7 +6,7 @@ using Azure.Core;
 using Azure.Developer.MicrosoftPlaywrightTesting.NUnit;
 using Azure.Identity;
 
-namespace PlaywrightTests;
+namespace PlaywrightTests.Sample1; // Remember to change this as per your project namespace
 
 [SetUpFixture]
 #if SNIPPET

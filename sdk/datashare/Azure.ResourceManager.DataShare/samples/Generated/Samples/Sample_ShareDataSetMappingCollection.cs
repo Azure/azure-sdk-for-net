@@ -10,126 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DataShare.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataShare.Samples
 {
     public partial class Sample_ShareDataSetMappingCollection
     {
-        // DataSetMappings_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_DataSetMappingsGet()
-        {
-            // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/DataSetMappings_Get.json
-            // this example is just showing the usage of "DataSetMappings_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ShareSubscriptionResource created on azure
-            // for more information of creating ShareSubscriptionResource, please refer to the document of ShareSubscriptionResource
-            string subscriptionId = "433a8dfd-e5d5-4e77-ad86-90acdc75eb1a";
-            string resourceGroupName = "SampleResourceGroup";
-            string accountName = "Account1";
-            string shareSubscriptionName = "ShareSubscription1";
-            ResourceIdentifier shareSubscriptionResourceId = ShareSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, shareSubscriptionName);
-            ShareSubscriptionResource shareSubscription = client.GetShareSubscriptionResource(shareSubscriptionResourceId);
-
-            // get the collection of this ShareDataSetMappingResource
-            ShareDataSetMappingCollection collection = shareSubscription.GetShareDataSetMappings();
-
-            // invoke the operation
-            string dataSetMappingName = "DatasetMapping1";
-            ShareDataSetMappingResource result = await collection.GetAsync(dataSetMappingName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ShareDataSetMappingData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // DataSetMappings_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_DataSetMappingsGet()
-        {
-            // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/DataSetMappings_Get.json
-            // this example is just showing the usage of "DataSetMappings_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ShareSubscriptionResource created on azure
-            // for more information of creating ShareSubscriptionResource, please refer to the document of ShareSubscriptionResource
-            string subscriptionId = "433a8dfd-e5d5-4e77-ad86-90acdc75eb1a";
-            string resourceGroupName = "SampleResourceGroup";
-            string accountName = "Account1";
-            string shareSubscriptionName = "ShareSubscription1";
-            ResourceIdentifier shareSubscriptionResourceId = ShareSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, shareSubscriptionName);
-            ShareSubscriptionResource shareSubscription = client.GetShareSubscriptionResource(shareSubscriptionResourceId);
-
-            // get the collection of this ShareDataSetMappingResource
-            ShareDataSetMappingCollection collection = shareSubscription.GetShareDataSetMappings();
-
-            // invoke the operation
-            string dataSetMappingName = "DatasetMapping1";
-            bool result = await collection.ExistsAsync(dataSetMappingName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // DataSetMappings_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_DataSetMappingsGet()
-        {
-            // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/DataSetMappings_Get.json
-            // this example is just showing the usage of "DataSetMappings_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ShareSubscriptionResource created on azure
-            // for more information of creating ShareSubscriptionResource, please refer to the document of ShareSubscriptionResource
-            string subscriptionId = "433a8dfd-e5d5-4e77-ad86-90acdc75eb1a";
-            string resourceGroupName = "SampleResourceGroup";
-            string accountName = "Account1";
-            string shareSubscriptionName = "ShareSubscription1";
-            ResourceIdentifier shareSubscriptionResourceId = ShareSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, shareSubscriptionName);
-            ShareSubscriptionResource shareSubscription = client.GetShareSubscriptionResource(shareSubscriptionResourceId);
-
-            // get the collection of this ShareDataSetMappingResource
-            ShareDataSetMappingCollection collection = shareSubscription.GetShareDataSetMappings();
-
-            // invoke the operation
-            string dataSetMappingName = "DatasetMapping1";
-            NullableResponse<ShareDataSetMappingResource> response = await collection.GetIfExistsAsync(dataSetMappingName);
-            ShareDataSetMappingResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ShareDataSetMappingData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // DataSetMappings_Create
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_DataSetMappingsCreate()
         {
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/DataSetMappings_Create.json
@@ -154,7 +42,13 @@ namespace Azure.ResourceManager.DataShare.Samples
 
             // invoke the operation
             string dataSetMappingName = "DatasetMapping1";
-            ShareDataSetMappingData data = new BlobDataSetMapping("C1", Guid.Parse("a08f184b-0567-4b11-ba22-a1199336d226"), "file21", "SampleResourceGroup", "storage2", "433a8dfd-e5d5-4e77-ad86-90acdc75eb1a");
+            ShareDataSetMappingData data = new BlobDataSetMapping(
+                "C1",
+                Guid.Parse("a08f184b-0567-4b11-ba22-a1199336d226"),
+                "file21",
+                "SampleResourceGroup",
+                "storage2",
+                "433a8dfd-e5d5-4e77-ad86-90acdc75eb1a");
             ArmOperation<ShareDataSetMappingResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dataSetMappingName, data);
             ShareDataSetMappingResource result = lro.Value;
 
@@ -165,9 +59,8 @@ namespace Azure.ResourceManager.DataShare.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DataSetMappings_SqlDB_Create
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_DataSetMappingsSqlDBCreate()
         {
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/DataSetMappings_SqlDB_Create.json
@@ -203,9 +96,8 @@ namespace Azure.ResourceManager.DataShare.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DataSetMappings_SqlDWDataSetToAdlsGen2File_Create
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_DataSetMappingsSqlDWDataSetToAdlsGen2FileCreate()
         {
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/DataSetMappings_SqlDWDataSetToAdlsGen2File_Create.json
@@ -230,7 +122,13 @@ namespace Azure.ResourceManager.DataShare.Samples
 
             // invoke the operation
             string dataSetMappingName = "DatasetMapping1";
-            ShareDataSetMappingData data = new AdlsGen2FileDataSetMapping(Guid.Parse("a08f184b-0567-4b11-ba22-a1199336d226"), "file21", "fileSystem", "SampleResourceGroup", "storage2", "433a8dfd-e5d5-4e77-ad86-90acdc75eb1a")
+            ShareDataSetMappingData data = new AdlsGen2FileDataSetMapping(
+                Guid.Parse("a08f184b-0567-4b11-ba22-a1199336d226"),
+                "file21",
+                "fileSystem",
+                "SampleResourceGroup",
+                "storage2",
+                "433a8dfd-e5d5-4e77-ad86-90acdc75eb1a")
             {
                 OutputType = DataShareOutputType.Csv,
             };
@@ -244,9 +142,8 @@ namespace Azure.ResourceManager.DataShare.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DataSetMappings_SqlDW_Create
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_DataSetMappingsSqlDWCreate()
         {
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/DataSetMappings_SqlDW_Create.json
@@ -282,9 +179,8 @@ namespace Azure.ResourceManager.DataShare.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DataSetMappings_SynapseWorkspaceSqlPoolTable_Create
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_DataSetMappingsSynapseWorkspaceSqlPoolTableCreate()
         {
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/DataSetMappings_SynapseWorkspaceSqlPoolTable_Create.json
@@ -320,9 +216,43 @@ namespace Azure.ResourceManager.DataShare.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DataSetMappings_ListByShareSubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_DataSetMappingsGet()
+        {
+            // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/DataSetMappings_Get.json
+            // this example is just showing the usage of "DataSetMappings_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ShareSubscriptionResource created on azure
+            // for more information of creating ShareSubscriptionResource, please refer to the document of ShareSubscriptionResource
+            string subscriptionId = "433a8dfd-e5d5-4e77-ad86-90acdc75eb1a";
+            string resourceGroupName = "SampleResourceGroup";
+            string accountName = "Account1";
+            string shareSubscriptionName = "ShareSubscription1";
+            ResourceIdentifier shareSubscriptionResourceId = ShareSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, shareSubscriptionName);
+            ShareSubscriptionResource shareSubscription = client.GetShareSubscriptionResource(shareSubscriptionResourceId);
+
+            // get the collection of this ShareDataSetMappingResource
+            ShareDataSetMappingCollection collection = shareSubscription.GetShareDataSetMappings();
+
+            // invoke the operation
+            string dataSetMappingName = "DatasetMapping1";
+            ShareDataSetMappingResource result = await collection.GetAsync(dataSetMappingName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ShareDataSetMappingData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_DataSetMappingsListByShareSubscription()
         {
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/DataSetMappings_ListByShareSubscription.json
@@ -355,7 +285,81 @@ namespace Azure.ResourceManager.DataShare.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_DataSetMappingsGet()
+        {
+            // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/DataSetMappings_Get.json
+            // this example is just showing the usage of "DataSetMappings_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ShareSubscriptionResource created on azure
+            // for more information of creating ShareSubscriptionResource, please refer to the document of ShareSubscriptionResource
+            string subscriptionId = "433a8dfd-e5d5-4e77-ad86-90acdc75eb1a";
+            string resourceGroupName = "SampleResourceGroup";
+            string accountName = "Account1";
+            string shareSubscriptionName = "ShareSubscription1";
+            ResourceIdentifier shareSubscriptionResourceId = ShareSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, shareSubscriptionName);
+            ShareSubscriptionResource shareSubscription = client.GetShareSubscriptionResource(shareSubscriptionResourceId);
+
+            // get the collection of this ShareDataSetMappingResource
+            ShareDataSetMappingCollection collection = shareSubscription.GetShareDataSetMappings();
+
+            // invoke the operation
+            string dataSetMappingName = "DatasetMapping1";
+            bool result = await collection.ExistsAsync(dataSetMappingName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_DataSetMappingsGet()
+        {
+            // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/DataSetMappings_Get.json
+            // this example is just showing the usage of "DataSetMappings_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ShareSubscriptionResource created on azure
+            // for more information of creating ShareSubscriptionResource, please refer to the document of ShareSubscriptionResource
+            string subscriptionId = "433a8dfd-e5d5-4e77-ad86-90acdc75eb1a";
+            string resourceGroupName = "SampleResourceGroup";
+            string accountName = "Account1";
+            string shareSubscriptionName = "ShareSubscription1";
+            ResourceIdentifier shareSubscriptionResourceId = ShareSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, shareSubscriptionName);
+            ShareSubscriptionResource shareSubscription = client.GetShareSubscriptionResource(shareSubscriptionResourceId);
+
+            // get the collection of this ShareDataSetMappingResource
+            ShareDataSetMappingCollection collection = shareSubscription.GetShareDataSetMappings();
+
+            // invoke the operation
+            string dataSetMappingName = "DatasetMapping1";
+            NullableResponse<ShareDataSetMappingResource> response = await collection.GetIfExistsAsync(dataSetMappingName);
+            ShareDataSetMappingResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ShareDataSetMappingData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

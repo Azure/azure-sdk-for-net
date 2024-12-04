@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 {
     public partial class Sample_ServerThreatProtectionSettingsModelResource
     {
-        // Get a server's Threat Protection settings
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAServerSThreatProtectionSettings()
         {
             // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/ServerThreatProtectionSettingsGet.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update a server's Threat Protection settings
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAServerSThreatProtectionSettings()
         {
             // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/ServerThreatProtectionSettingsCreateOrUpdate.json
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             ServerThreatProtectionSettingsModelResource serverThreatProtectionSettingsModel = client.GetServerThreatProtectionSettingsModelResource(serverThreatProtectionSettingsModelResourceId);
 
             // invoke the operation
-            ServerThreatProtectionSettingsModelData data = new ServerThreatProtectionSettingsModelData()
+            ServerThreatProtectionSettingsModelData data = new ServerThreatProtectionSettingsModelData
             {
                 State = ThreatProtectionState.Enabled,
             };

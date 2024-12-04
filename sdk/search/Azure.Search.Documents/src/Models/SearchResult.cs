@@ -49,7 +49,7 @@ namespace Azure.Search.Documents.Models
         /// <summary>
         /// Contains debugging information that can be used to further explore your search results.
         /// </summary>
-        public IList<DocumentDebugInfo> DocumentDebugInfo { get; internal set; }
+        public DocumentDebugInfo DocumentDebugInfo { get; internal set; }
 
         /// <summary>
         /// The document found by the search query.
@@ -127,12 +127,7 @@ namespace Azure.Search.Documents.Models
                 else if (prop.NameEquals(Constants.SearchDocumentDebugInfoKeyJson.EncodedUtf8Bytes) &&
                     prop.Value.ValueKind != JsonValueKind.Null)
                 {
-                    result.DocumentDebugInfo = new List<DocumentDebugInfo>();
-
-                    foreach (JsonElement documentDebugInfoValue in prop.Value.EnumerateArray())
-                    {
-                        result.DocumentDebugInfo.Add(Models.DocumentDebugInfo.DeserializeDocumentDebugInfo(documentDebugInfoValue));
-                    }
+                    result.DocumentDebugInfo = DocumentDebugInfo.DeserializeDocumentDebugInfo(prop.Value);
                 }
             }
 
@@ -230,6 +225,7 @@ namespace Azure.Search.Documents.Models
         /// </param>
         /// <param name="semanticSearch">The semantic search result.</param>
         /// <returns>A new SearchResult instance for mocking.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static SearchResult<T> SearchResult<T>(
             T document,
             double? score,
@@ -241,6 +237,40 @@ namespace Azure.Search.Documents.Models
                 Highlights = highlights,
                 Document = document,
                 SemanticSearch = semanticSearch
+            };
+
+        /// <summary> Initializes a new instance of SearchResult. </summary>
+        /// <typeparam name="T">
+        /// The .NET type that maps to the index schema. Instances of this type can
+        /// be retrieved as documents from the index.
+        /// </typeparam>
+        /// <param name="document">The document found by the search query.</param>
+        /// <param name="score">
+        /// The relevance score of the document compared to other documents
+        /// returned by the query.
+        /// </param>
+        /// <param name="highlights">
+        /// Text fragments from the document that indicate the matching search
+        /// terms, organized by each applicable field; null if hit highlighting
+        /// was not enabled for the query.
+        /// </param>
+        /// <param name="semanticSearch">The semantic search result.</param>
+        /// <param name="documentDebugInfo"> Contains debugging information that
+        /// can be used to further explore your search results. </param>
+        /// <returns>A new SearchResult instance for mocking.</returns>
+        public static SearchResult<T> SearchResult<T>(
+            T document,
+            double? score,
+            IDictionary<string, IList<string>> highlights,
+            SemanticSearchResult semanticSearch,
+            DocumentDebugInfo documentDebugInfo) =>
+            new SearchResult<T>()
+            {
+                Score = score,
+                Highlights = highlights,
+                Document = document,
+                SemanticSearch = semanticSearch,
+                DocumentDebugInfo = documentDebugInfo
             };
 
         /// <summary> Initializes a new instance of <see cref="SemanticSearchResult"/>. </summary>

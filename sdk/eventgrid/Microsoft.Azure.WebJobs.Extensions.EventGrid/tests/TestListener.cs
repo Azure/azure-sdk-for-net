@@ -105,6 +105,40 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             var request = new HttpRequestMessage(HttpMethod.Options, $"http://localhost/?functionName={functionName}");
             var response = await ext.ConvertAsync(request, CancellationToken.None);
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            // no WebHook-Request-Origin header, should fallback to public cloud
+            Assert.AreEqual("eventgrid.azure.net", response.Headers.GetValues("Webhook-Allowed-Origin").First());
+        }
+
+        [TestCase("eventgrid.azure.net")]
+        [TestCase("eventgrid.azure.us")]
+        [TestCase("eventgrid.azure.eaglex.ic.gov")]
+        [TestCase("eventgrid.azure.microsoft.scloud")]
+        [TestCase("eventgrid.azure.cn")]
+        public async Task TestSubscribeOptionsKnownAllowedOrigin(string origin)
+        {
+            using var host = TestHelpers.NewHost<MyProg1>(CreateConfigProvider);
+            var ext = host.Services.GetServices<IExtensionConfigProvider>().OfType<EventGridExtensionConfigProvider>().Single();
+            await host.StartAsync(); // add listener
+
+            var request = new HttpRequestMessage(HttpMethod.Options, $"http://localhost/?functionName=TestCloudEvent");
+            request.Headers.Add("WebHook-Request-Origin", origin);
+            var response = await ext.ConvertAsync(request, CancellationToken.None);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.AreEqual(origin, response.Headers.GetValues("Webhook-Allowed-Origin").First());
+        }
+
+        [Test]
+        public async Task TestSubscribeOptionsUnknownAllowedOrigin()
+        {
+            using var host = TestHelpers.NewHost<MyProg1>(CreateConfigProvider);
+            var ext = host.Services.GetServices<IExtensionConfigProvider>().OfType<EventGridExtensionConfigProvider>().Single();
+            await host.StartAsync(); // add listener
+
+            var request = new HttpRequestMessage(HttpMethod.Options, $"http://localhost/?functionName=TestCloudEvent");
+            request.Headers.Add("WebHook-Request-Origin", "someunknown.origin.com");
+            var response = await ext.ConvertAsync(request, CancellationToken.None);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            // Unknown origin, should fallback to public cloud
             Assert.AreEqual("eventgrid.azure.net", response.Headers.GetValues("Webhook-Allowed-Origin").First());
         }
 

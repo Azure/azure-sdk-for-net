@@ -222,9 +222,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             IList<DataTransfer> result = await manager.GetTransfersAsync().ToListAsync();
+            List<string> resultIds = result.Select(t => t.Id).ToList();
 
             // Assert
-            Assert.AreEqual(checkpointerTransfers, result.Select(d => d.Id).ToList());
+            Assert.IsTrue(Enumerable.SequenceEqual(checkpointerTransfers.OrderBy(id => id), result.Select(t => t.Id).OrderBy(id => id)));
         }
 
         [Test]

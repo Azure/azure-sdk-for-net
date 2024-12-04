@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Numerics;
 using System.Text;
 using Azure.Core;
 
@@ -16,6 +14,7 @@ namespace Azure.Search.Documents.Models
     {
         private const string QueryAnswerCountRaw = "count-";
         private const string QueryAnswerThresholdRaw = "threshold-";
+        private const string QueryAnswerMaxCharLengthRaw = "maxcharlength-";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="QueryAnswer"/> class.
@@ -39,37 +38,54 @@ namespace Azure.Search.Documents.Models
         /// <summary> A value that specifies the number of <see cref="SemanticSearchResults.Answers"/> that should be returned as part of the search response and will default to 1. </summary>
         public int? Count { get; set; }
 
-        /// <summary> A value that specifies the threshold of <see cref="SemanticSearchResults.Answers"/> that should be returned as part of the search response. The threshold is optional and will default to 0.7.
-        /// </summary>
+        /// <summary> A value that specifies the threshold of <see cref="SemanticSearchResults.Answers"/> that should be returned as part of the search response. The threshold is optional and will default to 0.7. </summary>
         public double? Threshold { get; set; }
 
-        /// <summary> Constructed from <see cref="AnswerType"/>, <see cref="Count"/> and <see cref="Threshold"/>. For example: "extractive|count-1,threshold-0.7"</summary>
+        /// <summary> A value that specifies the maximum character length for answers returned as part of the search response. Optional and will default to null. </summary>
+        public int? MaxCharLength { get; set; }
+
+        /// <summary>
+        /// Constructed from <see cref="AnswerType"/>, <see cref="Count"/>, <see cref="Threshold"/>, and <see cref="MaxCharLength"/>.
+        /// Examples of the values:
+        /// - "extractive"
+        /// - "extractive|count-1"
+        /// - "extractive|threshold-0.7"
+        /// - "extractive|count-5,threshold-0.9"
+        /// - "extractive|threshold-0.8,count-4"
+        /// - "extractive|maxcharlength-500"
+        /// - "extractive|count-2,maxcharlength-300"
+        /// - "extractive|threshold-0.6,maxcharlength-400,count-3"
+        /// </summary>
         internal string QueryAnswerRaw
         {
             get
             {
-                    StringBuilder queryAnswerStringValue = new(AnswerType.ToString());
+                StringBuilder queryAnswerStringValue = new(AnswerType.ToString());
 
-                    if (Count.HasValue && Threshold.HasValue)
+                if (Count.HasValue || Threshold.HasValue || MaxCharLength.HasValue)
+                {
+                    queryAnswerStringValue.Append('|');
+                    if (Count.HasValue)
                     {
-                        return queryAnswerStringValue.Append($"|{QueryAnswerCountRaw}{Count.Value},{QueryAnswerThresholdRaw}{Threshold.Value}").ToString();
+                        queryAnswerStringValue.Append($"{QueryAnswerCountRaw}{Count.Value},");
                     }
-                    else if (Count.HasValue)
+                    if (Threshold.HasValue)
                     {
-                        return queryAnswerStringValue.Append($"|{QueryAnswerCountRaw}{Count.Value}").ToString();
+                        queryAnswerStringValue.Append($"{QueryAnswerThresholdRaw}{Threshold.Value},");
                     }
-                    else if (Threshold.HasValue)
+                    if (MaxCharLength.HasValue)
                     {
-                        return queryAnswerStringValue.Append($"|{QueryAnswerThresholdRaw}{Threshold.Value}").ToString();
+                        queryAnswerStringValue.Append($"{QueryAnswerMaxCharLengthRaw}{MaxCharLength.Value},");
                     }
-                    else
-                    {
-                        return queryAnswerStringValue.ToString();
-                    }
+                    // Remove the trailing comma
+                    queryAnswerStringValue.Length--;
                 }
+
+                return queryAnswerStringValue.ToString();
+            }
             set
             {
-                if (!string.IsNullOrEmpty(value)) // If the value is - "extractive" or "extractive|count-1" or "extractive|threshold-0.7" or "extractive|count-5,threshold-0.9" or "extractive|threshold-0.8,count-4"
+                if (!string.IsNullOrEmpty(value))
                 {
                     string[] queryAnswerValues = value.Split('|');
                     if (!string.IsNullOrEmpty(queryAnswerValues[0]))
@@ -80,25 +96,30 @@ namespace Azure.Search.Documents.Models
                     if (queryAnswerValues.Length == 2)
                     {
                         var queryAnswerParams = queryAnswerValues[1].Split(',');
-                        if (queryAnswerParams.Length <= 2)
+                        foreach (var param in queryAnswerParams)
                         {
-                            foreach (var param in queryAnswerParams)
+                            if (param.Contains(QueryAnswerCountRaw))
                             {
-                                if (param.Contains(QueryAnswerCountRaw))
+                                var countPart = param.Substring(param.IndexOf(QueryAnswerCountRaw, StringComparison.OrdinalIgnoreCase) + QueryAnswerCountRaw.Length);
+                                if (int.TryParse(countPart, out int countValue))
                                 {
-                                    var countPart = param.Substring(param.IndexOf(QueryAnswerCountRaw, StringComparison.OrdinalIgnoreCase) + QueryAnswerCountRaw.Length);
-                                    if (int.TryParse(countPart, out int countValue))
-                                    {
-                                        Count = countValue;
-                                    }
+                                    Count = countValue;
                                 }
-                                else if (param.Contains(QueryAnswerThresholdRaw))
+                            }
+                            else if (param.Contains(QueryAnswerThresholdRaw))
+                            {
+                                var thresholdPart = param.Substring(param.IndexOf(QueryAnswerThresholdRaw, StringComparison.OrdinalIgnoreCase) + QueryAnswerThresholdRaw.Length);
+                                if (double.TryParse(thresholdPart, out double thresholdValue))
                                 {
-                                    var thresholdPart = param.Substring(param.IndexOf(QueryAnswerThresholdRaw, StringComparison.OrdinalIgnoreCase) + QueryAnswerThresholdRaw.Length);
-                                    if (double.TryParse(thresholdPart, out double thresholdValue))
-                                    {
-                                        Threshold = thresholdValue;
-                                    }
+                                    Threshold = thresholdValue;
+                                }
+                            }
+                            else if (param.Contains(QueryAnswerMaxCharLengthRaw))
+                            {
+                                var maxCharLengthPart = param.Substring(param.IndexOf(QueryAnswerMaxCharLengthRaw, StringComparison.OrdinalIgnoreCase) + QueryAnswerMaxCharLengthRaw.Length);
+                                if (int.TryParse(maxCharLengthPart, out int maxCharLengthValue))
+                                {
+                                    MaxCharLength = maxCharLengthValue;
                                 }
                             }
                         }

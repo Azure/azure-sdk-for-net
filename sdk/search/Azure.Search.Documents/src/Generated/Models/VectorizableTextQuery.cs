@@ -37,10 +37,14 @@ namespace Azure.Search.Documents.Models
         /// </param>
         /// <param name="filterOverride"> The OData filter expression to apply to this specific vector query. If no filter expression is defined at the vector level, the expression defined in the top level filter parameter is used instead. </param>
         /// <param name="text"> The text to be vectorized to perform a vector search query. </param>
-        internal VectorizableTextQuery(VectorQueryKind kind, int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, VectorThreshold threshold, string filterOverride, string text) : base(kind, kNearestNeighborsCount, fieldsRaw, exhaustive, oversampling, weight, threshold, filterOverride)
+        /// <param name="queryRewrites"> Can be configured to let a generative model rewrite the query before sending it to be vectorized. </param>
+        internal VectorizableTextQuery(VectorQueryKind kind, int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, VectorThreshold threshold, string filterOverride, string text, QueryRewritesType? queryRewrites) : base(kind, kNearestNeighborsCount, fieldsRaw, exhaustive, oversampling, weight, threshold, filterOverride)
         {
             Text = text;
+            QueryRewrites = queryRewrites;
             Kind = kind;
         }
+        /// <summary> Can be configured to let a generative model rewrite the query before sending it to be vectorized. </summary>
+        public QueryRewritesType? QueryRewrites { get; set; }
     }
 }

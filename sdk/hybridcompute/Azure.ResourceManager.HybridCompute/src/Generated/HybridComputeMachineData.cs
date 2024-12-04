@@ -74,6 +74,9 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="locationData"> Metadata pertaining to the geographic location of the resource. </param>
         /// <param name="agentConfiguration"> Configurable properties that the user can set locally via the azcmagent config command, or remotely via ARM. </param>
         /// <param name="serviceStatuses"> Statuses of dependent services that are reported back to ARM. </param>
+        /// <param name="hardwareProfile"> Information about the machine's hardware. </param>
+        /// <param name="storageProfile"> Information about the machine's storage. </param>
+        /// <param name="firmwareProfile"> Information about the machine's firmware. </param>
         /// <param name="cloudMetadata"> The metadata of the cloud environment (Azure/GCP/AWS/OCI...). </param>
         /// <param name="agentUpgrade"> The info of the machine w.r.t Agent Upgrade. </param>
         /// <param name="osProfile"> Specifies the operating system settings for the hybrid machine. </param>
@@ -103,7 +106,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="detectedProperties"> Detected properties from the machine. </param>
         /// <param name="networkProfile"> Information about the network the machine is on. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HybridComputeMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IReadOnlyList<HybridComputeMachineExtensionData> resources, ManagedServiceIdentity identity, ArcKindEnum? kind, HybridComputeLocation locationData, AgentConfiguration agentConfiguration, HybridComputeServiceStatuses serviceStatuses, HybridComputeCloudMetadata cloudMetadata, AgentUpgrade agentUpgrade, HybridComputeOSProfile osProfile, LicenseProfileMachineInstanceView licenseProfile, string provisioningState, HybridComputeStatusType? status, DateTimeOffset? lastStatusChange, IReadOnlyList<ResponseError> errorDetails, string agentVersion, Guid? vmId, string displayName, string machineFqdn, string clientPublicKey, string osName, string osVersion, string osType, Guid? vmUuid, IList<MachineExtensionInstanceView> extensions, string osSku, string osEdition, string domainName, string adFqdn, string dnsFqdn, ResourceIdentifier privateLinkScopeResourceId, ResourceIdentifier parentClusterResourceId, string msSqlDiscovered, IReadOnlyDictionary<string, string> detectedProperties, HybridComputeNetworkProfile networkProfile, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal HybridComputeMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IReadOnlyList<HybridComputeMachineExtensionData> resources, ManagedServiceIdentity identity, ArcKindEnum? kind, HybridComputeLocation locationData, AgentConfiguration agentConfiguration, HybridComputeServiceStatuses serviceStatuses, HybridComputeHardwareProfile hardwareProfile, StorageProfile storageProfile, HybridComputeFirmwareProfile firmwareProfile, HybridComputeCloudMetadata cloudMetadata, AgentUpgrade agentUpgrade, HybridComputeOSProfile osProfile, LicenseProfileMachineInstanceView licenseProfile, string provisioningState, HybridComputeStatusType? status, DateTimeOffset? lastStatusChange, IReadOnlyList<ResponseError> errorDetails, string agentVersion, Guid? vmId, string displayName, string machineFqdn, string clientPublicKey, string osName, string osVersion, string osType, Guid? vmUuid, IList<MachineExtensionInstanceView> extensions, string osSku, string osEdition, string domainName, string adFqdn, string dnsFqdn, ResourceIdentifier privateLinkScopeResourceId, ResourceIdentifier parentClusterResourceId, string msSqlDiscovered, IReadOnlyDictionary<string, string> detectedProperties, HybridComputeNetworkProfile networkProfile, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Resources = resources;
             Identity = identity;
@@ -111,6 +114,9 @@ namespace Azure.ResourceManager.HybridCompute
             LocationData = locationData;
             AgentConfiguration = agentConfiguration;
             ServiceStatuses = serviceStatuses;
+            HardwareProfile = hardwareProfile;
+            StorageProfile = storageProfile;
+            FirmwareProfile = firmwareProfile;
             CloudMetadata = cloudMetadata;
             AgentUpgrade = agentUpgrade;
             OSProfile = osProfile;
@@ -165,6 +171,21 @@ namespace Azure.ResourceManager.HybridCompute
         /// <summary> Statuses of dependent services that are reported back to ARM. </summary>
         [WirePath("properties.serviceStatuses")]
         public HybridComputeServiceStatuses ServiceStatuses { get; set; }
+        /// <summary> Information about the machine's hardware. </summary>
+        [WirePath("properties.hardwareProfile")]
+        public HybridComputeHardwareProfile HardwareProfile { get; }
+        /// <summary> Information about the machine's storage. </summary>
+        internal StorageProfile StorageProfile { get; }
+        /// <summary> The disks on the machine. </summary>
+        [WirePath("properties.storageProfile.disks")]
+        public IReadOnlyList<HybridComputeDisk> StorageDisks
+        {
+            get => StorageProfile?.Disks;
+        }
+
+        /// <summary> Information about the machine's firmware. </summary>
+        [WirePath("properties.firmwareProfile")]
+        public HybridComputeFirmwareProfile FirmwareProfile { get; }
         /// <summary> The metadata of the cloud environment (Azure/GCP/AWS/OCI...). </summary>
         internal HybridComputeCloudMetadata CloudMetadata { get; set; }
         /// <summary> Specifies the cloud provider (Azure/AWS/GCP...). </summary>

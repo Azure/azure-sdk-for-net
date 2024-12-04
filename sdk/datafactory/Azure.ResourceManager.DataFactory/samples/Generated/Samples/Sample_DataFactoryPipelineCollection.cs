@@ -6,56 +6,19 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 using Azure.Identity;
 using Azure.ResourceManager.DataFactory.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataFactory.Samples
 {
     public partial class Sample_DataFactoryPipelineCollection
     {
-        // Pipelines_ListByFactory
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_PipelinesListByFactory()
-        {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/Pipelines_ListByFactory.json
-            // this example is just showing the usage of "Pipelines_ListByFactory" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this DataFactoryResource created on azure
-            // for more information of creating DataFactoryResource, please refer to the document of DataFactoryResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
-            string resourceGroupName = "exampleResourceGroup";
-            string factoryName = "exampleFactoryName";
-            ResourceIdentifier dataFactoryResourceId = DataFactoryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, factoryName);
-            DataFactoryResource dataFactory = client.GetDataFactoryResource(dataFactoryResourceId);
-
-            // get the collection of this DataFactoryPipelineResource
-            DataFactoryPipelineCollection collection = dataFactory.GetDataFactoryPipelines();
-
-            // invoke the operation and iterate over the result
-            await foreach (DataFactoryPipelineResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                DataFactoryPipelineData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Pipelines_Create
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PipelinesCreate()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/Pipelines_Create.json
@@ -79,63 +42,56 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // invoke the operation
             string pipelineName = "examplePipeline";
-            DataFactoryPipelineData data = new DataFactoryPipelineData()
+            DataFactoryPipelineData data = new DataFactoryPipelineData
             {
-                Activities =
+                Activities = {new ForEachActivity("ExampleForeachActivity", new DataFactoryExpression(DataFactoryExpressionType.Expression, "@pipeline().parameters.OutputBlobNameList"), new PipelineActivity[]
 {
-new ForEachActivity("ExampleForeachActivity",new DataFactoryExpression(DataFactoryExpressionType.Expression,"@pipeline().parameters.OutputBlobNameList"),new PipelineActivity[]
+new CopyActivity("ExampleCopyActivity", new DataFactoryBlobSource(), new DataFactoryBlobSink())
 {
-new CopyActivity("ExampleCopyActivity",new DataFactoryBlobSource(),new DataFactoryBlobSink())
-{
-Inputs =
-{
-new DatasetReference(DatasetReferenceType.DatasetReference,"exampleDataset")
+Inputs = {new DatasetReference(DatasetReferenceType.DatasetReference, "exampleDataset")
 {
 Parameters =
 {
-["MyFileName"] = BinaryData.FromString("\"examplecontainer.csv\""),
-["MyFolderPath"] = BinaryData.FromString("\"examplecontainer\""),
+["MyFileName"] = BinaryData.FromObjectAsJson("examplecontainer.csv"),
+["MyFolderPath"] = BinaryData.FromObjectAsJson("examplecontainer")
 },
-}
-},
-Outputs =
-{
-new DatasetReference(DatasetReferenceType.DatasetReference,"exampleDataset")
+}},
+Outputs = {new DatasetReference(DatasetReferenceType.DatasetReference, "exampleDataset")
 {
 Parameters =
 {
-["MyFileName"] = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+["MyFileName"] = BinaryData.FromObjectAsJson(new
 {
-["type"] = "Expression",
-["value"] = "@item()"}),
-["MyFolderPath"] = BinaryData.FromString("\"examplecontainer\""),
+type = "Expression",
+value = "@item()",
+}),
+["MyFolderPath"] = BinaryData.FromObjectAsJson("examplecontainer")
 },
-}
-},
-DataIntegrationUnits = 32,
+}},
+DataIntegrationUnits = null,
 }
 })
 {
 IsSequential = true,
-}
-},
+}},
                 Parameters =
 {
 ["JobId"] = new EntityParameterSpecification(EntityParameterType.String),
-["OutputBlobNameList"] = new EntityParameterSpecification(EntityParameterType.Array),
+["OutputBlobNameList"] = new EntityParameterSpecification(EntityParameterType.Array)
 },
                 Variables =
 {
-["TestVariableArray"] = new PipelineVariableSpecification(PipelineVariableType.Array),
+["TestVariableArray"] = new PipelineVariableSpecification(PipelineVariableType.Array)
 },
                 RunDimensions =
 {
-["JobId"] = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+["JobId"] = BinaryData.FromObjectAsJson(new
 {
-["type"] = "Expression",
-["value"] = "@pipeline().parameters.JobId"}),
+type = "Expression",
+value = "@pipeline().parameters.JobId",
+})
 },
-                ElapsedTimeMetricDuration = BinaryData.FromString("\"0.00:10:00\""),
+                ElapsedTimeMetricDuration = BinaryData.FromObjectAsJson("0.00:10:00"),
             };
             ArmOperation<DataFactoryPipelineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             DataFactoryPipelineResource result = lro.Value;
@@ -147,9 +103,8 @@ IsSequential = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Pipelines_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PipelinesUpdate()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/Pipelines_Update.json
@@ -173,52 +128,44 @@ IsSequential = true,
 
             // invoke the operation
             string pipelineName = "examplePipeline";
-            DataFactoryPipelineData data = new DataFactoryPipelineData()
+            DataFactoryPipelineData data = new DataFactoryPipelineData
             {
                 Description = "Example description",
-                Activities =
+                Activities = {new ForEachActivity("ExampleForeachActivity", new DataFactoryExpression(DataFactoryExpressionType.Expression, "@pipeline().parameters.OutputBlobNameList"), new PipelineActivity[]
 {
-new ForEachActivity("ExampleForeachActivity",new DataFactoryExpression(DataFactoryExpressionType.Expression,"@pipeline().parameters.OutputBlobNameList"),new PipelineActivity[]
+new CopyActivity("ExampleCopyActivity", new DataFactoryBlobSource(), new DataFactoryBlobSink())
 {
-new CopyActivity("ExampleCopyActivity",new DataFactoryBlobSource(),new DataFactoryBlobSink())
-{
-Inputs =
-{
-new DatasetReference(DatasetReferenceType.DatasetReference,"exampleDataset")
+Inputs = {new DatasetReference(DatasetReferenceType.DatasetReference, "exampleDataset")
 {
 Parameters =
 {
-["MyFileName"] = BinaryData.FromString("\"examplecontainer.csv\""),
-["MyFolderPath"] = BinaryData.FromString("\"examplecontainer\""),
+["MyFileName"] = BinaryData.FromObjectAsJson("examplecontainer.csv"),
+["MyFolderPath"] = BinaryData.FromObjectAsJson("examplecontainer")
 },
-}
-},
-Outputs =
-{
-new DatasetReference(DatasetReferenceType.DatasetReference,"exampleDataset")
+}},
+Outputs = {new DatasetReference(DatasetReferenceType.DatasetReference, "exampleDataset")
 {
 Parameters =
 {
-["MyFileName"] = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+["MyFileName"] = BinaryData.FromObjectAsJson(new
 {
-["type"] = "Expression",
-["value"] = "@item()"}),
-["MyFolderPath"] = BinaryData.FromString("\"examplecontainer\""),
+type = "Expression",
+value = "@item()",
+}),
+["MyFolderPath"] = BinaryData.FromObjectAsJson("examplecontainer")
 },
-}
-},
-DataIntegrationUnits = 32,
+}},
+DataIntegrationUnits = null,
 }
 })
 {
 IsSequential = true,
-}
-},
+}},
                 Parameters =
 {
-["OutputBlobNameList"] = new EntityParameterSpecification(EntityParameterType.Array),
+["OutputBlobNameList"] = new EntityParameterSpecification(EntityParameterType.Array)
 },
-                ElapsedTimeMetricDuration = BinaryData.FromString("\"0.00:10:00\""),
+                ElapsedTimeMetricDuration = BinaryData.FromObjectAsJson("0.00:10:00"),
             };
             ArmOperation<DataFactoryPipelineResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, data);
             DataFactoryPipelineResource result = lro.Value;
@@ -230,9 +177,8 @@ IsSequential = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Pipelines_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_PipelinesGet()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/Pipelines_Get.json
@@ -265,9 +211,44 @@ IsSequential = true,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Pipelines_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_PipelinesListByFactory()
+        {
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/Pipelines_ListByFactory.json
+            // this example is just showing the usage of "Pipelines_ListByFactory" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DataFactoryResource created on azure
+            // for more information of creating DataFactoryResource, please refer to the document of DataFactoryResource
+            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string resourceGroupName = "exampleResourceGroup";
+            string factoryName = "exampleFactoryName";
+            ResourceIdentifier dataFactoryResourceId = DataFactoryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, factoryName);
+            DataFactoryResource dataFactory = client.GetDataFactoryResource(dataFactoryResourceId);
+
+            // get the collection of this DataFactoryPipelineResource
+            DataFactoryPipelineCollection collection = dataFactory.GetDataFactoryPipelines();
+
+            // invoke the operation and iterate over the result
+            await foreach (DataFactoryPipelineResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                DataFactoryPipelineData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_PipelinesGet()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/Pipelines_Get.json
@@ -296,9 +277,8 @@ IsSequential = true,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Pipelines_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_PipelinesGet()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/Pipelines_Get.json
@@ -327,7 +307,7 @@ IsSequential = true,
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

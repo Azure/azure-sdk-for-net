@@ -10,171 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DataShare.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataShare.Samples
 {
     public partial class Sample_ShareSubscriptionResource
     {
-        // ShareSubscriptions_CancelSynchronization
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CancelSynchronization_ShareSubscriptionsCancelSynchronization()
-        {
-            // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ShareSubscriptions_CancelSynchronization.json
-            // this example is just showing the usage of "ShareSubscriptions_CancelSynchronization" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ShareSubscriptionResource created on azure
-            // for more information of creating ShareSubscriptionResource, please refer to the document of ShareSubscriptionResource
-            string subscriptionId = "12345678-1234-1234-12345678abc";
-            string resourceGroupName = "SampleResourceGroup";
-            string accountName = "Account1";
-            string shareSubscriptionName = "ShareSubscription1";
-            ResourceIdentifier shareSubscriptionResourceId = ShareSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, shareSubscriptionName);
-            ShareSubscriptionResource shareSubscription = client.GetShareSubscriptionResource(shareSubscriptionResourceId);
-
-            // invoke the operation
-            ShareSubscriptionSynchronization shareSubscriptionSynchronization = new ShareSubscriptionSynchronization(Guid.Parse("7d0536a6-3fa5-43de-b152-3d07c4f6b2bb"));
-            ArmOperation<ShareSubscriptionSynchronization> lro = await shareSubscription.CancelSynchronizationAsync(WaitUntil.Completed, shareSubscriptionSynchronization);
-            ShareSubscriptionSynchronization result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // ShareSubscriptions_ListSourceShareSynchronizationSettings
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetSourceShareSynchronizationSettings_ShareSubscriptionsListSourceShareSynchronizationSettings()
-        {
-            // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ShareSubscriptions_ListSourceShareSynchronizationSettings.json
-            // this example is just showing the usage of "ShareSubscriptions_ListSourceShareSynchronizationSettings" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ShareSubscriptionResource created on azure
-            // for more information of creating ShareSubscriptionResource, please refer to the document of ShareSubscriptionResource
-            string subscriptionId = "433a8dfd-e5d5-4e77-ad86-90acdc75eb1a";
-            string resourceGroupName = "SampleResourceGroup";
-            string accountName = "Account1";
-            string shareSubscriptionName = "ShareSub1";
-            ResourceIdentifier shareSubscriptionResourceId = ShareSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, shareSubscriptionName);
-            ShareSubscriptionResource shareSubscription = client.GetShareSubscriptionResource(shareSubscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (SourceShareSynchronizationSetting item in shareSubscription.GetSourceShareSynchronizationSettingsAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // ShareSubscriptions_ListSynchronizationDetails
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetSynchronizationDetails_ShareSubscriptionsListSynchronizationDetails()
-        {
-            // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ShareSubscriptions_ListSynchronizationDetails.json
-            // this example is just showing the usage of "ShareSubscriptions_ListSynchronizationDetails" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ShareSubscriptionResource created on azure
-            // for more information of creating ShareSubscriptionResource, please refer to the document of ShareSubscriptionResource
-            string subscriptionId = "433a8dfd-e5d5-4e77-ad86-90acdc75eb1a";
-            string resourceGroupName = "SampleResourceGroup";
-            string accountName = "Account1";
-            string shareSubscriptionName = "ShareSub1";
-            ResourceIdentifier shareSubscriptionResourceId = ShareSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, shareSubscriptionName);
-            ShareSubscriptionResource shareSubscription = client.GetShareSubscriptionResource(shareSubscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            ShareSubscriptionSynchronization shareSubscriptionSynchronization = new ShareSubscriptionSynchronization(Guid.Parse("7d0536a6-3fa5-43de-b152-3d07c4f6b2bb"));
-            await foreach (SynchronizationDetails item in shareSubscription.GetSynchronizationDetailsAsync(shareSubscriptionSynchronization))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // ShareSubscriptions_ListSynchronizations
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetSynchronizations_ShareSubscriptionsListSynchronizations()
-        {
-            // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ShareSubscriptions_ListSynchronizations.json
-            // this example is just showing the usage of "ShareSubscriptions_ListSynchronizations" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ShareSubscriptionResource created on azure
-            // for more information of creating ShareSubscriptionResource, please refer to the document of ShareSubscriptionResource
-            string subscriptionId = "433a8dfd-e5d5-4e77-ad86-90acdc75eb1a";
-            string resourceGroupName = "SampleResourceGroup";
-            string accountName = "Account1";
-            string shareSubscriptionName = "ShareSub1";
-            ResourceIdentifier shareSubscriptionResourceId = ShareSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, shareSubscriptionName);
-            ShareSubscriptionResource shareSubscription = client.GetShareSubscriptionResource(shareSubscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (ShareSubscriptionSynchronization item in shareSubscription.GetSynchronizationsAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // ShareSubscriptions_Synchronize
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Synchronize_ShareSubscriptionsSynchronize()
-        {
-            // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ShareSubscriptions_Synchronize.json
-            // this example is just showing the usage of "ShareSubscriptions_Synchronize" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ShareSubscriptionResource created on azure
-            // for more information of creating ShareSubscriptionResource, please refer to the document of ShareSubscriptionResource
-            string subscriptionId = "12345678-1234-1234-12345678abc";
-            string resourceGroupName = "SampleResourceGroup";
-            string accountName = "Account1";
-            string shareSubscriptionName = "ShareSubscription1";
-            ResourceIdentifier shareSubscriptionResourceId = ShareSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, shareSubscriptionName);
-            ShareSubscriptionResource shareSubscription = client.GetShareSubscriptionResource(shareSubscriptionResourceId);
-
-            // invoke the operation
-            DataShareSynchronizeContent content = new DataShareSynchronizeContent()
-            {
-                SynchronizationMode = SynchronizationMode.Incremental,
-            };
-            ArmOperation<ShareSubscriptionSynchronization> lro = await shareSubscription.SynchronizeAsync(WaitUntil.Completed, content);
-            ShareSubscriptionSynchronization result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // ShareSubscriptions_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ShareSubscriptionsGet()
         {
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ShareSubscriptions_Get.json
@@ -204,9 +47,36 @@ namespace Azure.ResourceManager.DataShare.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ShareSubscriptions_Create
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_ShareSubscriptionsDelete()
+        {
+            // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ShareSubscriptions_Delete.json
+            // this example is just showing the usage of "ShareSubscriptions_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ShareSubscriptionResource created on azure
+            // for more information of creating ShareSubscriptionResource, please refer to the document of ShareSubscriptionResource
+            string subscriptionId = "12345678-1234-1234-12345678abc";
+            string resourceGroupName = "SampleResourceGroup";
+            string accountName = "Account1";
+            string shareSubscriptionName = "ShareSubscription1";
+            ResourceIdentifier shareSubscriptionResourceId = ShareSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, shareSubscriptionName);
+            ShareSubscriptionResource shareSubscription = client.GetShareSubscriptionResource(shareSubscriptionResourceId);
+
+            // invoke the operation
+            ArmOperation<DataShareOperationResult> lro = await shareSubscription.DeleteAsync(WaitUntil.Completed);
+            DataShareOperationResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ShareSubscriptionsCreate()
         {
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ShareSubscriptions_Create.json
@@ -241,13 +111,12 @@ namespace Azure.ResourceManager.DataShare.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ShareSubscriptions_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_ShareSubscriptionsDelete()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CancelSynchronization_ShareSubscriptionsCancelSynchronization()
         {
-            // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ShareSubscriptions_Delete.json
-            // this example is just showing the usage of "ShareSubscriptions_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ShareSubscriptions_CancelSynchronization.json
+            // this example is just showing the usage of "ShareSubscriptions_CancelSynchronization" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -264,15 +133,138 @@ namespace Azure.ResourceManager.DataShare.Samples
             ShareSubscriptionResource shareSubscription = client.GetShareSubscriptionResource(shareSubscriptionResourceId);
 
             // invoke the operation
-            ArmOperation<DataShareOperationResult> lro = await shareSubscription.DeleteAsync(WaitUntil.Completed);
-            DataShareOperationResult result = lro.Value;
+            ShareSubscriptionSynchronization shareSubscriptionSynchronization = new ShareSubscriptionSynchronization(Guid.Parse("7d0536a6-3fa5-43de-b152-3d07c4f6b2bb"));
+            ArmOperation<ShareSubscriptionSynchronization> lro = await shareSubscription.CancelSynchronizationAsync(WaitUntil.Completed, shareSubscriptionSynchronization);
+            ShareSubscriptionSynchronization result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ConsumerSourceDataSets_ListByShareSubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetSourceShareSynchronizationSettings_ShareSubscriptionsListSourceShareSynchronizationSettings()
+        {
+            // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ShareSubscriptions_ListSourceShareSynchronizationSettings.json
+            // this example is just showing the usage of "ShareSubscriptions_ListSourceShareSynchronizationSettings" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ShareSubscriptionResource created on azure
+            // for more information of creating ShareSubscriptionResource, please refer to the document of ShareSubscriptionResource
+            string subscriptionId = "433a8dfd-e5d5-4e77-ad86-90acdc75eb1a";
+            string resourceGroupName = "SampleResourceGroup";
+            string accountName = "Account1";
+            string shareSubscriptionName = "ShareSub1";
+            ResourceIdentifier shareSubscriptionResourceId = ShareSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, shareSubscriptionName);
+            ShareSubscriptionResource shareSubscription = client.GetShareSubscriptionResource(shareSubscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (SourceShareSynchronizationSetting item in shareSubscription.GetSourceShareSynchronizationSettingsAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetSynchronizationDetails_ShareSubscriptionsListSynchronizationDetails()
+        {
+            // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ShareSubscriptions_ListSynchronizationDetails.json
+            // this example is just showing the usage of "ShareSubscriptions_ListSynchronizationDetails" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ShareSubscriptionResource created on azure
+            // for more information of creating ShareSubscriptionResource, please refer to the document of ShareSubscriptionResource
+            string subscriptionId = "433a8dfd-e5d5-4e77-ad86-90acdc75eb1a";
+            string resourceGroupName = "SampleResourceGroup";
+            string accountName = "Account1";
+            string shareSubscriptionName = "ShareSub1";
+            ResourceIdentifier shareSubscriptionResourceId = ShareSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, shareSubscriptionName);
+            ShareSubscriptionResource shareSubscription = client.GetShareSubscriptionResource(shareSubscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            ShareSubscriptionSynchronization shareSubscriptionSynchronization = new ShareSubscriptionSynchronization(Guid.Parse("7d0536a6-3fa5-43de-b152-3d07c4f6b2bb"));
+            await foreach (SynchronizationDetails item in shareSubscription.GetSynchronizationDetailsAsync(shareSubscriptionSynchronization))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetSynchronizations_ShareSubscriptionsListSynchronizations()
+        {
+            // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ShareSubscriptions_ListSynchronizations.json
+            // this example is just showing the usage of "ShareSubscriptions_ListSynchronizations" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ShareSubscriptionResource created on azure
+            // for more information of creating ShareSubscriptionResource, please refer to the document of ShareSubscriptionResource
+            string subscriptionId = "433a8dfd-e5d5-4e77-ad86-90acdc75eb1a";
+            string resourceGroupName = "SampleResourceGroup";
+            string accountName = "Account1";
+            string shareSubscriptionName = "ShareSub1";
+            ResourceIdentifier shareSubscriptionResourceId = ShareSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, shareSubscriptionName);
+            ShareSubscriptionResource shareSubscription = client.GetShareSubscriptionResource(shareSubscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (ShareSubscriptionSynchronization item in shareSubscription.GetSynchronizationsAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Synchronize_ShareSubscriptionsSynchronize()
+        {
+            // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ShareSubscriptions_Synchronize.json
+            // this example is just showing the usage of "ShareSubscriptions_Synchronize" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ShareSubscriptionResource created on azure
+            // for more information of creating ShareSubscriptionResource, please refer to the document of ShareSubscriptionResource
+            string subscriptionId = "12345678-1234-1234-12345678abc";
+            string resourceGroupName = "SampleResourceGroup";
+            string accountName = "Account1";
+            string shareSubscriptionName = "ShareSubscription1";
+            ResourceIdentifier shareSubscriptionResourceId = ShareSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, shareSubscriptionName);
+            ShareSubscriptionResource shareSubscription = client.GetShareSubscriptionResource(shareSubscriptionResourceId);
+
+            // invoke the operation
+            DataShareSynchronizeContent content = new DataShareSynchronizeContent
+            {
+                SynchronizationMode = SynchronizationMode.Incremental,
+            };
+            ArmOperation<ShareSubscriptionSynchronization> lro = await shareSubscription.SynchronizeAsync(WaitUntil.Completed, content);
+            ShareSubscriptionSynchronization result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetConsumerSourceDataSets_ConsumerSourceDataSetsListByShareSubscription()
         {
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/ConsumerSourceDataSets_ListByShareSubscription.json
@@ -298,7 +290,7 @@ namespace Azure.ResourceManager.DataShare.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

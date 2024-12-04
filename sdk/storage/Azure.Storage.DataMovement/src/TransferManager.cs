@@ -3,6 +3,7 @@
 
 using System;
 using System.Buffers;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -28,7 +29,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Ongoing transfers indexed at the transfer id.
         /// </summary>
-        internal readonly Dictionary<string, DataTransfer> _dataTransfers = new();
+        internal readonly ConcurrentDictionary<string, DataTransfer> _dataTransfers = new();
 
         /// <summary>
         /// Designated checkpointer for the respective transfer manager.
@@ -59,9 +60,13 @@ namespace Azure.Storage.DataMovement
         /// <param name="options">Options that will apply to all transfers started by this TransferManager.</param>
         public TransferManager(TransferManagerOptions options = default)
             : this(
-            ChannelProcessing.NewProcessor<TransferJobInternal>(parallelism: 1),
-            ChannelProcessing.NewProcessor<JobPartInternal>(DataMovementConstants.MaxJobPartReaders),
-            ChannelProcessing.NewProcessor<Func<Task>>(options?.MaximumConcurrency ?? DataMovementConstants.MaxJobChunkTasks),
+            ChannelProcessing.NewProcessor<TransferJobInternal>(readers: 1),
+            ChannelProcessing.NewProcessor<JobPartInternal>(
+                readers: DataMovementConstants.Channels.MaxJobPartReaders,
+                capacity: DataMovementConstants.Channels.JobPartCapacity),
+            ChannelProcessing.NewProcessor<Func<Task>>(
+                readers: options?.MaximumConcurrency ?? DataMovementConstants.Channels.MaxJobChunkReaders,
+                capacity: DataMovementConstants.Channels.JobChunkCapacity),
             new(ArrayPool<byte>.Shared,
                 options?.ErrorHandling ?? DataTransferErrorMode.StopOnAnyFailure,
                 new ClientDiagnostics(options?.ClientOptions ?? ClientOptions.Default)),
@@ -158,7 +163,7 @@ namespace Azure.Storage.DataMovement
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             cancellationToken = LinkCancellation(cancellationToken);
-            await SetDataTransfers(cancellationToken).ConfigureAwait(false);
+            await SetDataTransfersAsync(cancellationToken).ConfigureAwait(false);
             IEnumerable<DataTransfer> totalTransfers;
             if (filterByStatus == default || filterByStatus.Count == 0)
             {
@@ -290,12 +295,11 @@ namespace Azure.Storage.DataMovement
 
             transferOptions ??= new DataTransferOptions();
 
-            if (_dataTransfers.ContainsKey(dataTransferProperties.TransferId))
-            {
-                // Remove the stale DataTransfer so we can pass a new DataTransfer object
-                // to the user and also track the transfer from the DataTransfer object
-                _dataTransfers.Remove(dataTransferProperties.TransferId);
-            }
+            // Remove the stale DataTransfer so we can pass a new DataTransfer object
+            // to the user and also track the transfer from the DataTransfer object
+            // No need to check if we were able to remove the transfer or not.
+            // If there's no stale DataTransfer to remove, move on.
+            _dataTransfers.TryRemove(dataTransferProperties.TransferId, out DataTransfer transfer);
 
             if (!TryGetStorageResourceProvider(dataTransferProperties, getSource: true, out StorageResourceProvider sourceProvider))
             {
@@ -369,24 +373,40 @@ namespace Azure.Storage.DataMovement
             transferOptions ??= new DataTransferOptions();
 
             string transferId = _generateTransferId();
-            await _checkpointer.AddNewJobAsync(
-                transferId,
-                sourceResource,
-                destinationResource,
-                cancellationToken).ConfigureAwait(false);
+            try
+            {
+                await _checkpointer.AddNewJobAsync(
+                    transferId,
+                    sourceResource,
+                    destinationResource,
+                    cancellationToken).ConfigureAwait(false);
 
-            // TODO: if the below fails for any reason, this job will still be in the checkpointer.
-            // That seems not desirable.
+                DataTransfer dataTransfer = await BuildAndAddTransferJobAsync(
+                    sourceResource,
+                    destinationResource,
+                    transferOptions,
+                    transferId,
+                    false,
+                    cancellationToken).ConfigureAwait(false);
 
-            DataTransfer dataTransfer = await BuildAndAddTransferJobAsync(
-                sourceResource,
-                destinationResource,
-                transferOptions,
-                transferId,
-                false,
-                cancellationToken).ConfigureAwait(false);
-
-            return dataTransfer;
+                return dataTransfer;
+            }
+            catch (Exception ex)
+            {
+                // cleanup any state for a job that didn't even start
+                try
+                {
+                    // No need to check if we were able to remove the transfer or not.
+                    // If there's no stale DataTransfer to remove, move on, because this is a cleanup
+                    _dataTransfers.TryRemove(transferId, out DataTransfer transfer);
+                    await _checkpointer.TryRemoveStoredTransferAsync(transferId, cancellationToken).ConfigureAwait(false);
+                }
+                catch (Exception cleanupEx)
+                {
+                    throw new AggregateException(ex, cleanupEx);
+                }
+                throw;
+            }
         }
 
         private async Task<DataTransfer> BuildAndAddTransferJobAsync(
@@ -409,14 +429,17 @@ namespace Azure.Storage.DataMovement
                 .ConfigureAwait(false);
 
             transfer.TransferManager = this;
-            _dataTransfers.Add(transfer.Id, transfer);
+            if (!_dataTransfers.TryAdd(transfer.Id, transfer))
+            {
+                throw Errors.CollisionTransferId(transfer.Id);
+            }
             await _jobsProcessor.QueueAsync(transferJobInternal, cancellationToken).ConfigureAwait(false);
 
             return transfer;
         }
         #endregion
 
-        private async Task SetDataTransfers(CancellationToken cancellationToken = default)
+        private async Task SetDataTransfersAsync(CancellationToken cancellationToken = default)
         {
             _dataTransfers.Clear();
 
@@ -424,12 +447,17 @@ namespace Azure.Storage.DataMovement
             foreach (string transferId in storedTransfers)
             {
                 DataTransferStatus jobStatus = await _checkpointer.GetJobStatusAsync(transferId, cancellationToken).ConfigureAwait(false);
-                _dataTransfers.Add(transferId, new DataTransfer(
+                // If TryAdd fails here, we need to check if in other places where we are
+                // adding that every transferId is unique.
+                if (!_dataTransfers.TryAdd(transferId, new DataTransfer(
                     id: transferId,
                     status: jobStatus)
                 {
                     TransferManager = this,
-                });
+                }))
+                {
+                    throw Errors.CollisionTransferId(transferId);
+                }
             }
         }
 
