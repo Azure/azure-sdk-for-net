@@ -1214,6 +1214,11 @@ namespace Azure.Communication.CallAutomation
         protected PlaySource() { }
         public string PlaySourceCacheId { get { throw null; } set { } }
     }
+    public partial class PlayStarted : Azure.Communication.CallAutomation.CallAutomationEventBase
+    {
+        internal PlayStarted() { }
+        public static Azure.Communication.CallAutomation.PlayStarted Deserialize(string content) { throw null; }
+    }
     public partial class PlayToAllOptions
     {
         public PlayToAllOptions(Azure.Communication.CallAutomation.PlaySource playSource) { }
