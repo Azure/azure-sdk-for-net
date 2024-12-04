@@ -504,26 +504,7 @@ namespace Azure.Storage.DataMovement
             return long.Parse(range.Substring(lengthSeparator + 1), CultureInfo.InvariantCulture);
         }
 
-        internal static List<(long Offset, long Size)> GetRangeList(long blockSize, long fileLength)
-        {
-            // The list tracking blocks IDs we're going to commit
-            List<(long Offset, long Size)> partitions = new List<(long, long)>();
-
-            // Partition the stream into individual blocks
-            foreach ((long Offset, long Length) block in GetPartitionIndexes(fileLength, blockSize))
-            {
-                /* We need to do this first! Length is calculated on the fly based on stream buffer
-                    * contents; We need to record the partition data first before consuming the stream
-                    * asynchronously. */
-                partitions.Add(block);
-            }
-            return partitions;
-        }
-
-        /// <summary>
-        /// Partition a stream into a series of blocks buffered as needed by an array pool.
-        /// </summary>
-        private static IEnumerable<(long Offset, long Length)> GetPartitionIndexes(
+        protected static IEnumerable<(long Offset, long Length)> GetRanges(
             long streamLength, // StreamLength needed to divide before hand
             long blockSize)
         {
