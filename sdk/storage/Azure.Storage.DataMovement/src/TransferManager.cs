@@ -468,17 +468,25 @@ namespace Azure.Storage.DataMovement
         /// Disposes.
         /// </summary>
         /// <returns>A <see cref="ValueTask"/> of disposing the <see cref="TransferManager"/>.</returns>
-        ValueTask IAsyncDisposable.DisposeAsync()
+        async ValueTask IAsyncDisposable.DisposeAsync()
         {
             if (!_cancellationTokenSource.IsCancellationRequested)
             {
                 _cancellationTokenSource.Cancel();
             }
-            _jobsProcessor?.Dispose();
-            _partsProcessor?.Dispose();
-            _chunksProcessor?.Dispose();
+            if (_jobsProcessor != default)
+            {
+                await _jobsProcessor.DisposeAsync().ConfigureAwait(false);
+            }
+            if (_partsProcessor != default)
+            {
+                await _partsProcessor.DisposeAsync().ConfigureAwait(false);
+            }
+            if (_chunksProcessor != default)
+            {
+                await _chunksProcessor.DisposeAsync().ConfigureAwait(false);
+            }
             GC.SuppressFinalize(this);
-            return default;
         }
     }
 }

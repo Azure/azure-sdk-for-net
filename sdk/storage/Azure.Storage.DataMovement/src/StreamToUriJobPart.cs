@@ -13,7 +13,7 @@ using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class StreamToUriJobPart : JobPartInternal, IDisposable
+    internal class StreamToUriJobPart : JobPartInternal, IAsyncDisposable
     {
         /// <summary>
         ///  Will handle the calling the commit block list API once
@@ -113,9 +113,9 @@ namespace Azure.Storage.DataMovement
         {
         }
 
-        public void Dispose()
+        public async ValueTask DisposeAsync()
         {
-            DisposeHandlers();
+            await DisposeHandlersAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -469,7 +469,7 @@ namespace Azure.Storage.DataMovement
                 cancellationToken: _cancellationToken).ConfigureAwait(false);
 
             // Dispose the handlers
-            DisposeHandlers();
+            await DisposeHandlersAsync().ConfigureAwait(false);
 
             // Set completion status to completed
             await OnTransferStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
@@ -557,23 +557,28 @@ namespace Azure.Storage.DataMovement
 
         public override async Task InvokeSkippedArgAsync()
         {
-            DisposeHandlers();
+            // TODO: remove to only Dispose right before Paused/Completed state
+            await DisposeHandlersAsync().ConfigureAwait(false);
             await base.InvokeSkippedArgAsync().ConfigureAwait(false);
         }
 
         public override async Task InvokeFailedArgAsync(Exception ex)
         {
-            DisposeHandlers();
+            // TODO: remove to only Dispose right before Paused/Completed state
+            await DisposeHandlersAsync().ConfigureAwait(false);
             await base.InvokeFailedArgAsync(ex).ConfigureAwait(false);
         }
 
-        internal void DisposeHandlers()
+        public override Task DisposeHandlersAsync()
         {
             if (_commitBlockHandler != default)
             {
+                // TODO: remove to replace with DisposeAsync
                 _commitBlockHandler.Dispose();
                 _commitBlockHandler = null;
             }
+            // TODO: remove after changes to DisposeAsync
+            return Task.CompletedTask;
         }
     }
 }

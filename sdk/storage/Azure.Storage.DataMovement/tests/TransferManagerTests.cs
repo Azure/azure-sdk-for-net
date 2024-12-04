@@ -74,9 +74,9 @@ public class TransferManagerTests
             partsProcessor.VerifyNoOtherCalls();
             chunksProcessor.VerifyNoOtherCalls();
         }
-        jobsProcessor.VerifyDisposal();
-        partsProcessor.VerifyDisposal();
-        chunksProcessor.VerifyDisposal();
+        jobsProcessor.VerifyAsyncDisposal();
+        partsProcessor.VerifyAsyncDisposal();
+        chunksProcessor.VerifyAsyncDisposal();
 
         jobsProcessor.VerifyNoOtherCalls();
         partsProcessor.VerifyNoOtherCalls();

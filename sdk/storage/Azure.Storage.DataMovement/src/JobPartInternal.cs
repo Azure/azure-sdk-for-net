@@ -3,6 +3,7 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -141,6 +142,8 @@ namespace Azure.Storage.DataMovement
         public ArrayPool<byte> UploadArrayPool => _arrayPool;
         internal ArrayPool<byte> _arrayPool;
 
+        private SemaphoreSlim _completedCountStatusLock;
+
         protected JobPartInternal() { }
 
         internal JobPartInternal(
@@ -201,6 +204,8 @@ namespace Azure.Storage.DataMovement
             Length = length;
             _currentChunkCount = 0;
             _completedChunkCount = 0;
+
+            _completedCountStatusLock = new SemaphoreSlim(1, 1);
         }
 
         public void SetQueueChunkDelegate(QueueChunkDelegate chunkDelegate)
@@ -241,6 +246,11 @@ namespace Azure.Storage.DataMovement
         public abstract Task ProcessPartToChunkAsync();
 
         /// <summary>
+        /// Diposes of chunk handler.
+        /// </summary>
+        public abstract Task DisposeHandlersAsync();
+
+        /// <summary>
         /// Triggers the cancellation for the Job Part.
         ///
         /// If the status is set to <see cref="DataTransferState.Paused"/>
@@ -276,6 +286,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="transferState"></param>
         internal async Task OnTransferStateChangedAsync(DataTransferState transferState)
         {
+            _completedCountStatusLock.Wait();
             if (JobPartStatus.SetTransferStateChange(transferState))
             {
                 // Progress tracking, do before invoking the event below
@@ -303,6 +314,7 @@ namespace Azure.Storage.DataMovement
                     ClientDiagnostics)
                     .ConfigureAwait(false);
             }
+            _completedCountStatusLock.Release();
         }
 
         /// <summary>
@@ -370,6 +382,7 @@ namespace Azure.Storage.DataMovement
                     .ConfigureAwait(false);
             }
             //TODO: figure out why we set the Completed state here and not just wait for all the chunks to finish
+            await DisposeHandlersAsync().ConfigureAwait(false);
             await OnTransferStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
         }
 
@@ -571,6 +584,7 @@ namespace Azure.Storage.DataMovement
                     DataTransferState newState = JobPartStatus.State == DataTransferState.Pausing ?
                         DataTransferState.Paused :
                         DataTransferState.Completed;
+                    await DisposeHandlersAsync().ConfigureAwait(false);
                     await OnTransferStateChangedAsync(newState).ConfigureAwait(false);
                 }
             }
