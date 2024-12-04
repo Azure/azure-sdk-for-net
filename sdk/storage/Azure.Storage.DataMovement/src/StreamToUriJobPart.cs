@@ -11,7 +11,6 @@ using Azure.Storage.Shared;
 using Azure.Core;
 using Azure.Storage.Common;
 using System.Linq;
-using static Azure.Storage.DataMovement.DataMovementConstants;
 
 namespace Azure.Storage.DataMovement
 {
