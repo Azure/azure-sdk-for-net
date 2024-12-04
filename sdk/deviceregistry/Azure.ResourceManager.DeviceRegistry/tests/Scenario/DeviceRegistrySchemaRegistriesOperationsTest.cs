@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             // Create DeviceRegistry SchemaRegistry Schema
             var schemaRegistrySchemaData = new DeviceRegistrySchemaData()
             {
-                Properties = new(Format.JsonSchemaDraft7, SchemaType.MessageSchema)
+                Properties = new(DeviceRegistrySchemaFormat.JsonSchemaDraft7, DeviceRegistrySchemaType.MessageSchema)
                 {
                     Description = "This is a Schema instance.",
                     DisplayName = "Schema SDK test"
