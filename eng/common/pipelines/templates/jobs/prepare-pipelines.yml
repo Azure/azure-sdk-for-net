@@ -22,8 +22,11 @@ jobs:
     Prefix: 'na'
     DevOpsPath: 'na'
     InternalVariableGroups: ''
+    InternalServiceConnections: ''
+    GeneratePublicCIPipeline: ''
     GenerateUnifiedWeekly: ''
     TestVariableGroups: ''
+    TestServiceConnections: ''
     
     # Standard set of variable groups for the Azure SDK repositories
     AzureSDK_Maven_Release_Pipeline_Secrets: 1
@@ -70,6 +73,12 @@ jobs:
           exit 1  
         }
 
+        $generatePublicCIPipeline = 'true'
+        $generateUnifiedWeekly = 'false'
+
+        $testServiceConnections = '"Azure" "azure-sdk-tests" "azure-sdk-tests-china" "azure-sdk-tests-preview" "azure-sdk-tests-public" "azure-sdk-tests-usgov" "Azure SDK Test Resources - LiveTestSecrets"'
+        $internalServiceConnections = '"Azure" "Azure SDK Artifacts" "Azure SDK Engineering System" "opensource-api-connection" "AzureSDKEngKeyVault Secrets"'
+
         # Map the language prefix to the appropriate variable groups
         switch ($prefix)
         {
@@ -81,16 +90,19 @@ jobs:
             $internalVariableGroups = '$(AzureSDK_Maven_Release_Pipeline_Secrets) $(Release_Secrets_for_GitHub) $(APIReview_AutoCreate_Configurations)'
           }
           "js" {
+            $generatePublicCIPipeline = 'false'
             $internalVariableGroups = '$(NPM_Registry_Authentication) $(Release_Secrets_for_GitHub) $(APIReview_AutoCreate_Configurations)'
             $testVariableGroups = '$(Secrets_for_Resource_Provisioner)'
           }
           "python" {
+            $generatePublicCIPipeline = 'false'
             $internalVariableGroups = '$(Release_Secrets_for_GitHub) $(APIReview_AutoCreate_Configurations)'
             $testVariableGroups = '$(Secrets_for_Resource_Provisioner)'
           }
           "net" {
             $internalVariableGroups = '$(AzureSDK_Nuget_Release_Pipeline_Secrets) $(Release_Secrets_for_GitHub) $(APIReview_AutoCreate_Configurations)'
             $testVariableGroups = '$(Secrets_for_Resource_Provisioner)'
+            $internalServiceConnections += ' "Azure SDK Symbols Publishing" Nuget.org'
           }
           "cpp" {
             $internalVariableGroups = '$(Release_Secrets_for_GitHub) $(APIReview_AutoCreate_Configurations) $(Secrets_for_Resource_Provisioner)'
@@ -110,9 +122,16 @@ jobs:
 
         Write-Host "InternalVariableGroups = $internalVariableGroups"
         Write-Host "TestVariableGroups = $testVariableGroups"
+        Write-Host "TestServiceConnections = $testServiceConnections"
+        Write-Host "InternalServiceConnections = $internalServiceConnections"
+        Write-Host "GeneratePublicCIPipeline = $generatePublicCIPipeline"
         Write-Host "GenerateUnifiedWeekly = $generateUnifiedWeekly"
+        
         Write-Host "##vso[task.setvariable variable=InternalVariableGroups]$internalVariableGroups"
         Write-Host "##vso[task.setvariable variable=TestVariableGroups]$testVariableGroups"
+        Write-Host "##vso[task.setvariable variable=TestServiceConnections]$testServiceConnections"
+        Write-Host "##vso[task.setvariable variable=InternalServiceConnections]$internalServviceConnections"
+        Write-host "##vso[task.setvariable variable=GeneratePublicCIPipeline]$generatePublicCIPipeline"
         Write-Host "##vso[task.setvariable variable=GenerateUnifiedWeekly]$generateUnifiedWeekly"
       displayName: Setup pipeline generation variables
 
@@ -135,7 +154,9 @@ jobs:
           --branch refs/heads/$(DefaultBranch)
           --set-managed-variables
           --debug
+          --serviceconnections "Azure"
       displayName: 'Generate ci pipelines for: ${{ parameters.Repository }}'
+      condition: and(succeeded(), eq(variables['GeneratePublicCIPipeline'],'true'))
       continueOnError: true
     - task: AzureCLI@2
       inputs:
@@ -157,6 +178,7 @@ jobs:
           --set-managed-variables
           --debug
           --variablegroups $(InternalVariableGroups) $(TestVariableGroups)
+          --serviceconnections $(InternalServiceConnections) $(TestServiceConnections)
       displayName: 'Generate release pipelines for: ${{ parameters.Repository }}'
       continueOnError: true
     - task: AzureCLI@2
@@ -179,6 +201,7 @@ jobs:
           --set-managed-variables
           --debug
           --variablegroups $(TestVariableGroups)
+          --serviceconnections $(TestServiceConnections)
       displayName: 'Generate test pipelines for: ${{ parameters.Repository }}'
       condition: and(succeeded(), ne(variables['TestVariableGroups'],''))
       continueOnError: true
@@ -202,6 +225,7 @@ jobs:
           --set-managed-variables
           --debug
           --variablegroups $(TestVariableGroups)
+          --serviceconnections $(TestServiceConnections)
       displayName: 'Generate weekly test pipelines (multi-cloud) for: ${{ parameters.Repository }}'
       condition: and(succeeded(), ne(variables['TestVariableGroups'],''))
       continueOnError: true
@@ -225,6 +249,7 @@ jobs:
           --set-managed-variables
           --debug
           --variablegroups $(InternalVariableGroups) $(TestVariableGroups)
+          --serviceconnections $(InternalServiceConnections) $(TestServiceConnections)
       displayName: 'Generate weekly unified test pipelines (multi-cloud) for: ${{ parameters.Repository }}'
       condition: and(succeeded(), ne(variables['GenerateUnifiedWeekly'],''))
       continueOnError: true
