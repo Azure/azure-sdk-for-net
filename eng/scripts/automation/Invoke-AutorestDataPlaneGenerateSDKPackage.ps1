@@ -1,7 +1,7 @@
 #Requires -Version 7.0
 <#
 .SYNOPSIS
-script for creating a getting started project in a branch of `azure-sdk-for-net` repo.
+script for creating a getting started project in a branch of `azure-sdk-for-net` repo for SDKs generated from swagger.
 
 .PARAMETER service
 The Azure client service directory name. ie. purview. It equals to the name of the directory in the specification folder of the azure-rest-api-specs repo that contains the REST API definition file.
@@ -13,7 +13,7 @@ The SDK package namespace. This value will also provide the name for the shipped
 The address of the root directory of sdk repo. e.g. /home/azure-sdk-for-net
 
 .PARAMETER inputfiles
-The address of the Open API spec files,  separated by semicolon if there is more than one file. 
+The address of the Open API spec files,  separated by semicolon if there is more than one file.
 The Open API spec file can be local file, or the web address of the file in the `azure-rest-api-specs` repo.
 When pointing to a local file, make sure to use **absolute path**, i.e. /home/swagger/compute.json.
 When pointing to a file in the `azure-rest-api-specs` repo, make sure to include the commit id in the URI, i.e. `https://github.com/Azure/azure-rest-api-specs/blob/73a0fa453a93bdbe8885f87b9e4e9fef4f0452d0/specification/webpubsub/data-plane/WebPubSub/stable/2021-10-01/webpubsub.json`. This ensures that you can choose the time to upgrade to new swagger file versions.
@@ -31,10 +31,10 @@ The key to use if your library supports **Azure Key Credential** authentication.
 .EXAMPLE
 Run script with default parameters.
 
-Invoke-DataPlaneGenerateSDKPackage.ps1 -service <servicename> -namespace Azure.<group>.<service> -sdkPath <sdkrepoRootPath> [-inputfiles <inputfilelink>] [-readme <readmeFilelink>] [-securityScope <securityScope>] [-securityHeaderName <securityHeaderName>]
+Invoke-AutorestDataPlaneGenerateSDKPackage.ps1 -service <servicename> -namespace Azure.<group>.<service> -sdkPath <sdkrepoRootPath> [-inputfiles <inputfilelink>] [-readme <readmeFilelink>] [-securityScope <securityScope>] [-securityHeaderName <securityHeaderName>]
 
 e.g.
-Invoke-DataPlaneGenerateSDKPackage.ps1 -service webpubsub -namespace Azure.Messaging.WebPubSub -sdkPath /home/azure-sdk-for-net -inputfiles https://github.com/Azure/azure-rest-api-specs/blob/73a0fa453a93bdbe8885f87b9e4e9fef4f0452d0/specification/webpubsub/data-plane/WebPubSub/stable/2021-10-01/webpubsub.json -securityScope https://sample/.default
+Invoke-AutorestDataPlaneGenerateSDKPackage.ps1 -service webpubsub -namespace Azure.Messaging.WebPubSub -sdkPath /home/azure-sdk-for-net -inputfiles https://github.com/Azure/azure-rest-api-specs/blob/73a0fa453a93bdbe8885f87b9e4e9fef4f0452d0/specification/webpubsub/data-plane/WebPubSub/stable/2021-10-01/webpubsub.json -securityScope https://sample/.default
 
 #>
 param (
