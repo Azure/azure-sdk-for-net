@@ -77,7 +77,7 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary>
     /// FilesModelFactory provides utilities for mocking.
     /// </summary>
-    public static partial class FilessModelFactory
+    public static partial class FilesModelFactory
     {
         /// <summary>
         /// Creates a new FileSmbProperties instance for mocking.
