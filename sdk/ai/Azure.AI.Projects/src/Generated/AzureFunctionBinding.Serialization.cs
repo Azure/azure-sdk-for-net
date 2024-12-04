@@ -7,12 +7,12 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.Projects
 {
-    [PersistableModelProxy(typeof(UnknownAzureFunctionBinding))]
     public partial class AzureFunctionBinding : IUtf8JsonSerializable, IJsonModel<AzureFunctionBinding>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureFunctionBinding>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -35,7 +35,9 @@ namespace Azure.AI.Projects
             }
 
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(Type.ToString());
+            writer.WritePropertyName("storage_queue"u8);
+            writer.WriteObjectValue(StorageQueue, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -73,14 +75,29 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            if (element.TryGetProperty("type", out JsonElement discriminator))
+            AzureFunctionBindingType type = default;
+            AzureFunctionStorageQueue storageQueue = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (property.NameEquals("type"u8))
                 {
-                    case "storage_queue": return AzureStorageQueueBinding.DeserializeAzureStorageQueueBinding(element, options);
+                    type = new AzureFunctionBindingType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("storage_queue"u8))
+                {
+                    storageQueue = AzureFunctionStorageQueue.DeserializeAzureFunctionStorageQueue(property.Value, options);
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return UnknownAzureFunctionBinding.DeserializeUnknownAzureFunctionBinding(element, options);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AzureFunctionBinding(type, storageQueue, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureFunctionBinding>.Write(ModelReaderWriterOptions options)

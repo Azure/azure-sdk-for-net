@@ -484,6 +484,7 @@ namespace Azure.AI.Projects
     {
         public static Azure.AI.Projects.AgentPageableListOfVectorStore AgentPageableListOfVectorStore(Azure.AI.Projects.AgentPageableListOfVectorStoreObject @object = default(Azure.AI.Projects.AgentPageableListOfVectorStoreObject), System.Collections.Generic.IEnumerable<Azure.AI.Projects.VectorStore> data = null, string firstId = null, string lastId = null, bool hasMore = false) { throw null; }
         public static Azure.AI.Projects.AgentPageableListOfVectorStoreFile AgentPageableListOfVectorStoreFile(Azure.AI.Projects.AgentPageableListOfVectorStoreFileObject @object = default(Azure.AI.Projects.AgentPageableListOfVectorStoreFileObject), System.Collections.Generic.IEnumerable<Azure.AI.Projects.VectorStoreFile> data = null, string firstId = null, string lastId = null, bool hasMore = false) { throw null; }
+        public static Azure.AI.Projects.AzureFunctionBinding AzureFunctionBinding(Azure.AI.Projects.AzureFunctionBindingType type = default(Azure.AI.Projects.AzureFunctionBindingType), Azure.AI.Projects.AzureFunctionStorageQueue storageQueue = null) { throw null; }
         public static Azure.AI.Projects.ConnectionProperties ConnectionProperties(Azure.AI.Projects.ConnectionType category = Azure.AI.Projects.ConnectionType.AzureOpenAI, string target = null) { throw null; }
         public static Azure.AI.Projects.ConnectionPropertiesApiKeyAuth ConnectionPropertiesApiKeyAuth(Azure.AI.Projects.ConnectionType category = Azure.AI.Projects.ConnectionType.AzureOpenAI, string target = null, Azure.AI.Projects.CredentialsApiKeyAuth credentials = null) { throw null; }
         public static Azure.AI.Projects.ConnectionResponse ConnectionResponse(string id = null, string name = null, Azure.AI.Projects.ConnectionProperties properties = null) { throw null; }
@@ -611,9 +612,11 @@ namespace Azure.AI.Projects
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AzureAISearchToolDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AzureAISearchToolDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public abstract partial class AzureFunctionBinding : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AzureFunctionBinding>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AzureFunctionBinding>
+    public partial class AzureFunctionBinding : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AzureFunctionBinding>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AzureFunctionBinding>
     {
-        protected AzureFunctionBinding() { }
+        public AzureFunctionBinding(Azure.AI.Projects.AzureFunctionStorageQueue storageQueue) { }
+        public Azure.AI.Projects.AzureFunctionStorageQueue StorageQueue { get { throw null; } set { } }
+        public Azure.AI.Projects.AzureFunctionBindingType Type { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Projects.AzureFunctionBinding System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AzureFunctionBinding>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AzureFunctionBinding>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -621,11 +624,28 @@ namespace Azure.AI.Projects
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AzureFunctionBinding>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AzureFunctionBinding>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AzureFunctionBindingType : System.IEquatable<Azure.AI.Projects.AzureFunctionBindingType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AzureFunctionBindingType(string value) { throw null; }
+        public static Azure.AI.Projects.AzureFunctionBindingType StorageQueue { get { throw null; } }
+        public bool Equals(Azure.AI.Projects.AzureFunctionBindingType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Projects.AzureFunctionBindingType left, Azure.AI.Projects.AzureFunctionBindingType right) { throw null; }
+        public static implicit operator Azure.AI.Projects.AzureFunctionBindingType (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Projects.AzureFunctionBindingType left, Azure.AI.Projects.AzureFunctionBindingType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class AzureFunctionStorageQueue : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AzureFunctionStorageQueue>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AzureFunctionStorageQueue>
     {
-        public AzureFunctionStorageQueue(string storageQueueUri, string queueName) { }
+        public AzureFunctionStorageQueue(string storageServiceUri, string queueName) { }
         public string QueueName { get { throw null; } set { } }
-        public string StorageQueueUri { get { throw null; } set { } }
+        public string StorageServiceUri { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Projects.AzureFunctionStorageQueue System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AzureFunctionStorageQueue>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AzureFunctionStorageQueue>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -635,7 +655,7 @@ namespace Azure.AI.Projects
     }
     public partial class AzureFunctionToolDefinition : Azure.AI.Projects.ToolDefinition, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AzureFunctionToolDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AzureFunctionToolDefinition>
     {
-        public AzureFunctionToolDefinition(string name, string description, Azure.AI.Projects.AzureStorageQueueBinding inputBinding, Azure.AI.Projects.AzureStorageQueueBinding outputBinding, System.BinaryData parameters) { }
+        public AzureFunctionToolDefinition(string name, string description, Azure.AI.Projects.AzureFunctionBinding inputBinding, Azure.AI.Projects.AzureFunctionBinding outputBinding, System.BinaryData parameters) { }
         public string Description { get { throw null; } }
         public string Name { get { throw null; } }
         public System.BinaryData Parameters { get { throw null; } }
@@ -647,17 +667,6 @@ namespace Azure.AI.Projects
         Azure.AI.Projects.AzureFunctionToolDefinition System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AzureFunctionToolDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AzureFunctionToolDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AzureFunctionToolDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class AzureStorageQueueBinding : Azure.AI.Projects.AzureFunctionBinding, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AzureStorageQueueBinding>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AzureStorageQueueBinding>
-    {
-        public AzureStorageQueueBinding(Azure.AI.Projects.AzureFunctionStorageQueue storageQueue) { }
-        public Azure.AI.Projects.AzureFunctionStorageQueue StorageQueue { get { throw null; } set { } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.AzureStorageQueueBinding System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AzureStorageQueueBinding>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AzureStorageQueueBinding>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.AzureStorageQueueBinding System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AzureStorageQueueBinding>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AzureStorageQueueBinding>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AzureStorageQueueBinding>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class BingGroundingToolDefinition : Azure.AI.Projects.ToolDefinition, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.BingGroundingToolDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.BingGroundingToolDefinition>
     {

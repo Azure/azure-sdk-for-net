@@ -35,7 +35,7 @@ namespace Azure.AI.Projects
             }
 
             writer.WritePropertyName("queue_service_uri"u8);
-            writer.WriteStringValue(StorageQueueUri);
+            writer.WriteStringValue(StorageServiceUri);
             writer.WritePropertyName("queue_name"u8);
             writer.WriteStringValue(QueueName);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -354,16 +354,16 @@ We also can use Azure Function from inside the agent. In the example below we ar
 AzureFunctionToolDefinition azureFnTool = new(
     name: "foo",
     description: "Get answers from the foo bot.",
-    inputBinding: new AzureStorageQueueBinding(
+    inputBinding: new AzureFunctionBinding(
         new AzureFunctionStorageQueue(
             queueName: "azure-function-foo-input",
-            storageQueueUri: storageQueueUri
+            storageServiceUri: storageQueueUri
         )
     ),
-    outputBinding: new AzureStorageQueueBinding(
+    outputBinding: new AzureFunctionBinding(
         new AzureFunctionStorageQueue(
             queueName: "azure-function-tool-output",
-            storageQueueUri: storageQueueUri
+            storageServiceUri: storageQueueUri
         )
     ),
     parameters: BinaryData.FromObjectAsJson(

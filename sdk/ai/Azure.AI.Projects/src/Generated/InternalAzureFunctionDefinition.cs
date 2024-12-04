@@ -50,7 +50,7 @@ namespace Azure.AI.Projects
         /// <param name="inputBinding"> Input storage queue. The queue storage trigger runs a function as messages are added to it. </param>
         /// <param name="outputBinding"> Output storage queue. The function writes output to this queue when the input items are processed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="function"/>, <paramref name="inputBinding"/> or <paramref name="outputBinding"/> is null. </exception>
-        public InternalAzureFunctionDefinition(InternalFunctionDefinition function, AzureStorageQueueBinding inputBinding, AzureStorageQueueBinding outputBinding)
+        public InternalAzureFunctionDefinition(InternalFunctionDefinition function, AzureFunctionBinding inputBinding, AzureFunctionBinding outputBinding)
         {
             Argument.AssertNotNull(function, nameof(function));
             Argument.AssertNotNull(inputBinding, nameof(inputBinding));
@@ -66,7 +66,7 @@ namespace Azure.AI.Projects
         /// <param name="inputBinding"> Input storage queue. The queue storage trigger runs a function as messages are added to it. </param>
         /// <param name="outputBinding"> Output storage queue. The function writes output to this queue when the input items are processed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InternalAzureFunctionDefinition(InternalFunctionDefinition function, AzureStorageQueueBinding inputBinding, AzureStorageQueueBinding outputBinding, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InternalAzureFunctionDefinition(InternalFunctionDefinition function, AzureFunctionBinding inputBinding, AzureFunctionBinding outputBinding, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Function = function;
             InputBinding = inputBinding;
@@ -82,8 +82,8 @@ namespace Azure.AI.Projects
         /// <summary> The definition of azure function and its parameters. </summary>
         public InternalFunctionDefinition Function { get; set; }
         /// <summary> Input storage queue. The queue storage trigger runs a function as messages are added to it. </summary>
-        public AzureStorageQueueBinding InputBinding { get; set; }
+        public AzureFunctionBinding InputBinding { get; set; }
         /// <summary> Output storage queue. The function writes output to this queue when the input items are processed. </summary>
-        public AzureStorageQueueBinding OutputBinding { get; set; }
+        public AzureFunctionBinding OutputBinding { get; set; }
     }
 }

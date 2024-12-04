@@ -78,8 +78,8 @@ namespace Azure.AI.Projects
                 return null;
             }
             InternalFunctionDefinition function = default;
-            AzureStorageQueueBinding inputBinding = default;
-            AzureStorageQueueBinding outputBinding = default;
+            AzureFunctionBinding inputBinding = default;
+            AzureFunctionBinding outputBinding = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,12 +91,12 @@ namespace Azure.AI.Projects
                 }
                 if (property.NameEquals("input_binding"u8))
                 {
-                    inputBinding = AzureStorageQueueBinding.DeserializeAzureStorageQueueBinding(property.Value, options);
+                    inputBinding = AzureFunctionBinding.DeserializeAzureFunctionBinding(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("output_binding"u8))
                 {
-                    outputBinding = AzureStorageQueueBinding.DeserializeAzureStorageQueueBinding(property.Value, options);
+                    outputBinding = AzureFunctionBinding.DeserializeAzureFunctionBinding(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

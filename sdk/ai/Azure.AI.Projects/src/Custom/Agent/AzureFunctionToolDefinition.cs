@@ -34,7 +34,7 @@ namespace Azure.AI.Projects
         /// <param name="outputBinding">Output storage queue.</param>
         /// <param name="parameters"> The parameters the Azure functions accepts, described as a JSON Schema object. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="description"/> or <paramref name="parameters"/> is null. </exception>
-        public AzureFunctionToolDefinition(string name, string description, AzureStorageQueueBinding inputBinding, AzureStorageQueueBinding outputBinding, BinaryData parameters)
+        public AzureFunctionToolDefinition(string name, string description, AzureFunctionBinding inputBinding, AzureFunctionBinding outputBinding, BinaryData parameters)
             : this(type: "azure_function", serializedAdditionalRawData: null, new InternalAzureFunctionDefinition(new InternalFunctionDefinition(name, description, parameters, serializedAdditionalRawData: null), inputBinding: inputBinding, outputBinding: outputBinding))
         {
         }

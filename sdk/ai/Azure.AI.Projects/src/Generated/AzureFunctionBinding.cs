@@ -10,12 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    /// <summary>
-    /// The Azure function binding
-    /// Please note <see cref="AzureFunctionBinding"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureStorageQueueBinding"/>.
-    /// </summary>
-    public abstract partial class AzureFunctionBinding
+    /// <summary> The structure for keeping storage queue name and URI. </summary>
+    public partial class AzureFunctionBinding
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,23 +43,38 @@ namespace Azure.AI.Projects
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AzureFunctionBinding"/>. </summary>
-        protected AzureFunctionBinding()
+        /// <param name="storageQueue"> Storage queue. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageQueue"/> is null. </exception>
+        public AzureFunctionBinding(AzureFunctionStorageQueue storageQueue)
         {
+            Argument.AssertNotNull(storageQueue, nameof(storageQueue));
+
+            StorageQueue = storageQueue;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureFunctionBinding"/>. </summary>
-        /// <param name="type"> The type of binding. </param>
+        /// <param name="type"> The type of binding, which is always 'storage_queue'. </param>
+        /// <param name="storageQueue"> Storage queue. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureFunctionBinding(string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AzureFunctionBinding(AzureFunctionBindingType type, AzureFunctionStorageQueue storageQueue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
+            StorageQueue = storageQueue;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The type of binding. </summary>
-        internal string Type { get; set; }
+        /// <summary> Initializes a new instance of <see cref="AzureFunctionBinding"/> for deserialization. </summary>
+        internal AzureFunctionBinding()
+        {
+        }
+
+        /// <summary> The type of binding, which is always 'storage_queue'. </summary>
+        public AzureFunctionBindingType Type { get; } = AzureFunctionBindingType.StorageQueue;
+
+        /// <summary> Storage queue. </summary>
+        public AzureFunctionStorageQueue StorageQueue { get; set; }
     }
 }
