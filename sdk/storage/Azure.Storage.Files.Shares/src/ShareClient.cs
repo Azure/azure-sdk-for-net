@@ -3710,7 +3710,7 @@ namespace Azure.Storage.Files.Shares
                 smbProperties: options?.SmbProperties,
                 filePermission: options?.FilePermission?.Permission,
                 filePermissionFormat: options?.FilePermission?.PermissionFormat,
-                nfsProperties: options?.NfsProperties,
+                posixProperties: options?.PosixProperties,
                 async: false,
                 cancellationToken,
                 operationName: $"{nameof(ShareClient)}.{nameof(CreateDirectory)}")
@@ -3766,7 +3766,7 @@ namespace Azure.Storage.Files.Shares
                 smbProperties,
                 filePermission,
                 filePermissionFormat: null,
-                nfsProperties: null,
+                posixProperties: null,
                 async: false,
                 cancellationToken,
                 operationName: $"{nameof(ShareClient)}.{nameof(CreateDirectory)}")
@@ -3811,7 +3811,7 @@ namespace Azure.Storage.Files.Shares
                 smbProperties: options?.SmbProperties,
                 filePermission: options?.FilePermission?.Permission,
                 filePermissionFormat: options?.FilePermission?.PermissionFormat,
-                nfsProperties: options?.NfsProperties,
+                posixProperties: options?.PosixProperties,
                 async: true,
                 cancellationToken,
                 operationName: $"{nameof(ShareClient)}.{nameof(CreateDirectory)}")
@@ -3867,7 +3867,7 @@ namespace Azure.Storage.Files.Shares
                 smbProperties,
                 filePermission,
                 filePermissionFormat: null,
-                nfsProperties: null,
+                posixProperties: null,
                 async: true,
                 cancellationToken,
                 operationName: $"{nameof(ShareClient)}.{nameof(CreateDirectory)}")

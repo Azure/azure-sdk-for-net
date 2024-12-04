@@ -602,7 +602,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             ShareDirectoryCreateOptions options = new ShareDirectoryCreateOptions
             {
-                NfsProperties = new FilePosixProperties
+                PosixProperties = new FilePosixProperties
                 {
                     Owner = owner,
                     Group = group,
@@ -614,10 +614,10 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareDirectoryInfo> response = await directory.CreateAsync(options);
 
             // Assert
-            Assert.AreEqual(NfsFileType.Directory, response.Value.NfsProperties.FileType);
-            Assert.AreEqual(owner, response.Value.NfsProperties.Owner);
-            Assert.AreEqual(group, response.Value.NfsProperties.Group);
-            Assert.AreEqual(fileMode, response.Value.NfsProperties.FileMode.ToOctalFileMode());
+            Assert.AreEqual(NfsFileType.Directory, response.Value.PosixProperties.FileType);
+            Assert.AreEqual(owner, response.Value.PosixProperties.Owner);
+            Assert.AreEqual(group, response.Value.PosixProperties.Group);
+            Assert.AreEqual(fileMode, response.Value.PosixProperties.FileMode.ToOctalFileMode());
 
             Assert.IsNull(response.Value.SmbProperties.FileAttributes);
             Assert.IsNull(response.Value.SmbProperties.FilePermissionKey);
@@ -1031,12 +1031,12 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareDirectoryProperties> response = await test.Directory.GetPropertiesAsync();
 
             // Assert
-            Assert.AreEqual(NfsFileType.Directory, response.Value.NfsProperties.FileType);
-            Assert.AreEqual("0", response.Value.NfsProperties.Owner);
-            Assert.AreEqual("0", response.Value.NfsProperties.Group);
-            Assert.AreEqual("0755", response.Value.NfsProperties.FileMode.ToOctalFileMode());
+            Assert.AreEqual(NfsFileType.Directory, response.Value.PosixProperties.FileType);
+            Assert.AreEqual("0", response.Value.PosixProperties.Owner);
+            Assert.AreEqual("0", response.Value.PosixProperties.Group);
+            Assert.AreEqual("0755", response.Value.PosixProperties.FileMode.ToOctalFileMode());
 
-            Assert.IsNull(response.Value.NfsProperties.LinkCount);
+            Assert.IsNull(response.Value.PosixProperties.LinkCount);
             Assert.IsNull(response.Value.SmbProperties.FileAttributes);
             Assert.IsNull(response.Value.SmbProperties.FilePermissionKey);
         }
@@ -1293,7 +1293,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             ShareDirectorySetHttpHeadersOptions options = new ShareDirectorySetHttpHeadersOptions
             {
-                NfsProperties = new FilePosixProperties
+                PosixProperties = new FilePosixProperties
                 {
                     Owner = owner,
                     Group = group,
@@ -1305,11 +1305,11 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareDirectoryInfo> response = await test.Directory.SetHttpHeadersAsync(options);
 
             // Assert
-            Assert.AreEqual(owner, response.Value.NfsProperties.Owner);
-            Assert.AreEqual(group, response.Value.NfsProperties.Group);
-            Assert.AreEqual(fileMode, response.Value.NfsProperties.FileMode.ToOctalFileMode());
+            Assert.AreEqual(owner, response.Value.PosixProperties.Owner);
+            Assert.AreEqual(group, response.Value.PosixProperties.Group);
+            Assert.AreEqual(fileMode, response.Value.PosixProperties.FileMode.ToOctalFileMode());
 
-            Assert.IsNull(response.Value.NfsProperties.LinkCount);
+            Assert.IsNull(response.Value.PosixProperties.LinkCount);
             Assert.IsNull(response.Value.SmbProperties.FileAttributes);
             Assert.IsNull(response.Value.SmbProperties.FilePermissionKey);
         }

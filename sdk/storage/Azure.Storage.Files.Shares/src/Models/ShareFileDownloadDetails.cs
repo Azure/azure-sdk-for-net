@@ -131,7 +131,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// NFS properties.
         /// Note that this property is only applicable to files created in NFS shares.
         /// </summary>
-        public FilePosixProperties NfsProperties { get; internal set; }
+        public FilePosixProperties PosixProperties { get; internal set; }
 
         /// <summary>
         /// Constructor.
@@ -169,7 +169,7 @@ namespace Azure.Storage.Files.Shares.Models
             ShareLeaseState leaseState = default,
             ShareLeaseStatus leaseStatus = default,
             FileSmbProperties smbProperties = default,
-            FilePosixProperties nfsProperties = default)
+            FilePosixProperties posixProperties = default)
         {
             return new ShareFileDownloadDetails
             {
@@ -193,7 +193,7 @@ namespace Azure.Storage.Files.Shares.Models
                 LeaseDuration = leaseDuration,
                 LeaseState = leaseState,
                 SmbProperties = smbProperties,
-                NfsProperties = nfsProperties,
+                PosixProperties = posixProperties,
             };
         }
 

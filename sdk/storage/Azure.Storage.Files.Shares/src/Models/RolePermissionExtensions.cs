@@ -8,16 +8,16 @@ using System.Text;
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary>
-    /// Extension methods for <see cref="RolePermissions"/>.
+    /// Extension methods for <see cref="PosixRolePermissions"/>.
     /// </summary>
     internal static class RolePermissionExtensions
     {
         /// <summary>
         /// Parses octal char to RolePermissions.
         /// </summary>
-        public static RolePermissions ParseOctalRolePermissions(char c)
+        public static PosixRolePermissions ParseOctalRolePermissions(char c)
         {
-            RolePermissions rolePermissions = RolePermissions.None;
+            PosixRolePermissions rolePermissions = PosixRolePermissions.None;
 
             int value = (int)char.GetNumericValue(c);
 
@@ -28,17 +28,17 @@ namespace Azure.Storage.Files.Shares.Models
 
             if ((value & 4) > 0)
             {
-                rolePermissions |= RolePermissions.Read;
+                rolePermissions |= PosixRolePermissions.Read;
             }
 
             if ((value & 2) > 0)
             {
-                rolePermissions |= RolePermissions.Write;
+                rolePermissions |= PosixRolePermissions.Write;
             }
 
             if ((value & 1) > 0)
             {
-                rolePermissions |= RolePermissions.Execute;
+                rolePermissions |= PosixRolePermissions.Execute;
             }
 
             return rolePermissions;
@@ -47,21 +47,21 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Returns the octal string representation of this RolePermissions.
         /// </summary>
-        public static string ToOctalRolePermissions(this RolePermissions rolePermissions)
+        public static string ToOctalRolePermissions(this PosixRolePermissions rolePermissions)
         {
             int result = 0;
 
-            if (rolePermissions.HasFlag(RolePermissions.Read))
+            if (rolePermissions.HasFlag(PosixRolePermissions.Read))
             {
                 result |= 4;
             }
 
-            if (rolePermissions.HasFlag(RolePermissions.Write))
+            if (rolePermissions.HasFlag(PosixRolePermissions.Write))
             {
                 result |= 2;
             }
 
-            if (rolePermissions.HasFlag(RolePermissions.Execute))
+            if (rolePermissions.HasFlag(PosixRolePermissions.Execute))
             {
                 result |= 1;
             }
@@ -72,11 +72,11 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Returns the symbolic string representation of this RolePermissions.
         /// </summary>
-        public static string ToSymbolicRolePermissions(this RolePermissions rolePermissions)
+        public static string ToSymbolicRolePermissions(this PosixRolePermissions rolePermissions)
         {
             StringBuilder stringBuilder = new StringBuilder();
 
-            if (rolePermissions.HasFlag(RolePermissions.Read))
+            if (rolePermissions.HasFlag(PosixRolePermissions.Read))
             {
                 stringBuilder.Append("r");
             }
@@ -85,7 +85,7 @@ namespace Azure.Storage.Files.Shares.Models
                 stringBuilder.Append("-");
             }
 
-            if (rolePermissions.HasFlag(RolePermissions.Write))
+            if (rolePermissions.HasFlag(PosixRolePermissions.Write))
             {
                 stringBuilder.Append("w");
             }
@@ -94,7 +94,7 @@ namespace Azure.Storage.Files.Shares.Models
                 stringBuilder.Append("-");
             }
 
-            if (rolePermissions.HasFlag(RolePermissions.Execute))
+            if (rolePermissions.HasFlag(PosixRolePermissions.Execute))
             {
                 stringBuilder.Append("x");
             }
@@ -106,7 +106,7 @@ namespace Azure.Storage.Files.Shares.Models
             return stringBuilder.ToString();
         }
 
-        public static RolePermissions ParseSymbolicRolePermissions(string s, out bool setSticky)
+        public static PosixRolePermissions ParseSymbolicRolePermissions(string s, out bool setSticky)
         {
             if (s == null)
             {
@@ -117,13 +117,13 @@ namespace Azure.Storage.Files.Shares.Models
                 throw new FormatException($"s must be 3 characters long");
             }
 
-            RolePermissions rolePermissions = new RolePermissions();
+            PosixRolePermissions rolePermissions = new PosixRolePermissions();
             setSticky = false;
 
             // Read character
             if (s[0] == 'r')
             {
-                rolePermissions |= RolePermissions.Read;
+                rolePermissions |= PosixRolePermissions.Read;
             }
             else if (s[0] != '-')
             {
@@ -133,7 +133,7 @@ namespace Azure.Storage.Files.Shares.Models
             // Write character
             if (s[1] == 'w')
             {
-                rolePermissions |= RolePermissions.Write;
+                rolePermissions |= PosixRolePermissions.Write;
             }
             else if (s[1] != '-')
             {
@@ -143,7 +143,7 @@ namespace Azure.Storage.Files.Shares.Models
             // Execute character
             if (s[2] == 'x' || s[2] == 's' || s[2] == 't')
             {
-                rolePermissions |= RolePermissions.Execute;
+                rolePermissions |= PosixRolePermissions.Execute;
                 if (s[2] == 's' || s[2] == 't')
                 {
                     setSticky = true;

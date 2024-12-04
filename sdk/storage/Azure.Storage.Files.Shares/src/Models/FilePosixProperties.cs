@@ -49,7 +49,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Creates a new StorageFileDownloadProperties instance for mocking.
         /// </summary>
-        public static FilePosixProperties FileNfsProperties(
+        public static FilePosixProperties FilePosixProperties(
             NfsFileMode fileMode,
             string owner,
             string group,

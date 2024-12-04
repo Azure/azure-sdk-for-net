@@ -46,7 +46,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// NFS properties.
         /// Note that this property is only applicable to directories created in NFS shares.
         /// </summary>
-        public FilePosixProperties NfsProperties { get; internal set; }
+        public FilePosixProperties PosixProperties { get; internal set; }
 
         /// <summary>
         /// Constructor.
@@ -68,7 +68,7 @@ namespace Azure.Storage.Files.Shares.Models
                 DateTimeOffset lastModified = default,
                 bool isServerEncrypted = default,
                 FileSmbProperties smbProperties = default,
-                FilePosixProperties nfsProperties = default
+                FilePosixProperties posixProperties = default
             )
             => new ShareDirectoryProperties
             {
@@ -77,7 +77,7 @@ namespace Azure.Storage.Files.Shares.Models
                 LastModified = lastModified,
                 IsServerEncrypted = isServerEncrypted,
                 SmbProperties = smbProperties,
-                NfsProperties = nfsProperties
+                PosixProperties = posixProperties
             };
 
         /// <summary>

@@ -579,7 +579,7 @@ namespace Azure.Storage.Files.Shares
                 smbProperties: options?.SmbProperties,
                 filePermission: options?.FilePermission?.Permission,
                 filePermissionFormat: options?.FilePermission?.PermissionFormat,
-                nfsProperties: options?.NfsProperties,
+                posixProperties: options?.PosixProperties,
                 conditions,
                 async: false,
                 cancellationToken)
@@ -630,7 +630,7 @@ namespace Azure.Storage.Files.Shares
                 smbProperties: options?.SmbProperties,
                 filePermission: options?.FilePermission?.Permission,
                 filePermissionFormat: options?.FilePermission?.PermissionFormat,
-                nfsProperties: options?.NfsProperties,
+                posixProperties: options?.PosixProperties,
                 conditions,
                 async: true,
                 cancellationToken)
@@ -696,7 +696,7 @@ namespace Azure.Storage.Files.Shares
                 smbProperties,
                 filePermission,
                 filePermissionFormat: default,
-                nfsProperties: default,
+                posixProperties: default,
                 conditions,
                 async: false,
                 cancellationToken)
@@ -757,7 +757,7 @@ namespace Azure.Storage.Files.Shares
                 smbProperties,
                 filePermission,
                 filePermissionFormat: default,
-                nfsProperties: default,
+                posixProperties: default,
                 conditions: default,
                 async: false,
                 cancellationToken)
@@ -823,7 +823,7 @@ namespace Azure.Storage.Files.Shares
                 smbProperties,
                 filePermission,
                 filePermissionFormat: default,
-                nfsProperties: default,
+                posixProperties: default,
                 conditions,
                 async: true,
                 cancellationToken)
@@ -884,7 +884,7 @@ namespace Azure.Storage.Files.Shares
                 smbProperties,
                 filePermission,
                 filePermissionFormat: default,
-                nfsProperties: default,
+                posixProperties: default,
                 conditions: default,
                 async: true,
                 cancellationToken)
@@ -919,7 +919,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="filePermissionFormat">
         /// Optional file permission format.
         /// </param>
-        /// <param name="nfsProperties">
+        /// <param name="posixProperties">
         /// Optional NFS properties.
         /// </param>
         /// <param name="conditions">
@@ -951,7 +951,7 @@ namespace Azure.Storage.Files.Shares
             FileSmbProperties smbProperties,
             string filePermission,
             FilePermissionFormat? filePermissionFormat,
-            FilePosixProperties nfsProperties,
+            FilePosixProperties posixProperties,
             ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken,
@@ -986,10 +986,10 @@ namespace Azure.Storage.Files.Shares
                             fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString(),
                             fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString(),
                             fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
-                            owner: nfsProperties?.Owner,
-                            group: nfsProperties?.Group,
-                            fileMode: nfsProperties?.FileMode.ToOctalFileMode(),
-                            nfsFileType: nfsProperties?.FileType,
+                            owner: posixProperties?.Owner,
+                            group: posixProperties?.Group,
+                            fileMode: posixProperties?.FileMode.ToOctalFileMode(),
+                            nfsFileType: posixProperties?.FileType,
                             metadata: metadata,
                             filePermission: filePermission,
                             filePermissionFormat: filePermissionFormat,
@@ -1007,10 +1007,10 @@ namespace Azure.Storage.Files.Shares
                             fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString(),
                             fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString(),
                             fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
-                            owner: nfsProperties?.Owner,
-                            group: nfsProperties?.Group,
-                            fileMode: nfsProperties?.FileMode.ToOctalFileMode(),
-                            nfsFileType: nfsProperties?.FileType,
+                            owner: posixProperties?.Owner,
+                            group: posixProperties?.Group,
+                            fileMode: posixProperties?.FileMode.ToOctalFileMode(),
+                            nfsFileType: posixProperties?.FileType,
                             metadata: metadata,
                             filePermission: filePermission,
                             filePermissionFormat: filePermissionFormat,
@@ -1322,7 +1322,7 @@ namespace Azure.Storage.Files.Shares
                 setArchiveAttribute: options?.Archive,
                 conditions: options?.Conditions,
                 copyableFileSmbProperties: options?.SmbPropertiesToCopy,
-                nfsProperties: options?.NfsProperties,
+                posixProperties: options?.PosixProperties,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
@@ -1400,7 +1400,7 @@ namespace Azure.Storage.Files.Shares
                 setArchiveAttribute,
                 conditions,
                 copyableFileSmbProperties: default,
-                nfsProperties: default,
+                posixProperties: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -1448,7 +1448,7 @@ namespace Azure.Storage.Files.Shares
                 setArchiveAttribute: default,
                 conditions: default,
                 copyableFileSmbProperties: default,
-                nfsProperties: default,
+                posixProperties: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -1493,7 +1493,7 @@ namespace Azure.Storage.Files.Shares
                 setArchiveAttribute: options?.Archive,
                 conditions: options?.Conditions,
                 copyableFileSmbProperties: options?.SmbPropertiesToCopy,
-                nfsProperties: options?.NfsProperties,
+                posixProperties: options?.PosixProperties,
                 async: true,
                 cancellationToken: cancellationToken).
                 ConfigureAwait(false);
@@ -1571,7 +1571,7 @@ namespace Azure.Storage.Files.Shares
                 setArchiveAttribute,
                 conditions,
                 copyableFileSmbProperties: default,
-                nfsProperties: default,
+                posixProperties: default,
                 async: true,
                 cancellationToken).
                 ConfigureAwait(false);
@@ -1619,7 +1619,7 @@ namespace Azure.Storage.Files.Shares
                 setArchiveAttribute: default,
                 conditions: default,
                 copyableFileSmbProperties: default,
-                nfsProperties: default,
+                posixProperties: default,
                 async: true,
                 cancellationToken).
                 ConfigureAwait(false);
@@ -1667,7 +1667,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="copyableFileSmbProperties">
         /// SMB properties to copy from the source file.
         /// </param>
-        /// <param name="nfsProperties">
+        /// <param name="posixProperties">
         /// NFS files only.  NFS properties to set on the destination file.
         /// </param>
         /// <param name="async">
@@ -1696,7 +1696,7 @@ namespace Azure.Storage.Files.Shares
             bool? setArchiveAttribute,
             ShareFileRequestConditions conditions,
             CopyableFileSmbProperties? copyableFileSmbProperties,
-            FilePosixProperties nfsProperties,
+            FilePosixProperties posixProperties,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1797,13 +1797,13 @@ namespace Azure.Storage.Files.Shares
                     ShareUriBuilder uriBuilder = new ShareUriBuilder(sourceUri);
 
                     ModeCopyMode? modeCopyMode = null;
-                    if (nfsProperties?.FileMode != null)
+                    if (posixProperties?.FileMode != null)
                     {
                         modeCopyMode = ModeCopyMode.Override;
                     }
 
                     OwnerCopyMode? ownerCopyMode = null;
-                    if (nfsProperties?.Owner != null || nfsProperties?.Group != null)
+                    if (posixProperties?.Owner != null || posixProperties?.Group != null)
                     {
                         ownerCopyMode = OwnerCopyMode.Override;
                     }
@@ -1816,9 +1816,9 @@ namespace Azure.Storage.Files.Shares
                             filePermission: filePermission,
                             filePermissionFormat: filePermissionFormat,
                             filePermissionKey: smbProperties?.FilePermissionKey,
-                            owner: nfsProperties?.Owner,
-                            group: nfsProperties?.Group,
-                            fileMode: nfsProperties?.FileMode?.ToOctalFileMode(),
+                            owner: posixProperties?.Owner,
+                            group: posixProperties?.Group,
+                            fileMode: posixProperties?.FileMode?.ToOctalFileMode(),
                             fileModeCopyMode: modeCopyMode,
                             fileOwnerCopyMode: ownerCopyMode,
                             copyFileSmbInfo: copyFileSmbInfo,
@@ -1834,9 +1834,9 @@ namespace Azure.Storage.Files.Shares
                             filePermission: filePermission,
                             filePermissionFormat: filePermissionFormat,
                             filePermissionKey: smbProperties?.FilePermissionKey,
-                            owner: nfsProperties?.Owner,
-                            group: nfsProperties?.Group,
-                            fileMode: nfsProperties?.FileMode?.ToOctalFileMode(),
+                            owner: posixProperties?.Owner,
+                            group: posixProperties?.Group,
+                            fileMode: posixProperties?.FileMode?.ToOctalFileMode(),
                             fileModeCopyMode: modeCopyMode,
                             fileOwnerCopyMode: ownerCopyMode,
                             copyFileSmbInfo: copyFileSmbInfo,
@@ -3441,7 +3441,7 @@ namespace Azure.Storage.Files.Shares
                 options?.SmbProperties,
                 options?.FilePermission?.Permission,
                 options?.FilePermission?.PermissionFormat,
-                options?.NfsProperties,
+                options?.PosixProperties,
                 conditions,
                 async: false,
                 cancellationToken)
@@ -3484,7 +3484,7 @@ namespace Azure.Storage.Files.Shares
                 options?.SmbProperties,
                 options?.FilePermission?.Permission,
                 options?.FilePermission?.PermissionFormat,
-                options?.NfsProperties,
+                options?.PosixProperties,
                 conditions,
                 async: true,
                 cancellationToken)
@@ -3545,7 +3545,7 @@ namespace Azure.Storage.Files.Shares
                 smbProperties,
                 filePermission,
                 filePermissionFormat: default,
-                nfsProperties: default,
+                posixProperties: default,
                 conditions,
                 async: false,
                 cancellationToken)
@@ -3602,7 +3602,7 @@ namespace Azure.Storage.Files.Shares
                 smbProperties,
                 filePermission,
                 filePermissionFormat: default,
-                nfsProperties: default,
+                posixProperties: default,
                 conditions: default,
                 async: false,
                 cancellationToken)
@@ -3663,7 +3663,7 @@ namespace Azure.Storage.Files.Shares
                 smbProperties,
                 filePermission,
                 filePermissionFormat: default,
-                nfsProperties: default,
+                posixProperties: default,
                 conditions,
                 async: true,
                 cancellationToken)
@@ -3719,7 +3719,7 @@ namespace Azure.Storage.Files.Shares
                 smbProperties,
                 filePermission,
                 filePermissionFormat: default,
-                nfsProperties: default,
+                posixProperties: default,
                 conditions: default,
                 async: true,
                 cancellationToken)
@@ -3751,7 +3751,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="filePermissionFormat">
         /// Optional file permission format.
         /// </param>
-        /// <param name="nfsProperties">
+        /// <param name="posixProperties">
         /// Optional NFS properties.
         /// </param>
         /// <param name="conditions">
@@ -3779,7 +3779,7 @@ namespace Azure.Storage.Files.Shares
             FileSmbProperties smbProperties,
             string filePermission,
             FilePermissionFormat? filePermissionFormat,
-            FilePosixProperties nfsProperties,
+            FilePosixProperties posixProperties,
             ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
@@ -3815,9 +3815,9 @@ namespace Azure.Storage.Files.Shares
                             filePermissionFormat: filePermissionFormat,
                             filePermissionKey: smbProps.FilePermissionKey,
                             fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
-                            owner: nfsProperties?.Owner,
-                            group: nfsProperties?.Group,
-                            fileMode: nfsProperties?.FileMode.ToOctalFileMode(),
+                            owner: posixProperties?.Owner,
+                            group: posixProperties?.Group,
+                            fileMode: posixProperties?.FileMode.ToOctalFileMode(),
                             fileHttpHeaders: httpHeaders.ToFileHttpHeaders(),
                             shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken)
@@ -3834,9 +3834,9 @@ namespace Azure.Storage.Files.Shares
                             filePermissionFormat: filePermissionFormat,
                             filePermissionKey: smbProps.FilePermissionKey,
                             fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
-                            owner: nfsProperties?.Owner,
-                            group: nfsProperties?.Group,
-                            fileMode: nfsProperties?.FileMode.ToOctalFileMode(),
+                            owner: posixProperties?.Owner,
+                            group: posixProperties?.Group,
+                            fileMode: posixProperties?.FileMode.ToOctalFileMode(),
                             fileHttpHeaders: httpHeaders.ToFileHttpHeaders(),
                             shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken);
@@ -6993,6 +6993,7 @@ namespace Azure.Storage.Files.Shares
         /// </summary>
         /// <param name="targetFile">
         /// Path of the file to create the hard link to, not including the share.
+        /// For example: "targetDirectory/targetSubDirectory/.../targetFile"
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
@@ -7026,6 +7027,7 @@ namespace Azure.Storage.Files.Shares
         /// </summary>
         /// <param name="targetFile">
         /// Path of the file to create the hard link to, not including the share.
+        /// For example: "targetDirectory/targetSubDirectory/.../targetFile"
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
@@ -7266,7 +7268,7 @@ namespace Azure.Storage.Files.Shares
                         smbProperties: default,
                         filePermission: default,
                         filePermissionFormat: default,
-                        nfsProperties: default,
+                        posixProperties: default,
                         conditions: options?.OpenConditions,
                         async: async,
                         cancellationToken: cancellationToken)
@@ -7297,7 +7299,7 @@ namespace Azure.Storage.Files.Shares
                             smbProperties: default,
                             filePermission: default,
                             filePermissionFormat: default,
-                            nfsProperties: default,
+                            posixProperties: default,
                             conditions: options?.OpenConditions,
                             async: async,
                             cancellationToken: cancellationToken)
