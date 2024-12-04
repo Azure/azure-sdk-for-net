@@ -18,33 +18,6 @@ namespace Azure.ResourceManager.Network.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Delete_DeleteSubnet()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/SubnetDelete.json
-            // this example is just showing the usage of "Subnets_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubnetResource created on azure
-            // for more information of creating SubnetResource, please refer to the document of SubnetResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "subnet-test";
-            string virtualNetworkName = "vnetname";
-            string subnetName = "subnet1";
-            ResourceIdentifier subnetResourceId = SubnetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName, subnetName);
-            SubnetResource subnet = client.GetSubnetResource(subnetResourceId);
-
-            // invoke the operation
-            await subnet.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSubnet()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/SubnetGet.json
@@ -138,6 +111,33 @@ namespace Azure.ResourceManager.Network.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteSubnet()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/SubnetDelete.json
+            // this example is just showing the usage of "Subnets_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubnetResource created on azure
+            // for more information of creating SubnetResource, please refer to the document of SubnetResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "subnet-test";
+            string virtualNetworkName = "vnetname";
+            string subnetName = "subnet1";
+            ResourceIdentifier subnetResourceId = SubnetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualNetworkName, subnetName);
+            SubnetResource subnet = client.GetSubnetResource(subnetResourceId);
+
+            // invoke the operation
+            await subnet.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateSubnet()
         {
             // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/SubnetCreate.json
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Network.Samples
             SubnetResource subnet = client.GetSubnetResource(subnetResourceId);
 
             // invoke the operation
-            SubnetData data = new SubnetData()
+            SubnetData data = new SubnetData
             {
                 AddressPrefix = "10.0.0.0/16",
             };
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Network.Samples
             SubnetResource subnet = client.GetSubnetResource(subnetResourceId);
 
             // invoke the operation
-            SubnetData data = new SubnetData()
+            SubnetData data = new SubnetData
             {
                 AddressPrefix = "10.0.0.0/16",
             };
@@ -230,16 +230,13 @@ namespace Azure.ResourceManager.Network.Samples
             SubnetResource subnet = client.GetSubnetResource(subnetResourceId);
 
             // invoke the operation
-            SubnetData data = new SubnetData()
+            SubnetData data = new SubnetData
             {
                 AddressPrefix = "10.0.0.0/16",
-                ServiceEndpoints =
-{
-new ServiceEndpointProperties()
+                ServiceEndpoints = {new ServiceEndpointProperties
 {
 Service = "Microsoft.Storage",
-}
-},
+}},
             };
             ArmOperation<SubnetResource> lro = await subnet.UpdateAsync(WaitUntil.Completed, data);
             SubnetResource result = lro.Value;
@@ -273,17 +270,14 @@ Service = "Microsoft.Storage",
             SubnetResource subnet = client.GetSubnetResource(subnetResourceId);
 
             // invoke the operation
-            SubnetData data = new SubnetData()
+            SubnetData data = new SubnetData
             {
                 AddressPrefix = "10.0.0.0/16",
-                ServiceEndpoints =
-{
-new ServiceEndpointProperties()
+                ServiceEndpoints = {new ServiceEndpointProperties
 {
 Service = "Microsoft.Storage",
 NetworkIdentifierId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/subnet-test/providers/Microsoft.Network/publicIPAddresses/test-ip"),
-}
-},
+}},
             };
             ArmOperation<SubnetResource> lro = await subnet.UpdateAsync(WaitUntil.Completed, data);
             SubnetResource result = lro.Value;
@@ -317,7 +311,7 @@ NetworkIdentifierId = new ResourceIdentifier("/subscriptions/subid/resourceGroup
             SubnetResource subnet = client.GetSubnetResource(subnetResourceId);
 
             // invoke the operation
-            SubnetData data = new SubnetData()
+            SubnetData data = new SubnetData
             {
                 AddressPrefix = "10.0.0.0/16",
             };
@@ -353,7 +347,7 @@ NetworkIdentifierId = new ResourceIdentifier("/subscriptions/subid/resourceGroup
             SubnetResource subnet = client.GetSubnetResource(subnetResourceId);
 
             // invoke the operation
-            PrepareNetworkPoliciesContent content = new PrepareNetworkPoliciesContent()
+            PrepareNetworkPoliciesContent content = new PrepareNetworkPoliciesContent
             {
                 ServiceName = "Microsoft.Sql/managedInstances",
             };
@@ -384,7 +378,7 @@ NetworkIdentifierId = new ResourceIdentifier("/subscriptions/subid/resourceGroup
             SubnetResource subnet = client.GetSubnetResource(subnetResourceId);
 
             // invoke the operation
-            UnprepareNetworkPoliciesContent content = new UnprepareNetworkPoliciesContent()
+            UnprepareNetworkPoliciesContent content = new UnprepareNetworkPoliciesContent
             {
                 ServiceName = "Microsoft.Sql/managedInstances",
             };

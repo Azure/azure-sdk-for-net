@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Media.Samples
             MediaAssetResource mediaAsset = client.GetMediaAssetResource(mediaAssetResourceId);
 
             // invoke the operation
-            MediaAssetData data = new MediaAssetData()
+            MediaAssetData data = new MediaAssetData
             {
                 Description = "A documentary showing the ascent of Mount Baker in HD",
             };
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Media.Samples
             MediaAssetResource mediaAsset = client.GetMediaAssetResource(mediaAssetResourceId);
 
             // invoke the operation and iterate over the result
-            MediaAssetStorageContainerSasContent content = new MediaAssetStorageContainerSasContent()
+            MediaAssetStorageContainerSasContent content = new MediaAssetStorageContainerSasContent
             {
                 Permissions = MediaAssetContainerPermission.ReadWrite,
                 ExpireOn = DateTimeOffset.Parse("2018-01-01T10:00:00.007Z"),

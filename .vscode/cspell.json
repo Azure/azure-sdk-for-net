@@ -264,7 +264,7 @@
         "Hvci"
       ]
     },
-	  {
+    {
       "filename": "**/sdk/computefleet/**/*.cs",
       "words": [
         "Rdma"
@@ -917,7 +917,7 @@
       ]
     },
     {
-      "filename": "**/sdk/maps/Azure.Maps.TimeZone/**/*.cs",
+      "filename": "**/sdk/maps/Azure.Maps.TimeZones/**/*.cs",
       "words": [
         "Posix",
         "posix",

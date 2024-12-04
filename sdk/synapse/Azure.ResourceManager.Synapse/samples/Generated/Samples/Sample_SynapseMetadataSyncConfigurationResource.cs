@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Synapse.Samples
             SynapseMetadataSyncConfigurationResource synapseMetadataSyncConfiguration = client.GetSynapseMetadataSyncConfigurationResource(synapseMetadataSyncConfigurationResourceId);
 
             // invoke the operation
-            SynapseMetadataSyncConfigurationData data = new SynapseMetadataSyncConfigurationData()
+            SynapseMetadataSyncConfigurationData data = new SynapseMetadataSyncConfigurationData
             {
                 IsEnabled = true,
             };

@@ -128,9 +128,9 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             DevTestLabVmResource devTestLabVm = client.GetDevTestLabVmResource(devTestLabVmResourceId);
 
             // invoke the operation
-            DevTestLabDataDiskProperties dataDiskProperties = new DevTestLabDataDiskProperties()
+            DevTestLabDataDiskProperties dataDiskProperties = new DevTestLabDataDiskProperties
             {
-                AttachNewDataDiskOptions = new AttachNewDataDiskDetails()
+                AttachNewDataDiskOptions = new AttachNewDataDiskDetails
                 {
                     DiskSizeGiB = 127,
                     DiskName = "{diskName}",
@@ -164,15 +164,12 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             DevTestLabVmResource devTestLabVm = client.GetDevTestLabVmResource(devTestLabVmResourceId);
 
             // invoke the operation
-            DevTestLabVmApplyArtifactsContent content = new DevTestLabVmApplyArtifactsContent()
+            DevTestLabVmApplyArtifactsContent content = new DevTestLabVmApplyArtifactsContent
             {
-                Artifacts =
-{
-new DevTestLabArtifactInstallInfo()
+                Artifacts = {new DevTestLabArtifactInstallInfo
 {
 ArtifactId = "/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/providers/Microsoft.DevTestLab/labs/{labName}/artifactSources/public repo/artifacts/windows-restart",
-}
-},
+}},
             };
             await devTestLabVm.ApplyArtifactsAsync(WaitUntil.Completed, content);
 
@@ -228,7 +225,7 @@ ArtifactId = "/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/p
             DevTestLabVmResource devTestLabVm = client.GetDevTestLabVmResource(devTestLabVmResourceId);
 
             // invoke the operation
-            DevTestLabVmDetachDataDiskContent content = new DevTestLabVmDetachDataDiskContent()
+            DevTestLabVmDetachDataDiskContent content = new DevTestLabVmDetachDataDiskContent
             {
                 ExistingLabDiskId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourcegroups/resourceGroupName/providers/microsoft.devtestlab/labs/{labName}/virtualmachines/{virtualMachineName}"),
             };
@@ -340,7 +337,7 @@ ArtifactId = "/subscriptions/{subscriptionId}/resourceGroups/resourceGroupName/p
             DevTestLabVmResource devTestLabVm = client.GetDevTestLabVmResource(devTestLabVmResourceId);
 
             // invoke the operation
-            DevTestLabVmResizeContent content = new DevTestLabVmResizeContent()
+            DevTestLabVmResizeContent content = new DevTestLabVmResizeContent
             {
                 Size = "Standard_A4_v2",
             };

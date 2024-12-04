@@ -110,8 +110,7 @@ namespace Azure.Maps.Routing.Models
                 _id = paths[paths.Length - 1];
             }
 
-            RouteMatrixResult result = null;
-            return Response.FromValue(result, response);
+            return await WaitForCompletionAsync(async, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
