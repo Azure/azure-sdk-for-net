@@ -33,11 +33,11 @@ namespace Azure.Messaging.EventHubs.Amqp
         public static void PopulateFromEventProperties(this AmqpAnnotatedMessage instance,
                                                        IDictionary<string, object> properties = null,
                                                        long? sequenceNumber = null,
-                                                       long? offset = null,
+                                                       string offset = null,
                                                        DateTimeOffset? enqueuedTime = null,
                                                        string partitionKey = null,
                                                        long? lastPartitionSequenceNumber = null,
-                                                       long? lastPartitionOffset = null,
+                                                       string lastPartitionOffset = null,
                                                        DateTimeOffset? lastPartitionEnqueuedTime = null,
                                                        DateTimeOffset? lastPartitionPropertiesRetrievalTime = null)
         {
@@ -51,9 +51,9 @@ namespace Azure.Messaging.EventHubs.Amqp
                instance.MessageAnnotations[AmqpProperty.SequenceNumber.ToString()] = sequenceNumber.Value;
            }
 
-           if (offset.HasValue)
+           if (!string.IsNullOrEmpty(offset))
            {
-               instance.MessageAnnotations[AmqpProperty.Offset.ToString()] = offset.Value;
+               instance.MessageAnnotations[AmqpProperty.Offset.ToString()] = offset;
            }
 
            if (enqueuedTime.HasValue)
@@ -71,9 +71,9 @@ namespace Azure.Messaging.EventHubs.Amqp
                instance.DeliveryAnnotations[AmqpProperty.PartitionLastEnqueuedSequenceNumber.ToString()] = lastPartitionSequenceNumber.Value;
            }
 
-           if (lastPartitionOffset.HasValue)
+           if (!string.IsNullOrEmpty(lastPartitionOffset))
            {
-               instance.DeliveryAnnotations[AmqpProperty.PartitionLastEnqueuedOffset.ToString()] = lastPartitionOffset.Value;
+               instance.DeliveryAnnotations[AmqpProperty.PartitionLastEnqueuedOffset.ToString()] = lastPartitionOffset;
            }
 
            if (lastPartitionEnqueuedTime.HasValue)
@@ -188,13 +188,13 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <returns>The offset, if represented in the <paramref name="instance"/>; otherwise, <paramref name="defaultValue"/>.</returns>
         ///
-        public static long GetOffset(this AmqpAnnotatedMessage instance,
-                                     long defaultValue = long.MinValue)
+        public static string GetOffset(this AmqpAnnotatedMessage instance,
+                                       string defaultValue = default)
         {
             if ((instance.HasSection(AmqpMessageSection.MessageAnnotations))
                 && (instance.MessageAnnotations.TryGetValue(AmqpProperty.Offset.ToString(), out var value)))
             {
-                return (long)value;
+                return (string)value;
             }
 
             return defaultValue;
@@ -298,13 +298,13 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <returns>The offset of the last event published to the partition, if represented in the <paramref name="instance"/>; otherwise, <paramref name="defaultValue"/>.</returns>
         ///
-        public static long? GetLastPartitionOffset(this AmqpAnnotatedMessage instance,
-                                                   long? defaultValue = default)
+        public static string GetLastPartitionOffset(this AmqpAnnotatedMessage instance,
+                                                   string defaultValue = default)
         {
             if ((instance.HasSection(AmqpMessageSection.DeliveryAnnotations))
                 && (instance.DeliveryAnnotations.TryGetValue(AmqpProperty.PartitionLastEnqueuedOffset.ToString(), out var value)))
             {
-                return (long)value;
+                return (string)value;
             }
 
             return defaultValue;

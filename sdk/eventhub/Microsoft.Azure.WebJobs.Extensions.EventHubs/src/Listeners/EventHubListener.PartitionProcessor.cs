@@ -463,7 +463,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     // leave the property name as lease for backcompat with T1
                     writer.WritePropertyName("lease");
                     writer.WriteStartObject();
-                    WritePropertyIfNotNull(writer, "offset", context.Checkpoint.Value.Offset.ToString(CultureInfo.InvariantCulture));
+                    WritePropertyIfNotNull(writer, "offset", context.Checkpoint.Value.Offset);
                     WritePropertyIfNotNull(writer, "sequenceNumber", context.Checkpoint.Value.SequenceNumber.ToString(CultureInfo.InvariantCulture));
                     writer.WriteEndObject();
                 }
@@ -471,7 +471,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 // Log RuntimeInformation if EnableReceiverRuntimeMetric is enabled
                 writer.WritePropertyName("runtimeInformation");
                 writer.WriteStartObject();
-                WritePropertyIfNotNull(writer, "lastEnqueuedOffset", context.LastEnqueuedEventProperties.Offset?.ToString(CultureInfo.InvariantCulture));
+                WritePropertyIfNotNull(writer, "lastEnqueuedOffset", context.LastEnqueuedEventProperties.OffsetString);
                 WritePropertyIfNotNull(writer, "lastSequenceNumber", context.LastEnqueuedEventProperties.SequenceNumber?.ToString(CultureInfo.InvariantCulture));
                 WritePropertyIfNotNull(writer, "lastEnqueuedTimeUtc", context.LastEnqueuedEventProperties.EnqueuedTime?.ToString("o", CultureInfo.InvariantCulture));
                 writer.WriteEndObject();
