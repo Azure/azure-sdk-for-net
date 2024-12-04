@@ -21,10 +21,7 @@ public partial class Sample_Agent_Azure_Functions : SamplesBase<AIProjectsTestEn
     {
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
         var storageQueueUri = TestEnvironment.STORAGE_QUEUE_URI;
-        // Add experimental headers policy
-        AIProjectClientOptions clientOptions = new();
-        clientOptions.AddPolicy(new CustomHeadersPolicy(), HttpPipelinePosition.PerCall);
-        AgentsClient client = new(connectionString, new DefaultAzureCredential(), clientOptions);
+        AgentsClient client = new(connectionString, new DefaultAzureCredential());
 
         #region Snippet:AzureFunctionsDefineFunctionTools
         AzureFunctionToolDefinition azureFnTool = new(
