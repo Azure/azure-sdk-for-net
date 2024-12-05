@@ -29,6 +29,7 @@ namespace Azure.Communication.CallAutomation
             CommunicationIdentifierModel source = default;
             string correlationId = default;
             CommunicationUserIdentifierModel answeredBy = default;
+            MediaStreamingSubscriptionInternal mediaStreamingSubscription = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -111,6 +112,15 @@ namespace Azure.Communication.CallAutomation
                     answeredBy = CommunicationUserIdentifierModel.DeserializeCommunicationUserIdentifierModel(property.Value);
                     continue;
                 }
+                if (property.NameEquals("mediaStreamingSubscription"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mediaStreamingSubscription = MediaStreamingSubscriptionInternal.DeserializeMediaStreamingSubscriptionInternal(property.Value);
+                    continue;
+                }
             }
             return new CallConnectionPropertiesInternal(
                 callConnectionId,
@@ -123,7 +133,8 @@ namespace Azure.Communication.CallAutomation
                 sourceDisplayName,
                 source,
                 correlationId,
-                answeredBy);
+                answeredBy,
+                mediaStreamingSubscription);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

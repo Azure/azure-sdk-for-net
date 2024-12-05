@@ -31,7 +31,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                                         "\"callConnectionState\": \"connecting\"," +
                                         "\"subject\": \"dummySubject\"," +
                                         "\"callbackUri\": \"https://bot.contoso.com/callback\"," +
-                                        "\"mediaSubscriptionId\": {0}," +
+                                        "\"mediaStreamingSubscription\": {0}," +
                                         "\"dataSubscriptionId\": {1}" +
                                         "}}";
         protected const string SourceId = "sourceId";
@@ -46,8 +46,12 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         private const string MediaSubscriptionId = "\"mediaSubscriptionId\"";
         private const string NoneDataSubscriptionId = "null";
         private const string DataSubscriptionId = "\"dataSubscriptionId\"";
+        private const string MediaStreamingSubscription = "{" +
+                                        " \"id\": \"22c3a25a-aed5-47df-9ef9-5ba5c7b6d08e\"," +
+                                        "\"state\": \"disabled\",\"subscribedContentTypes\": [" +
+                                        "\"audio\"] }";
         protected string CreateOrAnswerCallOrGetCallConnectionPayload = string.Format(DummyPayload, NoneMediaSubscriptionId, NoneDataSubscriptionId);
-        protected string CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionAndTranscriptionPayload = string.Format(DummyPayload, MediaSubscriptionId, DataSubscriptionId);
+        protected string CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionAndTranscriptionPayload = string.Format(DummyPayload, MediaStreamingSubscription, DataSubscriptionId);
 
         internal CallAutomationClient CreateMockCallAutomationClient(int responseCode, object? responseContent = null, HttpHeader[]? httpHeaders = null)
         {

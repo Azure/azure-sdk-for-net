@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Azure.Communication.CallAutomation.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -1198,6 +1199,106 @@ namespace Azure.Communication.CallAutomation
 
                 result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
                 return Response.FromValue(result, response);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Starts media streaming in the call.
+        /// </summary>
+        /// <param name="options">An optional object containing start media streaming options.</param>
+        /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
+        /// <returns>Returns an HTTP response with a 202 status code for success, or an HTTP failure error code in case of an error.</returns>
+        public virtual Response StartMediaStreaming(StartMediaStreamingOptions options = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StartMediaStreaming)}");
+            scope.Start();
+            try
+            {
+                var request = options == default
+                    ? new StartMediaStreamingRequestInternal()
+                    : new StartMediaStreamingRequestInternal() { OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri, OperationContext = options.OperationContext };
+
+                return CallMediaRestClient.StartMediaStreaming(CallConnectionId, request, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Starts media streaming in the call.
+        /// </summary>
+        /// <param name="options">An optional object containing start media streaming options.</param>
+        /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
+        /// <returns>Returns an HTTP response with a 202 status code for success, or an HTTP failure error code in case of an error.</returns>
+        public virtual async Task<Response> StartMediaStreamingAsync(StartMediaStreamingOptions options = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StartMediaStreaming)}");
+            scope.Start();
+            try
+            {
+                var request = options == default
+                    ? new StartMediaStreamingRequestInternal()
+                    : new StartMediaStreamingRequestInternal() { OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri, OperationContext = options.OperationContext };
+
+                return await CallMediaRestClient.StartMediaStreamingAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Stops media streaming in the call.
+        /// </summary>
+        /// <param name="options">An optional object containing stop media streaming options.</param>
+        /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
+        /// <returns>Returns an HTTP response with a 202 status code for success, or an HTTP failure error code in case of an error.</returns>
+        public virtual Response StopMediaStreaming(StopMediaStreamingOptions options = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopMediaStreaming)}");
+            scope.Start();
+            try
+            {
+                var request = options == default
+                    ? new StopMediaStreamingRequestInternal()
+                    : new StopMediaStreamingRequestInternal() { OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri, OperationContext = options.OperationContext };
+
+                return CallMediaRestClient.StopMediaStreaming(CallConnectionId, request, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Stops media streaming in the call.
+        /// </summary>
+        /// <param name="options">An optional object containing stop media streaming options.</param>
+        /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
+        /// <returns>Returns an HTTP response with a 202 status code for success, or an HTTP failure error code in case of an error.</returns>
+        public virtual async Task<Response> StopMediaStreamingAsync(StopMediaStreamingOptions options = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopMediaStreaming)}");
+            scope.Start();
+            try
+            {
+                var request = options == default
+                    ? new StopMediaStreamingRequestInternal()
+                    : new StopMediaStreamingRequestInternal() { OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri, OperationContext = options.OperationContext };
+
+                return await CallMediaRestClient.StopMediaStreamingAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
