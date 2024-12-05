@@ -24,10 +24,7 @@ To classify a given file at a URI, use the `ClassifyDocument` method. The return
 string classifierId = "<classifierId>";
 Uri uriSource = new Uri("<uriSource>");
 
-var options = new ClassifyDocumentOptions()
-{
-    UriSource = uriSource
-};
+var options = new ClassifyDocumentOptions(uriSource);
 
 Operation<AnalyzeResult> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, classifierId, options);
 AnalyzeResult result = operation.Value;

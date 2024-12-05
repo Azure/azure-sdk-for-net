@@ -2,10 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -31,12 +28,13 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var clientOptions = new DocumentIntelligenceClientOptions() { Transport = mockTransport };
             var client = CreateInstrumentedClient(clientOptions);
 
-            var options = new AnalyzeDocumentOptions()
+            var uriSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.ContosoReceipt);
+            var options = new AnalyzeDocumentOptions(uriSource)
             {
-                UriSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.ContosoReceipt)
+                Pages = pages
             };
 
-            await client.AnalyzeDocumentAsync(WaitUntil.Started, "modelId", options, pages: pages);
+            await client.AnalyzeDocumentAsync(WaitUntil.Started, "modelId", options);
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedQuerySubstring = $"pages={pages}";
@@ -55,12 +53,13 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var clientOptions = new DocumentIntelligenceClientOptions() { Transport = mockTransport };
             var client = CreateInstrumentedClient(clientOptions);
 
-            var options = new AnalyzeDocumentOptions()
+            var uriSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.ContosoReceipt);
+            var options = new AnalyzeDocumentOptions(uriSource)
             {
-                UriSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.ContosoReceipt)
+                Locale = locale
             };
 
-            await client.AnalyzeDocumentAsync(WaitUntil.Started, "modelId", options, locale: locale);
+            await client.AnalyzeDocumentAsync(WaitUntil.Started, "modelId", options);
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedQuerySubstring = $"locale={locale}";
@@ -86,12 +85,15 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var clientOptions = new DocumentIntelligenceClientOptions() { Transport = mockTransport };
             var client = CreateInstrumentedClient(clientOptions);
 
-            var options = new AnalyzeDocumentOptions()
-            {
-                UriSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.ContosoReceipt)
-            };
+            var uriSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.ContosoReceipt);
+            var options = new AnalyzeDocumentOptions(uriSource);
 
-            await client.AnalyzeDocumentAsync(WaitUntil.Started, "modelId", options, features: features);
+            foreach (var feature in features)
+            {
+                options.Features.Add(feature);
+            }
+
+            await client.AnalyzeDocumentAsync(WaitUntil.Started, "modelId", options);
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
 
@@ -109,12 +111,15 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var clientOptions = new DocumentIntelligenceClientOptions() { Transport = mockTransport };
             var client = CreateInstrumentedClient(clientOptions);
 
-            var options = new AnalyzeDocumentOptions()
-            {
-                UriSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.ContosoReceipt)
-            };
+            var uriSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.ContosoReceipt);
+            var options = new AnalyzeDocumentOptions(uriSource);
 
-            await client.AnalyzeDocumentAsync(WaitUntil.Started, "modelId", options, queryFields: queryFields);
+            foreach (var queryField in queryFields)
+            {
+                options.QueryFields.Add(queryField);
+            }
+
+            await client.AnalyzeDocumentAsync(WaitUntil.Started, "modelId", options);
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedQuerySubstring = "queryFields=" + string.Join("%2C", queryFields);
@@ -137,12 +142,13 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var clientOptions = new DocumentIntelligenceClientOptions() { Transport = mockTransport };
             var client = CreateInstrumentedClient(clientOptions);
 
-            var options = new AnalyzeDocumentOptions()
+            var uriSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.ContosoReceipt);
+            var options = new AnalyzeDocumentOptions(uriSource)
             {
-                UriSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.ContosoReceipt)
+                OutputContentFormat = format
             };
 
-            await client.AnalyzeDocumentAsync(WaitUntil.Started, "modelId", options, outputContentFormat: format);
+            await client.AnalyzeDocumentAsync(WaitUntil.Started, "modelId", options);
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
 

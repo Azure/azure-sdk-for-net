@@ -81,10 +81,8 @@ namespace Azure.AI.DocumentIntelligence.Samples
             var client = new DocumentIntelligenceClient(new Uri(endpoint), TestEnvironment.Credential);
 
             #region Snippet:DocumentIntelligenceBadRequest
-            var options = new AnalyzeDocumentOptions()
-            {
-                UriSource = new Uri("http://invalid.uri")
-            };
+            var uriSource = new Uri("http://invalid.uri");
+            var options = new AnalyzeDocumentOptions(uriSource);
 
             try
             {
@@ -110,10 +108,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Uri uriSource = DocumentIntelligenceTestEnvironment.CreateUri("Form_1.jpg");
 #endif
 
-            var options = new AnalyzeDocumentOptions()
-            {
-                UriSource = uriSource
-            };
+            var options = new AnalyzeDocumentOptions(uriSource);
 
             Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", options);
             AnalyzeResult result = operation.Value;

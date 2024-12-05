@@ -39,10 +39,10 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WritePropertyName("urlSource"u8);
                 writer.WriteStringValue(UriSource.AbsoluteUri);
             }
-            if (Optional.IsDefined(Base64Source))
+            if (Optional.IsDefined(BytesSource))
             {
                 writer.WritePropertyName("base64Source"u8);
-                writer.WriteBase64StringValue(Base64Source.ToArray(), "D");
+                writer.WriteBase64StringValue(BytesSource.ToArray(), "D");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

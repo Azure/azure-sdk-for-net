@@ -46,43 +46,17 @@ namespace Azure.AI.DocumentIntelligence
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AnalyzeDocumentOptions"/>. </summary>
-        public AnalyzeDocumentOptions()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AnalyzeDocumentOptions"/>. </summary>
         /// <param name="uriSource"> Document URL to analyze.  Either urlSource or base64Source must be specified. </param>
-        /// <param name="base64Source">
+        /// <param name="bytesSource">
         /// Base64 encoding of the document to analyze.  Either urlSource or base64Source
         /// must be specified.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeDocumentOptions(Uri uriSource, BinaryData base64Source, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AnalyzeDocumentOptions(Uri uriSource, BinaryData bytesSource, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UriSource = uriSource;
-            Base64Source = base64Source;
+            BytesSource = bytesSource;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-
-        /// <summary> Document URL to analyze.  Either urlSource or base64Source must be specified. </summary>
-        public Uri UriSource { get; set; }
-        /// <summary>
-        /// Base64 encoding of the document to analyze.  Either urlSource or base64Source
-        /// must be specified.
-        /// <para>
-        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
-        /// The byte[] will be serialized to a Base64 encoded string.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromBytes(new byte[] { 1, 2, 3 })</term>
-        /// <description>Creates a payload of "AQID".</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Base64Source { get; set; }
     }
 }

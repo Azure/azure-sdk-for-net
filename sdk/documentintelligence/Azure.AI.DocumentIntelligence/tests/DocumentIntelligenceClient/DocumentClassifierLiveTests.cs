@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -23,10 +22,8 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             await using var disposableClassifier = await BuildDisposableDocumentClassifierAsync();
 
-            var options = new ClassifyDocumentOptions()
-            {
-                UriSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.Irs1040)
-            };
+            var uriSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.Irs1040);
+            var options = new ClassifyDocumentOptions(uriSource);
 
             var operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, disposableClassifier.ClassifierId, options);
 
@@ -37,16 +34,14 @@ namespace Azure.AI.DocumentIntelligence.Tests
         }
 
         [RecordedTest]
-        public async Task ClassifyDocumentWithBase64Source()
+        public async Task ClassifyDocumentWithBytesSource()
         {
             var client = CreateDocumentIntelligenceClient();
 
             await using var disposableClassifier = await BuildDisposableDocumentClassifierAsync();
 
-            var options = new ClassifyDocumentOptions()
-            {
-                Base64Source = DocumentIntelligenceTestEnvironment.CreateBinaryData(TestFile.Irs1040)
-            };
+            var bytesSource = DocumentIntelligenceTestEnvironment.CreateBinaryData(TestFile.Irs1040);
+            var options = new ClassifyDocumentOptions(bytesSource);
 
             var operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, disposableClassifier.ClassifierId, options);
 
@@ -64,10 +59,8 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             await using var disposableClassifier = await BuildDisposableDocumentClassifierAsync();
 
-            var options = new ClassifyDocumentOptions()
-            {
-                UriSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.Blank)
-            };
+            var uriSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.Blank);
+            var options = new ClassifyDocumentOptions(uriSource);
 
             var operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, disposableClassifier.ClassifierId, options);
 

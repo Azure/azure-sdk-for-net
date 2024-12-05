@@ -183,10 +183,7 @@ Extract text, selection marks, table structures, styles, and paragraphs, along w
 ```C# Snippet:DocumentIntelligenceExtractLayoutFromUriAsync
 Uri uriSource = new Uri("<uriSource>");
 
-var options = new AnalyzeDocumentOptions()
-{
-    UriSource = uriSource
-};
+var options = new AnalyzeDocumentOptions(uriSource);
 
 Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", options);
 AnalyzeResult result = operation.Value;
@@ -285,10 +282,7 @@ For example, to analyze fields from an invoice, use the prebuilt Invoice model p
 ```C# Snippet:DocumentIntelligenceAnalyzeWithPrebuiltModelFromUriAsync
 Uri uriSource = new Uri("<uriSource>");
 
-var options = new AnalyzeDocumentOptions()
-{
-    UriSource = uriSource
-};
+var options = new AnalyzeDocumentOptions(uriSource);
 
 Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", options);
 AnalyzeResult result = operation.Value;
@@ -507,10 +501,7 @@ Use document classifiers to accurately detect and identify documents you process
 string classifierId = "<classifierId>";
 Uri uriSource = new Uri("<uriSource>");
 
-var options = new ClassifyDocumentOptions()
-{
-    UriSource = uriSource
-};
+var options = new ClassifyDocumentOptions(uriSource);
 
 Operation<AnalyzeResult> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, classifierId, options);
 AnalyzeResult result = operation.Value;
@@ -534,10 +525,8 @@ When you interact with the Document Intelligence client library using the .NET S
 For example, if you submit a receipt image with an invalid `Uri`, a `400` error is returned, indicating "Bad Request".
 
 ```C# Snippet:DocumentIntelligenceBadRequest
-var options = new AnalyzeDocumentOptions()
-{
-    UriSource = new Uri("http://invalid.uri")
-};
+var uriSource = new Uri("http://invalid.uri");
+var options = new AnalyzeDocumentOptions(uriSource);
 
 try
 {

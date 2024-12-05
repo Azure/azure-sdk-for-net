@@ -23,14 +23,14 @@ namespace Azure.AI.DocumentIntelligence
         }
 
         private const string UriValue = "url";
-        private const string Base64Value = "base64";
+        private const string BytesValue = "base64";
         private const string BlobValue = "azureBlob";
         private const string BlobFileListValue = "azureBlobFileList";
 
         /// <summary> Content at a specific URL. </summary>
         public static ContentSourceKind Uri { get; } = new ContentSourceKind(UriValue);
         /// <summary> Content represented via Base64 encoding. </summary>
-        public static ContentSourceKind Base64 { get; } = new ContentSourceKind(Base64Value);
+        public static ContentSourceKind Bytes { get; } = new ContentSourceKind(BytesValue);
         /// <summary> Files in a path within an Azure Blob Storage container. </summary>
         public static ContentSourceKind Blob { get; } = new ContentSourceKind(BlobValue);
         /// <summary> A file list specifying individual files in an Azure Blob Storage container. </summary>

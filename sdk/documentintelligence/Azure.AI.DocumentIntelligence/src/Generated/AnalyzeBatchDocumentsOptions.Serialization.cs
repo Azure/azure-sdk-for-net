@@ -37,12 +37,12 @@ namespace Azure.AI.DocumentIntelligence
             if (Optional.IsDefined(BlobSource))
             {
                 writer.WritePropertyName("azureBlobSource"u8);
-                writer.WriteObjectValue(BlobSource, options);
+                writer.WriteObjectValue<BlobContentSource>(BlobSource, options);
             }
             if (Optional.IsDefined(BlobFileListSource))
             {
                 writer.WritePropertyName("azureBlobFileListSource"u8);
-                writer.WriteObjectValue(BlobFileListSource, options);
+                writer.WriteObjectValue<BlobFileListContentSource>(BlobFileListSource, options);
             }
             writer.WritePropertyName("resultContainerUrl"u8);
             writer.WriteStringValue(ResultContainerUri.AbsoluteUri);

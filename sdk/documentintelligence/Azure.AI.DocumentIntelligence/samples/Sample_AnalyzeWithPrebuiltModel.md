@@ -25,10 +25,7 @@ For simplicity, we are not showing all the fields that the service returns. To s
 ```C# Snippet:DocumentIntelligenceAnalyzeWithPrebuiltModelFromUriAsync
 Uri uriSource = new Uri("<uriSource>");
 
-var options = new AnalyzeDocumentOptions()
-{
-    UriSource = uriSource
-};
+var options = new AnalyzeDocumentOptions(uriSource);
 
 Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", options);
 AnalyzeResult result = operation.Value;
