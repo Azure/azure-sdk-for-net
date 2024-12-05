@@ -1,9 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-using System;
-using System.Collections.Generic;
+
+using Azure.CloudMachine.Core;
 using Azure.Core;
-using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.CognitiveServices;
 using Azure.Provisioning.Primitives;
 

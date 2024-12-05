@@ -3,7 +3,7 @@
 
 using System.ClientModel.Primitives;
 
-namespace Azure
+namespace Azure.Core.Rest
 {
     /// <summary>
     /// Options for the REST client.

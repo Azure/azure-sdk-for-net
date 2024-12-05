@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
@@ -9,12 +8,12 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace Azure.AI.OpenAI;
+namespace Azure.Core;
 
 /// <summary>
 /// TokenCredentialAuthenticationPolicy is a pipeline policy that authenticates requests using a TokenCredential.
 /// </summary>
-public partial class TokenCredentialAuthenticationPolicy : PipelinePolicy
+internal partial class TokenCredentialAuthenticationPolicy : PipelinePolicy
 {
     private readonly TokenCredential _credential;
     private readonly string[] _scopes;
@@ -99,7 +98,7 @@ public partial class TokenCredentialAuthenticationPolicy : PipelinePolicy
 
     private TokenRequestContext CreateRequestContext(PipelineRequest request)
     {
-        if (request.Headers.TryGetValue("x-ms-client-request-id", out string messageClientId))
+        if (request.Headers.TryGetValue("x-ms-client-request-id", out string? messageClientId))
         {
             return new TokenRequestContext(_scopes, messageClientId);
         }
