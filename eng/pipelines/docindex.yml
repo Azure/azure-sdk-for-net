@@ -135,7 +135,8 @@ jobs:
                 -DefinitionId 397 `
                 -BuildParametersJson $buildParamJson `
                 -BearerToken $accessToken
-            condition: and(succeeded(), or(eq(variables['Build.Reason'], 'Schedule'), ${{ parameters.StartMainSDKCIRun }}))
+
+            condition: and(succeeded(), or(eq(variables['Build.Reason'], 'Schedule'), eq(${{ parameters.StartMainSDKCIRun }}, true)))
 
       # The scenario for running a Manual build is normally only for the main updates. The daily build
       # should really only get kicked off for scheduled runs.
