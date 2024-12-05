@@ -42,9 +42,11 @@ namespace Azure.Communication.CallAutomation
                 ServiceVersion.V2023_03_06 => "2023-03-06",
                 ServiceVersion.V2023_06_15_Preview => "2023-06-15-preview",
                 ServiceVersion.V2023_10_15 => "2023-10-15",
-                ServiceVersion.V2024_04_15 => "2024-04-15",
-                ServiceVersion.V2024_09_15 => "2024-09-15",
                 ServiceVersion.V2023_10_03_Preview => "2023-10-03-preview",
+                ServiceVersion.V2024_04_15 => "2024-04-15",
+                ServiceVersion.V2024_06_15_Preview => "2024-06-15-preview",
+                ServiceVersion.V2024_09_15 => "2024-09-15",
+                ServiceVersion.V2024_11_15_Preview => "2024-11-15-preview",
                 ServiceVersion.V2024_09_01_Preview => "2024-09-01-preview",
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
