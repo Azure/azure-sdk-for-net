@@ -39,6 +39,11 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("transcriptionConfiguration"u8);
                 writer.WriteObjectValue(TranscriptionConfiguration);
             }
+            if (Optional.IsDefined(MediaStreamingConfiguration))
+            {
+                writer.WritePropertyName("mediaStreamingConfiguration"u8);
+                writer.WriteObjectValue(MediaStreamingConfiguration);
+            }
             writer.WriteEndObject();
         }
 

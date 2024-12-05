@@ -251,6 +251,7 @@ namespace Azure.Communication.CallAutomation
             }
 
             request.TranscriptionConfiguration = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
+            request.MediaStreamingConfiguration = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
             request.AnsweredBy = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id);
             request.OperationContext = options.OperationContext;
 
@@ -622,6 +623,7 @@ namespace Azure.Communication.CallAutomation
 
             request.OperationContext = options.OperationContext;
             request.TranscriptionConfiguration = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
+            request.MediaStreamingConfiguration = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
 
             return request;
         }
@@ -651,6 +653,7 @@ namespace Azure.Communication.CallAutomation
 
             request.OperationContext = options.OperationContext;
             request.TranscriptionConfiguration = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
+            request.MediaStreamingConfiguration = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
 
             return request;
         }
@@ -673,6 +676,15 @@ namespace Azure.Communication.CallAutomation
                 ? default
                 : new TranscriptionOptionsInternal(configuration.TransportUrl.AbsoluteUri, configuration.TranscriptionTransport, configuration.Locale,
                 configuration.StartTranscription);
+        }
+
+        private static MediaStreamingOptionsInternal CreateMediaStreamingOptionsInternal(MediaStreamingOptions configuration)
+        {
+            return configuration == default
+                ? default
+                : new MediaStreamingOptionsInternal(configuration.TransportUri.AbsoluteUri, configuration.MediaStreamingTransport,
+                configuration.MediaStreamingContent, configuration.MediaStreamingAudioChannel, configuration.StartMediaStreaming,
+                configuration.EnableBidirectional, configuration.AudioFormat == null ? AudioFormat.Pcm24KMono : configuration.AudioFormat);
         }
 
         /// <summary> Initializes a new instance of CallConnection. <see cref="CallConnection"/>.</summary>
