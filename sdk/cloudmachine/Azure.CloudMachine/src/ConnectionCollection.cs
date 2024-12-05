@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -13,6 +14,7 @@ namespace Azure.Core;
 /// Represents the connection options for a client.
 /// </summary>
 [JsonConverter(typeof(ConnectionCollectionConverter))]
+[DebuggerTypeProxy(typeof(ConnectionCollectionViewer))]
 public class ConnectionCollection : KeyedCollection<string, ClientConnection>
 {
     /// <summary>
@@ -26,6 +28,20 @@ public class ConnectionCollection : KeyedCollection<string, ClientConnection>
     {
         foreach (ClientConnection connection in connections)
             Add(connection);
+    }
+}
+
+internal class ConnectionCollectionViewer(ConnectionCollection connections)
+{
+    [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
+    public ClientConnection[] Items
+    {
+        get
+        {
+            ClientConnection[] items = new ClientConnection[connections.Count];
+            connections.CopyTo(items, 0);
+            return items;
+        }
     }
 }
 

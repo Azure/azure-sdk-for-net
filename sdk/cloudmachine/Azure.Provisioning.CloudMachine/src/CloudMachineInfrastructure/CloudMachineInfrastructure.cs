@@ -13,6 +13,7 @@ using Azure.Provisioning;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Roles;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.CloudMachine;
 
@@ -131,4 +132,20 @@ public class CloudMachineInfrastructure
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override bool Equals(object? obj) => base.Equals(obj);
+}
+
+public static class CloudMachineInfrastructureConfiguration
+{
+    /// <summary>
+    /// Adds a connection to the collection.
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <param name="cm"></param>
+    /// <returns></returns>
+    public static IConfigurationBuilder AddCloudMachineInfrastructure(this IConfigurationBuilder builder, CloudMachineInfrastructure cm)
+    {
+        builder.AddCloudMachineConnections(cm.Connections);
+        builder.AddCloudMachineId(cm.Id);
+        return builder;
+    }
 }

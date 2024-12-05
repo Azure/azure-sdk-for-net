@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
 using Azure.Identity;
@@ -31,8 +30,9 @@ public partial class CloudMachineClient : ClientWorkspace
     /// Initializes a new instance of the <see cref="CloudMachineClient"/> class for mocking purposes..
     /// </summary>
     protected CloudMachineClient() :
-        this(BuildCredentail(default))
+        this(credential: BuildCredentail(default))
     {
+        Id = AppConfigHelpers.ReadOrCreateCloudMachineId();
         Messaging = new MessagingServices(this);
         Storage = new StorageServices(this);
     }
@@ -41,11 +41,42 @@ public partial class CloudMachineClient : ClientWorkspace
     /// <summary>
     /// Initializes a new instance of the <see cref="CloudMachineClient"/> class.
     /// </summary>
-    /// <param name="credential">The token credential.</param>
     /// <param name="configuration">The configuration settings.</param>
-    /// <param name="connections"></param>
+    /// <param name="credential">The token credential.</param>
     // TODO: we need to combine the configuration and the connections into a single parameter.
-    public CloudMachineClient(TokenCredential credential = default, IConfiguration configuration = default, IEnumerable<ClientConnection> connections = default)
+    public CloudMachineClient(IConfiguration configuration, TokenCredential credential = default)
+#pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
+        : base(BuildCredentail(credential))
+    {
+        Id = configuration["CloudMachine:ID"];
+        if (Id == null)
+        {
+            Id = AppConfigHelpers.ReadOrCreateCloudMachineId();
+        }
+
+        IConfigurationSection connectionsSection = configuration.GetSection("CloudMachine:Connections");
+
+        foreach (IConfigurationSection connection in connectionsSection.GetChildren())
+        {
+            string id = connection["Id"];
+            if (id == null) continue;
+            string locator = connection["Locator"];
+
+            Connections.Add(new ClientConnection(id, locator, ClientAuthenticationMethod.EntraId));
+        }
+
+        Messaging = new MessagingServices(this);
+        Storage = new StorageServices(this);
+    }
+
+#pragma warning disable AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CloudMachineClient"/> class.
+    /// </summary>
+    /// <param name="connections"></param>
+    /// <param name="credential">The token credential.</param>
+    // TODO: we need to combine the configuration and the connections into a single parameter.
+    public CloudMachineClient(ConnectionCollection connections = default, TokenCredential credential = default)
 #pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
         : base(BuildCredentail(credential))
     {
@@ -54,12 +85,7 @@ public partial class CloudMachineClient : ClientWorkspace
             Connections.AddRange(connections);
         }
 
-        Id = configuration switch
-        {
-            null => AppConfigHelpers.ReadOrCreateCloudMachineId(),
-            _ => configuration["CloudMachine:ID"] ?? throw new Exception("CloudMachine:ID configuration value missing")
-        };
-
+        Id = AppConfigHelpers.ReadOrCreateCloudMachineId();
         Messaging = new MessagingServices(this);
         Storage = new StorageServices(this);
     }
