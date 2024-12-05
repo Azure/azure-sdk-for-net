@@ -13,20 +13,14 @@ namespace Azure.CloudMachine.Tests;
 
 public partial class CloudMachineTests
 {
-    [Test]
-    [TestCase([new string[] { "-azd" }])]
+    [TestCase([new string[] { "-bicep" }])]
     public void GettingStarted(string[] args)
     {
-        CloudMachineInfrastructure infra = new();
-        infra.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
+        CloudMachineInfrastructure cm = new();
+        cm.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
+        if (cm.TryExecuteCommand(args)) return;
 
-        if (args.Contains("-azd")) {
-            Azd.Init(infra);
-            return;
-        }
-
-        // TODO: we need to allow newing up the client.
-        CloudMachineClient client = infra.GetClient();
+        CloudMachineClient client = cm.GetClient();
 
         ChatClient chat = client.GetOpenAIChatClient();
         string completion = chat.CompleteChat("List all noble gases.").AsText();
