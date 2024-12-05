@@ -30,7 +30,7 @@ public partial class CloudMachineClient : ClientWorkspace
     /// Initializes a new instance of the <see cref="CloudMachineClient"/> class for mocking purposes..
     /// </summary>
     protected CloudMachineClient() :
-        this(credential: BuildCredentail(default))
+        this(credential: BuildCredential(default))
     {
         Id = AppConfigHelpers.ReadOrCreateCloudMachineId();
         Messaging = new MessagingServices(this);
@@ -43,10 +43,9 @@ public partial class CloudMachineClient : ClientWorkspace
     /// </summary>
     /// <param name="configuration">The configuration settings.</param>
     /// <param name="credential">The token credential.</param>
-    // TODO: we need to combine the configuration and the connections into a single parameter.
     public CloudMachineClient(IConfiguration configuration, TokenCredential credential = default)
 #pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
-        : base(BuildCredentail(credential))
+        : base(BuildCredential(credential))
     {
         Id = configuration["CloudMachine:ID"];
         if (Id == null)
@@ -78,7 +77,7 @@ public partial class CloudMachineClient : ClientWorkspace
     // TODO: we need to combine the configuration and the connections into a single parameter.
     public CloudMachineClient(ConnectionCollection connections = default, TokenCredential credential = default)
 #pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
-        : base(BuildCredentail(credential))
+        : base(BuildCredential(credential))
     {
         if (connections != default)
         {
@@ -112,7 +111,7 @@ public partial class CloudMachineClient : ClientWorkspace
         return Connections[connectionId];
     }
 
-    private static TokenCredential BuildCredentail(TokenCredential credential)
+    private static TokenCredential BuildCredential(TokenCredential credential)
     {
         if (credential == default)
         {
