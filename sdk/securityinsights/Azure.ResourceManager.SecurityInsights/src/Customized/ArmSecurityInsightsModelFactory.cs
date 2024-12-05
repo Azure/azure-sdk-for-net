@@ -87,6 +87,32 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new SecurityInsightsIncidentEntitiesMetadata(entityKind, count, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsUriEntity"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
+        /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
+        /// <param name="uri"> A full URL the entity points to. </param>
+        /// <returns> A new <see cref="Models.SecurityInsightsUriEntity"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SecurityInsightsUriEntity SecurityInsightsUriEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> additionalData = null, string friendlyName = null, Uri uri = null)
+        {
+            additionalData ??= new Dictionary<string, BinaryData>();
+
+            return new SecurityInsightsUriEntity(
+                id,
+                name,
+                resourceType,
+                systemData,
+                SecurityInsightsEntityKind.Uri,
+                serializedAdditionalRawData: null,
+                additionalData,
+                friendlyName,
+                uri?.AbsoluteUri);
+        }
+
         /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsWatchlistData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
