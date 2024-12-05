@@ -2,7 +2,7 @@ namespace Azure.Storage.Files.DataLake
 {
     public partial class DataLakeClientOptions : Azure.Core.ClientOptions
     {
-        public DataLakeClientOptions(Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion version = Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2025_01_05) { }
+        public DataLakeClientOptions(Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion version = Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2025_05_05) { }
         public Azure.Storage.Files.DataLake.Models.DataLakeAudience? Audience { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.Models.DataLakeCustomerProvidedKey? CustomerProvidedKey { get { throw null; } set { } }
         public bool EnableTenantDiscovery { get { throw null; } set { } }
@@ -36,6 +36,7 @@ namespace Azure.Storage.Files.DataLake
             V2024_08_04 = 23,
             V2024_11_04 = 24,
             V2025_01_05 = 25,
+            V2025_05_05 = 26,
         }
     }
     public partial class DataLakeDirectoryClient : Azure.Storage.Files.DataLake.DataLakePathClient
