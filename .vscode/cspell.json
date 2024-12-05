@@ -151,6 +151,7 @@
     "southcentralus",
     "structs",
     "Sysctls",
+    "SYSLIB",
     "Uefi",
     "uints",
     "unbilled",
@@ -263,7 +264,7 @@
         "Hvci"
       ]
     },
-	  {
+    {
       "filename": "**/sdk/computefleet/**/*.cs",
       "words": [
         "Rdma"
@@ -916,7 +917,7 @@
       ]
     },
     {
-      "filename": "**/sdk/maps/Azure.Maps.TimeZone/**/*.cs",
+      "filename": "**/sdk/maps/Azure.Maps.TimeZones/**/*.cs",
       "words": [
         "Posix",
         "posix",
@@ -1198,6 +1199,12 @@
         "capi",
         "kvaio",
         "scvmm"
+      ]
+    },
+    {
+      "filename": "**/sdk/resourcemanager/**/*.cs",
+      "words": [
+        "AZPROVISION"
       ]
     },
     {

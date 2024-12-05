@@ -11,7 +11,6 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DigitalTwins.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.DigitalTwins.Samples
@@ -110,114 +109,6 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_PatchADigitalTwinsInstanceResource()
-        {
-            // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/DigitalTwinsPatch_example.json
-            // this example is just showing the usage of "DigitalTwins_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this DigitalTwinsDescriptionResource created on azure
-            // for more information of creating DigitalTwinsDescriptionResource, please refer to the document of DigitalTwinsDescriptionResource
-            string subscriptionId = "50016170-c839-41ba-a724-51e9df440b9e";
-            string resourceGroupName = "resRg";
-            string resourceName = "myDigitalTwinsService";
-            ResourceIdentifier digitalTwinsDescriptionResourceId = DigitalTwinsDescriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            DigitalTwinsDescriptionResource digitalTwinsDescription = client.GetDigitalTwinsDescriptionResource(digitalTwinsDescriptionResourceId);
-
-            // invoke the operation
-            DigitalTwinsDescriptionPatch patch = new DigitalTwinsDescriptionPatch()
-            {
-                Tags =
-{
-["purpose"] = "dev",
-},
-            };
-            ArmOperation<DigitalTwinsDescriptionResource> lro = await digitalTwinsDescription.UpdateAsync(WaitUntil.Completed, patch);
-            DigitalTwinsDescriptionResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            DigitalTwinsDescriptionData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Update_PatchADigitalTwinsInstanceResourceWithIdentity()
-        {
-            // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/DigitalTwinsPatch_WithIdentity_example.json
-            // this example is just showing the usage of "DigitalTwins_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this DigitalTwinsDescriptionResource created on azure
-            // for more information of creating DigitalTwinsDescriptionResource, please refer to the document of DigitalTwinsDescriptionResource
-            string subscriptionId = "50016170-c839-41ba-a724-51e9df440b9e";
-            string resourceGroupName = "resRg";
-            string resourceName = "myDigitalTwinsService";
-            ResourceIdentifier digitalTwinsDescriptionResourceId = DigitalTwinsDescriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            DigitalTwinsDescriptionResource digitalTwinsDescription = client.GetDigitalTwinsDescriptionResource(digitalTwinsDescriptionResourceId);
-
-            // invoke the operation
-            DigitalTwinsDescriptionPatch patch = new DigitalTwinsDescriptionPatch()
-            {
-                Identity = new ManagedServiceIdentity("None"),
-            };
-            ArmOperation<DigitalTwinsDescriptionResource> lro = await digitalTwinsDescription.UpdateAsync(WaitUntil.Completed, patch);
-            DigitalTwinsDescriptionResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            DigitalTwinsDescriptionData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Update_PatchADigitalTwinsInstanceResourceWithPublicNetworkAccessProperty()
-        {
-            // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/DigitalTwinsPatch_WithPublicNetworkAccess.json
-            // this example is just showing the usage of "DigitalTwins_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this DigitalTwinsDescriptionResource created on azure
-            // for more information of creating DigitalTwinsDescriptionResource, please refer to the document of DigitalTwinsDescriptionResource
-            string subscriptionId = "50016170-c839-41ba-a724-51e9df440b9e";
-            string resourceGroupName = "resRg";
-            string resourceName = "myDigitalTwinsService";
-            ResourceIdentifier digitalTwinsDescriptionResourceId = DigitalTwinsDescriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            DigitalTwinsDescriptionResource digitalTwinsDescription = client.GetDigitalTwinsDescriptionResource(digitalTwinsDescriptionResourceId);
-
-            // invoke the operation
-            DigitalTwinsDescriptionPatch patch = new DigitalTwinsDescriptionPatch()
-            {
-                DigitalTwinsPatchPublicNetworkAccess = DigitalTwinsPublicNetworkAccess.Disabled,
-            };
-            ArmOperation<DigitalTwinsDescriptionResource> lro = await digitalTwinsDescription.UpdateAsync(WaitUntil.Completed, patch);
-            DigitalTwinsDescriptionResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            DigitalTwinsDescriptionData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteADigitalTwinsInstanceResource()
         {
             // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/DigitalTwinsDelete_example.json
@@ -280,59 +171,110 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetDigitalTwinsDescriptions_GetDigitalTwinsInstanceResourcesBySubscription()
+        public async Task Update_PatchADigitalTwinsInstanceResource()
         {
-            // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/DigitalTwinsList_example.json
-            // this example is just showing the usage of "DigitalTwins_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/DigitalTwinsPatch_example.json
+            // this example is just showing the usage of "DigitalTwins_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            // this example assumes you already have this DigitalTwinsDescriptionResource created on azure
+            // for more information of creating DigitalTwinsDescriptionResource, please refer to the document of DigitalTwinsDescriptionResource
             string subscriptionId = "50016170-c839-41ba-a724-51e9df440b9e";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+            string resourceGroupName = "resRg";
+            string resourceName = "myDigitalTwinsService";
+            ResourceIdentifier digitalTwinsDescriptionResourceId = DigitalTwinsDescriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            DigitalTwinsDescriptionResource digitalTwinsDescription = client.GetDigitalTwinsDescriptionResource(digitalTwinsDescriptionResourceId);
 
-            // invoke the operation and iterate over the result
-            await foreach (DigitalTwinsDescriptionResource item in subscriptionResource.GetDigitalTwinsDescriptionsAsync())
+            // invoke the operation
+            DigitalTwinsDescriptionPatch patch = new DigitalTwinsDescriptionPatch
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                DigitalTwinsDescriptionData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                Tags =
+{
+["purpose"] = "dev"
+},
+            };
+            ArmOperation<DigitalTwinsDescriptionResource> lro = await digitalTwinsDescription.UpdateAsync(WaitUntil.Completed, patch);
+            DigitalTwinsDescriptionResource result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DigitalTwinsDescriptionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CheckDigitalTwinsNameAvailability_CheckNameAvailability()
+        public async Task Update_PatchADigitalTwinsInstanceResourceWithIdentity()
         {
-            // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/DigitalTwinsCheckNameAvailability_example.json
-            // this example is just showing the usage of "DigitalTwins_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/DigitalTwinsPatch_WithIdentity_example.json
+            // this example is just showing the usage of "DigitalTwins_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            // this example assumes you already have this DigitalTwinsDescriptionResource created on azure
+            // for more information of creating DigitalTwinsDescriptionResource, please refer to the document of DigitalTwinsDescriptionResource
             string subscriptionId = "50016170-c839-41ba-a724-51e9df440b9e";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+            string resourceGroupName = "resRg";
+            string resourceName = "myDigitalTwinsService";
+            ResourceIdentifier digitalTwinsDescriptionResourceId = DigitalTwinsDescriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            DigitalTwinsDescriptionResource digitalTwinsDescription = client.GetDigitalTwinsDescriptionResource(digitalTwinsDescriptionResourceId);
 
             // invoke the operation
-            AzureLocation location = new AzureLocation("WestUS2");
-            DigitalTwinsNameContent content = new DigitalTwinsNameContent("myadtinstance");
-            DigitalTwinsNameResult result = await subscriptionResource.CheckDigitalTwinsNameAvailabilityAsync(location, content);
+            DigitalTwinsDescriptionPatch patch = new DigitalTwinsDescriptionPatch
+            {
+                Identity = new ManagedServiceIdentity("None"),
+            };
+            ArmOperation<DigitalTwinsDescriptionResource> lro = await digitalTwinsDescription.UpdateAsync(WaitUntil.Completed, patch);
+            DigitalTwinsDescriptionResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded: {result}");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DigitalTwinsDescriptionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_PatchADigitalTwinsInstanceResourceWithPublicNetworkAccessProperty()
+        {
+            // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/DigitalTwinsPatch_WithPublicNetworkAccess.json
+            // this example is just showing the usage of "DigitalTwins_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DigitalTwinsDescriptionResource created on azure
+            // for more information of creating DigitalTwinsDescriptionResource, please refer to the document of DigitalTwinsDescriptionResource
+            string subscriptionId = "50016170-c839-41ba-a724-51e9df440b9e";
+            string resourceGroupName = "resRg";
+            string resourceName = "myDigitalTwinsService";
+            ResourceIdentifier digitalTwinsDescriptionResourceId = DigitalTwinsDescriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            DigitalTwinsDescriptionResource digitalTwinsDescription = client.GetDigitalTwinsDescriptionResource(digitalTwinsDescriptionResourceId);
+
+            // invoke the operation
+            DigitalTwinsDescriptionPatch patch = new DigitalTwinsDescriptionPatch
+            {
+                DigitalTwinsPatchPublicNetworkAccess = DigitalTwinsPublicNetworkAccess.Disabled,
+            };
+            ArmOperation<DigitalTwinsDescriptionResource> lro = await digitalTwinsDescription.UpdateAsync(WaitUntil.Completed, patch);
+            DigitalTwinsDescriptionResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DigitalTwinsDescriptionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

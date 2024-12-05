@@ -1,10 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Storage.Blobs;
 
@@ -95,6 +98,8 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                                           CancellationToken cancellationToken) => _checkpointStoreImplementation.GetCheckpointAsync(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, cancellationToken);
 
         /// <summary>
+        ///   Obsolete.
+        ///
         ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream
         ///   that an event processor should begin reading from.
         /// </summary>
@@ -103,17 +108,23 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
-        /// <param name="offset">The offset to associate with the checkpoint, intended as informational metadata. This will only be used for positioning if there is no value provided for <paramref name="sequenceNumber"/>.</param>
+        /// <param name="offset">The offset to associate with the checkpoint, intended as informational metadata. This will only be used from positioning if there is no value provided for <paramref name="sequenceNumber"/>.</param>
         /// <param name="sequenceNumber">The sequence number to associate with the checkpoint, indicating that a processor should begin reading from the next event in the stream.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
         ///
+        /// <remarks>
+        ///   This method is obsolete and should no longer be used.  Please use <see cref="UpdateCheckpointAsync(string, string, string, string, string, CheckpointPosition, CancellationToken)"/> instead.
+        /// </remarks>
+        ///
+        [Obsolete(AttributeMessageText.LongOffsetUpdateCheckpointObsolete, false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override Task UpdateCheckpointAsync(string fullyQualifiedNamespace,
-                                                   string eventHubName,
-                                                   string consumerGroup,
-                                                   string partitionId,
-                                                   long offset,
-                                                   long? sequenceNumber,
-                                                   CancellationToken cancellationToken) => _checkpointStoreImplementation.UpdateCheckpointAsync(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, offset, sequenceNumber, cancellationToken);
+                                                  string eventHubName,
+                                                  string consumerGroup,
+                                                  string partitionId,
+                                                  long offset,
+                                                  long? sequenceNumber,
+                                                  CancellationToken cancellationToken) => _checkpointStoreImplementation.UpdateCheckpointAsync(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, offset, sequenceNumber, cancellationToken);
 
         /// <summary>
         ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream

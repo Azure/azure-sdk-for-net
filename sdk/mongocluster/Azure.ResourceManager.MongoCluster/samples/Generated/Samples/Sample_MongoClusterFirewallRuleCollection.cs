@@ -18,6 +18,45 @@ namespace Azure.ResourceManager.MongoCluster.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreatesAFirewallRuleOnAMongoClusterResource()
+        {
+            // Generated from example definition: 2024-07-01/MongoClusters_FirewallRuleCreate.json
+            // this example is just showing the usage of "FirewallRule_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MongoClusterResource created on azure
+            // for more information of creating MongoClusterResource, please refer to the document of MongoClusterResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "TestGroup";
+            string mongoClusterName = "myMongoCluster";
+            ResourceIdentifier mongoClusterResourceId = MongoClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, mongoClusterName);
+            MongoClusterResource mongoCluster = client.GetMongoClusterResource(mongoClusterResourceId);
+
+            // get the collection of this MongoClusterFirewallRuleResource
+            MongoClusterFirewallRuleCollection collection = mongoCluster.GetMongoClusterFirewallRules();
+
+            // invoke the operation
+            string firewallRuleName = "rule1";
+            MongoClusterFirewallRuleData data = new MongoClusterFirewallRuleData
+            {
+                Properties = new MongoClusterFirewallRuleProperties("0.0.0.0", "255.255.255.255"),
+            };
+            ArmOperation<MongoClusterFirewallRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, firewallRuleName, data);
+            MongoClusterFirewallRuleResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            MongoClusterFirewallRuleData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsAFirewallRuleOnAMongoClusterResource()
         {
             // Generated from example definition: 2024-07-01/MongoClusters_FirewallRuleGet.json
@@ -48,6 +87,42 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             MongoClusterFirewallRuleData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListTheFirewallRulesOnAMongoClusterResource()
+        {
+            // Generated from example definition: 2024-07-01/MongoClusters_FirewallRuleList.json
+            // this example is just showing the usage of "FirewallRule_ListByMongoCluster" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MongoClusterResource created on azure
+            // for more information of creating MongoClusterResource, please refer to the document of MongoClusterResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "TestGroup";
+            string mongoClusterName = "myMongoCluster";
+            ResourceIdentifier mongoClusterResourceId = MongoClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, mongoClusterName);
+            MongoClusterResource mongoCluster = client.GetMongoClusterResource(mongoClusterResourceId);
+
+            // get the collection of this MongoClusterFirewallRuleResource
+            MongoClusterFirewallRuleCollection collection = mongoCluster.GetMongoClusterFirewallRules();
+
+            // invoke the operation and iterate over the result
+            await foreach (MongoClusterFirewallRuleResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                MongoClusterFirewallRuleData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -120,81 +195,6 @@ namespace Azure.ResourceManager.MongoCluster.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_CreatesAFirewallRuleOnAMongoClusterResource()
-        {
-            // Generated from example definition: 2024-07-01/MongoClusters_FirewallRuleCreate.json
-            // this example is just showing the usage of "FirewallRule_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MongoClusterResource created on azure
-            // for more information of creating MongoClusterResource, please refer to the document of MongoClusterResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "TestGroup";
-            string mongoClusterName = "myMongoCluster";
-            ResourceIdentifier mongoClusterResourceId = MongoClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, mongoClusterName);
-            MongoClusterResource mongoCluster = client.GetMongoClusterResource(mongoClusterResourceId);
-
-            // get the collection of this MongoClusterFirewallRuleResource
-            MongoClusterFirewallRuleCollection collection = mongoCluster.GetMongoClusterFirewallRules();
-
-            // invoke the operation
-            string firewallRuleName = "rule1";
-            MongoClusterFirewallRuleData data = new MongoClusterFirewallRuleData()
-            {
-                Properties = new MongoClusterFirewallRuleProperties("0.0.0.0", "255.255.255.255"),
-            };
-            ArmOperation<MongoClusterFirewallRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, firewallRuleName, data);
-            MongoClusterFirewallRuleResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            MongoClusterFirewallRuleData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ListTheFirewallRulesOnAMongoClusterResource()
-        {
-            // Generated from example definition: 2024-07-01/MongoClusters_FirewallRuleList.json
-            // this example is just showing the usage of "FirewallRule_ListByMongoCluster" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MongoClusterResource created on azure
-            // for more information of creating MongoClusterResource, please refer to the document of MongoClusterResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "TestGroup";
-            string mongoClusterName = "myMongoCluster";
-            ResourceIdentifier mongoClusterResourceId = MongoClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, mongoClusterName);
-            MongoClusterResource mongoCluster = client.GetMongoClusterResource(mongoClusterResourceId);
-
-            // get the collection of this MongoClusterFirewallRuleResource
-            MongoClusterFirewallRuleCollection collection = mongoCluster.GetMongoClusterFirewallRules();
-
-            // invoke the operation and iterate over the result
-            await foreach (MongoClusterFirewallRuleResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                MongoClusterFirewallRuleData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
         }
     }
 }

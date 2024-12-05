@@ -63,13 +63,13 @@ namespace Azure.ResourceManager.Billing.Samples
             BillingRequestResource billingRequest = client.GetBillingRequestResource(billingRequestResourceId);
 
             // invoke the operation
-            BillingRequestData data = new BillingRequestData()
+            BillingRequestData data = new BillingRequestData
             {
-                Properties = new BillingRequestProperties()
+                Properties = new BillingRequestProperties
                 {
                     AdditionalInformation =
 {
-["RoleId"] = "40000000-aaaa-bbbb-cccc-200000000006",
+["RoleId"] = "40000000-aaaa-bbbb-cccc-200000000006"
 },
                     DecisionReason = "New team member",
                     RequestScope = "/providers/Microsoft.Billing/billingAccounts/00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31/billingProfiles/xxxx-xxxx-xxx-xxx",

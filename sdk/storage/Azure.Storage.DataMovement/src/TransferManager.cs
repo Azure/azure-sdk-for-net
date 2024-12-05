@@ -60,9 +60,13 @@ namespace Azure.Storage.DataMovement
         /// <param name="options">Options that will apply to all transfers started by this TransferManager.</param>
         public TransferManager(TransferManagerOptions options = default)
             : this(
-            ChannelProcessing.NewProcessor<TransferJobInternal>(parallelism: 1),
-            ChannelProcessing.NewProcessor<JobPartInternal>(DataMovementConstants.MaxJobPartReaders),
-            ChannelProcessing.NewProcessor<Func<Task>>(options?.MaximumConcurrency ?? DataMovementConstants.MaxJobChunkTasks),
+            ChannelProcessing.NewProcessor<TransferJobInternal>(readers: 1),
+            ChannelProcessing.NewProcessor<JobPartInternal>(
+                readers: DataMovementConstants.Channels.MaxJobPartReaders,
+                capacity: DataMovementConstants.Channels.JobPartCapacity),
+            ChannelProcessing.NewProcessor<Func<Task>>(
+                readers: options?.MaximumConcurrency ?? DataMovementConstants.Channels.MaxJobChunkReaders,
+                capacity: DataMovementConstants.Channels.JobChunkCapacity),
             new(ArrayPool<byte>.Shared,
                 options?.ErrorHandling ?? DataTransferErrorMode.StopOnAnyFailure,
                 new ClientDiagnostics(options?.ClientOptions ?? ClientOptions.Default)),

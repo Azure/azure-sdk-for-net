@@ -59,10 +59,6 @@ public abstract class VectorbaseStore
 
 public readonly struct VectorbaseEntry
 {
-    private readonly ReadOnlyMemory<float> _vector;
-    private readonly int? _id;
-    private readonly BinaryData _data;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="VectorbaseEntry"/> class.
     /// </summary>
@@ -71,23 +67,23 @@ public readonly struct VectorbaseEntry
     /// <param name="id"></param>
     public VectorbaseEntry(ReadOnlyMemory<float> vector, BinaryData data, int? id = default)
     {
-        _vector = vector;
-        _data = data;
-        _id = id;
+        Vector = vector;
+        Data = data;
+        Id = id;
     }
 
     /// <summary>
     /// Gets the data associated with the entry.
     /// </summary>
-    public BinaryData Data => _data;
+    public BinaryData Data { get; }
 
     /// <summary>
     /// Gets the vector associated with the entry.
     /// </summary>
-    public ReadOnlyMemory<float> Vector => _vector;
+    public ReadOnlyMemory<float> Vector { get; }
 
     /// <summary>
     /// Gets the id associated with the entry.
     /// </summary>
-    public int? Id => _id;
+    public int? Id { get; }
 }

@@ -8,7 +8,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Azure.AI.OpenAI" />
     <ProjectReference Include="..\src\Azure.CloudMachine.csproj" />
-    <ProjectReference Include="..\..\..\provisioning\Azure.Provisioning.CloudMachine\src\Azure.Provisioning.CloudMachine.csproj" />
+    <ProjectReference Include="..\..\Azure.Provisioning.CloudMachine\src\Azure.Provisioning.CloudMachine.csproj" />
     <ProjectReference Include="..\..\..\provisioning\Azure.Provisioning.Deployment\src\Azure.Provisioning.Deployment.csproj" />
   </ItemGroup>
 </Project>

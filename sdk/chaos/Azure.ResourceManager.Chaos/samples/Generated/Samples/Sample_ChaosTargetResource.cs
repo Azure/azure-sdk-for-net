@@ -102,12 +102,16 @@ namespace Azure.ResourceManager.Chaos.Samples
             ChaosTargetResource chaosTarget = client.GetChaosTargetResource(chaosTargetResourceId);
 
             // invoke the operation
-            ChaosTargetData data = new ChaosTargetData(new Dictionary<string, BinaryData>()
+            ChaosTargetData data = new ChaosTargetData(new Dictionary<string, BinaryData>
             {
-                ["identities"] = BinaryData.FromObjectAsJson(new object[] { new Dictionary<string, object>()
+                ["identities"] = BinaryData.FromObjectAsJson(new object[]
+            {
+new
 {
-["type"] = "CertificateSubjectIssuer",
-["subject"] = "CN=example.subject"} }),
+type = "CertificateSubjectIssuer",
+subject = "CN=example.subject",
+}
+            })
             });
             ArmOperation<ChaosTargetResource> lro = await chaosTarget.UpdateAsync(WaitUntil.Completed, data);
             ChaosTargetResource result = lro.Value;

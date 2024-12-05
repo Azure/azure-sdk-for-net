@@ -19,33 +19,6 @@ namespace Azure.ResourceManager.Compute.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Delete_DeleteCloudServiceRoleInstance()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-09-04/examples/CloudServiceRoleInstance_Delete.json
-            // this example is just showing the usage of "CloudServiceRoleInstances_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CloudServiceRoleInstanceResource created on azure
-            // for more information of creating CloudServiceRoleInstanceResource, please refer to the document of CloudServiceRoleInstanceResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "ConstosoRG";
-            string cloudServiceName = "{cs-name}";
-            string roleInstanceName = "{roleInstance-name}";
-            ResourceIdentifier cloudServiceRoleInstanceResourceId = CloudServiceRoleInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
-            CloudServiceRoleInstanceResource cloudServiceRoleInstance = client.GetCloudServiceRoleInstanceResource(cloudServiceRoleInstanceResourceId);
-
-            // invoke the operation
-            await cloudServiceRoleInstance.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetCloudServiceRoleInstance()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-09-04/examples/CloudServiceRoleInstance_Get.json
@@ -73,6 +46,33 @@ namespace Azure.ResourceManager.Compute.Samples
             CloudServiceRoleInstanceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteCloudServiceRoleInstance()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-09-04/examples/CloudServiceRoleInstance_Delete.json
+            // this example is just showing the usage of "CloudServiceRoleInstances_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CloudServiceRoleInstanceResource created on azure
+            // for more information of creating CloudServiceRoleInstanceResource, please refer to the document of CloudServiceRoleInstanceResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "ConstosoRG";
+            string cloudServiceName = "{cs-name}";
+            string roleInstanceName = "{roleInstance-name}";
+            ResourceIdentifier cloudServiceRoleInstanceResourceId = CloudServiceRoleInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName, roleInstanceName);
+            CloudServiceRoleInstanceResource cloudServiceRoleInstance = client.GetCloudServiceRoleInstanceResource(cloudServiceRoleInstanceResourceId);
+
+            // invoke the operation
+            await cloudServiceRoleInstance.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
