@@ -340,6 +340,21 @@ namespace Azure.Storage.Shared
             base.Dispose(disposing);
         }
 
+#if NET6_0_OR_GREATER
+        public override async ValueTask DisposeAsync()
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            await FlushAsync().ConfigureAwait(false);
+            ValidateCallerCrcIfAny();
+            _accumulatedDisposables.Dispose();
+            _disposed = true;
+        }
+#endif
+
         private void ValidateCallerCrcIfAny()
         {
             if (UseMasterCrc && !_userProvidedChecksum.IsEmpty)
