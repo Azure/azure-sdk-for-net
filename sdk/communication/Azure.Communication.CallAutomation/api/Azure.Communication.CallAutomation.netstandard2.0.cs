@@ -170,7 +170,11 @@ namespace Azure.Communication.CallAutomation
             V2023_06_15_Preview = 2,
             V2023_10_15 = 3,
             V2023_10_03_Preview = 4,
-            V2024_09_01_Preview = 5,
+            V2024_04_15 = 5,
+            V2024_06_15_Preview = 6,
+            V2024_09_15 = 7,
+            V2024_11_15_Preview = 8,
+            V2024_09_01_Preview = 9,
         }
     }
     public abstract partial class CallAutomationEventBase
