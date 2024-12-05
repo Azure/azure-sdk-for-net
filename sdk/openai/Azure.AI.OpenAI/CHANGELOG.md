@@ -1,6 +1,6 @@
 # Release History
 
-## 2.1.0 (Unreleased)
+## 2.1.0 (2024-12-05)
 
 This GA library release aligns functionality with the latest `2024-10-21` stable service API label.
 
@@ -45,8 +45,6 @@ This update brings compatibility with the Azure OpenAI `2024-10-01-preview` serv
   - Note 1: this feature is not yet compatible when using On Your Data features (after invoking the `.AddDataSource()` extension method on `ChatCompletionOptions`)
   - Note 2: this feature is not yet compatible when using image input (a `ChatMessageContentPart` of `Kind` `Image`)
 - `2024-10-01-preview` further adds support for ungrounded content detection in chat completion content filter results via the `UngroundedMaterial` property on `ResponseContentFilterResult`, as retrieved from a chat completion via the `GetResponseContentFilterResult()` extension method.
-
-## 2.0.1 (Unreleased)
 
 ## Breaking Changes
 
