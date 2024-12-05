@@ -114,6 +114,22 @@ jobs:
             TargetRepoOwner: $(DocRepoOwner)
             WorkingDirectory: $(DocRepoLocation)
 
+        - task: AzureCLI@2
+          displayName: Queue Docs CI build
+          inputs:
+            azureSubscription: msdocs-apidrop-connection
+            scriptType: pscore
+            scriptLocation: inlineScript
+            inlineScript: |
+              $accessToken = az account get-access-token --resource "499b84ac-1321-427f-aa17-267ca6975798" --query "accessToken" --output tsv
+              $buildParamJson = (@{ params = (Get-Content ./eng/docsSDKCIConfig.json -Raw) -replace '%%DocsBranchName%%', "main" } | ConvertTo-Json)
+              eng/common/scripts/Queue-Pipeline.ps1 `
+                -Organization "apidrop" `
+                -Project "Content%20CI" `
+                -DefinitionId 397 `
+                -BuildParametersJson $buildParamJson `
+                -BearerToken $accessToken
+
 
       # The scenario for running a Manual build is normally only for the main updates. The daily build
       # should really only get kicked off for scheduled runs.
@@ -200,7 +216,7 @@ jobs:
             scriptLocation: inlineScript
             inlineScript: |
               $accessToken = az account get-access-token --resource "499b84ac-1321-427f-aa17-267ca6975798" --query "accessToken" --output tsv
-              $buildParamJson = (@{ params = (Get-Content ./eng/dailydocsconfig.json -Raw) -replace '%%DailyDocsBranchName%%', "$(DailyDocsBranchName)" } | ConvertTo-Json)
+              $buildParamJson = (@{ params = (Get-Content ./eng/docsSDKCIConfig.json -Raw) -replace '%%DocsBranchName%%', "$(DailyDocsBranchName)" } | ConvertTo-Json)
               eng/common/scripts/Queue-Pipeline.ps1 `
                 -Organization "apidrop" `
                 -Project "Content%20CI" `
