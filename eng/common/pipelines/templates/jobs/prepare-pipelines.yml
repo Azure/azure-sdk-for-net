@@ -251,5 +251,5 @@ jobs:
           --variablegroups $(InternalVariableGroups) $(TestVariableGroups)
           --serviceconnections $(InternalServiceConnections) $(TestServiceConnections)
       displayName: 'Generate weekly unified test pipelines (multi-cloud) for: ${{ parameters.Repository }}'
-      condition: and(succeeded(), ne(variables['GenerateUnifiedWeekly'],''))
+      condition: and(succeeded(), eq(variables['GenerateUnifiedWeekly'],'true'))
       continueOnError: true
