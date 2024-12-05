@@ -1,0 +1,141 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-text/projects/MyImportTextProject/:import?api-version=2024-11-15-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "791",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Text.Authoring/1.0.0-alpha.20241201.1 (.NET 8.0.11; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "projectFileVersion": "2022-05-01",
+        "stringIndexType": "Utf16CodeUnit",
+        "metadata": {
+          "projectKind": "CustomSingleLabelClassification",
+          "storageInputContainerName": "test-data",
+          "settings": {},
+          "projectName": "MyImportTextProject",
+          "multilingual": false,
+          "description": "This is a sample dataset provided by the Azure Language service team to help users get started with Custom named entity recognition. The provided sample dataset contains 20 loan agreements drawn up between two entities.",
+          "language": "en"
+        },
+        "assets": {
+          "classes": [
+            {
+              "category": "Date"
+            },
+            {
+              "category": "LenderName"
+            },
+            {
+              "category": "LenderAddress"
+            }
+          ],
+          "documents": [
+            {
+              "class": {
+                "category": "Date"
+              },
+              "location": "01.txt",
+              "language": "en"
+            },
+            {
+              "class": {
+                "category": "LenderName"
+              },
+              "location": "02.txt",
+              "language": "en"
+            }
+          ],
+          "projectKind": "CustomSingleLabelClassification"
+        }
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "d7fb9f82-b49d-4195-be54-2fd041638378",
+        "Content-Length": "0",
+        "Date": "Mon, 02 Dec 2024 06:25:21 GMT",
+        "operation-location": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-text/projects/MyImportTextProject/import/jobs/32be372c-d550-4845-8840-f67a1e0e8079_638686944000000000?api-version=2024-11-15-preview",
+        "request-id": "d7fb9f82-b49d-4195-be54-2fd041638378",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "281",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-text/projects/MyImportTextProject/import/jobs/32be372c-d550-4845-8840-f67a1e0e8079_638686944000000000?api-version=2024-11-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Text.Authoring/1.0.0-alpha.20241201.1 (.NET 8.0.11; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "5bc6c2db-61de-46ed-acd7-5aa1e1260ab9",
+        "Content-Length": "216",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 02 Dec 2024 06:25:21 GMT",
+        "request-id": "5bc6c2db-61de-46ed-acd7-5aa1e1260ab9",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "42",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": {
+        "jobId": "32be372c-d550-4845-8840-f67a1e0e8079_638686944000000000",
+        "createdDateTime": "2024-12-02T06:25:21Z",
+        "lastUpdatedDateTime": "2024-12-02T06:25:21Z",
+        "expirationDateTime": "2024-12-09T06:25:21Z",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-text/projects/MyImportTextProject/import/jobs/32be372c-d550-4845-8840-f67a1e0e8079_638686944000000000?api-version=2024-11-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Text.Authoring/1.0.0-alpha.20241201.1 (.NET 8.0.11; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "4fa81860-06b0-4540-bc61-988efe974cd3",
+        "Content-Length": "218",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 02 Dec 2024 06:25:22 GMT",
+        "request-id": "4fa81860-06b0-4540-bc61-988efe974cd3",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "39",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": {
+        "jobId": "32be372c-d550-4845-8840-f67a1e0e8079_638686944000000000",
+        "createdDateTime": "2024-12-02T06:25:21Z",
+        "lastUpdatedDateTime": "2024-12-02T06:25:21Z",
+        "expirationDateTime": "2024-12-09T06:25:21Z",
+        "status": "succeeded"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_TEXT_AUTHORING_ENDPOINT": "https://gokulk-test.cognitiveservices.azure.com",
+    "AZURE_TEXT_AUTHORING_KEY": "Sanitized",
+    "RandomSeed": "2109549850"
+  }
+}
