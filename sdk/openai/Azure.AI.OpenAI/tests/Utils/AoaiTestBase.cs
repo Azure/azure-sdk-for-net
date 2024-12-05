@@ -389,7 +389,7 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
                 clientObject = topLevelClient.GetAudioClient(getDeployment());
                 break;
             case nameof(BatchClient):
-                clientObject = topLevelClient.GetBatchClient(getDeployment());
+                clientObject = topLevelClient.GetBatchClient();
                 break;
             case nameof(ChatClient):
                 clientObject = topLevelClient.GetChatClient(getDeployment());
@@ -574,6 +574,9 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
             case nameof(VectorStore):
                 _vectorStoreIdsToDelete.Add(id);
                 break;
+            case nameof(CreateBatchOperation):
+                _batchIdsToDelete.Add(id);
+                break;
             default:
                 throw new NotImplementedException();
         }
@@ -622,6 +625,7 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
                 OpenAIFile file => file.Id,
                 ThreadRun run => run.Id,
                 VectorStore store => store.Id,
+                CreateBatchOperation batchOperation => batchOperation.BatchId,
                 _ => throw new NotImplementedException(),
             });
         }
@@ -637,7 +641,6 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
         });
         RequestOptions requestOptions = new() { ErrorOptions = ClientErrorBehaviors.NoThrow, };
 
-#if !AZURE_OPENAI_GA
         OpenAIFileClient fileClient = topLevelCleanupClient.GetOpenAIFileClient();
         foreach (string fileId in _fileIdsToDelete)
         {
@@ -645,6 +648,13 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
         }
         _fileIdsToDelete.Clear();
 
+        BatchClient batchClient = topLevelCleanupClient.GetBatchClient();
+        foreach (string batchId in _batchIdsToDelete)
+        {
+            // No delete currently exists
+        }
+
+#if !AZURE_OPENAI_GA
         AssistantClient client = topLevelCleanupClient.GetAssistantClient();
         VectorStoreClient vectorStoreClient = topLevelCleanupClient.GetVectorStoreClient();
         foreach ((string threadId, string messageId) in _threadIdsWithMessageIdsToDelete)
@@ -735,6 +745,7 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
     private readonly List<string> _fileIdsToDelete = [];
     private readonly List<(string, string)> _vectorStoreFileAssociationsToRemove = [];
     private readonly List<string> _vectorStoreIdsToDelete = [];
+    private readonly List<string> _batchIdsToDelete = [];
 }
 
 public class TestClientOptions : AzureOpenAIClientOptions

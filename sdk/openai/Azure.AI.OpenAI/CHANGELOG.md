@@ -1,14 +1,39 @@
 # Release History
 
-## 2.1.0-beta.3 (Unreleased)
+## 2.1.0 (Unreleased)
+
+This GA library release aligns functionality with the latest `2024-10-21` stable service API label.
+
+> [!NOTE]
+> For consistency and reliability, GA releases of the `Azure.AI.OpenAI` library will always map to stable Azure OpenAI service API versions. Because stable service API versions omit volatile surfaces such as beta features, GA library releases will also not contain the full set of preview functionality. To use beta and preview features, please use the latest prerelease version of the library.
 
 ### Features Added
 
+**Chat**
+
+- [GA] The `2024-10-21` API version brings GA AOAI support for streaming token usage in chat completions; `Usage` is now automatically populated in `StreamingChatCompletionUpdate` instances.
+  - Note 1: this feature is not yet compatible when using On Your Data features (after invoking the `.AddDataSource()` extension method on `ChatCompletionOptions`)
+  - Note 2: this feature is not yet compatible when using image input (a `ChatMessageContentPart` of `Kind` `Image`)
+- [GA] The `AllowParalllelToolCalls` property on `ChatCompletionOptions`, which can be set to `false` to disable the invocation of multiple tools on a single chat completion response, is now supported.
+- [GA] Structured outputs, via the use of `ChatResponseFormat.CreateJsonSchemaFormat()`, is now supported.
+- When using `o1-preview` and `o1-mini` models, `max_completion_tokens` may now be configured by calling the `[Experimental] SetNewMaxCompletionTokensPropertyEnabled()` extension method on `ChatCompletionOptions`.
+  - This extension method will be removed in a future service API version, when it becomes unnecessary once all models support the `max_completion_tokens` property
+
+**Batch**
+
+The `2024-10-21` service API label introduces stable support for batch chat completions to Azure OpenAI. This library release exposes low-level support for batch:
+
+- `AzureOpenAIClient`'s `GetOpenAIFileClient()` will now return a valid, configured instance of `FileClient` that supports uploading files with `FileUploadPurpose.Batch`. This can be used to upload the contents of a valid `.jsonl` file for batch processing.
+- `AzureOpenAIClient`'s `GetBatchClient()` will now return a valid, configured instance of `BatchClient` that can produce a `CreateBatchOperation` given an uploaded file ID using protocol methods.
+- Strongly typed convenience surfaces for `BatchClient` will arrive in a future update.
+
 ### Breaking Changes
 
-### Bugs Fixed
+> [!NOTE]
+> GA library releases only permit breaking changes to items marked with an `[Experimental]` attribute and these changes will be minimized whenever possible.
 
-### Other Changes
+- `[Experimental]` `GetBatchClient(string deploymentName)` on `AzureOpenAIClient` is removed, as the Azure OpenAI batch API now aligns with OpenAI's in not using a deployment-based request URI path. Please use `GetBatchClient()`, instead.
+- `[Expermental]` the `Uri` property of type `System.Uri` in `ChatCitation` and `ChatRetrivedDocument` has been replaced by a `Url` property of type `string`. This contains the same information but properly handles document paths that don't conform to a valid RFC 3986 identifier.
 
 ## 2.1.0-beta.2 (2024-11-04)
 
