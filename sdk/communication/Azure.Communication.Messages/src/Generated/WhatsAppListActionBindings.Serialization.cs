@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.Messages
+namespace Azure.Communication.Messages.Models.Channels
 {
     public partial class WhatsAppListActionBindings : IUtf8JsonSerializable, IJsonModel<WhatsAppListActionBindings>
     {
@@ -35,8 +35,8 @@ namespace Azure.Communication.Messages
             }
 
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("action"u8);
-            writer.WriteObjectValue(Action, options);
+            writer.WritePropertyName("content"u8);
+            writer.WriteObjectValue(Content, options);
         }
 
         WhatsAppListActionBindings IJsonModel<WhatsAppListActionBindings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -59,20 +59,20 @@ namespace Azure.Communication.Messages
             {
                 return null;
             }
-            ActionSetContent action = default;
-            MessageActionBindingKind actionBindingKind = default;
+            ActionGroupContent content = default;
+            MessageActionBindingKind kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("action"u8))
+                if (property.NameEquals("content"u8))
                 {
-                    action = ActionSetContent.DeserializeActionSetContent(property.Value, options);
+                    content = ActionGroupContent.DeserializeActionGroupContent(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("actionBindingKind"u8))
+                if (property.NameEquals("kind"u8))
                 {
-                    actionBindingKind = new MessageActionBindingKind(property.Value.GetString());
+                    kind = new MessageActionBindingKind(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -81,7 +81,7 @@ namespace Azure.Communication.Messages
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new WhatsAppListActionBindings(actionBindingKind, serializedAdditionalRawData, action);
+            return new WhatsAppListActionBindings(kind, serializedAdditionalRawData, content);
         }
 
         BinaryData IPersistableModel<WhatsAppListActionBindings>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.Communication.Messages
         private const string ImageValue = "image";
         private const string VideoValue = "video";
         private const string DocumentValue = "document";
-        private const string ActionSetValue = "actionSet";
+        private const string GroupValue = "group";
         private const string ButtonSetValue = "buttonSet";
         private const string UrlValue = "url";
 
@@ -39,7 +39,7 @@ namespace Azure.Communication.Messages
         /// <summary> The document content type. </summary>
         public static MessageContentKind Document { get; } = new MessageContentKind(DocumentValue);
         /// <summary> The ActionSet content type. </summary>
-        public static MessageContentKind ActionSet { get; } = new MessageContentKind(ActionSetValue);
+        public static MessageContentKind Group { get; } = new MessageContentKind(GroupValue);
         /// <summary> The ButtonSet content type. </summary>
         public static MessageContentKind ButtonSet { get; } = new MessageContentKind(ButtonSetValue);
         /// <summary> The Url content type. </summary>

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Communication.Messages.Models.Channels;
 
 namespace Azure.Communication.Messages
 {
@@ -55,15 +56,15 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> Initializes a new instance of <see cref="ActionBindings"/>. </summary>
-        /// <param name="actionBindingKind"> Kind of the MessageActionBinding. </param>
+        /// <param name="kind"> Kind of the MessageActionBinding. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ActionBindings(MessageActionBindingKind actionBindingKind, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ActionBindings(MessageActionBindingKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ActionBindingKind = actionBindingKind;
+            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Kind of the MessageActionBinding. </summary>
-        internal MessageActionBindingKind ActionBindingKind { get; set; }
+        internal MessageActionBindingKind Kind { get; set; }
     }
 }

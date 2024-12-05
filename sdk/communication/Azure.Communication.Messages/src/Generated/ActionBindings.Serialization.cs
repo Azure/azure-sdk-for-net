@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.Communication.Messages.Models.Channels;
 using Azure.Core;
 
 namespace Azure.Communication.Messages
@@ -34,8 +35,8 @@ namespace Azure.Communication.Messages
                 throw new FormatException($"The model {nameof(ActionBindings)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("actionBindingKind"u8);
-            writer.WriteStringValue(ActionBindingKind.ToString());
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -73,7 +74,7 @@ namespace Azure.Communication.Messages
             {
                 return null;
             }
-            if (element.TryGetProperty("actionBindingKind", out JsonElement discriminator))
+            if (element.TryGetProperty("kind", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {

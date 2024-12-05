@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Communication.Messages.Models.Channels;
 
 namespace Azure.Communication.Messages
 {
@@ -47,41 +48,41 @@ namespace Azure.Communication.Messages
 
         /// <summary> Initializes a new instance of <see cref="InteractiveMessage"/>. </summary>
         /// <param name="body"> Gets or Sets Message body content. Emojis, markdown, and links are supported. </param>
-        /// <param name="actionBindings">
+        /// <param name="action">
         /// The binding object to get or set Action which describes options user have to respond to message.
-        /// Please note <see cref="Messages.ActionBindings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="ActionBindings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="WhatsAppButtonActionBindings"/>, <see cref="WhatsAppListActionBindings"/> and <see cref="WhatsAppUrlActionBindings"/>.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> or <paramref name="actionBindings"/> is null. </exception>
-        public InteractiveMessage(TextMessageContent body, ActionBindings actionBindings)
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> or <paramref name="action"/> is null. </exception>
+        public InteractiveMessage(TextMessageContent body, ActionBindings action)
         {
             Argument.AssertNotNull(body, nameof(body));
-            Argument.AssertNotNull(actionBindings, nameof(actionBindings));
+            Argument.AssertNotNull(action, nameof(action));
 
             Body = body;
-            ActionBindings = actionBindings;
+            Action = action;
         }
 
         /// <summary> Initializes a new instance of <see cref="InteractiveMessage"/>. </summary>
         /// <param name="header">
         /// Gets or Sets Header content. Supports the following types:text, images etc.
         /// Please note <see cref="MessageContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ActionSetContent"/>, <see cref="ButtonSetContent"/>, <see cref="DocumentMessageContent"/>, <see cref="ImageMessageContent"/>, <see cref="TextMessageContent"/>, <see cref="UrlContent"/> and <see cref="VideoMessageContent"/>.
+        /// The available derived classes include <see cref="ButtonSetContent"/>, <see cref="DocumentMessageContent"/>, <see cref="ActionGroupContent"/>, <see cref="ImageMessageContent"/>, <see cref="TextMessageContent"/>, <see cref="LinkContent"/> and <see cref="VideoMessageContent"/>.
         /// </param>
         /// <param name="body"> Gets or Sets Message body content. Emojis, markdown, and links are supported. </param>
         /// <param name="footer"> Gets or Sets Message footer content. Emojis, markdown, and links are supported. </param>
-        /// <param name="actionBindings">
+        /// <param name="action">
         /// The binding object to get or set Action which describes options user have to respond to message.
-        /// Please note <see cref="Messages.ActionBindings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="ActionBindings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="WhatsAppButtonActionBindings"/>, <see cref="WhatsAppListActionBindings"/> and <see cref="WhatsAppUrlActionBindings"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InteractiveMessage(MessageContent header, TextMessageContent body, TextMessageContent footer, ActionBindings actionBindings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InteractiveMessage(MessageContent header, TextMessageContent body, TextMessageContent footer, ActionBindings action, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Header = header;
             Body = body;
             Footer = footer;
-            ActionBindings = actionBindings;
+            Action = action;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -93,7 +94,7 @@ namespace Azure.Communication.Messages
         /// <summary>
         /// Gets or Sets Header content. Supports the following types:text, images etc.
         /// Please note <see cref="MessageContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ActionSetContent"/>, <see cref="ButtonSetContent"/>, <see cref="DocumentMessageContent"/>, <see cref="ImageMessageContent"/>, <see cref="TextMessageContent"/>, <see cref="UrlContent"/> and <see cref="VideoMessageContent"/>.
+        /// The available derived classes include <see cref="ButtonSetContent"/>, <see cref="DocumentMessageContent"/>, <see cref="ActionGroupContent"/>, <see cref="ImageMessageContent"/>, <see cref="TextMessageContent"/>, <see cref="LinkContent"/> and <see cref="VideoMessageContent"/>.
         /// </summary>
         public MessageContent Header { get; set; }
         /// <summary> Gets or Sets Message body content. Emojis, markdown, and links are supported. </summary>
@@ -102,9 +103,9 @@ namespace Azure.Communication.Messages
         public TextMessageContent Footer { get; set; }
         /// <summary>
         /// The binding object to get or set Action which describes options user have to respond to message.
-        /// Please note <see cref="Messages.ActionBindings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="ActionBindings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="WhatsAppButtonActionBindings"/>, <see cref="WhatsAppListActionBindings"/> and <see cref="WhatsAppUrlActionBindings"/>.
         /// </summary>
-        public ActionBindings ActionBindings { get; }
+        public ActionBindings Action { get; }
     }
 }

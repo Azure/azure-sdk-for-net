@@ -77,12 +77,12 @@ namespace Azure.Communication.Messages
             {
                 switch (discriminator.GetString())
                 {
-                    case "actionSet": return ActionSetContent.DeserializeActionSetContent(element, options);
                     case "buttonSet": return ButtonSetContent.DeserializeButtonSetContent(element, options);
                     case "document": return DocumentMessageContent.DeserializeDocumentMessageContent(element, options);
+                    case "group": return ActionGroupContent.DeserializeActionGroupContent(element, options);
                     case "image": return ImageMessageContent.DeserializeImageMessageContent(element, options);
                     case "text": return TextMessageContent.DeserializeTextMessageContent(element, options);
-                    case "url": return UrlContent.DeserializeUrlContent(element, options);
+                    case "url": return LinkContent.DeserializeLinkContent(element, options);
                     case "video": return VideoMessageContent.DeserializeVideoMessageContent(element, options);
                 }
             }

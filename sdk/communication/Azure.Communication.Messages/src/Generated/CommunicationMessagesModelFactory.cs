@@ -157,19 +157,19 @@ namespace Azure.Communication.Messages
         /// <param name="header">
         /// Gets or Sets Header content. Supports the following types:text, images etc.
         /// Please note <see cref="MessageContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Messages.ActionSetContent"/>, <see cref="ButtonSetContent"/>, <see cref="Messages.DocumentMessageContent"/>, <see cref="Messages.ImageMessageContent"/>, <see cref="Messages.TextMessageContent"/>, <see cref="Messages.UrlContent"/> and <see cref="Messages.VideoMessageContent"/>.
+        /// The available derived classes include <see cref="ButtonSetContent"/>, <see cref="Messages.DocumentMessageContent"/>, <see cref="Messages.ActionGroupContent"/>, <see cref="Messages.ImageMessageContent"/>, <see cref="Messages.TextMessageContent"/>, <see cref="Messages.LinkContent"/> and <see cref="Messages.VideoMessageContent"/>.
         /// </param>
         /// <param name="body"> Gets or Sets Message body content. Emojis, markdown, and links are supported. </param>
         /// <param name="footer"> Gets or Sets Message footer content. Emojis, markdown, and links are supported. </param>
-        /// <param name="actionBindings">
+        /// <param name="action">
         /// The binding object to get or set Action which describes options user have to respond to message.
         /// Please note <see cref="ActionBindings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Messages.WhatsAppButtonActionBindings"/>, <see cref="Messages.WhatsAppListActionBindings"/> and <see cref="Messages.WhatsAppUrlActionBindings"/>.
+        /// The available derived classes include <see cref="Models.Channels.WhatsAppButtonActionBindings"/>, <see cref="Models.Channels.WhatsAppListActionBindings"/> and <see cref="Models.Channels.WhatsAppUrlActionBindings"/>.
         /// </param>
         /// <returns> A new <see cref="Messages.InteractiveMessage"/> instance for mocking. </returns>
-        public static InteractiveMessage InteractiveMessage(MessageContent header = null, TextMessageContent body = null, TextMessageContent footer = null, ActionBindings actionBindings = null)
+        public static InteractiveMessage InteractiveMessage(MessageContent header = null, TextMessageContent body = null, TextMessageContent footer = null, ActionBindings action = null)
         {
-            return new InteractiveMessage(header, body, footer, actionBindings, serializedAdditionalRawData: null);
+            return new InteractiveMessage(header, body, footer, action, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Messages.TextMessageContent"/>. </summary>
@@ -204,48 +204,48 @@ namespace Azure.Communication.Messages
             return new VideoMessageContent(MessageContentKind.Video, serializedAdditionalRawData: null, mediaUri);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Messages.UrlContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Messages.LinkContent"/>. </summary>
         /// <param name="title"> Title of the url content. </param>
-        /// <param name="url"> The url in the content. </param>
-        /// <returns> A new <see cref="Messages.UrlContent"/> instance for mocking. </returns>
-        public static UrlContent UrlContent(string title = null, Uri url = null)
+        /// <param name="uri"> The url in the content. </param>
+        /// <returns> A new <see cref="Messages.LinkContent"/> instance for mocking. </returns>
+        public static LinkContent LinkContent(string title = null, Uri uri = null)
         {
-            return new UrlContent(MessageContentKind.Url, serializedAdditionalRawData: null, title, url);
+            return new LinkContent(MessageContentKind.Url, serializedAdditionalRawData: null, title, uri);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Messages.ActionSetContent"/>. </summary>
-        /// <param name="title"> Title of the actionSet content. </param>
-        /// <param name="actionSet"> Set or group of actions. </param>
-        /// <returns> A new <see cref="Messages.ActionSetContent"/> instance for mocking. </returns>
-        public static ActionSetContent ActionSetContent(string title = null, IEnumerable<ActionSet> actionSet = null)
+        /// <summary> Initializes a new instance of <see cref="Messages.ActionGroupContent"/>. </summary>
+        /// <param name="title"> Title of the actionGroup content. </param>
+        /// <param name="groups"> Set or group of actions. </param>
+        /// <returns> A new <see cref="Messages.ActionGroupContent"/> instance for mocking. </returns>
+        public static ActionGroupContent ActionGroupContent(string title = null, IEnumerable<ActionGroup> groups = null)
         {
-            actionSet ??= new List<ActionSet>();
+            groups ??= new List<ActionGroup>();
 
-            return new ActionSetContent(MessageContentKind.ActionSet, serializedAdditionalRawData: null, title, actionSet?.ToList());
+            return new ActionGroupContent(MessageContentKind.Group, serializedAdditionalRawData: null, title, groups?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Messages.WhatsAppListActionBindings"/>. </summary>
-        /// <param name="action"> Action content of Interactive message. </param>
-        /// <returns> A new <see cref="Messages.WhatsAppListActionBindings"/> instance for mocking. </returns>
-        public static WhatsAppListActionBindings WhatsAppListActionBindings(ActionSetContent action = null)
+        /// <summary> Initializes a new instance of <see cref="Models.Channels.WhatsAppListActionBindings"/>. </summary>
+        /// <param name="content"> Action content of Interactive message. </param>
+        /// <returns> A new <see cref="Models.Channels.WhatsAppListActionBindings"/> instance for mocking. </returns>
+        public static WhatsAppListActionBindings WhatsAppListActionBindings(ActionGroupContent content = null)
         {
-            return new WhatsAppListActionBindings(MessageActionBindingKind.WhatsAppListAction, serializedAdditionalRawData: null, action);
+            return new WhatsAppListActionBindings(MessageActionBindingKind.WhatsAppListAction, serializedAdditionalRawData: null, content);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Messages.WhatsAppButtonActionBindings"/>. </summary>
-        /// <param name="action"> Action content of Button based Interactive message. </param>
-        /// <returns> A new <see cref="Messages.WhatsAppButtonActionBindings"/> instance for mocking. </returns>
-        public static WhatsAppButtonActionBindings WhatsAppButtonActionBindings(ButtonSetContent action = null)
+        /// <summary> Initializes a new instance of <see cref="Models.Channels.WhatsAppButtonActionBindings"/>. </summary>
+        /// <param name="content"> Action content of Interactive message. </param>
+        /// <returns> A new <see cref="Models.Channels.WhatsAppButtonActionBindings"/> instance for mocking. </returns>
+        public static WhatsAppButtonActionBindings WhatsAppButtonActionBindings(ButtonSetContent content = null)
         {
-            return new WhatsAppButtonActionBindings(MessageActionBindingKind.WhatsAppButtonAction, serializedAdditionalRawData: null, action);
+            return new WhatsAppButtonActionBindings(MessageActionBindingKind.WhatsAppButtonAction, serializedAdditionalRawData: null, content);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Messages.WhatsAppUrlActionBindings"/>. </summary>
-        /// <param name="action"> Action content of Quick action Interactive message. </param>
-        /// <returns> A new <see cref="Messages.WhatsAppUrlActionBindings"/> instance for mocking. </returns>
-        public static WhatsAppUrlActionBindings WhatsAppUrlActionBindings(UrlContent action = null)
+        /// <summary> Initializes a new instance of <see cref="Models.Channels.WhatsAppUrlActionBindings"/>. </summary>
+        /// <param name="content"> Action content of Interactive message. </param>
+        /// <returns> A new <see cref="Models.Channels.WhatsAppUrlActionBindings"/> instance for mocking. </returns>
+        public static WhatsAppUrlActionBindings WhatsAppUrlActionBindings(LinkContent content = null)
         {
-            return new WhatsAppUrlActionBindings(MessageActionBindingKind.WhatsAppUrlAction, serializedAdditionalRawData: null, action);
+            return new WhatsAppUrlActionBindings(MessageActionBindingKind.WhatsAppUrlAction, serializedAdditionalRawData: null, content);
         }
 
         /// <summary> Initializes a new instance of <see cref="Messages.TemplateNotificationContent"/>. </summary>

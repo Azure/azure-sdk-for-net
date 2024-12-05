@@ -11,41 +11,41 @@ using System.Collections.Generic;
 namespace Azure.Communication.Messages
 {
     /// <summary> The message content of type Url information. </summary>
-    public partial class UrlContent : MessageContent
+    public partial class LinkContent : MessageContent
     {
-        /// <summary> Initializes a new instance of <see cref="UrlContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkContent"/>. </summary>
         /// <param name="title"> Title of the url content. </param>
-        /// <param name="url"> The url in the content. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="title"/> or <paramref name="url"/> is null. </exception>
-        public UrlContent(string title, Uri url)
+        /// <param name="uri"> The url in the content. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="title"/> or <paramref name="uri"/> is null. </exception>
+        public LinkContent(string title, Uri uri)
         {
             Argument.AssertNotNull(title, nameof(title));
-            Argument.AssertNotNull(url, nameof(url));
+            Argument.AssertNotNull(uri, nameof(uri));
 
             Kind = MessageContentKind.Url;
             Title = title;
-            Url = url;
+            Uri = uri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UrlContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkContent"/>. </summary>
         /// <param name="kind"> Kind of MessageContent. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="title"> Title of the url content. </param>
-        /// <param name="url"> The url in the content. </param>
-        internal UrlContent(MessageContentKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string title, Uri url) : base(kind, serializedAdditionalRawData)
+        /// <param name="uri"> The url in the content. </param>
+        internal LinkContent(MessageContentKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string title, Uri uri) : base(kind, serializedAdditionalRawData)
         {
             Title = title;
-            Url = url;
+            Uri = uri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UrlContent"/> for deserialization. </summary>
-        internal UrlContent()
+        /// <summary> Initializes a new instance of <see cref="LinkContent"/> for deserialization. </summary>
+        internal LinkContent()
         {
         }
 
         /// <summary> Title of the url content. </summary>
         public string Title { get; }
         /// <summary> The url in the content. </summary>
-        public Uri Url { get; }
+        public Uri Uri { get; }
     }
 }

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
-    public partial class ActionSet : IUtf8JsonSerializable, IJsonModel<ActionSet>
+    public partial class ActionGroupItem : IUtf8JsonSerializable, IJsonModel<ActionGroupItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ActionSet>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ActionGroupItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ActionSet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ActionGroupItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,21 +28,18 @@ namespace Azure.Communication.Messages
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ActionSet>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ActionGroupItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActionSet)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ActionGroupItem)} does not support writing '{format}' format.");
             }
 
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("title"u8);
             writer.WriteStringValue(Title);
-            writer.WritePropertyName("items"u8);
-            writer.WriteStartArray();
-            foreach (var item in Items)
-            {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
+            writer.WritePropertyName("description"u8);
+            writer.WriteStringValue(Description);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -60,19 +57,19 @@ namespace Azure.Communication.Messages
             }
         }
 
-        ActionSet IJsonModel<ActionSet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ActionGroupItem IJsonModel<ActionGroupItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ActionSet>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ActionGroupItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActionSet)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ActionGroupItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeActionSet(document.RootElement, options);
+            return DeserializeActionGroupItem(document.RootElement, options);
         }
 
-        internal static ActionSet DeserializeActionSet(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ActionGroupItem DeserializeActionGroupItem(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -80,25 +77,26 @@ namespace Azure.Communication.Messages
             {
                 return null;
             }
+            string id = default;
             string title = default;
-            IList<ActionSetItem> items = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("id"u8))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("title"u8))
                 {
                     title = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("items"u8))
+                if (property.NameEquals("description"u8))
                 {
-                    List<ActionSetItem> array = new List<ActionSetItem>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ActionSetItem.DeserializeActionSetItem(item, options));
-                    }
-                    items = array;
+                    description = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -107,46 +105,46 @@ namespace Azure.Communication.Messages
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ActionSet(title, items, serializedAdditionalRawData);
+            return new ActionGroupItem(id, title, description, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ActionSet>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ActionGroupItem>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ActionSet>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ActionGroupItem>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ActionSet)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActionGroupItem)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ActionSet IPersistableModel<ActionSet>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ActionGroupItem IPersistableModel<ActionGroupItem>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ActionSet>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ActionGroupItem>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeActionSet(document.RootElement, options);
+                        return DeserializeActionGroupItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ActionSet)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActionGroupItem)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ActionSet>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ActionGroupItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ActionSet FromResponse(Response response)
+        internal static ActionGroupItem FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeActionSet(document.RootElement);
+            return DeserializeActionGroupItem(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

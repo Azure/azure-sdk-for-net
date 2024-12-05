@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Communication.Messages
 {
-    /// <summary> The Action set item in the content. </summary>
-    public partial class ActionSetItem
+    /// <summary> The Action group item in the content. </summary>
+    public partial class ActionGroupItem
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,12 +45,12 @@ namespace Azure.Communication.Messages
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ActionSetItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActionGroupItem"/>. </summary>
         /// <param name="id"> Id of the Item. </param>
         /// <param name="title"> Title of the Item. </param>
         /// <param name="description"> Description of the Item. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="title"/> or <paramref name="description"/> is null. </exception>
-        public ActionSetItem(string id, string title, string description)
+        public ActionGroupItem(string id, string title, string description)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(title, nameof(title));
@@ -61,12 +61,12 @@ namespace Azure.Communication.Messages
             Description = description;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ActionSetItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActionGroupItem"/>. </summary>
         /// <param name="id"> Id of the Item. </param>
         /// <param name="title"> Title of the Item. </param>
         /// <param name="description"> Description of the Item. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ActionSetItem(string id, string title, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ActionGroupItem(string id, string title, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Title = title;
@@ -74,8 +74,8 @@ namespace Azure.Communication.Messages
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ActionSetItem"/> for deserialization. </summary>
-        internal ActionSetItem()
+        /// <summary> Initializes a new instance of <see cref="ActionGroupItem"/> for deserialization. </summary>
+        internal ActionGroupItem()
         {
         }
 

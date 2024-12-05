@@ -8,29 +8,29 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Communication.Messages
+namespace Azure.Communication.Messages.Models.Channels
 {
     /// <summary> WhatsApp Binding actions to the interactive message. </summary>
     public partial class WhatsAppUrlActionBindings : ActionBindings
     {
         /// <summary> Initializes a new instance of <see cref="WhatsAppUrlActionBindings"/>. </summary>
-        /// <param name="action"> Action content of Quick action Interactive message. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="action"/> is null. </exception>
-        public WhatsAppUrlActionBindings(UrlContent action)
+        /// <param name="content"> Action content of Interactive message. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public WhatsAppUrlActionBindings(LinkContent content)
         {
-            Argument.AssertNotNull(action, nameof(action));
+            Argument.AssertNotNull(content, nameof(content));
 
-            ActionBindingKind = MessageActionBindingKind.WhatsAppUrlAction;
-            Action = action;
+            Kind = MessageActionBindingKind.WhatsAppUrlAction;
+            Content = content;
         }
 
         /// <summary> Initializes a new instance of <see cref="WhatsAppUrlActionBindings"/>. </summary>
-        /// <param name="actionBindingKind"> Kind of the MessageActionBinding. </param>
+        /// <param name="kind"> Kind of the MessageActionBinding. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="action"> Action content of Quick action Interactive message. </param>
-        internal WhatsAppUrlActionBindings(MessageActionBindingKind actionBindingKind, IDictionary<string, BinaryData> serializedAdditionalRawData, UrlContent action) : base(actionBindingKind, serializedAdditionalRawData)
+        /// <param name="content"> Action content of Interactive message. </param>
+        internal WhatsAppUrlActionBindings(MessageActionBindingKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, LinkContent content) : base(kind, serializedAdditionalRawData)
         {
-            Action = action;
+            Content = content;
         }
 
         /// <summary> Initializes a new instance of <see cref="WhatsAppUrlActionBindings"/> for deserialization. </summary>
@@ -38,7 +38,7 @@ namespace Azure.Communication.Messages
         {
         }
 
-        /// <summary> Action content of Quick action Interactive message. </summary>
-        public UrlContent Action { get; }
+        /// <summary> Action content of Interactive message. </summary>
+        public LinkContent Content { get; }
     }
 }

@@ -8,29 +8,29 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Communication.Messages
+namespace Azure.Communication.Messages.Models.Channels
 {
     /// <summary> WhatsApp Binding actions to the interactive message. </summary>
     public partial class WhatsAppButtonActionBindings : ActionBindings
     {
         /// <summary> Initializes a new instance of <see cref="WhatsAppButtonActionBindings"/>. </summary>
-        /// <param name="action"> Action content of Button based Interactive message. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="action"/> is null. </exception>
-        public WhatsAppButtonActionBindings(ButtonSetContent action)
+        /// <param name="content"> Action content of Interactive message. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public WhatsAppButtonActionBindings(ButtonSetContent content)
         {
-            Argument.AssertNotNull(action, nameof(action));
+            Argument.AssertNotNull(content, nameof(content));
 
-            ActionBindingKind = MessageActionBindingKind.WhatsAppButtonAction;
-            Action = action;
+            Kind = MessageActionBindingKind.WhatsAppButtonAction;
+            Content = content;
         }
 
         /// <summary> Initializes a new instance of <see cref="WhatsAppButtonActionBindings"/>. </summary>
-        /// <param name="actionBindingKind"> Kind of the MessageActionBinding. </param>
+        /// <param name="kind"> Kind of the MessageActionBinding. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="action"> Action content of Button based Interactive message. </param>
-        internal WhatsAppButtonActionBindings(MessageActionBindingKind actionBindingKind, IDictionary<string, BinaryData> serializedAdditionalRawData, ButtonSetContent action) : base(actionBindingKind, serializedAdditionalRawData)
+        /// <param name="content"> Action content of Interactive message. </param>
+        internal WhatsAppButtonActionBindings(MessageActionBindingKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, ButtonSetContent content) : base(kind, serializedAdditionalRawData)
         {
-            Action = action;
+            Content = content;
         }
 
         /// <summary> Initializes a new instance of <see cref="WhatsAppButtonActionBindings"/> for deserialization. </summary>
@@ -38,7 +38,7 @@ namespace Azure.Communication.Messages
         {
         }
 
-        /// <summary> Action content of Button based Interactive message. </summary>
-        public ButtonSetContent Action { get; }
+        /// <summary> Action content of Interactive message. </summary>
+        public ButtonSetContent Content { get; }
     }
 }

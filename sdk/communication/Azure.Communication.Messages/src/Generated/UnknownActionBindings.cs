@@ -14,9 +14,9 @@ namespace Azure.Communication.Messages
     internal partial class UnknownActionBindings : ActionBindings
     {
         /// <summary> Initializes a new instance of <see cref="UnknownActionBindings"/>. </summary>
-        /// <param name="actionBindingKind"> Kind of the MessageActionBinding. </param>
+        /// <param name="kind"> Kind of the MessageActionBinding. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownActionBindings(MessageActionBindingKind actionBindingKind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(actionBindingKind, serializedAdditionalRawData)
+        internal UnknownActionBindings(MessageActionBindingKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
         {
         }
 

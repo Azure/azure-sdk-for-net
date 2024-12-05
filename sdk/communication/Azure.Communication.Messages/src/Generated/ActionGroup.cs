@@ -11,8 +11,8 @@ using System.Linq;
 
 namespace Azure.Communication.Messages
 {
-    /// <summary> The Action Set content. </summary>
-    public partial class ActionSet
+    /// <summary> The Action Group content. </summary>
+    public partial class ActionGroup
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,11 +46,11 @@ namespace Azure.Communication.Messages
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ActionSet"/>. </summary>
-        /// <param name="title"> Title of the ActionSet. </param>
-        /// <param name="items"> Array of items in ActionSet. </param>
+        /// <summary> Initializes a new instance of <see cref="ActionGroup"/>. </summary>
+        /// <param name="title"> Title of the ActionGroup. </param>
+        /// <param name="items"> Array of items in ActionGroup. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="title"/> or <paramref name="items"/> is null. </exception>
-        public ActionSet(string title, IEnumerable<ActionSetItem> items)
+        public ActionGroup(string title, IEnumerable<ActionGroupItem> items)
         {
             Argument.AssertNotNull(title, nameof(title));
             Argument.AssertNotNull(items, nameof(items));
@@ -59,25 +59,25 @@ namespace Azure.Communication.Messages
             Items = items.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ActionSet"/>. </summary>
-        /// <param name="title"> Title of the ActionSet. </param>
-        /// <param name="items"> Array of items in ActionSet. </param>
+        /// <summary> Initializes a new instance of <see cref="ActionGroup"/>. </summary>
+        /// <param name="title"> Title of the ActionGroup. </param>
+        /// <param name="items"> Array of items in ActionGroup. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ActionSet(string title, IList<ActionSetItem> items, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ActionGroup(string title, IList<ActionGroupItem> items, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Title = title;
             Items = items;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ActionSet"/> for deserialization. </summary>
-        internal ActionSet()
+        /// <summary> Initializes a new instance of <see cref="ActionGroup"/> for deserialization. </summary>
+        internal ActionGroup()
         {
         }
 
-        /// <summary> Title of the ActionSet. </summary>
+        /// <summary> Title of the ActionGroup. </summary>
         public string Title { get; }
-        /// <summary> Array of items in ActionSet. </summary>
-        public IList<ActionSetItem> Items { get; }
+        /// <summary> Array of items in ActionGroup. </summary>
+        public IList<ActionGroupItem> Items { get; }
     }
 }

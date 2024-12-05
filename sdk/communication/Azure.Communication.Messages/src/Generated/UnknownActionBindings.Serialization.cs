@@ -57,14 +57,14 @@ namespace Azure.Communication.Messages
             {
                 return null;
             }
-            MessageActionBindingKind actionBindingKind = "Unknown";
+            MessageActionBindingKind kind = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("actionBindingKind"u8))
+                if (property.NameEquals("kind"u8))
                 {
-                    actionBindingKind = new MessageActionBindingKind(property.Value.GetString());
+                    kind = new MessageActionBindingKind(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -73,7 +73,7 @@ namespace Azure.Communication.Messages
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownActionBindings(actionBindingKind, serializedAdditionalRawData);
+            return new UnknownActionBindings(kind, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ActionBindings>.Write(ModelReaderWriterOptions options)

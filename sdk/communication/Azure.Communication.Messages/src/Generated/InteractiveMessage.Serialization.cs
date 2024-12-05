@@ -46,8 +46,8 @@ namespace Azure.Communication.Messages
                 writer.WritePropertyName("footer"u8);
                 writer.WriteObjectValue(Footer, options);
             }
-            writer.WritePropertyName("actionBindings"u8);
-            writer.WriteObjectValue(ActionBindings, options);
+            writer.WritePropertyName("action"u8);
+            writer.WriteObjectValue(Action, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -88,7 +88,7 @@ namespace Azure.Communication.Messages
             MessageContent header = default;
             TextMessageContent body = default;
             TextMessageContent footer = default;
-            ActionBindings actionBindings = default;
+            ActionBindings action = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,9 +116,9 @@ namespace Azure.Communication.Messages
                     footer = TextMessageContent.DeserializeTextMessageContent(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("actionBindings"u8))
+                if (property.NameEquals("action"u8))
                 {
-                    actionBindings = ActionBindings.DeserializeActionBindings(property.Value, options);
+                    action = ActionBindings.DeserializeActionBindings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -127,7 +127,7 @@ namespace Azure.Communication.Messages
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new InteractiveMessage(header, body, footer, actionBindings, serializedAdditionalRawData);
+            return new InteractiveMessage(header, body, footer, action, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InteractiveMessage>.Write(ModelReaderWriterOptions options)
