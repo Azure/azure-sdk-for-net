@@ -30,7 +30,7 @@ namespace Azure.Maps.TimeZones
             _daylightSavings = daylightSavings;
             if (TimeSpan.TryParse(daylightSavings, out TimeSpan DaylightSavingsValue))
             {
-                DaylightSavingsTimeSpan = DaylightSavingsValue;
+                DaylightSavingsOffset = DaylightSavingsValue;
             }
 
             UtcStart = utcStart;
@@ -45,6 +45,6 @@ namespace Azure.Maps.TimeZones
         [CodeGenMember("DaylightSavings")]
         internal string _daylightSavings { get; }
         /// <summary> Time saving in <see cref="TimeSpan"/> format in effect at the <c>ReferenceUTCTimestamp</c>. </summary>
-        public TimeSpan DaylightSavingsTimeSpan { get; }
+        public TimeSpan DaylightSavingsOffset { get; }
     }
 }
