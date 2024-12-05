@@ -7,7 +7,7 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> Play resumed event. </summary>
+    /// <summary> Play started event. </summary>
     public partial class PlayResumed
     {
         /// <summary> Initializes a new instance of <see cref="PlayResumed"/>. </summary>
