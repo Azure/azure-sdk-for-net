@@ -23,12 +23,12 @@ To extract the layout from a given file at a URI, use the `AnalyzeDocument` meth
 ```C# Snippet:DocumentIntelligenceExtractLayoutAsMarkdownAsync
 Uri uriSource = new Uri("<uriSource>");
 
-var options = new AnalyzeDocumentOptions()
+var options = new AnalyzeDocumentOptions(uriSource)
 {
-    UriSource = uriSource
+    OutputContentFormat = DocumentContentFormat.Markdown
 };
 
-Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", options, outputContentFormat: DocumentContentFormat.Markdown);
+Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", options);
 AnalyzeResult result = operation.Value;
 
 Console.WriteLine(result.Content);

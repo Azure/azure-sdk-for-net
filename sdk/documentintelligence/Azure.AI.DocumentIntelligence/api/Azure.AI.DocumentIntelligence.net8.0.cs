@@ -26,10 +26,17 @@ namespace Azure.AI.DocumentIntelligence
     }
     public partial class AnalyzeBatchDocumentsOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.DocumentIntelligence.AnalyzeBatchDocumentsOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.DocumentIntelligence.AnalyzeBatchDocumentsOptions>
     {
-        public AnalyzeBatchDocumentsOptions(System.Uri resultContainerUri) { }
-        public Azure.AI.DocumentIntelligence.BlobFileListContentSource BlobFileListSource { get { throw null; } set { } }
-        public Azure.AI.DocumentIntelligence.BlobContentSource BlobSource { get { throw null; } set { } }
+        public AnalyzeBatchDocumentsOptions(Azure.AI.DocumentIntelligence.BlobContentSource blobSource, System.Uri resultContainerUri) { }
+        public AnalyzeBatchDocumentsOptions(Azure.AI.DocumentIntelligence.BlobFileListContentSource blobFileListSource, System.Uri resultContainerUri) { }
+        public Azure.AI.DocumentIntelligence.BlobFileListContentSource BlobFileListSource { get { throw null; } }
+        public Azure.AI.DocumentIntelligence.BlobContentSource BlobSource { get { throw null; } }
+        public System.Collections.Generic.ICollection<Azure.AI.DocumentIntelligence.DocumentAnalysisFeature> Features { get { throw null; } }
+        public string Locale { get { throw null; } set { } }
+        public System.Collections.Generic.ICollection<Azure.AI.DocumentIntelligence.AnalyzeOutputOption> Output { get { throw null; } }
+        public Azure.AI.DocumentIntelligence.DocumentContentFormat? OutputContentFormat { get { throw null; } set { } }
         public bool? OverwriteExisting { get { throw null; } set { } }
+        public string Pages { get { throw null; } set { } }
+        public System.Collections.Generic.ICollection<string> QueryFields { get { throw null; } }
         public System.Uri ResultContainerUri { get { throw null; } }
         public string ResultPrefix { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -101,9 +108,16 @@ namespace Azure.AI.DocumentIntelligence
     }
     public partial class AnalyzeDocumentOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.DocumentIntelligence.AnalyzeDocumentOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.DocumentIntelligence.AnalyzeDocumentOptions>
     {
-        public AnalyzeDocumentOptions() { }
-        public System.BinaryData Base64Source { get { throw null; } set { } }
-        public System.Uri UriSource { get { throw null; } set { } }
+        public AnalyzeDocumentOptions(System.BinaryData bytesSource) { }
+        public AnalyzeDocumentOptions(System.Uri uriSource) { }
+        public System.BinaryData BytesSource { get { throw null; } }
+        public System.Collections.Generic.ICollection<Azure.AI.DocumentIntelligence.DocumentAnalysisFeature> Features { get { throw null; } }
+        public string Locale { get { throw null; } set { } }
+        public System.Collections.Generic.ICollection<Azure.AI.DocumentIntelligence.AnalyzeOutputOption> Output { get { throw null; } }
+        public Azure.AI.DocumentIntelligence.DocumentContentFormat? OutputContentFormat { get { throw null; } set { } }
+        public string Pages { get { throw null; } set { } }
+        public System.Collections.Generic.ICollection<string> QueryFields { get { throw null; } }
+        public System.Uri UriSource { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.DocumentIntelligence.AnalyzeDocumentOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.DocumentIntelligence.AnalyzeDocumentOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.DocumentIntelligence.AnalyzeDocumentOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -143,7 +157,6 @@ namespace Azure.AI.DocumentIntelligence
         public System.Collections.Generic.IReadOnlyList<Azure.AI.DocumentIntelligence.DocumentPage> Pages { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.DocumentIntelligence.DocumentParagraph> Paragraphs { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.DocumentIntelligence.DocumentSection> Sections { get { throw null; } }
-        public Azure.AI.DocumentIntelligence.StringIndexType StringIndexType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.DocumentIntelligence.DocumentStyle> Styles { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.DocumentIntelligence.DocumentTable> Tables { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.DocumentIntelligence.DocumentIntelligenceWarning> Warnings { get { throw null; } }
@@ -280,9 +293,12 @@ namespace Azure.AI.DocumentIntelligence
     }
     public partial class ClassifyDocumentOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.DocumentIntelligence.ClassifyDocumentOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.DocumentIntelligence.ClassifyDocumentOptions>
     {
-        public ClassifyDocumentOptions() { }
-        public System.BinaryData Base64Source { get { throw null; } set { } }
-        public System.Uri UriSource { get { throw null; } set { } }
+        public ClassifyDocumentOptions(System.BinaryData bytesSource) { }
+        public ClassifyDocumentOptions(System.Uri uriSource) { }
+        public System.BinaryData BytesSource { get { throw null; } }
+        public string Pages { get { throw null; } set { } }
+        public Azure.AI.DocumentIntelligence.SplitMode? Split { get { throw null; } set { } }
+        public System.Uri UriSource { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.DocumentIntelligence.ClassifyDocumentOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.DocumentIntelligence.ClassifyDocumentOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.DocumentIntelligence.ClassifyDocumentOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -312,9 +328,9 @@ namespace Azure.AI.DocumentIntelligence
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ContentSourceKind(string value) { throw null; }
-        public static Azure.AI.DocumentIntelligence.ContentSourceKind Base64 { get { throw null; } }
         public static Azure.AI.DocumentIntelligence.ContentSourceKind Blob { get { throw null; } }
         public static Azure.AI.DocumentIntelligence.ContentSourceKind BlobFileList { get { throw null; } }
+        public static Azure.AI.DocumentIntelligence.ContentSourceKind Bytes { get { throw null; } }
         public static Azure.AI.DocumentIntelligence.ContentSourceKind Uri { get { throw null; } }
         public bool Equals(Azure.AI.DocumentIntelligence.ContentSourceKind other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -765,17 +781,17 @@ namespace Azure.AI.DocumentIntelligence
         public DocumentIntelligenceClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public DocumentIntelligenceClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.DocumentIntelligence.DocumentIntelligenceClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Operation<Azure.AI.DocumentIntelligence.AnalyzeBatchResult> AnalyzeBatchDocuments(Azure.WaitUntil waitUntil, string modelId, Azure.AI.DocumentIntelligence.AnalyzeBatchDocumentsOptions analyzeBatchRequest = null, string pages = null, string locale = null, Azure.AI.DocumentIntelligence.StringIndexType? stringIndexType = default(Azure.AI.DocumentIntelligence.StringIndexType?), System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentAnalysisFeature> features = null, System.Collections.Generic.IEnumerable<string> queryFields = null, Azure.AI.DocumentIntelligence.DocumentContentFormat? outputContentFormat = default(Azure.AI.DocumentIntelligence.DocumentContentFormat?), System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.AnalyzeOutputOption> output = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation<Azure.AI.DocumentIntelligence.AnalyzeBatchResult> AnalyzeBatchDocuments(Azure.WaitUntil waitUntil, string modelId, Azure.AI.DocumentIntelligence.AnalyzeBatchDocumentsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation<System.BinaryData> AnalyzeBatchDocuments(Azure.WaitUntil waitUntil, string modelId, Azure.Core.RequestContent content, string pages = null, string locale = null, string stringIndexType = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentAnalysisFeature> features = null, System.Collections.Generic.IEnumerable<string> queryFields = null, string outputContentFormat = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.AnalyzeOutputOption> output = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.DocumentIntelligence.AnalyzeBatchResult>> AnalyzeBatchDocumentsAsync(Azure.WaitUntil waitUntil, string modelId, Azure.AI.DocumentIntelligence.AnalyzeBatchDocumentsOptions analyzeBatchRequest = null, string pages = null, string locale = null, Azure.AI.DocumentIntelligence.StringIndexType? stringIndexType = default(Azure.AI.DocumentIntelligence.StringIndexType?), System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentAnalysisFeature> features = null, System.Collections.Generic.IEnumerable<string> queryFields = null, Azure.AI.DocumentIntelligence.DocumentContentFormat? outputContentFormat = default(Azure.AI.DocumentIntelligence.DocumentContentFormat?), System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.AnalyzeOutputOption> output = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.DocumentIntelligence.AnalyzeBatchResult>> AnalyzeBatchDocumentsAsync(Azure.WaitUntil waitUntil, string modelId, Azure.AI.DocumentIntelligence.AnalyzeBatchDocumentsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> AnalyzeBatchDocumentsAsync(Azure.WaitUntil waitUntil, string modelId, Azure.Core.RequestContent content, string pages = null, string locale = null, string stringIndexType = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentAnalysisFeature> features = null, System.Collections.Generic.IEnumerable<string> queryFields = null, string outputContentFormat = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.AnalyzeOutputOption> output = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Operation<Azure.AI.DocumentIntelligence.AnalyzeResult> AnalyzeDocument(Azure.WaitUntil waitUntil, string modelId, Azure.AI.DocumentIntelligence.AnalyzeDocumentOptions analyzeRequest = null, string pages = null, string locale = null, Azure.AI.DocumentIntelligence.StringIndexType? stringIndexType = default(Azure.AI.DocumentIntelligence.StringIndexType?), System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentAnalysisFeature> features = null, System.Collections.Generic.IEnumerable<string> queryFields = null, Azure.AI.DocumentIntelligence.DocumentContentFormat? outputContentFormat = default(Azure.AI.DocumentIntelligence.DocumentContentFormat?), System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.AnalyzeOutputOption> output = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation<Azure.AI.DocumentIntelligence.AnalyzeResult> AnalyzeDocument(Azure.WaitUntil waitUntil, string modelId, Azure.AI.DocumentIntelligence.AnalyzeDocumentOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation<System.BinaryData> AnalyzeDocument(Azure.WaitUntil waitUntil, string modelId, Azure.Core.RequestContent content, string pages = null, string locale = null, string stringIndexType = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentAnalysisFeature> features = null, System.Collections.Generic.IEnumerable<string> queryFields = null, string outputContentFormat = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.AnalyzeOutputOption> output = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.DocumentIntelligence.AnalyzeResult>> AnalyzeDocumentAsync(Azure.WaitUntil waitUntil, string modelId, Azure.AI.DocumentIntelligence.AnalyzeDocumentOptions analyzeRequest = null, string pages = null, string locale = null, Azure.AI.DocumentIntelligence.StringIndexType? stringIndexType = default(Azure.AI.DocumentIntelligence.StringIndexType?), System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentAnalysisFeature> features = null, System.Collections.Generic.IEnumerable<string> queryFields = null, Azure.AI.DocumentIntelligence.DocumentContentFormat? outputContentFormat = default(Azure.AI.DocumentIntelligence.DocumentContentFormat?), System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.AnalyzeOutputOption> output = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.DocumentIntelligence.AnalyzeResult>> AnalyzeDocumentAsync(Azure.WaitUntil waitUntil, string modelId, Azure.AI.DocumentIntelligence.AnalyzeDocumentOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> AnalyzeDocumentAsync(Azure.WaitUntil waitUntil, string modelId, Azure.Core.RequestContent content, string pages = null, string locale = null, string stringIndexType = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentAnalysisFeature> features = null, System.Collections.Generic.IEnumerable<string> queryFields = null, string outputContentFormat = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.AnalyzeOutputOption> output = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Operation<Azure.AI.DocumentIntelligence.AnalyzeResult> ClassifyDocument(Azure.WaitUntil waitUntil, string classifierId, Azure.AI.DocumentIntelligence.ClassifyDocumentOptions classifyRequest, Azure.AI.DocumentIntelligence.StringIndexType? stringIndexType = default(Azure.AI.DocumentIntelligence.StringIndexType?), Azure.AI.DocumentIntelligence.SplitMode? split = default(Azure.AI.DocumentIntelligence.SplitMode?), string pages = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation<Azure.AI.DocumentIntelligence.AnalyzeResult> ClassifyDocument(Azure.WaitUntil waitUntil, string classifierId, Azure.AI.DocumentIntelligence.ClassifyDocumentOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation<System.BinaryData> ClassifyDocument(Azure.WaitUntil waitUntil, string classifierId, Azure.Core.RequestContent content, string stringIndexType = null, string split = null, string pages = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.DocumentIntelligence.AnalyzeResult>> ClassifyDocumentAsync(Azure.WaitUntil waitUntil, string classifierId, Azure.AI.DocumentIntelligence.ClassifyDocumentOptions classifyRequest, Azure.AI.DocumentIntelligence.StringIndexType? stringIndexType = default(Azure.AI.DocumentIntelligence.StringIndexType?), Azure.AI.DocumentIntelligence.SplitMode? split = default(Azure.AI.DocumentIntelligence.SplitMode?), string pages = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.AI.DocumentIntelligence.AnalyzeResult>> ClassifyDocumentAsync(Azure.WaitUntil waitUntil, string classifierId, Azure.AI.DocumentIntelligence.ClassifyDocumentOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> ClassifyDocumentAsync(Azure.WaitUntil waitUntil, string classifierId, Azure.Core.RequestContent content, string stringIndexType = null, string split = null, string pages = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response DeleteAnalyzeBatchResult(string modelId, System.Guid resultId, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAnalyzeBatchResultAsync(string modelId, System.Guid resultId, Azure.RequestContext context = null) { throw null; }
@@ -842,7 +858,7 @@ namespace Azure.AI.DocumentIntelligence
         public static Azure.AI.DocumentIntelligence.AnalyzeBatchResult AnalyzeBatchResult(int succeededCount = 0, int failedCount = 0, int skippedCount = 0, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.AnalyzeBatchResultDetails> details = null) { throw null; }
         public static Azure.AI.DocumentIntelligence.AnalyzeBatchResultDetails AnalyzeBatchResultDetails(Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationStatus status = default(Azure.AI.DocumentIntelligence.DocumentIntelligenceOperationStatus), System.Uri sourceUri = null, System.Uri resultUri = null, Azure.AI.DocumentIntelligence.DocumentIntelligenceError error = null) { throw null; }
         public static Azure.AI.DocumentIntelligence.AnalyzedDocument AnalyzedDocument(string documentType = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.BoundingRegion> boundingRegions = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSpan> spans = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.DocumentIntelligence.DocumentField> fields = null, float confidence = 0f) { throw null; }
-        public static Azure.AI.DocumentIntelligence.AnalyzeResult AnalyzeResult(string apiVersion = null, string modelId = null, Azure.AI.DocumentIntelligence.StringIndexType stringIndexType = default(Azure.AI.DocumentIntelligence.StringIndexType), Azure.AI.DocumentIntelligence.DocumentContentFormat? contentFormat = default(Azure.AI.DocumentIntelligence.DocumentContentFormat?), string content = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentPage> pages = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentParagraph> paragraphs = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentTable> tables = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentFigure> figures = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSection> sections = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentKeyValuePair> keyValuePairs = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentStyle> styles = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentLanguage> languages = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.AnalyzedDocument> documents = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentIntelligenceWarning> warnings = null) { throw null; }
+        public static Azure.AI.DocumentIntelligence.AnalyzeResult AnalyzeResult(string apiVersion = null, string modelId = null, Azure.AI.DocumentIntelligence.DocumentContentFormat? contentFormat = default(Azure.AI.DocumentIntelligence.DocumentContentFormat?), string content = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentPage> pages = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentParagraph> paragraphs = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentTable> tables = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentFigure> figures = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentSection> sections = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentKeyValuePair> keyValuePairs = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentStyle> styles = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentLanguage> languages = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.AnalyzedDocument> documents = null, System.Collections.Generic.IEnumerable<Azure.AI.DocumentIntelligence.DocumentIntelligenceWarning> warnings = null) { throw null; }
         public static Azure.AI.DocumentIntelligence.AuthorizeClassifierCopyOptions AuthorizeClassifierCopyOptions(string classifierId = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.AI.DocumentIntelligence.AuthorizeModelCopyOptions AuthorizeModelCopyOptions(string modelId = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.AI.DocumentIntelligence.BoundingRegion BoundingRegion(int pageNumber = 0, System.Collections.Generic.IEnumerable<float> polygon = null) { throw null; }
@@ -1349,25 +1365,6 @@ namespace Azure.AI.DocumentIntelligence
         public static bool operator ==(Azure.AI.DocumentIntelligence.SplitMode left, Azure.AI.DocumentIntelligence.SplitMode right) { throw null; }
         public static implicit operator Azure.AI.DocumentIntelligence.SplitMode (string value) { throw null; }
         public static bool operator !=(Azure.AI.DocumentIntelligence.SplitMode left, Azure.AI.DocumentIntelligence.SplitMode right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct StringIndexType : System.IEquatable<Azure.AI.DocumentIntelligence.StringIndexType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public StringIndexType(string value) { throw null; }
-        public static Azure.AI.DocumentIntelligence.StringIndexType TextElements { get { throw null; } }
-        public static Azure.AI.DocumentIntelligence.StringIndexType UnicodeCodePoint { get { throw null; } }
-        public static Azure.AI.DocumentIntelligence.StringIndexType Utf16CodeUnit { get { throw null; } }
-        public bool Equals(Azure.AI.DocumentIntelligence.StringIndexType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.DocumentIntelligence.StringIndexType left, Azure.AI.DocumentIntelligence.StringIndexType right) { throw null; }
-        public static implicit operator Azure.AI.DocumentIntelligence.StringIndexType (string value) { throw null; }
-        public static bool operator !=(Azure.AI.DocumentIntelligence.StringIndexType left, Azure.AI.DocumentIntelligence.StringIndexType right) { throw null; }
         public override string ToString() { throw null; }
     }
 }

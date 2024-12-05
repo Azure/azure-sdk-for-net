@@ -10,7 +10,7 @@
 - Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
-- Renamed the following classes ending in `Content`:
+- Replaced the following `Content` classes with new corresponding `Options` classes:
   - `AnalyzeBatchDocumentsContent` to `AnalyzeBatchDocumentsOptions`.
   - `AnalyzeDocumentContent` to `AnalyzeDocumentOptions`.
   - `AuthorizeClassifierCopyContent` to `AuthorizeClassifierCopyOptions`.
@@ -19,6 +19,7 @@
   - `BuildDocumentModelContent` to `BuildDocumentModelOptions`.
   - `ClassifyDocumentContent` to `ClassifyDocumentOptions`.
   - `ComposeDocumentModelContent` to `ComposeModelOptions`.
+  - Optional parameters of the `AnalyzeBatchDocuments`, `AnalyzeDocument`, and `ClassifyDocument` methods have been moved into their corresponding `Options` class.
 - Renamed all occurrences of property `UrlSource` to `UriSource`.
 - Renamed all occurrences of properties `DocType` and `DocTypes` to `DocumentType` and `DocumentTypes`, respectively.
 - In `DocumentField`, renamed properties `Type` and `ValueLong` to `FieldType` and `ValueInt64`, respectively.
@@ -32,7 +33,7 @@
 - In `AnalyzeBatchResultDetails` (former `AnalyzeBatchOperationDetail`), renamed properties `SourceUrl` and `ResultUrl` to `SourceUri` and `ResultUri`, respectively.
 - Removed member `Generative` from `DocumentBuildMode`.
 - Renamed member `StyleFonts` to `FontStyling` in `DocumentAnalysisFeature`.
-- In `ContentSourceKind`, renamed members `Url`, `AzureBlob`, and `AzureBlobFileList` to `Uri`, `Blob`, and `BlobFileList`, respectively.
+- In `ContentSourceKind`, renamed members `Url`, `Base64`, `AzureBlob`, and `AzureBlobFileList` to `Uri`, `Bytes`, `Blob`, and `BlobFileList`, respectively.
 - Renamed all occurrences of property `ExpirationDateTime` to `ExpiresOn`.
 - Renamed method `GetResourceInfo` to `GetResourceDetails` in `DocumentIntelligenceAdministrationClient`.
 - Renamed class `ResourceDetails` to `DocumentIntelligenceResourceDetails`.
@@ -42,9 +43,12 @@
 - Renamed class `CopyAuthorization` to `ModelCopyAuthorization`.
 - Renamed type `OperationStatus` to `DocumentIntelligenceOperationStatus`.
 - Removed member `Completed` from `DocumentIntelligenceOperationStatus` (former `OperationStatus`).
+- Removed type `StringIndexType`.
+- Removed property `StringIndexType` in `AnalyzeResult`.
 
 ### Bugs Fixed
 - Fixed a bug where calling `Operation.Id` would sometimes return an `InvalidOperationException` with message "The operation ID was not present in the service response.".
+- Calling `Operation.Id` in an operation returned from the `AnalyzeBatchDocuments` and `ClassifyDocument` APIs won't throw a `NotSupportedException` anymore.
 
 ### Other Changes
 

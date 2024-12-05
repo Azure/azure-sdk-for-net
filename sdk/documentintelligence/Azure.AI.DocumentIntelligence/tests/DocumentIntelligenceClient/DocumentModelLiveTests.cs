@@ -22,10 +22,8 @@ namespace Azure.AI.DocumentIntelligence.Tests
         {
             var client = CreateDocumentIntelligenceClient();
 
-            var options = new AnalyzeDocumentOptions()
-            {
-                UriSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.ContosoReceipt)
-            };
+            var uriSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.ContosoReceipt);
+            var options = new AnalyzeDocumentOptions(uriSource);
 
             var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-receipt", options);
 
@@ -36,14 +34,12 @@ namespace Azure.AI.DocumentIntelligence.Tests
         }
 
         [RecordedTest]
-        public async Task AnalyzeDocumentWithBase64Source()
+        public async Task AnalyzeDocumentWithBytesSource()
         {
             var client = CreateDocumentIntelligenceClient();
 
-            var options = new AnalyzeDocumentOptions()
-            {
-                Base64Source = DocumentIntelligenceTestEnvironment.CreateBinaryData(TestFile.ContosoReceipt)
-            };
+            var bytesSource = DocumentIntelligenceTestEnvironment.CreateBinaryData(TestFile.ContosoReceipt);
+            var options = new AnalyzeDocumentOptions(bytesSource);
 
             var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-receipt", options);
 
@@ -58,10 +54,8 @@ namespace Azure.AI.DocumentIntelligence.Tests
         {
             var client = CreateDocumentIntelligenceClient();
 
-            var options = new AnalyzeDocumentOptions()
-            {
-                UriSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.Blank)
-            };
+            var uriSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.Blank);
+            var options = new AnalyzeDocumentOptions(uriSource);
 
             var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-receipt", options);
 
@@ -99,13 +93,13 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var client = CreateDocumentIntelligenceClient();
 
             const string ModelId = "prebuilt-read";
-            var options = new AnalyzeDocumentOptions()
+            var bytesSource = DocumentIntelligenceTestEnvironment.CreateBinaryData(TestFile.LayoutSample);
+            var options = new AnalyzeDocumentOptions(bytesSource)
             {
-                Base64Source = DocumentIntelligenceTestEnvironment.CreateBinaryData(TestFile.LayoutSample)
+                Output = { AnalyzeOutputOption.Pdf }
             };
-            var output = new[] { AnalyzeOutputOption.Pdf };
 
-            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, ModelId, options, output: output);
+            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, ModelId, options);
             var response = await client.GetAnalyzeResultPdfAsync(ModelId, Guid.Parse(operation.Id));
 
             BinaryData pdf = response.Value;
@@ -122,13 +116,13 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var client = CreateDocumentIntelligenceClient();
 
             const string ModelId = "prebuilt-layout";
-            var options = new AnalyzeDocumentOptions()
+            var bytesSource = DocumentIntelligenceTestEnvironment.CreateBinaryData(TestFile.LayoutSample);
+            var options = new AnalyzeDocumentOptions(bytesSource)
             {
-                Base64Source = DocumentIntelligenceTestEnvironment.CreateBinaryData(TestFile.LayoutSample)
+                Output = { AnalyzeOutputOption.Figures }
             };
-            var output = new[] { AnalyzeOutputOption.Figures };
 
-            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, ModelId, options, output: output);
+            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, ModelId, options);
             var result = operation.Value;
 
             Assert.That(result.Figures, Is.Not.Empty);

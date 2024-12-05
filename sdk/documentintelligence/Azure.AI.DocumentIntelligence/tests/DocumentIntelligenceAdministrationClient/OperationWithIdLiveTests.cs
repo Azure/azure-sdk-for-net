@@ -30,10 +30,8 @@ namespace Azure.AI.DocumentIntelligence.Tests
         {
             var client = CreateDocumentIntelligenceClient();
 
-            var options = new AnalyzeDocumentOptions()
-            {
-                UriSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.ContosoReceipt)
-            };
+            var uriSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.ContosoReceipt);
+            var options = new AnalyzeDocumentOptions(uriSource);
 
             Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(waitUntil, "prebuilt-receipt", options);
             await operation.WaitForCompletionAsync();

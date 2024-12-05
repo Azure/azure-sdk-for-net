@@ -13,12 +13,12 @@ namespace Azure.AI.DocumentIntelligence.Samples
     public partial class DocumentIntelligenceSamples
     {
         [RecordedTest]
-        public async Task AnalyzeWithPrebuiltModelWithBase64Async()
+        public async Task AnalyzeWithPrebuiltModelFromBytesAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
             var client = new DocumentIntelligenceClient(new Uri(endpoint), TestEnvironment.Credential);
 
-            #region Snippet:DocumentIntelligenceAnalyzeWithPrebuiltModelWithBase64Async
+            #region Snippet:DocumentIntelligenceAnalyzeWithPrebuiltModelFromBytesAsync
 #if SNIPPET
             string filePath = "<filePath>";
 #else
@@ -26,10 +26,8 @@ namespace Azure.AI.DocumentIntelligence.Samples
 #endif
             byte[] fileBytes = File.ReadAllBytes(filePath);
 
-            var options = new AnalyzeDocumentOptions()
-            {
-                Base64Source = BinaryData.FromBytes(fileBytes)
-            };
+            var bytesSource = BinaryData.FromBytes(fileBytes);
+            var options = new AnalyzeDocumentOptions(bytesSource);
 
             Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", options);
             AnalyzeResult result = operation.Value;

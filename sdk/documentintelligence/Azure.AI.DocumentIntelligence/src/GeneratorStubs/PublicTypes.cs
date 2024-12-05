@@ -7,11 +7,13 @@ using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
+    public partial class AnalyzeResult
+    {
+        internal StringIndexType StringIndexType { get; }
+    }
+
     [CodeGenModel("AzureAIDocumentIntelligenceClientOptions")]
     public partial class DocumentIntelligenceClientOptions { }
-
-    [CodeGenModel("AIDocumentIntelligenceModelFactory")]
-    public partial class DocumentIntelligenceModelFactory { }
 }
 
 namespace Microsoft.Extensions.Azure

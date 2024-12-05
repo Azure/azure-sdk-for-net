@@ -215,10 +215,7 @@ Analyzing documents with `Azure.AI.DocumentIntelligence`:
 ```C# Snippet:DocumentIntelligenceAnalyzeWithPrebuiltModelFromUriAsync
 Uri uriSource = new Uri("<uriSource>");
 
-var options = new AnalyzeDocumentOptions()
-{
-    UriSource = uriSource
-};
+var options = new AnalyzeDocumentOptions(uriSource);
 
 Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", options);
 AnalyzeResult result = operation.Value;
@@ -325,10 +322,7 @@ Classifying documents with `Azure.AI.DocumentIntelligence`:
 string classifierId = "<classifierId>";
 Uri uriSource = new Uri("<uriSource>");
 
-var options = new ClassifyDocumentOptions()
-{
-    UriSource = uriSource
-};
+var options = new ClassifyDocumentOptions(uriSource);
 
 Operation<AnalyzeResult> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, classifierId, options);
 AnalyzeResult result = operation.Value;
@@ -414,14 +408,12 @@ foreach (KeyValuePair<string, DocumentTypeDetails> docType in model.DocumentType
 
 Currently neither `AnalyzeDocument` nor `ClassifyDocument` support submitting a document from a `Stream` input. As a temporary workaround, you can make use of the new Base64 input option. The following example illustrates how to submit a local file for analysis:
 
-```C# Snippet:DocumentIntelligenceAnalyzeWithPrebuiltModelWithBase64Async
+```C# Snippet:DocumentIntelligenceAnalyzeWithPrebuiltModelFromBytesAsync
 string filePath = "<filePath>";
 byte[] fileBytes = File.ReadAllBytes(filePath);
 
-var options = new AnalyzeDocumentOptions()
-{
-    Base64Source = BinaryData.FromBytes(fileBytes)
-};
+var bytesSource = BinaryData.FromBytes(fileBytes);
+var options = new AnalyzeDocumentOptions(bytesSource);
 
 Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", options);
 AnalyzeResult result = operation.Value;
@@ -533,10 +525,7 @@ Note that it's necessary to pass the `DocumentPage` containing the line to the m
 ```C# Snippet:Migration_DocumentIntelligenceGetWordsUsage
 Uri uriSource = new Uri("<uriSource>");
 
-var options = new AnalyzeDocumentOptions()
-{
-    UriSource = uriSource
-};
+var options = new AnalyzeDocumentOptions(uriSource);
 
 Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", options);
 AnalyzeResult result = operation.Value;

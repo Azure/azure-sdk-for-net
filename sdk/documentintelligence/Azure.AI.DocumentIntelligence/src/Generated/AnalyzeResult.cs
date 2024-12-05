@@ -128,8 +128,6 @@ namespace Azure.AI.DocumentIntelligence
         public string ApiVersion { get; }
         /// <summary> Document model ID used to produce this result. </summary>
         public string ModelId { get; }
-        /// <summary> Method used to compute string offset and length. </summary>
-        public StringIndexType StringIndexType { get; }
         /// <summary> Format of the analyze result top-level content. </summary>
         public DocumentContentFormat? ContentFormat { get; }
         /// <summary>

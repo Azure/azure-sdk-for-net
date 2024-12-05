@@ -44,58 +44,6 @@ namespace Azure.AI.DocumentIntelligence
             return new DocumentIntelligenceInnerError(code, message, innerErrorObject, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.AnalyzeResult"/>. </summary>
-        /// <param name="apiVersion"> API version used to produce this result. </param>
-        /// <param name="modelId"> Document model ID used to produce this result. </param>
-        /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
-        /// <param name="contentFormat"> Format of the analyze result top-level content. </param>
-        /// <param name="content">
-        /// Concatenate string representation of all textual and visual elements in reading
-        /// order.
-        /// </param>
-        /// <param name="pages"> Analyzed pages. </param>
-        /// <param name="paragraphs"> Extracted paragraphs. </param>
-        /// <param name="tables"> Extracted tables. </param>
-        /// <param name="figures"> Extracted figures. </param>
-        /// <param name="sections"> Extracted sections. </param>
-        /// <param name="keyValuePairs"> Extracted key-value pairs. </param>
-        /// <param name="styles"> Extracted font styles. </param>
-        /// <param name="languages"> Detected languages. </param>
-        /// <param name="documents"> Extracted documents. </param>
-        /// <param name="warnings"> List of warnings encountered. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.AnalyzeResult"/> instance for mocking. </returns>
-        public static AnalyzeResult AnalyzeResult(string apiVersion = null, string modelId = null, StringIndexType stringIndexType = default, DocumentContentFormat? contentFormat = null, string content = null, IEnumerable<DocumentPage> pages = null, IEnumerable<DocumentParagraph> paragraphs = null, IEnumerable<DocumentTable> tables = null, IEnumerable<DocumentFigure> figures = null, IEnumerable<DocumentSection> sections = null, IEnumerable<DocumentKeyValuePair> keyValuePairs = null, IEnumerable<DocumentStyle> styles = null, IEnumerable<DocumentLanguage> languages = null, IEnumerable<AnalyzedDocument> documents = null, IEnumerable<DocumentIntelligenceWarning> warnings = null)
-        {
-            pages ??= new List<DocumentPage>();
-            paragraphs ??= new List<DocumentParagraph>();
-            tables ??= new List<DocumentTable>();
-            figures ??= new List<DocumentFigure>();
-            sections ??= new List<DocumentSection>();
-            keyValuePairs ??= new List<DocumentKeyValuePair>();
-            styles ??= new List<DocumentStyle>();
-            languages ??= new List<DocumentLanguage>();
-            documents ??= new List<AnalyzedDocument>();
-            warnings ??= new List<DocumentIntelligenceWarning>();
-
-            return new AnalyzeResult(
-                apiVersion,
-                modelId,
-                stringIndexType,
-                contentFormat,
-                content,
-                pages?.ToList(),
-                paragraphs?.ToList(),
-                tables?.ToList(),
-                figures?.ToList(),
-                sections?.ToList(),
-                keyValuePairs?.ToList(),
-                styles?.ToList(),
-                languages?.ToList(),
-                documents?.ToList(),
-                warnings?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentPage"/>. </summary>
         /// <param name="pageNumber"> 1-based page number in the input document. </param>
         /// <param name="angle">

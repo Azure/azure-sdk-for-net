@@ -46,16 +46,6 @@ namespace Azure.AI.DocumentIntelligence
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AnalyzeBatchDocumentsOptions"/>. </summary>
-        /// <param name="resultContainerUri"> Azure Blob Storage container URL where analyze result files will be stored. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resultContainerUri"/> is null. </exception>
-        public AnalyzeBatchDocumentsOptions(Uri resultContainerUri)
-        {
-            Argument.AssertNotNull(resultContainerUri, nameof(resultContainerUri));
-
-            ResultContainerUri = resultContainerUri;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AnalyzeBatchDocumentsOptions"/>. </summary>
         /// <param name="blobSource">
         /// Azure Blob Storage location containing the batch documents.  Either
         /// azureBlobSource or azureBlobFileListSource must be specified.
@@ -77,22 +67,6 @@ namespace Azure.AI.DocumentIntelligence
             OverwriteExisting = overwriteExisting;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-
-        /// <summary> Initializes a new instance of <see cref="AnalyzeBatchDocumentsOptions"/> for deserialization. </summary>
-        internal AnalyzeBatchDocumentsOptions()
-        {
-        }
-
-        /// <summary>
-        /// Azure Blob Storage location containing the batch documents.  Either
-        /// azureBlobSource or azureBlobFileListSource must be specified.
-        /// </summary>
-        public BlobContentSource BlobSource { get; set; }
-        /// <summary>
-        /// Azure Blob Storage file list specifying the batch documents.  Either
-        /// azureBlobSource or azureBlobFileListSource must be specified.
-        /// </summary>
-        public BlobFileListContentSource BlobFileListSource { get; set; }
         /// <summary> Azure Blob Storage container URL where analyze result files will be stored. </summary>
         public Uri ResultContainerUri { get; }
         /// <summary> Blob name prefix of result files. </summary>
