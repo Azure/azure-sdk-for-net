@@ -30,11 +30,11 @@ public static class CloudMachineClientConfiguration
     /// Adds a connection to the collection.
     /// </summary>
     /// <param name="builder"></param>
-    /// <param name="cmid"></param>
+    /// <param name="id"></param>
     /// <returns></returns>
-    public static IConfigurationBuilder AddCloudMachineId(this IConfigurationBuilder builder, string cmid)
+    public static IConfigurationBuilder AddCloudMachineId(this IConfigurationBuilder builder, string id)
     {
-        var source = new CmidConfigurationSource(cmid);
+        var source = new CmidConfigurationSource(id);
         builder.Add(source);
         return builder;
     }

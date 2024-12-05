@@ -174,7 +174,7 @@ namespace Azure.Core
     public static partial class CloudMachineClientConfiguration
     {
         public static Microsoft.Extensions.Configuration.IConfigurationBuilder AddCloudMachineConnections(this Microsoft.Extensions.Configuration.IConfigurationBuilder builder, Azure.Core.ConnectionCollection connections) { throw null; }
-        public static Microsoft.Extensions.Configuration.IConfigurationBuilder AddCloudMachineId(this Microsoft.Extensions.Configuration.IConfigurationBuilder builder, string cmid) { throw null; }
+        public static Microsoft.Extensions.Configuration.IConfigurationBuilder AddCloudMachineId(this Microsoft.Extensions.Configuration.IConfigurationBuilder builder, string id) { throw null; }
     }
     public partial class ConnectionCollection : System.Collections.ObjectModel.KeyedCollection<string, Azure.Core.ClientConnection>
     {
