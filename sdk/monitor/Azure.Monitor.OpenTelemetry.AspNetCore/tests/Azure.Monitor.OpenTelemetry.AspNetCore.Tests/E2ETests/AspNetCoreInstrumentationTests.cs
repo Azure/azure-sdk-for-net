@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.VisualStudio.TestPlatform.Utilities;
@@ -144,6 +145,99 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
                 statusCode: statusCode.ToString(),
                 telemetryItem: telemetryItem,
                 activity: activity);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void VerifyQueryStringRedaction(bool redactionEnabled)
+        {
+            // SETUP MOCK TRANSMITTER TO CAPTURE AZURE MONITOR TELEMETRY
+            var testConnectionString = $"InstrumentationKey=unitTest-{nameof(VerifyQueryStringRedaction)}";
+            var telemetryItems = new List<TelemetryItem>();
+            var mockTransmitter = new Exporter.Tests.CommonTestFramework.MockTransmitter(telemetryItems);
+            // The TransmitterFactory is invoked by the Exporter during initialization to ensure that there's only one instance of a transmitter/connectionString shared by all Exporters.
+            // Here we're setting that instance to use the MockTransmitter so this test can capture telemetry before it's sent to Azure Monitor.
+            Exporter.Internals.TransmitterFactory.Instance.Set(connectionString: testConnectionString, transmitter: mockTransmitter);
+
+            var activities = new List<Activity>();
+            string expectedUrl;
+
+            var configuration = new ConfigurationBuilder()
+                .AddInMemoryCollection(new Dictionary<string, string?> { ["OTEL_DOTNET_EXPERIMENTAL_ASPNETCORE_DISABLE_URL_QUERY_REDACTION"] = (!redactionEnabled).ToString() })
+                .Build();
+
+            // SETUP WEBAPPLICATIONFACTORY WITH OPENTELEMETRY
+            using (var client = _factory
+                .WithWebHostBuilder(builder =>
+                {
+                    builder.ConfigureTestServices(serviceCollection =>
+                    {
+                        serviceCollection.AddSingleton<IConfiguration>(configuration);
+
+                        serviceCollection.AddOpenTelemetry()
+                            .UseAzureMonitor(x =>
+                            {
+                                x.EnableLiveMetrics = false;
+                                x.ConnectionString = testConnectionString;
+                            })
+                            .WithTracing(x => x.AddInMemoryExporter(activities))
+                            // Custom resources must be added AFTER AzureMonitor to override the included ResourceDetectors.
+                            .ConfigureResource(x => x.AddAttributes(SharedTestVars.TestResourceAttributes));
+                    });
+
+                    builder.Configure(app =>
+                    {
+                        app.UseRouting();
+
+                        app.UseEndpoints(endpoints =>
+                        {
+                            endpoints.MapGet("/custom-endpoint", async context =>
+                            {
+                                context.Response.StatusCode = 200;
+                                await context.Response.WriteAsync("Hello!");
+                            });
+                        });
+                    });
+                })
+                .CreateClient())
+            {
+                // Act
+                string url = "/custom-endpoint?key=value";
+
+                expectedUrl = new Uri(client.BaseAddress!, url).AbsoluteUri;
+
+                try
+                {
+                    using var response = client.GetAsync(url).Result;
+                }
+                catch
+                {
+                    // Ignore exceptions
+                }
+            }
+
+            // SHUTDOWN
+            var tracerProvider = _factory.Factories.Last().Services.GetRequiredService<TracerProvider>();
+            tracerProvider.ForceFlush();
+
+            WaitForActivityExport(activities);
+            WaitForActivityExport(telemetryItems, x => x.Name == "Request");
+
+            // ASSERT
+            _telemetryOutput.Write(telemetryItems);
+            Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
+            var telemetryItem = telemetryItems.Where(x => x.Name == "Request").Single();
+            var activity = activities.Single();
+
+            if (redactionEnabled)
+            {
+                Assert.EndsWith("key=Redacted", ((RequestData)telemetryItem.Data.BaseData).Url);
+            }
+            else
+            {
+                Assert.EndsWith("key=value", ((RequestData)telemetryItem.Data.BaseData).Url);
+            }
         }
 
         private void WaitForActivityExport<T>(List<T> traceTelemetryItems, Func<T, bool>? predicate = null)
