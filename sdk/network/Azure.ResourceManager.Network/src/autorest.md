@@ -113,6 +113,7 @@ rename-mapping:
   Hub: ConnectivityHub
   IdpsQueryObject: IdpsQueryContent
   InboundNatPool: LoadBalancerInboundNatPool
+  InboundNatPoolPropertiesFormat: LoadBalancerInboundNatPoolProperties
   IpAllocation.properties.type: IPAllocationType
   IpAllocationListResult: NetworkIPAllocationListResult
   IPAllocationMethod: NetworkIPAllocationMethod
@@ -209,6 +210,7 @@ rename-mapping:
   VpnPacketCaptureStartParameters: VpnPacketCaptureStartContent
   VpnPacketCaptureStopParameters: VpnPacketCaptureStopContent
   VpnPolicyMemberAttributeType.AADGroupId: AadGroupId
+  LoadBalancingRulePropertiesFormat: LoadBalancingRuleProperties
 
 keep-plural-resource-data:
 - PolicySignaturesOverridesForIdps
@@ -598,6 +600,14 @@ directive:
       {
           delete $[path];
       }
+  # disable the flatten and add additional properties to its properties object
+  - from: loadBalancer.json
+    where: $.definitions
+    transform: >
+      $.LoadBalancingRule.properties.properties["x-ms-client-flatten"] = false;
+      $.LoadBalancingRulePropertiesFormat.additionalProperties = true;
+      $.InboundNatPool.properties.properties["x-ms-client-flatten"] = false;
+      $.InboundNatPoolPropertiesFormat.additionalProperties = true;
   # - from: vmssPublicIpAddress.json
   #   where: $.paths
   #   transform: >
