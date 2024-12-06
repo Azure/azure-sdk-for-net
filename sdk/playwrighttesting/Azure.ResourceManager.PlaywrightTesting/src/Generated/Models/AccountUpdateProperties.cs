@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
         /// <param name="reporting"> When enabled, this feature allows the workspace to upload and display test results, including artifacts like traces and screenshots, in the Playwright portal. This enables faster and more efficient troubleshooting. </param>
         /// <param name="localAuth"> When enabled, this feature allows the workspace to use local auth(through access key) for authentication of test runs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AccountUpdateProperties(EnablementStatus? regionalAffinity, EnablementStatus? scalableExecution, EnablementStatus? reporting, EnablementStatus? localAuth, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AccountUpdateProperties(PlaywrightTestingEnablementStatus? regionalAffinity, PlaywrightTestingEnablementStatus? scalableExecution, PlaywrightTestingEnablementStatus? reporting, PlaywrightTestingEnablementStatus? localAuth, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RegionalAffinity = regionalAffinity;
             ScalableExecution = scalableExecution;
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
         }
 
         /// <summary> This property sets the connection region for Playwright client workers to cloud-hosted browsers. If enabled, workers connect to browsers in the closest Azure region, ensuring lower latency. If disabled, workers connect to browsers in the Azure region in which the workspace was initially created. </summary>
-        public EnablementStatus? RegionalAffinity { get; set; }
+        public PlaywrightTestingEnablementStatus? RegionalAffinity { get; set; }
         /// <summary> When enabled, Playwright client workers can connect to cloud-hosted browsers. This can increase the number of parallel workers for a test run, significantly minimizing test completion durations. </summary>
-        public EnablementStatus? ScalableExecution { get; set; }
+        public PlaywrightTestingEnablementStatus? ScalableExecution { get; set; }
         /// <summary> When enabled, this feature allows the workspace to upload and display test results, including artifacts like traces and screenshots, in the Playwright portal. This enables faster and more efficient troubleshooting. </summary>
-        public EnablementStatus? Reporting { get; set; }
+        public PlaywrightTestingEnablementStatus? Reporting { get; set; }
         /// <summary> When enabled, this feature allows the workspace to use local auth(through access key) for authentication of test runs. </summary>
-        public EnablementStatus? LocalAuth { get; set; }
+        public PlaywrightTestingEnablementStatus? LocalAuth { get; set; }
     }
 }

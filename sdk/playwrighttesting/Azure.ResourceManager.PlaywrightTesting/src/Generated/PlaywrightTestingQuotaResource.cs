@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quotas_Get</description>
+        /// <description>Quota_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
             scope.Start();
             try
             {
-                var response = await _playwrightTestingQuotaQuotasRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _playwrightTestingQuotaQuotasRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PlaywrightTestingQuotaResource(Client, response.Value), response.GetRawResponse());
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quotas_Get</description>
+        /// <description>Quota_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
             scope.Start();
             try
             {
-                var response = _playwrightTestingQuotaQuotasRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
+                var response = _playwrightTestingQuotaQuotasRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PlaywrightTestingQuotaResource(Client, response.Value), response.GetRawResponse());

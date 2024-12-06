@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PlaywrightTesting.Models
 {
-    /// <summary> The subscription quota resource free-trial properties. </summary>
-    public partial class FreeTrialProperties
+    /// <summary> The check availability request body. </summary>
+    public partial class PlaywrightTestingNameAvailabilityContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,34 +45,25 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="FreeTrialProperties"/>. </summary>
-        /// <param name="accountId"> The Playwright service account id. </param>
-        /// <param name="state"> The free-trial state. </param>
-        public FreeTrialProperties(string accountId, FreeTrialState state)
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingNameAvailabilityContent"/>. </summary>
+        public PlaywrightTestingNameAvailabilityContent()
         {
-            AccountId = accountId;
-            State = state;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FreeTrialProperties"/>. </summary>
-        /// <param name="accountId"> The Playwright service account id. </param>
-        /// <param name="state"> The free-trial state. </param>
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
+        /// <param name="type"> The resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FreeTrialProperties(string accountId, FreeTrialState state, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PlaywrightTestingNameAvailabilityContent(string name, string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            AccountId = accountId;
-            State = state;
+            Name = name;
+            Type = type;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FreeTrialProperties"/> for deserialization. </summary>
-        internal FreeTrialProperties()
-        {
-        }
-
-        /// <summary> The Playwright service account id. </summary>
-        public string AccountId { get; }
-        /// <summary> The free-trial state. </summary>
-        public FreeTrialState State { get; }
+        /// <summary> The name of the resource for which availability needs to be checked. </summary>
+        public string Name { get; set; }
+        /// <summary> The resource type. </summary>
+        public string Type { get; set; }
     }
 }

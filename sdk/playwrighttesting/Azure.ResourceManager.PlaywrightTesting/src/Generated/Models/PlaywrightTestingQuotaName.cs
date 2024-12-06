@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PlaywrightTesting.Models
 {
-    /// <summary> The PlaywrightTestingQuotaName. </summary>
+    /// <summary> The enum for quota name. </summary>
     public readonly partial struct PlaywrightTestingQuotaName : IEquatable<PlaywrightTestingQuotaName>
     {
         private readonly string _value;

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
             {
                 return null;
             }
-            IReadOnlyList<AccountQuotumData> value = default;
+            IReadOnlyList<PlaywrightTestingAccountQuotaData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<AccountQuotumData> array = new List<AccountQuotumData>();
+                    List<PlaywrightTestingAccountQuotaData> array = new List<PlaywrightTestingAccountQuotaData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AccountQuotumData.DeserializeAccountQuotumData(item, options));
+                        array.Add(PlaywrightTestingAccountQuotaData.DeserializePlaywrightTestingAccountQuotaData(item, options));
                     }
                     value = array;
                     continue;

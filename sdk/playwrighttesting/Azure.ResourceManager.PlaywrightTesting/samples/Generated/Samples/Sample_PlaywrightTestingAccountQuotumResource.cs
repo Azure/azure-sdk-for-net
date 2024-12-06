@@ -14,34 +14,35 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.PlaywrightTesting.Samples
 {
-    public partial class Sample_PlaywrightTestingQuotaResource
+    public partial class Sample_PlaywrightTestingAccountQuotumResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_QuotasGet()
+        public async Task Get_AccountQuotasGet()
         {
-            // Generated from example definition: 2024-12-01/Quotas_Get.json
-            // this example is just showing the usage of "Quota_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-01/AccountQuotas_Get.json
+            // this example is just showing the usage of "AccountQuota_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this PlaywrightTestingQuotaResource created on azure
-            // for more information of creating PlaywrightTestingQuotaResource, please refer to the document of PlaywrightTestingQuotaResource
+            // this example assumes you already have this PlaywrightTestingAccountQuotumResource created on azure
+            // for more information of creating PlaywrightTestingAccountQuotumResource, please refer to the document of PlaywrightTestingAccountQuotumResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string location = "eastus";
+            string resourceGroupName = "dummyrg";
+            string accountName = "myPlaywrightAccount";
             PlaywrightTestingQuotaName quotaName = PlaywrightTestingQuotaName.ScalableExecution;
-            ResourceIdentifier playwrightTestingQuotaResourceId = PlaywrightTestingQuotaResource.CreateResourceIdentifier(subscriptionId, location, quotaName);
-            PlaywrightTestingQuotaResource playwrightTestingQuota = client.GetPlaywrightTestingQuotaResource(playwrightTestingQuotaResourceId);
+            ResourceIdentifier playwrightTestingAccountQuotumResourceId = PlaywrightTestingAccountQuotumResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, quotaName);
+            PlaywrightTestingAccountQuotumResource playwrightTestingAccountQuotum = client.GetPlaywrightTestingAccountQuotumResource(playwrightTestingAccountQuotumResourceId);
 
             // invoke the operation
-            PlaywrightTestingQuotaResource result = await playwrightTestingQuota.GetAsync();
+            PlaywrightTestingAccountQuotumResource result = await playwrightTestingAccountQuotum.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            PlaywrightTestingQuotaData resourceData = result.Data;
+            PlaywrightTestingAccountQuotumData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

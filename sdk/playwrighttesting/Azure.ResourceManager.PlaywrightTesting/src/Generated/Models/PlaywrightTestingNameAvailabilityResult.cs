@@ -51,23 +51,23 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PlaywrightTestingNameAvailabilityResult"/>. </summary>
-        /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
+        /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
-        /// <param name="message"> Detailed reason why the given name is available. </param>
+        /// <param name="message"> Detailed reason why the given name is not available. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PlaywrightTestingNameAvailabilityResult(bool? nameAvailable, CheckNameAvailabilityReason? reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PlaywrightTestingNameAvailabilityResult(bool? isNameAvailable, PlaywrightTestingNameUnavailableReason? reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NameAvailable = nameAvailable;
+            IsNameAvailable = isNameAvailable;
             Reason = reason;
             Message = message;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates if the resource name is available. </summary>
-        public bool? NameAvailable { get; }
+        public bool? IsNameAvailable { get; }
         /// <summary> The reason why the given name is not available. </summary>
-        public CheckNameAvailabilityReason? Reason { get; }
-        /// <summary> Detailed reason why the given name is available. </summary>
+        public PlaywrightTestingNameUnavailableReason? Reason { get; }
+        /// <summary> Detailed reason why the given name is not available. </summary>
         public string Message { get; }
     }
 }

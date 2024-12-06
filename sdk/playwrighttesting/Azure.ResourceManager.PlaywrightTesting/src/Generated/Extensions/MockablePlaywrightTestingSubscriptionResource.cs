@@ -44,8 +44,10 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
 
         /// <summary> Gets a collection of PlaywrightTestingQuotaResources in the SubscriptionResource. </summary>
         /// <param name="location"> The location of quota in ARM Normalized format like eastus, southeastasia etc. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> An object representing collection of PlaywrightTestingQuotaResources and their operations over a PlaywrightTestingQuotaResource. </returns>
-        public virtual PlaywrightTestingQuotaCollection GetAllPlaywrightTestingQuota(AzureLocation location)
+        public virtual PlaywrightTestingQuotaCollection GetAllPlaywrightTestingQuota(string location)
         {
             return new PlaywrightTestingQuotaCollection(Client, Id, location);
         }
@@ -59,7 +61,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quotas_Get</description>
+        /// <description>Quota_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -74,8 +76,10 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// <param name="location"> The location of quota in ARM Normalized format like eastus, southeastasia etc. </param>
         /// <param name="quotaName"> The quota name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PlaywrightTestingQuotaResource>> GetPlaywrightTestingQuotaAsync(AzureLocation location, PlaywrightTestingQuotaName quotaName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlaywrightTestingQuotaResource>> GetPlaywrightTestingQuotaAsync(string location, PlaywrightTestingQuotaName quotaName, CancellationToken cancellationToken = default)
         {
             return await GetAllPlaywrightTestingQuota(location).GetAsync(quotaName, cancellationToken).ConfigureAwait(false);
         }
@@ -89,7 +93,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quotas_Get</description>
+        /// <description>Quota_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -104,8 +108,10 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// <param name="location"> The location of quota in ARM Normalized format like eastus, southeastasia etc. </param>
         /// <param name="quotaName"> The quota name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PlaywrightTestingQuotaResource> GetPlaywrightTestingQuota(AzureLocation location, PlaywrightTestingQuotaName quotaName, CancellationToken cancellationToken = default)
+        public virtual Response<PlaywrightTestingQuotaResource> GetPlaywrightTestingQuota(string location, PlaywrightTestingQuotaName quotaName, CancellationToken cancellationToken = default)
         {
             return GetAllPlaywrightTestingQuota(location).Get(quotaName, cancellationToken);
         }
@@ -119,7 +125,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Accounts_ListBySubscription</description>
+        /// <description>Account_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -149,7 +155,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Accounts_ListBySubscription</description>
+        /// <description>Account_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -179,7 +185,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Accounts_CheckNameAvailability</description>
+        /// <description>Accounts_CheckPlaywrightTestingNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -194,15 +200,15 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<PlaywrightTestingNameAvailabilityResult>> CheckNameAvailabilityAccountAsync(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlaywrightTestingNameAvailabilityResult>> CheckPlaywrightTestingNameAvailabilityAsync(PlaywrightTestingNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = PlaywrightTestingAccountAccountsClientDiagnostics.CreateScope("MockablePlaywrightTestingSubscriptionResource.CheckNameAvailabilityAccount");
+            using var scope = PlaywrightTestingAccountAccountsClientDiagnostics.CreateScope("MockablePlaywrightTestingSubscriptionResource.CheckPlaywrightTestingNameAvailability");
             scope.Start();
             try
             {
-                var response = await PlaywrightTestingAccountAccountsRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                var response = await PlaywrightTestingAccountAccountsRestClient.CheckPlaywrightTestingNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -221,7 +227,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Accounts_CheckNameAvailability</description>
+        /// <description>Accounts_CheckPlaywrightTestingNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -236,15 +242,15 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<PlaywrightTestingNameAvailabilityResult> CheckNameAvailabilityAccount(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<PlaywrightTestingNameAvailabilityResult> CheckPlaywrightTestingNameAvailability(PlaywrightTestingNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = PlaywrightTestingAccountAccountsClientDiagnostics.CreateScope("MockablePlaywrightTestingSubscriptionResource.CheckNameAvailabilityAccount");
+            using var scope = PlaywrightTestingAccountAccountsClientDiagnostics.CreateScope("MockablePlaywrightTestingSubscriptionResource.CheckPlaywrightTestingNameAvailability");
             scope.Start();
             try
             {
-                var response = PlaywrightTestingAccountAccountsRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
+                var response = PlaywrightTestingAccountAccountsRestClient.CheckPlaywrightTestingNameAvailability(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

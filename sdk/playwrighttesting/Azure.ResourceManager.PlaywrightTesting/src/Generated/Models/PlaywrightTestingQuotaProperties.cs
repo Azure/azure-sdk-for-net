@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PlaywrightTesting.Models
 {
-    /// <summary> The Playwright service account quota resource properties. </summary>
-    public partial class AccountQuotaProperties
+    /// <summary> The subscription quota resource properties. </summary>
+    public partial class PlaywrightTestingQuotaProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,24 +45,28 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AccountQuotaProperties"/>. </summary>
-        public AccountQuotaProperties()
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingQuotaProperties"/>. </summary>
+        internal PlaywrightTestingQuotaProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccountQuotaProperties"/>. </summary>
-        /// <param name="freeTrial"> The Playwright service account quota resource free-trial properties. </param>
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingQuotaProperties"/>. </summary>
+        /// <param name="freeTrial"> The subscription quota resource free-trial properties. </param>
+        /// <param name="offeringType"> Indicates the offering type for the subscription. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AccountQuotaProperties(AccountFreeTrialProperties freeTrial, PlaywrightTestingProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PlaywrightTestingQuotaProperties(PlaywrightTestingFreeTrialProperties freeTrial, PlaywrightTestingOfferingType? offeringType, PlaywrightTestingProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FreeTrial = freeTrial;
+            OfferingType = offeringType;
             ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The Playwright service account quota resource free-trial properties. </summary>
-        public AccountFreeTrialProperties FreeTrial { get; set; }
+        /// <summary> The subscription quota resource free-trial properties. </summary>
+        public PlaywrightTestingFreeTrialProperties FreeTrial { get; }
+        /// <summary> Indicates the offering type for the subscription. </summary>
+        public PlaywrightTestingOfferingType? OfferingType { get; }
         /// <summary> The status of the last operation. </summary>
         public PlaywrightTestingProvisioningState? ProvisioningState { get; }
     }

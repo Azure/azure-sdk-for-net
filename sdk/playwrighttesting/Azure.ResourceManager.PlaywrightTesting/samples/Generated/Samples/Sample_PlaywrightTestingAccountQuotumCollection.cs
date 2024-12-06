@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.PlaywrightTesting.Samples
 {
-    public partial class Sample_AccountQuotumCollection
+    public partial class Sample_PlaywrightTestingAccountQuotumCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -36,16 +36,16 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             ResourceIdentifier playwrightTestingAccountResourceId = PlaywrightTestingAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             PlaywrightTestingAccountResource playwrightTestingAccount = client.GetPlaywrightTestingAccountResource(playwrightTestingAccountResourceId);
 
-            // get the collection of this AccountQuotumResource
-            AccountQuotumCollection collection = playwrightTestingAccount.GetAccountQuota();
+            // get the collection of this PlaywrightTestingAccountQuotumResource
+            PlaywrightTestingAccountQuotumCollection collection = playwrightTestingAccount.GetPlaywrightTestingAccountQuota();
 
             // invoke the operation
             PlaywrightTestingQuotaName quotaName = PlaywrightTestingQuotaName.ScalableExecution;
-            AccountQuotumResource result = await collection.GetAsync(quotaName);
+            PlaywrightTestingAccountQuotumResource result = await collection.GetAsync(quotaName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AccountQuotumData resourceData = result.Data;
+            PlaywrightTestingAccountQuotumData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -70,15 +70,15 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             ResourceIdentifier playwrightTestingAccountResourceId = PlaywrightTestingAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             PlaywrightTestingAccountResource playwrightTestingAccount = client.GetPlaywrightTestingAccountResource(playwrightTestingAccountResourceId);
 
-            // get the collection of this AccountQuotumResource
-            AccountQuotumCollection collection = playwrightTestingAccount.GetAccountQuota();
+            // get the collection of this PlaywrightTestingAccountQuotumResource
+            PlaywrightTestingAccountQuotumCollection collection = playwrightTestingAccount.GetPlaywrightTestingAccountQuota();
 
             // invoke the operation and iterate over the result
-            await foreach (AccountQuotumResource item in collection.GetAllAsync())
+            await foreach (PlaywrightTestingAccountQuotumResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                AccountQuotumData resourceData = item.Data;
+                PlaywrightTestingAccountQuotumData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -106,8 +106,8 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             ResourceIdentifier playwrightTestingAccountResourceId = PlaywrightTestingAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             PlaywrightTestingAccountResource playwrightTestingAccount = client.GetPlaywrightTestingAccountResource(playwrightTestingAccountResourceId);
 
-            // get the collection of this AccountQuotumResource
-            AccountQuotumCollection collection = playwrightTestingAccount.GetAccountQuota();
+            // get the collection of this PlaywrightTestingAccountQuotumResource
+            PlaywrightTestingAccountQuotumCollection collection = playwrightTestingAccount.GetPlaywrightTestingAccountQuota();
 
             // invoke the operation
             PlaywrightTestingQuotaName quotaName = PlaywrightTestingQuotaName.ScalableExecution;
@@ -136,13 +136,13 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             ResourceIdentifier playwrightTestingAccountResourceId = PlaywrightTestingAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             PlaywrightTestingAccountResource playwrightTestingAccount = client.GetPlaywrightTestingAccountResource(playwrightTestingAccountResourceId);
 
-            // get the collection of this AccountQuotumResource
-            AccountQuotumCollection collection = playwrightTestingAccount.GetAccountQuota();
+            // get the collection of this PlaywrightTestingAccountQuotumResource
+            PlaywrightTestingAccountQuotumCollection collection = playwrightTestingAccount.GetPlaywrightTestingAccountQuota();
 
             // invoke the operation
             PlaywrightTestingQuotaName quotaName = PlaywrightTestingQuotaName.ScalableExecution;
-            NullableResponse<AccountQuotumResource> response = await collection.GetIfExistsAsync(quotaName);
-            AccountQuotumResource result = response.HasValue ? response.Value : null;
+            NullableResponse<PlaywrightTestingAccountQuotumResource> response = await collection.GetIfExistsAsync(quotaName);
+            PlaywrightTestingAccountQuotumResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                AccountQuotumData resourceData = result.Data;
+                PlaywrightTestingAccountQuotumData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

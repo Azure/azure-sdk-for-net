@@ -72,22 +72,22 @@ namespace Azure.ResourceManager.PlaywrightTesting
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AccountQuotumResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AccountQuotumResource.CreateResourceIdentifier" /> to create an <see cref="AccountQuotumResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PlaywrightTestingAccountQuotaResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PlaywrightTestingAccountQuotaResource.CreateResourceIdentifier" /> to create a <see cref="PlaywrightTestingAccountQuotaResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePlaywrightTestingArmClient.GetAccountQuotumResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePlaywrightTestingArmClient.GetPlaywrightTestingAccountQuotaResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AccountQuotumResource"/> object. </returns>
-        public static AccountQuotumResource GetAccountQuotumResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PlaywrightTestingAccountQuotaResource"/> object. </returns>
+        public static PlaywrightTestingAccountQuotaResource GetPlaywrightTestingAccountQuotaResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockablePlaywrightTestingArmClient(client).GetAccountQuotumResource(id);
+            return GetMockablePlaywrightTestingArmClient(client).GetPlaywrightTestingAccountQuotaResource(id);
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Accounts_Get</description>
+        /// <description>Account_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Accounts_Get</description>
+        /// <description>Account_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -187,14 +187,15 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// Gets a collection of PlaywrightTestingQuotaResources in the SubscriptionResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePlaywrightTestingSubscriptionResource.GetAllPlaywrightTestingQuota(AzureLocation)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePlaywrightTestingSubscriptionResource.GetAllPlaywrightTestingQuota(string)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of quota in ARM Normalized format like eastus, southeastasia etc. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> An object representing collection of PlaywrightTestingQuotaResources and their operations over a PlaywrightTestingQuotaResource. </returns>
-        public static PlaywrightTestingQuotaCollection GetAllPlaywrightTestingQuota(this SubscriptionResource subscriptionResource, AzureLocation location)
+        public static PlaywrightTestingQuotaCollection GetAllPlaywrightTestingQuota(this SubscriptionResource subscriptionResource, string location)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -210,7 +211,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quotas_Get</description>
+        /// <description>Quota_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -223,16 +224,17 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePlaywrightTestingSubscriptionResource.GetPlaywrightTestingQuotaAsync(AzureLocation,PlaywrightTestingQuotaName,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePlaywrightTestingSubscriptionResource.GetPlaywrightTestingQuotaAsync(string,PlaywrightTestingQuotaName,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of quota in ARM Normalized format like eastus, southeastasia etc. </param>
         /// <param name="quotaName"> The quota name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<PlaywrightTestingQuotaResource>> GetPlaywrightTestingQuotaAsync(this SubscriptionResource subscriptionResource, AzureLocation location, PlaywrightTestingQuotaName quotaName, CancellationToken cancellationToken = default)
+        public static async Task<Response<PlaywrightTestingQuotaResource>> GetPlaywrightTestingQuotaAsync(this SubscriptionResource subscriptionResource, string location, PlaywrightTestingQuotaName quotaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -248,7 +250,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quotas_Get</description>
+        /// <description>Quota_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -261,16 +263,17 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePlaywrightTestingSubscriptionResource.GetPlaywrightTestingQuota(AzureLocation,PlaywrightTestingQuotaName,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePlaywrightTestingSubscriptionResource.GetPlaywrightTestingQuota(string,PlaywrightTestingQuotaName,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location of quota in ARM Normalized format like eastus, southeastasia etc. </param>
         /// <param name="quotaName"> The quota name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<PlaywrightTestingQuotaResource> GetPlaywrightTestingQuota(this SubscriptionResource subscriptionResource, AzureLocation location, PlaywrightTestingQuotaName quotaName, CancellationToken cancellationToken = default)
+        public static Response<PlaywrightTestingQuotaResource> GetPlaywrightTestingQuota(this SubscriptionResource subscriptionResource, string location, PlaywrightTestingQuotaName quotaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -286,7 +289,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Accounts_ListBySubscription</description>
+        /// <description>Account_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -322,7 +325,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Accounts_ListBySubscription</description>
+        /// <description>Account_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -358,7 +361,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Accounts_CheckNameAvailability</description>
+        /// <description>Accounts_CheckPlaywrightTestingNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -371,18 +374,18 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePlaywrightTestingSubscriptionResource.CheckNameAvailabilityAccount(CheckNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePlaywrightTestingSubscriptionResource.CheckPlaywrightTestingNameAvailability(PlaywrightTestingNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<PlaywrightTestingNameAvailabilityResult>> CheckNameAvailabilityAccountAsync(this SubscriptionResource subscriptionResource, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<PlaywrightTestingNameAvailabilityResult>> CheckPlaywrightTestingNameAvailabilityAsync(this SubscriptionResource subscriptionResource, PlaywrightTestingNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockablePlaywrightTestingSubscriptionResource(subscriptionResource).CheckNameAvailabilityAccountAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockablePlaywrightTestingSubscriptionResource(subscriptionResource).CheckPlaywrightTestingNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -394,7 +397,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Accounts_CheckNameAvailability</description>
+        /// <description>Accounts_CheckPlaywrightTestingNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -407,18 +410,18 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePlaywrightTestingSubscriptionResource.CheckNameAvailabilityAccount(CheckNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePlaywrightTestingSubscriptionResource.CheckPlaywrightTestingNameAvailability(PlaywrightTestingNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static Response<PlaywrightTestingNameAvailabilityResult> CheckNameAvailabilityAccount(this SubscriptionResource subscriptionResource, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<PlaywrightTestingNameAvailabilityResult> CheckPlaywrightTestingNameAvailability(this SubscriptionResource subscriptionResource, PlaywrightTestingNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockablePlaywrightTestingSubscriptionResource(subscriptionResource).CheckNameAvailabilityAccount(content, cancellationToken);
+            return GetMockablePlaywrightTestingSubscriptionResource(subscriptionResource).CheckPlaywrightTestingNameAvailability(content, cancellationToken);
         }
     }
 }

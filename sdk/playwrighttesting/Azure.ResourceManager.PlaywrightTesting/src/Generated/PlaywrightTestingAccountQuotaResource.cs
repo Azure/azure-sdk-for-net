@@ -16,14 +16,14 @@ using Azure.ResourceManager.PlaywrightTesting.Models;
 namespace Azure.ResourceManager.PlaywrightTesting
 {
     /// <summary>
-    /// A Class representing an AccountQuotum along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AccountQuotumResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetAccountQuotumResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PlaywrightTestingAccountResource"/> using the GetAccountQuotum method.
+    /// A Class representing a PlaywrightTestingAccountQuota along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PlaywrightTestingAccountQuotaResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPlaywrightTestingAccountQuotaResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PlaywrightTestingAccountResource"/> using the GetPlaywrightTestingAccountQuota method.
     /// </summary>
-    public partial class AccountQuotumResource : ArmResource
+    public partial class PlaywrightTestingAccountQuotaResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="AccountQuotumResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="PlaywrightTestingAccountQuotaResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="accountName"> The accountName. </param>
@@ -34,35 +34,35 @@ namespace Azure.ResourceManager.PlaywrightTesting
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _accountQuotumAccountQuotasClientDiagnostics;
-        private readonly AccountQuotasRestOperations _accountQuotumAccountQuotasRestClient;
-        private readonly AccountQuotumData _data;
+        private readonly ClientDiagnostics _playwrightTestingAccountQuotaAccountQuotasClientDiagnostics;
+        private readonly AccountQuotasRestOperations _playwrightTestingAccountQuotaAccountQuotasRestClient;
+        private readonly PlaywrightTestingAccountQuotaData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AzurePlaywrightService/accounts/quotas";
 
-        /// <summary> Initializes a new instance of the <see cref="AccountQuotumResource"/> class for mocking. </summary>
-        protected AccountQuotumResource()
+        /// <summary> Initializes a new instance of the <see cref="PlaywrightTestingAccountQuotaResource"/> class for mocking. </summary>
+        protected PlaywrightTestingAccountQuotaResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AccountQuotumResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PlaywrightTestingAccountQuotaResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AccountQuotumResource(ArmClient client, AccountQuotumData data) : this(client, data.Id)
+        internal PlaywrightTestingAccountQuotaResource(ArmClient client, PlaywrightTestingAccountQuotaData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AccountQuotumResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PlaywrightTestingAccountQuotaResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AccountQuotumResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PlaywrightTestingAccountQuotaResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _accountQuotumAccountQuotasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PlaywrightTesting", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string accountQuotumAccountQuotasApiVersion);
-            _accountQuotumAccountQuotasRestClient = new AccountQuotasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, accountQuotumAccountQuotasApiVersion);
+            _playwrightTestingAccountQuotaAccountQuotasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PlaywrightTesting", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string playwrightTestingAccountQuotaAccountQuotasApiVersion);
+            _playwrightTestingAccountQuotaAccountQuotasRestClient = new AccountQuotasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, playwrightTestingAccountQuotaAccountQuotasApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual AccountQuotumData Data
+        public virtual PlaywrightTestingAccountQuotaData Data
         {
             get
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AccountQuotas_Get</description>
+        /// <description>AccountQuota_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -106,21 +106,21 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccountQuotumResource"/></description>
+        /// <description><see cref="PlaywrightTestingAccountQuotaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AccountQuotumResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlaywrightTestingAccountQuotaResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _accountQuotumAccountQuotasClientDiagnostics.CreateScope("AccountQuotumResource.Get");
+            using var scope = _playwrightTestingAccountQuotaAccountQuotasClientDiagnostics.CreateScope("PlaywrightTestingAccountQuotaResource.Get");
             scope.Start();
             try
             {
-                var response = await _accountQuotumAccountQuotasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _playwrightTestingAccountQuotaAccountQuotasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AccountQuotumResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PlaywrightTestingAccountQuotaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AccountQuotas_Get</description>
+        /// <description>AccountQuota_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -146,21 +146,21 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccountQuotumResource"/></description>
+        /// <description><see cref="PlaywrightTestingAccountQuotaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AccountQuotumResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<PlaywrightTestingAccountQuotaResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _accountQuotumAccountQuotasClientDiagnostics.CreateScope("AccountQuotumResource.Get");
+            using var scope = _playwrightTestingAccountQuotaAccountQuotasClientDiagnostics.CreateScope("PlaywrightTestingAccountQuotaResource.Get");
             scope.Start();
             try
             {
-                var response = _accountQuotumAccountQuotasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _playwrightTestingAccountQuotaAccountQuotasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AccountQuotumResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PlaywrightTestingAccountQuotaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
