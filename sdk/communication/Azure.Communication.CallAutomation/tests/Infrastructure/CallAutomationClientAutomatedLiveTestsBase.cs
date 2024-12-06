@@ -32,6 +32,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         private const string URIDomainRegEx = @"https://([^/?]+)";
         private const string TestDispatcherRegEx = @"https://incomingcalldispatcher.azurewebsites.net";
         private const string TestDispatcherQNameRegEx = @"(?<=\?q=)(.*)";
+        private const string ACSUserIdInUrlRegex = @"[0-9]%3Aacs%3A[a-f0-9-]+_[0-9a-f-]+";
 
         private Dictionary<string, ConcurrentDictionary<Type, CallAutomationEventBase>> _eventstore;
         private ConcurrentDictionary<string, string> _incomingcontextstore;
@@ -52,11 +53,18 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             JsonPathSanitizers.Add("$..botAppId");
             JsonPathSanitizers.Add("$..ivrContext");
             JsonPathSanitizers.Add("$..dialog.botAppId");
-            BodyKeySanitizers.Add(new BodyKeySanitizer("..callbackUri") { Value = @"https://sanitized.skype.com/api/servicebuscallback/events?q=SanitizedSanitized"});
+            BodyKeySanitizers.Add(new BodyKeySanitizer("..callbackUri") { Value = @"https://sanitized.skype.com/api/servicebuscallback/events?q=SanitizedSanitized" });
+            BodyKeySanitizers.Add(new BodyKeySanitizer("..transportUrl") { Value = @"wss://sanitized.skype.com" });
+            BodyKeySanitizers.Add(new BodyKeySanitizer("..cognitiveServicesEndpoint") { Value = @"https://sanitized.skype.com" });
+            BodyKeySanitizers.Add(new BodyKeySanitizer("$..file.uri") { Value = @"https://sanitized.skype.com/prompt.wav" });
             BodyRegexSanitizers.Add(new BodyRegexSanitizer(TestDispatcherRegEx) { Value = "https://sanitized.skype.com" });
             UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainRegEx) { Value = "https://sanitized.skype.com" });
-            UriRegexSanitizers.Add(new UriRegexSanitizer(TestDispatcherQNameRegEx));
+            UriRegexSanitizers.Add(new UriRegexSanitizer(TestDispatcherQNameRegEx) { Value = SanitizeValue });
+            UriRegexSanitizers.Add(new UriRegexSanitizer(ACSUserIdInUrlRegex) { Value = SanitizeValue });
         }
+
+        public bool SkipCallAutomationInteractionLiveTests
+            => TestEnvironment.Mode != RecordedTestMode.Playback && Environment.GetEnvironmentVariable("SKIP_CALLAUTOMATION_INTERACTION_LIVE_TESTS") == "TRUE";
 
         [SetUp]
         public void TestSetup()
@@ -92,7 +100,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         }
 
         public bool SkipCallingServerInteractionLiveTests
-            => TestEnvironment.Mode != RecordedTestMode.Playback && Environment.GetEnvironmentVariable("SKIP_CALLINGSERVER_INTERACTION_LIVE_TESTS")== "TRUE";
+            => TestEnvironment.Mode != RecordedTestMode.Playback && Environment.GetEnvironmentVariable("SKIP_CALLINGSERVER_INTERACTION_LIVE_TESTS") == "TRUE";
 
         /// <summary>
         /// Creates a <see cref="CallAutomationClient" />
@@ -102,15 +110,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         {
             var connectionString = TestEnvironment.LiveTestStaticConnectionString;
 
-            CallAutomationClient callAutomationClient;
-            if (TestEnvironment.PMAEndpoint == null || TestEnvironment.PMAEndpoint.Length == 0)
-            {
-                callAutomationClient = new CallAutomationClient(connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs(source));
-            }
-            else
-            {
-                callAutomationClient = new CallAutomationClient(new Uri(TestEnvironment.PMAEndpoint), connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs(source));
-            }
+            CallAutomationClient callAutomationClient = new CallAutomationClient(connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs(source));
 
             return InstrumentClient(callAutomationClient);
         }
@@ -310,7 +310,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         private HttpPipeline BuildHttpPipeline()
         {
             var clientOptions = CreateServerCallingClientOptionsWithCorrelationVectorLogs();
-            return clientOptions.CustomBuildHttpPipeline(
+            return clientOptions.BuildHttpPipeline(
                 ConnectionString.Parse(TestEnvironment.LiveTestStaticConnectionString));
         }
 

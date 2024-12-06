@@ -1,18 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
-using System.Linq;
 using Azure.CloudMachine.Core;
 using Azure.Core;
-using Azure.Provisioning;
-using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Storage;
 
-namespace Azure.CloudMachine;
+namespace Azure.CloudMachine.Storage;
 
 internal class StorageAccountFeature : CloudMachineFeature
 {
