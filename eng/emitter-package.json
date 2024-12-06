@@ -9,6 +9,7 @@
     "@azure-tools/typespec-azure-resource-manager": "0.48.0",
     "@azure-tools/typespec-azure-rulesets": "0.48.0",
     "@azure-tools/typespec-client-generator-core": "0.48.1",
+    "@azure-tools/typespec-liftr-base": "0.6.0",
     "@typespec/compiler": "0.62.0",
     "@typespec/http": "0.62.0",
     "@typespec/openapi": "0.62.0",
