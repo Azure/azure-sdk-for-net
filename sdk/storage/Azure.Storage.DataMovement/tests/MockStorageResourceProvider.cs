@@ -11,7 +11,7 @@ namespace Azure.Storage.DataMovement.Tests
     /// <summary>
     /// Provider for a <see cref="StorageResource"/> configured for mocking.
     /// </summary>
-    public class MockStorageResourceProvider : StorageResourceProvider
+    internal class MockStorageResourceProvider : StorageResourceProvider
     {
         /// <inheritdoc/>
         protected internal override string ProviderId => "mock";
