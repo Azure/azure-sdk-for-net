@@ -51,3 +51,9 @@ extends:
     Artifacts:
     - name: Azure.CloudMachine
       safeName: AzureCloudMachine
+    - name: Azure.CloudMachine.All
+      safeName: AzureCloudMachineAll
+    - name: Azure.CloudMachine.Web
+      safeName: AzureCloudMachineWeb
+    - name: Azure.Provisioning.CloudMachine
+      safeName: AzureProvisioningCloudMachine
