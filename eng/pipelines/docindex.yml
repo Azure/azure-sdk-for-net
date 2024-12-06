@@ -121,7 +121,7 @@ jobs:
             WorkingDirectory: $(DocRepoLocation)
 
         - task: AzureCLI@2
-          displayName: Queue Docs CI build
+          displayName: Queue Docs CI build for main branch
           condition: and(succeeded(), or(eq(variables['Build.Reason'], 'Schedule'), eq(${{ parameters.StartMainSDKCIRun }}, true)))
           inputs:
             azureSubscription: msdocs-apidrop-connection
