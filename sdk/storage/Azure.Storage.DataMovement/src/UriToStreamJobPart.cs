@@ -497,7 +497,6 @@ namespace Azure.Storage.DataMovement
             _chunkHandlerLock.Wait();
             if (_downloadChunkHandler != default)
             {
-                Console.WriteLine("Disposing download chunk handler");
                 await _downloadChunkHandler.DisposeAsync().ConfigureAwait(false);
                 _downloadChunkHandler = null;
             }

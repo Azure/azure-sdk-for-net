@@ -94,8 +94,6 @@ namespace Azure.Storage.DataMovement
             _chunkHandlerStatus = ChunkHandlerStatus.Running;
         }
 
-        public bool TryComplete() => _downloadRangeProcessor.TryComplete();
-
         public async ValueTask DisposeAsync()
         {
             _chunkHandlerStatus = ChunkHandlerStatus.Disposing;
@@ -141,11 +139,9 @@ namespace Azure.Storage.DataMovement
                 if (_chunkHandlerStatus == ChunkHandlerStatus.Running)
                 {
                     // This will trigger the job part to call Dispose on this object
-                    Console.WriteLine($"{Thread.CurrentThread.ManagedThreadId}: invoke failed event handler");
                     _ = Task.Run(() => _invokeFailedEventHandler(ex));
                 }
             }
-            Console.WriteLine("Finished process download range");
         }
 
         private void UpdateBytesAndRange(long bytesDownloaded)

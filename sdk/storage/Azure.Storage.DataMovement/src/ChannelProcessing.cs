@@ -19,14 +19,6 @@ internal interface IProcessor<TItem> : IAsyncDisposable
     ProcessAsync<TItem> Process { get; set; }
 }
 
-internal enum ChannelProcessorStatus
-{
-    Running,
-    Disposing,
-    Disposed,
-    NotRunning = default,
-}
-
 internal static class ChannelProcessing
 {
     public static IProcessor<T> NewProcessor<T>(int readers, int? capacity = null)

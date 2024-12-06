@@ -3,7 +3,6 @@
 
 using System;
 using System.Buffers;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,7 +11,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Storage.DataMovement.JobPlan;
 using Azure.Storage.DataMovement.Tests.Shared;
 using Moq;
 using NUnit.Framework;
@@ -93,7 +91,7 @@ public class TransferManagerTests
         int chunksPerPart = (int)Math.Ceiling((float)itemSize / chunkSize);
         // TODO: below should be only `items * chunksPerPart` but can't in some cases due to
         //       a bug in how work items are processed on multipart uploads.
-        int expectedChunksInQueue = Math.Max(chunksPerPart-1, 1) * items;
+        int expectedChunksInQueue = Math.Max(chunksPerPart - 1, 1) * items;
 
         Uri srcUri = new("file:///foo/bar");
         Uri dstUri = new("https://example.com/fizz/buzz");
@@ -184,7 +182,18 @@ public class TransferManagerTests
         }
 
         // process chunks
-        Assert.That(await chunksProcessor.StepAll(), Is.EqualTo(expectedChunksInQueue));
+        int chunksStepped = await chunksProcessor.StepAll();
+        // Check if all chunks stepped through
+        if (chunksPerPart > 1)
+        {
+            // Multichunk transfer sends a completion chunk after all the other chunks stepped through.
+            await Task.Delay(50);
+            Assert.That(await chunksProcessor.StepAll() + chunksStepped, Is.EqualTo(expectedChunksInQueue + items));
+        }
+        else
+        {
+            Assert.That(chunksStepped, Is.EqualTo(expectedChunksInQueue));
+        }
         Assert.That(chunksProcessor.ItemsInQueue, Is.EqualTo(0));
         foreach ((Mock<StorageResourceItem> srcResource, Mock<StorageResourceItem> dstResource) in resources)
         {
@@ -298,7 +307,18 @@ public class TransferManagerTests
         }
 
         // process chunks
-        Assert.That(await chunksProcessor.StepAll(), Is.EqualTo(numChunks), "Failed to step through chunks queue.");
+        int chunksStepped = await chunksProcessor.StepAll();
+        // Check if all chunks stepped through
+        if (chunksPerPart > 1)
+        {
+            // Multichunk transfer sends a completion chunk after all the other chunks stepped through.
+            await Task.Delay(50);
+            Assert.That(await chunksProcessor.StepAll() + chunksStepped, Is.EqualTo(numChunks + totalJobParts));
+        }
+        else
+        {
+            Assert.That(chunksStepped, Is.EqualTo(numChunks));
+        }
         Assert.That(chunksProcessor.ItemsInQueue, Is.EqualTo(0), "Failed to step through chunks queue.");
         foreach ((DataTransfer transfer, int parts, Mock<StorageResourceContainer> srcResource, Mock<StorageResourceContainer> dstResource) in transfers)
         {

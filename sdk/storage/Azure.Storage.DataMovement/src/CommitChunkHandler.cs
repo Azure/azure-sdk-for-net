@@ -5,10 +5,11 @@ using System;
 using System.Threading.Tasks;
 using System.Threading;
 using Azure.Storage.Common;
+using System.Diagnostics;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class CommitChunkHandler : IDisposable
+    internal class CommitChunkHandler : IAsyncDisposable
     {
         #region Delegate Definitions
         public delegate Task QueuePutBlockTaskInternal(long offset, long blockSize, long expectedLength, StorageResourceItemProperties properties);
@@ -42,6 +43,8 @@ namespace Azure.Storage.DataMovement
         private readonly long _blockSize;
         private readonly DataTransferOrder _transferOrder;
         private readonly StorageResourceItemProperties _sourceProperties;
+
+        internal ChunkHandlerStatus _chunkHandlerStatus;
 
         public CommitChunkHandler(
             long expectedLength,
@@ -78,11 +81,14 @@ namespace Azure.Storage.DataMovement
                 readers: 1,
                 capacity: DataMovementConstants.Channels.StageChunkCapacity);
             _stageChunkProcessor.Process = ProcessCommitRange;
+            _chunkHandlerStatus = ChunkHandlerStatus.Running;
         }
 
-        public void Dispose()
+        public async ValueTask DisposeAsync()
         {
-            _stageChunkProcessor.TryComplete();
+            _chunkHandlerStatus = ChunkHandlerStatus.Disposing;
+            await _stageChunkProcessor.DisposeAsync().ConfigureAwait(false);
+            _chunkHandlerStatus = ChunkHandlerStatus.Disposed;
         }
 
         public async ValueTask QueueChunkAsync(QueueStageChunkArgs args)
@@ -100,6 +106,7 @@ namespace Azure.Storage.DataMovement
                 if (_bytesTransferred == _expectedLength)
                 {
                     // Add CommitBlockList task to the channel
+                    Console.WriteLine("queue commit block task");
                     await _queueCommitBlockTask(_sourceProperties).ConfigureAwait(false);
                 }
                 else if (_bytesTransferred < _expectedLength)
@@ -111,6 +118,7 @@ namespace Azure.Storage.DataMovement
                         long blockLength = (newOffset + _blockSize < _expectedLength) ?
                                             _blockSize :
                                             _expectedLength - newOffset;
+                        Console.WriteLine("queue put block task");
                         await _queuePutBlockTask(
                             newOffset,
                             blockLength,
@@ -120,6 +128,7 @@ namespace Azure.Storage.DataMovement
                 }
                 else  // _bytesTransferred > _expectedLength
                 {
+                    Console.WriteLine("Mismatch length transferred");
                     throw Errors.MismatchLengthTransferred(
                         expectedLength: _expectedLength,
                         actualLength: _bytesTransferred);
@@ -127,8 +136,16 @@ namespace Azure.Storage.DataMovement
             }
             catch (Exception ex)
             {
-                await _invokeFailedEventHandler(ex).ConfigureAwait(false);
+                // If we are disposing, we don't want to invoke the failed event handler
+                // because the error is likely due to the job part being disposed and was
+                // invoked by another InvokeFailedEventHandler call.
+                if (_chunkHandlerStatus == ChunkHandlerStatus.Running)
+                {
+                    // This will trigger the job part to call Dispose on this object
+                    _ = Task.Run(() => _invokeFailedEventHandler(ex));
+                }
             }
+            Console.WriteLine("Finished Commit Range");
         }
     }
 }

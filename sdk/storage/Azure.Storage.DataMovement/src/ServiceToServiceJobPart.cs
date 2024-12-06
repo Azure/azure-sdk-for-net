@@ -20,6 +20,7 @@ namespace Azure.Storage.DataMovement
         ///  Will handle the calling the commit block list API once
         ///  all commit blocks have been uploaded.
         /// </summary>
+        private SemaphoreSlim _chunkHandlerLock = new SemaphoreSlim(1, 1);
         private CommitChunkHandler _commitBlockHandler;
 
         /// <summary>
@@ -339,12 +340,15 @@ namespace Azure.Storage.DataMovement
             return new CommitChunkHandler.Behaviors
             {
                 QueuePutBlockTask = jobPart.QueueStageBlockRequest,
-                QueueCommitBlockTask = jobPart.CompleteTransferAsync,
+                QueueCommitBlockTask = jobPart.QueueCompleteTransferAsync,
                 ReportProgressInBytes = jobPart.ReportBytesWritten,
                 InvokeFailedHandler = jobPart.InvokeFailedArgAsync,
             };
         }
         #endregion
+
+        internal Task QueueCompleteTransferAsync(StorageResourceItemProperties sourceProperties) =>
+            QueueChunkToChannelAsync(() => CompleteTransferAsync(sourceProperties));
 
         internal async Task CompleteTransferAsync(StorageResourceItemProperties sourceProperties)
         {
@@ -457,28 +461,23 @@ namespace Azure.Storage.DataMovement
 
         public override async Task InvokeSkippedArgAsync()
         {
-            // TODO: remove to only Dispose right before Paused/Completed state
-            await DisposeHandlersAsync().ConfigureAwait(false);
             await base.InvokeSkippedArgAsync().ConfigureAwait(false);
         }
 
         public override async Task InvokeFailedArgAsync(Exception ex)
         {
-            // TODO: remove to only Dispose right before Paused/Completed state
-            await DisposeHandlersAsync().ConfigureAwait(false);
             await base.InvokeFailedArgAsync(ex).ConfigureAwait(false);
         }
 
-        public override Task DisposeHandlersAsync()
+        public override async Task DisposeHandlersAsync()
         {
+            _chunkHandlerLock.Wait();
             if (_commitBlockHandler != default)
             {
-                // TODO: remove to replace with DisposeAsync
-                _commitBlockHandler.Dispose();
+                await _commitBlockHandler.DisposeAsync().ConfigureAwait(false);
                 _commitBlockHandler = null;
             }
-            // TODO: remove after changes to DisposeAsync
-            return Task.CompletedTask;
+            _chunkHandlerLock.Release();
         }
 
         private async Task<StorageResourceCopyFromUriOptions> GetCopyFromUriOptionsAsync(CancellationToken cancellationToken)

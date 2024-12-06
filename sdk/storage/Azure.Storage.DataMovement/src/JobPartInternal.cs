@@ -3,10 +3,7 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
-using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
@@ -389,61 +386,54 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public async virtual Task InvokeFailedArgAsync(Exception ex)
         {
-            try
+            if (ex is not OperationCanceledException &&
+                ex is not TaskCanceledException &&
+                ex is not ChannelClosedException &&
+                ex.InnerException is not TaskCanceledException &&
+                !ex.Message.Contains("The request was canceled."))
             {
-                if (ex is not OperationCanceledException &&
-                    ex is not TaskCanceledException &&
-                    ex is not ChannelClosedException &&
-                    ex.InnerException is not TaskCanceledException &&
-                    !ex.Message.Contains("The request was canceled."))
+                if (ex is RequestFailedException requestFailedException)
                 {
-                    if (ex is RequestFailedException requestFailedException)
-                    {
-                        SetFailureType(requestFailedException.ErrorCode);
-                    }
-                    else
-                    {
-                        SetFailureType(ex.Message);
-                    }
-                    if (TransferFailedEventHandler != null)
-                    {
-                        Console.WriteLine("RaiseAsync TransferFailedEventHandler");
-                        await TransferFailedEventHandler.RaiseAsync(
-                            new TransferItemFailedEventArgs(
-                                _dataTransfer.Id,
-                                _sourceResource,
-                                _destinationResource,
-                                ex,
-                                false,
-                                _cancellationToken),
-                            nameof(JobPartInternal),
-                            nameof(TransferFailedEventHandler),
-                            ClientDiagnostics)
-                            .ConfigureAwait(false);
-                    }
-                    _progressTracker.IncrementFailedFiles();
-
-                    // Update the JobPartStatus. If was already updated (e.g. there was a failed item before)
-                    // then don't raise the PartTransferStatusEventHandler
-                    if (JobPartStatus.SetFailedItem())
-                    {
-                        Console.WriteLine("RaiseAsync PartTransferStatusEventHandler");
-                        await PartTransferStatusEventHandler.RaiseAsync(
-                            new TransferStatusEventArgs(
-                                _dataTransfer.Id,
-                                JobPartStatus.DeepCopy(),
-                                false,
-                                _cancellationToken),
-                            nameof(JobPartInternal),
-                            nameof(PartTransferStatusEventHandler),
-                            ClientDiagnostics)
-                            .ConfigureAwait(false);
-                    }
+                    SetFailureType(requestFailedException.ErrorCode);
                 }
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception.StackTrace);
+                else
+                {
+                    SetFailureType(ex.Message);
+                }
+                if (TransferFailedEventHandler != null)
+                {
+                    Console.WriteLine("RaiseAsync TransferFailedEventHandler");
+                    await TransferFailedEventHandler.RaiseAsync(
+                        new TransferItemFailedEventArgs(
+                            _dataTransfer.Id,
+                            _sourceResource,
+                            _destinationResource,
+                            ex,
+                            false,
+                            _cancellationToken),
+                        nameof(JobPartInternal),
+                        nameof(TransferFailedEventHandler),
+                        ClientDiagnostics)
+                        .ConfigureAwait(false);
+                }
+                _progressTracker.IncrementFailedFiles();
+
+                // Update the JobPartStatus. If was already updated (e.g. there was a failed item before)
+                // then don't raise the PartTransferStatusEventHandler
+                if (JobPartStatus.SetFailedItem())
+                {
+                    Console.WriteLine("RaiseAsync PartTransferStatusEventHandler");
+                    await PartTransferStatusEventHandler.RaiseAsync(
+                        new TransferStatusEventArgs(
+                            _dataTransfer.Id,
+                            JobPartStatus.DeepCopy(),
+                            false,
+                            _cancellationToken),
+                        nameof(JobPartInternal),
+                        nameof(PartTransferStatusEventHandler),
+                        ClientDiagnostics)
+                        .ConfigureAwait(false);
+                }
             }
 
             try
