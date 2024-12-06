@@ -78,6 +78,7 @@ namespace Azure.AI.Projects
                 switch (discriminator.GetString())
                 {
                     case "azure_ai_search": return AzureAISearchToolDefinition.DeserializeAzureAISearchToolDefinition(element, options);
+                    case "azure_function": return AzureFunctionToolDefinition.DeserializeAzureFunctionToolDefinition(element, options);
                     case "bing_grounding": return BingGroundingToolDefinition.DeserializeBingGroundingToolDefinition(element, options);
                     case "code_interpreter": return CodeInterpreterToolDefinition.DeserializeCodeInterpreterToolDefinition(element, options);
                     case "fabric_aiskill": return MicrosoftFabricToolDefinition.DeserializeMicrosoftFabricToolDefinition(element, options);

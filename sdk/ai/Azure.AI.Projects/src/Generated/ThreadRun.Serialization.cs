@@ -251,11 +251,8 @@ namespace Azure.AI.Projects
                     writer.WriteNull("tool_resources");
                 }
             }
-            if (Optional.IsDefined(ParallelToolCalls))
-            {
-                writer.WritePropertyName("parallelToolCalls"u8);
-                writer.WriteBooleanValue(ParallelToolCalls.Value);
-            }
+            writer.WritePropertyName("parallel_tool_calls"u8);
+            writer.WriteBooleanValue(ParallelToolCalls);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -320,7 +317,7 @@ namespace Azure.AI.Projects
             BinaryData responseFormat = default;
             IReadOnlyDictionary<string, string> metadata = default;
             UpdateToolResourcesOptions toolResources = default;
-            bool? parallelToolCalls = default;
+            bool parallelToolCalls = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -535,12 +532,8 @@ namespace Azure.AI.Projects
                     toolResources = UpdateToolResourcesOptions.DeserializeUpdateToolResourcesOptions(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("parallelToolCalls"u8))
+                if (property.NameEquals("parallel_tool_calls"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     parallelToolCalls = property.Value.GetBoolean();
                     continue;
                 }

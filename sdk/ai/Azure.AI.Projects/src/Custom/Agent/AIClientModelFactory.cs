@@ -133,7 +133,7 @@ public static partial class AIClientModelFactory
         tools ??= new List<ToolDefinition>();
         metadata ??= new Dictionary<string, string>();
 
-        return new ThreadRun(id, @object: null, threadId, agentId, status, requiredAction, lastError, model, instructions, tools.ToList(), createdAt, expiresAt, startedAt, completedAt, cancelledAt, failedAt, incompleteDetails, usage, temperature, topP, maxPromptTokens, maxCompletionTokens, truncationStrategy, toolChoice, responseFormat, metadata, toolResources, parallelToolCalls, serializedAdditionalRawData: null);
+        return new ThreadRun(id, @object: null, threadId, agentId, status, requiredAction, lastError, model, instructions, tools.ToList(), createdAt, expiresAt, startedAt, completedAt, cancelledAt, failedAt, incompleteDetails, usage, temperature, topP, maxPromptTokens, maxCompletionTokens, truncationStrategy, toolChoice, responseFormat, metadata, toolResources, parallelToolCalls ?? true, serializedAdditionalRawData: null);
     }
 
     /// <summary> Initializes a new instance of <see cref="Projects.AgentFile"/>. </summary>

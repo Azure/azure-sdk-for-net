@@ -164,6 +164,15 @@ namespace Azure.AI.Projects
             return new CredentialsApiKeyAuth(key, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Projects.AzureFunctionBinding"/>. </summary>
+        /// <param name="type"> The type of binding, which is always 'storage_queue'. </param>
+        /// <param name="storageQueue"> Storage queue. </param>
+        /// <returns> A new <see cref="Projects.AzureFunctionBinding"/> instance for mocking. </returns>
+        public static AzureFunctionBinding AzureFunctionBinding(AzureFunctionBindingType type = default, AzureFunctionStorageQueue storageQueue = null)
+        {
+            return new AzureFunctionBinding(type, storageQueue, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Projects.ThreadMessageOptions"/>. </summary>
         /// <param name="role">
         /// The role of the entity that is creating the message. Allowed values include:
