@@ -41,6 +41,8 @@ namespace Azure.Storage.DataMovement
         private long _bytesTransferred;
         private readonly long _expectedLength;
 
+        internal ChunkHandlerStatus _chunkHandlerStatus;
+
         /// <summary>
         /// The controller for downloading the chunks to each file.
         /// </summary>
@@ -89,13 +91,16 @@ namespace Azure.Storage.DataMovement
                 readers: 1,
                 capacity: DataMovementConstants.Channels.DownloadChunkCapacity);
             _downloadRangeProcessor.Process = ProcessDownloadRange;
+            _chunkHandlerStatus = ChunkHandlerStatus.Running;
         }
 
         public bool TryComplete() => _downloadRangeProcessor.TryComplete();
 
         public async ValueTask DisposeAsync()
         {
+            _chunkHandlerStatus = ChunkHandlerStatus.Disposing;
             await _downloadRangeProcessor.DisposeAsync().ConfigureAwait(false);
+            _chunkHandlerStatus = ChunkHandlerStatus.Disposed;
         }
 
         public async ValueTask QueueChunkAsync(QueueDownloadChunkArgs args)
@@ -108,6 +113,7 @@ namespace Azure.Storage.DataMovement
             try
             {
                 // Copy the current chunk to the destination
+                Console.WriteLine("copy to destination file");
                 using (Stream content = args.Content)
                 {
                     await _copyToDestinationFile(
@@ -117,19 +123,29 @@ namespace Azure.Storage.DataMovement
                         _expectedLength,
                         initial: _bytesTransferred == 0).ConfigureAwait(false);
                 }
+                Console.WriteLine("update bytes and range");
                 UpdateBytesAndRange(args.Length);
 
                 // Check if we finished downloading the blob
                 if (_bytesTransferred == _expectedLength)
                 {
+                    Console.WriteLine("queue file download");
                     await _queueCompleteFileDownload().ConfigureAwait(false);
                 }
             }
             catch (Exception ex)
             {
-                // This will trigger the job part to call Dispose on this object
-                await _invokeFailedEventHandler(ex).ConfigureAwait(false);
+                // If we are disposing, we don't want to invoke the failed event handler
+                // because the error is likely due to the job part being disposed and was
+                // invoked by another InvokeFailedEventHandler call.
+                if (_chunkHandlerStatus == ChunkHandlerStatus.Running)
+                {
+                    // This will trigger the job part to call Dispose on this object
+                    Console.WriteLine($"{Thread.CurrentThread.ManagedThreadId}: invoke failed event handler");
+                    _ = Task.Run(() => _invokeFailedEventHandler(ex));
+                }
             }
+            Console.WriteLine("Finished process download range");
         }
 
         private void UpdateBytesAndRange(long bytesDownloaded)

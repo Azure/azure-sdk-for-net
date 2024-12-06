@@ -286,7 +286,6 @@ namespace Azure.Storage.DataMovement
         /// <param name="transferState"></param>
         internal async Task OnTransferStateChangedAsync(DataTransferState transferState)
         {
-            _completedCountStatusLock.Wait();
             if (JobPartStatus.SetTransferStateChange(transferState))
             {
                 // Progress tracking, do before invoking the event below
@@ -314,7 +313,6 @@ namespace Azure.Storage.DataMovement
                     ClientDiagnostics)
                     .ConfigureAwait(false);
             }
-            _completedCountStatusLock.Release();
         }
 
         /// <summary>
@@ -391,64 +389,76 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public async virtual Task InvokeFailedArgAsync(Exception ex)
         {
-            if (ex is not OperationCanceledException &&
-                ex is not TaskCanceledException &&
-                ex is not ChannelClosedException &&
-                ex.InnerException is not TaskCanceledException &&
-                !ex.Message.Contains("The request was canceled."))
+            try
             {
-                if (ex is RequestFailedException requestFailedException)
+                if (ex is not OperationCanceledException &&
+                    ex is not TaskCanceledException &&
+                    ex is not ChannelClosedException &&
+                    ex.InnerException is not TaskCanceledException &&
+                    !ex.Message.Contains("The request was canceled."))
                 {
-                    SetFailureType(requestFailedException.ErrorCode);
-                }
-                else
-                {
-                    SetFailureType(ex.Message);
-                }
-                if (TransferFailedEventHandler != null)
-                {
-                    await TransferFailedEventHandler.RaiseAsync(
-                        new TransferItemFailedEventArgs(
-                            _dataTransfer.Id,
-                            _sourceResource,
-                            _destinationResource,
-                            ex,
-                            false,
-                            _cancellationToken),
-                        nameof(JobPartInternal),
-                        nameof(TransferFailedEventHandler),
-                        ClientDiagnostics)
-                        .ConfigureAwait(false);
-                }
-                _progressTracker.IncrementFailedFiles();
+                    if (ex is RequestFailedException requestFailedException)
+                    {
+                        SetFailureType(requestFailedException.ErrorCode);
+                    }
+                    else
+                    {
+                        SetFailureType(ex.Message);
+                    }
+                    if (TransferFailedEventHandler != null)
+                    {
+                        Console.WriteLine("RaiseAsync TransferFailedEventHandler");
+                        await TransferFailedEventHandler.RaiseAsync(
+                            new TransferItemFailedEventArgs(
+                                _dataTransfer.Id,
+                                _sourceResource,
+                                _destinationResource,
+                                ex,
+                                false,
+                                _cancellationToken),
+                            nameof(JobPartInternal),
+                            nameof(TransferFailedEventHandler),
+                            ClientDiagnostics)
+                            .ConfigureAwait(false);
+                    }
+                    _progressTracker.IncrementFailedFiles();
 
-                // Update the JobPartStatus. If was already updated (e.g. there was a failed item before)
-                // then don't raise the PartTransferStatusEventHandler
-                if (JobPartStatus.SetFailedItem())
-                {
-                    await PartTransferStatusEventHandler.RaiseAsync(
-                        new TransferStatusEventArgs(
-                            _dataTransfer.Id,
-                            JobPartStatus.DeepCopy(),
-                            false,
-                            _cancellationToken),
-                        nameof(JobPartInternal),
-                        nameof(PartTransferStatusEventHandler),
-                        ClientDiagnostics)
-                        .ConfigureAwait(false);
+                    // Update the JobPartStatus. If was already updated (e.g. there was a failed item before)
+                    // then don't raise the PartTransferStatusEventHandler
+                    if (JobPartStatus.SetFailedItem())
+                    {
+                        Console.WriteLine("RaiseAsync PartTransferStatusEventHandler");
+                        await PartTransferStatusEventHandler.RaiseAsync(
+                            new TransferStatusEventArgs(
+                                _dataTransfer.Id,
+                                JobPartStatus.DeepCopy(),
+                                false,
+                                _cancellationToken),
+                            nameof(JobPartInternal),
+                            nameof(PartTransferStatusEventHandler),
+                            ClientDiagnostics)
+                            .ConfigureAwait(false);
+                    }
                 }
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.StackTrace);
             }
 
             try
             {
                 // Trigger job cancellation if the failed handler is enabled
+                Console.WriteLine($"{Thread.CurrentThread.ManagedThreadId}:TriggerCancellationAsync");
                 await TriggerCancellationAsync().ConfigureAwait(false);
+                Console.WriteLine($"{Thread.CurrentThread.ManagedThreadId}: CheckAndUpdateCancellationStateAsync");
                 await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
             }
             catch (Exception cancellationException)
             {
                 // If an exception is thrown while trying to clean up,
                 // raise the failed event and prevent the transfer from hanging
+                Console.WriteLine("RaiseAsync TransferFailedEventHandler ending");
                 await TransferFailedEventHandler.RaiseAsync(
                     new TransferItemFailedEventArgs(
                         _dataTransfer.Id,
@@ -462,6 +472,7 @@ namespace Azure.Storage.DataMovement
                     ClientDiagnostics)
                     .ConfigureAwait(false);
             }
+            Console.WriteLine($"{Thread.CurrentThread.ManagedThreadId}: Finished InvokeFailedArgAsync");
         }
 
         /// <summary>
@@ -576,17 +587,21 @@ namespace Azure.Storage.DataMovement
 
         internal async Task CheckAndUpdateCancellationStateAsync()
         {
-            if (JobPartStatus.State == DataTransferState.Pausing ||
-                JobPartStatus.State == DataTransferState.Stopping)
+            if (await _completedCountStatusLock.WaitAsync(TimeSpan.FromMilliseconds(50)).ConfigureAwait(false))
             {
-                if (!_queueingTasks && _currentChunkCount == _completedChunkCount)
+                if (JobPartStatus.State == DataTransferState.Pausing ||
+                    JobPartStatus.State == DataTransferState.Stopping)
                 {
-                    DataTransferState newState = JobPartStatus.State == DataTransferState.Pausing ?
-                        DataTransferState.Paused :
-                        DataTransferState.Completed;
-                    await DisposeHandlersAsync().ConfigureAwait(false);
-                    await OnTransferStateChangedAsync(newState).ConfigureAwait(false);
+                    if (!_queueingTasks && _currentChunkCount == _completedChunkCount)
+                    {
+                        DataTransferState newState = JobPartStatus.State == DataTransferState.Pausing ?
+                            DataTransferState.Paused :
+                            DataTransferState.Completed;
+                        await DisposeHandlersAsync().ConfigureAwait(false);
+                        await OnTransferStateChangedAsync(newState).ConfigureAwait(false);
+                    }
                 }
+                _completedCountStatusLock.Release();
             }
         }
 

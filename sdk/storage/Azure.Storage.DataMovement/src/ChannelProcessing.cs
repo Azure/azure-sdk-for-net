@@ -19,6 +19,14 @@ internal interface IProcessor<TItem> : IAsyncDisposable
     ProcessAsync<TItem> Process { get; set; }
 }
 
+internal enum ChannelProcessorStatus
+{
+    Running,
+    Disposing,
+    Disposed,
+    NotRunning = default,
+}
+
 internal static class ChannelProcessing
 {
     public static IProcessor<T> NewProcessor<T>(int readers, int? capacity = null)
@@ -100,13 +108,17 @@ internal static class ChannelProcessing
 
         public async ValueTask DisposeAsync()
         {
+            Console.WriteLine("TryComplete...");
             _channel.Writer.TryComplete();
             if (!_cancellationTokenSource.IsCancellationRequested)
             {
+                Console.WriteLine("Cancel called...");
                 _cancellationTokenSource.Cancel();
             }
+            Console.WriteLine("Awaiting task for finished state...");
             await _processerTaskCompletionSource.Task.ConfigureAwait(false);
 
+            Console.WriteLine("supress finalize...");
             GC.SuppressFinalize(this);
         }
     }
@@ -124,8 +136,11 @@ internal static class ChannelProcessing
                 // Process all available items in the queue.
                 while (await _channel.Reader.WaitToReadAsync(_cancellationToken).ConfigureAwait(false))
                 {
+                    Console.WriteLine("Reading item...");
                     TItem item = await _channel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
+                    Console.WriteLine("Processing item...");
                     await Process(item, _cancellationToken).ConfigureAwait(false);
+                    Console.WriteLine("Loooop. Wait to read~");
                 }
             }
             finally
@@ -133,6 +148,7 @@ internal static class ChannelProcessing
                 // Since the channel has it's own dedicated CancellationTokenSource (only called at Dispose)
                 // we don't need a catch block to catch the exception since we know the cancellation either comes
                 // from successful completion or another failure that has been already invoked.
+                Console.WriteLine("Setting result true...");
                 _processerTaskCompletionSource.TrySetResult(true);
             }
         }
@@ -179,6 +195,7 @@ internal static class ChannelProcessing
                 // Since the channel has it's own dedicated CancellationTokenSource (only called at Dispose)
                 // we don't need a catch block to catch the exception since we know the cancellation either comes
                 // from successful completion or another failure that has been already invoked.
+                Console.WriteLine("Setting result true...");
                 _processerTaskCompletionSource.TrySetResult(true);
             }
         }
