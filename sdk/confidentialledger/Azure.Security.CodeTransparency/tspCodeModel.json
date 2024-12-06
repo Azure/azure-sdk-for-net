@@ -1,0 +1,3402 @@
+{
+ "$id": "1",
+ "Name": "Microsoft.CodeTransparency",
+ "ApiVersions": [
+  "2024-01-11-preview"
+ ],
+ "Enums": [
+  {
+   "$id": "2",
+   "kind": "enum",
+   "name": "OperationStatus",
+   "crossLanguageDefinitionId": "Microsoft.CodeTransparency.OperationStatus",
+   "valueType": {
+    "$id": "3",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "4",
+     "kind": "enumvalue",
+     "name": "running",
+     "value": "running",
+     "valueType": {
+      "$id": "5",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "2"
+     },
+     "description": "Operation is still running.",
+     "decorators": []
+    },
+    {
+     "$id": "6",
+     "kind": "enumvalue",
+     "name": "failed",
+     "value": "failed",
+     "valueType": {
+      "$id": "7",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "2"
+     },
+     "description": "Operation failed.",
+     "decorators": []
+    },
+    {
+     "$id": "8",
+     "kind": "enumvalue",
+     "name": "succeeded",
+     "value": "succeeded",
+     "valueType": {
+      "$id": "9",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "2"
+     },
+     "description": "Operation succeeded.",
+     "decorators": []
+    }
+   ],
+   "description": "Possible statuses of the operation.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Output,Json",
+   "decorators": []
+  },
+  {
+   "$id": "10",
+   "kind": "enum",
+   "name": "DidDocumentKey_type",
+   "valueType": {
+    "$id": "11",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "12",
+     "kind": "enumvalue",
+     "name": "JsonWebKey2020",
+     "value": "JsonWebKey2020",
+     "description": "JsonWebKey2020",
+     "valueType": {
+      "$ref": "11"
+     },
+     "enumType": {
+      "$ref": "10"
+     }
+    }
+   ],
+   "crossLanguageDefinitionId": "",
+   "description": "The DidDocumentKey_type",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Output,Json",
+   "decorators": []
+  },
+  {
+   "$id": "13",
+   "kind": "enum",
+   "name": "Versions",
+   "crossLanguageDefinitionId": "Microsoft.CodeTransparency.Versions",
+   "valueType": {
+    "$id": "14",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "15",
+     "kind": "enumvalue",
+     "name": "2024-01-11-preview",
+     "value": "2024-01-11-preview",
+     "valueType": {
+      "$id": "16",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "13"
+     },
+     "description": "The 2024-01-11-preview version of the Microsoft.CodeTransparency service.",
+     "decorators": []
+    }
+   ],
+   "description": "The Microsoft.CodeTransparency service versions.",
+   "isFixed": true,
+   "isFlags": false,
+   "usage": "ApiVersionEnum",
+   "decorators": []
+  }
+ ],
+ "Models": [
+  {
+   "$id": "17",
+   "kind": "model",
+   "name": "CreateEntryResult",
+   "crossLanguageDefinitionId": "Microsoft.CodeTransparency.CreateEntryResult",
+   "usage": "Output,Json",
+   "description": "Response of entry submission containing the operationId.",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "18",
+     "kind": "property",
+     "name": "operationId",
+     "serializedName": "operationId",
+     "description": "String representing the operation id submitted",
+     "type": {
+      "$id": "19",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Microsoft.CodeTransparency.CreateEntryResult.operationId"
+    }
+   ]
+  },
+  {
+   "$id": "20",
+   "kind": "model",
+   "name": "GetOperationResult",
+   "crossLanguageDefinitionId": "Microsoft.CodeTransparency.GetOperationResult",
+   "usage": "Output,Json",
+   "description": "The Response body of the GetOperationId API.",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "21",
+     "kind": "property",
+     "name": "entryId",
+     "serializedName": "entryId",
+     "description": "ID of the transaction. Only if status is Succeeded.",
+     "type": {
+      "$id": "22",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Microsoft.CodeTransparency.GetOperationResult.entryId"
+    },
+    {
+     "$id": "23",
+     "kind": "property",
+     "name": "error",
+     "serializedName": "error",
+     "description": "Error in json format. Only if Status is Failed.",
+     "type": {
+      "$id": "24",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Microsoft.CodeTransparency.GetOperationResult.error"
+    },
+    {
+     "$id": "25",
+     "kind": "property",
+     "name": "operationId",
+     "serializedName": "operationId",
+     "description": "OperationId",
+     "type": {
+      "$id": "26",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Microsoft.CodeTransparency.GetOperationResult.operationId"
+    },
+    {
+     "$id": "27",
+     "kind": "property",
+     "name": "status",
+     "serializedName": "status",
+     "description": "Status of the operation.",
+     "type": {
+      "$ref": "2"
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Microsoft.CodeTransparency.GetOperationResult.status"
+    }
+   ]
+  },
+  {
+   "$id": "28",
+   "kind": "model",
+   "name": "ListOperationResult",
+   "crossLanguageDefinitionId": "Microsoft.CodeTransparency.ListOperationResult",
+   "usage": "Output,Json",
+   "description": "The Response body of the ListOperations API",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "29",
+     "kind": "property",
+     "name": "operations",
+     "serializedName": "operations",
+     "description": "List of operations",
+     "type": {
+      "$id": "30",
+      "kind": "array",
+      "name": "ArrayGetOperationResult",
+      "valueType": {
+       "$ref": "20"
+      },
+      "crossLanguageDefinitionId": "TypeSpec.Array",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Microsoft.CodeTransparency.ListOperationResult.operations"
+    }
+   ]
+  },
+  {
+   "$id": "31",
+   "kind": "model",
+   "name": "EntryIds",
+   "crossLanguageDefinitionId": "Microsoft.CodeTransparency.EntryIds",
+   "usage": "Output,Json",
+   "description": "A List of Entry IDs",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "32",
+     "kind": "property",
+     "name": "transactionIds",
+     "serializedName": "transactionIds",
+     "description": "List of entry ids",
+     "type": {
+      "$id": "33",
+      "kind": "array",
+      "name": "Array",
+      "valueType": {
+       "$id": "34",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string",
+       "decorators": []
+      },
+      "crossLanguageDefinitionId": "TypeSpec.Array",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Microsoft.CodeTransparency.EntryIds.transactionIds"
+    },
+    {
+     "$id": "35",
+     "kind": "property",
+     "name": "nextLink",
+     "serializedName": "nextLink",
+     "description": "Path to the next page of results",
+     "type": {
+      "$id": "36",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Microsoft.CodeTransparency.EntryIds.nextLink"
+    }
+   ]
+  },
+  {
+   "$id": "37",
+   "kind": "model",
+   "name": "ServiceUnavailableError",
+   "crossLanguageDefinitionId": "Microsoft.CodeTransparency.ServiceUnavailableError",
+   "usage": "Error,Json,Exception",
+   "description": "Service temporarily unavailable",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "38",
+     "kind": "property",
+     "name": "error",
+     "serializedName": "error",
+     "description": "The error object.",
+     "type": {
+      "$id": "39",
+      "kind": "model",
+      "name": "Error",
+      "crossLanguageDefinitionId": "Azure.Core.Foundations.Error",
+      "usage": "Json,Exception",
+      "description": "The error object.",
+      "decorators": [],
+      "properties": [
+       {
+        "$id": "40",
+        "kind": "property",
+        "name": "code",
+        "serializedName": "code",
+        "description": "One of a server-defined set of error codes.",
+        "type": {
+         "$id": "41",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "optional": false,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Azure.Core.Foundations.Error.code"
+       },
+       {
+        "$id": "42",
+        "kind": "property",
+        "name": "message",
+        "serializedName": "message",
+        "description": "A human-readable representation of the error.",
+        "type": {
+         "$id": "43",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "optional": false,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Azure.Core.Foundations.Error.message"
+       },
+       {
+        "$id": "44",
+        "kind": "property",
+        "name": "target",
+        "serializedName": "target",
+        "description": "The target of the error.",
+        "type": {
+         "$id": "45",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "optional": true,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Azure.Core.Foundations.Error.target"
+       },
+       {
+        "$id": "46",
+        "kind": "property",
+        "name": "details",
+        "serializedName": "details",
+        "description": "An array of details about specific errors that led to this reported error.",
+        "type": {
+         "$id": "47",
+         "kind": "array",
+         "name": "ArrayError",
+         "valueType": {
+          "$ref": "39"
+         },
+         "crossLanguageDefinitionId": "TypeSpec.Array",
+         "decorators": []
+        },
+        "optional": true,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Azure.Core.Foundations.Error.details"
+       },
+       {
+        "$id": "48",
+        "kind": "property",
+        "name": "innererror",
+        "serializedName": "innererror",
+        "description": "An object containing more specific information than the current object about the error.",
+        "type": {
+         "$id": "49",
+         "kind": "model",
+         "name": "InnerError",
+         "crossLanguageDefinitionId": "Azure.Core.Foundations.InnerError",
+         "usage": "Json,Exception",
+         "description": "An object containing more specific information about the error. As per Microsoft One API guidelines - https://github.com/Microsoft/api-guidelines/blob/vNext/Guidelines.md#7102-error-condition-responses.",
+         "decorators": [],
+         "properties": [
+          {
+           "$id": "50",
+           "kind": "property",
+           "name": "code",
+           "serializedName": "code",
+           "description": "One of a server-defined set of error codes.",
+           "type": {
+            "$id": "51",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+           },
+           "optional": true,
+           "readOnly": false,
+           "discriminator": false,
+           "flatten": false,
+           "decorators": [],
+           "crossLanguageDefinitionId": "Azure.Core.Foundations.InnerError.code"
+          },
+          {
+           "$id": "52",
+           "kind": "property",
+           "name": "innererror",
+           "serializedName": "innererror",
+           "description": "Inner error.",
+           "type": {
+            "$ref": "49"
+           },
+           "optional": true,
+           "readOnly": false,
+           "discriminator": false,
+           "flatten": false,
+           "decorators": [],
+           "crossLanguageDefinitionId": "Azure.Core.Foundations.InnerError.innererror"
+          }
+         ]
+        },
+        "optional": true,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Azure.Core.Foundations.Error.innererror"
+       }
+      ]
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Microsoft.CodeTransparency.ServiceUnavailableError.error"
+    }
+   ]
+  },
+  {
+   "$ref": "39"
+  },
+  {
+   "$ref": "49"
+  },
+  {
+   "$id": "53",
+   "kind": "model",
+   "name": "ParametersResult",
+   "crossLanguageDefinitionId": "Microsoft.CodeTransparency.ParametersResult",
+   "usage": "Output,Json",
+   "description": "The Response body of the service parameters",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "54",
+     "kind": "property",
+     "name": "serviceCertificate",
+     "serializedName": "serviceCertificate",
+     "type": {
+      "$id": "55",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Microsoft.CodeTransparency.ParametersResult.serviceCertificate"
+    },
+    {
+     "$id": "56",
+     "kind": "property",
+     "name": "serviceId",
+     "serializedName": "serviceId",
+     "type": {
+      "$id": "57",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Microsoft.CodeTransparency.ParametersResult.serviceId"
+    },
+    {
+     "$id": "58",
+     "kind": "property",
+     "name": "signatureAlgorithm",
+     "serializedName": "signatureAlgorithm",
+     "type": {
+      "$id": "59",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Microsoft.CodeTransparency.ParametersResult.signatureAlgorithm"
+    },
+    {
+     "$id": "60",
+     "kind": "property",
+     "name": "treeAlgorithm",
+     "serializedName": "treeAlgorithm",
+     "type": {
+      "$id": "61",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Microsoft.CodeTransparency.ParametersResult.treeAlgorithm"
+    }
+   ]
+  },
+  {
+   "$id": "62",
+   "kind": "model",
+   "name": "DidDocument",
+   "crossLanguageDefinitionId": "Microsoft.CodeTransparency.DidDocument",
+   "usage": "Output,Json",
+   "description": "A DID document",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "63",
+     "kind": "property",
+     "name": "id",
+     "serializedName": "id",
+     "description": "String representing a DID issuer.",
+     "type": {
+      "$id": "64",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Microsoft.CodeTransparency.DidDocument.id"
+    },
+    {
+     "$id": "65",
+     "kind": "property",
+     "name": "assertionMethod",
+     "serializedName": "assertionMethod",
+     "description": "List of public keys used for receipt endorsement verification.",
+     "type": {
+      "$id": "66",
+      "kind": "array",
+      "name": "ArrayDidDocumentKey",
+      "valueType": {
+       "$id": "67",
+       "kind": "model",
+       "name": "DidDocumentKey",
+       "crossLanguageDefinitionId": "Microsoft.CodeTransparency.DidDocumentKey",
+       "usage": "Output,Json",
+       "description": "A DID document key",
+       "decorators": [],
+       "properties": [
+        {
+         "$id": "68",
+         "kind": "property",
+         "name": "id",
+         "serializedName": "id",
+         "description": "Key identifier.",
+         "type": {
+          "$id": "69",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         },
+         "optional": false,
+         "readOnly": false,
+         "discriminator": false,
+         "flatten": false,
+         "decorators": [],
+         "crossLanguageDefinitionId": "Microsoft.CodeTransparency.DidDocumentKey.id"
+        },
+        {
+         "$id": "70",
+         "kind": "property",
+         "name": "controller",
+         "serializedName": "controller",
+         "description": "Key controller - similar to DID issuer.",
+         "type": {
+          "$id": "71",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         },
+         "optional": false,
+         "readOnly": false,
+         "discriminator": false,
+         "flatten": false,
+         "decorators": [],
+         "crossLanguageDefinitionId": "Microsoft.CodeTransparency.DidDocumentKey.controller"
+        },
+        {
+         "$id": "72",
+         "kind": "property",
+         "name": "type",
+         "serializedName": "type",
+         "description": "Key type.",
+         "type": {
+          "$id": "73",
+          "kind": "constant",
+          "valueType": {
+           "$ref": "10"
+          },
+          "value": "JsonWebKey2020",
+          "decorators": []
+         },
+         "optional": false,
+         "readOnly": false,
+         "discriminator": false,
+         "flatten": false,
+         "decorators": [],
+         "crossLanguageDefinitionId": "Microsoft.CodeTransparency.DidDocumentKey.type"
+        },
+        {
+         "$id": "74",
+         "kind": "property",
+         "name": "publicKeyJwk",
+         "serializedName": "publicKeyJwk",
+         "description": "Serialized public key in JWK format.",
+         "type": {
+          "$id": "75",
+          "kind": "model",
+          "name": "JsonWebKey",
+          "crossLanguageDefinitionId": "Microsoft.CodeTransparency.JsonWebKey",
+          "usage": "Output,Json",
+          "description": "rfc7517 JSON Web Key representation adapted from a shared swagger definition in the common types",
+          "decorators": [],
+          "properties": [
+           {
+            "$id": "76",
+            "kind": "property",
+            "name": "alg",
+            "serializedName": "alg",
+            "description": "The \"alg\" (algorithm) parameter identifies the algorithm intended for\nuse with the key.  The values used should either be registered in the\nIANA \"JSON Web Signature and Encryption Algorithms\" registry\nestablished by [JWA] or be a value that contains a Collision-\nResistant Name.",
+            "type": {
+             "$id": "77",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "optional": true,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Microsoft.CodeTransparency.JsonWebKey.alg"
+           },
+           {
+            "$id": "78",
+            "kind": "property",
+            "name": "crv",
+            "serializedName": "crv",
+            "description": "The \"crv\" (curve) parameter identifies the curve type",
+            "type": {
+             "$id": "79",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "optional": true,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Microsoft.CodeTransparency.JsonWebKey.crv"
+           },
+           {
+            "$id": "80",
+            "kind": "property",
+            "name": "d",
+            "serializedName": "d",
+            "description": "RSA private exponent or ECC private key",
+            "type": {
+             "$id": "81",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "optional": true,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Microsoft.CodeTransparency.JsonWebKey.d"
+           },
+           {
+            "$id": "82",
+            "kind": "property",
+            "name": "dp",
+            "serializedName": "dp",
+            "description": "RSA Private Key Parameter",
+            "type": {
+             "$id": "83",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "optional": true,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Microsoft.CodeTransparency.JsonWebKey.dp"
+           },
+           {
+            "$id": "84",
+            "kind": "property",
+            "name": "dq",
+            "serializedName": "dq",
+            "description": "RSA Private Key Parameter",
+            "type": {
+             "$id": "85",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "optional": true,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Microsoft.CodeTransparency.JsonWebKey.dq"
+           },
+           {
+            "$id": "86",
+            "kind": "property",
+            "name": "e",
+            "serializedName": "e",
+            "description": "RSA public exponent, in Base64",
+            "type": {
+             "$id": "87",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "optional": true,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Microsoft.CodeTransparency.JsonWebKey.e"
+           },
+           {
+            "$id": "88",
+            "kind": "property",
+            "name": "k",
+            "serializedName": "k",
+            "description": "Symmetric key",
+            "type": {
+             "$id": "89",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "optional": true,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Microsoft.CodeTransparency.JsonWebKey.k"
+           },
+           {
+            "$id": "90",
+            "kind": "property",
+            "name": "kid",
+            "serializedName": "kid",
+            "description": "The \"kid\" (key ID) parameter is used to match a specific key.  This\nis used, for instance, to choose among a set of keys within a JWK Set\nduring key rollover.  The structure of the \"kid\" value is\nunspecified.  When \"kid\" values are used within a JWK Set, different\nkeys within the JWK Set SHOULD use distinct \"kid\" values.  (One\nexample in which different keys might use the same \"kid\" value is if\nthey have different \"kty\" (key type) values but are considered to be\nequivalent alternatives by the application using them.)  The \"kid\"\nvalue is a case-sensitive string.",
+            "type": {
+             "$id": "91",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "optional": true,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Microsoft.CodeTransparency.JsonWebKey.kid"
+           },
+           {
+            "$id": "92",
+            "kind": "property",
+            "name": "kty",
+            "serializedName": "kty",
+            "description": "The \"kty\" (key type) parameter identifies the cryptographic algorithm\nfamily used with the key, such as \"RSA\" or \"EC\". \"kty\" values should\neither be registered in the IANA \"JSON Web Key Types\" registry\nestablished by [JWA] or be a value that contains a Collision-\nResistant Name.  The \"kty\" value is a case-sensitive string.",
+            "type": {
+             "$id": "93",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "optional": false,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Microsoft.CodeTransparency.JsonWebKey.kty"
+           },
+           {
+            "$id": "94",
+            "kind": "property",
+            "name": "n",
+            "serializedName": "n",
+            "description": "RSA modulus, in Base64",
+            "type": {
+             "$id": "95",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "optional": true,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Microsoft.CodeTransparency.JsonWebKey.n"
+           },
+           {
+            "$id": "96",
+            "kind": "property",
+            "name": "p",
+            "serializedName": "p",
+            "description": "RSA secret prime",
+            "type": {
+             "$id": "97",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "optional": true,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Microsoft.CodeTransparency.JsonWebKey.p"
+           },
+           {
+            "$id": "98",
+            "kind": "property",
+            "name": "q",
+            "serializedName": "q",
+            "description": "RSA secret prime, with p < q",
+            "type": {
+             "$id": "99",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "optional": true,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Microsoft.CodeTransparency.JsonWebKey.q"
+           },
+           {
+            "$id": "100",
+            "kind": "property",
+            "name": "qi",
+            "serializedName": "qi",
+            "description": "RSA Private Key Parameter",
+            "type": {
+             "$id": "101",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "optional": true,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Microsoft.CodeTransparency.JsonWebKey.qi"
+           },
+           {
+            "$id": "102",
+            "kind": "property",
+            "name": "use",
+            "serializedName": "use",
+            "description": "Use (\"public key use\") identifies the intended use of\nthe public key. The \"use\" parameter is employed to indicate whether\na public key is used for encrypting data or verifying the signature\non data. Values are commonly \"sig\" (signature) or \"enc\" (encryption).",
+            "type": {
+             "$id": "103",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "optional": true,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Microsoft.CodeTransparency.JsonWebKey.use"
+           },
+           {
+            "$id": "104",
+            "kind": "property",
+            "name": "x",
+            "serializedName": "x",
+            "description": "X coordinate for the Elliptic Curve point",
+            "type": {
+             "$id": "105",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "optional": true,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Microsoft.CodeTransparency.JsonWebKey.x"
+           },
+           {
+            "$id": "106",
+            "kind": "property",
+            "name": "x5c",
+            "serializedName": "x5c",
+            "description": "The \"x5c\" (X.509 certificate chain) parameter contains a chain of one\nor more PKIX certificates [RFC5280].  The certificate chain is\nrepresented as a JSON array of certificate value strings.  Each\nstring in the array is a base64-encoded (Section 4 of [RFC4648] --\nnot base64url-encoded) DER [ITU.X690.1994] PKIX certificate value.\nThe PKIX certificate containing the key value MUST be the first\ncertificate.",
+            "type": {
+             "$id": "107",
+             "kind": "array",
+             "name": "Array",
+             "valueType": {
+              "$id": "108",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string",
+              "decorators": []
+             },
+             "crossLanguageDefinitionId": "TypeSpec.Array",
+             "decorators": []
+            },
+            "optional": true,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Microsoft.CodeTransparency.JsonWebKey.x5c"
+           },
+           {
+            "$id": "109",
+            "kind": "property",
+            "name": "y",
+            "serializedName": "y",
+            "description": "Y coordinate for the Elliptic Curve point",
+            "type": {
+             "$id": "110",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "optional": true,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Microsoft.CodeTransparency.JsonWebKey.y"
+           }
+          ]
+         },
+         "optional": false,
+         "readOnly": false,
+         "discriminator": false,
+         "flatten": false,
+         "decorators": [],
+         "crossLanguageDefinitionId": "Microsoft.CodeTransparency.DidDocumentKey.publicKeyJwk"
+        }
+       ]
+      },
+      "crossLanguageDefinitionId": "TypeSpec.Array",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Microsoft.CodeTransparency.DidDocument.assertionMethod"
+    }
+   ]
+  },
+  {
+   "$ref": "67"
+  },
+  {
+   "$ref": "75"
+  },
+  {
+   "$id": "111",
+   "kind": "model",
+   "name": "CodeTransparencyConfiguration",
+   "crossLanguageDefinitionId": "Microsoft.CodeTransparency.CodeTransparencyConfiguration",
+   "usage": "Output,Json",
+   "description": "The Response body of the Configuration API.",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "112",
+     "kind": "property",
+     "name": "policy",
+     "serializedName": "policy",
+     "type": {
+      "$id": "113",
+      "kind": "model",
+      "name": "CodeTransparencyConfigurationPolicy",
+      "crossLanguageDefinitionId": "Microsoft.CodeTransparency.CodeTransparencyConfigurationPolicy",
+      "usage": "Output,Json",
+      "description": "Configuration of CCF Authentication policies.",
+      "decorators": [],
+      "properties": [
+       {
+        "$id": "114",
+        "kind": "property",
+        "name": "accepted_algorithms",
+        "serializedName": "accepted_algorithms",
+        "type": {
+         "$id": "115",
+         "kind": "array",
+         "name": "Array",
+         "valueType": {
+          "$id": "116",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         },
+         "crossLanguageDefinitionId": "TypeSpec.Array",
+         "decorators": []
+        },
+        "optional": true,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Microsoft.CodeTransparency.CodeTransparencyConfigurationPolicy.accepted_algorithms"
+       },
+       {
+        "$id": "117",
+        "kind": "property",
+        "name": "accepted_did_issuers",
+        "serializedName": "accepted_did_issuers",
+        "type": {
+         "$id": "118",
+         "kind": "array",
+         "name": "Array",
+         "valueType": {
+          "$id": "119",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         },
+         "crossLanguageDefinitionId": "TypeSpec.Array",
+         "decorators": []
+        },
+        "optional": true,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Microsoft.CodeTransparency.CodeTransparencyConfigurationPolicy.accepted_did_issuers"
+       }
+      ]
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Microsoft.CodeTransparency.CodeTransparencyConfiguration.policy"
+    },
+    {
+     "$id": "120",
+     "kind": "property",
+     "name": "authentication",
+     "serializedName": "authentication",
+     "type": {
+      "$id": "121",
+      "kind": "model",
+      "name": "CodeTransparencyConfigurationAuthentication",
+      "crossLanguageDefinitionId": "Microsoft.CodeTransparency.CodeTransparencyConfigurationAuthentication",
+      "usage": "Output,Json",
+      "description": "Configuration of CCF authentication.",
+      "decorators": [],
+      "properties": [
+       {
+        "$id": "122",
+        "kind": "property",
+        "name": "allow_unauthenticated",
+        "serializedName": "allow_unauthenticated",
+        "type": {
+         "$id": "123",
+         "kind": "boolean",
+         "name": "boolean",
+         "crossLanguageDefinitionId": "TypeSpec.boolean",
+         "decorators": []
+        },
+        "optional": false,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Microsoft.CodeTransparency.CodeTransparencyConfigurationAuthentication.allow_unauthenticated"
+       },
+       {
+        "$id": "124",
+        "kind": "property",
+        "name": "jwt",
+        "serializedName": "jwt",
+        "type": {
+         "$id": "125",
+         "kind": "model",
+         "name": "CodeTransparencyConfigurationAuthenticationJwt",
+         "crossLanguageDefinitionId": "Microsoft.CodeTransparency.CodeTransparencyConfigurationAuthenticationJwt",
+         "usage": "Output,Json",
+         "description": "Configuration of JWT claims",
+         "decorators": [],
+         "properties": [
+          {
+           "$id": "126",
+           "kind": "property",
+           "name": "required_claims",
+           "serializedName": "required_claims",
+           "type": {
+            "$id": "127",
+            "kind": "dict",
+            "keyType": {
+             "$id": "128",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "valueType": {
+             "$id": "129",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "decorators": []
+           },
+           "optional": false,
+           "readOnly": false,
+           "discriminator": false,
+           "flatten": false,
+           "decorators": [],
+           "crossLanguageDefinitionId": "Microsoft.CodeTransparency.CodeTransparencyConfigurationAuthenticationJwt.required_claims"
+          }
+         ]
+        },
+        "optional": true,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Microsoft.CodeTransparency.CodeTransparencyConfigurationAuthentication.jwt"
+       }
+      ]
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Microsoft.CodeTransparency.CodeTransparencyConfiguration.authentication"
+    },
+    {
+     "$id": "130",
+     "kind": "property",
+     "name": "service_identifier",
+     "serializedName": "service_identifier",
+     "description": "did:web identifier",
+     "type": {
+      "$id": "131",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Microsoft.CodeTransparency.CodeTransparencyConfiguration.service_identifier"
+    }
+   ]
+  },
+  {
+   "$ref": "113"
+  },
+  {
+   "$ref": "121"
+  },
+  {
+   "$ref": "125"
+  },
+  {
+   "$id": "132",
+   "kind": "model",
+   "name": "VersionResult",
+   "crossLanguageDefinitionId": "Microsoft.CodeTransparency.VersionResult",
+   "usage": "Output,Json",
+   "description": "The Response body of the Version API.",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "133",
+     "kind": "property",
+     "name": "scitt_version",
+     "serializedName": "scitt_version",
+     "description": "Version of the CodeTransparency service",
+     "type": {
+      "$id": "134",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Microsoft.CodeTransparency.VersionResult.scitt_version"
+    }
+   ]
+  }
+ ],
+ "Clients": [
+  {
+   "$id": "135",
+   "Name": "CodeTransparencyClient",
+   "Operations": [
+    {
+     "$id": "136",
+     "Name": "createEntry",
+     "ResourceName": "CodeTransparency",
+     "Description": "Post an entry to be registered on the CodeTransparency instance.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "137",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "138",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "139",
+        "Type": {
+         "$id": "140",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2024-01-11-preview"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "141",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Description": "The MIME content type a Cose body is application/cose, containing a CoseSign1 signature.",
+       "Type": {
+        "$id": "142",
+        "kind": "constant",
+        "valueType": {
+         "$id": "143",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/cose",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "144",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "145",
+        "kind": "constant",
+        "valueType": {
+         "$id": "146",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "147",
+       "Name": "body",
+       "NameInRequest": "body",
+       "Description": "A raw CoseSign1 signature",
+       "Type": {
+        "$id": "148",
+        "kind": "bytes",
+        "name": "bytes",
+        "crossLanguageDefinitionId": "TypeSpec.bytes",
+        "decorators": []
+       },
+       "Location": "Body",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "149",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "17"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Binary",
+     "Uri": "{endpoint}",
+     "Path": "/entries",
+     "RequestMediaTypes": [
+      "application/cose"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "Microsoft.CodeTransparency.createEntry",
+     "Decorators": [],
+     "Examples": [
+      {
+       "$id": "150",
+       "kind": "http",
+       "name": "CreateEntry",
+       "description": "CreateEntry",
+       "filePath": "2024-01-11-preview/CreateEntry.json",
+       "parameters": [
+        {
+         "$id": "151",
+         "parameter": {
+          "$ref": "137"
+         },
+         "value": {
+          "$id": "152",
+          "kind": "string",
+          "type": {
+           "$ref": "138"
+          },
+          "value": "2024-01-11-preview"
+         }
+        },
+        {
+         "$id": "153",
+         "parameter": {
+          "$ref": "147"
+         },
+         "value": {
+          "$id": "154",
+          "kind": "string",
+          "type": {
+           "$ref": "148"
+          },
+          "value": "{binary}"
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "155",
+         "response": {
+          "$ref": "149"
+         },
+         "statusCode": 200,
+         "bodyValue": {
+          "$id": "156",
+          "kind": "model",
+          "type": {
+           "$ref": "17"
+          },
+          "value": {
+           "$id": "157",
+           "operationId": {
+            "$id": "158",
+            "kind": "string",
+            "type": {
+             "$ref": "19"
+            },
+            "value": "2.123"
+           }
+          }
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "$id": "159",
+     "Name": "getEntryStatus",
+     "ResourceName": "CodeTransparency",
+     "Description": "Get the status the entry operation",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "160",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "161",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "162",
+        "Type": {
+         "$id": "163",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2024-01-11-preview"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "164",
+       "Name": "operationId",
+       "NameInRequest": "operationId",
+       "Description": "ID of the operation to retrieve.",
+       "Type": {
+        "$id": "165",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "166",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "167",
+        "kind": "constant",
+        "valueType": {
+         "$id": "168",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "169",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "20"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/operations/{operationId}",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "Microsoft.CodeTransparency.getEntryStatus",
+     "Decorators": [],
+     "Examples": [
+      {
+       "$id": "170",
+       "kind": "http",
+       "name": "GetEntryStatus",
+       "description": "GetEntryStatus",
+       "filePath": "2024-01-11-preview/GetEntryStatus.json",
+       "parameters": [
+        {
+         "$id": "171",
+         "parameter": {
+          "$ref": "160"
+         },
+         "value": {
+          "$id": "172",
+          "kind": "string",
+          "type": {
+           "$ref": "161"
+          },
+          "value": "2024-01-11-preview"
+         }
+        },
+        {
+         "$id": "173",
+         "parameter": {
+          "$ref": "164"
+         },
+         "value": {
+          "$id": "174",
+          "kind": "string",
+          "type": {
+           "$ref": "165"
+          },
+          "value": "2.123"
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "175",
+         "response": {
+          "$ref": "169"
+         },
+         "statusCode": 200,
+         "bodyValue": {
+          "$id": "176",
+          "kind": "model",
+          "type": {
+           "$ref": "20"
+          },
+          "value": {
+           "$id": "177",
+           "entryId": {
+            "$id": "178",
+            "kind": "string",
+            "type": {
+             "$ref": "22"
+            },
+            "value": "2.131"
+           },
+           "operationId": {
+            "$id": "179",
+            "kind": "string",
+            "type": {
+             "$ref": "26"
+            },
+            "value": "2.123"
+           },
+           "status": {
+            "$id": "180",
+            "kind": "string",
+            "type": {
+             "$ref": "2"
+            },
+            "value": "succeeded"
+           }
+          }
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "$id": "181",
+     "Name": "listEntryStatuses",
+     "ResourceName": "CodeTransparency",
+     "Description": "Get the status of all entries operations",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "182",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "183",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "184",
+        "Type": {
+         "$id": "185",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2024-01-11-preview"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "186",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "187",
+        "kind": "constant",
+        "valueType": {
+         "$id": "188",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "189",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "28"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/operations",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "Microsoft.CodeTransparency.listEntryStatuses",
+     "Decorators": [],
+     "Examples": [
+      {
+       "$id": "190",
+       "kind": "http",
+       "name": "ListEntryStatuses",
+       "description": "ListEntryStatuses",
+       "filePath": "2024-01-11-preview/ListEntryStatuses.json",
+       "parameters": [
+        {
+         "$id": "191",
+         "parameter": {
+          "$ref": "182"
+         },
+         "value": {
+          "$id": "192",
+          "kind": "string",
+          "type": {
+           "$ref": "183"
+          },
+          "value": "2024-01-11-preview"
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "193",
+         "response": {
+          "$ref": "189"
+         },
+         "statusCode": 200,
+         "bodyValue": {
+          "$id": "194",
+          "kind": "model",
+          "type": {
+           "$ref": "28"
+          },
+          "value": {
+           "$id": "195",
+           "operations": {
+            "$id": "196",
+            "kind": "array",
+            "type": {
+             "$ref": "30"
+            },
+            "value": [
+             {
+              "$id": "197",
+              "kind": "model",
+              "type": {
+               "$ref": "20"
+              },
+              "value": {
+               "$id": "198",
+               "entryId": {
+                "$id": "199",
+                "kind": "string",
+                "type": {
+                 "$ref": "22"
+                },
+                "value": "4.89"
+               },
+               "operationId": {
+                "$id": "200",
+                "kind": "string",
+                "type": {
+                 "$ref": "26"
+                },
+                "value": "4.87"
+               },
+               "status": {
+                "$id": "201",
+                "kind": "string",
+                "type": {
+                 "$ref": "2"
+                },
+                "value": "succeeded"
+               }
+              }
+             },
+             {
+              "$id": "202",
+              "kind": "model",
+              "type": {
+               "$ref": "20"
+              },
+              "value": {
+               "$id": "203",
+               "entryId": {
+                "$id": "204",
+                "kind": "string",
+                "type": {
+                 "$ref": "22"
+                },
+                "value": "4.91"
+               },
+               "operationId": {
+                "$id": "205",
+                "kind": "string",
+                "type": {
+                 "$ref": "26"
+                },
+                "value": "4.91"
+               },
+               "status": {
+                "$id": "206",
+                "kind": "string",
+                "type": {
+                 "$ref": "2"
+                },
+                "value": "succeeded"
+               }
+              }
+             }
+            ]
+           }
+          }
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "$id": "207",
+     "Name": "getEntry",
+     "ResourceName": "CodeTransparency",
+     "Description": "Get Entry with or without receipt embedded in its unprotected header",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "208",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "209",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "210",
+        "Type": {
+         "$id": "211",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2024-01-11-preview"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "212",
+       "Name": "embedReceipt",
+       "NameInRequest": "embedReceipt",
+       "Description": "Embed a receipt as part of the response",
+       "Type": {
+        "$id": "213",
+        "kind": "boolean",
+        "name": "boolean",
+        "crossLanguageDefinitionId": "TypeSpec.boolean",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": false,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "214",
+       "Name": "entryId",
+       "NameInRequest": "entryId",
+       "Description": "ID of the entry to retrieve.",
+       "Type": {
+        "$id": "215",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "216",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "217",
+        "kind": "constant",
+        "valueType": {
+         "$id": "218",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/cose",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "219",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$id": "220",
+        "kind": "bytes",
+        "name": "bytes",
+        "crossLanguageDefinitionId": "TypeSpec.bytes",
+        "decorators": []
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "221",
+         "Name": "contentType",
+         "NameInResponse": "content-type",
+         "Description": "The MIME content type a Cose body is application/cose, containing a CoseSign1 signature.",
+         "Type": {
+          "$id": "222",
+          "kind": "constant",
+          "valueType": {
+           "$id": "223",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          },
+          "value": "application/cose",
+          "decorators": []
+         }
+        }
+       ],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/cose"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/entries/{entryId}",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "Microsoft.CodeTransparency.getEntry",
+     "Decorators": [],
+     "Examples": [
+      {
+       "$id": "224",
+       "kind": "http",
+       "name": "GetEntry",
+       "description": "GetEntry",
+       "filePath": "2024-01-11-preview/GetEntry.json",
+       "parameters": [
+        {
+         "$id": "225",
+         "parameter": {
+          "$ref": "208"
+         },
+         "value": {
+          "$id": "226",
+          "kind": "string",
+          "type": {
+           "$ref": "209"
+          },
+          "value": "2024-01-11-preview"
+         }
+        },
+        {
+         "$id": "227",
+         "parameter": {
+          "$ref": "214"
+         },
+         "value": {
+          "$id": "228",
+          "kind": "string",
+          "type": {
+           "$ref": "215"
+          },
+          "value": "2.131"
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "229",
+         "response": {
+          "$ref": "219"
+         },
+         "statusCode": 200,
+         "bodyValue": {
+          "$id": "230",
+          "kind": "string",
+          "type": {
+           "$ref": "220"
+          },
+          "value": ""
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "$id": "231",
+     "Name": "getEntryReceipt",
+     "ResourceName": "CodeTransparency",
+     "Description": "Get the receipt of an entry given a specific entry id.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "232",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "233",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "234",
+        "Type": {
+         "$id": "235",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2024-01-11-preview"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "236",
+       "Name": "entryId",
+       "NameInRequest": "entryId",
+       "Description": "ID of the entry to retrieve.",
+       "Type": {
+        "$id": "237",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "238",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "239",
+        "kind": "constant",
+        "valueType": {
+         "$id": "240",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/cbor",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "241",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$id": "242",
+        "kind": "bytes",
+        "name": "bytes",
+        "crossLanguageDefinitionId": "TypeSpec.bytes",
+        "decorators": []
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "243",
+         "Name": "contentType",
+         "NameInResponse": "content-type",
+         "Description": "The MIME content type for raw receipt is application/cbor.",
+         "Type": {
+          "$id": "244",
+          "kind": "constant",
+          "valueType": {
+           "$id": "245",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          },
+          "value": "application/cbor",
+          "decorators": []
+         }
+        }
+       ],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/cbor"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/entries/{entryId}/receipt",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "Microsoft.CodeTransparency.getEntryReceipt",
+     "Decorators": [],
+     "Examples": [
+      {
+       "$id": "246",
+       "kind": "http",
+       "name": "GetEntryReceipt",
+       "description": "GetEntryReceipt",
+       "filePath": "2024-01-11-preview/GetEntryReceipt.json",
+       "parameters": [
+        {
+         "$id": "247",
+         "parameter": {
+          "$ref": "232"
+         },
+         "value": {
+          "$id": "248",
+          "kind": "string",
+          "type": {
+           "$ref": "233"
+          },
+          "value": "2024-01-11-preview"
+         }
+        },
+        {
+         "$id": "249",
+         "parameter": {
+          "$ref": "236"
+         },
+         "value": {
+          "$id": "250",
+          "kind": "string",
+          "type": {
+           "$ref": "237"
+          },
+          "value": "2.131"
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "251",
+         "response": {
+          "$ref": "241"
+         },
+         "statusCode": 200,
+         "bodyValue": {
+          "$id": "252",
+          "kind": "string",
+          "type": {
+           "$ref": "242"
+          },
+          "value": ""
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "$id": "253",
+     "Name": "listEntryIds",
+     "ResourceName": "CodeTransparency",
+     "Description": "Historical query to get a list of entries of a given range",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "254",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "255",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "256",
+        "Type": {
+         "$id": "257",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2024-01-11-preview"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "258",
+       "Name": "from",
+       "NameInRequest": "from",
+       "Description": "Starting Transaction Id",
+       "Type": {
+        "$id": "259",
+        "kind": "int64",
+        "name": "int64",
+        "crossLanguageDefinitionId": "TypeSpec.int64",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": false,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "260",
+       "Name": "to",
+       "NameInRequest": "to",
+       "Description": "Ending Transaction Id",
+       "Type": {
+        "$id": "261",
+        "kind": "int64",
+        "name": "int64",
+        "crossLanguageDefinitionId": "TypeSpec.int64",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": false,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "262",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "263",
+        "kind": "constant",
+        "valueType": {
+         "$id": "264",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "265",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "31"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/entries/txIds",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "266",
+      "ItemName": "transactionIds",
+      "NextLinkName": "nextLink"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "Microsoft.CodeTransparency.listEntryIds",
+     "Decorators": [],
+     "Examples": [
+      {
+       "$id": "267",
+       "kind": "http",
+       "name": "ListEntryIds",
+       "description": "ListEntryIds",
+       "filePath": "2024-01-11-preview/ListEntryIds.json",
+       "parameters": [
+        {
+         "$id": "268",
+         "parameter": {
+          "$ref": "254"
+         },
+         "value": {
+          "$id": "269",
+          "kind": "string",
+          "type": {
+           "$ref": "255"
+          },
+          "value": "2024-01-11-preview"
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "270",
+         "response": {
+          "$ref": "265"
+         },
+         "statusCode": 200,
+         "bodyValue": {
+          "$id": "271",
+          "kind": "model",
+          "type": {
+           "$ref": "31"
+          },
+          "value": {
+           "$id": "272",
+           "transactionIds": {
+            "$id": "273",
+            "kind": "array",
+            "type": {
+             "$ref": "33"
+            },
+            "value": [
+             {
+              "$id": "274",
+              "kind": "string",
+              "type": {
+               "$ref": "34"
+              },
+              "value": "2.131"
+             }
+            ]
+           },
+           "nextLink": {
+            "$id": "275",
+            "kind": "string",
+            "type": {
+             "$ref": "36"
+            },
+            "value": "/entries/txIds?from=20&to=40"
+           }
+          }
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "$id": "276",
+     "Name": "getParameters",
+     "ResourceName": "CodeTransparency",
+     "Description": "Get service parameters",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "277",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "278",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "279",
+        "Type": {
+         "$id": "280",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2024-01-11-preview"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "281",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "282",
+        "kind": "constant",
+        "valueType": {
+         "$id": "283",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "284",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "53"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/parameters",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "Microsoft.CodeTransparency.getParameters",
+     "Decorators": [],
+     "Examples": [
+      {
+       "$id": "285",
+       "kind": "http",
+       "name": "GetParameters",
+       "description": "GetParameters",
+       "filePath": "2024-01-11-preview/GetParameters.json",
+       "parameters": [
+        {
+         "$id": "286",
+         "parameter": {
+          "$ref": "277"
+         },
+         "value": {
+          "$id": "287",
+          "kind": "string",
+          "type": {
+           "$ref": "278"
+          },
+          "value": "2024-01-11-preview"
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "288",
+         "response": {
+          "$ref": "284"
+         },
+         "statusCode": 200,
+         "bodyValue": {
+          "$id": "289",
+          "kind": "model",
+          "type": {
+           "$ref": "53"
+          },
+          "value": {
+           "$id": "290",
+           "serviceCertificate": {
+            "$id": "291",
+            "kind": "string",
+            "type": {
+             "$ref": "55"
+            },
+            "value": "MIIBvTCCAUOgAwIBAgIQNobpRR2ttkHF4x+r18qpSzAKBggqhkjOPQQDAzAWMRQwEgYDVQQDDAtDQ0YgTmV0d29yazAeFw0yNDAyMjAxNTI5NThaFw0yNDA1MjAxNTI5NTdaMBYxFDASBgNVBAMMC0NDRiBOZXR3b3JrMHYwEAYHKoZIzj0CAQYFK4EEACIDYgAE1LPHv776kFvrLqt7IoOOXXR/tc37XZxEVV7kDpAQnd/FnBFwFLJP5bR4EWDK4dagtFhdFK9jygDjGAnusKNUcBpnNW+VYbZdnQJqMtCczG1/vkdCU2BJFwovqwPY+DqEo1YwVDASBgNVHRMBAf8ECDAGAQH/AgEAMB0GA1UdDgQWBBT85f22GsUpfHQ7iZchE3Hffu1phTAfBgNVHSMEGDAWgBT85f22GsUpfHQ7iZchE3Hffu1phTAKBggqhkjOPQQDAwNoADBlAjEAuxwyGmAXHtglqnA+lZwmDGa7FRZxafupNBGmdhUpfZeZeONpM5S51OW/vigJyT2qAjBa6YlKiXlqUvYTGby8/NrhY9Wso1iezhIZl6eD90UY6vDI8P44/doPWBqhye8En/k="
+           },
+           "serviceId": {
+            "$id": "292",
+            "kind": "string",
+            "type": {
+             "$ref": "57"
+            },
+            "value": "d40283071e4365dbc2b222464ed41f8fc541c0368c478facf379687272d8f5e4"
+           },
+           "signatureAlgorithm": {
+            "$id": "293",
+            "kind": "string",
+            "type": {
+             "$ref": "59"
+            },
+            "value": "ES256"
+           },
+           "treeAlgorithm": {
+            "$id": "294",
+            "kind": "string",
+            "type": {
+             "$ref": "61"
+            },
+            "value": "CCF"
+           }
+          }
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "$id": "295",
+     "Name": "getDidConfig",
+     "ResourceName": "CodeTransparency",
+     "Description": "Get the DID configuration file.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "296",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "297",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "298",
+        "Type": {
+         "$id": "299",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2024-01-11-preview"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "300",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "301",
+        "kind": "constant",
+        "valueType": {
+         "$id": "302",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "303",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "62"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/.well-known/did.json",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "Microsoft.CodeTransparency.getDidConfig",
+     "Decorators": [],
+     "Examples": [
+      {
+       "$id": "304",
+       "kind": "http",
+       "name": "GetDidConfig",
+       "description": "GetDidConfig",
+       "filePath": "2024-01-11-preview/GetDidConfig.json",
+       "parameters": [
+        {
+         "$id": "305",
+         "parameter": {
+          "$ref": "296"
+         },
+         "value": {
+          "$id": "306",
+          "kind": "string",
+          "type": {
+           "$ref": "297"
+          },
+          "value": "2024-01-11-preview"
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "307",
+         "response": {
+          "$ref": "303"
+         },
+         "statusCode": 200,
+         "bodyValue": {
+          "$id": "308",
+          "kind": "model",
+          "type": {
+           "$ref": "62"
+          },
+          "value": {
+           "$id": "309",
+           "id": {
+            "$id": "310",
+            "kind": "string",
+            "type": {
+             "$ref": "64"
+            },
+            "value": "did:web:servicename.confidential-ledger.azure.com"
+           },
+           "assertionMethod": {
+            "$id": "311",
+            "kind": "array",
+            "type": {
+             "$ref": "66"
+            },
+            "value": [
+             {
+              "$id": "312",
+              "kind": "model",
+              "type": {
+               "$ref": "67"
+              },
+              "value": {
+               "$id": "313",
+               "controller": {
+                "$id": "314",
+                "kind": "string",
+                "type": {
+                 "$ref": "71"
+                },
+                "value": "did:web:servicename.confidential-ledger.azure.com"
+               },
+               "id": {
+                "$id": "315",
+                "kind": "string",
+                "type": {
+                 "$ref": "69"
+                },
+                "value": "did:web:servicename.confidential-ledger.azure.com#d40283071e4365dbc2b222464ed41f8fc541c0368c478facf379687272d8f5e4"
+               },
+               "publicKeyJwk": {
+                "$id": "316",
+                "kind": "model",
+                "type": {
+                 "$ref": "75"
+                },
+                "value": {
+                 "$id": "317",
+                 "crv": {
+                  "$id": "318",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "79"
+                  },
+                  "value": "P-384"
+                 },
+                 "kty": {
+                  "$id": "319",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "93"
+                  },
+                  "value": "EC"
+                 },
+                 "x": {
+                  "$id": "320",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "105"
+                  },
+                  "value": "1LPHv776kFvrLqt7IoOOXXR_tc37XZxEVV7kDpAQnd_FnBFwFLJP5bR4EWDK4dag"
+                 },
+                 "x5c": {
+                  "$id": "321",
+                  "kind": "array",
+                  "type": {
+                   "$ref": "107"
+                  },
+                  "value": [
+                   {
+                    "$id": "322",
+                    "kind": "string",
+                    "type": {
+                     "$ref": "108"
+                    },
+                    "value": "MIIBvTCCAUOgAwIBAgIQNobpRR2ttkHF4x+r18qpSzAKBggqhkjOPQQDAzAWMRQwEgYDVQQDDAtDQ0YgTmV0d29yazAeFw0yNDAyMjAxNTI5NThaFw0yNDA1MjAxNTI5NTdaMBYxFDASBgNVBAMMC0NDRiBOZXR3b3JrMHYwEAYHKoZIzj0CAQYFK4EEACIDYgAE1LPHv776kFvrLqt7IoOOXXR/tc37XZxEVV7kDpAQnd/FnBFwFLJP5bR4EWDK4dagtFhdFK9jygDjGAnusKNUcBpnNW+VYbZdnQJqMtCczG1/vkdCU2BJFwovqwPY+DqEo1YwVDASBgNVHRMBAf8ECDAGAQH/AgEAMB0GA1UdDgQWBBT85f22GsUpfHQ7iZchE3Hffu1phTAfBgNVHSMEGDAWgBT85f22GsUpfHQ7iZchE3Hffu1phTAKBggqhkjOPQQDAwNoADBlAjEAuxwyGmAXHtglqnA+lZwmDGa7FRZxafupNBGmdhUpfZeZeONpM5S51OW/vigJyT2qAjBa6YlKiXlqUvYTGby8/NrhY9Wso1iezhIZl6eD90UY6vDI8P44/doPWBqhye8En/k="
+                   }
+                  ]
+                 },
+                 "y": {
+                  "$id": "323",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "110"
+                  },
+                  "value": "tFhdFK9jygDjGAnusKNUcBpnNW-VYbZdnQJqMtCczG1_vkdCU2BJFwovqwPY-DqE"
+                 }
+                }
+               },
+               "type": {
+                "$id": "324",
+                "kind": "string",
+                "type": {
+                 "$ref": "73"
+                },
+                "value": "JsonWebKey2020"
+               }
+              }
+             }
+            ]
+           }
+          }
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "$id": "325",
+     "Name": "getCodeTransparencyConfig",
+     "ResourceName": "CodeTransparency",
+     "Description": "Get CodeTransparency configuration information.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "326",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "327",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "328",
+        "Type": {
+         "$id": "329",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2024-01-11-preview"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "330",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "331",
+        "kind": "constant",
+        "valueType": {
+         "$id": "332",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "333",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "111"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/configuration",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "Microsoft.CodeTransparency.getCodeTransparencyConfig",
+     "Decorators": [],
+     "Examples": [
+      {
+       "$id": "334",
+       "kind": "http",
+       "name": "GetCodeTransparencyConfig",
+       "description": "GetCodeTransparencyConfig",
+       "filePath": "2024-01-11-preview/GetCodeTransparencyConfig.json",
+       "parameters": [
+        {
+         "$id": "335",
+         "parameter": {
+          "$ref": "326"
+         },
+         "value": {
+          "$id": "336",
+          "kind": "string",
+          "type": {
+           "$ref": "327"
+          },
+          "value": "2024-01-11-preview"
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "337",
+         "response": {
+          "$ref": "333"
+         },
+         "statusCode": 200,
+         "bodyValue": {
+          "$id": "338",
+          "kind": "model",
+          "type": {
+           "$ref": "111"
+          },
+          "value": {
+           "$id": "339",
+           "authentication": {
+            "$id": "340",
+            "kind": "model",
+            "type": {
+             "$ref": "121"
+            },
+            "value": {
+             "$id": "341",
+             "allow_unauthenticated": {
+              "$id": "342",
+              "kind": "boolean",
+              "type": {
+               "$ref": "123"
+              },
+              "value": true
+             }
+            }
+           },
+           "service_identifier": {
+            "$id": "343",
+            "kind": "string",
+            "type": {
+             "$ref": "131"
+            },
+            "value": "did:web:servicename.confidential-ledger.azure.com"
+           }
+          }
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "$id": "344",
+     "Name": "getCodeTransparencyVersion",
+     "ResourceName": "CodeTransparency",
+     "Description": "Get CodeTransparency version information.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "345",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "346",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "347",
+        "Type": {
+         "$id": "348",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2024-01-11-preview"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "349",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "350",
+        "kind": "constant",
+        "valueType": {
+         "$id": "351",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "352",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "132"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/version",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "Microsoft.CodeTransparency.getCodeTransparencyVersion",
+     "Decorators": [],
+     "Examples": [
+      {
+       "$id": "353",
+       "kind": "http",
+       "name": "GetCodeTransparencyVersion",
+       "description": "GetCodeTransparencyVersion",
+       "filePath": "2024-01-11-preview/GetCodeTransparencyVersion.json",
+       "parameters": [
+        {
+         "$id": "354",
+         "parameter": {
+          "$ref": "345"
+         },
+         "value": {
+          "$id": "355",
+          "kind": "string",
+          "type": {
+           "$ref": "346"
+          },
+          "value": "2024-01-11-preview"
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "356",
+         "response": {
+          "$ref": "352"
+         },
+         "statusCode": 200,
+         "bodyValue": {
+          "$id": "357",
+          "kind": "model",
+          "type": {
+           "$ref": "132"
+          },
+          "value": {
+           "$id": "358",
+           "scitt_version": {
+            "$id": "359",
+            "kind": "string",
+            "type": {
+             "$ref": "134"
+            },
+            "value": "0.6.1"
+           }
+          }
+         }
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "Protocol": {
+    "$id": "360"
+   },
+   "Parameters": [
+    {
+     "$id": "361",
+     "Name": "endpoint",
+     "NameInRequest": "endpoint",
+     "Type": {
+      "$id": "362",
+      "kind": "url",
+      "name": "url",
+      "crossLanguageDefinitionId": "TypeSpec.url"
+     },
+     "Location": "Uri",
+     "IsApiVersion": false,
+     "IsResourceParameter": false,
+     "IsContentType": false,
+     "IsRequired": true,
+     "IsEndpoint": true,
+     "SkipUrlEncoding": false,
+     "Explode": false,
+     "Kind": "Client"
+    }
+   ],
+   "Decorators": []
+  }
+ ],
+ "Auth": {
+  "$id": "363",
+  "ApiKey": {
+   "$id": "364",
+   "Name": "Authorization",
+   "Prefix": "Bearer"
+  }
+ }
+}

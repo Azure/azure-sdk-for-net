@@ -1,0 +1,11 @@
+{
+  "output-folder": ".",
+  "namespace": "Azure.Developer.DevCenter",
+  "library-name": "Azure.Developer.DevCenter",
+  "flavor": "azure",
+  "use-model-reader-writer": true,
+  "shared-source-folders": [
+    "../../TempTypeSpecFiles/node_modules/@autorest/csharp/Generator.Shared",
+    "../../TempTypeSpecFiles/node_modules/@autorest/csharp/Azure.Core.Shared"
+  ]
+}
