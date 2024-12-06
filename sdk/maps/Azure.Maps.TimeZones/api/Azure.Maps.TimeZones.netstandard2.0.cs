@@ -91,7 +91,7 @@ namespace Azure.Maps.TimeZones
         public System.TimeSpan DaylightSavingsOffset { get { throw null; } }
         public string PosixTimeZone { get { throw null; } }
         public int? PosixTimeZoneValidYear { get { throw null; } }
-        public System.TimeSpan StandardOffsetTimeSpan { get { throw null; } }
+        public System.TimeSpan StandardOffset { get { throw null; } }
         public System.DateTimeOffset? Sunrise { get { throw null; } }
         public System.DateTimeOffset? Sunset { get { throw null; } }
         public string Tag { get { throw null; } }
@@ -101,7 +101,7 @@ namespace Azure.Maps.TimeZones
     {
         internal TimeTransition() { }
         public System.TimeSpan DaylightSavingsOffset { get { throw null; } }
-        public System.TimeSpan StandardOffsetTimeSpan { get { throw null; } }
+        public System.TimeSpan StandardOffsetOffset { get { throw null; } }
         public string Tag { get { throw null; } }
         public System.DateTimeOffset? UtcEnd { get { throw null; } }
         public System.DateTimeOffset? UtcStart { get { throw null; } }
