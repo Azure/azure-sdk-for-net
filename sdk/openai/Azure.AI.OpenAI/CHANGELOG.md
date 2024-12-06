@@ -1,22 +1,43 @@
 # Release History
 
-## 2.1.0-beta.3 (Unreleased)
+## 2.1.0 (2024-12-05)
+
+This GA library release aligns functionality with the latest `2024-10-21` stable service API label.
+
+> [!NOTE]
+> For consistency and reliability, GA releases of the `Azure.AI.OpenAI` library will always map to stable Azure OpenAI service API versions. Because stable service API versions omit volatile surfaces such as beta features, GA library releases will also not contain the full set of preview functionality. To use beta and preview features, please use the latest prerelease version of the library.
 
 ### Features Added
 
+**Chat**
+
+- [GA] The `2024-10-21` API version brings GA AOAI support for streaming token usage in chat completions; `Usage` is now automatically populated in `StreamingChatCompletionUpdate` instances.
+  - Note 1: this feature is not yet compatible when using On Your Data features (after invoking the `.AddDataSource()` extension method on `ChatCompletionOptions`)
+  - Note 2: this feature is not yet compatible when using image input (a `ChatMessageContentPart` of `Kind` `Image`)
+- [GA] The `AllowParalllelToolCalls` property on `ChatCompletionOptions`, which can be set to `false` to disable the invocation of multiple tools on a single chat completion response, is now supported.
+- [GA] Structured outputs, via the use of `ChatResponseFormat.CreateJsonSchemaFormat()`, is now supported.
+- When using `o1-preview` and `o1-mini` models, `max_completion_tokens` may now be configured by calling the `[Experimental] SetNewMaxCompletionTokensPropertyEnabled()` extension method on `ChatCompletionOptions`.
+  - This extension method will be removed in a future service API version, when it becomes unnecessary once all models support the `max_completion_tokens` property
+
+**Batch**
+
+The `2024-10-21` service API label introduces stable support for batch chat completions to Azure OpenAI. This library release exposes low-level support for batch:
+
+- `AzureOpenAIClient`'s `GetOpenAIFileClient()` will now return a valid, configured instance of `FileClient` that supports uploading files with `FileUploadPurpose.Batch`. This can be used to upload the contents of a valid `.jsonl` file for batch processing.
+- `AzureOpenAIClient`'s `GetBatchClient()` will now return a valid, configured instance of `BatchClient` that can produce a `CreateBatchOperation` given an uploaded file ID using protocol methods.
+- Strongly typed convenience surfaces for `BatchClient` will arrive in a future update.
+
 ### Breaking Changes
 
-### Bugs Fixed
+> [!NOTE]
+> GA library releases only permit breaking changes to items marked with an `[Experimental]` attribute and these changes will be minimized whenever possible.
 
-### Other Changes
+- `[Experimental]` `GetBatchClient(string deploymentName)` on `AzureOpenAIClient` is removed, as the Azure OpenAI batch API now aligns with OpenAI's in not using a deployment-based request URI path. Please use `GetBatchClient()`, instead.
+- `[Expermental]` the `Uri` property of type `System.Uri` in `ChatCitation` and `ChatRetrivedDocument` has been replaced by a `Url` property of type `string`. This contains the same information but properly handles document paths that don't conform to a valid RFC 3986 identifier.
 
 ## 2.1.0-beta.2 (2024-11-04)
 
 This update brings compatibility with the Azure OpenAI `2024-10-01-preview` service API version as well as the `2.1.0-beta.2` release of the `OpenAI` library.
-
-### Breaking Changes
-
-- `[Experimental]` `ChatCitation` and `ChatRetrievedDocument` have each replaced the `Uri` property of type `System.Uri` with a `string` property named `Url`. This aligns with the REST specification and accounts for the wire value of `url` not always providing a valid RFC 3986 identifier [[azure-sdk-for-net \#46793](https://github.com/Azure/azure-sdk-for-net/issues/46793)]
 
 ### Features Added
 
@@ -25,20 +46,13 @@ This update brings compatibility with the Azure OpenAI `2024-10-01-preview` serv
   - Note 2: this feature is not yet compatible when using image input (a `ChatMessageContentPart` of `Kind` `Image`)
 - `2024-10-01-preview` further adds support for ungrounded content detection in chat completion content filter results via the `UngroundedMaterial` property on `ResponseContentFilterResult`, as retrieved from a chat completion via the `GetResponseContentFilterResult()` extension method.
 
-Via `OpenAI 2.0.0-beta.2`:
+## Breaking Changes
 
-- Made improvements to the experimental Realtime API. Please note this features area is currently under rapid development and not all changes may be reflected here.
-  - Several types have been renamed for consistency and clarity.
-  - ConversationRateLimitsUpdate (previously ConversationRateLimitsUpdatedUpdate) now includes named RequestDetails and TokenDetails properties, mapping to the corresponding named items in the underlying rate_limits command payload.
+- `[Experimental]` `ChatCitation` and `ChatRetrievedDocument` have each replaced the `Uri` property of type `System.Uri` with a `string` property named `Url`. This aligns with the REST specification and accounts for the wire value of `url` not always providing a valid RFC 3986 identifier [[azure-sdk-for-net \#46793](https://github.com/Azure/azure-sdk-for-net/issues/46793)]
 
-### Bugs Fixed
+## Bugs Fixed
 
-- Addressed an HTTP 401 issue that caused certain connection retry attempts, such as those triggered for HTTP 429 rate limiting errors, to sometimes generate a malformed request with multiple `Authorization` headers that would then be rejected. [#46401](https://github.com/Azure/azure-sdk-for-net/pull/46401)
 - Addressed an issue that caused `ChatCitation` and `ChatRetrievedDocument` to sometimes throw on deserialization, specifically when a returned value in the `url` JSON field was not populated with an RFC 3986 compliant identifier for `System.Uri` [[azure-sdk-for-net \#46793](https://github.com/Azure/azure-sdk-for-net/issues/46793)]
-
-Via `OpenAI 2.0.0-beta.2`:
-
-- Fixed serialization and deserialization of ConversationToolChoice literal values (such as "required").
 
 ## 2.1.0-beta.1 (2024-10-01)
 
