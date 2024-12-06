@@ -77,9 +77,6 @@ namespace Azure.Maps.TimeZones
             V1_0 = 1,
         }
     }
-    public static partial class MapsTimeZoneModelFactory
-    {
-    }
     public static partial class MapsTimeZonesModelFactory
     {
         public static Azure.Maps.TimeZones.CountryRecord CountryRecord(string name = null, string code = null) { throw null; }
@@ -91,7 +88,7 @@ namespace Azure.Maps.TimeZones
     public partial class ReferenceTime
     {
         internal ReferenceTime() { }
-        public System.TimeSpan DaylightSavingsTimeSpan { get { throw null; } }
+        public System.TimeSpan DaylightSavingsOffset { get { throw null; } }
         public string PosixTimeZone { get { throw null; } }
         public int? PosixTimeZoneValidYear { get { throw null; } }
         public System.TimeSpan StandardOffsetTimeSpan { get { throw null; } }
@@ -103,7 +100,7 @@ namespace Azure.Maps.TimeZones
     public partial class TimeTransition
     {
         internal TimeTransition() { }
-        public System.TimeSpan DaylightSavingsTimeSpan { get { throw null; } }
+        public System.TimeSpan DaylightSavingsOffset { get { throw null; } }
         public System.TimeSpan StandardOffsetTimeSpan { get { throw null; } }
         public string Tag { get { throw null; } }
         public System.DateTimeOffset? UtcEnd { get { throw null; } }

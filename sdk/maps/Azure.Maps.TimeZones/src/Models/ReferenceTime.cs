@@ -32,7 +32,7 @@ namespace Azure.Maps.TimeZones
             _daylightSavings = daylightSavings;
             if (TimeSpan.TryParse(daylightSavings, out TimeSpan DaylightSavingsValue))
             {
-                DaylightSavingsTimeSpan = DaylightSavingsValue;
+                DaylightSavingsOffset = DaylightSavingsValue;
             }
 
             _wallTime = wallTime;
@@ -55,7 +55,7 @@ namespace Azure.Maps.TimeZones
         [CodeGenMember("DaylightSavings")]
         internal string _daylightSavings { get; }
         /// <summary> Time saving in <see cref="TimeSpan"/> format in effect at the <c>ReferenceUTCTimestamp</c>. </summary>
-        public TimeSpan DaylightSavingsTimeSpan { get; }
+        public TimeSpan DaylightSavingsOffset { get; }
 
         /// <summary> Current wall time at the given time zone as shown in the <c>Tag</c> property. </summary>
         [CodeGenMember("WallTime")]
