@@ -46,7 +46,6 @@ function GetDocsTocDisplayName($pkg) {
   return $displayName
 }
 
-
 <#
 .SYNOPSIS
 This function is a safe wrapper around `yq` and `ConvertFrom-Yaml` to convert YAML content to a PowerShell HashTable object
@@ -68,7 +67,7 @@ Get-Content -Raw path/to/file.yml | CompatibleConvertFrom-Yaml
 #>
 function CompatibleConvertFrom-Yaml {
   param(
-    [Parameter(Mandatory=$true, ValueFromPipeline=$true)]
+    [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
     [string]$Content
   )
 
@@ -76,20 +75,13 @@ function CompatibleConvertFrom-Yaml {
     throw "Content to parse is a required input."
   }
 
-  # Initialize any variables or checks that need to be done once
-  $yqPresent = Get-Command 'yq' -ErrorAction SilentlyContinue
-  if (-not $yqPresent) {
+  if (-not $script:IsYamlInstalled) {
     . (Join-Path $PSScriptRoot PSModule-Helpers.ps1)
     Install-ModuleIfNotInstalled -WhatIf:$false "powershell-yaml" "0.4.7" | Import-Module
+    $script:IsYamlInstalled = $true
   }
 
-  # Process the content (for example, you could convert from YAML here)
-  if ($yqPresent) {
-      return ($content | yq -o=json | ConvertFrom-Json -AsHashTable)
-  }
-  else {
-      return ConvertFrom-Yaml $content
-  }
+  return ConvertFrom-Yaml $content
 }
 
 <#
