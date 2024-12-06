@@ -4,11 +4,16 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Azure.CloudMachine.Core;
+using Azure.CloudMachine.EventGrid;
+using Azure.CloudMachine.ServiceBus;
+using Azure.CloudMachine.Storage;
+using Azure.Core;
 using Azure.Provisioning;
-using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Roles;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.CloudMachine;
 
@@ -43,7 +48,7 @@ public class CloudMachineInfrastructure
     {
         if (cmId == default)
         {
-            cmId = CloudMachineWorkspace.ReadOrCreateCloudMachineId();
+            cmId = CloudMachineClient.ReadOrCreateCloudMachineId();
         }
         Id = cmId;
 
@@ -62,7 +67,7 @@ public class CloudMachineInfrastructure
         AddFeature(new ServiceBusSubscriptionFeature("cm_servicebus_subscription_private", sbTopicPrivate)); // TODO: should private connections not be in the Connections collection?
         AddFeature(new ServiceBusSubscriptionFeature("cm_servicebus_subscription_default", sbTopicDefault));
         var systemTopic = AddFeature(new EventGridSystemTopicFeature(Id, storage, "Microsoft.Storage.StorageAccounts"));
-        AddFeature(new SystemTopicEventSubscriptionFeature("cm_eventgrid_subscription_blob", systemTopic, sbTopicPrivate, sbNamespace));
+        AddFeature(new SystemTopicEventSubscriptionFeature("cm-eventgrid-subscription-blob", systemTopic, sbTopicPrivate, sbNamespace));
     }
 
     public T AddFeature<T>(T feature) where T: CloudMachineFeature
@@ -127,4 +132,20 @@ public class CloudMachineInfrastructure
 
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override bool Equals(object? obj) => base.Equals(obj);
+}
+
+public static class CloudMachineInfrastructureConfiguration
+{
+    /// <summary>
+    /// Adds a connection to the collection.
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <param name="cm"></param>
+    /// <returns></returns>
+    public static IConfigurationBuilder AddCloudMachineInfrastructure(this IConfigurationBuilder builder, CloudMachineInfrastructure cm)
+    {
+        builder.AddCloudMachineConnections(cm.Connections);
+        builder.AddCloudMachineId(cm.Id);
+        return builder;
+    }
 }

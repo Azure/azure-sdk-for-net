@@ -57,7 +57,7 @@ internal class MemoryTransferCheckpointer : ITransferCheckpointer
 
     public Dictionary<string, Job> Jobs { get; set; } = new();
 
-    public Task AddNewJobAsync(string transferId, StorageResource source, StorageResource destination, CancellationToken cancellationToken = default)
+    public virtual Task AddNewJobAsync(string transferId, StorageResource source, StorageResource destination, CancellationToken cancellationToken = default)
     {
         CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
         if (Jobs.ContainsKey(transferId))
@@ -71,12 +71,12 @@ internal class MemoryTransferCheckpointer : ITransferCheckpointer
             Operation = JobPlanOperation.Upload, // TODO
             Source = source,
             Destination = destination,
-            Status = new()
+            Status = new(DataTransferState.Queued, false, false),
         };
         return Task.CompletedTask;
     }
 
-    public Task AddNewJobPartAsync(string transferId, int partNumber, JobPartPlanHeader header, CancellationToken cancellationToken = default)
+    public virtual Task AddNewJobPartAsync(string transferId, int partNumber, JobPartPlanHeader header, CancellationToken cancellationToken = default)
     {
         CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
         if (!Jobs.TryGetValue(transferId, out Job job))
@@ -90,18 +90,18 @@ internal class MemoryTransferCheckpointer : ITransferCheckpointer
         job.Parts.Add(partNumber, new()
         {
             Plan = header,
-            Status = new()
+            Status = new(DataTransferState.Queued, false, false),
         });
         return Task.CompletedTask;
     }
 
-    public Task<int> GetCurrentJobPartCountAsync(string transferId, CancellationToken cancellationToken = default)
+    public virtual Task<int> GetCurrentJobPartCountAsync(string transferId, CancellationToken cancellationToken = default)
     {
         CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
         return Task.FromResult(Jobs.TryGetValue(transferId, out Job job) ? job.Parts.Count : 0);
     }
 
-    public Task<DataTransferProperties> GetDataTransferPropertiesAsync(string transferId, CancellationToken cancellationToken = default)
+    public virtual Task<DataTransferProperties> GetDataTransferPropertiesAsync(string transferId, CancellationToken cancellationToken = default)
     {
         CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
         if (!Jobs.TryGetValue(transferId, out Job job))
@@ -119,7 +119,7 @@ internal class MemoryTransferCheckpointer : ITransferCheckpointer
         });
     }
 
-    public Task<JobPartPlanHeader> GetJobPartAsync(string transferId, int partNumber, CancellationToken cancellationToken = default)
+    public virtual Task<JobPartPlanHeader> GetJobPartAsync(string transferId, int partNumber, CancellationToken cancellationToken = default)
     {
         CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
         if (!Jobs.TryGetValue(transferId, out Job job))
@@ -133,7 +133,7 @@ internal class MemoryTransferCheckpointer : ITransferCheckpointer
         return Task.FromResult(part.Plan);
     }
 
-    public Task<DataTransferStatus> GetJobStatusAsync(string transferId, CancellationToken cancellationToken = default)
+    public virtual Task<DataTransferStatus> GetJobStatusAsync(string transferId, CancellationToken cancellationToken = default)
     {
         CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
         if (!Jobs.TryGetValue(transferId, out Job job))
@@ -143,19 +143,19 @@ internal class MemoryTransferCheckpointer : ITransferCheckpointer
         return Task.FromResult(job.Status.DeepCopy());
     }
 
-    public Task<List<string>> GetStoredTransfersAsync(CancellationToken cancellationToken = default)
+    public virtual Task<List<string>> GetStoredTransfersAsync(CancellationToken cancellationToken = default)
     {
         CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
         return Task.FromResult(Jobs.Keys.ToList());
     }
 
-    public Task<bool> IsEnumerationCompleteAsync(string transferId, CancellationToken cancellationToken = default)
+    public virtual Task<bool> IsEnumerationCompleteAsync(string transferId, CancellationToken cancellationToken = default)
     {
         CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
         return Task.FromResult(Jobs.TryGetValue(transferId, out Job job) && job.EnumerationComplete);
     }
 
-    public Task SetEnumerationCompleteAsync(string transferId, CancellationToken cancellationToken = default)
+    public virtual Task SetEnumerationCompleteAsync(string transferId, CancellationToken cancellationToken = default)
     {
         CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
         if (Jobs.TryGetValue(transferId, out Job job))
@@ -165,7 +165,7 @@ internal class MemoryTransferCheckpointer : ITransferCheckpointer
         return Task.CompletedTask;
     }
 
-    public Task SetJobPartStatusAsync(string transferId, int partNumber, DataTransferStatus status, CancellationToken cancellationToken = default)
+    public virtual Task SetJobPartStatusAsync(string transferId, int partNumber, DataTransferStatus status, CancellationToken cancellationToken = default)
     {
         CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
         if (Jobs.TryGetValue(transferId, out Job job) && job.Parts.TryGetValue(partNumber, out JobPart part))
@@ -175,7 +175,7 @@ internal class MemoryTransferCheckpointer : ITransferCheckpointer
         return Task.CompletedTask;
     }
 
-    public Task SetJobStatusAsync(string transferId, DataTransferStatus status, CancellationToken cancellationToken = default)
+    public virtual Task SetJobStatusAsync(string transferId, DataTransferStatus status, CancellationToken cancellationToken = default)
     {
         CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
         if (Jobs.TryGetValue(transferId, out Job job))
@@ -185,7 +185,7 @@ internal class MemoryTransferCheckpointer : ITransferCheckpointer
         return Task.CompletedTask;
     }
 
-    public Task<bool> TryRemoveStoredTransferAsync(string transferId, CancellationToken cancellationToken = default)
+    public virtual Task<bool> TryRemoveStoredTransferAsync(string transferId, CancellationToken cancellationToken = default)
     {
         CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
         return Task.FromResult(Jobs.Remove(transferId));
