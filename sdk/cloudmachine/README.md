@@ -1,4 +1,4 @@
-# Azure CloudMachine client library for .NETyy
+# Azure CloudMachine client library for .NET
 
 Write Azure apps in 5 minutes
 
