@@ -443,6 +443,10 @@ public class TransferManagerTests
             It.IsAny<CancellationToken>()));
         checkpointer.Verify(c => c.SetJobStatusAsync(transferId, It.IsAny<DataTransferStatus>(),
             It.IsAny<CancellationToken>()), Times.Exactly(3));
+        if (!isContainer)
+        {
+            checkpointer.Verify(c => c.GetCurrentJobPartCountAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()), Times.Once);
+        }
         Assert.That(capturedTransferStatuses[0].State, Is.EqualTo(DataTransferState.InProgress));
         Assert.That(capturedTransferStatuses[1].State, Is.EqualTo(DataTransferState.Stopping));
         Assert.That(capturedTransferStatuses[2].IsCompletedWithFailedItems);
