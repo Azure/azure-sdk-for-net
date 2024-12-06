@@ -101,7 +101,7 @@ namespace Azure.Maps.TimeZones
     {
         internal TimeTransition() { }
         public System.TimeSpan DaylightSavingsOffset { get { throw null; } }
-        public System.TimeSpan StandardOffsetOffset { get { throw null; } }
+        public System.TimeSpan StandardOffset { get { throw null; } }
         public string Tag { get { throw null; } }
         public System.DateTimeOffset? UtcEnd { get { throw null; } }
         public System.DateTimeOffset? UtcStart { get { throw null; } }
