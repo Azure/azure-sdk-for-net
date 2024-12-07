@@ -7,17 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
-using Azure.ResourceManager.PlaywrightTesting.Models;
 
-namespace Azure.ResourceManager.PlaywrightTesting
+namespace Azure.ResourceManager.PlaywrightTesting.Models
 {
-    /// <summary>
-    /// A class representing the PlaywrightTestingQuota data model.
-    /// A subscription quota resource.
-    /// </summary>
-    public partial class PlaywrightTestingQuotaData : ResourceData
+    /// <summary> The check availability result. </summary>
+    public partial class PlaywrightTestingNameAvailabilityResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,25 +45,29 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingQuotaData"/>. </summary>
-        internal PlaywrightTestingQuotaData()
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingNameAvailabilityResult"/>. </summary>
+        internal PlaywrightTestingNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingQuotaData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingNameAvailabilityResult"/>. </summary>
+        /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
+        /// <param name="reason"> The reason why the given name is not available. </param>
+        /// <param name="message"> Detailed reason why the given name is not available. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PlaywrightTestingQuotaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PlaywrightTestingQuotaProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PlaywrightTestingNameAvailabilityResult(bool? isNameAvailable, PlaywrightTestingNameUnavailableReason? reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
+            IsNameAvailable = isNameAvailable;
+            Reason = reason;
+            Message = message;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
-        public PlaywrightTestingQuotaProperties Properties { get; }
+        /// <summary> Indicates if the resource name is available. </summary>
+        public bool? IsNameAvailable { get; }
+        /// <summary> The reason why the given name is not available. </summary>
+        public PlaywrightTestingNameUnavailableReason? Reason { get; }
+        /// <summary> Detailed reason why the given name is not available. </summary>
+        public string Message { get; }
     }
 }
