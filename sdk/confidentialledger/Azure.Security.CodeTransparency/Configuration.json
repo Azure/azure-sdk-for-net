@@ -1,0 +1,12 @@
+{
+  "output-folder": ".",
+  "namespace": "Azure.Security.CodeTransparency",
+  "library-name": "Azure.Security.CodeTransparency",
+  "model-namespace": false,
+  "flavor": "azure",
+  "use-model-reader-writer": true,
+  "shared-source-folders": [
+    "../../TempTypeSpecFiles/node_modules/@autorest/csharp/Generator.Shared",
+    "../../TempTypeSpecFiles/node_modules/@autorest/csharp/Azure.Core.Shared"
+  ]
+}
