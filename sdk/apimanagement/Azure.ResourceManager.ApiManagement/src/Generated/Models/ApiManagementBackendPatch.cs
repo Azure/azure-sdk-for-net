@@ -59,10 +59,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="proxy"> Backend gateway Contract Properties. </param>
         /// <param name="tls"> Backend TLS Properties. </param>
         /// <param name="circuitBreaker"> Backend Circuit Breaker Configuration. </param>
+        /// <param name="pool"></param>
+        /// <param name="backendType"> Type of the backend. A backend can be either Single or Pool. </param>
         /// <param name="uri"> Runtime Url of the Backend. </param>
         /// <param name="protocol"> Backend communication protocol. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementBackendPatch(string title, string description, Uri resourceUri, BackendProperties properties, BackendCredentialsContract credentials, BackendProxyContract proxy, BackendTlsProperties tls, BackendCircuitBreaker circuitBreaker, Uri uri, BackendProtocol? protocol, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiManagementBackendPatch(string title, string description, Uri resourceUri, BackendProperties properties, BackendCredentialsContract credentials, BackendProxyContract proxy, BackendTlsProperties tls, BackendCircuitBreaker circuitBreaker, BackendBaseParametersPool pool, BackendType? backendType, Uri uri, BackendProtocol? protocol, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Title = title;
             Description = description;
@@ -72,6 +74,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Proxy = proxy;
             Tls = tls;
             CircuitBreaker = circuitBreaker;
+            Pool = pool;
+            BackendType = backendType;
             Uri = uri;
             Protocol = protocol;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -124,6 +128,23 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
         }
 
+        /// <summary> Gets or sets the pool. </summary>
+        internal BackendBaseParametersPool Pool { get; set; }
+        /// <summary> The list of backend entities belonging to a pool. </summary>
+        [WirePath("properties.pool.services")]
+        public IList<BackendPoolItem> PoolServices
+        {
+            get
+            {
+                if (Pool is null)
+                    Pool = new BackendBaseParametersPool();
+                return Pool.Services;
+            }
+        }
+
+        /// <summary> Type of the backend. A backend can be either Single or Pool. </summary>
+        [WirePath("properties.type")]
+        public BackendType? BackendType { get; set; }
         /// <summary> Runtime Url of the Backend. </summary>
         [WirePath("properties.url")]
         public Uri Uri { get; set; }
