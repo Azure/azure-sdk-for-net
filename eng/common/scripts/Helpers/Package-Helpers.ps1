@@ -46,6 +46,7 @@ function GetDocsTocDisplayName($pkg) {
   return $displayName
 }
 
+$script:IsYamlInstalled = $false
 <#
 .SYNOPSIS
 This function is a safe wrapper around `yq` and `ConvertFrom-Yaml` to convert YAML content to a PowerShell HashTable object
