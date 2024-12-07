@@ -51,7 +51,10 @@ namespace Azure.Health.Deidentification
         }
 
         /// <summary> Initializes a new instance of <see cref="DeidentificationCustomizationOptions"/>. </summary>
-        /// <param name="redactionFormat"> Format of the redacted output. Only valid when Operation is Redact. </param>
+        /// <param name="redactionFormat">
+        /// Format of the redacted output. Only valid when Operation is Redact.
+        /// Please refer to https://learn.microsoft.com/en-us/azure/healthcare-apis/deidentification/redaction-format for more details.
+        /// </param>
         /// <param name="surrogateLocale"> Locale in which the output surrogates are written. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DeidentificationCustomizationOptions(string redactionFormat, string surrogateLocale, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -61,7 +64,10 @@ namespace Azure.Health.Deidentification
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Format of the redacted output. Only valid when Operation is Redact. </summary>
+        /// <summary>
+        /// Format of the redacted output. Only valid when Operation is Redact.
+        /// Please refer to https://learn.microsoft.com/en-us/azure/healthcare-apis/deidentification/redaction-format for more details.
+        /// </summary>
         public string RedactionFormat { get; set; }
         /// <summary> Locale in which the output surrogates are written. </summary>
         public string SurrogateLocale { get; set; }
