@@ -62,6 +62,23 @@ public class PauseResumeTransferMockedTests
         return transfers.Count(transfer => checkpointer.Jobs[transfer.Id].EnumerationComplete);
     }
 
+    private void AssertAllJobsAndPartsCompleted(int numJobs, int numJobParts, List<DataTransfer> transfers, MemoryTransferCheckpointer checkpointer)
+    {
+        int completedJobsCount = GetJobsStateCount(transfers, checkpointer)[DataTransferState.Completed];
+        int completedPartsCount = GetJobPartsStateCount(transfers, checkpointer)[DataTransferState.Completed];
+        Assert.That(completedJobsCount, Is.EqualTo(numJobs), "Error in transitioning all jobs to Completed state");
+        Assert.That(completedPartsCount, Is.EqualTo(numJobParts), "Error in transitioning all job parts to Completed state");
+        foreach (DataTransfer transfer in transfers)
+        {
+            Job job = checkpointer.Jobs[transfer.Id];
+            Assert.That(job.Status.State, Is.EqualTo(DataTransferState.Completed), "Error in transitioning all jobs to Completed state");
+            foreach (var jobPart in job.Parts)
+            {
+                Assert.That(jobPart.Value.Status.State, Is.EqualTo(DataTransferState.Completed), "Error in transitioning all job parts to Completed state");
+            }
+        }
+    }
+
     [Test]
     [Combinatorial]
     public async Task PauseResumeDuringJobProcessing_ItemTransfer(
@@ -217,20 +234,8 @@ public class PauseResumeTransferMockedTests
         // process chunks on resume
         Assert.That(await chunksProcessor.StepAll(), Is.EqualTo(numChunks), "Error chunk processing on resume");
 
-        // Assert that all jobs and job parts are completed successfully
         await Task.Delay(50);
-        int completedJobsCount = GetJobsStateCount(resumedTransfers, checkpointer)[DataTransferState.Completed];
-        int completedPartsCount = GetJobPartsStateCount(resumedTransfers, checkpointer)[DataTransferState.Completed];
-        Assert.That(completedJobsCount, Is.EqualTo(items), "Error in transitioning all jobs to Completed state");
-        Assert.That(completedPartsCount, Is.EqualTo(items), "Error in transitioning all job parts to Completed state");
-        foreach (DataTransfer resumedTransfer in resumedTransfers)
-        {
-            Assert.That(resumedTransfer.HasCompleted);
-            Job job = checkpointer.Jobs[resumedTransfer.Id];
-            Assert.That(job.Status.State, Is.EqualTo(DataTransferState.Completed), "Error in transitioning all jobs to Completed state");
-            JobPart jobPart = job.Parts.First().Value;
-            Assert.That(jobPart.Status.State, Is.EqualTo(DataTransferState.Completed), "Error in transitioning all job parts to Completed state");
-        }
+        AssertAllJobsAndPartsCompleted(items, items, transfers, checkpointer);
     }
 
     [Test]
@@ -391,20 +396,8 @@ public class PauseResumeTransferMockedTests
         // process chunks on resume
         Assert.That(await chunksProcessor.StepAll(), Is.EqualTo(numChunks), "Error chunk processing on resume");
 
-        // Assert that all jobs and job parts are completed successfully
         await Task.Delay(50);
-        int completedJobsCount = GetJobsStateCount(resumedTransfers, checkpointer)[DataTransferState.Completed];
-        int completedPartsCount = GetJobPartsStateCount(resumedTransfers, checkpointer)[DataTransferState.Completed];
-        Assert.That(completedJobsCount, Is.EqualTo(items), "Error in transitioning all jobs to Completed state");
-        Assert.That(completedPartsCount, Is.EqualTo(items), "Error in transitioning all job parts to Completed state");
-        foreach (DataTransfer resumedTransfer in resumedTransfers)
-        {
-            Assert.That(resumedTransfer.HasCompleted);
-            Job job = checkpointer.Jobs[resumedTransfer.Id];
-            Assert.That(job.Status.State, Is.EqualTo(DataTransferState.Completed), "Error in transitioning all jobs to Completed state");
-            JobPart jobPart = job.Parts.First().Value;
-            Assert.That(jobPart.Status.State, Is.EqualTo(DataTransferState.Completed), "Error in transitioning all job parts to Completed state");
-        }
+        AssertAllJobsAndPartsCompleted(items, items, transfers, checkpointer);
     }
 
     [Test]
@@ -610,20 +603,8 @@ public class PauseResumeTransferMockedTests
         // process chunks on resume
         await chunksProcessor.StepAll();
 
-        // Assert that all jobs and job parts are completed successfully
         await Task.Delay(50);
-        int completedJobsCount2 = GetJobsStateCount(transfers, checkpointer)[DataTransferState.Completed];
-        int completedPartsCount2 = GetJobPartsStateCount(transfers, checkpointer)[DataTransferState.Completed];
-        Assert.That(completedJobsCount2, Is.EqualTo(items), "Error in transitioning all jobs to Completed state");
-        Assert.That(completedPartsCount2, Is.EqualTo(items), "Error in transitioning all job parts to Completed state");
-        foreach (DataTransfer resumedTransfer in resumedTransfers)
-        {
-            Assert.That(resumedTransfer.HasCompleted);
-            Job job = checkpointer.Jobs[resumedTransfer.Id];
-            Assert.That(job.Status.State, Is.EqualTo(DataTransferState.Completed), "Error in transitioning all jobs to Completed state");
-            JobPart jobPart = job.Parts.First().Value;
-            Assert.That(jobPart.Status.State, Is.EqualTo(DataTransferState.Completed), "Error in transitioning all job parts to Completed state");
-        }
+        AssertAllJobsAndPartsCompleted(items, items, transfers, checkpointer);
     }
 
     [Test]
@@ -782,22 +763,8 @@ public class PauseResumeTransferMockedTests
         // process chunks on resume
         Assert.That(await chunksProcessor.StepAll(), Is.EqualTo(numChunks), "Error chunk processing on resume");
 
-        // Assert that all jobs and job parts are completed successfully
         await Task.Delay(50);
-        int completedJobsCount = GetJobsStateCount(resumedTransfers, checkpointer)[DataTransferState.Completed];
-        int completedPartsCount = GetJobPartsStateCount(resumedTransfers, checkpointer)[DataTransferState.Completed];
-        Assert.That(completedJobsCount, Is.EqualTo(numJobs), "Error in transitioning all jobs to Completed state");
-        Assert.That(completedPartsCount, Is.EqualTo(numJobParts), "Error in transitioning all job parts to Completed state");
-        foreach (DataTransfer resumedTransfer in resumedTransfers)
-        {
-            Assert.That(resumedTransfer.HasCompleted);
-            Job job = checkpointer.Jobs[resumedTransfer.Id];
-            Assert.That(job.Status.State, Is.EqualTo(DataTransferState.Completed), "Error in transitioning all jobs to Completed state");
-            foreach (var jobPart in job.Parts)
-            {
-                Assert.That(jobPart.Value.Status.State, Is.EqualTo(DataTransferState.Completed), "Error in transitioning all job parts to Completed state");
-            }
-        }
+        AssertAllJobsAndPartsCompleted(numJobs, numJobParts, transfers, checkpointer);
     }
 
     [Test]
@@ -958,22 +925,8 @@ public class PauseResumeTransferMockedTests
         // process chunks on resume
         Assert.That(await chunksProcessor.StepAll(), Is.EqualTo(numChunks), "Error chunk processing on resume");
 
-        // Assert that all jobs and job parts are completed successfully
         await Task.Delay(50);
-        int completedJobsCount = GetJobsStateCount(resumedTransfers, checkpointer)[DataTransferState.Completed];
-        int completedPartsCount = GetJobPartsStateCount(resumedTransfers, checkpointer)[DataTransferState.Completed];
-        Assert.That(completedJobsCount, Is.EqualTo(numJobs), "Error in transitioning all jobs to Completed state");
-        Assert.That(completedPartsCount, Is.EqualTo(numJobParts), "Error in transitioning all job parts to Completed state");
-        foreach (DataTransfer resumedTransfer in resumedTransfers)
-        {
-            Assert.That(resumedTransfer.HasCompleted);
-            Job job = checkpointer.Jobs[resumedTransfer.Id];
-            Assert.That(job.Status.State, Is.EqualTo(DataTransferState.Completed), "Error in transitioning all jobs to Completed state");
-            foreach (var jobPart in job.Parts)
-            {
-                Assert.That(jobPart.Value.Status.State, Is.EqualTo(DataTransferState.Completed), "Error in transitioning all job parts to Completed state");
-            }
-        }
+        AssertAllJobsAndPartsCompleted(numJobs, numJobParts, transfers, checkpointer);
     }
 
     [Test]
@@ -1162,22 +1115,8 @@ public class PauseResumeTransferMockedTests
         // process chunks on resume
         await chunksProcessor.StepAll();
 
-        // Assert that all jobs and job parts are completed successfully
         await Task.Delay(50);
-        int completedJobsCount2 = GetJobsStateCount(transfers, checkpointer)[DataTransferState.Completed];
-        int completedPartsCount2 = GetJobPartsStateCount(transfers, checkpointer)[DataTransferState.Completed];
-        Assert.That(completedJobsCount2, Is.EqualTo(numJobs), "Error in transitioning all jobs to Completed state");
-        Assert.That(completedPartsCount2, Is.EqualTo(numJobParts), "Error in transitioning all job parts to Completed state");
-        foreach (DataTransfer resumedTransfer in resumedTransfers)
-        {
-            Assert.That(resumedTransfer.HasCompleted);
-            Job job = checkpointer.Jobs[resumedTransfer.Id];
-            Assert.That(job.Status.State, Is.EqualTo(DataTransferState.Completed), "Error in transitioning all jobs to Completed state");
-            foreach (var jobPart in job.Parts)
-            {
-                Assert.That(jobPart.Value.Status.State, Is.EqualTo(DataTransferState.Completed), "Error in transitioning all job parts to Completed state");
-            }
-        }
+        AssertAllJobsAndPartsCompleted(numJobs, numJobParts, transfers, checkpointer);
     }
 
     public enum PauseLocation
