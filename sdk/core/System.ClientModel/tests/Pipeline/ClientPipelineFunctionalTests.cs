@@ -1,16 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Diagnostics.Tracing;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using ClientModel.Tests;
 using ClientModel.Tests.Mocks;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
 using SyncAsyncTestBase = ClientModel.Tests.SyncAsyncTestBase;
 
 namespace System.ClientModel.Tests.Pipeline;
@@ -348,7 +351,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
     }
 
     [Test]
-    public async Task DoesntRetryClientCancellation()
+    public async Task DoesNotRetryClientCancellation()
     {
         var testDoneTcs = new CancellationTokenSource();
         int i = 0;
@@ -429,6 +432,127 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
         testDoneTcs.Cancel();
     }
 
+    #endregion
+
+    #region Test default logging policy behavior
+    [Test]
+    public async Task LogsRequestAndResponseToEventSource()
+    {
+        using FunctionalTestsEventListener eventListener = new();
+
+        ClientPipeline pipeline = ClientPipeline.Create();
+
+        using TestServer testServer = new TestServer(
+            async context =>
+            {
+                context.Response.StatusCode = 201;
+                await context.Response.WriteAsync("Hello World!");
+            });
+
+        using PipelineMessage message = pipeline.CreateMessage();
+        message.Request.Uri = testServer.Address;
+        message.BufferResponse = true;
+
+        await pipeline.SendSyncOrAsync(message, IsAsync);
+
+        // Request
+        EventWrittenEventArgs args = eventListener.SingleEventById(1, e => e.EventSource.Name == "System-ClientModel");
+        Assert.AreEqual(EventLevel.Informational, args.Level);
+        Assert.AreEqual("Request", args.EventName);
+
+        // Response
+        args = eventListener.SingleEventById(5, e => e.EventSource.Name == "System-ClientModel");
+        Assert.AreEqual(EventLevel.Informational, args.Level);
+        Assert.AreEqual("Response", args.EventName);
+        Assert.AreEqual(201, args.GetProperty<int>("status"));
+
+        // No other events should have been logged
+        Assert.AreEqual(2, eventListener.EventData.Count());
+    }
+
+    [Test]
+    public void LogsRequestAndExceptionResponseToEventSource()
+    {
+        using FunctionalTestsEventListener eventListener = new();
+
+        ClientPipeline pipeline = ClientPipeline.Create();
+
+        using TestServer testServer = new TestServer(
+            async context =>
+            {
+                await context.Response.WriteAsync("Hello World!");
+                throw new Exception("Error");
+            });
+
+        using PipelineMessage message = pipeline.CreateMessage();
+        message.Request.Uri = testServer.Address;
+        message.BufferResponse = true;
+
+        Assert.ThrowsAsync<AggregateException>(async () => await pipeline.SendSyncOrAsync(message, IsAsync));
+
+        // Request Events
+        IEnumerable<EventWrittenEventArgs> args = eventListener.EventsById(1);
+        Assert.AreEqual(4, args.Count());
+
+        // Response Events
+        args = eventListener.EventsById(18);
+        Assert.AreEqual(4, args.Count());
+        foreach (EventWrittenEventArgs responseEventArgs in args)
+        {
+            Assert.AreEqual(EventLevel.Informational, responseEventArgs.Level);
+            Assert.AreEqual("ExceptionResponse", responseEventArgs.EventName);
+            Assert.True((responseEventArgs.GetProperty<string>("exception")).Contains("Exception"));
+        }
+
+        // No other events should have been logged
+        Assert.AreEqual(8, eventListener.EventData.Count());
+    }
+
+    [Test]
+    public async Task LogsRequestAndErrorResponseToEventSource()
+    {
+        using FunctionalTestsEventListener eventListener = new();
+
+        ClientPipeline pipeline = ClientPipeline.Create();
+
+        using TestServer testServer = new TestServer(
+            async context =>
+            {
+                context.Response.StatusCode = 400;
+                await context.Response.WriteAsync("Bad Request");
+            });
+
+        using PipelineMessage message = pipeline.CreateMessage();
+        message.Request.Uri = testServer.Address;
+        message.BufferResponse = true;
+
+        await pipeline.SendSyncOrAsync(message, IsAsync);
+
+        // Request
+        EventWrittenEventArgs args = eventListener.SingleEventById(1, e => e.EventSource.Name == "System-ClientModel");
+        Assert.AreEqual(EventLevel.Informational, args.Level);
+        Assert.AreEqual("Request", args.EventName);
+
+        // Response
+        args = eventListener.SingleEventById(8, e => e.EventSource.Name == "System-ClientModel");
+        Assert.AreEqual(EventLevel.Warning, args.Level);
+        Assert.AreEqual("ErrorResponse", args.EventName);
+        Assert.AreEqual(args.GetProperty<int>("status"), 400);
+
+        // No other events should have been logged
+        Assert.AreEqual(2, eventListener.EventData.Count());
+    }
+
+    private class FunctionalTestsEventListener : TestClientEventListener
+    {
+        protected override void OnEventSourceCreated(EventSource eventSource)
+        {
+            if (eventSource.Name == "System-ClientModel")
+            {
+                EnableEvents(eventSource, EventLevel.Informational);
+            }
+        }
+    }
     #endregion
 
     #region Test parallel connections

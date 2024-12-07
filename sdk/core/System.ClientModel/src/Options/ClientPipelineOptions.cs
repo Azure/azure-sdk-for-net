@@ -2,6 +2,9 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using Microsoft.Extensions.Logging;
 
 namespace System.ClientModel.Primitives;
 
@@ -20,8 +23,10 @@ public class ClientPipelineOptions
     private bool _frozen;
 
     private PipelinePolicy? _retryPolicy;
+    private PipelinePolicy? _loggingPolicy;
     private PipelineTransport? _transport;
     private TimeSpan? _timeout;
+    private ClientLoggingOptions? _loggingOptions;
 
     #region Pipeline creation: Overrides of default pipeline policies
 
@@ -41,6 +46,25 @@ public class ClientPipelineOptions
             AssertNotFrozen();
 
             _retryPolicy = value;
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the <see cref="PipelinePolicy"/> to be used by the
+    /// <see cref="ClientPipeline"/> for logging.
+    /// </summary>
+    /// <remarks>
+    /// In most cases, this property will be set to an instance of
+    /// <see cref="MessageLoggingPolicy"/>.
+    /// </remarks>
+    public PipelinePolicy? MessageLoggingPolicy
+    {
+        get => _loggingPolicy;
+        set
+        {
+            AssertNotFrozen();
+
+            _loggingPolicy = value;
         }
     }
 
@@ -78,6 +102,21 @@ public class ClientPipelineOptions
             AssertNotFrozen();
 
             _timeout = value;
+        }
+    }
+
+    /// <summary>
+    /// The options to be used to configure logging within the
+    /// <see cref="ClientPipeline"/>.
+    /// </summary>
+    public ClientLoggingOptions? ClientLoggingOptions
+    {
+        get => _loggingOptions;
+        set
+        {
+            AssertNotFrozen();
+
+            _loggingOptions = value;
         }
     }
 
@@ -161,7 +200,11 @@ public class ClientPipelineOptions
     /// instance or call methods that would change its state will throw
     /// <see cref="InvalidOperationException"/>.
     /// </summary>
-    public virtual void Freeze() => _frozen = true;
+    public virtual void Freeze()
+    {
+        _frozen = true;
+        _loggingOptions?.Freeze();
+    }
 
     /// <summary>
     /// Assert that <see cref="Freeze"/> has not been called on this
@@ -177,4 +220,47 @@ public class ClientPipelineOptions
             throw new InvalidOperationException("Cannot change a ClientPipelineOptions instance after it has been used to create a ClientPipeline.");
         }
     }
+
+    #region Helpers
+
+    internal HttpClientPipelineTransport GetHttpClientPipelineTransport()
+    {
+        // If client-wide logging is enabled via ILogger, the shared client pipeline transport instance cannot be used. The transport will need the
+        // logger factory instance from the logging options.
+        // If client-wide logging is disabled, the shared client pipeline transport instance cannot be used. By default, client-wide logging is
+        // enabled.
+        if (_loggingOptions != null && (_loggingOptions.ClientWideLoggingIsDisabled || _loggingOptions.ClientWideLoggingIsEnabledViaILogger))
+        {
+            return new HttpClientPipelineTransport(null, _loggingOptions.EnableLogging ?? ClientLoggingOptions.DefaultEnableLogging, _loggingOptions.LoggerFactory);
+        }
+        return HttpClientPipelineTransport.Shared;
+    }
+
+    internal ClientRetryPolicy GetClientRetryPolicy()
+    {
+        // If client-wide logging is enabled via ILogger, the default retry policy cannot be used. The policy will need the
+        // logger factory instance from the logging options.
+        // If client-wide logging is disabled, the default retry policy cannot be used. By default, client-wide logging is
+        // enabled.
+        if (_loggingOptions != null && (_loggingOptions.ClientWideLoggingIsDisabled || _loggingOptions.ClientWideLoggingIsEnabledViaILogger))
+        {
+            return new ClientRetryPolicy(ClientRetryPolicy.DefaultMaxRetries,
+                                         _loggingOptions.EnableLogging ?? ClientLoggingOptions.DefaultEnableLogging,
+                                         _loggingOptions.LoggerFactory);
+        }
+        return ClientRetryPolicy.Default;
+    }
+
+    internal bool AddMessageLoggingPolicy => _loggingOptions?.AddMessageLoggingPolicy ?? true;
+
+    internal MessageLoggingPolicy GetMessageLoggingPolicy()
+    {
+        if (_loggingOptions == null || _loggingOptions.AddDefaultMessageLoggingPolicy)
+        {
+            return System.ClientModel.Primitives.MessageLoggingPolicy.Default;
+        }
+        return new MessageLoggingPolicy(_loggingOptions);
+    }
+
+    #endregion
 }

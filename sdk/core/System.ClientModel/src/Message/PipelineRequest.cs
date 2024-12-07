@@ -68,6 +68,11 @@ public abstract class PipelineRequest : IDisposable
     /// </summary>
     protected abstract BinaryContent? ContentCore { get; set; }
 
+    /// <summary>
+    /// The client request id to include in log entries.
+    /// </summary>
+    internal string? ClientRequestId { get; set; }
+
     /// <inheritdoc/>
     public abstract void Dispose();
 }
