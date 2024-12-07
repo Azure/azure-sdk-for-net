@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -58,7 +59,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(events.FailedEvents, Is.Not.Empty);
-            Assert.That(events.FailedEvents[0].Exception.Message, Does.Contain("Intentionally failing"));
+            Assert.That(events.FailedEvents.First().Exception.Message, Does.Contain("Intentionally failing"));
         }
 
         [Test, Pairwise]
@@ -83,7 +84,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             Assert.That(transfer.HasCompleted, Is.True);
             Assert.That(events.FailedEvents, Is.Not.Empty);
-            Assert.That(events.FailedEvents[0].Exception.Message, Does.Contain("Intentionally failing"));
+            Assert.That(events.FailedEvents.First().Exception.Message, Does.Contain("Intentionally failing"));
         }
     }
 }
