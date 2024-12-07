@@ -126,9 +126,9 @@ internal class MemoryTransferCheckpointer : ITransferCheckpointer
         {
             throw new Exception("Job does not exist.");
         }
-        if (job.Parts.TryGetValue(partNumber, out JobPart part))
+        if (!job.Parts.TryGetValue(partNumber, out JobPart part))
         {
-            throw new Exception($"Job part {partNumber} already exists for job {job.TransferId}.");
+            throw new Exception($"Job part {partNumber} does not exists for job {job.TransferId}.");
         }
         return Task.FromResult(part.Plan);
     }

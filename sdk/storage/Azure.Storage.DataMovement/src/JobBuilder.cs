@@ -135,7 +135,10 @@ internal class JobBuilder
             arrayPool: _arrayPool,
             clientDiagnostics: ClientDiagnostics);
 
-        if (resumeJob)
+        int jobPartCount = await checkpointer.GetCurrentJobPartCountAsync(
+                transferId: dataTransfer.Id,
+                cancellationToken: cancellationToken).ConfigureAwait(false);
+        if (resumeJob && jobPartCount > 0)
         {
             JobPartPlanHeader part = await checkpointer.GetJobPartAsync(dataTransfer.Id, partNumber: 0).ConfigureAwait(false);
             job.AppendJobPart(
