@@ -180,3 +180,5 @@ TempTypeSpecFiles/
 
 # Common toolchain intermediate files
 temp
+
+SessionRecords/
