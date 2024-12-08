@@ -2542,10 +2542,11 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [TestCase(false)]
-        [TestCase(true)]
+        [TestCase(null)]
+        [TestCase(ModeCopyMode.Source)]
+        [TestCase(ModeCopyMode.Override)]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
-        public async Task StartCopy_NFS(bool overwriteOwnerAndMode)
+        public async Task StartCopy_NFS(ModeCopyMode? modeAndOwnerCopyMode)
         {
             // Arrange
             await using DisposingFile source = await SharesClientBuilder.GetTestFileAsync(nfs: true);
@@ -2556,6 +2557,16 @@ namespace Azure.Storage.Files.Shares.Tests
             await source.File.UploadRangeAsync(
                 range: new HttpRange(0, Constants.KB),
                 content: stream);
+
+            await source.File.SetHttpHeadersAsync(new ShareFileSetHttpHeadersOptions
+            {
+                PosixProperties = new FilePosixProperties
+                {
+                    Owner = "999",
+                    Group = "888",
+                    FileMode = NfsFileMode.ParseOctalFileMode("0111")
+                }
+            });
 
             Response<ShareFileProperties> sourceProperties =  await source.File.GetPropertiesAsync();
 
@@ -2568,20 +2579,30 @@ namespace Azure.Storage.Files.Shares.Tests
                 PosixProperties = new FilePosixProperties()
             };
 
-            if (overwriteOwnerAndMode)
+            if (modeAndOwnerCopyMode == ModeCopyMode.Override)
             {
                 owner = "54321";
                 group = "12345";
                 fileMode = NfsFileMode.ParseOctalFileMode("7777");
+                options.ModeCopyMode = ModeCopyMode.Override;
+                options.OwnerCopyMode = OwnerCopyMode.Override;
                 options.PosixProperties.Owner = owner;
                 options.PosixProperties.Group = group;
                 options.PosixProperties.FileMode = fileMode;
             }
-            else
+            else if (modeAndOwnerCopyMode == ModeCopyMode.Source)
             {
+                options.ModeCopyMode = ModeCopyMode.Source;
+                options.OwnerCopyMode = OwnerCopyMode.Source;
                 owner = sourceProperties.Value.PosixProperties.Owner;
                 fileMode = sourceProperties.Value.PosixProperties.FileMode;
                 group = sourceProperties.Value.PosixProperties.Group;
+            }
+            else
+            {
+                owner = "0";
+                group = "0";
+                fileMode = NfsFileMode.ParseOctalFileMode("0664");
             }
 
             // Act
