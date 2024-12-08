@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Health.Deidentification
 {
-    /// <summary> Location of a document. </summary>
-    public partial class DocumentLocation
+    /// <summary> Customizations options to override default service behaviors for job usage. </summary>
+    public partial class DeidentificationJobCustomizationOptions
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,35 +45,31 @@ namespace Azure.Health.Deidentification
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentLocation"/>. </summary>
-        /// <param name="path"> Path of document in storage. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>
-        internal DocumentLocation(string path)
+        /// <summary> Initializes a new instance of <see cref="DeidentificationJobCustomizationOptions"/>. </summary>
+        public DeidentificationJobCustomizationOptions()
         {
-            Argument.AssertNotNull(path, nameof(path));
-
-            Path = path;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentLocation"/>. </summary>
-        /// <param name="path"> Path of document in storage. </param>
-        /// <param name="etag"> The entity tag for this resource. </param>
+        /// <summary> Initializes a new instance of <see cref="DeidentificationJobCustomizationOptions"/>. </summary>
+        /// <param name="redactionFormat">
+        /// Format of the redacted output. Only valid when Operation is Redact.
+        /// Please refer to https://learn.microsoft.com/en-us/azure/healthcare-apis/deidentification/redaction-format for more details.
+        /// </param>
+        /// <param name="surrogateLocale"> Locale in which the output surrogates are written. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentLocation(string path, ETag etag, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeidentificationJobCustomizationOptions(string redactionFormat, string surrogateLocale, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Path = path;
-            Etag = etag;
+            RedactionFormat = redactionFormat;
+            SurrogateLocale = surrogateLocale;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentLocation"/> for deserialization. </summary>
-        internal DocumentLocation()
-        {
-        }
-
-        /// <summary> Path of document in storage. </summary>
-        public string Path { get; }
-        /// <summary> The entity tag for this resource. </summary>
-        public ETag Etag { get; }
+        /// <summary>
+        /// Format of the redacted output. Only valid when Operation is Redact.
+        /// Please refer to https://learn.microsoft.com/en-us/azure/healthcare-apis/deidentification/redaction-format for more details.
+        /// </summary>
+        public string RedactionFormat { get; set; }
+        /// <summary> Locale in which the output surrogates are written. </summary>
+        public string SurrogateLocale { get; set; }
     }
 }

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.Health.Deidentification
 {
-    public partial class DocumentLocation : IUtf8JsonSerializable, IJsonModel<DocumentLocation>
+    public partial class DeidentificationDocumentLocation : IUtf8JsonSerializable, IJsonModel<DeidentificationDocumentLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentLocation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeidentificationDocumentLocation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DocumentLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DeidentificationDocumentLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,14 +28,14 @@ namespace Azure.Health.Deidentification
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DocumentLocation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeidentificationDocumentLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentLocation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DeidentificationDocumentLocation)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("path"u8);
-            writer.WriteStringValue(Path);
+            writer.WritePropertyName("location"u8);
+            writer.WriteStringValue(Location.AbsoluteUri);
             if (options.Format != "W")
             {
                 writer.WritePropertyName("etag"u8);
@@ -58,19 +58,19 @@ namespace Azure.Health.Deidentification
             }
         }
 
-        DocumentLocation IJsonModel<DocumentLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DeidentificationDocumentLocation IJsonModel<DeidentificationDocumentLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DocumentLocation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeidentificationDocumentLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentLocation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DeidentificationDocumentLocation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDocumentLocation(document.RootElement, options);
+            return DeserializeDeidentificationDocumentLocation(document.RootElement, options);
         }
 
-        internal static DocumentLocation DeserializeDocumentLocation(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DeidentificationDocumentLocation DeserializeDeidentificationDocumentLocation(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -78,15 +78,15 @@ namespace Azure.Health.Deidentification
             {
                 return null;
             }
-            string path = default;
+            Uri location = default;
             ETag etag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("path"u8))
+                if (property.NameEquals("location"u8))
                 {
-                    path = property.Value.GetString();
+                    location = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -100,46 +100,46 @@ namespace Azure.Health.Deidentification
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DocumentLocation(path, etag, serializedAdditionalRawData);
+            return new DeidentificationDocumentLocation(location, etag, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DocumentLocation>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DeidentificationDocumentLocation>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DocumentLocation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeidentificationDocumentLocation>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentLocation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeidentificationDocumentLocation)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DocumentLocation IPersistableModel<DocumentLocation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DeidentificationDocumentLocation IPersistableModel<DeidentificationDocumentLocation>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DocumentLocation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeidentificationDocumentLocation>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDocumentLocation(document.RootElement, options);
+                        return DeserializeDeidentificationDocumentLocation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentLocation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeidentificationDocumentLocation)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DocumentLocation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DeidentificationDocumentLocation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static DocumentLocation FromResponse(Response response)
+        internal static DeidentificationDocumentLocation FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeDocumentLocation(document.RootElement);
+            return DeserializeDeidentificationDocumentLocation(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
