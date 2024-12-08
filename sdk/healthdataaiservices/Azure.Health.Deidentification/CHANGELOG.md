@@ -1,10 +1,10 @@
 # Release History
 
-## 1.0.0 (2024-11-22)
+## 1.0.0 (2024-12-13)
 
 ### Features Added
 
-- Introduced `CustomizationOptions` and `JobCustomizationOptions` models
+- Introduced `DeidentificationCustomizationOptions` and `DeidentificationJobCustomizationOptions` models
   - Created `SurrogateLocale` field in these models
   - Moved `RedactionFormat` field into these models
 - Introduced `Overwrite` flag in `TargetStorageLocation` model
