@@ -741,5 +741,94 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             Assert.AreEqual(CallConnectionId, returnedResult.SuccessResult.CallConnectionId);
             Assert.AreEqual(invitationId, returnedResult.SuccessResult.InvitationId);
         }
+
+        [Test]
+        public async Task HoldEventResultSuccessTest()
+        {
+            int successCode = (int)HttpStatusCode.OK;
+
+            var callConnection = CreateMockCallConnection(successCode, AddParticipantsPayload);
+            CallAutomationEventProcessor handler = callConnection.EventProcessor;
+
+            var response = callConnection.GetCallMedia().Hold(new HoldOptions(new CommunicationUserIdentifier(TargetUser)) { PlaySourceInfo= new FileSource(new Uri(CallBackUri)),OperationContext= OperationContext });
+            Assert.AreEqual(successCode, response.GetRawResponse().Status);
+
+            // Create and send event to event processor
+            SendAndProcessEvent(handler, new HoldAudioStarted(CallConnectionId, ServerCallId, CorrelationId, OperationContext, new ResultInformation() { }));
+
+            HoldEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
+
+            // Assert
+            AssertHoldEvent(returnedResult, typeof(HoldAudioStarted));
+
+            SendAndProcessEvent(handler, new HoldAudioCompleted(CallConnectionId, ServerCallId, CorrelationId, OperationContext, new ResultInformation() { }));
+            returnedResult = await response.Value.WaitForEventProcessorAsync();
+
+            // Assert
+            AssertHoldEvent(returnedResult, typeof(HoldAudioCompleted));
+        }
+
+        [Test]
+        public async Task HoldEventResultFailedTest()
+        {
+            int successCode = (int)HttpStatusCode.OK;
+
+            var callConnection = CreateMockCallConnection(successCode, AddParticipantsPayload);
+            CallAutomationEventProcessor handler = callConnection.EventProcessor;
+
+            var response = callConnection.GetCallMedia().Hold(new HoldOptions(new CommunicationUserIdentifier(TargetUser)) { PlaySourceInfo = new FileSource(new Uri(CallBackUri)), OperationContext = OperationContext });
+            Assert.AreEqual(successCode, response.GetRawResponse().Status);
+
+            // Create and send event to event processor
+            SendAndProcessEvent(handler, new HoldFailed(CallConnectionId, ServerCallId, CorrelationId, OperationContext, new ResultInformation() { }));
+
+            HoldEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
+
+            // Assert
+            Assert.NotNull(returnedResult);
+            Assert.AreEqual(false, returnedResult.IsSuccess);
+            Assert.IsNull(returnedResult.SuccessResult);
+            Assert.NotNull(returnedResult.FailureResult);
+            Assert.AreEqual(typeof(HoldFailed), returnedResult.FailureResult.GetType());
+            Assert.AreEqual(CallConnectionId, returnedResult.FailureResult.CallConnectionId);
+            Assert.AreEqual(OperationContext, returnedResult.FailureResult.OperationContext);
+        }
+        private static void AssertHoldEvent(HoldEventResult returnedResult, System.Type expectedType, string expectedOperationContext = OperationContext)
+        {
+            Assert.NotNull(returnedResult);
+            Assert.AreEqual(true, returnedResult.IsSuccess);
+
+            if (expectedType == typeof(HoldAudioResumed))
+            {
+                Assert.IsNotNull(returnedResult.ResumeResult);
+                Assert.AreEqual(CallConnectionId, returnedResult.ResumeResult.CallConnectionId);
+                Assert.AreEqual(expectedOperationContext, returnedResult.ResumeResult.OperationContext);
+                return;
+            }
+
+            if (expectedType == typeof(HoldAudioStarted))
+            {
+                Assert.IsNotNull(returnedResult.StartResult);
+                Assert.AreEqual(CallConnectionId, returnedResult.StartResult.CallConnectionId);
+                Assert.AreEqual(expectedOperationContext, returnedResult.StartResult.OperationContext);
+                return;
+            }
+
+            if (expectedType == typeof(HoldAudioCompleted))
+            {
+                Assert.IsNotNull(returnedResult.SuccessResult);
+                Assert.AreEqual(CallConnectionId, returnedResult.SuccessResult.CallConnectionId);
+                Assert.AreEqual(expectedOperationContext, returnedResult.SuccessResult.OperationContext);
+                return;
+            }
+
+            if (expectedType == typeof(HoldAudioPaused))
+            {
+                Assert.IsNotNull(returnedResult.PauseResult);
+                Assert.AreEqual(CallConnectionId, returnedResult.PauseResult.CallConnectionId);
+                Assert.AreEqual(expectedOperationContext, returnedResult.PauseResult.OperationContext);
+                return;
+            }
+        }
     }
 }

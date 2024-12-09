@@ -393,8 +393,8 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="options">The options.</param>
         /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public virtual async Task<Response> HoldAsync(HoldOptions options, CancellationToken cancellationToken = default)
+        /// <returns>Returns <see cref="HoldResult"/>, which can be used to wait for Hold's related events.</returns>
+        public virtual async Task<Response<HoldResult>> HoldAsync(HoldOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(Hold)}");
             scope.Start();
@@ -408,7 +408,11 @@ namespace Azure.Communication.CallAutomation
                     OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri,
                 };
 
-                return await CallMediaRestClient.HoldAsync(CallConnectionId, request, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response =  await CallMediaRestClient.HoldAsync(CallConnectionId, request, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var result = new HoldResult();
+                result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
+
+                return Response.FromValue(result, response);
             }
             catch (Exception ex)
             {
@@ -422,8 +426,8 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="options">The options.</param>
         /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public virtual Response Hold(HoldOptions options, CancellationToken cancellationToken = default)
+        /// <returns>Returns <see cref="HoldResult"/>, which can be used to wait for Hold's related events.</returns>
+        public virtual Response<HoldResult> Hold(HoldOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(Hold)}");
             scope.Start();
@@ -437,7 +441,11 @@ namespace Azure.Communication.CallAutomation
                     OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri,
                 };
 
-                return CallMediaRestClient.Hold(CallConnectionId, request, cancellationToken: cancellationToken);
+                var response =  CallMediaRestClient.Hold(CallConnectionId, request, cancellationToken: cancellationToken);
+                var result = new HoldResult();
+                result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
+
+                return Response.FromValue(result, response);
             }
             catch (Exception ex)
             {
@@ -451,8 +459,8 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="options">The options.</param>
         /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public virtual async Task<Response> UnholdAsync(UnholdOptions options, CancellationToken cancellationToken = default)
+        /// <returns>Returns <see cref="HoldResult"/>, which can be used to wait for Unhold's related events.</returns>
+        public virtual async Task<Response<HoldResult>> UnholdAsync(UnholdOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(Unhold)}");
             scope.Start();
@@ -460,7 +468,11 @@ namespace Azure.Communication.CallAutomation
             {
                 var request = new UnholdRequestInternal(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant));
 
-                return await CallMediaRestClient.UnholdAsync(CallConnectionId, request, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response =  await CallMediaRestClient.UnholdAsync(CallConnectionId, request, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var result = new HoldResult();
+                result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
+
+                return Response.FromValue(result, response);
             }
             catch (Exception ex)
             {
@@ -474,8 +486,8 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="options">The options.</param>
         /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public virtual Response Unhold(UnholdOptions options, CancellationToken cancellationToken = default)
+        /// <returns>Returns <see cref="HoldResult"/>, which can be used to wait for Unhold's related events.</returns>
+        public virtual Response<HoldResult> Unhold(UnholdOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(Unhold)}");
             scope.Start();
@@ -483,7 +495,11 @@ namespace Azure.Communication.CallAutomation
             {
                 var request = new UnholdRequestInternal(CommunicationIdentifierSerializer.Serialize(options.TargetParticipant));
 
-                return CallMediaRestClient.Unhold(CallConnectionId, request, cancellationToken: cancellationToken);
+                var response =  CallMediaRestClient.Unhold(CallConnectionId, request, cancellationToken: cancellationToken);
+                var result = new HoldResult();
+                result.SetEventProcessor(EventProcessor, CallConnectionId, request.OperationContext);
+
+                return Response.FromValue(result, response);
             }
             catch (Exception ex)
             {
