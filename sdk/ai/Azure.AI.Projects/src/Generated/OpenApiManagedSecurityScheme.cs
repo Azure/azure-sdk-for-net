@@ -10,12 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    /// <summary>
-    /// An abstract representation of an input tool definition that an agent can use.
-    /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="MicrosoftFabricToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/>, <see cref="OpenApiToolDefinition"/> and <see cref="SharepointToolDefinition"/>.
-    /// </summary>
-    public abstract partial class ToolDefinition
+    /// <summary> Security scheme for OpenApi managed_identity authentication. </summary>
+    public partial class OpenApiManagedSecurityScheme
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,23 +43,33 @@ namespace Azure.AI.Projects
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ToolDefinition"/>. </summary>
-        protected ToolDefinition()
+        /// <summary> Initializes a new instance of <see cref="OpenApiManagedSecurityScheme"/>. </summary>
+        /// <param name="audience"> Authentication scope for managed_identity auth type. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="audience"/> is null. </exception>
+        public OpenApiManagedSecurityScheme(string audience)
         {
+            Argument.AssertNotNull(audience, nameof(audience));
+
+            Audience = audience;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ToolDefinition"/>. </summary>
-        /// <param name="type"> The object type. </param>
+        /// <summary> Initializes a new instance of <see cref="OpenApiManagedSecurityScheme"/>. </summary>
+        /// <param name="audience"> Authentication scope for managed_identity auth type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ToolDefinition(string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OpenApiManagedSecurityScheme(string audience, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Type = type;
+            Audience = audience;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The object type. </summary>
-        internal string Type { get; set; }
+        /// <summary> Initializes a new instance of <see cref="OpenApiManagedSecurityScheme"/> for deserialization. </summary>
+        internal OpenApiManagedSecurityScheme()
+        {
+        }
+
+        /// <summary> Authentication scope for managed_identity auth type. </summary>
+        public string Audience { get; set; }
     }
 }

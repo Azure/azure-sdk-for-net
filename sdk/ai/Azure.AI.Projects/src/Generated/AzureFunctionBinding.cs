@@ -10,12 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    /// <summary>
-    /// An abstract representation of an input tool definition that an agent can use.
-    /// Please note <see cref="ToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureAISearchToolDefinition"/>, <see cref="AzureFunctionToolDefinition"/>, <see cref="BingGroundingToolDefinition"/>, <see cref="CodeInterpreterToolDefinition"/>, <see cref="MicrosoftFabricToolDefinition"/>, <see cref="FileSearchToolDefinition"/>, <see cref="FunctionToolDefinition"/>, <see cref="OpenApiToolDefinition"/> and <see cref="SharepointToolDefinition"/>.
-    /// </summary>
-    public abstract partial class ToolDefinition
+    /// <summary> The structure for keeping storage queue name and URI. </summary>
+    public partial class AzureFunctionBinding
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,23 +43,38 @@ namespace Azure.AI.Projects
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ToolDefinition"/>. </summary>
-        protected ToolDefinition()
+        /// <summary> Initializes a new instance of <see cref="AzureFunctionBinding"/>. </summary>
+        /// <param name="storageQueue"> Storage queue. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageQueue"/> is null. </exception>
+        public AzureFunctionBinding(AzureFunctionStorageQueue storageQueue)
         {
+            Argument.AssertNotNull(storageQueue, nameof(storageQueue));
+
+            StorageQueue = storageQueue;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ToolDefinition"/>. </summary>
-        /// <param name="type"> The object type. </param>
+        /// <summary> Initializes a new instance of <see cref="AzureFunctionBinding"/>. </summary>
+        /// <param name="type"> The type of binding, which is always 'storage_queue'. </param>
+        /// <param name="storageQueue"> Storage queue. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ToolDefinition(string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AzureFunctionBinding(AzureFunctionBindingType type, AzureFunctionStorageQueue storageQueue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
+            StorageQueue = storageQueue;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The object type. </summary>
-        internal string Type { get; set; }
+        /// <summary> Initializes a new instance of <see cref="AzureFunctionBinding"/> for deserialization. </summary>
+        internal AzureFunctionBinding()
+        {
+        }
+
+        /// <summary> The type of binding, which is always 'storage_queue'. </summary>
+        public AzureFunctionBindingType Type { get; } = AzureFunctionBindingType.StorageQueue;
+
+        /// <summary> Storage queue. </summary>
+        public AzureFunctionStorageQueue StorageQueue { get; set; }
     }
 }

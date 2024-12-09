@@ -52,12 +52,13 @@ public partial class AgentsClient
     /// <param name="truncationStrategy"> The strategy to use for dropping messages as the context windows moves forward. </param>
     /// <param name="toolChoice"> Controls whether or not and which tool is called by the model. </param>
     /// <param name="responseFormat"> Specifies the format that the model must output. </param>
+    /// <param name="parallelToolCalls"> If `true` functions will run in parallel during tool use. </param>
     /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
     /// <param name="cancellationToken"> The cancellation token to use. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="assistantId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
 #pragma warning disable AZC0015 // Unexpected client method return type.
-    public virtual AsyncCollectionResult<StreamingUpdate> CreateRunStreamingAsync(string threadId, string assistantId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ThreadMessageOptions> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<StreamingUpdate> CreateRunStreamingAsync(string threadId, string assistantId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ThreadMessageOptions> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
 #pragma warning restore AZC0015 // Unexpected client method return type.
     {
         Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -78,6 +79,7 @@ public partial class AgentsClient
             truncationStrategy,
             toolChoice,
             responseFormat,
+            parallelToolCalls,
             metadata ?? new ChangeTrackingDictionary<string, string>(),
             null);
         RequestContext context = FromCancellationToken(cancellationToken);
@@ -126,12 +128,13 @@ public partial class AgentsClient
     /// <param name="truncationStrategy"> The strategy to use for dropping messages as the context windows moves forward. </param>
     /// <param name="toolChoice"> Controls whether or not and which tool is called by the model. </param>
     /// <param name="responseFormat"> Specifies the format that the model must output. </param>
+    /// <param name="parallelToolCalls"> If `true` functions will run in parallel during tool use. </param>
     /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
     /// <param name="cancellationToken"> The cancellation token to use. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="assistantId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
 #pragma warning disable AZC0015 // Unexpected client method return type.
-    public virtual CollectionResult<StreamingUpdate> CreateRunStreaming(string threadId, string assistantId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ThreadMessageOptions> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<StreamingUpdate> CreateRunStreaming(string threadId, string assistantId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ThreadMessageOptions> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, TruncationObject truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
 #pragma warning restore AZC0015 // Unexpected client method return type.
     {
         Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -152,6 +155,7 @@ public partial class AgentsClient
             truncationStrategy,
             toolChoice,
             responseFormat,
+            parallelToolCalls,
             metadata ?? new ChangeTrackingDictionary<string, string>(),
             null);
         RequestContext context = FromCancellationToken(cancellationToken);
