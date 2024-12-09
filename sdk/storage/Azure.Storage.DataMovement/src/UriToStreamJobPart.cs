@@ -201,6 +201,11 @@ namespace Azure.Storage.DataMovement
             // does not require a length to be created.
             try
             {
+                // Continue only if job is in progress
+                if (!await IsTransferJobInProgress().ConfigureAwait(false))
+                {
+                    return;
+                }
                 await OnTransferStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
                 if (!_sourceResource.Length.HasValue)
                 {
@@ -293,11 +298,20 @@ namespace Azure.Storage.DataMovement
             // Download with a single GET
             else if (_initialTransferSize >= totalLength)
             {
-                // To prevent requesting a range that is invalid when
-                // we already know the length we can just make one get blob request.
-                StorageResourceReadStreamResult result = await _sourceResource.
-                    ReadStreamAsync(length: totalLength, cancellationToken: _cancellationToken)
-                    .ConfigureAwait(false);
+                StorageResourceReadStreamResult result;
+                try
+                {
+                    // To prevent requesting a range that is invalid when
+                    // we already know the length we can just make one get blob request.
+                    result = await _sourceResource.
+                        ReadStreamAsync(length: totalLength, cancellationToken: _cancellationToken)
+                        .ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    await InvokeFailedArgAsync(ex).ConfigureAwait(false);
+                    return;
+                }
 
                 long downloadLength = result.ContentLength.Value;
                 // This should not occur but add a check just in case
@@ -339,23 +353,29 @@ namespace Azure.Storage.DataMovement
             // Fill the queue with tasks to download each of the remaining
             // ranges in the file
             _queueingTasks = true;
-            foreach (HttpRange httpRange in GetRanges(initialLength, totalLength, _transferChunkSize))
+            try
             {
-                if (_cancellationToken.IsCancellationRequested)
+                int chunkCount = 0;
+                foreach (HttpRange httpRange in GetRanges(initialLength, totalLength, _transferChunkSize))
                 {
-                    break;
+                    CancellationHelper.ThrowIfCancellationRequested(_cancellationToken);
+
+                    // Add the next Task (which will start the download but
+                    // return before it's completed downloading)
+                    await QueueChunkToChannelAsync(
+                        async () =>
+                        await DownloadStreamingInternal(range: httpRange).ConfigureAwait(false))
+                        .ConfigureAwait(false);
+                    chunkCount++;
                 }
-
-                // Add the next Task (which will start the download but
-                // return before it's completed downloading)
-                await QueueChunkToChannelAsync(
-                    async () =>
-                    await DownloadStreamingInternal(range: httpRange).ConfigureAwait(false))
-                    .ConfigureAwait(false);
+                _queueingTasks = false;
+                await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
             }
-
-            _queueingTasks = false;
-            await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
+            catch (Exception ex)
+            {
+                _queueingTasks = false;
+                await InvokeFailedArgAsync(ex).ConfigureAwait(false);
+            }
         }
 
         internal async Task CompleteFileDownload()

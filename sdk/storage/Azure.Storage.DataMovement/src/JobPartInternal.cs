@@ -402,7 +402,6 @@ namespace Azure.Storage.DataMovement
                 }
                 if (TransferFailedEventHandler != null)
                 {
-                    Console.WriteLine("RaiseAsync TransferFailedEventHandler");
                     await TransferFailedEventHandler.RaiseAsync(
                         new TransferItemFailedEventArgs(
                             _dataTransfer.Id,
@@ -422,7 +421,6 @@ namespace Azure.Storage.DataMovement
                 // then don't raise the PartTransferStatusEventHandler
                 if (JobPartStatus.SetFailedItem())
                 {
-                    Console.WriteLine("RaiseAsync PartTransferStatusEventHandler");
                     await PartTransferStatusEventHandler.RaiseAsync(
                         new TransferStatusEventArgs(
                             _dataTransfer.Id,
@@ -439,16 +437,17 @@ namespace Azure.Storage.DataMovement
             try
             {
                 // Trigger job cancellation if the failed handler is enabled
-                Console.WriteLine($"{Thread.CurrentThread.ManagedThreadId}:TriggerCancellationAsync");
-                await TriggerCancellationAsync().ConfigureAwait(false);
-                Console.WriteLine($"{Thread.CurrentThread.ManagedThreadId}: CheckAndUpdateCancellationStateAsync");
-                await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
+                if (JobPartStatus.State != DataTransferState.Pausing ||
+                    JobPartStatus.State != DataTransferState.Stopping)
+                {
+                    await TriggerCancellationAsync().ConfigureAwait(false);
+                    await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
+                }
             }
             catch (Exception cancellationException)
             {
                 // If an exception is thrown while trying to clean up,
                 // raise the failed event and prevent the transfer from hanging
-                Console.WriteLine("RaiseAsync TransferFailedEventHandler ending");
                 await TransferFailedEventHandler.RaiseAsync(
                     new TransferItemFailedEventArgs(
                         _dataTransfer.Id,
@@ -462,7 +461,6 @@ namespace Azure.Storage.DataMovement
                     ClientDiagnostics)
                     .ConfigureAwait(false);
             }
-            Console.WriteLine($"{Thread.CurrentThread.ManagedThreadId}: Finished InvokeFailedArgAsync");
         }
 
         /// <summary>
@@ -602,6 +600,22 @@ namespace Azure.Storage.DataMovement
                     _failureType = JobPartFailureType.Other;
                 }
             }
+        }
+
+        internal async Task<bool> IsTransferJobInProgress()
+        {
+            // If the main transfer has been stopped, do not process this part.
+            if (_dataTransfer.TransferStatus.State == DataTransferState.Pausing)
+            {
+                await OnTransferStateChangedAsync(DataTransferState.Paused).ConfigureAwait(false);
+                return false;
+            }
+            else if (_dataTransfer.TransferStatus.State == DataTransferState.Stopping)
+            {
+                await OnTransferStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
+                return false;
+            }
+            return true;
         }
     }
 }

@@ -190,6 +190,11 @@ namespace Azure.Storage.DataMovement
             string operationName = $"{nameof(TransferManager.StartTransferAsync)}";
             try
             {
+                // Continue only if job is in progress
+                if (!await IsTransferJobInProgress().ConfigureAwait(false))
+                {
+                    return;
+                }
                 await OnTransferStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
                 long? fileLength = default;
                 StorageResourceItemProperties properties = await _sourceResource.GetPropertiesAsync(_cancellationToken).ConfigureAwait(false);
@@ -449,24 +454,28 @@ namespace Azure.Storage.DataMovement
             StorageResourceItemProperties sourceProperties)
         {
             _queueingTasks = true;
-            // Partition the stream into individual blocks
-            foreach ((long Offset, long Length) block in ranges)
+            try
             {
-                if (_cancellationToken.IsCancellationRequested)
+                // Partition the stream into individual blocks
+                foreach ((long Offset, long Length) block in ranges)
                 {
-                    break;
+                    CancellationHelper.ThrowIfCancellationRequested(_cancellationToken);
+
+                    // Queue partitioned block task
+                    await QueueStageBlockRequest(
+                        block.Offset,
+                        block.Length,
+                        completeLength,
+                        sourceProperties).ConfigureAwait(false);
                 }
-
-                // Queue partitioned block task
-                await QueueStageBlockRequest(
-                    block.Offset,
-                    block.Length,
-                    completeLength,
-                    sourceProperties).ConfigureAwait(false);
+                _queueingTasks = false;
+                await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
             }
-
-            _queueingTasks = false;
-            await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
+            catch (Exception ex)
+            {
+                _queueingTasks = false;
+                await InvokeFailedArgAsync(ex).ConfigureAwait(false);
+            }
         }
 
         private Task QueueStageBlockRequest(

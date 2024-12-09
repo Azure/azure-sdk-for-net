@@ -106,7 +106,6 @@ namespace Azure.Storage.DataMovement
                 if (_bytesTransferred == _expectedLength)
                 {
                     // Add CommitBlockList task to the channel
-                    Console.WriteLine("queue commit block task");
                     await _queueCommitBlockTask(_sourceProperties).ConfigureAwait(false);
                 }
                 else if (_bytesTransferred < _expectedLength)
@@ -118,7 +117,6 @@ namespace Azure.Storage.DataMovement
                         long blockLength = (newOffset + _blockSize < _expectedLength) ?
                                             _blockSize :
                                             _expectedLength - newOffset;
-                        Console.WriteLine("queue put block task");
                         await _queuePutBlockTask(
                             newOffset,
                             blockLength,
@@ -128,7 +126,6 @@ namespace Azure.Storage.DataMovement
                 }
                 else  // _bytesTransferred > _expectedLength
                 {
-                    Console.WriteLine("Mismatch length transferred");
                     throw Errors.MismatchLengthTransferred(
                         expectedLength: _expectedLength,
                         actualLength: _bytesTransferred);
@@ -145,7 +142,6 @@ namespace Azure.Storage.DataMovement
                     _ = Task.Run(() => _invokeFailedEventHandler(ex));
                 }
             }
-            Console.WriteLine("Finished Commit Range");
         }
     }
 }

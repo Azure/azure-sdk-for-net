@@ -685,11 +685,9 @@ namespace Azure.Storage.DataMovement
                 {
                     await OnJobStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
                 }
-                return;
             }
-
             // If there are no more pending job parts, complete the job
-            if (_pendingJobParts == 0)
+            else if (_pendingJobParts == 0)
             {
                 if (_jobPartPaused)
                 {
@@ -698,6 +696,31 @@ namespace Azure.Storage.DataMovement
                 else
                 {
                     await OnJobStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
+                }
+            }
+            else
+            {
+                // If we are in a pausing/stopping state, and the number of pending job parts is equal to the number
+                // of queued job parts, then we can safely change the state to paused.
+                DataTransferState state = _dataTransfer.TransferStatus.State;
+                if (state == DataTransferState.Pausing || state == DataTransferState.Stopping)
+                {
+                    // Checking all the job parts status's can be expensive so minimizing this to once
+                    // and only if we're in a pausing or stopping state.
+                    if (_jobParts.All(p =>
+                        p.JobPartStatus.State == DataTransferState.Queued ||
+                        p.JobPartStatus.State == DataTransferState.Paused ||
+                        p.JobPartStatus.State == DataTransferState.Completed))
+                    {
+                        if (state == DataTransferState.Pausing)
+                        {
+                            await OnJobStateChangedAsync(DataTransferState.Paused).ConfigureAwait(false);
+                        }
+                        else if (state == DataTransferState.Stopping)
+                        {
+                            await OnJobStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
+                        }
+                    }
                 }
             }
         }

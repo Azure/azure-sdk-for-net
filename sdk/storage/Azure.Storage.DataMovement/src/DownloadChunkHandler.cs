@@ -111,7 +111,6 @@ namespace Azure.Storage.DataMovement
             try
             {
                 // Copy the current chunk to the destination
-                Console.WriteLine("copy to destination file");
                 using (Stream content = args.Content)
                 {
                     await _copyToDestinationFile(
@@ -121,13 +120,11 @@ namespace Azure.Storage.DataMovement
                         _expectedLength,
                         initial: _bytesTransferred == 0).ConfigureAwait(false);
                 }
-                Console.WriteLine("update bytes and range");
                 UpdateBytesAndRange(args.Length);
 
                 // Check if we finished downloading the blob
                 if (_bytesTransferred == _expectedLength)
                 {
-                    Console.WriteLine("queue file download");
                     await _queueCompleteFileDownload().ConfigureAwait(false);
                 }
             }
