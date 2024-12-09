@@ -11,7 +11,6 @@ using Azure.Core;
 using Azure.Storage.Blobs;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
-using OpenAI.Chat;
 
 [assembly: NonParallelizable]
 
@@ -59,8 +58,6 @@ public class ConnectionTests
         client.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
 
         if (args.Contains("-azd")) Azd.Init(client);
-
-        ChatClient chat = client.GetOpenAIChatClient();
     }
 
     [Test]
@@ -74,7 +71,6 @@ public class ConnectionTests
             .Build();
 
         CloudMachineClient client = new(configuration);
-        ChatClient chat = client.GetOpenAIChatClient();
     }
 
     [Test]
@@ -106,7 +102,6 @@ public class ConnectionTests
 
     private static void ValidateClient(CloudMachineClient client)
     {
-        ChatClient chat = client.GetOpenAIChatClient();
         StorageServices storage = client.Storage;
         BlobContainerClient container = storage.GetContainer(default);
         MessagingServices messaging = client.Messaging;

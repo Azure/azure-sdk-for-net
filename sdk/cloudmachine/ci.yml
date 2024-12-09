@@ -55,5 +55,7 @@ extends:
       safeName: AzureCloudMachineAll
     - name: Azure.CloudMachine.Web
       safeName: AzureCloudMachineWeb
+    - name: Azure.CloudMachine.AI
+      safeName: AzureCloudMachineAI
     - name: Azure.Provisioning.CloudMachine
       safeName: AzureProvisioningCloudMachine
