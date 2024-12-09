@@ -84,6 +84,7 @@ namespace Azure.AI.Projects
                     case "fabric_aiskill": return MicrosoftFabricToolDefinition.DeserializeMicrosoftFabricToolDefinition(element, options);
                     case "file_search": return FileSearchToolDefinition.DeserializeFileSearchToolDefinition(element, options);
                     case "function": return FunctionToolDefinition.DeserializeFunctionToolDefinition(element, options);
+                    case "openapi": return OpenApiToolDefinition.DeserializeOpenApiToolDefinition(element, options);
                     case "sharepoint_grounding": return SharepointToolDefinition.DeserializeSharepointToolDefinition(element, options);
                 }
             }

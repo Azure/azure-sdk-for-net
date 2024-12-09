@@ -30,13 +30,13 @@ public partial class Sample_Agent_Azure_Functions : SamplesBase<AIProjectsTestEn
             inputBinding: new AzureFunctionBinding(
                 new AzureFunctionStorageQueue(
                     queueName: "azure-function-foo-input",
-                    storageServiceUri: storageQueueUri
+                    storageServiceEndpoint: storageQueueUri
                 )
             ),
             outputBinding: new AzureFunctionBinding(
                 new AzureFunctionStorageQueue(
                     queueName: "azure-function-tool-output",
-                    storageServiceUri: storageQueueUri
+                    storageServiceEndpoint: storageQueueUri
                 )
             ),
             parameters: BinaryData.FromObjectAsJson(

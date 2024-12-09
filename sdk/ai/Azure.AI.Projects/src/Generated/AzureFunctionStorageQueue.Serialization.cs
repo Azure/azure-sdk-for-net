@@ -34,8 +34,8 @@ namespace Azure.AI.Projects
                 throw new FormatException($"The model {nameof(AzureFunctionStorageQueue)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("queue_service_uri"u8);
-            writer.WriteStringValue(StorageServiceUri);
+            writer.WritePropertyName("queue_service_endpoint"u8);
+            writer.WriteStringValue(StorageServiceEndpoint);
             writer.WritePropertyName("queue_name"u8);
             writer.WriteStringValue(QueueName);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -75,15 +75,15 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            string queueServiceUri = default;
+            string queueServiceEndpoint = default;
             string queueName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("queue_service_uri"u8))
+                if (property.NameEquals("queue_service_endpoint"u8))
                 {
-                    queueServiceUri = property.Value.GetString();
+                    queueServiceEndpoint = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("queue_name"u8))
@@ -97,7 +97,7 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AzureFunctionStorageQueue(queueServiceUri, queueName, serializedAdditionalRawData);
+            return new AzureFunctionStorageQueue(queueServiceEndpoint, queueName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureFunctionStorageQueue>.Write(ModelReaderWriterOptions options)

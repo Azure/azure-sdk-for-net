@@ -46,25 +46,25 @@ namespace Azure.AI.Projects
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AzureFunctionStorageQueue"/>. </summary>
-        /// <param name="storageServiceUri"> URI to the Azure Storage Queue service allowing you to manipulate a queue. </param>
+        /// <param name="storageServiceEndpoint"> URI to the Azure Storage Queue service allowing you to manipulate a queue. </param>
         /// <param name="queueName"> The name of an Azure function storage queue. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageServiceUri"/> or <paramref name="queueName"/> is null. </exception>
-        public AzureFunctionStorageQueue(string storageServiceUri, string queueName)
+        /// <exception cref="ArgumentNullException"> <paramref name="storageServiceEndpoint"/> or <paramref name="queueName"/> is null. </exception>
+        public AzureFunctionStorageQueue(string storageServiceEndpoint, string queueName)
         {
-            Argument.AssertNotNull(storageServiceUri, nameof(storageServiceUri));
+            Argument.AssertNotNull(storageServiceEndpoint, nameof(storageServiceEndpoint));
             Argument.AssertNotNull(queueName, nameof(queueName));
 
-            StorageServiceUri = storageServiceUri;
+            StorageServiceEndpoint = storageServiceEndpoint;
             QueueName = queueName;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureFunctionStorageQueue"/>. </summary>
-        /// <param name="storageServiceUri"> URI to the Azure Storage Queue service allowing you to manipulate a queue. </param>
+        /// <param name="storageServiceEndpoint"> URI to the Azure Storage Queue service allowing you to manipulate a queue. </param>
         /// <param name="queueName"> The name of an Azure function storage queue. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureFunctionStorageQueue(string storageServiceUri, string queueName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AzureFunctionStorageQueue(string storageServiceEndpoint, string queueName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            StorageServiceUri = storageServiceUri;
+            StorageServiceEndpoint = storageServiceEndpoint;
             QueueName = queueName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -75,7 +75,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> URI to the Azure Storage Queue service allowing you to manipulate a queue. </summary>
-        public string StorageServiceUri { get; set; }
+        public string StorageServiceEndpoint { get; set; }
         /// <summary> The name of an Azure function storage queue. </summary>
         public string QueueName { get; set; }
     }
