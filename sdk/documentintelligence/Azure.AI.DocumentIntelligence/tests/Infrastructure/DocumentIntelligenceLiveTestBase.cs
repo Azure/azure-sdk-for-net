@@ -68,9 +68,8 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var containerUrl = new Uri(containerUrlString);
             var source = new BlobContentSource(containerUrl);
 
-            var options = new BuildDocumentModelOptions(modelId, DocumentBuildMode.Template)
+            var options = new BuildDocumentModelOptions(modelId, DocumentBuildMode.Template, source)
             {
-                BlobSource = source,
                 Description = description
             };
 
@@ -95,11 +94,11 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var sourceC = new BlobContentSource(containerUrl) { Prefix = "IRS-1040-C/train" };
             var sourceD = new BlobContentSource(containerUrl) { Prefix = "IRS-1040-D/train" };
             var sourceE = new BlobContentSource(containerUrl) { Prefix = "IRS-1040-E/train" };
-            var docTypeA = new ClassifierDocumentTypeDetails() { BlobSource = sourceA };
-            var docTypeB = new ClassifierDocumentTypeDetails() { BlobSource = sourceB };
-            var docTypeC = new ClassifierDocumentTypeDetails() { BlobSource = sourceC };
-            var docTypeD = new ClassifierDocumentTypeDetails() { BlobSource = sourceD };
-            var docTypeE = new ClassifierDocumentTypeDetails() { BlobSource = sourceE };
+            var docTypeA = new ClassifierDocumentTypeDetails(sourceA);
+            var docTypeB = new ClassifierDocumentTypeDetails(sourceB);
+            var docTypeC = new ClassifierDocumentTypeDetails(sourceC);
+            var docTypeD = new ClassifierDocumentTypeDetails(sourceD);
+            var docTypeE = new ClassifierDocumentTypeDetails(sourceE);
             var docTypes = new Dictionary<string, ClassifierDocumentTypeDetails>()
             {
                 { "IRS-1040-A", docTypeA },

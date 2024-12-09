@@ -110,7 +110,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="span"> Location of the word in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the word. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentWord"/> instance for mocking. </returns>
-        public static DocumentWord DocumentWord(string content = null, IEnumerable<float> polygon = null, DocumentSpan span = null, float confidence = default)
+        public static DocumentWord DocumentWord(string content = null, IEnumerable<float> polygon = null, DocumentSpan span = default, float confidence = default)
         {
             polygon ??= new List<float>();
 
@@ -128,7 +128,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="span"> Location of the selection mark in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the selection mark. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentSelectionMark"/> instance for mocking. </returns>
-        public static DocumentSelectionMark DocumentSelectionMark(DocumentSelectionMarkState state = default, IEnumerable<float> polygon = null, DocumentSpan span = null, float confidence = default)
+        public static DocumentSelectionMark DocumentSelectionMark(DocumentSelectionMarkState state = default, IEnumerable<float> polygon = null, DocumentSpan span = default, float confidence = default)
         {
             polygon ??= new List<float>();
 
@@ -165,7 +165,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="span"> Location of the barcode in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the barcode. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentBarcode"/> instance for mocking. </returns>
-        public static DocumentBarcode DocumentBarcode(DocumentBarcodeKind kind = default, string value = null, IEnumerable<float> polygon = null, DocumentSpan span = null, float confidence = default)
+        public static DocumentBarcode DocumentBarcode(DocumentBarcodeKind kind = default, string value = null, IEnumerable<float> polygon = null, DocumentSpan span = default, float confidence = default)
         {
             polygon ??= new List<float>();
 
@@ -190,7 +190,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="span"> Location of the formula in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the formula. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentFormula"/> instance for mocking. </returns>
-        public static DocumentFormula DocumentFormula(DocumentFormulaKind kind = default, string value = null, IEnumerable<float> polygon = null, DocumentSpan span = null, float confidence = default)
+        public static DocumentFormula DocumentFormula(DocumentFormulaKind kind = default, string value = null, IEnumerable<float> polygon = null, DocumentSpan span = default, float confidence = default)
         {
             polygon ??= new List<float>();
 

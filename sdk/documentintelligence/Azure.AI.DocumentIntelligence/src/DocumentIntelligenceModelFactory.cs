@@ -8,13 +8,14 @@ using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    // CUSTOM CODE NOTE: the generator started including AnalyzeDocumentOptions and ClassifyDocumentOptions
-    // in the factory after we hid their parameterless constructors. This is unnecessary given that they are
-    // input-only models that can be directly instantiated by users. For this reason we're suppressing their
-    // generation here.
+    // CUSTOM CODE NOTE: the generator started including AnalyzeDocumentOptions, ClassifierDocumentTypeDetails,
+    // and ClassifyDocumentOptions in the factory after we hid their parameterless constructors. This is unnecessary
+    // given that they are input-only models that can be directly instantiated by users. For this reason we're
+    // suppressing their generation here.
 
     [CodeGenModel("AIDocumentIntelligenceModelFactory")]
     [CodeGenSuppress("AnalyzeDocumentOptions", typeof(Uri), typeof(BinaryData))]
+    [CodeGenSuppress("ClassifierDocumentTypeDetails", typeof(ContentSourceKind?), typeof(BlobContentSource), typeof(BlobFileListContentSource))]
     [CodeGenSuppress("ClassifyDocumentOptions", typeof(Uri), typeof(BinaryData))]
     public partial class DocumentIntelligenceModelFactory
     {

@@ -756,10 +756,6 @@ namespace Azure.AI.DocumentIntelligence.Samples
             BuildDocumentModelOptions buildRequest = new BuildDocumentModelOptions("myCustomModel", DocumentBuildMode.Template)
             {
                 Description = "Custom model description",
-                BlobSource = new BlobContentSource(new Uri("https://myStorageAccount.blob.core.windows.net/myContainer?mySasToken"))
-                {
-                    Prefix = "trainingDocs/",
-                },
                 Tags =
 {
 ["createdBy"] = "myUserId"
@@ -780,10 +776,6 @@ namespace Azure.AI.DocumentIntelligence.Samples
             BuildDocumentModelOptions buildRequest = new BuildDocumentModelOptions("myCustomModel", DocumentBuildMode.Template)
             {
                 Description = "Custom model description",
-                BlobSource = new BlobContentSource(new Uri("https://myStorageAccount.blob.core.windows.net/myContainer?mySasToken"))
-                {
-                    Prefix = "trainingDocs/",
-                },
                 Tags =
 {
 ["createdBy"] = "myUserId"
@@ -1093,17 +1085,8 @@ namespace Azure.AI.DocumentIntelligence.Samples
 
             BuildClassifierOptions buildRequest = new BuildClassifierOptions("myClassifier", new Dictionary<string, ClassifierDocumentTypeDetails>
             {
-                ["formA"] = new ClassifierDocumentTypeDetails
-                {
-                    BlobSource = new BlobContentSource(new Uri("https://myStorageAccount.blob.core.windows.net/myContainer?mySasToken"))
-                    {
-                        Prefix = "formADocs/",
-                    },
-                },
-                ["formB"] = new ClassifierDocumentTypeDetails
-                {
-                    BlobFileListSource = new BlobFileListContentSource(new Uri("https://myStorageAccount.blob.core.windows.net/myContainer?mySasToken"), "formB.jsonl"),
-                }
+                ["formA"] = new ClassifierDocumentTypeDetails(),
+                ["formB"] = new ClassifierDocumentTypeDetails()
             })
             {
                 Description = "Classifier description",
@@ -1122,17 +1105,8 @@ namespace Azure.AI.DocumentIntelligence.Samples
 
             BuildClassifierOptions buildRequest = new BuildClassifierOptions("myClassifier", new Dictionary<string, ClassifierDocumentTypeDetails>
             {
-                ["formA"] = new ClassifierDocumentTypeDetails
-                {
-                    BlobSource = new BlobContentSource(new Uri("https://myStorageAccount.blob.core.windows.net/myContainer?mySasToken"))
-                    {
-                        Prefix = "formADocs/",
-                    },
-                },
-                ["formB"] = new ClassifierDocumentTypeDetails
-                {
-                    BlobFileListSource = new BlobFileListContentSource(new Uri("https://myStorageAccount.blob.core.windows.net/myContainer?mySasToken"), "formB.jsonl"),
-                }
+                ["formA"] = new ClassifierDocumentTypeDetails(),
+                ["formB"] = new ClassifierDocumentTypeDetails()
             })
             {
                 Description = "Classifier description",

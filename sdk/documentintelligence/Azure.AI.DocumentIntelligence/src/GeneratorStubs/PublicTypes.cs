@@ -12,8 +12,12 @@ namespace Azure.AI.DocumentIntelligence
         internal StringIndexType StringIndexType { get; }
     }
 
+    public readonly partial struct BoundingRegion { }
+
     [CodeGenModel("AzureAIDocumentIntelligenceClientOptions")]
     public partial class DocumentIntelligenceClientOptions { }
+
+    public readonly partial struct DocumentSpan { }
 }
 
 namespace Microsoft.Extensions.Azure

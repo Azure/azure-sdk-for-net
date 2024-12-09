@@ -386,10 +386,8 @@ Uri blobContainerUri = new Uri("<blobContainerUri>");
 // build modes and their differences, see:
 // https://aka.ms/azsdk/formrecognizer/buildmode
 
-var options = new BuildDocumentModelOptions(modelId, DocumentBuildMode.Template)
-{
-    BlobSource = new BlobContentSource(blobContainerUri)
-};
+var blobSource = new BlobContentSource(blobContainerUri);
+var options = new BuildDocumentModelOptions(modelId, DocumentBuildMode.Template, blobSource);
 
 Operation<DocumentModelDetails> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, options);
 DocumentModelDetails model = operation.Value;
@@ -468,8 +466,8 @@ string classifierId = "<classifierId>";
 Uri blobContainerUri = new Uri("<blobContainerUri>");
 var sourceA = new BlobContentSource(blobContainerUri) { Prefix = "IRS-1040-A/train" };
 var sourceB = new BlobContentSource(blobContainerUri) { Prefix = "IRS-1040-B/train" };
-var docTypeA = new ClassifierDocumentTypeDetails() { BlobSource = sourceA };
-var docTypeB = new ClassifierDocumentTypeDetails() { BlobSource = sourceB };
+var docTypeA = new ClassifierDocumentTypeDetails(sourceA);
+var docTypeB = new ClassifierDocumentTypeDetails(sourceB);
 var docTypes = new Dictionary<string, ClassifierDocumentTypeDetails>()
 {
     { "IRS-1040-A", docTypeA },

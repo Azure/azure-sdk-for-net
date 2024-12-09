@@ -28,9 +28,9 @@ We will be writing an application that collects the expenses a company is making
 
 string officeSuppliesModelId = "<officeSuppliesModelId>";
 Uri officeSuppliesUri = new Uri("<officeSuppliesUri>");
-var officeSuppliesOptions = new BuildDocumentModelOptions(officeSuppliesModelId, DocumentBuildMode.Template)
+var officeSuppliesSource = new BlobContentSource(officeSuppliesUri);
+var officeSuppliesOptions = new BuildDocumentModelOptions(officeSuppliesModelId, DocumentBuildMode.Template, officeSuppliesSource)
 {
-    BlobSource = new BlobContentSource(officeSuppliesUri),
     Description = "Purchase order - Office supplies"
 };
 
@@ -39,9 +39,9 @@ DocumentModelDetails officeSuppliesModel = officeSuppliesOperation.Value;
 
 string officeEquipmentModelId = "<officeEquipmentModelId>";
 Uri officeEquipmentUri = new Uri("<officeEquipmentUri>");
-var officeEquipmentOptions = new BuildDocumentModelOptions(officeEquipmentModelId, DocumentBuildMode.Template)
+var officeEquipmentSource = new BlobContentSource(officeEquipmentUri);
+var officeEquipmentOptions = new BuildDocumentModelOptions(officeEquipmentModelId, DocumentBuildMode.Template, officeEquipmentSource)
 {
-    BlobSource = new BlobContentSource(officeEquipmentUri),
     Description = "Purchase order - Office Equipment"
 };
 
@@ -50,9 +50,9 @@ DocumentModelDetails officeEquipmentModel = officeEquipmentOperation.Value;
 
 string furnitureModelId = "<furnitureModelId>";
 Uri furnitureUri = new Uri("<purchaseOrderFurnitureUri>");
-var furnitureOptions = new BuildDocumentModelOptions(furnitureModelId, DocumentBuildMode.Template)
+var furnitureSource = new BlobContentSource(furnitureUri);
+var furnitureOptions = new BuildDocumentModelOptions(furnitureModelId, DocumentBuildMode.Template, furnitureSource)
 {
-    BlobSource = new BlobContentSource(furnitureUri),
     Description = "Purchase order - Furniture"
 };
 
@@ -61,9 +61,9 @@ DocumentModelDetails furnitureModel = furnitureOperation.Value;
 
 string cleaningSuppliesModelId = "<cleaningSuppliesModelId>";
 Uri cleaningSuppliesUri = new Uri("<cleaningSuppliesUri>");
-var cleaningSuppliesOptions = new BuildDocumentModelOptions(cleaningSuppliesModelId, DocumentBuildMode.Template)
+var cleaningSuppliesSource = new BlobContentSource(cleaningSuppliesUri);
+var cleaningSuppliesOptions = new BuildDocumentModelOptions(cleaningSuppliesModelId, DocumentBuildMode.Template, cleaningSuppliesSource)
 {
-    BlobSource = new BlobContentSource(cleaningSuppliesUri),
     Description = "Purchase order - Cleaning Supplies"
 };
 

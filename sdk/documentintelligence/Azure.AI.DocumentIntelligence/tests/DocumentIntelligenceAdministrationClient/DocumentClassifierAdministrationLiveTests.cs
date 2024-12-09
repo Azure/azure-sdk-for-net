@@ -30,8 +30,8 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var containerUrl = new Uri(TestEnvironment.ClassifierTrainingSasUrl);
             var sourceA = new BlobContentSource(containerUrl) { Prefix = "IRS-1040-A/train" };
             var sourceB = new BlobContentSource(containerUrl) { Prefix = "IRS-1040-B/train" };
-            var docTypeA = new ClassifierDocumentTypeDetails() { BlobSource = sourceA };
-            var docTypeB = new ClassifierDocumentTypeDetails() { BlobSource = sourceB };
+            var docTypeA = new ClassifierDocumentTypeDetails(sourceA);
+            var docTypeB = new ClassifierDocumentTypeDetails(sourceB);
             var docTypes = new Dictionary<string, ClassifierDocumentTypeDetails>()
             {
                 { "IRS-1040-A", docTypeA },
@@ -88,8 +88,8 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var containerUrl = new Uri(TestEnvironment.ClassifierTrainingSasUrl);
             var sourceA = new BlobFileListContentSource(containerUrl, "IRS-1040-A.jsonl");
             var sourceB = new BlobFileListContentSource(containerUrl, "IRS-1040-B.jsonl");
-            var docTypeA = new ClassifierDocumentTypeDetails() { BlobFileListSource = sourceA };
-            var docTypeB = new ClassifierDocumentTypeDetails() { BlobFileListSource = sourceB };
+            var docTypeA = new ClassifierDocumentTypeDetails(sourceA);
+            var docTypeB = new ClassifierDocumentTypeDetails(sourceB);
             var docTypes = new Dictionary<string, ClassifierDocumentTypeDetails>()
             {
                 { "IRS-1040-A", docTypeA },

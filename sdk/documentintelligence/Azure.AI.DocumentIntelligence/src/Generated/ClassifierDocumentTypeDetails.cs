@@ -46,11 +46,6 @@ namespace Azure.AI.DocumentIntelligence
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ClassifierDocumentTypeDetails"/>. </summary>
-        public ClassifierDocumentTypeDetails()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ClassifierDocumentTypeDetails"/>. </summary>
         /// <param name="sourceKind"> Type of training data source. </param>
         /// <param name="blobSource">
         /// Azure Blob Storage location containing the training data for a classifier
@@ -73,17 +68,5 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> Type of training data source. </summary>
         public ContentSourceKind? SourceKind { get; set; }
-        /// <summary>
-        /// Azure Blob Storage location containing the training data for a classifier
-        /// document type.  Either azureBlobSource or azureBlobFileListSource must be
-        /// specified.
-        /// </summary>
-        public BlobContentSource BlobSource { get; set; }
-        /// <summary>
-        /// Azure Blob Storage file list specifying the training data for a classifier
-        /// document type.  Either azureBlobSource or azureBlobFileListSource must be
-        /// specified.
-        /// </summary>
-        public BlobFileListContentSource BlobFileListSource { get; set; }
     }
 }

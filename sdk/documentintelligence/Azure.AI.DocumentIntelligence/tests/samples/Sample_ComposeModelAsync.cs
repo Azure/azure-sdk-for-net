@@ -29,9 +29,9 @@ namespace Azure.AI.DocumentIntelligence.Samples
             string officeSuppliesModelId = Guid.NewGuid().ToString();
             Uri officeSuppliesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 #endif
-            var officeSuppliesOptions = new BuildDocumentModelOptions(officeSuppliesModelId, DocumentBuildMode.Template)
+            var officeSuppliesSource = new BlobContentSource(officeSuppliesUri);
+            var officeSuppliesOptions = new BuildDocumentModelOptions(officeSuppliesModelId, DocumentBuildMode.Template, officeSuppliesSource)
             {
-                BlobSource = new BlobContentSource(officeSuppliesUri),
                 Description = "Purchase order - Office supplies"
             };
 
@@ -45,9 +45,9 @@ namespace Azure.AI.DocumentIntelligence.Samples
             string officeEquipmentModelId = Guid.NewGuid().ToString();
             Uri officeEquipmentUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 #endif
-            var officeEquipmentOptions = new BuildDocumentModelOptions(officeEquipmentModelId, DocumentBuildMode.Template)
+            var officeEquipmentSource = new BlobContentSource(officeEquipmentUri);
+            var officeEquipmentOptions = new BuildDocumentModelOptions(officeEquipmentModelId, DocumentBuildMode.Template, officeEquipmentSource)
             {
-                BlobSource = new BlobContentSource(officeEquipmentUri),
                 Description = "Purchase order - Office Equipment"
             };
 
@@ -61,9 +61,9 @@ namespace Azure.AI.DocumentIntelligence.Samples
             string furnitureModelId = Guid.NewGuid().ToString();
             Uri furnitureUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 #endif
-            var furnitureOptions = new BuildDocumentModelOptions(furnitureModelId, DocumentBuildMode.Template)
+            var furnitureSource = new BlobContentSource(furnitureUri);
+            var furnitureOptions = new BuildDocumentModelOptions(furnitureModelId, DocumentBuildMode.Template, furnitureSource)
             {
-                BlobSource = new BlobContentSource(furnitureUri),
                 Description = "Purchase order - Furniture"
             };
 
@@ -77,9 +77,9 @@ namespace Azure.AI.DocumentIntelligence.Samples
             string cleaningSuppliesModelId = Guid.NewGuid().ToString();
             Uri cleaningSuppliesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 #endif
-            var cleaningSuppliesOptions = new BuildDocumentModelOptions(cleaningSuppliesModelId, DocumentBuildMode.Template)
+            var cleaningSuppliesSource = new BlobContentSource(cleaningSuppliesUri);
+            var cleaningSuppliesOptions = new BuildDocumentModelOptions(cleaningSuppliesModelId, DocumentBuildMode.Template, cleaningSuppliesSource)
             {
-                BlobSource = new BlobContentSource(cleaningSuppliesUri),
                 Description = "Purchase order - Cleaning Supplies"
             };
 
@@ -140,8 +140,8 @@ namespace Azure.AI.DocumentIntelligence.Samples
 
             var sourceA = new BlobContentSource(blobContainerUri) { Prefix = "IRS-1040-A/train" };
             var sourceB = new BlobContentSource(blobContainerUri) { Prefix = "IRS-1040-B/train" };
-            var docTypeA = new ClassifierDocumentTypeDetails() { BlobSource = sourceA };
-            var docTypeB = new ClassifierDocumentTypeDetails() { BlobSource = sourceB };
+            var docTypeA = new ClassifierDocumentTypeDetails(sourceA);
+            var docTypeB = new ClassifierDocumentTypeDetails(sourceB);
             var docTypes = new Dictionary<string, ClassifierDocumentTypeDetails>()
             {
                 { "IRS-1040-A", docTypeA },

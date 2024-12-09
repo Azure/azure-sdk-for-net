@@ -4,7 +4,7 @@
 
 ### Features Added
 - Added methods `GetAnalyzeBatchResult`, `GetAnalyzeBatchResults`, `DeleteAnalyzeBatchResult`, and `DeleteAnalyzeResult` to `DocumentIntelligenceClient`.
-- Added class `AnalyzeBatchOperationRename` to be used as the output of the `GetAnalyzeBatchResult` and `GetAnalyzeBatchResults` APIs.
+- Added class `AnalyzeBatchOperationDetails` to be used as the output of the `GetAnalyzeBatchResult` and `GetAnalyzeBatchResults` APIs.
 - Added property `ModifiedOn` to `DocumentModelDetails` and to `DocumentClassifierDetails`.
 - Added member `Skipped` to `DocumentIntelligenceOperationStatus` (former `OperationStatus`).
 - Exposed `JsonModelWriteCore` for model serialization procedure.
@@ -20,6 +20,7 @@
   - `ClassifyDocumentContent` to `ClassifyDocumentOptions`.
   - `ComposeDocumentModelContent` to `ComposeModelOptions`.
   - Optional parameters of the `AnalyzeBatchDocuments`, `AnalyzeDocument`, and `ClassifyDocument` methods have been moved into their corresponding `Options` class.
+- Updated parameter `resultId` of methods `GetAnalyzeResultPdf` and `GetAnalyzeResultFigure` to take a `string` instead of a `Guid`.
 - Renamed all occurrences of property `UrlSource` to `UriSource`.
 - Renamed all occurrences of properties `DocType` and `DocTypes` to `DocumentType` and `DocumentTypes`, respectively.
 - In `DocumentField`, renamed properties `Type` and `ValueLong` to `FieldType` and `ValueInt64`, respectively.
@@ -45,6 +46,7 @@
 - Removed member `Completed` from `DocumentIntelligenceOperationStatus` (former `OperationStatus`).
 - Removed type `StringIndexType`.
 - Removed property `StringIndexType` in `AnalyzeResult`.
+- Made type `BoundingRegion` a `struct`.
 
 ### Bugs Fixed
 - Fixed a bug where calling `Operation.Id` would sometimes return an `InvalidOperationException` with message "The operation ID was not present in the service response.".
