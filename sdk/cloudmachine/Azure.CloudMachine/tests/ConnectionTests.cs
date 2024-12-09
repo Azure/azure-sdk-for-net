@@ -70,7 +70,7 @@ public class ConnectionTests
         infra.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
 
         IConfiguration configuration = new ConfigurationBuilder()
-            .AddCloudMachineInfrastructure(infra)
+            .AddCloudMachineConfiguration(infra)
             .Build();
 
         CloudMachineClient client = new(configuration);

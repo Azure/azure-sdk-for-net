@@ -35,17 +35,6 @@ public static class CloudMachineExtensions
     }
 
     /// <summary>
-    /// Adds a CloudMachine client to the service collection.
-    /// </summary>
-    /// <param name="builder"></param>
-    /// <param name="workspace"></param>
-    public static void AddCloudMachine(this IHostApplicationBuilder builder, ClientWorkspace workspace)
-    {
-        var connections = workspace.GetAllConnectionOptions();
-        builder.Services.AddSingleton(new CloudMachineClient(connections));
-    }
-
-    /// <summary>
     /// Uploads a document to the storage service.
     /// </summary>
     /// <param name="storage"></param>
