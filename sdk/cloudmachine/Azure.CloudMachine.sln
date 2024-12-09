@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.CloudMachine", "Azure
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.CloudMachine.Tests", "Azure.CloudMachine\tests\Azure.CloudMachine.Tests.csproj", "{8C1A29AE-E357-4C40-ACCC-7215FBFB368C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Azure.CloudMachine.AI", "Azure.CloudMachine.AI", "{637A5F7C-2741-4841-9617-A60E28AB54CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.CloudMachine.AI", "Azure.CloudMachine.AI\src\Azure.CloudMachine.AI.csproj", "{C743EA41-2CBD-464C-9C5E-141B785804A4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,9 +30,14 @@ Global
 		{8C1A29AE-E357-4C40-ACCC-7215FBFB368C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C1A29AE-E357-4C40-ACCC-7215FBFB368C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C1A29AE-E357-4C40-ACCC-7215FBFB368C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C743EA41-2CBD-464C-9C5E-141B785804A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C743EA41-2CBD-464C-9C5E-141B785804A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C743EA41-2CBD-464C-9C5E-141B785804A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C743EA41-2CBD-464C-9C5E-141B785804A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0EA29D2F-41E0-4826-9CD4-111109A2CFF7} = {780138CF-68C6-4323-982F-F18989E2FA86}
 		{8C1A29AE-E357-4C40-ACCC-7215FBFB368C} = {780138CF-68C6-4323-982F-F18989E2FA86}
+		{C743EA41-2CBD-464C-9C5E-141B785804A4} = {637A5F7C-2741-4841-9617-A60E28AB54CD}
 	EndGlobalSection
 EndGlobal
