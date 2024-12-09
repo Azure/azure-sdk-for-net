@@ -1061,9 +1061,22 @@ public class PauseResumeTransferMockedTests
         int pausedPartsCount = partsStateCount[DataTransferState.Paused];
         int completedPartsCount = partsStateCount[DataTransferState.Completed];
 
+        int expectedAlreadyCompletedJobsCount_half = 0;
+        for (int i = 1, numChunksCompleted = numChunks / 2; i <= numJobParts / 2 && numChunksCompleted > 0; ++i)
+        {
+            numChunksCompleted -= i * 2;
+            if (numChunksCompleted >= 0)
+            {
+                ++expectedAlreadyCompletedJobsCount_half;
+            }
+        }
+
         if (pauseLocation == PauseLocation.PauseProcessHalfway)
         {
+            int expectedPausedJobsCount = numJobs - expectedAlreadyCompletedJobsCount_half;
             // For this test, job parts is 1:1 with job chunks
+            Assert.That(pausedJobsCount, Is.EqualTo(expectedPausedJobsCount), "Error in Pausing half");
+            Assert.That(completedJobsCount, Is.EqualTo(expectedAlreadyCompletedJobsCount_half), "Error in Pausing half");
             Assert.That(pausedPartsCount, Is.EqualTo(numJobParts / 2), "Error in Pausing half");
             Assert.That(completedPartsCount, Is.EqualTo(numJobParts / 2), "Error in Pausing half");
         }
@@ -1079,10 +1092,13 @@ public class PauseResumeTransferMockedTests
         List<DataTransfer> resumedTransfers = await transferManager.ResumeAllTransfersAsync();
 
         await Task.Delay(50);
-        int pausedJobsCount_resume = GetJobsStateCount(resumedTransfers, checkpointer)[DataTransferState.Paused];
-        if (pauseLocation == PauseLocation.PauseProcessStart)
+        int expectedJobsCount_half = numJobs - expectedAlreadyCompletedJobsCount_half;
+        if (pauseLocation == PauseLocation.PauseProcessHalfway)
         {
-            Assert.That(pausedJobsCount_resume, Is.EqualTo(numJobs));
+            Assert.That(jobsProcessor.ItemsInQueue, Is.EqualTo(expectedJobsCount_half), "Error in job processor on resume");
+        }
+        else
+        {
             Assert.That(jobsProcessor.ItemsInQueue, Is.EqualTo(numJobs), "Error in job processor on resume");
         }
 
@@ -1091,13 +1107,18 @@ public class PauseResumeTransferMockedTests
 
         await Task.Delay(50);
         int inProgressJobsCount = GetJobsStateCount(resumedTransfers, checkpointer)[DataTransferState.InProgress];
-        int pausedJobPartsCount = GetJobPartsStateCount(resumedTransfers, checkpointer)[DataTransferState.Paused];
         int enumerationCompleteCount2 = GetEnumerationCompleteCount(transfers, checkpointer);
         Assert.That(enumerationCompleteCount2, Is.EqualTo(numJobs), "Error: all jobs should have finished enumerating");
-        if (pauseLocation == PauseLocation.PauseProcessStart)
+        int expectedPartsCount_half = Enumerable.Range(numJobs + 1 - expectedJobsCount_half, expectedJobsCount_half)
+            .Sum(i => i * 2);
+        if (pauseLocation == PauseLocation.PauseProcessHalfway)
+        {
+            Assert.That(inProgressJobsCount, Is.EqualTo(expectedJobsCount_half), "Error: all remaining jobs should be in InProgress state after Job Processing on resume");
+            Assert.That(partsProcessor.ItemsInQueue, Is.EqualTo(expectedPartsCount_half), "Error in parts processor on resume");
+        }
+        else
         {
             Assert.That(inProgressJobsCount, Is.EqualTo(numJobs), "Error: all jobs should be in InProgress state after Job Processing on resume");
-            Assert.That(pausedJobPartsCount, Is.EqualTo(numJobParts));
             Assert.That(partsProcessor.ItemsInQueue, Is.EqualTo(numJobParts), "Error in parts processor on resume");
         }
 
@@ -1106,7 +1127,12 @@ public class PauseResumeTransferMockedTests
 
         await Task.Delay(50);
         int inProgressJobPartsCount = GetJobPartsStateCount(resumedTransfers, checkpointer)[DataTransferState.InProgress];
-        if (pauseLocation == PauseLocation.PauseProcessStart)
+        if (pauseLocation == PauseLocation.PauseProcessHalfway)
+        {
+            Assert.That(inProgressJobPartsCount, Is.EqualTo(expectedPartsCount_half), "Error: all remaining job parts should be in InProgress state after Part Processing on resume");
+            Assert.That(chunksProcessor.ItemsInQueue, Is.EqualTo(expectedPartsCount_half), "Error in chunks processor on resume"); // For this test, job parts is 1:1 with job chunks
+        }
+        else
         {
             Assert.That(inProgressJobPartsCount, Is.EqualTo(numJobParts), "Error: all job parts should be in InProgress state after Part Processing on resume");
             Assert.That(chunksProcessor.ItemsInQueue, Is.EqualTo(numChunks), "Error in chunks processor on resume");
