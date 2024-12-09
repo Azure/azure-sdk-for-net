@@ -5,7 +5,10 @@ using System.ClientModel.Internal;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace System.ClientModel.Primitives;
 
@@ -101,6 +104,7 @@ public sealed partial class ClientPipeline
         Argument.AssertNotNull(options, nameof(options));
 
         options.Freeze();
+        options.ClientLoggingOptions?.ValidateOptions();
 
         // Add length of client-specific policies.
         int pipelineLength = perCallPolicies.Length + perTryPolicies.Length + beforeTransportPolicies.Length;
@@ -111,6 +115,7 @@ public sealed partial class ClientPipeline
         pipelineLength += options.BeforeTransportPolicies?.Length ?? 0;
 
         pipelineLength++; // for retry policy
+        pipelineLength += options.AddMessageLoggingPolicy ? 1 : 0; // for message logging policy
         pipelineLength++; // for transport
 
         PipelinePolicy[] policies = new PipelinePolicy[pipelineLength];
@@ -130,7 +135,7 @@ public sealed partial class ClientPipeline
         int perCallIndex = index;
 
         // Add retry policy.
-        policies[index++] = options.RetryPolicy ?? ClientRetryPolicy.Default;
+        policies[index++] = options.RetryPolicy ?? options.GetClientRetryPolicy();
 
         // Per try policies come after the retry policy.
         perTryPolicies.CopyTo(policies.AsSpan(index));
@@ -143,6 +148,13 @@ public sealed partial class ClientPipeline
         }
 
         int perTryIndex = index;
+
+        // Add logging policy just before the transport.
+
+        if (options.AddMessageLoggingPolicy)
+        {
+            policies[index++] = options.MessageLoggingPolicy ?? options.GetMessageLoggingPolicy();
+        }
 
         // Before transport policies come before the transport.
         beforeTransportPolicies.CopyTo(policies.AsSpan(index));
@@ -157,7 +169,7 @@ public sealed partial class ClientPipeline
         int beforeTransportIndex = index;
 
         // Add the transport.
-        policies[index++] = options.Transport ?? HttpClientPipelineTransport.Shared;
+        policies[index++] = options.Transport ?? options.GetHttpClientPipelineTransport();
 
         return new ClientPipeline(policies,
             options.NetworkTimeout ?? DefaultNetworkTimeout,
