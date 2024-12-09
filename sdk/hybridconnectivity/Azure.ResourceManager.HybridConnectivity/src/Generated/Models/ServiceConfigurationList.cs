@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.HybridConnectivity.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ServiceConfigurationList"/>. </summary>
-        internal ServiceConfigurationList()
+        /// <param name="value"> The list of service configuration. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ServiceConfigurationList(IEnumerable<HybridConnectivityServiceConfigurationData> value)
         {
-            Value = new ChangeTrackingList<HybridConnectivityServiceConfigurationData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceConfigurationList"/>. </summary>
         /// <param name="value"> The list of service configuration. </param>
         /// <param name="nextLink"> The link to fetch the next page of connected cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceConfigurationList(IReadOnlyList<HybridConnectivityServiceConfigurationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServiceConfigurationList(IReadOnlyList<HybridConnectivityServiceConfigurationData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ServiceConfigurationList"/> for deserialization. </summary>
+        internal ServiceConfigurationList()
+        {
+        }
+
         /// <summary> The list of service configuration. </summary>
         public IReadOnlyList<HybridConnectivityServiceConfigurationData> Value { get; }
         /// <summary> The link to fetch the next page of connected cluster. </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

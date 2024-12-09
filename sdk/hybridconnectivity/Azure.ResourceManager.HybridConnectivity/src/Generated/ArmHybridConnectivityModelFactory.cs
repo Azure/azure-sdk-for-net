@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,6 +16,30 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmHybridConnectivityModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="HybridConnectivity.HybridConnectivityServiceConfigurationData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="serviceName"> Name of the service. </param>
+        /// <param name="resourceId"> The resource Id of the connectivity endpoint (optional). </param>
+        /// <param name="port"> The port on which service is enabled. </param>
+        /// <param name="provisioningState"> The resource provisioning state. </param>
+        /// <returns> A new <see cref="HybridConnectivity.HybridConnectivityServiceConfigurationData"/> instance for mocking. </returns>
+        public static HybridConnectivityServiceConfigurationData HybridConnectivityServiceConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HybridConnectivityServiceName? serviceName = null, ResourceIdentifier resourceId = null, long? port = null, HybridConnectivityProvisioningState? provisioningState = null)
+        {
+            return new HybridConnectivityServiceConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                serviceName,
+                resourceId,
+                port,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="HybridConnectivity.HybridConnectivityEndpointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -42,30 +68,6 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             return new HybridConnectivityEndpointProperties(endpointType, resourceId, provisioningState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="HybridConnectivity.HybridConnectivityServiceConfigurationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="serviceName"> Name of the service. </param>
-        /// <param name="resourceId"> The resource Id of the connectivity endpoint (optional). </param>
-        /// <param name="port"> The port on which service is enabled. </param>
-        /// <param name="provisioningState"> The resource provisioning state. </param>
-        /// <returns> A new <see cref="HybridConnectivity.HybridConnectivityServiceConfigurationData"/> instance for mocking. </returns>
-        public static HybridConnectivityServiceConfigurationData HybridConnectivityServiceConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HybridConnectivityServiceName? serviceName = null, ResourceIdentifier resourceId = null, long? port = null, HybridConnectivityProvisioningState? provisioningState = null)
-        {
-            return new HybridConnectivityServiceConfigurationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                serviceName,
-                resourceId,
-                port,
-                provisioningState,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.TargetResourceEndpointAccess"/>. </summary>
         /// <param name="namespaceName"> The namespace name. </param>
         /// <param name="namespaceNameSuffix"> The suffix domain name of relay namespace. </param>
@@ -77,32 +79,6 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         public static TargetResourceEndpointAccess TargetResourceEndpointAccess(string namespaceName = null, string namespaceNameSuffix = null, string hybridConnectionName = null, string accessKey = null, long? expiresOn = null, string serviceConfigurationToken = null)
         {
             return new TargetResourceEndpointAccess(
-                namespaceName,
-                namespaceNameSuffix,
-                hybridConnectionName,
-                accessKey,
-                expiresOn,
-                serviceConfigurationToken,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.IngressGatewayAsset"/>. </summary>
-        /// <param name="hostname"> The ingress hostname. </param>
-        /// <param name="serverId"> The arc ingress gateway server app id. </param>
-        /// <param name="tenantId"> The target resource home tenant id. </param>
-        /// <param name="namespaceName"> The namespace name. </param>
-        /// <param name="namespaceNameSuffix"> The suffix domain name of relay namespace. </param>
-        /// <param name="hybridConnectionName"> Azure Relay hybrid connection name for the resource. </param>
-        /// <param name="accessKey"> Access key for hybrid connection. </param>
-        /// <param name="expiresOn"> The expiration of access key in unix time. </param>
-        /// <param name="serviceConfigurationToken"> The token to access the enabled service. </param>
-        /// <returns> A new <see cref="Models.IngressGatewayAsset"/> instance for mocking. </returns>
-        public static IngressGatewayAsset IngressGatewayAsset(string hostname = null, Guid? serverId = null, Guid? tenantId = null, string namespaceName = null, string namespaceNameSuffix = null, string hybridConnectionName = null, string accessKey = null, long? expiresOn = null, string serviceConfigurationToken = null)
-        {
-            return new IngressGatewayAsset(
-                hostname,
-                serverId,
-                tenantId,
                 namespaceName,
                 namespaceNameSuffix,
                 hybridConnectionName,

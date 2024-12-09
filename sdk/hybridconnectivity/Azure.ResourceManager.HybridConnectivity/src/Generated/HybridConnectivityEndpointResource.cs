@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.HybridConnectivity
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _hybridConnectivityEndpointEndpointsClientDiagnostics;
-        private readonly EndpointsRestOperations _hybridConnectivityEndpointEndpointsRestClient;
+        private readonly ClientDiagnostics _hybridConnectivityEndpointEndpointResourcesClientDiagnostics;
+        private readonly EndpointResourcesRestOperations _hybridConnectivityEndpointEndpointResourcesRestClient;
         private readonly HybridConnectivityEndpointData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HybridConnectivityEndpointResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _hybridConnectivityEndpointEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string hybridConnectivityEndpointEndpointsApiVersion);
-            _hybridConnectivityEndpointEndpointsRestClient = new EndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hybridConnectivityEndpointEndpointsApiVersion);
+            _hybridConnectivityEndpointEndpointResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string hybridConnectivityEndpointEndpointResourcesApiVersion);
+            _hybridConnectivityEndpointEndpointResourcesRestClient = new EndpointResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hybridConnectivityEndpointEndpointResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceConfigurations_Get</description>
+        /// <description>ServiceConfigurationResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -118,6 +118,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="serviceConfigurationName"> The service name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HybridConnectivityServiceConfigurationResource>> GetHybridConnectivityServiceConfigurationAsync(string serviceConfigurationName, CancellationToken cancellationToken = default)
         {
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceConfigurations_Get</description>
+        /// <description>ServiceConfigurationResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -148,6 +149,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="serviceConfigurationName"> The service name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HybridConnectivityServiceConfigurationResource> GetHybridConnectivityServiceConfiguration(string serviceConfigurationName, CancellationToken cancellationToken = default)
         {
@@ -163,7 +165,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Endpoints_Get</description>
+        /// <description>EndpointResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -178,11 +180,11 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<HybridConnectivityEndpointResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _hybridConnectivityEndpointEndpointsClientDiagnostics.CreateScope("HybridConnectivityEndpointResource.Get");
+            using var scope = _hybridConnectivityEndpointEndpointResourcesClientDiagnostics.CreateScope("HybridConnectivityEndpointResource.Get");
             scope.Start();
             try
             {
-                var response = await _hybridConnectivityEndpointEndpointsRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _hybridConnectivityEndpointEndpointResourcesRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new HybridConnectivityEndpointResource(Client, response.Value), response.GetRawResponse());
@@ -203,7 +205,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Endpoints_Get</description>
+        /// <description>EndpointResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -218,11 +220,11 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<HybridConnectivityEndpointResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _hybridConnectivityEndpointEndpointsClientDiagnostics.CreateScope("HybridConnectivityEndpointResource.Get");
+            using var scope = _hybridConnectivityEndpointEndpointResourcesClientDiagnostics.CreateScope("HybridConnectivityEndpointResource.Get");
             scope.Start();
             try
             {
-                var response = _hybridConnectivityEndpointEndpointsRestClient.Get(Id.Parent, Id.Name, cancellationToken);
+                var response = _hybridConnectivityEndpointEndpointResourcesRestClient.Get(Id.Parent, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new HybridConnectivityEndpointResource(Client, response.Value), response.GetRawResponse());
@@ -243,7 +245,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Endpoints_Delete</description>
+        /// <description>EndpointResource_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -259,12 +261,12 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _hybridConnectivityEndpointEndpointsClientDiagnostics.CreateScope("HybridConnectivityEndpointResource.Delete");
+            using var scope = _hybridConnectivityEndpointEndpointResourcesClientDiagnostics.CreateScope("HybridConnectivityEndpointResource.Delete");
             scope.Start();
             try
             {
-                var response = await _hybridConnectivityEndpointEndpointsRestClient.DeleteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _hybridConnectivityEndpointEndpointsRestClient.CreateDeleteRequestUri(Id.Parent, Id.Name);
+                var response = await _hybridConnectivityEndpointEndpointResourcesRestClient.DeleteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                var uri = _hybridConnectivityEndpointEndpointResourcesRestClient.CreateDeleteRequestUri(Id.Parent, Id.Name);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new HybridConnectivityArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -287,7 +289,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Endpoints_Delete</description>
+        /// <description>EndpointResource_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -303,12 +305,12 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _hybridConnectivityEndpointEndpointsClientDiagnostics.CreateScope("HybridConnectivityEndpointResource.Delete");
+            using var scope = _hybridConnectivityEndpointEndpointResourcesClientDiagnostics.CreateScope("HybridConnectivityEndpointResource.Delete");
             scope.Start();
             try
             {
-                var response = _hybridConnectivityEndpointEndpointsRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
-                var uri = _hybridConnectivityEndpointEndpointsRestClient.CreateDeleteRequestUri(Id.Parent, Id.Name);
+                var response = _hybridConnectivityEndpointEndpointResourcesRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
+                var uri = _hybridConnectivityEndpointEndpointResourcesRestClient.CreateDeleteRequestUri(Id.Parent, Id.Name);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new HybridConnectivityArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -331,7 +333,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Endpoints_Update</description>
+        /// <description>EndpointResource_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -350,11 +352,11 @@ namespace Azure.ResourceManager.HybridConnectivity
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hybridConnectivityEndpointEndpointsClientDiagnostics.CreateScope("HybridConnectivityEndpointResource.Update");
+            using var scope = _hybridConnectivityEndpointEndpointResourcesClientDiagnostics.CreateScope("HybridConnectivityEndpointResource.Update");
             scope.Start();
             try
             {
-                var response = await _hybridConnectivityEndpointEndpointsRestClient.UpdateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var response = await _hybridConnectivityEndpointEndpointResourcesRestClient.UpdateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new HybridConnectivityEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -373,7 +375,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Endpoints_Update</description>
+        /// <description>EndpointResource_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -392,11 +394,11 @@ namespace Azure.ResourceManager.HybridConnectivity
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hybridConnectivityEndpointEndpointsClientDiagnostics.CreateScope("HybridConnectivityEndpointResource.Update");
+            using var scope = _hybridConnectivityEndpointEndpointResourcesClientDiagnostics.CreateScope("HybridConnectivityEndpointResource.Update");
             scope.Start();
             try
             {
-                var response = _hybridConnectivityEndpointEndpointsRestClient.Update(Id.Parent, Id.Name, data, cancellationToken);
+                var response = _hybridConnectivityEndpointEndpointResourcesRestClient.Update(Id.Parent, Id.Name, data, cancellationToken);
                 return Response.FromValue(new HybridConnectivityEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -415,7 +417,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Endpoints_ListCredentials</description>
+        /// <description>EndpointResources_ListCredentials</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -432,11 +434,11 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<TargetResourceEndpointAccess>> GetCredentialsAsync(ListCredentialsContent content = null, long? expiresin = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _hybridConnectivityEndpointEndpointsClientDiagnostics.CreateScope("HybridConnectivityEndpointResource.GetCredentials");
+            using var scope = _hybridConnectivityEndpointEndpointResourcesClientDiagnostics.CreateScope("HybridConnectivityEndpointResource.GetCredentials");
             scope.Start();
             try
             {
-                var response = await _hybridConnectivityEndpointEndpointsRestClient.ListCredentialsAsync(Id.Parent, Id.Name, content, expiresin, cancellationToken).ConfigureAwait(false);
+                var response = await _hybridConnectivityEndpointEndpointResourcesRestClient.ListCredentialsAsync(Id.Parent, Id.Name, content, expiresin, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -455,7 +457,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Endpoints_ListCredentials</description>
+        /// <description>EndpointResources_ListCredentials</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -472,11 +474,11 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TargetResourceEndpointAccess> GetCredentials(ListCredentialsContent content = null, long? expiresin = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _hybridConnectivityEndpointEndpointsClientDiagnostics.CreateScope("HybridConnectivityEndpointResource.GetCredentials");
+            using var scope = _hybridConnectivityEndpointEndpointResourcesClientDiagnostics.CreateScope("HybridConnectivityEndpointResource.GetCredentials");
             scope.Start();
             try
             {
-                var response = _hybridConnectivityEndpointEndpointsRestClient.ListCredentials(Id.Parent, Id.Name, content, expiresin, cancellationToken);
+                var response = _hybridConnectivityEndpointEndpointResourcesRestClient.ListCredentials(Id.Parent, Id.Name, content, expiresin, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -495,7 +497,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Endpoints_ListIngressGatewayCredentials</description>
+        /// <description>EndpointResources_ListIngressGatewayCredentials</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -511,11 +513,11 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<IngressGatewayAsset>> GetIngressGatewayCredentialsAsync(long? expiresin = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _hybridConnectivityEndpointEndpointsClientDiagnostics.CreateScope("HybridConnectivityEndpointResource.GetIngressGatewayCredentials");
+            using var scope = _hybridConnectivityEndpointEndpointResourcesClientDiagnostics.CreateScope("HybridConnectivityEndpointResource.GetIngressGatewayCredentials");
             scope.Start();
             try
             {
-                var response = await _hybridConnectivityEndpointEndpointsRestClient.ListIngressGatewayCredentialsAsync(Id.Parent, Id.Name, expiresin, cancellationToken).ConfigureAwait(false);
+                var response = await _hybridConnectivityEndpointEndpointResourcesRestClient.ListIngressGatewayCredentialsAsync(Id.Parent, Id.Name, expiresin, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -534,7 +536,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Endpoints_ListIngressGatewayCredentials</description>
+        /// <description>EndpointResources_ListIngressGatewayCredentials</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -550,11 +552,11 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<IngressGatewayAsset> GetIngressGatewayCredentials(long? expiresin = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _hybridConnectivityEndpointEndpointsClientDiagnostics.CreateScope("HybridConnectivityEndpointResource.GetIngressGatewayCredentials");
+            using var scope = _hybridConnectivityEndpointEndpointResourcesClientDiagnostics.CreateScope("HybridConnectivityEndpointResource.GetIngressGatewayCredentials");
             scope.Start();
             try
             {
-                var response = _hybridConnectivityEndpointEndpointsRestClient.ListIngressGatewayCredentials(Id.Parent, Id.Name, expiresin, cancellationToken);
+                var response = _hybridConnectivityEndpointEndpointResourcesRestClient.ListIngressGatewayCredentials(Id.Parent, Id.Name, expiresin, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -573,7 +575,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Endpoints_ListManagedProxyDetails</description>
+        /// <description>EndpointResources_ListManagedProxyDetails</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -592,11 +594,11 @@ namespace Azure.ResourceManager.HybridConnectivity
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _hybridConnectivityEndpointEndpointsClientDiagnostics.CreateScope("HybridConnectivityEndpointResource.GetManagedProxyDetails");
+            using var scope = _hybridConnectivityEndpointEndpointResourcesClientDiagnostics.CreateScope("HybridConnectivityEndpointResource.GetManagedProxyDetails");
             scope.Start();
             try
             {
-                var response = await _hybridConnectivityEndpointEndpointsRestClient.ListManagedProxyDetailsAsync(Id.Parent, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var response = await _hybridConnectivityEndpointEndpointResourcesRestClient.ListManagedProxyDetailsAsync(Id.Parent, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -615,7 +617,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Endpoints_ListManagedProxyDetails</description>
+        /// <description>EndpointResources_ListManagedProxyDetails</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -634,11 +636,11 @@ namespace Azure.ResourceManager.HybridConnectivity
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _hybridConnectivityEndpointEndpointsClientDiagnostics.CreateScope("HybridConnectivityEndpointResource.GetManagedProxyDetails");
+            using var scope = _hybridConnectivityEndpointEndpointResourcesClientDiagnostics.CreateScope("HybridConnectivityEndpointResource.GetManagedProxyDetails");
             scope.Start();
             try
             {
-                var response = _hybridConnectivityEndpointEndpointsRestClient.ListManagedProxyDetails(Id.Parent, Id.Name, content, cancellationToken);
+                var response = _hybridConnectivityEndpointEndpointResourcesRestClient.ListManagedProxyDetails(Id.Parent, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
