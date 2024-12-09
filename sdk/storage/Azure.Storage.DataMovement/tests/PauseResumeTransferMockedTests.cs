@@ -534,44 +534,13 @@ public class PauseResumeTransferMockedTests
         // START RESUME TRANSFERS
         List<DataTransfer> resumedTransfers = await transferManager.ResumeAllTransfersAsync();
 
-        if (pauseLocation == PauseLocation.PauseProcessStart)
+        if (pauseLocation == PauseLocation.PauseProcessHalfway)
         {
-            await AssertResumeTransfer(items, items, numChunks, resumedTransfers, checkpointer, jobsProcessor, partsProcessor, chunksProcessor);
+            await AssertResumeTransfer(items / 2, items / 2, numChunks / 2, resumedTransfers, checkpointer, jobsProcessor, partsProcessor, chunksProcessor);
         }
         else
         {
-            await Task.Delay(50);
-            int pausedJobsCount_resume = GetJobsStateCount(resumedTransfers, checkpointer)[DataTransferState.Paused];
-            Assert.That(pausedJobsCount_resume, Is.EqualTo(items / 2));
-            Assert.That(jobsProcessor.ItemsInQueue, Is.EqualTo(items / 2), "Error in job processor on resume");
-
-            // process jobs on resume
-            await jobsProcessor.StepAll();
-
-            await Task.Delay(50);
-            int inProgressJobsCount = GetJobsStateCount(resumedTransfers, checkpointer)[DataTransferState.InProgress];
-            int pausedJobPartsCount = GetJobPartsStateCount(resumedTransfers, checkpointer)[DataTransferState.Paused];
-            int enumerationCompleteCount2 = GetEnumerationCompleteCount(transfers, checkpointer);
-            Assert.That(enumerationCompleteCount2, Is.EqualTo(items), "Error: all jobs should have finished enumerating");
-            // the count for all jobs for PauseProcessHalfway is (items / 2) since half have already completed transfer
-            Assert.That(inProgressJobsCount, Is.EqualTo(items / 2), "Error: all jobs should be in InProgress state after Job Processing on resume");
-            Assert.That(pausedJobPartsCount, Is.EqualTo(items / 2));
-            Assert.That(partsProcessor.ItemsInQueue, Is.EqualTo(items / 2), "Error in job part processor on resume");
-
-            // process job parts on resume
-            await partsProcessor.StepAll();
-
-            await Task.Delay(50);
-            int inProgressJobPartsCount = GetJobPartsStateCount(resumedTransfers, checkpointer)[DataTransferState.InProgress];
-            // the count for all job parts for PauseProcessHalfway is (items / 2) since half have already completed transfer
-            Assert.That(inProgressJobPartsCount, Is.EqualTo(items / 2), "Error: all job parts should be in InProgress state after Part Processing on resume");
-            Assert.That(chunksProcessor.ItemsInQueue, Is.EqualTo(numChunks / 2), "Error in chunk processor on resume");
-
-            // process chunks on resume
-            await chunksProcessor.StepAll();
-
-            await Task.Delay(50);
-            AssertAllJobsAndPartsCompleted(items, items, transfers, checkpointer);
+            await AssertResumeTransfer(items, items, numChunks, resumedTransfers, checkpointer, jobsProcessor, partsProcessor, chunksProcessor);
         }
     }
 
@@ -1009,42 +978,16 @@ public class PauseResumeTransferMockedTests
         // START RESUME TRANSFERS
         List<DataTransfer> resumedTransfers = await transferManager.ResumeAllTransfersAsync();
 
-        if (pauseLocation == PauseLocation.PauseProcessStart)
+        if (pauseLocation == PauseLocation.PauseProcessHalfway)
         {
-            await AssertResumeTransfer(numJobs, numJobParts, numChunks, resumedTransfers, checkpointer, jobsProcessor, partsProcessor, chunksProcessor);
+            int expectedJobsCount = numJobs - expectedAlreadyCompletedJobsCount_half;
+            int expectedPartsCount = Enumerable.Range(numJobs + 1 - expectedJobsCount, expectedJobsCount)
+                .Sum(i => i * 2);
+            await AssertResumeTransfer(expectedJobsCount, expectedPartsCount, expectedPartsCount, resumedTransfers, checkpointer, jobsProcessor, partsProcessor, chunksProcessor);
         }
         else
         {
-            await Task.Delay(50);
-            int expectedJobsCount_half = numJobs - expectedAlreadyCompletedJobsCount_half;
-            Assert.That(jobsProcessor.ItemsInQueue, Is.EqualTo(expectedJobsCount_half), "Error in job processor on resume");
-
-            // process jobs on resume
-            await jobsProcessor.StepAll();
-
-            await Task.Delay(50);
-            int inProgressJobsCount = GetJobsStateCount(resumedTransfers, checkpointer)[DataTransferState.InProgress];
-            int enumerationCompleteCount2 = GetEnumerationCompleteCount(transfers, checkpointer);
-            Assert.That(enumerationCompleteCount2, Is.EqualTo(numJobs), "Error: all jobs should have finished enumerating");
-            int expectedPartsCount_half = Enumerable.Range(numJobs + 1 - expectedJobsCount_half, expectedJobsCount_half)
-                .Sum(i => i * 2);
-            if (pauseLocation == PauseLocation.PauseProcessHalfway)
-            Assert.That(inProgressJobsCount, Is.EqualTo(expectedJobsCount_half), "Error: all remaining jobs should be in InProgress state after Job Processing on resume");
-            Assert.That(partsProcessor.ItemsInQueue, Is.EqualTo(expectedPartsCount_half), "Error in parts processor on resume");
-
-            // process job parts on resume
-            await partsProcessor.StepAll();
-
-            await Task.Delay(50);
-            int inProgressJobPartsCount = GetJobPartsStateCount(resumedTransfers, checkpointer)[DataTransferState.InProgress];
-            Assert.That(inProgressJobPartsCount, Is.EqualTo(expectedPartsCount_half), "Error: all remaining job parts should be in InProgress state after Part Processing on resume");
-            Assert.That(chunksProcessor.ItemsInQueue, Is.EqualTo(expectedPartsCount_half), "Error in chunks processor on resume"); // For this test, job parts is 1:1 with job chunks
-
-            // process chunks on resume
-            await chunksProcessor.StepAll();
-
-            await Task.Delay(50);
-            AssertAllJobsAndPartsCompleted(numJobs, numJobParts, transfers, checkpointer);
+            await AssertResumeTransfer(numJobs, numJobParts, numChunks, resumedTransfers, checkpointer, jobsProcessor, partsProcessor, chunksProcessor);
         }
     }
 
