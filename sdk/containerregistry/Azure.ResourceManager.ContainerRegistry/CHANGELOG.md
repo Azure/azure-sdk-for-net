@@ -1,14 +1,10 @@
 # Release History
 
-## 1.3.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.3.0-beta.2 (2024-12-10)
 
 ### Other Changes
+
+- Upgraded container registry preview API version to `2024-11-01-preview`.
 
 ## 1.3.0-beta.1 (2024-10-15)
 
