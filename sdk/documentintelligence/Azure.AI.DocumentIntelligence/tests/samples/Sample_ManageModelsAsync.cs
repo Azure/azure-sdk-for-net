@@ -18,10 +18,8 @@ namespace Azure.AI.DocumentIntelligence.Samples
             // Build to make sure that there is at least one custom model.
             string setupModelId = Guid.NewGuid().ToString();
             Uri blobContainerUri = new Uri(TestEnvironment.BlobContainerSasUrl);
-            var options = new BuildDocumentModelOptions(setupModelId, DocumentBuildMode.Template)
-            {
-                BlobSource = new BlobContentSource(blobContainerUri)
-            };
+            var blobSource = new BlobContentSource(blobContainerUri);
+            var options = new BuildDocumentModelOptions(setupModelId, DocumentBuildMode.Template, blobSource);
 
             await client.BuildDocumentModelAsync(WaitUntil.Completed, options);
 

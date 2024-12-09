@@ -46,9 +46,8 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var prefix = "subfolder";
             var source = new BlobContentSource(containerUrl) { Prefix = prefix };
 
-            var options = new BuildDocumentModelOptions(modelId, buildMode)
+            var options = new BuildDocumentModelOptions(modelId, buildMode, source)
             {
-                BlobSource = source,
                 Description = description,
                 Tags = { { "tag1", "value1" }, { "tag2", "value2" } }
             };
@@ -135,11 +134,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var containerUrl = new Uri(TestEnvironment.BlobContainerSasUrl);
             var prefix = "testfolder"; // folder exists but most training files are missing
             var source = new BlobContentSource(containerUrl) { Prefix = prefix };
-
-            var options = new BuildDocumentModelOptions(modelId, DocumentBuildMode.Template)
-            {
-                BlobSource = source
-            };
+            var options = new BuildDocumentModelOptions(modelId, DocumentBuildMode.Template, source);
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.BuildDocumentModelAsync(WaitUntil.Started, options));
 

@@ -100,7 +100,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
             };
 
             var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, ModelId, options);
-            var response = await client.GetAnalyzeResultPdfAsync(ModelId, Guid.Parse(operation.Id));
+            var response = await client.GetAnalyzeResultPdfAsync(ModelId, operation.Id);
 
             BinaryData pdf = response.Value;
             byte[] pdfBytes = pdf.ToArray();
@@ -128,7 +128,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
             Assert.That(result.Figures, Is.Not.Empty);
 
             var figure = result.Figures[0];
-            var response = await client.GetAnalyzeResultFigureAsync(ModelId, Guid.Parse(operation.Id), figure.Id);
+            var response = await client.GetAnalyzeResultFigureAsync(ModelId, operation.Id, figure.Id);
 
             BinaryData image = response.Value;
             byte[] imageBytes = image.ToArray();

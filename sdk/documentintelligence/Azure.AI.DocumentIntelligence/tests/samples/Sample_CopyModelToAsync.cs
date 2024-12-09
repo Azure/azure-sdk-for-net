@@ -29,10 +29,8 @@ namespace Azure.AI.DocumentIntelligence.Samples
 
             string setupModelId = Guid.NewGuid().ToString();
             Uri blobContainerUri = new Uri(TestEnvironment.BlobContainerSasUrl);
-            var buildOptions = new BuildDocumentModelOptions(setupModelId, DocumentBuildMode.Template)
-            {
-                BlobSource = new BlobContentSource(blobContainerUri)
-            };
+            var blobSource = new BlobContentSource(blobContainerUri);
+            var buildOptions = new BuildDocumentModelOptions(setupModelId, DocumentBuildMode.Template, blobSource);
 
             await sourceClient.BuildDocumentModelAsync(WaitUntil.Completed, buildOptions);
 

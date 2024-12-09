@@ -37,10 +37,8 @@ namespace Azure.AI.DocumentIntelligence.Samples
             // build modes and their differences, see:
             // https://aka.ms/azsdk/formrecognizer/buildmode
 
-            var options = new BuildDocumentModelOptions(modelId, DocumentBuildMode.Template)
-            {
-                BlobSource = new BlobContentSource(blobContainerUri)
-            };
+            var blobSource = new BlobContentSource(blobContainerUri);
+            var options = new BuildDocumentModelOptions(modelId, DocumentBuildMode.Template, blobSource);
 
             Operation<DocumentModelDetails> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, options);
             DocumentModelDetails model = operation.Value;

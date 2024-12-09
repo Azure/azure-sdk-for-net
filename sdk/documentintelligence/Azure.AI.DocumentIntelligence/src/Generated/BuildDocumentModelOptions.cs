@@ -47,19 +47,6 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> Initializes a new instance of <see cref="BuildDocumentModelOptions"/>. </summary>
         /// <param name="modelId"> Unique document model name. </param>
-        /// <param name="buildMode"> Custom document model build mode. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        public BuildDocumentModelOptions(string modelId, DocumentBuildMode buildMode)
-        {
-            Argument.AssertNotNull(modelId, nameof(modelId));
-
-            ModelId = modelId;
-            BuildMode = buildMode;
-            Tags = new ChangeTrackingDictionary<string, string>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BuildDocumentModelOptions"/>. </summary>
-        /// <param name="modelId"> Unique document model name. </param>
         /// <param name="description"> Document model description. </param>
         /// <param name="buildMode"> Custom document model build mode. </param>
         /// <param name="blobSource">
@@ -98,16 +85,6 @@ namespace Azure.AI.DocumentIntelligence
         public string Description { get; set; }
         /// <summary> Custom document model build mode. </summary>
         public DocumentBuildMode BuildMode { get; }
-        /// <summary>
-        /// Azure Blob Storage location containing the training data.  Either
-        /// azureBlobSource or azureBlobFileListSource must be specified.
-        /// </summary>
-        public BlobContentSource BlobSource { get; set; }
-        /// <summary>
-        /// Azure Blob Storage file list specifying the training data.  Either
-        /// azureBlobSource or azureBlobFileListSource must be specified.
-        /// </summary>
-        public BlobFileListContentSource BlobFileListSource { get; set; }
         /// <summary> List of key-value tag attributes associated with the document model. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Max number of V100-equivalent GPU hours to use for model training.  Default=0.5. </summary>
