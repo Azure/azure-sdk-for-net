@@ -8,8 +8,6 @@ using System.IO;
 using System.Threading;
 using Azure.Core;
 using Azure.Storage.Common;
-using System.ClientModel.Primitives;
-using System.Diagnostics;
 
 namespace Azure.Storage.DataMovement
 {

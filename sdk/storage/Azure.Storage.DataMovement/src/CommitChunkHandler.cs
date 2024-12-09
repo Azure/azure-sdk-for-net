@@ -5,7 +5,6 @@ using System;
 using System.Threading.Tasks;
 using System.Threading;
 using Azure.Storage.Common;
-using System.Diagnostics;
 
 namespace Azure.Storage.DataMovement
 {
