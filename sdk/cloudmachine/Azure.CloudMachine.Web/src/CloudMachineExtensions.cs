@@ -23,7 +23,7 @@ namespace Azure.CloudMachine;
 public static class CloudMachineExtensions
 {
     /// <summary>
-    /// Adds a CloudMachine client to the service collection.
+    /// Maps TSP endpoints. CloudMachineClient needs to be in the container for this method to work.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="application"></param>
