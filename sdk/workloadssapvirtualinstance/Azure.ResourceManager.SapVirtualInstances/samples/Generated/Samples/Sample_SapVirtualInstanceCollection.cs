@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.SapVirtualInstances.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
-            string resourceGroupName = "test-rg";
+            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
+            string resourceGroupName = "PS_CLI_TF_RG";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -580,7 +580,7 @@ SkuName = DiskSkuName.PremiumLRS,
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -726,7 +726,7 @@ SkuName = DiskSkuName.PremiumLRS,
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -872,7 +872,7 @@ SkuName = DiskSkuName.PremiumLRS,
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -980,7 +980,7 @@ SkuName = DiskSkuName.PremiumLRS,
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -1077,7 +1077,7 @@ KeyData = "ssh-rsa public key",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -1177,7 +1177,7 @@ KeyData = "ssh-rsa public key",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -1277,7 +1277,7 @@ KeyData = "ssh-rsa public key",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -1368,7 +1368,7 @@ KeyData = "ssh-rsa public key",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -1550,7 +1550,7 @@ DataDiskNames =
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -1770,7 +1770,7 @@ DataDiskNames =
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -1987,7 +1987,7 @@ DataDiskNames =
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -2056,7 +2056,7 @@ DataDiskNames =
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -2160,7 +2160,7 @@ DataDiskNames =
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -2267,7 +2267,7 @@ DataDiskNames =
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -2374,7 +2374,7 @@ DataDiskNames =
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -2443,7 +2443,7 @@ DataDiskNames =
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -2507,7 +2507,7 @@ KeyData = "ssh-rsa public key",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -2614,7 +2614,7 @@ KeyData = "ssh-rsa public key",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -2725,7 +2725,7 @@ KeyData = "ssh-rsa public key",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -2832,7 +2832,7 @@ KeyData = "ssh-rsa public key",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -2939,7 +2939,7 @@ KeyData = "ssh-rsa public key",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -2954,7 +2954,7 @@ KeyData = "ssh-rsa public key",
                 Properties = new SapVirtualInstanceProperties(SapEnvironmentType.Prod, SapProductType.S4HANA, new DeploymentWithOSConfiguration
                 {
                     AppLocation = "eastus",
-                    InfrastructureConfiguration = new ThreeTierConfiguration("{{resourcegrp}}", new CentralServerConfiguration("/subscriptions/8e17e36c-42e9-4cd5-a078-7b44883414e0/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/app", new VirtualMachineConfiguration("Standard_E4ds_v4", new ImageReference
+                    InfrastructureConfiguration = new ThreeTierConfiguration("{{resourcegrp}}", new CentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/app", new VirtualMachineConfiguration("Standard_E4ds_v4", new ImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP-HA",
@@ -2972,7 +2972,7 @@ KeyData = "ssh-rsa public key",
                                 PrivateKey = "{{privateKey}}",
                             },
                         },
-                    }), 1L), new ApplicationServerConfiguration("/subscriptions/8e17e36c-42e9-4cd5-a078-7b44883414e0/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/app", new VirtualMachineConfiguration("Standard_E4ds_v4", new ImageReference
+                    }), 1L), new ApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/app", new VirtualMachineConfiguration("Standard_E4ds_v4", new ImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP-HA",
@@ -2990,7 +2990,7 @@ KeyData = "ssh-rsa public key",
                                 PrivateKey = "{{privateKey}}",
                             },
                         },
-                    }), 2L), new DatabaseConfiguration("/subscriptions/8e17e36c-42e9-4cd5-a078-7b44883414e0/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/app", new VirtualMachineConfiguration("Standard_M32ts", new ImageReference
+                    }), 2L), new DatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/app", new VirtualMachineConfiguration("Standard_M32ts", new ImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP-HA",
@@ -3012,7 +3012,7 @@ KeyData = "ssh-rsa public key",
                     {
                         IsSecondaryIPEnabled = true,
                     },
-                    SoftwareConfiguration = new SapInstallWithoutOSConfigSoftwareConfiguration("https://teststorageaccount.blob.core.windows.net/sapbits/sapfiles/boms/S41909SPS03_v0011ms/S41909SPS03_v0011ms.yaml", "/subscriptions/8e17e36c-42e9-4cd5-a078-7b44883414e0/resourceGroups/test-rg/providers/Microsoft.Storage/storageAccounts/teststorageaccount", "SAP S/4HANA 1909 SPS 03"),
+                    SoftwareConfiguration = new SapInstallWithoutOSConfigSoftwareConfiguration("https://teststorageaccount.blob.core.windows.net/sapbits/sapfiles/boms/S41909SPS03_v0011ms/S41909SPS03_v0011ms.yaml", "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Storage/storageAccounts/teststorageaccount", "SAP S/4HANA 1909 SPS 03"),
                     OSSapConfiguration = new OSSapConfiguration
                     {
                         SapFqdn = "sap.bpaas.com",
@@ -3047,7 +3047,7 @@ KeyData = "ssh-rsa public key",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -3062,7 +3062,7 @@ KeyData = "ssh-rsa public key",
                 Properties = new SapVirtualInstanceProperties(SapEnvironmentType.NonProd, SapProductType.S4HANA, new DeploymentWithOSConfiguration
                 {
                     AppLocation = "eastus",
-                    InfrastructureConfiguration = new SingleServerConfiguration("test-rg", "/subscriptions/8e17e36c-42e9-4cd5-a078-7b44883414e0/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/testsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new ImageReference
+                    InfrastructureConfiguration = new SingleServerConfiguration("test-rg", "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/testsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new ImageReference
                     {
                         Publisher = "SUSE",
                         Offer = "SLES-SAP",
@@ -3081,7 +3081,7 @@ KeyData = "ssh-rsa public key",
                             },
                         },
                     })),
-                    SoftwareConfiguration = new SapInstallWithoutOSConfigSoftwareConfiguration("https://teststorageaccount.blob.core.windows.net/sapbits/sapfiles/boms/S41909SPS03_v0011ms/S41909SPS03_v0011ms.yaml", "/subscriptions/8e17e36c-42e9-4cd5-a078-7b44883414e0/resourceGroups/test-rg/providers/Microsoft.Storage/storageAccounts/teststorageaccount", "SAP S/4HANA 1909 SPS 03"),
+                    SoftwareConfiguration = new SapInstallWithoutOSConfigSoftwareConfiguration("https://teststorageaccount.blob.core.windows.net/sapbits/sapfiles/boms/S41909SPS03_v0011ms/S41909SPS03_v0011ms.yaml", "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Storage/storageAccounts/teststorageaccount", "SAP S/4HANA 1909 SPS 03"),
                     OSSapConfiguration = new OSSapConfiguration
                     {
                         SapFqdn = "sap.bpaas.com",
@@ -3113,7 +3113,7 @@ KeyData = "ssh-rsa public key",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -3127,7 +3127,7 @@ KeyData = "ssh-rsa public key",
             {
                 Properties = new SapVirtualInstanceProperties(SapEnvironmentType.NonProd, SapProductType.S4HANA, new DiscoveryConfiguration
                 {
-                    CentralServerVmId = "/subscriptions/8e17e36c-42e9-4cd5-a078-7b44883414e0/resourceGroups/test-rg/providers/Microsoft.Compute/virtualMachines/sapq20scsvm0",
+                    CentralServerVmId = "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Compute/virtualMachines/sapq20scsvm0",
                 }),
                 Tags =
 {
@@ -3159,7 +3159,7 @@ KeyData = "ssh-rsa public key",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -3173,7 +3173,7 @@ KeyData = "ssh-rsa public key",
             {
                 Properties = new SapVirtualInstanceProperties(SapEnvironmentType.NonProd, SapProductType.S4HANA, new DiscoveryConfiguration
                 {
-                    CentralServerVmId = "/subscriptions/8e17e36c-42e9-4cd5-a078-7b44883414e0/resourceGroups/test-rg/providers/Microsoft.Compute/virtualMachines/sapq20scsvm0",
+                    CentralServerVmId = "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Compute/virtualMachines/sapq20scsvm0",
                     ManagedRgStorageAccountName = "q20saacssgrs",
                 }),
                 Tags =
@@ -3206,7 +3206,7 @@ KeyData = "ssh-rsa public key",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -3220,7 +3220,7 @@ KeyData = "ssh-rsa public key",
             {
                 Properties = new SapVirtualInstanceProperties(SapEnvironmentType.NonProd, SapProductType.S4HANA, new DiscoveryConfiguration
                 {
-                    CentralServerVmId = "/subscriptions/8e17e36c-42e9-4cd5-a078-7b44883414e0/resourceGroups/test-rg/providers/Microsoft.Compute/virtualMachines/sapq20scsvm0",
+                    CentralServerVmId = "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Compute/virtualMachines/sapq20scsvm0",
                 })
                 {
                     ManagedResourcesNetworkAccessType = ManagedResourcesNetworkAccessType.Private,
@@ -3255,7 +3255,7 @@ KeyData = "ssh-rsa public key",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -3288,7 +3288,7 @@ KeyData = "ssh-rsa public key",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -3356,7 +3356,7 @@ KeyData = "ssh-rsa public key",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -3385,7 +3385,7 @@ KeyData = "ssh-rsa public key",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -3414,7 +3414,7 @@ KeyData = "ssh-rsa public key",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -3455,7 +3455,7 @@ KeyData = "ssh-rsa public key",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);

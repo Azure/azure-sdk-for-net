@@ -13,6 +13,11 @@ namespace Azure.ResourceManager.SapVirtualInstances.Tests.Tests
 {
     public class SapVirtualInstanceMetadataTests : WorkloadsManagementTestBase
     {
+        /// <summary>
+        /// Public cloud location for East US 2.
+        /// </summary>
+        private readonly AzureLocation _location = new AzureLocation("centraluseuap", "Central US EUAP");
+
         public SapVirtualInstanceMetadataTests(bool isAsync) : base(isAsync)
         {
         }
@@ -32,9 +37,9 @@ namespace Azure.ResourceManager.SapVirtualInstances.Tests.Tests
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             Response<SapAvailabilityZoneDetailsResult> response =
                 await subscription.GetAvailabilityZoneDetailsSapVirtualInstanceAsync(
-                    AzureLocation.EastUS2,
+                    _location,
                     new SapAvailabilityZoneDetailsContent(
-                        AzureLocation.EastUS2, SapProductType.S4HANA, SapDatabaseType.HANA));
+                        _location, SapProductType.S4HANA, SapDatabaseType.HANA));
             Assert.NotNull(response);
             Console.WriteLine("Sap Availability Zone Details Response : " + getObjectAsString(response.Value));
         }
@@ -44,9 +49,9 @@ namespace Azure.ResourceManager.SapVirtualInstances.Tests.Tests
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             Response<SapDiskConfigurationsResult> response =
                 await subscription.GetDiskConfigurationsSapVirtualInstanceAsync(
-                    AzureLocation.EastUS2,
+                    _location,
                     new SapDiskConfigurationsContent(
-                        AzureLocation.EastUS2,
+                        _location,
                         SapEnvironmentType.NonProd,
                         SapProductType.S4HANA,
                         SapDatabaseType.HANA,
@@ -68,7 +73,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Tests.Tests
             request.HighAvailabilityType = "AvailabilitySet";
             Response<SapSupportedResourceSkusResult> response =
                 await subscription.GetSapSupportedSkuSapVirtualInstanceAsync(
-                    AzureLocation.EastUS2,
+                    _location,
                     request);
             Assert.NotNull(response);
             Console.WriteLine("sap Supported Skus Response : " + getObjectAsString(response.Value));
@@ -89,7 +94,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Tests.Tests
             request.HighAvailabilityType = "AvailabilitySet";
             Response<SapSizingRecommendationResult> response =
                 await subscription.GetSizingRecommendationsSapVirtualInstanceAsync(
-                    AzureLocation.EastUS2,
+                    _location,
                     request);
             Assert.NotNull(response);
             Console.WriteLine("sap Sizing Recommendations Response : " + getObjectAsString(response.Value));
