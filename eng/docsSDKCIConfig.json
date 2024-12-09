@@ -2,12 +2,12 @@
     "TFM": "net471",
     "target_repo": {
         "url": "https://github.com/Azure/azure-docs-sdk-dotnet",
-        "branch": "%%DailyDocsBranchName%%",
+        "branch": "%%DocsBranchName%%",
         "folder": "xml"
     },
     "source_repo": {
         "url": "https://github.com/Azure/azure-docs-sdk-dotnet",
-        "branch": "%%DailyDocsBranchName%%",
+        "branch": "%%DocsBranchName%%",
         "csvPath": "bundlepackages"
     },
     "import_content": true
