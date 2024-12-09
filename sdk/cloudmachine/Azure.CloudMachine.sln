@@ -9,9 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.CloudMachine", "Azure
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.CloudMachine.Tests", "Azure.CloudMachine\tests\Azure.CloudMachine.Tests.csproj", "{8C1A29AE-E357-4C40-ACCC-7215FBFB368C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Azure.CloudMachine.AI", "Azure.CloudMachine.AI", "{637A5F7C-2741-4841-9617-A60E28AB54CD}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Azure.CloudMachine.OpenAI", "Azure.CloudMachine.OpenAI", "{637A5F7C-2741-4841-9617-A60E28AB54CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.CloudMachine.AI", "Azure.CloudMachine.AI\src\Azure.CloudMachine.AI.csproj", "{C743EA41-2CBD-464C-9C5E-141B785804A4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.CloudMachine.OpenAI", "Azure.CloudMachine.OpenAI\src\Azure.CloudMachine.OpenAI.csproj", "{C743EA41-2CBD-464C-9C5E-141B785804A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
