@@ -1,4 +1,4 @@
-# ASP.NET Core extensions for Azure CloudMachine client library for .NET
+# AI extensions for Azure CloudMachine client library for .NET
 
 TODO
 
