@@ -1,53 +1,19 @@
-namespace Azure
-{
-    public partial class RestCallFailedException : System.Exception
-    {
-        public RestCallFailedException(string message, System.ClientModel.Primitives.PipelineResponse response) { }
-    }
-    public partial class RestClient
-    {
-        public RestClient() { }
-        public RestClient(System.ClientModel.Primitives.PipelinePolicy auth) { }
-        public static Azure.RestClient Shared { get { throw null; } }
-        public System.ClientModel.Primitives.PipelineMessage Create(string method, System.Uri uri) { throw null; }
-        public System.ClientModel.Primitives.PipelineResponse Get(string uri, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public System.ClientModel.Primitives.PipelineResponse Patch(string uri, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public System.ClientModel.Primitives.PipelineResponse Post(string uri, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public System.ClientModel.Primitives.PipelineResponse Put(string uri, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public System.ClientModel.Primitives.PipelineResponse Send(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-    }
-    public partial class RestClientOptions : System.ClientModel.Primitives.ClientPipelineOptions
-    {
-        public RestClientOptions() { }
-    }
-}
-namespace Azure.AI.OpenAI
-{
-    public partial class TokenCredentialAuthenticationPolicy : System.ClientModel.Primitives.PipelinePolicy
-    {
-        public TokenCredentialAuthenticationPolicy(Azure.Core.TokenCredential credential, System.Collections.Generic.IEnumerable<string> scopes, System.TimeSpan? refreshOffset = default(System.TimeSpan?)) { }
-        public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
-        public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
-    }
-}
 namespace Azure.CloudMachine
 {
-    public partial class CloudMachineClient : Azure.CloudMachine.CloudMachineWorkspace
+    public partial class CloudMachineClient : Azure.Core.ClientWorkspace
     {
-        protected CloudMachineClient() : base (default(Azure.Core.TokenCredential), default(Microsoft.Extensions.Configuration.IConfiguration), default(System.Collections.Generic.IEnumerable<Azure.Core.ClientConnection>)) { }
-        public CloudMachineClient(Azure.Core.TokenCredential credential = null, Microsoft.Extensions.Configuration.IConfiguration configuration = null, System.Collections.Generic.IEnumerable<Azure.Core.ClientConnection> connections = null) : base (default(Azure.Core.TokenCredential), default(Microsoft.Extensions.Configuration.IConfiguration), default(System.Collections.Generic.IEnumerable<Azure.Core.ClientConnection>)) { }
-        public Azure.CloudMachine.MessagingServices Messaging { get { throw null; } }
-        public Azure.CloudMachine.StorageServices Storage { get { throw null; } }
-    }
-    public partial class CloudMachineWorkspace : Azure.Core.ClientWorkspace
-    {
-        public CloudMachineWorkspace(Azure.Core.TokenCredential credential = null, Microsoft.Extensions.Configuration.IConfiguration configuration = null, System.Collections.Generic.IEnumerable<Azure.Core.ClientConnection> connections = null) : base (default(Azure.Core.TokenCredential)) { }
+        protected CloudMachineClient() : base (default(Azure.Core.TokenCredential)) { }
+        public CloudMachineClient(Microsoft.Extensions.Configuration.IConfiguration configuration, Azure.Core.TokenCredential credential = null) : base (default(Azure.Core.TokenCredential)) { }
+        public CloudMachineClient(System.Collections.Generic.IEnumerable<Azure.Core.ClientConnection> connections = null, Azure.Core.TokenCredential credential = null) : base (default(Azure.Core.TokenCredential)) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public Azure.CloudMachine.ConnectionCollection Connections { get { throw null; } }
+        public Azure.Core.ConnectionCollection Connections { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string Id { get { throw null; } }
+        public Azure.CloudMachine.MessagingServices Messaging { get { throw null; } }
+        public Azure.CloudMachine.StorageServices Storage { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        public override System.Collections.Generic.IEnumerable<Azure.Core.ClientConnection> GetAllConnectionOptions() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Core.ClientConnection GetConnectionOptions(string connectionId) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -56,11 +22,6 @@ namespace Azure.CloudMachine
         public static string ReadOrCreateCloudMachineId() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
-    }
-    public partial class ConnectionCollection : System.Collections.ObjectModel.KeyedCollection<string, Azure.Core.ClientConnection>
-    {
-        public ConnectionCollection() { }
-        protected override string GetKeyForItem(Azure.Core.ClientConnection item) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MessagingServices
@@ -209,6 +170,40 @@ namespace Azure.Core
         public Azure.Core.TokenCredential Credential { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Core.ClientCache Subclients { get { throw null; } }
+        public abstract System.Collections.Generic.IEnumerable<Azure.Core.ClientConnection> GetAllConnectionOptions();
         public abstract Azure.Core.ClientConnection GetConnectionOptions(string connectionId);
+    }
+    public static partial class CloudMachineClientConfiguration
+    {
+        public static Microsoft.Extensions.Configuration.IConfigurationBuilder AddCloudMachineConnections(this Microsoft.Extensions.Configuration.IConfigurationBuilder builder, Azure.Core.ConnectionCollection connections) { throw null; }
+        public static Microsoft.Extensions.Configuration.IConfigurationBuilder AddCloudMachineId(this Microsoft.Extensions.Configuration.IConfigurationBuilder builder, string id) { throw null; }
+    }
+    public partial class ConnectionCollection : System.Collections.ObjectModel.KeyedCollection<string, Azure.Core.ClientConnection>
+    {
+        public ConnectionCollection() { }
+        protected override string GetKeyForItem(Azure.Core.ClientConnection item) { throw null; }
+    }
+}
+namespace Azure.Core.Rest
+{
+    public partial class RestCallFailedException : System.Exception
+    {
+        public RestCallFailedException(string message, System.ClientModel.Primitives.PipelineResponse response) { }
+    }
+    public partial class RestClient
+    {
+        public RestClient() { }
+        public RestClient(System.ClientModel.Primitives.PipelinePolicy auth) { }
+        public static Azure.Core.Rest.RestClient Shared { get { throw null; } }
+        public System.ClientModel.Primitives.PipelineMessage Create(string method, System.Uri uri) { throw null; }
+        public System.ClientModel.Primitives.PipelineResponse Get(string uri, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public System.ClientModel.Primitives.PipelineResponse Patch(string uri, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public System.ClientModel.Primitives.PipelineResponse Post(string uri, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public System.ClientModel.Primitives.PipelineResponse Put(string uri, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public System.ClientModel.Primitives.PipelineResponse Send(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+    }
+    public partial class RestClientOptions : System.ClientModel.Primitives.ClientPipelineOptions
+    {
+        public RestClientOptions() { }
     }
 }

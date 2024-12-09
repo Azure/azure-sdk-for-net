@@ -20,6 +20,7 @@ namespace Azure.Storage.DataMovement
             internal const int JobPartCapacity = 1000;
             internal const int JobChunkCapacity = 1000;
             internal const int DownloadChunkCapacity = 16;
+            internal const int StageChunkCapacity = 1000;
         }
 
         internal static class ConcurrencyTuner

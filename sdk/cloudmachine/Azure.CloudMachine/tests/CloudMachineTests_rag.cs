@@ -34,7 +34,7 @@ public partial class CloudMachineTests
             "Do you think I would like the weather there?",
         ];
 
-        CloudMachineClient cm = new(default, new MockConfiguration("cmec4615e3fdfa44e"));
+        CloudMachineClient cm = new(new MockConfiguration("cmec4615e3fdfa44e"), default);
         var chat = cm.GetOpenAIChatClient();
         var embeddings = cm.GetOpenAIEmbeddingsClient();
 
