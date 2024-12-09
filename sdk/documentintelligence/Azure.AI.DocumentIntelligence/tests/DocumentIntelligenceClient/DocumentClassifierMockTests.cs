@@ -32,12 +32,12 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var client = CreateInstrumentedClient(clientOptions);
 
             var uriSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.ContosoReceipt);
-            var options = new ClassifyDocumentOptions(uriSource)
+            var options = new ClassifyDocumentOptions("classifierId", uriSource)
             {
                 Split = split
             };
 
-            await client.ClassifyDocumentAsync(WaitUntil.Started, "classifierId", options);
+            await client.ClassifyDocumentAsync(WaitUntil.Started, options);
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
 

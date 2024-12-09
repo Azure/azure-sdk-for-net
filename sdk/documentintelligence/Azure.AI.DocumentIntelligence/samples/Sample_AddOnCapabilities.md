@@ -27,12 +27,12 @@ To extract formulas from a given file at a URI with the add-on formulas capabili
 ```C# Snippet:DocumentIntelligenceSampleFormulaExtraction
 Uri uriSource = new Uri("<uriSource>");
 
-var options = new AnalyzeDocumentOptions(uriSource)
+var options = new AnalyzeDocumentOptions("prebuilt-layout", uriSource)
 {
     Features = { DocumentAnalysisFeature.Formulas }
 };
 
-var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", options);
+var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, options);
 AnalyzeResult result = operation.Value;
 
 foreach (DocumentPage page in result.Pages)
@@ -61,12 +61,12 @@ To extract font information from a given file at a URI with the add-on font styl
 ```C# Snippet:DocumentIntelligenceSampleFontStyling
 Uri uriSource = new Uri("<uriSource>");
 
-var options = new AnalyzeDocumentOptions(uriSource)
+var options = new AnalyzeDocumentOptions("prebuilt-layout", uriSource)
 {
     Features = { DocumentAnalysisFeature.FontStyling }
 };
 
-var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", options);
+var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, options);
 AnalyzeResult result = operation.Value;
 
 // Handwritten styles
@@ -210,12 +210,12 @@ To extract barcodes from a given file at a URI with the add-on barcodes capabili
 ```C# Snippet:DocumentIntelligenceSampleBarcodeExtraction
 Uri uriSource = new Uri("<uriSource>");
 
-var options = new AnalyzeDocumentOptions(uriSource)
+var options = new AnalyzeDocumentOptions("prebuild-layout", uriSource)
 {
     Features = { DocumentAnalysisFeature.Barcodes }
 };
 
-var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", options);
+var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, options);
 AnalyzeResult result = operation.Value;
 
 foreach (DocumentPage page in result.Pages)
@@ -246,12 +246,12 @@ To detect languages from a given file at a URI with the add-on languages capabil
 ```C# Snippet:DocumentIntelligenceSampleLanguageDetection
 Uri uriSource = new Uri("<uriSource>");
 
-var options = new AnalyzeDocumentOptions(uriSource)
+var options = new AnalyzeDocumentOptions("prebuilt-layout", uriSource)
 {
     Features = { DocumentAnalysisFeature.Languages }
 };
 
-var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", options);
+var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, options);
 AnalyzeResult result = operation.Value;
 
 Console.WriteLine("----Languages detected in the document----");
@@ -274,12 +274,12 @@ To extract key-value pairs from a given file at a URI with the add-on keyValuePa
 ```C# Snippet:DocumentIntelligenceSampleKeyValuePairsExtraction
 Uri uriSource = new Uri("<uriSource>");
 
-var options = new AnalyzeDocumentOptions(uriSource)
+var options = new AnalyzeDocumentOptions("prebuilt-layout", uriSource)
 {
     Features = { DocumentAnalysisFeature.KeyValuePairs }
 };
 
-var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", options);
+var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, options);
 AnalyzeResult result = operation.Value;
 
 Console.WriteLine("----Key Value Pair Options detected in the document----");

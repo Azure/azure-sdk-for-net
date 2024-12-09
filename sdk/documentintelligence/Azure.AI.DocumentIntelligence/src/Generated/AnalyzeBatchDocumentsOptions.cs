@@ -67,6 +67,11 @@ namespace Azure.AI.DocumentIntelligence
             OverwriteExisting = overwriteExisting;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> Initializes a new instance of <see cref="AnalyzeBatchDocumentsOptions"/> for deserialization. </summary>
+        internal AnalyzeBatchDocumentsOptions()
+        {
+        }
         /// <summary> Azure Blob Storage container URL where analyze result files will be stored. </summary>
         public Uri ResultContainerUri { get; }
         /// <summary> Blob name prefix of result files. </summary>

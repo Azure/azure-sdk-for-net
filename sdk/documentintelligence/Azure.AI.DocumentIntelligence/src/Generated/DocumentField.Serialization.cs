@@ -91,14 +91,14 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ValueDictionary))
+            if (Optional.IsCollectionDefined(ValueObject))
             {
                 writer.WritePropertyName("valueObject"u8);
                 writer.WriteStartObject();
-                foreach (var item in ValueDictionary)
+                foreach (var item in ValueObject)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    writer.WriteObjectValue<DocumentField>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

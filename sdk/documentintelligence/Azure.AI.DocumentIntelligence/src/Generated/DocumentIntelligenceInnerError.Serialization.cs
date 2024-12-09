@@ -44,10 +44,10 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(InnerErrorObject))
+            if (Optional.IsDefined(InnerError))
             {
                 writer.WritePropertyName("innererror"u8);
-                writer.WriteObjectValue(InnerErrorObject, options);
+                writer.WriteObjectValue(InnerError, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

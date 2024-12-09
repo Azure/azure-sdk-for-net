@@ -31,5 +31,15 @@ namespace Azure.AI.DocumentIntelligence.Samples
         {
             return null;
         }
+
+        public static Task<Operation<AnalyzeResult>> ClassifyDocumentAsync(this DocumentIntelligenceClient client, WaitUntil waitUntil, string classifierId, ClassifyDocumentOptions options)
+        {
+            return null;
+        }
+
+        public static Operation<AnalyzeResult> ClassifyDocument(this DocumentIntelligenceClient client, WaitUntil waitUntil, string classifierId, ClassifyDocumentOptions options)
+        {
+            return null;
+        }
     }
 }

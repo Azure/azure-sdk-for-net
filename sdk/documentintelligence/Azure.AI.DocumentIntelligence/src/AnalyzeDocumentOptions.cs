@@ -15,9 +15,11 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary>
         /// Initializes a new instance of <see cref="AnalyzeDocumentOptions"/>.
         /// </summary>
+        /// <param name="modelId"> Unique document model name. </param>
         /// <param name="uriSource"> Document URL to analyze. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="uriSource"/> is null. </exception>
-        public AnalyzeDocumentOptions(Uri uriSource) : this()
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="uriSource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        public AnalyzeDocumentOptions(string modelId, Uri uriSource) : this(modelId)
         {
             Argument.AssertNotNull(uriSource, nameof(uriSource));
 
@@ -27,6 +29,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary>
         /// Initializes a new instance of <see cref="AnalyzeDocumentOptions"/>.
         /// </summary>
+        /// <param name="modelId"> Unique document model name. </param>
         /// <param name="bytesSource">
         /// Bytes of the document to analyze.
         /// <para>
@@ -43,12 +46,20 @@ namespace Azure.AI.DocumentIntelligence
         /// </list>
         /// </para>
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="bytesSource"/> is null. </exception>
-        public AnalyzeDocumentOptions(BinaryData bytesSource) : this()
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="bytesSource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        public AnalyzeDocumentOptions(string modelId, BinaryData bytesSource) : this(modelId)
         {
             Argument.AssertNotNull(bytesSource, nameof(bytesSource));
 
             BytesSource = bytesSource;
+        }
+
+        private AnalyzeDocumentOptions(string modelId) : this()
+        {
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+
+            ModelId = modelId;
         }
 
         private AnalyzeDocumentOptions()
@@ -57,6 +68,9 @@ namespace Azure.AI.DocumentIntelligence
             QueryFields = new ChangeTrackingList<string>();
             Output = new ChangeTrackingList<AnalyzeOutputOption>();
         }
+
+        /// <summary> Unique document model name. </summary>
+        public string ModelId { get; }
 
         /// <summary> Document URL to analyze. </summary>
         public Uri UriSource { get; }

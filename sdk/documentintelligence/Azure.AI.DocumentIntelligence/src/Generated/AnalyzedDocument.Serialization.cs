@@ -53,14 +53,14 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Fields))
+            if (Optional.IsCollectionDefined(FieldsPrivate))
             {
                 writer.WritePropertyName("fields"u8);
                 writer.WriteStartObject();
-                foreach (var item in Fields)
+                foreach (var item in FieldsPrivate)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
+                    writer.WriteObjectValue<DocumentField>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

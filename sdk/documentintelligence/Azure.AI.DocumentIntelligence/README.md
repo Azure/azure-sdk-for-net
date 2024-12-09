@@ -183,9 +183,9 @@ Extract text, selection marks, table structures, styles, and paragraphs, along w
 ```C# Snippet:DocumentIntelligenceExtractLayoutFromUriAsync
 Uri uriSource = new Uri("<uriSource>");
 
-var options = new AnalyzeDocumentOptions(uriSource);
+var options = new AnalyzeDocumentOptions("prebuilt-layout", uriSource);
 
-Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", options);
+Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, options);
 AnalyzeResult result = operation.Value;
 
 foreach (DocumentPage page in result.Pages)
@@ -282,9 +282,9 @@ For example, to analyze fields from an invoice, use the prebuilt Invoice model p
 ```C# Snippet:DocumentIntelligenceAnalyzeWithPrebuiltModelFromUriAsync
 Uri uriSource = new Uri("<uriSource>");
 
-var options = new AnalyzeDocumentOptions(uriSource);
+var options = new AnalyzeDocumentOptions("prebuilt-invoice", uriSource);
 
-Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", options);
+Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, options);
 AnalyzeResult result = operation.Value;
 
 // To see the list of all the supported fields returned by service and its corresponding types for the
@@ -499,9 +499,9 @@ Use document classifiers to accurately detect and identify documents you process
 string classifierId = "<classifierId>";
 Uri uriSource = new Uri("<uriSource>");
 
-var options = new ClassifyDocumentOptions(uriSource);
+var options = new ClassifyDocumentOptions(classifierId, uriSource);
 
-Operation<AnalyzeResult> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, classifierId, options);
+Operation<AnalyzeResult> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, options);
 AnalyzeResult result = operation.Value;
 
 Console.WriteLine($"Input was classified by the classifier with ID '{result.ModelId}'.");
@@ -524,11 +524,11 @@ For example, if you submit a receipt image with an invalid `Uri`, a `400` error 
 
 ```C# Snippet:DocumentIntelligenceBadRequest
 var uriSource = new Uri("http://invalid.uri");
-var options = new AnalyzeDocumentOptions(uriSource);
+var options = new AnalyzeDocumentOptions("prebuild-receipt", uriSource);
 
 try
 {
-    Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-receipt", options);
+    Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, options);
 }
 catch (RequestFailedException e)
 {

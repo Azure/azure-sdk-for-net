@@ -37,7 +37,7 @@ namespace Azure.AI.DocumentIntelligence
             if (Optional.IsDefined(ResultId))
             {
                 writer.WritePropertyName("resultId"u8);
-                writer.WriteStringValue(ResultId.Value);
+                writer.WriteStringValue(ResultId);
             }
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
@@ -97,7 +97,7 @@ namespace Azure.AI.DocumentIntelligence
             {
                 return null;
             }
-            Guid? resultId = default;
+            string resultId = default;
             DocumentIntelligenceOperationStatus status = default;
             DateTimeOffset createdDateTime = default;
             DateTimeOffset lastUpdatedDateTime = default;
@@ -110,11 +110,7 @@ namespace Azure.AI.DocumentIntelligence
             {
                 if (property.NameEquals("resultId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resultId = property.Value.GetGuid();
+                    resultId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("status"u8))

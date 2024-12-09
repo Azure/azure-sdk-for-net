@@ -15,10 +15,12 @@ namespace Azure.AI.DocumentIntelligence
         // adding custom constructors, and making both properties readonly.
 
         /// <summary> Initializes a new instance of <see cref="AnalyzeBatchDocumentsOptions"/>. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
         /// <param name="blobSource"> Azure Blob Storage location containing the batch documents. </param>
         /// <param name="resultContainerUri"> Azure Blob Storage container URL where analyze result files will be stored. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="blobSource"/> or <paramref name="resultContainerUri"/> is null. </exception>
-        public AnalyzeBatchDocumentsOptions(BlobContentSource blobSource, Uri resultContainerUri) : this()
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/>, <paramref name="blobSource"/>, or <paramref name="resultContainerUri"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        public AnalyzeBatchDocumentsOptions(string modelId, BlobContentSource blobSource, Uri resultContainerUri) : this(modelId)
         {
             Argument.AssertNotNull(blobSource, nameof(blobSource));
             Argument.AssertNotNull(resultContainerUri, nameof(resultContainerUri));
@@ -28,10 +30,12 @@ namespace Azure.AI.DocumentIntelligence
         }
 
         /// <summary> Initializes a new instance of <see cref="AnalyzeBatchDocumentsOptions"/>. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
         /// <param name="blobFileListSource"> Azure Blob Storage file list specifying the batch documents. </param>
         /// <param name="resultContainerUri"> Azure Blob Storage container URL where analyze result files will be stored. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="blobFileListSource"/> or <paramref name="resultContainerUri"/> is null. </exception>
-        public AnalyzeBatchDocumentsOptions(BlobFileListContentSource blobFileListSource, Uri resultContainerUri) : this()
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/>, <paramref name="blobFileListSource"/>, or <paramref name="resultContainerUri"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        public AnalyzeBatchDocumentsOptions(string modelId, BlobFileListContentSource blobFileListSource, Uri resultContainerUri) : this(modelId)
         {
             Argument.AssertNotNull(blobFileListSource, nameof(blobFileListSource));
             Argument.AssertNotNull(resultContainerUri, nameof(resultContainerUri));
@@ -40,12 +44,18 @@ namespace Azure.AI.DocumentIntelligence
             ResultContainerUri = resultContainerUri;
         }
 
-        private AnalyzeBatchDocumentsOptions()
+        private AnalyzeBatchDocumentsOptions(string modelId)
         {
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+
+            ModelId = modelId;
             Features = new ChangeTrackingList<DocumentAnalysisFeature>();
             QueryFields = new ChangeTrackingList<string>();
             Output = new ChangeTrackingList<AnalyzeOutputOption>();
         }
+
+        /// <summary> Unique document model name. </summary>
+        public string ModelId { get; }
 
         /// <summary>
         /// Azure Blob Storage location containing the batch documents.

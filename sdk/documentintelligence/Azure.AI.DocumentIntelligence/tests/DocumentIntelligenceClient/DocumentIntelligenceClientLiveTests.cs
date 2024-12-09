@@ -20,9 +20,9 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var client = CreateDocumentIntelligenceClient(useApiKey: true);
 
             var uriSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.Blank);
-            var options = new AnalyzeDocumentOptions(uriSource);
+            var options = new AnalyzeDocumentOptions("prebuilt-layout", uriSource);
 
-            Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", options);
+            Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, options);
             Response rawResponse = operation.GetRawResponse();
 
             Assert.That(rawResponse.Status, Is.EqualTo(200));

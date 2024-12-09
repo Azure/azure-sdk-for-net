@@ -53,13 +53,13 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligenceInnerError"/>. </summary>
         /// <param name="code"> One of a server-defined set of error codes. </param>
         /// <param name="message"> A human-readable representation of the error. </param>
-        /// <param name="innerErrorObject"> Inner error. </param>
+        /// <param name="innerError"> Inner error. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentIntelligenceInnerError(string code, string message, DocumentIntelligenceInnerError innerErrorObject, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DocumentIntelligenceInnerError(string code, string message, DocumentIntelligenceInnerError innerError, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
-            InnerErrorObject = innerErrorObject;
+            InnerError = innerError;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -68,6 +68,6 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> A human-readable representation of the error. </summary>
         public string Message { get; }
         /// <summary> Inner error. </summary>
-        public DocumentIntelligenceInnerError InnerErrorObject { get; }
+        public DocumentIntelligenceInnerError InnerError { get; }
     }
 }
