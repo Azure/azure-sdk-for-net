@@ -19,9 +19,9 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <param name="target"> The target of the error. </param>
         /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
-        /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
+        /// <param name="innerError"> An object containing more specific information than the current object about the error. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentIntelligenceError"/> instance for mocking. </returns>
-        public static DocumentIntelligenceError DocumentIntelligenceError(string code = null, string message = null, string target = null, IEnumerable<DocumentIntelligenceError> details = null, DocumentIntelligenceInnerError innererror = null)
+        public static DocumentIntelligenceError DocumentIntelligenceError(string code = null, string message = null, string target = null, IEnumerable<DocumentIntelligenceError> details = null, DocumentIntelligenceInnerError innerError = null)
         {
             details ??= new List<DocumentIntelligenceError>();
 
@@ -30,18 +30,18 @@ namespace Azure.AI.DocumentIntelligence
                 message,
                 target,
                 details?.ToList(),
-                innererror,
+                innerError,
                 serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentIntelligenceInnerError"/>. </summary>
         /// <param name="code"> One of a server-defined set of error codes. </param>
         /// <param name="message"> A human-readable representation of the error. </param>
-        /// <param name="innerErrorObject"> Inner error. </param>
+        /// <param name="innerError"> Inner error. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentIntelligenceInnerError"/> instance for mocking. </returns>
-        public static DocumentIntelligenceInnerError DocumentIntelligenceInnerError(string code = null, string message = null, DocumentIntelligenceInnerError innerErrorObject = null)
+        public static DocumentIntelligenceInnerError DocumentIntelligenceInnerError(string code = null, string message = null, DocumentIntelligenceInnerError innerError = null)
         {
-            return new DocumentIntelligenceInnerError(code, message, innerErrorObject, serializedAdditionalRawData: null);
+            return new DocumentIntelligenceInnerError(code, message, innerError, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentPage"/>. </summary>
@@ -427,82 +427,6 @@ namespace Azure.AI.DocumentIntelligence
             return new DocumentLanguage(locale, spans?.ToList(), confidence, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.AnalyzedDocument"/>. </summary>
-        /// <param name="documentType"> Document type. </param>
-        /// <param name="boundingRegions"> Bounding regions covering the document. </param>
-        /// <param name="spans"> Location of the document in the reading order concatenated content. </param>
-        /// <param name="fields"> Dictionary of named field values. </param>
-        /// <param name="confidence"> Confidence of correctly extracting the document. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.AnalyzedDocument"/> instance for mocking. </returns>
-        public static AnalyzedDocument AnalyzedDocument(string documentType = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null, IReadOnlyDictionary<string, DocumentField> fields = null, float confidence = default)
-        {
-            boundingRegions ??= new List<BoundingRegion>();
-            spans ??= new List<DocumentSpan>();
-            fields ??= new Dictionary<string, DocumentField>();
-
-            return new AnalyzedDocument(
-                documentType,
-                boundingRegions?.ToList(),
-                spans?.ToList(),
-                fields,
-                confidence,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentField"/>. </summary>
-        /// <param name="fieldType"> Data type of the field value. </param>
-        /// <param name="valueString"> String value. </param>
-        /// <param name="valueDate"> Date value in YYYY-MM-DD format (ISO 8601). </param>
-        /// <param name="valueTime"> Time value in hh:mm:ss format (ISO 8601). </param>
-        /// <param name="valuePhoneNumber"> Phone number value in E.164 format (ex. +19876543210). </param>
-        /// <param name="valueDouble"> Floating point value. </param>
-        /// <param name="valueInt64"> Integer value. </param>
-        /// <param name="valueSelectionMark"> Selection mark value. </param>
-        /// <param name="valueSignature"> Presence of signature. </param>
-        /// <param name="valueCountryRegion"> 3-letter country code value (ISO 3166-1 alpha-3). </param>
-        /// <param name="valueList"> Array of field values. </param>
-        /// <param name="valueDictionary"> Dictionary of named field values. </param>
-        /// <param name="valueCurrency"> Currency value. </param>
-        /// <param name="valueAddress"> Address value. </param>
-        /// <param name="valueBoolean"> Boolean value. </param>
-        /// <param name="valueSelectionGroup"> Selection group value. </param>
-        /// <param name="content"> Field content. </param>
-        /// <param name="boundingRegions"> Bounding regions covering the field. </param>
-        /// <param name="spans"> Location of the field in the reading order concatenated content. </param>
-        /// <param name="confidence"> Confidence of correctly extracting the field. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.DocumentField"/> instance for mocking. </returns>
-        public static DocumentField DocumentField(DocumentFieldType fieldType = default, string valueString = null, DateTimeOffset? valueDate = null, TimeSpan? valueTime = null, string valuePhoneNumber = null, double? valueDouble = null, long? valueInt64 = null, DocumentSelectionMarkState? valueSelectionMark = null, DocumentSignatureType? valueSignature = null, string valueCountryRegion = null, IEnumerable<DocumentField> valueList = null, IReadOnlyDictionary<string, DocumentField> valueDictionary = null, CurrencyValue valueCurrency = null, AddressValue valueAddress = null, bool? valueBoolean = null, IEnumerable<string> valueSelectionGroup = null, string content = null, IEnumerable<BoundingRegion> boundingRegions = null, IEnumerable<DocumentSpan> spans = null, float? confidence = null)
-        {
-            valueList ??= new List<DocumentField>();
-            valueDictionary ??= new Dictionary<string, DocumentField>();
-            valueSelectionGroup ??= new List<string>();
-            boundingRegions ??= new List<BoundingRegion>();
-            spans ??= new List<DocumentSpan>();
-
-            return new DocumentField(
-                fieldType,
-                valueString,
-                valueDate,
-                valueTime,
-                valuePhoneNumber,
-                valueDouble,
-                valueInt64,
-                valueSelectionMark,
-                valueSignature,
-                valueCountryRegion,
-                valueList?.ToList(),
-                valueDictionary,
-                valueCurrency,
-                valueAddress,
-                valueBoolean,
-                valueSelectionGroup?.ToList(),
-                content,
-                boundingRegions?.ToList(),
-                spans?.ToList(),
-                confidence,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.CurrencyValue"/>. </summary>
         /// <param name="amount"> Currency amount. </param>
         /// <param name="currencySymbol"> Currency symbol label, if any. </param>
@@ -619,7 +543,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="error"> Encountered error during batch document analysis. </param>
         /// <param name="result"> Batch document analysis result. </param>
         /// <returns> A new <see cref="DocumentIntelligence.AnalyzeBatchOperationDetails"/> instance for mocking. </returns>
-        public static AnalyzeBatchOperationDetails AnalyzeBatchOperationDetails(Guid? resultId = null, DocumentIntelligenceOperationStatus status = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, int? percentCompleted = null, DocumentIntelligenceError error = null, AnalyzeBatchResult result = null)
+        public static AnalyzeBatchOperationDetails AnalyzeBatchOperationDetails(string resultId = null, DocumentIntelligenceOperationStatus status = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, int? percentCompleted = null, DocumentIntelligenceError error = null, AnalyzeBatchResult result = null)
         {
             return new AnalyzeBatchOperationDetails(
                 resultId,

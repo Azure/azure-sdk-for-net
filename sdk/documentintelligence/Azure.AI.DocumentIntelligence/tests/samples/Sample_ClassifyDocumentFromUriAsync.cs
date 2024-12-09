@@ -51,9 +51,9 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Uri uriSource = DocumentIntelligenceTestEnvironment.CreateUri("IRS-1040_2.pdf");
 #endif
 
-            var options = new ClassifyDocumentOptions(uriSource);
+            var options = new ClassifyDocumentOptions(classifierId, uriSource);
 
-            Operation<AnalyzeResult> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, classifierId, options);
+            Operation<AnalyzeResult> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, options);
             AnalyzeResult result = operation.Value;
 
             Console.WriteLine($"Input was classified by the classifier with ID '{result.ModelId}'.");

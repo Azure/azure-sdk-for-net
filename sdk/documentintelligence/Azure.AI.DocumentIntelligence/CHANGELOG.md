@@ -19,7 +19,7 @@
   - `BuildDocumentModelContent` to `BuildDocumentModelOptions`.
   - `ClassifyDocumentContent` to `ClassifyDocumentOptions`.
   - `ComposeDocumentModelContent` to `ComposeModelOptions`.
-  - Optional parameters of the `AnalyzeBatchDocuments`, `AnalyzeDocument`, and `ClassifyDocument` methods have been moved into their corresponding `Options` class.
+  - Parameters of the `AnalyzeBatchDocuments`, `AnalyzeDocument`, and `ClassifyDocument` methods have been moved into their corresponding `Options` class.
 - Updated parameter `resultId` of methods `GetAnalyzeResultPdf` and `GetAnalyzeResultFigure` to take a `string` instead of a `Guid`.
 - Renamed all occurrences of property `UrlSource` to `UriSource`.
 - Renamed all occurrences of properties `DocType` and `DocTypes` to `DocumentType` and `DocumentTypes`, respectively.
@@ -43,10 +43,15 @@
 - Renamed class `InnerError` to `DocumentIntelligenceInnerError`.
 - Renamed class `CopyAuthorization` to `ModelCopyAuthorization`.
 - Renamed type `OperationStatus` to `DocumentIntelligenceOperationStatus`.
+- Renamed property `Innererror` to `InnerError` in `DocumentIntelligenceError`.
+- Renamed property `InnerErrorObject` to `InnerError` in `DocumentIntelligenceInnerError` (former class `InnerError`).
 - Removed member `Completed` from `DocumentIntelligenceOperationStatus` (former `OperationStatus`).
 - Removed type `StringIndexType`.
 - Removed property `StringIndexType` in `AnalyzeResult`.
+- Updated property `Fields` in `AnalyzedDocument` to be a `DocumentFieldDictionary` instead of an `IReadOnly<string, DocumentField>`.
+- Updated property `ValueDictionary` in `DocumentField` to be a `DocumentFieldDictionary` instead of an `IReadOnly<string, DocumentField>`.
 - Made type `BoundingRegion` a `struct`.
+- Made type `DocumentSpan` a `struct`.
 
 ### Bugs Fixed
 - Fixed a bug where calling `Operation.Id` would sometimes return an `InvalidOperationException` with message "The operation ID was not present in the service response.".

@@ -65,7 +65,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="error"> Encountered error during batch document analysis. </param>
         /// <param name="result"> Batch document analysis result. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeBatchOperationDetails(Guid? resultId, DocumentIntelligenceOperationStatus status, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, int? percentCompleted, DocumentIntelligenceError error, AnalyzeBatchResult result, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AnalyzeBatchOperationDetails(string resultId, DocumentIntelligenceOperationStatus status, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, int? percentCompleted, DocumentIntelligenceError error, AnalyzeBatchResult result, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResultId = resultId;
             Status = status;
@@ -81,9 +81,6 @@ namespace Azure.AI.DocumentIntelligence
         internal AnalyzeBatchOperationDetails()
         {
         }
-
-        /// <summary> Analyze batch operation result ID. </summary>
-        public Guid? ResultId { get; }
         /// <summary> Operation status.  notStarted, running, succeeded, or failed. </summary>
         public DocumentIntelligenceOperationStatus Status { get; }
         /// <summary> Date and time (UTC) when the operation was submitted. </summary>

@@ -215,9 +215,9 @@ Analyzing documents with `Azure.AI.DocumentIntelligence`:
 ```C# Snippet:DocumentIntelligenceAnalyzeWithPrebuiltModelFromUriAsync
 Uri uriSource = new Uri("<uriSource>");
 
-var options = new AnalyzeDocumentOptions(uriSource);
+var options = new AnalyzeDocumentOptions("prebuilt-invoice", uriSource);
 
-Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", options);
+Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, options);
 AnalyzeResult result = operation.Value;
 
 // To see the list of all the supported fields returned by service and its corresponding types for the
@@ -322,9 +322,9 @@ Classifying documents with `Azure.AI.DocumentIntelligence`:
 string classifierId = "<classifierId>";
 Uri uriSource = new Uri("<uriSource>");
 
-var options = new ClassifyDocumentOptions(uriSource);
+var options = new ClassifyDocumentOptions(classifierId, uriSource);
 
-Operation<AnalyzeResult> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, classifierId, options);
+Operation<AnalyzeResult> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, options);
 AnalyzeResult result = operation.Value;
 
 Console.WriteLine($"Input was classified by the classifier with ID '{result.ModelId}'.");
@@ -411,9 +411,9 @@ string filePath = "<filePath>";
 byte[] fileBytes = File.ReadAllBytes(filePath);
 
 var bytesSource = BinaryData.FromBytes(fileBytes);
-var options = new AnalyzeDocumentOptions(bytesSource);
+var options = new AnalyzeDocumentOptions("prebuilt-invoice", bytesSource);
 
-Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", options);
+Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, options);
 AnalyzeResult result = operation.Value;
 
 // To see the list of all the supported fields returned by service and its corresponding types for the
@@ -523,9 +523,9 @@ Note that it's necessary to pass the `DocumentPage` containing the line to the m
 ```C# Snippet:Migration_DocumentIntelligenceGetWordsUsage
 Uri uriSource = new Uri("<uriSource>");
 
-var options = new AnalyzeDocumentOptions(uriSource);
+var options = new AnalyzeDocumentOptions("prebuilt-invoice", uriSource);
 
-Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", options);
+Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, options);
 AnalyzeResult result = operation.Value;
 
 DocumentPage firstPage = result.Pages[0];

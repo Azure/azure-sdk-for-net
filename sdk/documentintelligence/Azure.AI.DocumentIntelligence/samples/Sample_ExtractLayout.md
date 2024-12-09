@@ -23,9 +23,9 @@ To extract the layout from a given file at a URI, use the `AnalyzeDocument` meth
 ```C# Snippet:DocumentIntelligenceExtractLayoutFromUriAsync
 Uri uriSource = new Uri("<uriSource>");
 
-var options = new AnalyzeDocumentOptions(uriSource);
+var options = new AnalyzeDocumentOptions("prebuilt-layout", uriSource);
 
-Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", options);
+Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, options);
 AnalyzeResult result = operation.Value;
 
 foreach (DocumentPage page in result.Pages)

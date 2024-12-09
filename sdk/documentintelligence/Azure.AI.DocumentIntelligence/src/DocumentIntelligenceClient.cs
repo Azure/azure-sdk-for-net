@@ -39,7 +39,7 @@ namespace Azure.AI.DocumentIntelligence
         // AnalyzeBatchDocuments, and ClassifyDocument methods and adding methods manually
         // below for the following reasons:
         //   - Hiding the StringIndexType parameter. We're making its value default to 'utf16CodeUnit'.
-        //   - Hiding optional parameters (e.g. 'pages') inside the 'options' property bag.
+        //   - Hiding other parameters (e.g. 'modelId', 'pages') inside the 'options' property bag.
         //   - Renaming 'request' parameters to 'options'.
         //   - Making the 'options' parameter required in all methods.
 
@@ -47,115 +47,97 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> Analyzes document with document model. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="modelId"> Unique document model name. </param>
         /// <param name="options"> Analyze request options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="options"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='AnalyzeDocumentAsync(WaitUntil,string,AnalyzeDocumentOptions,string,string,StringIndexType?,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},DocumentContentFormat?,IEnumerable{AnalyzeOutputOption},CancellationToken)']/*" />
-        public virtual async Task<Operation<AnalyzeResult>> AnalyzeDocumentAsync(WaitUntil waitUntil, string modelId, AnalyzeDocumentOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<AnalyzeResult>> AnalyzeDocumentAsync(WaitUntil waitUntil, AnalyzeDocumentOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(options, nameof(options));
 
             using RequestContent content = options.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = await AnalyzeDocumentAsync(waitUntil, modelId, content, options.Pages, options.Locale, DefaultStringIndexType, options.Features, options.QueryFields, options.OutputContentFormat?.ToString(), options.Output, context).ConfigureAwait(false);
+            Operation<BinaryData> response = await AnalyzeDocumentAsync(waitUntil, options.ModelId, content, options.Pages, options.Locale, DefaultStringIndexType, options.Features, options.QueryFields, options.OutputContentFormat?.ToString(), options.Output, context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(response, FetchAnalyzeResultFromAnalyzeOperation, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeDocument");
         }
 
         /// <summary> Analyzes document with document model. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="modelId"> Unique document model name. </param>
         /// <param name="options"> Analyze request options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="options"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='AnalyzeDocument(WaitUntil,string,AnalyzeDocumentOptions,string,string,StringIndexType?,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},DocumentContentFormat?,IEnumerable{AnalyzeOutputOption},CancellationToken)']/*" />
-        public virtual Operation<AnalyzeResult> AnalyzeDocument(WaitUntil waitUntil, string modelId, AnalyzeDocumentOptions options, CancellationToken cancellationToken = default)
+        public virtual Operation<AnalyzeResult> AnalyzeDocument(WaitUntil waitUntil, AnalyzeDocumentOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(options, nameof(options));
 
             using RequestContent content = options.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = AnalyzeDocument(waitUntil, modelId, content, options.Pages, options.Locale, DefaultStringIndexType, options.Features, options.QueryFields, options.OutputContentFormat?.ToString(), options.Output, context);
+            Operation<BinaryData> response = AnalyzeDocument(waitUntil, options.ModelId, content, options.Pages, options.Locale, DefaultStringIndexType, options.Features, options.QueryFields, options.OutputContentFormat?.ToString(), options.Output, context);
             return ProtocolOperationHelpers.Convert(response, FetchAnalyzeResultFromAnalyzeOperation, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeDocument");
         }
 
         /// <summary> Analyzes batch documents with document model. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="modelId"> Unique document model name. </param>
         /// <param name="options"> Analyze batch request options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="options"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='AnalyzeBatchDocumentsAsync(WaitUntil,string,AnalyzeBatchDocumentsOptions,string,string,StringIndexType?,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},DocumentContentFormat?,IEnumerable{AnalyzeOutputOption},CancellationToken)']/*" />
-        public virtual async Task<Operation<AnalyzeBatchResult>> AnalyzeBatchDocumentsAsync(WaitUntil waitUntil, string modelId, AnalyzeBatchDocumentsOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<AnalyzeBatchResult>> AnalyzeBatchDocumentsAsync(WaitUntil waitUntil, AnalyzeBatchDocumentsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(options, nameof(options));
 
             using RequestContent content = options.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = await AnalyzeBatchDocumentsAsync(waitUntil, modelId, content, options.Pages, options.Locale, DefaultStringIndexType, options.Features, options.QueryFields, options.OutputContentFormat?.ToString(), options.Output, context).ConfigureAwait(false);
+            Operation<BinaryData> response = await AnalyzeBatchDocumentsAsync(waitUntil, options.ModelId, content, options.Pages, options.Locale, DefaultStringIndexType, options.Features, options.QueryFields, options.OutputContentFormat?.ToString(), options.Output, context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(response, FetchAnalyzeBatchResultFromAnalyzeBatchOperationDetails, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeBatchDocuments");
         }
 
         /// <summary> Analyzes batch documents with document model. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="modelId"> Unique document model name. </param>
         /// <param name="options"> Analyze batch request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="options"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='AnalyzeBatchDocuments(WaitUntil,string,AnalyzeBatchDocumentsOptions,string,string,StringIndexType?,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},DocumentContentFormat?,IEnumerable{AnalyzeOutputOption},CancellationToken)']/*" />
-        public virtual Operation<AnalyzeBatchResult> AnalyzeBatchDocuments(WaitUntil waitUntil, string modelId, AnalyzeBatchDocumentsOptions options, CancellationToken cancellationToken = default)
+        public virtual Operation<AnalyzeBatchResult> AnalyzeBatchDocuments(WaitUntil waitUntil, AnalyzeBatchDocumentsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(options, nameof(options));
 
             using RequestContent content = options.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = AnalyzeBatchDocuments(waitUntil, modelId, content, options.Pages, options.Locale, DefaultStringIndexType, options.Features, options.QueryFields, options.OutputContentFormat?.ToString(), options.Output, context);
+            Operation<BinaryData> response = AnalyzeBatchDocuments(waitUntil, options.ModelId, content, options.Pages, options.Locale, DefaultStringIndexType, options.Features, options.QueryFields, options.OutputContentFormat?.ToString(), options.Output, context);
             return ProtocolOperationHelpers.Convert(response, FetchAnalyzeBatchResultFromAnalyzeBatchOperationDetails, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeBatchDocuments");
         }
 
         /// <summary> Classifies document with document classifier. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="options"> Classify request options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> or <paramref name="options"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='ClassifyDocumentAsync(WaitUntil,string,ClassifyDocumentOptions,StringIndexType?,SplitMode?,string,CancellationToken)']/*" />
-        public virtual async Task<Operation<AnalyzeResult>> ClassifyDocumentAsync(WaitUntil waitUntil, string classifierId, ClassifyDocumentOptions options, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<AnalyzeResult>> ClassifyDocumentAsync(WaitUntil waitUntil, ClassifyDocumentOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
             Argument.AssertNotNull(options, nameof(options));
 
             using RequestContent content = options.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = await ClassifyDocumentAsync(waitUntil, classifierId, content, DefaultStringIndexType, options.Split?.ToString(), options.Pages, context).ConfigureAwait(false);
+            Operation<BinaryData> response = await ClassifyDocumentAsync(waitUntil, options.ClassifierId, content, DefaultStringIndexType, options.Split?.ToString(), options.Pages, context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(response, FetchAnalyzeResultFromAnalyzeOperation, ClientDiagnostics, "DocumentIntelligenceClient.ClassifyDocument");
         }
 
         /// <summary> Classifies document with document classifier. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="options"> Classify request options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> or <paramref name="options"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='ClassifyDocument(WaitUntil,string,ClassifyDocumentOptions,StringIndexType?,SplitMode?,string,CancellationToken)']/*" />
-        public virtual Operation<AnalyzeResult> ClassifyDocument(WaitUntil waitUntil, string classifierId, ClassifyDocumentOptions options, CancellationToken cancellationToken = default)
+        public virtual Operation<AnalyzeResult> ClassifyDocument(WaitUntil waitUntil, ClassifyDocumentOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
             Argument.AssertNotNull(options, nameof(options));
 
             using RequestContent content = options.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = ClassifyDocument(waitUntil, classifierId, content, DefaultStringIndexType, options.Split?.ToString(), options.Pages, context);
+            Operation<BinaryData> response = ClassifyDocument(waitUntil, options.ClassifierId, content, DefaultStringIndexType, options.Split?.ToString(), options.Pages, context);
             return ProtocolOperationHelpers.Convert(response, FetchAnalyzeResultFromAnalyzeOperation, ClientDiagnostics, "DocumentIntelligenceClient.ClassifyDocument");
         }
 
@@ -175,7 +157,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AnalyzeDocumentAsync(WaitUntil,string,AnalyzeDocumentOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AnalyzeDocumentAsync(WaitUntil,AnalyzeDocumentOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -239,7 +221,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AnalyzeDocument(WaitUntil,string,AnalyzeDocumentOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AnalyzeDocument(WaitUntil,AnalyzeDocumentOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -303,7 +285,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AnalyzeBatchDocumentsAsync(WaitUntil,string,AnalyzeBatchDocumentsOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AnalyzeBatchDocumentsAsync(WaitUntil,AnalyzeBatchDocumentsOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -367,7 +349,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AnalyzeBatchDocuments(WaitUntil,string,AnalyzeBatchDocumentsOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AnalyzeBatchDocuments(WaitUntil,AnalyzeBatchDocumentsOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -431,7 +413,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ClassifyDocumentAsync(WaitUntil,string,ClassifyDocumentOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ClassifyDocumentAsync(WaitUntil,ClassifyDocumentOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -489,7 +471,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ClassifyDocument(WaitUntil,string,ClassifyDocumentOptions,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ClassifyDocument(WaitUntil,ClassifyDocumentOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>

@@ -7,6 +7,12 @@ using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
+    public partial class AnalyzeBatchOperationDetails
+    {
+        /// <summary> Analyze batch operation result ID. </summary>
+        public string ResultId { get; }
+    }
+
     public partial class AnalyzeResult
     {
         internal StringIndexType StringIndexType { get; }

@@ -23,9 +23,8 @@ namespace Azure.AI.DocumentIntelligence.Tests
             await using var disposableClassifier = await BuildDisposableDocumentClassifierAsync();
 
             var uriSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.Irs1040);
-            var options = new ClassifyDocumentOptions(uriSource);
-
-            var operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, disposableClassifier.ClassifierId, options);
+            var options = new ClassifyDocumentOptions(disposableClassifier.ClassifierId, uriSource);
+            var operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, options);
 
             Assert.That(operation.HasCompleted);
             Assert.That(operation.HasValue);
@@ -41,9 +40,8 @@ namespace Azure.AI.DocumentIntelligence.Tests
             await using var disposableClassifier = await BuildDisposableDocumentClassifierAsync();
 
             var bytesSource = DocumentIntelligenceTestEnvironment.CreateBinaryData(TestFile.Irs1040);
-            var options = new ClassifyDocumentOptions(bytesSource);
-
-            var operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, disposableClassifier.ClassifierId, options);
+            var options = new ClassifyDocumentOptions(disposableClassifier.ClassifierId, bytesSource);
+            var operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, options);
 
             Assert.That(operation.HasCompleted);
             Assert.That(operation.HasValue);
@@ -60,9 +58,8 @@ namespace Azure.AI.DocumentIntelligence.Tests
             await using var disposableClassifier = await BuildDisposableDocumentClassifierAsync();
 
             var uriSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.Blank);
-            var options = new ClassifyDocumentOptions(uriSource);
-
-            var operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, disposableClassifier.ClassifierId, options);
+            var options = new ClassifyDocumentOptions(disposableClassifier.ClassifierId, uriSource);
+            var operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, options);
 
             Assert.That(operation.HasCompleted);
             Assert.That(operation.HasValue);

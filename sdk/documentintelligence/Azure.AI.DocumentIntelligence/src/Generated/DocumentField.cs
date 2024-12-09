@@ -51,7 +51,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             FieldType = fieldType;
             ValueList = new ChangeTrackingList<DocumentField>();
-            ValueDictionary = new ChangeTrackingDictionary<string, DocumentField>();
+            ValueObject = new ChangeTrackingDictionary<string, DocumentField>();
             ValueSelectionGroup = new ChangeTrackingList<string>();
             BoundingRegions = new ChangeTrackingList<BoundingRegion>();
             Spans = new ChangeTrackingList<DocumentSpan>();
@@ -69,7 +69,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="valueSignature"> Presence of signature. </param>
         /// <param name="valueCountryRegion"> 3-letter country code value (ISO 3166-1 alpha-3). </param>
         /// <param name="valueList"> Array of field values. </param>
-        /// <param name="valueDictionary"> Dictionary of named field values. </param>
+        /// <param name="valueObject"> Dictionary of named field values. </param>
         /// <param name="valueCurrency"> Currency value. </param>
         /// <param name="valueAddress"> Address value. </param>
         /// <param name="valueBoolean"> Boolean value. </param>
@@ -79,7 +79,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="spans"> Location of the field in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the field. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentField(DocumentFieldType fieldType, string valueString, DateTimeOffset? valueDate, TimeSpan? valueTime, string valuePhoneNumber, double? valueDouble, long? valueInt64, DocumentSelectionMarkState? valueSelectionMark, DocumentSignatureType? valueSignature, string valueCountryRegion, IReadOnlyList<DocumentField> valueList, IReadOnlyDictionary<string, DocumentField> valueDictionary, CurrencyValue valueCurrency, AddressValue valueAddress, bool? valueBoolean, IReadOnlyList<string> valueSelectionGroup, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, float? confidence, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DocumentField(DocumentFieldType fieldType, string valueString, DateTimeOffset? valueDate, TimeSpan? valueTime, string valuePhoneNumber, double? valueDouble, long? valueInt64, DocumentSelectionMarkState? valueSelectionMark, DocumentSignatureType? valueSignature, string valueCountryRegion, IReadOnlyList<DocumentField> valueList, IReadOnlyDictionary<string, DocumentField> valueObject, CurrencyValue valueCurrency, AddressValue valueAddress, bool? valueBoolean, IReadOnlyList<string> valueSelectionGroup, string content, IReadOnlyList<BoundingRegion> boundingRegions, IReadOnlyList<DocumentSpan> spans, float? confidence, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FieldType = fieldType;
             ValueString = valueString;
@@ -92,7 +92,7 @@ namespace Azure.AI.DocumentIntelligence
             ValueSignature = valueSignature;
             ValueCountryRegion = valueCountryRegion;
             ValueList = valueList;
-            ValueDictionary = valueDictionary;
+            ValueObject = valueObject;
             ValueCurrency = valueCurrency;
             ValueAddress = valueAddress;
             ValueBoolean = valueBoolean;
@@ -131,8 +131,6 @@ namespace Azure.AI.DocumentIntelligence
         public string ValueCountryRegion { get; }
         /// <summary> Array of field values. </summary>
         public IReadOnlyList<DocumentField> ValueList { get; }
-        /// <summary> Dictionary of named field values. </summary>
-        public IReadOnlyDictionary<string, DocumentField> ValueDictionary { get; }
         /// <summary> Currency value. </summary>
         public CurrencyValue ValueCurrency { get; }
         /// <summary> Address value. </summary>
