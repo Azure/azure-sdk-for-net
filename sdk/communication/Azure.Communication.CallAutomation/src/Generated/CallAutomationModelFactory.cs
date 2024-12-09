@@ -222,5 +222,72 @@ namespace Azure.Communication.CallAutomation
                 resultInformation,
                 transcriptionUpdateResult);
         }
+
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.MediaStreamingFailed"/>. </summary>
+        /// <param name="mediaStreamingUpdate"> Defines the result for audio streaming update with the current status and the details about the status. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <returns> A new <see cref="CallAutomation.MediaStreamingFailed"/> instance for mocking. </returns>
+        public static MediaStreamingFailed MediaStreamingFailed(MediaStreamingUpdate mediaStreamingUpdate = null, string operationContext = null, ResultInformation resultInformation = null, string callConnectionId = null, string serverCallId = null, string correlationId = null)
+        {
+            return new MediaStreamingFailed(
+                mediaStreamingUpdate,
+                operationContext,
+                resultInformation,
+                callConnectionId,
+                serverCallId,
+                correlationId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.MediaStreamingUpdate"/>. </summary>
+        /// <param name="contentType"></param>
+        /// <param name="mediaStreamingStatus"></param>
+        /// <param name="mediaStreamingStatusDetails"></param>
+        /// <returns> A new <see cref="CallAutomation.MediaStreamingUpdate"/> instance for mocking. </returns>
+        public static MediaStreamingUpdate MediaStreamingUpdate(string contentType = null, MediaStreamingStatus mediaStreamingStatus = default, MediaStreamingStatusDetails mediaStreamingStatusDetails = default)
+        {
+            return new MediaStreamingUpdate(contentType, mediaStreamingStatus, mediaStreamingStatusDetails);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.MediaStreamingStarted"/>. </summary>
+        /// <param name="mediaStreamingUpdate"> Defines the result for audio streaming update with the current status and the details about the status. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <returns> A new <see cref="CallAutomation.MediaStreamingStarted"/> instance for mocking. </returns>
+        public static MediaStreamingStarted MediaStreamingStarted(MediaStreamingUpdate mediaStreamingUpdate = null, string operationContext = null, ResultInformation resultInformation = null, string callConnectionId = null, string serverCallId = null, string correlationId = null)
+        {
+            return new MediaStreamingStarted(
+                mediaStreamingUpdate,
+                operationContext,
+                resultInformation,
+                callConnectionId,
+                serverCallId,
+                correlationId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.MediaStreamingStopped"/>. </summary>
+        /// <param name="mediaStreamingUpdate"> Defines the result for audio streaming update with the current status and the details about the status. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <returns> A new <see cref="CallAutomation.MediaStreamingStopped"/> instance for mocking. </returns>
+        public static MediaStreamingStopped MediaStreamingStopped(MediaStreamingUpdate mediaStreamingUpdate = null, string operationContext = null, ResultInformation resultInformation = null, string callConnectionId = null, string serverCallId = null, string correlationId = null)
+        {
+            return new MediaStreamingStopped(
+                mediaStreamingUpdate,
+                operationContext,
+                resultInformation,
+                callConnectionId,
+                serverCallId,
+                correlationId);
+        }
     }
 }

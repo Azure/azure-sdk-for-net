@@ -33,7 +33,8 @@ namespace Azure.Communication.CallAutomation
         /// <param name="source"> Source identity. </param>
         /// <param name="correlationId"> The correlation ID. </param>
         /// <param name="answeredBy"> Identity of the answering entity. Only populated when identity is provided in the request. </param>
-        internal CallConnectionPropertiesInternal(string callConnectionId, string serverCallId, IReadOnlyList<CommunicationIdentifierModel> targets, CallConnectionState? callConnectionState, string callbackUri, string dataSubscriptionId, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationIdentifierModel source, string correlationId, CommunicationUserIdentifierModel answeredBy)
+        /// <param name="mediaStreamingSubscription"> The state of media streaming subscription for the call. </param>
+        internal CallConnectionPropertiesInternal(string callConnectionId, string serverCallId, IReadOnlyList<CommunicationIdentifierModel> targets, CallConnectionState? callConnectionState, string callbackUri, string dataSubscriptionId, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationIdentifierModel source, string correlationId, CommunicationUserIdentifierModel answeredBy, MediaStreamingSubscriptionInternal mediaStreamingSubscription)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
@@ -46,6 +47,7 @@ namespace Azure.Communication.CallAutomation
             Source = source;
             CorrelationId = correlationId;
             AnsweredBy = answeredBy;
+            MediaStreamingSubscription = mediaStreamingSubscription;
         }
 
         /// <summary> The call connection id. </summary>
@@ -73,5 +75,7 @@ namespace Azure.Communication.CallAutomation
         public string CorrelationId { get; }
         /// <summary> Identity of the answering entity. Only populated when identity is provided in the request. </summary>
         public CommunicationUserIdentifierModel AnsweredBy { get; }
+        /// <summary> The state of media streaming subscription for the call. </summary>
+        public MediaStreamingSubscriptionInternal MediaStreamingSubscription { get; }
     }
 }

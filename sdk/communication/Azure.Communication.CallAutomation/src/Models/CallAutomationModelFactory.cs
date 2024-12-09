@@ -195,6 +195,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="sourceDisplayName">Display name to appear on the invitee.</param>
         /// <param name="dataSubscriptionId">The subscriptionId for transcription.</param>
         /// <param name="answeredBy">Identifier that answered the call.</param>
+        /// /// <param name="mediaStreamingSubscription">The subscription details for Media Streaming.</param>
         /// <returns> A new <see cref="CallAutomation.CallConnectionProperties"/> instance for mocking. </returns>
         public static CallConnectionProperties CallConnectionProperties(
             string callConnectionId = default,
@@ -206,9 +207,10 @@ namespace Azure.Communication.CallAutomation
             PhoneNumberIdentifier sourceCallerIdNumber = default,
             string sourceDisplayName = default,
             CommunicationUserIdentifier answeredBy = default,
-            string dataSubscriptionId = default)
+            string dataSubscriptionId = default,
+            MediaStreamingSubscription mediaStreamingSubscription = default)
         {
-            return new CallConnectionProperties(callConnectionId, serverCallId, targets, callConnectionState, callbackUri, sourceIdentity, sourceCallerIdNumber, sourceDisplayName, dataSubscriptionId, answeredBy);
+            return new CallConnectionProperties(callConnectionId, serverCallId, targets, callConnectionState, callbackUri, sourceIdentity, sourceCallerIdNumber, sourceDisplayName, dataSubscriptionId, answeredBy, mediaStreamingSubscription);
         }
 
         /// <summary> Initializes a new instance of CallParticipant. </summary>
@@ -551,6 +553,18 @@ namespace Azure.Communication.CallAutomation
         public static HoldFailed HoldFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
             return new HoldFailed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+        }
+
+        /// <summary> Initializes a new instance of ConnectFailed. </summary>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        /// <returns> A new <see cref="CallAutomation.ConnectFailed"/> instance for mocking. </returns>
+        public static ConnectFailed ConnectFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
+        {
+            return new ConnectFailed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
         }
     }
 }
