@@ -90,7 +90,7 @@
 # ServiceOwners:                                                   @Azure/aks-pm
 
 # ServiceLabel: %Alerts Management
-# ServiceOwners:                                                   @liadtal @yairgil
+# ServiceOwners:                                                   @yairgil
 
 # ServiceLabel: %ARM
 # ServiceOwners:                                                   @armleads-azure

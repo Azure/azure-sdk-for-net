@@ -9,7 +9,7 @@ steps:
   - script: >
       dotnet tool install
       Azure.Sdk.Tools.PipelineGenerator
-      --version 1.1.0-dev.20240604.1
+      --version 1.1.0-dev.20241204.1
       --add-source https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json
       --tool-path ${{parameters.ToolPath}}
     workingDirectory: $(Pipeline.Workspace)/pipeline-generator
