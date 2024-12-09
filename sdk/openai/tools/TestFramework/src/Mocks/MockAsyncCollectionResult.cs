@@ -36,7 +36,13 @@ public class MockAsyncCollectionResult<TValue> : AsyncCollectionResult<TValue>
     /// <inheritdoc />
     public override ContinuationToken? GetContinuationToken(ClientResult page)
     {
-        var parsed = MockPage<TValue>.FromClientResult(page);
+        MockPage<TValue>? parsed = MockPage<TValue>.FromClientResult(page);
+
+        if (parsed == null)
+        {
+            return null;
+        }
+
         string token = parsed.Next.ToString(CultureInfo.InvariantCulture);
         return ContinuationToken.FromBytes(BinaryData.FromString(token));
     }
@@ -75,5 +81,5 @@ public class MockAsyncCollectionResult<TValue> : AsyncCollectionResult<TValue>
 
     /// <inheritdoc />
     protected override IAsyncEnumerable<TValue> GetValuesFromPageAsync(ClientResult page)
-        => new SyncToAsyncEnumerable<TValue>(MockPage<TValue>.FromClientResult(page).Values);
+        => new SyncToAsyncEnumerable<TValue>(MockPage<TValue>.FromClientResult(page)?.Values ?? []);
 }

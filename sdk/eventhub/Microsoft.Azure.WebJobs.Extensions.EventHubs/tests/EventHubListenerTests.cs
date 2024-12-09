@@ -1,6 +1,8 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+// Ignore Spelling: Checkpointing Rebalancing
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -186,7 +188,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
             processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
-            processor.Setup(p => p.GetLastReadCheckpoint(partitionContext.PartitionId)).Returns(() => new CheckpointInfo(123, 45678, DateTimeOffset.UtcNow.Subtract(TimeSpan.FromSeconds(1))));
+            processor.Setup(p => p.GetLastReadCheckpoint(partitionContext.PartitionId)).Returns(() => new CheckpointInfo("123:1:11", 45678, DateTimeOffset.UtcNow.Subtract(TimeSpan.FromSeconds(1))));
             partitionContext.ProcessorHost = processor.Object;
 
             var loggerMock = new Mock<ILogger>();
@@ -240,7 +242,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
             processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
-            processor.Setup(p => p.GetLastReadCheckpoint(partitionContext.PartitionId)).Returns(() => new CheckpointInfo(123, 45678, DateTimeOffset.UtcNow.Subtract(TimeSpan.FromHours(1))));
+            processor.Setup(p => p.GetLastReadCheckpoint(partitionContext.PartitionId)).Returns(() => new CheckpointInfo("123", 45678, DateTimeOffset.UtcNow.Subtract(TimeSpan.FromHours(1))));
             partitionContext.ProcessorHost = processor.Object;
 
             var loggerMock = new Mock<ILogger>();
@@ -292,7 +294,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
             processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
-            processor.Setup(p => p.GetLastReadCheckpoint(partitionContext.PartitionId)).Returns(() => new CheckpointInfo(123, 45678, DateTimeOffset.UtcNow.Subtract(TimeSpan.FromHours(1))));
+            processor.Setup(p => p.GetLastReadCheckpoint(partitionContext.PartitionId)).Returns(() => new CheckpointInfo("123", 45678, DateTimeOffset.UtcNow.Subtract(TimeSpan.FromHours(1))));
             partitionContext.ProcessorHost = processor.Object;
 
             // Because the first invocation will allow a partial batch due to the old checkpoint,

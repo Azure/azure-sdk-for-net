@@ -32,7 +32,7 @@
         },
         "trainingDataAccount": {
             "type": "string",
-            "defaultValue": "azuresdktrainingdata"
+            "defaultValue": "azuresdktrainingdatatme"
         },
         "trainingDataContainer": {
             "type": "string",
@@ -44,7 +44,7 @@
         },
         "trainingDataResourceId": {
             "type": "string",
-            "defaultValue": "[resourceId('TrainingData', 'Microsoft.Storage/storageAccounts', parameters('trainingDataAccount'))]"
+            "defaultValue": "[resourceId('static-test-resources', 'Microsoft.Storage/storageAccounts', parameters('trainingDataAccount'))]"
         },
         "trainingDataSasProperties": {
             "type": "object",

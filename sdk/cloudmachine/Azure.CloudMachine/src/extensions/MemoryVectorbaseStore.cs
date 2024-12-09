@@ -8,7 +8,7 @@ namespace Azure.CloudMachine.OpenAI;
 
 internal class MemoryVectorbaseStore : VectorbaseStore
 {
-    private readonly List<VectorbaseEntry> _entries = new List<VectorbaseEntry>();
+    private readonly List<VectorbaseEntry> _entries = [];
 
     public override IEnumerable<VectorbaseEntry> Find(ReadOnlyMemory<float> vector, FindOptions options)
     {
@@ -24,14 +24,14 @@ internal class MemoryVectorbaseStore : VectorbaseStore
             }
             distances.Sort(((float D1, int I1) v1, (float D2, int I2) v2) => v1.D1.CompareTo(v2.D2));
 
-            var results = new List<VectorbaseEntry>(options.MaxEntries);
-            var top = Math.Min(options.MaxEntries, distances.Count);
+            List<VectorbaseEntry> results = new(options.MaxEntries);
+            int top = Math.Min(options.MaxEntries, distances.Count);
             for (int i = 0; i < top; i++)
             {
-                var distance = distances[i].Distance;
+                float distance = distances[i].Distance;
                 if (distance > options.Threshold)
                     break;
-                var index = distances[i].Index;
+                int index = distances[i].Index;
                 results.Add(_entries[index]);
             }
             return results;
@@ -41,8 +41,8 @@ internal class MemoryVectorbaseStore : VectorbaseStore
     {
         lock (_entries)
         {
-            var id = _entries.Count;
-            var newEntry = new VectorbaseEntry(entry.Vector, entry.Data, id);
+            int id = _entries.Count;
+            VectorbaseEntry newEntry = new(entry.Vector, entry.Data, id);
             _entries.Add(newEntry);
             return id;
         }
@@ -50,7 +50,7 @@ internal class MemoryVectorbaseStore : VectorbaseStore
 
     public override void Add(IReadOnlyList<VectorbaseEntry> entries)
     {
-        foreach (var entry in entries)
+        foreach (VectorbaseEntry entry in entries)
         {
             Add(entry);
         }

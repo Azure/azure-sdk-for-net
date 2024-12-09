@@ -29,6 +29,8 @@ namespace Azure.Storage.DataMovement.Tests
             return new(Task.CompletedTask);
         }
 
+        public bool TryComplete() => true;
+
         /// <summary>
         /// Attmpts to read an item from internal queue, then completes
         /// a call to <see cref="Process"/> on it.
