@@ -3,8 +3,8 @@ namespace Azure.CloudMachine
     public partial class CloudMachineClient : Azure.Core.ClientWorkspace
     {
         protected CloudMachineClient() : base (default(Azure.Core.TokenCredential)) { }
-        public CloudMachineClient(Azure.Core.ConnectionCollection connections = null, Azure.Core.TokenCredential credential = null) : base (default(Azure.Core.TokenCredential)) { }
         public CloudMachineClient(Microsoft.Extensions.Configuration.IConfiguration configuration, Azure.Core.TokenCredential credential = null) : base (default(Azure.Core.TokenCredential)) { }
+        public CloudMachineClient(System.Collections.Generic.IEnumerable<Azure.Core.ClientConnection> connections = null, Azure.Core.TokenCredential credential = null) : base (default(Azure.Core.TokenCredential)) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Core.ConnectionCollection Connections { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -13,6 +13,7 @@ namespace Azure.CloudMachine
         public Azure.CloudMachine.StorageServices Storage { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
+        public override System.Collections.Generic.IEnumerable<Azure.Core.ClientConnection> GetAllConnectionOptions() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.Core.ClientConnection GetConnectionOptions(string connectionId) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -169,6 +170,7 @@ namespace Azure.Core
         public Azure.Core.TokenCredential Credential { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Core.ClientCache Subclients { get { throw null; } }
+        public abstract System.Collections.Generic.IEnumerable<Azure.Core.ClientConnection> GetAllConnectionOptions();
         public abstract Azure.Core.ClientConnection GetConnectionOptions(string connectionId);
     }
     public static partial class CloudMachineClientConfiguration
