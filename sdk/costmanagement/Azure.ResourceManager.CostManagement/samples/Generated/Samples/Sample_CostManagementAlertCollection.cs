@@ -9,252 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.CostManagement.Samples
 {
     public partial class Sample_CostManagementAlertCollection
     {
-        // BillingAccountAlerts
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_BillingAccountAlerts()
-        {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/BillingAccountAlerts.json
-            // this example is just showing the usage of "Alerts_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this CostManagementAlertResource
-            string scope = "providers/Microsoft.Billing/billingAccounts/12345:6789";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            CostManagementAlertCollection collection = client.GetCostManagementAlerts(scopeId);
-
-            // invoke the operation and iterate over the result
-            await foreach (CostManagementAlertResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                CostManagementAlertData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // BillingProfileAlerts
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_BillingProfileAlerts()
-        {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/BillingProfileAlerts.json
-            // this example is just showing the usage of "Alerts_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this CostManagementAlertResource
-            string scope = "providers/Microsoft.Billing/billingAccounts/12345:6789/billingProfiles/13579";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            CostManagementAlertCollection collection = client.GetCostManagementAlerts(scopeId);
-
-            // invoke the operation and iterate over the result
-            await foreach (CostManagementAlertResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                CostManagementAlertData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // DepartmentAlerts
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_DepartmentAlerts()
-        {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/DepartmentAlerts.json
-            // this example is just showing the usage of "Alerts_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this CostManagementAlertResource
-            string scope = "providers/Microsoft.Billing/billingAccounts/12345:6789/departments/123";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            CostManagementAlertCollection collection = client.GetCostManagementAlerts(scopeId);
-
-            // invoke the operation and iterate over the result
-            await foreach (CostManagementAlertResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                CostManagementAlertData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // EnrollmentAccountAlerts
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_EnrollmentAccountAlerts()
-        {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/EnrollmentAccountAlerts.json
-            // this example is just showing the usage of "Alerts_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this CostManagementAlertResource
-            string scope = "providers/Microsoft.Billing/billingAccounts/12345:6789/enrollmentAccounts/456";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            CostManagementAlertCollection collection = client.GetCostManagementAlerts(scopeId);
-
-            // invoke the operation and iterate over the result
-            await foreach (CostManagementAlertResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                CostManagementAlertData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // InvoiceSectionAlerts
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_InvoiceSectionAlerts()
-        {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/InvoiceSectionAlerts.json
-            // this example is just showing the usage of "Alerts_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this CostManagementAlertResource
-            string scope = "providers/Microsoft.Billing/billingAccounts/12345:6789/billingProfiles/13579/invoiceSections/9876";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            CostManagementAlertCollection collection = client.GetCostManagementAlerts(scopeId);
-
-            // invoke the operation and iterate over the result
-            await foreach (CostManagementAlertResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                CostManagementAlertData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // ResourceGroupAlerts
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ResourceGroupAlerts()
-        {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ResourceGroupAlerts.json
-            // this example is just showing the usage of "Alerts_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this CostManagementAlertResource
-            string scope = "subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/ScreenSharingTest-peer";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            CostManagementAlertCollection collection = client.GetCostManagementAlerts(scopeId);
-
-            // invoke the operation and iterate over the result
-            await foreach (CostManagementAlertResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                CostManagementAlertData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // SubscriptionAlerts
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_SubscriptionAlerts()
-        {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/SubscriptionAlerts.json
-            // this example is just showing the usage of "Alerts_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this CostManagementAlertResource
-            string scope = "subscriptions/00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            CostManagementAlertCollection collection = client.GetCostManagementAlerts(scopeId);
-
-            // invoke the operation and iterate over the result
-            await foreach (CostManagementAlertResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                CostManagementAlertData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // SingleResourceGroupAlerts
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SingleResourceGroupAlerts()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/SingleResourceGroupAlert.json
@@ -265,13 +27,9 @@ namespace Azure.ResourceManager.CostManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this CostManagementAlertResource
             string scope = "subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/ScreenSharingTest-peer";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            CostManagementAlertCollection collection = client.GetCostManagementAlerts(scopeId);
+            CostManagementAlertCollection collection = client.GetCostManagementAlerts(new ResourceIdentifier(scope));
 
             // invoke the operation
             string alertId = "22222222-2222-2222-2222-222222222222";
@@ -284,9 +42,238 @@ namespace Azure.ResourceManager.CostManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SingleResourceGroupAlerts
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_SingleSubscriptionAlerts()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/SingleSubscriptionAlert.json
+            // this example is just showing the usage of "Alerts_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this CostManagementAlertResource
+            string scope = "subscriptions/00000000-0000-0000-0000-000000000000";
+            CostManagementAlertCollection collection = client.GetCostManagementAlerts(new ResourceIdentifier(scope));
+
+            // invoke the operation
+            string alertId = "22222222-2222-2222-2222-222222222222";
+            CostManagementAlertResource result = await collection.GetAsync(alertId);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CostManagementAlertData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_BillingAccountAlerts()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/BillingAccountAlerts.json
+            // this example is just showing the usage of "Alerts_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this CostManagementAlertResource
+            string scope = "providers/Microsoft.Billing/billingAccounts/12345:6789";
+            CostManagementAlertCollection collection = client.GetCostManagementAlerts(new ResourceIdentifier(scope));
+
+            // invoke the operation and iterate over the result
+            await foreach (CostManagementAlertResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                CostManagementAlertData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_BillingProfileAlerts()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/BillingProfileAlerts.json
+            // this example is just showing the usage of "Alerts_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this CostManagementAlertResource
+            string scope = "providers/Microsoft.Billing/billingAccounts/12345:6789/billingProfiles/13579";
+            CostManagementAlertCollection collection = client.GetCostManagementAlerts(new ResourceIdentifier(scope));
+
+            // invoke the operation and iterate over the result
+            await foreach (CostManagementAlertResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                CostManagementAlertData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_DepartmentAlerts()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/DepartmentAlerts.json
+            // this example is just showing the usage of "Alerts_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this CostManagementAlertResource
+            string scope = "providers/Microsoft.Billing/billingAccounts/12345:6789/departments/123";
+            CostManagementAlertCollection collection = client.GetCostManagementAlerts(new ResourceIdentifier(scope));
+
+            // invoke the operation and iterate over the result
+            await foreach (CostManagementAlertResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                CostManagementAlertData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_EnrollmentAccountAlerts()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/EnrollmentAccountAlerts.json
+            // this example is just showing the usage of "Alerts_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this CostManagementAlertResource
+            string scope = "providers/Microsoft.Billing/billingAccounts/12345:6789/enrollmentAccounts/456";
+            CostManagementAlertCollection collection = client.GetCostManagementAlerts(new ResourceIdentifier(scope));
+
+            // invoke the operation and iterate over the result
+            await foreach (CostManagementAlertResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                CostManagementAlertData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_InvoiceSectionAlerts()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/InvoiceSectionAlerts.json
+            // this example is just showing the usage of "Alerts_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this CostManagementAlertResource
+            string scope = "providers/Microsoft.Billing/billingAccounts/12345:6789/billingProfiles/13579/invoiceSections/9876";
+            CostManagementAlertCollection collection = client.GetCostManagementAlerts(new ResourceIdentifier(scope));
+
+            // invoke the operation and iterate over the result
+            await foreach (CostManagementAlertResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                CostManagementAlertData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ResourceGroupAlerts()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/ResourceGroupAlerts.json
+            // this example is just showing the usage of "Alerts_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this CostManagementAlertResource
+            string scope = "subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/ScreenSharingTest-peer";
+            CostManagementAlertCollection collection = client.GetCostManagementAlerts(new ResourceIdentifier(scope));
+
+            // invoke the operation and iterate over the result
+            await foreach (CostManagementAlertResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                CostManagementAlertData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_SubscriptionAlerts()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/SubscriptionAlerts.json
+            // this example is just showing the usage of "Alerts_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this CostManagementAlertResource
+            string scope = "subscriptions/00000000-0000-0000-0000-000000000000";
+            CostManagementAlertCollection collection = client.GetCostManagementAlerts(new ResourceIdentifier(scope));
+
+            // invoke the operation and iterate over the result
+            await foreach (CostManagementAlertResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                CostManagementAlertData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_SingleResourceGroupAlerts()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/SingleResourceGroupAlert.json
@@ -297,13 +284,9 @@ namespace Azure.ResourceManager.CostManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this CostManagementAlertResource
             string scope = "subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/ScreenSharingTest-peer";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            CostManagementAlertCollection collection = client.GetCostManagementAlerts(scopeId);
+            CostManagementAlertCollection collection = client.GetCostManagementAlerts(new ResourceIdentifier(scope));
 
             // invoke the operation
             string alertId = "22222222-2222-2222-2222-222222222222";
@@ -312,9 +295,31 @@ namespace Azure.ResourceManager.CostManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // SingleResourceGroupAlerts
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_SingleSubscriptionAlerts()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/SingleSubscriptionAlert.json
+            // this example is just showing the usage of "Alerts_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this CostManagementAlertResource
+            string scope = "subscriptions/00000000-0000-0000-0000-000000000000";
+            CostManagementAlertCollection collection = client.GetCostManagementAlerts(new ResourceIdentifier(scope));
+
+            // invoke the operation
+            string alertId = "22222222-2222-2222-2222-222222222222";
+            bool result = await collection.ExistsAsync(alertId);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_SingleResourceGroupAlerts()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/SingleResourceGroupAlert.json
@@ -325,13 +330,9 @@ namespace Azure.ResourceManager.CostManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this CostManagementAlertResource
             string scope = "subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/ScreenSharingTest-peer";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            CostManagementAlertCollection collection = client.GetCostManagementAlerts(scopeId);
+            CostManagementAlertCollection collection = client.GetCostManagementAlerts(new ResourceIdentifier(scope));
 
             // invoke the operation
             string alertId = "22222222-2222-2222-2222-222222222222";
@@ -340,7 +341,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -352,69 +353,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             }
         }
 
-        // SingleSubscriptionAlerts
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_SingleSubscriptionAlerts()
-        {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/SingleSubscriptionAlert.json
-            // this example is just showing the usage of "Alerts_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this CostManagementAlertResource
-            string scope = "subscriptions/00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            CostManagementAlertCollection collection = client.GetCostManagementAlerts(scopeId);
-
-            // invoke the operation
-            string alertId = "22222222-2222-2222-2222-222222222222";
-            CostManagementAlertResource result = await collection.GetAsync(alertId);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            CostManagementAlertData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // SingleSubscriptionAlerts
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_SingleSubscriptionAlerts()
-        {
-            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/SingleSubscriptionAlert.json
-            // this example is just showing the usage of "Alerts_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this CostManagementAlertResource
-            string scope = "subscriptions/00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            CostManagementAlertCollection collection = client.GetCostManagementAlerts(scopeId);
-
-            // invoke the operation
-            string alertId = "22222222-2222-2222-2222-222222222222";
-            bool result = await collection.ExistsAsync(alertId);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // SingleSubscriptionAlerts
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_SingleSubscriptionAlerts()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/SingleSubscriptionAlert.json
@@ -425,13 +365,9 @@ namespace Azure.ResourceManager.CostManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this CostManagementAlertResource
             string scope = "subscriptions/00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            CostManagementAlertCollection collection = client.GetCostManagementAlerts(scopeId);
+            CostManagementAlertCollection collection = client.GetCostManagementAlerts(new ResourceIdentifier(scope));
 
             // invoke the operation
             string alertId = "22222222-2222-2222-2222-222222222222";
@@ -440,7 +376,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

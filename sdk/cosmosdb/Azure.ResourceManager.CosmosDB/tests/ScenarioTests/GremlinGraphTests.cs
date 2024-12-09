@@ -39,8 +39,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [OneTimeTearDown]
         public async Task GlobalTeardown()
         {
-            await _gremlinDatabase.DeleteAsync(WaitUntil.Completed);
-            await _databaseAccount.DeleteAsync(WaitUntil.Completed);
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await _gremlinDatabase.DeleteAsync(WaitUntil.Completed);
+                await _databaseAccount.DeleteAsync(WaitUntil.Completed);
+            }
         }
 
         [SetUp]
@@ -52,12 +55,15 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            if (await GremlinGraphContainer.ExistsAsync(_graphName))
+            if (Mode != RecordedTestMode.Playback)
             {
-                var id = GremlinGraphContainer.Id;
-                id = GremlinGraphResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Parent.Name, id.Name, _graphName);
-                GremlinGraphResource graph = this.ArmClient.GetGremlinGraphResource(id);
-                await graph.DeleteAsync(WaitUntil.Completed);
+                if (await GremlinGraphContainer.ExistsAsync(_graphName))
+                {
+                    var id = GremlinGraphContainer.Id;
+                    id = GremlinGraphResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Parent.Name, id.Name, _graphName);
+                    GremlinGraphResource graph = this.ArmClient.GetGremlinGraphResource(id);
+                    await graph.DeleteAsync(WaitUntil.Completed);
+                }
             }
         }
 

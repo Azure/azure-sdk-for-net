@@ -4,9 +4,9 @@ jobs:
       name: azsdk-pool-mms-win-2022-general
     steps:
       - task: UsePythonVersion@0
-        displayName: 'Use Python 3.9'
+        displayName: 'Use Python 3.11'
         inputs:
-          versionSpec: '3.9'
+          versionSpec: '3.11'
 
       - pwsh: |
           Invoke-WebRequest -Uri "https://github.com/dotnet/docfx/releases/download/v2.43.2/docfx.zip" `

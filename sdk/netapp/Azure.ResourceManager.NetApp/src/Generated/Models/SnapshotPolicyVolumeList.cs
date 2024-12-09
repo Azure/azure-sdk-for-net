@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Volumes associated with snapshot policy
-    /// Serialized Name: SnapshotPolicyVolumeList
-    /// </summary>
+    /// <summary> Volumes associated with snapshot policy. </summary>
     internal partial class SnapshotPolicyVolumeList
     {
         /// <summary>
@@ -55,10 +52,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SnapshotPolicyVolumeList"/>. </summary>
-        /// <param name="value">
-        /// List of volumes
-        /// Serialized Name: SnapshotPolicyVolumeList.value
-        /// </param>
+        /// <param name="value"> List of volumes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SnapshotPolicyVolumeList(IReadOnlyList<NetAppVolumeData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,10 +60,7 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// List of volumes
-        /// Serialized Name: SnapshotPolicyVolumeList.value
-        /// </summary>
+        /// <summary> List of volumes. </summary>
         public IReadOnlyList<NetAppVolumeData> Value { get; }
     }
 }

@@ -10,18 +10,18 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Synapse.Samples
 {
     public partial class Sample_SynapseIPFirewallRuleInfoResource
     {
-        // Create an IP firewall rule
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_CreateAnIPFirewallRule()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetIPFirewallRule()
         {
-            // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/CreateIpFirewallRule.json
-            // this example is just showing the usage of "IpFirewallRules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/GetIpFirewallRule.json
+            // this example is just showing the usage of "IpFirewallRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -38,13 +38,7 @@ namespace Azure.ResourceManager.Synapse.Samples
             SynapseIPFirewallRuleInfoResource synapseIPFirewallRuleInfo = client.GetSynapseIPFirewallRuleInfoResource(synapseIPFirewallRuleInfoResourceId);
 
             // invoke the operation
-            SynapseIPFirewallRuleInfoData info = new SynapseIPFirewallRuleInfoData()
-            {
-                EndIPAddress = IPAddress.Parse("10.0.0.254"),
-                StartIPAddress = IPAddress.Parse("10.0.0.0"),
-            };
-            ArmOperation<SynapseIPFirewallRuleInfoResource> lro = await synapseIPFirewallRuleInfo.UpdateAsync(WaitUntil.Completed, info);
-            SynapseIPFirewallRuleInfoResource result = lro.Value;
+            SynapseIPFirewallRuleInfoResource result = await synapseIPFirewallRuleInfo.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -53,9 +47,8 @@ namespace Azure.ResourceManager.Synapse.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete an IP firewall rule from a workspace
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAnIPFirewallRuleFromAWorkspace()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/DeleteIpFirewallRule.json
@@ -82,13 +75,12 @@ namespace Azure.ResourceManager.Synapse.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get IP firewall rule
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetIPFirewallRule()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_CreateAnIPFirewallRule()
         {
-            // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/GetIpFirewallRule.json
-            // this example is just showing the usage of "IpFirewallRules_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/CreateIpFirewallRule.json
+            // this example is just showing the usage of "IpFirewallRules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -105,7 +97,13 @@ namespace Azure.ResourceManager.Synapse.Samples
             SynapseIPFirewallRuleInfoResource synapseIPFirewallRuleInfo = client.GetSynapseIPFirewallRuleInfoResource(synapseIPFirewallRuleInfoResourceId);
 
             // invoke the operation
-            SynapseIPFirewallRuleInfoResource result = await synapseIPFirewallRuleInfo.GetAsync();
+            SynapseIPFirewallRuleInfoData info = new SynapseIPFirewallRuleInfoData
+            {
+                EndIPAddress = IPAddress.Parse("10.0.0.254"),
+                StartIPAddress = IPAddress.Parse("10.0.0.0"),
+            };
+            ArmOperation<SynapseIPFirewallRuleInfoResource> lro = await synapseIPFirewallRuleInfo.UpdateAsync(WaitUntil.Completed, info);
+            SynapseIPFirewallRuleInfoResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

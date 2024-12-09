@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.2 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,23 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0 (2024-11-19)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-12' to 'package-2024-04'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/0410d404c68289cb1737d06bba92133bb84b515c/specification/web/resource-manager/readme.md.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.41.0 to 1.44.1
+- Upgraded Azure.ResourceManager from 1.12.0 to 1.13.0
+
+## 1.3.0-beta.2 (2024-11-11)
+
+### Bugs Fixed
+
+- Added status code 202 and allow some properties to be empty. Issue at 'https://github.com/Azure/azure-sdk-for-net/issues/46854.
 
 ## 1.3.0-beta.1 (2024-10-14)
 

@@ -274,7 +274,9 @@ namespace Azure.Maps.Search
                 }
 
                 IEnumerable<double> coordinates = null;
+#pragma warning disable CS8073 // The result of the expression is always true in net8.0, but not this is not true in netstandard2.0
                 if (options.Coordinates != null)
+#pragma warning restore CS8073
                 {
                     coordinates = coordinates = new[]
                     {
@@ -310,7 +312,9 @@ namespace Azure.Maps.Search
                 }
 
                 IEnumerable<double> coordinates = null;
+#pragma warning disable CS8073 // The result of the expression is always true in net8.0, but not this is not true in netstandard2.0
                 if (options.Coordinates != null)
+#pragma warning restore CS8073
                 {
                     coordinates = new[] { (double)options.Coordinates.Longitude, (double)options.Coordinates.Latitude };
                 }
@@ -344,7 +348,9 @@ namespace Azure.Maps.Search
                 }
 
                 IEnumerable<double> coordinatesList = null;
+#pragma warning disable CS8073 // The result of the expression is always true in net8.0, but not this is not true in netstandard2.0
                 if (coordinates != null)
+#pragma warning restore CS8073
                 {
                     coordinatesList = new[] { coordinates.Longitude, coordinates.Latitude };
                 }
@@ -378,7 +384,9 @@ namespace Azure.Maps.Search
                 }
 
                 IEnumerable<double> coordinatesList = null;
+#pragma warning disable CS8073 // The result of the expression is always true in net8.0, but not this is not true in netstandard2.0
                 if (coordinates != null)
+#pragma warning restore CS8073
                 {
                     coordinatesList = new[] { coordinates.Longitude, coordinates.Latitude };
                 }
@@ -464,7 +472,9 @@ namespace Azure.Maps.Search
             {
                 ReverseGeocodingBatchRequestItem item = new ReverseGeocodingBatchRequestItem();
                 item.OptionalId = query.OptionalId;
+#pragma warning disable CS8073 // The result of the expression is always true in net8.0, but not this is not true in netstandard2.0
                 if (query.Coordinates != null)
+#pragma warning restore CS8073
                 {
                     item.Coordinates = new GeoPosition(Convert.ToDouble(query.Coordinates.Longitude), Convert.ToDouble(query.Coordinates.Latitude));
                 }

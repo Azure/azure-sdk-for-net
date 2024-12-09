@@ -9,17 +9,17 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppService.Samples
 {
     public partial class Sample_DomainOwnershipIdentifierResource
     {
-        // Get Domain Ownership Identifier
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetDomainOwnershipIdentifier()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2023-12-01/examples/GetDomainOwnershipIdentifier.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2024-04-01/examples/GetDomainOwnershipIdentifier.json
             // this example is just showing the usage of "Domains_GetOwnershipIdentifier" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -46,12 +46,11 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete App Service Domain Ownership Identifier
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAppServiceDomainOwnershipIdentifier()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2023-12-01/examples/DeleteAppServiceDomainOwnershipIdentifier.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2024-04-01/examples/DeleteAppServiceDomainOwnershipIdentifier.json
             // this example is just showing the usage of "Domains_DeleteOwnershipIdentifier" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -71,15 +70,14 @@ namespace Azure.ResourceManager.AppService.Samples
             // invoke the operation
             await domainOwnershipIdentifier.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Update App Service Domain OwnershipIdentifier
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAppServiceDomainOwnershipIdentifier()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2023-12-01/examples/UpdateAppServiceDomainOwnershipIdentifier.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.DomainRegistration/stable/2024-04-01/examples/UpdateAppServiceDomainOwnershipIdentifier.json
             // this example is just showing the usage of "Domains_UpdateOwnershipIdentifier" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -97,7 +95,7 @@ namespace Azure.ResourceManager.AppService.Samples
             DomainOwnershipIdentifierResource domainOwnershipIdentifier = client.GetDomainOwnershipIdentifierResource(domainOwnershipIdentifierResourceId);
 
             // invoke the operation
-            DomainOwnershipIdentifierData data = new DomainOwnershipIdentifierData()
+            DomainOwnershipIdentifierData data = new DomainOwnershipIdentifierData
             {
                 OwnershipId = "SampleOwnershipId",
             };

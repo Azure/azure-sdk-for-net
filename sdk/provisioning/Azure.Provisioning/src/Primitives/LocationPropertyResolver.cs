@@ -19,10 +19,9 @@ public class LocationPropertyResolver : InfrastructureResolver
     public override void ResolveProperties(ProvisionableConstruct construct, ProvisioningBuildOptions options)
     {
         // We only need to set a location if one doesn't already exist
-        if (construct.ProvisioningProperties.TryGetValue("Location", out BicepValue? location) &&
+        if (construct.ProvisionableProperties.TryGetValue("Location", out IBicepValue? location) &&
             location.Kind == BicepValueKind.Unset &&
-            !location.IsOutput &&
-            (construct is not ProvisionableResource r || !r.IsExistingResource))
+            !location.IsOutput)
         {
             ProvisioningParameter param = GetOrCreateLocationParameter(options, construct);
             construct.SetProvisioningProperty(location, (BicepValue<string>)param);

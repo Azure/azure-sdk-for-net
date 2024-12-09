@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Automation.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Automation.Samples
 {
     public partial class Sample_AutomationVariableResource
     {
-        // Update a variable
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_UpdateAVariable()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetAVariable()
         {
-            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/examples/updateVariable_patch.json
-            // this example is just showing the usage of "Variable_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/examples/getVariable.json
+            // this example is just showing the usage of "Variable_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -38,12 +38,7 @@ namespace Azure.ResourceManager.Automation.Samples
             AutomationVariableResource automationVariable = client.GetAutomationVariableResource(automationVariableResourceId);
 
             // invoke the operation
-            AutomationVariablePatch patch = new AutomationVariablePatch()
-            {
-                Name = "sampleVariable",
-                Value = "\"ComputerName3.domain.com\"",
-            };
-            AutomationVariableResource result = await automationVariable.UpdateAsync(patch);
+            AutomationVariableResource result = await automationVariable.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -52,9 +47,8 @@ namespace Azure.ResourceManager.Automation.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete a variable
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAVariable()
         {
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/examples/deleteVariable.json
@@ -77,16 +71,15 @@ namespace Azure.ResourceManager.Automation.Samples
             // invoke the operation
             await automationVariable.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get a variable
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetAVariable()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateAVariable()
         {
-            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/examples/getVariable.json
-            // this example is just showing the usage of "Variable_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/preview/2020-01-13-preview/examples/updateVariable_patch.json
+            // this example is just showing the usage of "Variable_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -103,7 +96,12 @@ namespace Azure.ResourceManager.Automation.Samples
             AutomationVariableResource automationVariable = client.GetAutomationVariableResource(automationVariableResourceId);
 
             // invoke the operation
-            AutomationVariableResource result = await automationVariable.GetAsync();
+            AutomationVariablePatch patch = new AutomationVariablePatch
+            {
+                Name = "sampleVariable",
+                Value = "\"ComputerName3.domain.com\"",
+            };
+            AutomationVariableResource result = await automationVariable.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

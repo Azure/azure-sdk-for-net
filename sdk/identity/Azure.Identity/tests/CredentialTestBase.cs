@@ -857,6 +857,11 @@ namespace Azure.Identity.Tests
             }
         }
 
+        public static Action<object> GetExceptionAction(Exception exceptionToThrow)
+        {
+            return (p) => throw exceptionToThrow;
+        }
+
         public class CommonCredentialTestConfig : TokenCredentialOptions, ISupportsAdditionallyAllowedTenants, ISupportsDisableInstanceDiscovery
         {
             public bool DisableInstanceDiscovery { get; set; }

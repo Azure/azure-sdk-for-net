@@ -8,7 +8,13 @@
 
 ### Bugs Fixed
 
+- Fixed an issue where identifier generation for senders did not correctly include the entity path as an informational element.  ([#46952](https://github.com/Azure/azure-sdk-for-net/issues/46952))
+
 ### Other Changes
+
+- Added annotations to make the package compatible with trimming and native AOT compilation.
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.9, which contains several bug fixes. _(see: [commits](https://github.com/Azure/azure-amqp/commits/hotfix/))_
 
 ## 7.18.2 (2024-10-08)
 

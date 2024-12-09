@@ -9,48 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Consumption.Samples
 {
     public partial class Sample_ConsumptionBudgetCollection
     {
-        // BudgetsList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_BudgetsList()
-        {
-            // Generated from example definition: specification/consumption/resource-manager/Microsoft.Consumption/stable/2021-10-01/examples/BudgetsList.json
-            // this example is just showing the usage of "Budgets_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this ConsumptionBudgetResource
-            string scope = "subscriptions/00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            ConsumptionBudgetCollection collection = client.GetConsumptionBudgets(scopeId);
-
-            // invoke the operation and iterate over the result
-            await foreach (ConsumptionBudgetResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ConsumptionBudgetData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Budget
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_Budget()
         {
             // Generated from example definition: specification/consumption/resource-manager/Microsoft.Consumption/stable/2021-10-01/examples/Budget.json
@@ -61,13 +27,9 @@ namespace Azure.ResourceManager.Consumption.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this ConsumptionBudgetResource
             string scope = "subscriptions/00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            ConsumptionBudgetCollection collection = client.GetConsumptionBudgets(scopeId);
+            ConsumptionBudgetCollection collection = client.GetConsumptionBudgets(new ResourceIdentifier(scope));
 
             // invoke the operation
             string budgetName = "TestBudget";
@@ -80,9 +42,37 @@ namespace Azure.ResourceManager.Consumption.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Budget
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_BudgetsList()
+        {
+            // Generated from example definition: specification/consumption/resource-manager/Microsoft.Consumption/stable/2021-10-01/examples/BudgetsList.json
+            // this example is just showing the usage of "Budgets_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this ConsumptionBudgetResource
+            string scope = "subscriptions/00000000-0000-0000-0000-000000000000";
+            ConsumptionBudgetCollection collection = client.GetConsumptionBudgets(new ResourceIdentifier(scope));
+
+            // invoke the operation and iterate over the result
+            await foreach (ConsumptionBudgetResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ConsumptionBudgetData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_Budget()
         {
             // Generated from example definition: specification/consumption/resource-manager/Microsoft.Consumption/stable/2021-10-01/examples/Budget.json
@@ -93,13 +83,9 @@ namespace Azure.ResourceManager.Consumption.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this ConsumptionBudgetResource
             string scope = "subscriptions/00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            ConsumptionBudgetCollection collection = client.GetConsumptionBudgets(scopeId);
+            ConsumptionBudgetCollection collection = client.GetConsumptionBudgets(new ResourceIdentifier(scope));
 
             // invoke the operation
             string budgetName = "TestBudget";
@@ -108,9 +94,8 @@ namespace Azure.ResourceManager.Consumption.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Budget
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_Budget()
         {
             // Generated from example definition: specification/consumption/resource-manager/Microsoft.Consumption/stable/2021-10-01/examples/Budget.json
@@ -121,13 +106,9 @@ namespace Azure.ResourceManager.Consumption.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this ConsumptionBudgetResource
             string scope = "subscriptions/00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            ConsumptionBudgetCollection collection = client.GetConsumptionBudgets(scopeId);
+            ConsumptionBudgetCollection collection = client.GetConsumptionBudgets(new ResourceIdentifier(scope));
 
             // invoke the operation
             string budgetName = "TestBudget";
@@ -136,7 +117,7 @@ namespace Azure.ResourceManager.Consumption.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

@@ -30,7 +30,7 @@ public class ConversationTestFixtureBase
         CancellationTokenSource = new();
         if (!Debugger.IsAttached)
         {
-            CancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(15));
+            CancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(25));
         }
         DefaultConfiguration = TestConfig.GetConfig("rt_eus2");
         if (DefaultConfiguration is null || DefaultConfiguration.Endpoint is null)

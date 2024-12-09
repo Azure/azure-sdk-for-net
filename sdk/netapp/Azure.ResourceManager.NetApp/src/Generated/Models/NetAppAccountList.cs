@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// List of NetApp account resources
-    /// Serialized Name: NetAppAccountList
-    /// </summary>
+    /// <summary> List of NetApp account resources. </summary>
     internal partial class NetAppAccountList
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppAccountList"/>. </summary>
-        /// <param name="value">
-        /// Multiple NetApp accounts
-        /// Serialized Name: NetAppAccountList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// URL to get the next set of results.
-        /// Serialized Name: NetAppAccountList.nextLink
-        /// </param>
+        /// <param name="value"> Multiple NetApp accounts. </param>
+        /// <param name="nextLink"> URL to get the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppAccountList(IReadOnlyList<NetAppAccountData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Multiple NetApp accounts
-        /// Serialized Name: NetAppAccountList.value
-        /// </summary>
+        /// <summary> Multiple NetApp accounts. </summary>
         public IReadOnlyList<NetAppAccountData> Value { get; }
-        /// <summary>
-        /// URL to get the next set of results.
-        /// Serialized Name: NetAppAccountList.nextLink
-        /// </summary>
+        /// <summary> URL to get the next set of results. </summary>
         public string NextLink { get; }
     }
 }

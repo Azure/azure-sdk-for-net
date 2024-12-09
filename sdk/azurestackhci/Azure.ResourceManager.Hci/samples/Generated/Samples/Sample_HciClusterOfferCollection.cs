@@ -9,52 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Hci.Samples
 {
     public partial class Sample_HciClusterOfferCollection
     {
-        // List Offer resources by publisher for the HCI Cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ListOfferResourcesByPublisherForTheHCICluster()
-        {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/ListOffersByPublisher.json
-            // this example is just showing the usage of "Offers_ListByPublisher" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this HciClusterPublisherResource created on azure
-            // for more information of creating HciClusterPublisherResource, please refer to the document of HciClusterPublisherResource
-            string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
-            string resourceGroupName = "test-rg";
-            string clusterName = "myCluster";
-            string publisherName = "publisher1";
-            ResourceIdentifier hciClusterPublisherResourceId = HciClusterPublisherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, publisherName);
-            HciClusterPublisherResource hciClusterPublisher = client.GetHciClusterPublisherResource(hciClusterPublisherResourceId);
-
-            // get the collection of this HciClusterOfferResource
-            HciClusterOfferCollection collection = hciClusterPublisher.GetHciClusterOffers();
-
-            // invoke the operation and iterate over the result
-            await foreach (HciClusterOfferResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                HciClusterOfferData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get Offer
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetOffer()
         {
             // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/GetOffer.json
@@ -88,9 +50,45 @@ namespace Azure.ResourceManager.Hci.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Offer
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListOfferResourcesByPublisherForTheHCICluster()
+        {
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/ListOffersByPublisher.json
+            // this example is just showing the usage of "Offers_ListByPublisher" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this HciClusterPublisherResource created on azure
+            // for more information of creating HciClusterPublisherResource, please refer to the document of HciClusterPublisherResource
+            string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
+            string resourceGroupName = "test-rg";
+            string clusterName = "myCluster";
+            string publisherName = "publisher1";
+            ResourceIdentifier hciClusterPublisherResourceId = HciClusterPublisherResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, publisherName);
+            HciClusterPublisherResource hciClusterPublisher = client.GetHciClusterPublisherResource(hciClusterPublisherResourceId);
+
+            // get the collection of this HciClusterOfferResource
+            HciClusterOfferCollection collection = hciClusterPublisher.GetHciClusterOffers();
+
+            // invoke the operation and iterate over the result
+            await foreach (HciClusterOfferResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                HciClusterOfferData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetOffer()
         {
             // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/GetOffer.json
@@ -120,9 +118,8 @@ namespace Azure.ResourceManager.Hci.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get Offer
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetOffer()
         {
             // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/GetOffer.json
@@ -152,7 +149,7 @@ namespace Azure.ResourceManager.Hci.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

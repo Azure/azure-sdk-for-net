@@ -78,7 +78,7 @@ namespace Azure.AI.Translation.Document
         /// <param name="formatVersion"> Optional Version.  If not specified, default is used. </param>
         /// <param name="storageSource"> Storage Source. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TranslationGlossary(Uri glossaryUri, string format, string formatVersion, string storageSource, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TranslationGlossary(Uri glossaryUri, string format, string formatVersion, TranslationStorageSource? storageSource, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GlossaryUri = glossaryUri;
             Format = format;
@@ -91,5 +91,7 @@ namespace Azure.AI.Translation.Document
         internal TranslationGlossary()
         {
         }
+        /// <summary> Storage Source. </summary>
+        public TranslationStorageSource? StorageSource { get; set; }
     }
 }

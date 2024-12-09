@@ -134,6 +134,10 @@ namespace BasicTypeSpec.Models
         /// <param name="projectedModel"> The <see cref="ProjectedModel"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(ProjectedModel projectedModel)
         {
+            if (projectedModel == null)
+            {
+                return null;
+            }
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
             content.JsonWriter.WriteObjectValue(projectedModel, ModelSerializationExtensions.WireOptions);
             return content;

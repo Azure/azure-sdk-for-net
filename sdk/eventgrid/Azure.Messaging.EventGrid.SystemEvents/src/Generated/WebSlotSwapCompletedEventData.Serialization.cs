@@ -19,13 +19,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         void IJsonModel<WebSlotSwapCompletedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<WebSlotSwapCompletedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WebSlotSwapCompletedEventData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("appEventTypeDetail"u8);
             writer.WriteObjectValue(AppEventTypeDetail, options);
             if (Optional.IsDefined(Name))
@@ -73,7 +81,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         WebSlotSwapCompletedEventData IJsonModel<WebSlotSwapCompletedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

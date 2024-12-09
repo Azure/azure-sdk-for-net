@@ -122,6 +122,10 @@ namespace BasicTypeSpec.Models
         /// <param name="returnsAnonymousModelResponse"> The <see cref="ReturnsAnonymousModelResponse"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(ReturnsAnonymousModelResponse returnsAnonymousModelResponse)
         {
+            if (returnsAnonymousModelResponse == null)
+            {
+                return null;
+            }
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
             content.JsonWriter.WriteObjectValue(returnsAnonymousModelResponse, ModelSerializationExtensions.WireOptions);
             return content;

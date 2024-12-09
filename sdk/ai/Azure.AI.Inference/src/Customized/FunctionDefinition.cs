@@ -10,17 +10,17 @@ namespace Azure.AI.Inference
         //     accessible setters
         //   - These changes merge "presets" into static class members for ease of use
 
-        /// <inheritdoc cref="ChatCompletionsToolSelectionPreset.Auto"/>
+        /// <inheritdoc cref="ChatCompletionsToolChoicePreset.Auto"/>
         public static FunctionDefinition Auto
-            = CreatePredefinedFunctionDefinition(ChatCompletionsToolSelectionPreset.Auto.ToString());
+            = CreatePredefinedFunctionDefinition(ChatCompletionsToolChoicePreset.Auto.ToString());
 
-        /// <inheritdoc cref="ChatCompletionsToolSelectionPreset.None"/>
+        /// <inheritdoc cref="ChatCompletionsToolChoicePreset.None"/>
         public static FunctionDefinition None
-            = CreatePredefinedFunctionDefinition(ChatCompletionsToolSelectionPreset.None.ToString());
+            = CreatePredefinedFunctionDefinition(ChatCompletionsToolChoicePreset.None.ToString());
 
-        /// <inheritdoc cref="ChatCompletionsToolSelectionPreset.Required"/>
+        /// <inheritdoc cref="ChatCompletionsToolChoicePreset.Required"/>
         public static FunctionDefinition Required
-            = CreatePredefinedFunctionDefinition(ChatCompletionsToolSelectionPreset.Required.ToString());
+            = CreatePredefinedFunctionDefinition(ChatCompletionsToolChoicePreset.Required.ToString());
 
         /// <summary>
         /// Initializes a new instance of FunctionDefinition.

@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.RecoveryServicesBackup.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
 {
     public partial class Sample_ResourceGroupResourceExtensions
     {
-        // List protection intent with backupManagementType filter
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBackupProtectionIntents_ListProtectionIntentWithBackupManagementTypeFilter()
         {
             // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureWorkload/BackupProtectionIntent_List.json
@@ -47,12 +47,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get Protected Containers Usages Summary
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBackupUsageSummaries_GetProtectedContainersUsagesSummary()
         {
             // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/Common/BackupProtectionContainers_UsageSummary_Get.json
@@ -78,12 +77,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get Protected Items Usages Summary
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBackupUsageSummaries_GetProtectedItemsUsagesSummary()
         {
             // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/Common/BackupProtectedItem_UsageSummary_Get.json
@@ -109,12 +107,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Export Jobs
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ExportJob_ExportJobs()
         {
             // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/Common/TriggerExportJobs.json
@@ -136,12 +133,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             string vaultName = "NetSDKTestRsVault";
             await resourceGroupResource.ExportJobAsync(vaultName);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List protected items with backupManagementType filter as AzureIaasVm
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBackupProtectedItems_ListProtectedItemsWithBackupManagementTypeFilterAsAzureIaasVm()
         {
             // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureIaasVm/BackupProtectedItems_List.json
@@ -171,12 +167,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List protectable items with backupManagementType filter as AzureStorage
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetProtectableContainers_ListProtectableItemsWithBackupManagementTypeFilterAsAzureStorage()
         {
             // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureStorage/ProtectableContainers_List.json
@@ -203,12 +198,38 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List protectable items with backupManagementType filter as AzureIaasVm
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task RefreshProtectionContainer_TriggerAzureVmDiscovery()
+        {
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/Common/RefreshContainers.json
+            // this example is just showing the usage of "ProtectionContainers_Refresh" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "SwaggerTestRg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // invoke the operation
+            string vaultName = "NetSDKTestRsVault";
+            string fabricName = "Azure";
+            await resourceGroupResource.RefreshProtectionContainerAsync(vaultName, fabricName);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBackupProtectableItems_ListProtectableItemsWithBackupManagementTypeFilterAsAzureIaasVm()
         {
             // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureIaasVm/BackupProtectableItems_List.json
@@ -234,12 +255,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List Backup Protection Containers
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBackupProtectionContainers_ListBackupProtectionContainers()
         {
             // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureStorage/ProtectionContainers_List.json
@@ -269,12 +289,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List Backup Protection Containers
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSoftDeletedProtectionContainers_ListBackupProtectionContainers()
         {
             // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureStorage/SoftDeletedContainers_List.json
@@ -304,12 +323,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get Vault Security Pin
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSecurityPin_GetVaultSecurityPin()
         {
             // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/Common/BackupSecurityPin_Get.json
@@ -334,9 +352,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get the rehydration cost for recovery point
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task PostFetchTieringCost_GetTheRehydrationCostForRecoveryPoint()
         {
             // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/TieringCost/FetchTieringCostForRehydrate.json
@@ -356,16 +373,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
 
             // invoke the operation
             string vaultName = "testVault";
-            FetchTieringCostInfoContent content = new FetchTieringCostInfoForRehydrationContent(RecoveryPointTierType.ArchivedRP, RecoveryPointTierType.HardenedRP, "IaasVMContainer;iaasvmcontainerv2;netsdktestrg;netvmtestv2vm1", "VM;iaasvmcontainerv2;netsdktestrg;netvmtestv2vm1", "1222343434", RehydrationPriority.High);
+            FetchTieringCostInfoContent content = new FetchTieringCostInfoForRehydrationContent(
+                RecoveryPointTierType.ArchivedRP,
+                RecoveryPointTierType.HardenedRP,
+                "IaasVMContainer;iaasvmcontainerv2;netsdktestrg;netvmtestv2vm1",
+                "VM;iaasvmcontainerv2;netsdktestrg;netvmtestv2vm1",
+                "1222343434",
+                RehydrationPriority.High);
             ArmOperation<TieringCostInfo> lro = await resourceGroupResource.PostFetchTieringCostAsync(WaitUntil.Completed, vaultName, content);
             TieringCostInfo result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get the tiering savings cost info for policy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task PostFetchTieringCost_GetTheTieringSavingsCostInfoForPolicy()
         {
             // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/TieringCost/FetchTieringCostForPolicy.json
@@ -392,9 +414,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get the tiering savings cost info for protected item
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task PostFetchTieringCost_GetTheTieringSavingsCostInfoForProtectedItem()
         {
             // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/TieringCost/FetchTieringCostForProtectedItem.json
@@ -421,9 +442,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get the tiering savings cost info for vault
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task PostFetchTieringCost_GetTheTieringSavingsCostInfoForVault()
         {
             // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/TieringCost/FetchTieringCostForVault.json
@@ -450,9 +470,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Fetch Tiering Cost Operation Result
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetGetTieringCostOperationResult_FetchTieringCostOperationResult()
         {
             // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/TieringCost/GetTieringCostOperationResult.json

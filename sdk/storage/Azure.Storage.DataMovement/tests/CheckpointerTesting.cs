@@ -71,7 +71,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         internal static async Task AssertJobPlanHeaderAsync(
-            this TransferCheckpointer checkpointer,
+            this SerializerTransferCheckpointer checkpointer,
             string transferId,
             int partNumber,
             JobPartPlanHeader expectedHeader)

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Sql.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Samples
 {
     public partial class Sample_SqlServerAdvisorResource
     {
-        // Get server advisor
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetServerAdvisor()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/ServerAdvisorGet.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update server advisor
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateServerAdvisor()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/ServerAdvisorUpdate.json
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlServerAdvisorResource sqlServerAdvisor = client.GetSqlServerAdvisorResource(sqlServerAdvisorResourceId);
 
             // invoke the operation
-            SqlAdvisorData data = new SqlAdvisorData()
+            SqlAdvisorData data = new SqlAdvisorData
             {
                 AutoExecuteStatus = AutoExecuteStatus.Disabled,
             };

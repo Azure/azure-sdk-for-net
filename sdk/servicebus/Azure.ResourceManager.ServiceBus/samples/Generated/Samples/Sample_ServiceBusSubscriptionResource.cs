@@ -9,18 +9,18 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceBus.Samples
 {
     public partial class Sample_ServiceBusSubscriptionResource
     {
-        // SubscriptionCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_SubscriptionCreate()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_SubscriptionGet()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/Subscriptions/SBSubscriptionCreate.json
-            // this example is just showing the usage of "Subscriptions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2024-01-01/examples/Subscriptions/SBSubscriptionGet.json
+            // this example is just showing the usage of "Subscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -38,12 +38,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             ServiceBusSubscriptionResource serviceBusSubscription = client.GetServiceBusSubscriptionResource(serviceBusSubscriptionResourceId);
 
             // invoke the operation
-            ServiceBusSubscriptionData data = new ServiceBusSubscriptionData()
-            {
-                EnableBatchedOperations = true,
-            };
-            ArmOperation<ServiceBusSubscriptionResource> lro = await serviceBusSubscription.UpdateAsync(WaitUntil.Completed, data);
-            ServiceBusSubscriptionResource result = lro.Value;
+            ServiceBusSubscriptionResource result = await serviceBusSubscription.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -52,12 +47,11 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SubscriptionDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_SubscriptionDelete()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/Subscriptions/SBSubscriptionDelete.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2024-01-01/examples/Subscriptions/SBSubscriptionDelete.json
             // this example is just showing the usage of "Subscriptions_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,16 +72,15 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             // invoke the operation
             await serviceBusSubscription.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // SubscriptionGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_SubscriptionGet()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_SubscriptionCreate()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/Subscriptions/SBSubscriptionGet.json
-            // this example is just showing the usage of "Subscriptions_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2024-01-01/examples/Subscriptions/SBSubscriptionCreate.json
+            // this example is just showing the usage of "Subscriptions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -105,7 +98,12 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             ServiceBusSubscriptionResource serviceBusSubscription = client.GetServiceBusSubscriptionResource(serviceBusSubscriptionResourceId);
 
             // invoke the operation
-            ServiceBusSubscriptionResource result = await serviceBusSubscription.GetAsync();
+            ServiceBusSubscriptionData data = new ServiceBusSubscriptionData
+            {
+                EnableBatchedOperations = true,
+            };
+            ArmOperation<ServiceBusSubscriptionResource> lro = await serviceBusSubscription.UpdateAsync(WaitUntil.Completed, data);
+            ServiceBusSubscriptionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

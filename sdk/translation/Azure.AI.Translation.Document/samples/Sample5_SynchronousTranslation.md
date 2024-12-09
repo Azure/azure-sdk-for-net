@@ -27,7 +27,7 @@ try
     using Stream fileStream = File.OpenRead(filePath);
     var sourceDocument = new MultipartFormFileData(Path.GetFileName(filePath), fileStream, "text/html");
     DocumentTranslateContent content = new DocumentTranslateContent(sourceDocument);
-    var response = await client.DocumentTranslateAsync("hi", content).ConfigureAwait(false);
+    var response = await client.TranslateAsync("hi", content).ConfigureAwait(false);
 
     var requestString = File.ReadAllText(filePath);
     var responseString = Encoding.UTF8.GetString(response.Value.ToArray());

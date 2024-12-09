@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Indicates whether the local volume is the source or destination for the Volume Replication
-    /// Serialized Name: EndpointType
-    /// </summary>
+    /// <summary> Indicates whether the local volume is the source or destination for the Volume Replication. </summary>
     public readonly partial struct NetAppEndpointType : IEquatable<NetAppEndpointType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string SourceValue = "src";
         private const string DestinationValue = "dst";
 
-        /// <summary>
-        /// src
-        /// Serialized Name: EndpointType.src
-        /// </summary>
+        /// <summary> src. </summary>
         public static NetAppEndpointType Source { get; } = new NetAppEndpointType(SourceValue);
-        /// <summary>
-        /// dst
-        /// Serialized Name: EndpointType.dst
-        /// </summary>
+        /// <summary> dst. </summary>
         public static NetAppEndpointType Destination { get; } = new NetAppEndpointType(DestinationValue);
         /// <summary> Determines if two <see cref="NetAppEndpointType"/> values are the same. </summary>
         public static bool operator ==(NetAppEndpointType left, NetAppEndpointType right) => left.Equals(right);

@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Compute.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Samples
 {
     public partial class Sample_VirtualMachineScaleSetVmRunCommandResource
     {
-        // Update VirtualMachineScaleSet VM run command.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_UpdateVirtualMachineScaleSetVMRunCommand()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetVirtualMachineScaleSetVMRunCommands()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/runCommandExamples/VirtualMachineScaleSetVMRunCommand_Update.json
-            // this example is just showing the usage of "VirtualMachineScaleSetVMRunCommands_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/runCommandExamples/VirtualMachineScaleSetVMRunCommand_Get.json
+            // this example is just showing the usage of "VirtualMachineScaleSetVMRunCommands_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -39,19 +39,7 @@ namespace Azure.ResourceManager.Compute.Samples
             VirtualMachineScaleSetVmRunCommandResource virtualMachineScaleSetVmRunCommand = client.GetVirtualMachineScaleSetVmRunCommandResource(virtualMachineScaleSetVmRunCommandResourceId);
 
             // invoke the operation
-            VirtualMachineRunCommandUpdate runCommand = new VirtualMachineRunCommandUpdate()
-            {
-                Source = new VirtualMachineRunCommandScriptSource()
-                {
-                    ScriptUri = new Uri("https://mystorageaccount.blob.core.windows.net/scriptcontainer/MyScript.ps1"),
-                    ScriptUriManagedIdentity = new RunCommandManagedIdentity()
-                    {
-                        ObjectId = "4231e4d2-33e4-4e23-96b2-17888afa6072",
-                    },
-                },
-            };
-            ArmOperation<VirtualMachineScaleSetVmRunCommandResource> lro = await virtualMachineScaleSetVmRunCommand.UpdateAsync(WaitUntil.Completed, runCommand);
-            VirtualMachineScaleSetVmRunCommandResource result = lro.Value;
+            VirtualMachineScaleSetVmRunCommandResource result = await virtualMachineScaleSetVmRunCommand.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -60,9 +48,8 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete VirtualMachineScaleSet VM run command.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteVirtualMachineScaleSetVMRunCommand()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/runCommandExamples/VirtualMachineScaleSetVMRunCommand_Delete.json
@@ -86,16 +73,15 @@ namespace Azure.ResourceManager.Compute.Samples
             // invoke the operation
             await virtualMachineScaleSetVmRunCommand.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get VirtualMachineScaleSet VM run commands.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetVirtualMachineScaleSetVMRunCommands()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateVirtualMachineScaleSetVMRunCommand()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/runCommandExamples/VirtualMachineScaleSetVMRunCommand_Get.json
-            // this example is just showing the usage of "VirtualMachineScaleSetVMRunCommands_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/runCommandExamples/VirtualMachineScaleSetVMRunCommand_Update.json
+            // this example is just showing the usage of "VirtualMachineScaleSetVMRunCommands_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -113,7 +99,19 @@ namespace Azure.ResourceManager.Compute.Samples
             VirtualMachineScaleSetVmRunCommandResource virtualMachineScaleSetVmRunCommand = client.GetVirtualMachineScaleSetVmRunCommandResource(virtualMachineScaleSetVmRunCommandResourceId);
 
             // invoke the operation
-            VirtualMachineScaleSetVmRunCommandResource result = await virtualMachineScaleSetVmRunCommand.GetAsync();
+            VirtualMachineRunCommandUpdate runCommand = new VirtualMachineRunCommandUpdate
+            {
+                Source = new VirtualMachineRunCommandScriptSource
+                {
+                    ScriptUri = new Uri("https://mystorageaccount.blob.core.windows.net/scriptcontainer/MyScript.ps1"),
+                    ScriptUriManagedIdentity = new RunCommandManagedIdentity
+                    {
+                        ObjectId = "4231e4d2-33e4-4e23-96b2-17888afa6072",
+                    },
+                },
+            };
+            ArmOperation<VirtualMachineScaleSetVmRunCommandResource> lro = await virtualMachineScaleSetVmRunCommand.UpdateAsync(WaitUntil.Completed, runCommand);
+            VirtualMachineScaleSetVmRunCommandResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Maps
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The SKU of this account. </param>
         /// <param name="kind"> Get or Set Kind property. </param>
-        /// <param name="identity"> Sets the identity property for maps account. </param>
+        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
         /// <param name="properties"> The map account properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MapsAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MapsSku sku, MapsAccountKind? kind, ManagedServiceIdentity identity, MapsAccountProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Maps
         public MapsSku Sku { get; set; }
         /// <summary> Get or Set Kind property. </summary>
         public MapsAccountKind? Kind { get; set; }
-        /// <summary> Sets the identity property for maps account. </summary>
+        /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The map account properties. </summary>
         public MapsAccountProperties Properties { get; set; }

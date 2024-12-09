@@ -89,7 +89,7 @@ namespace Azure.Messaging.EventHubs.Tests
             (
                 eventBody: new BinaryData(Array.Empty<byte>()),
                 lastPartitionSequenceNumber: 1234,
-                lastPartitionOffset: 42,
+                lastPartitionOffset: "42",
                 lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T00:00:00Z"),
                 lastPartitionPropertiesRetrievalTime: DateTimeOffset.Parse("2012-03-04T08:42Z")
             );
@@ -99,7 +99,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var information = context.ReadLastEnqueuedEventProperties();
 
             Assert.That(information.SequenceNumber, Is.EqualTo(lastEvent.LastPartitionSequenceNumber), "The sequence number should match.");
-            Assert.That(information.Offset, Is.EqualTo(lastEvent.LastPartitionOffset), "The offset should match.");
+            Assert.That(information.OffsetString, Is.EqualTo(lastEvent.LastPartitionOffset), "The offset should match.");
             Assert.That(information.EnqueuedTime, Is.EqualTo(lastEvent.LastPartitionEnqueuedTime), "The last enqueue time should match.");
             Assert.That(information.LastReceivedTime, Is.EqualTo(lastEvent.LastPartitionPropertiesRetrievalTime), "The retrieval time should match.");
             Assert.That(mockConsumer.IsClosed, Is.False, "The consumer should not have been closed or disposed of.");

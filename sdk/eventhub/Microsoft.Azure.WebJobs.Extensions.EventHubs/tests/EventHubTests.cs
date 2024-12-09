@@ -84,7 +84,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreSame(input.ProcessorPartition.PartitionContext, bindingData["TriggerPartitionContext"]);
             Assert.AreSame(input.ProcessorPartition.PartitionContext, bindingData["PartitionContext"]);
             Assert.AreEqual(evt.PartitionKey, bindingData["PartitionKey"]);
-            Assert.AreEqual(evt.Offset, bindingData["Offset"]);
+            Assert.AreEqual(evt.OffsetString, bindingData["Offset"]);
             Assert.AreEqual(evt.SequenceNumber, bindingData["SequenceNumber"]);
             Assert.AreEqual(evt.EnqueuedTime.DateTime, bindingData["EnqueuedTimeUtc"]);
             Assert.AreSame(evt.Properties, bindingData["Properties"]);
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         }
 
         private static EventData GetSystemProperties(byte[] body, string partitionKey = "TestKey") =>
-            EventHubsModelFactory.EventData(new BinaryData(body), partitionKey: partitionKey, offset: 140, enqueuedTime: DateTimeOffset.MinValue, sequenceNumber: 4294967296, systemProperties: new Dictionary<string, object>()
+            EventHubsModelFactory.EventData(new BinaryData(body), partitionKey: partitionKey, offsetString: "140:1:12", enqueuedTime: DateTimeOffset.MinValue, sequenceNumber: 4294967296, systemProperties: new Dictionary<string, object>()
             {
                 {"iothub-connection-device-id", "testDeviceId"},
                 {"iothub-enqueuedtime", DateTime.MinValue}

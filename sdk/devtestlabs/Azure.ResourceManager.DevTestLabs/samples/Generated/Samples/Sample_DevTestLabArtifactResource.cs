@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DevTestLabs.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DevTestLabs.Samples
 {
     public partial class Sample_DevTestLabArtifactResource
     {
-        // Artifacts_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ArtifactsGet()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Artifacts_Get.json
@@ -48,9 +48,8 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Artifacts_GenerateArmTemplate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GenerateArmTemplate_ArtifactsGenerateArmTemplate()
         {
             // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Artifacts_GenerateArmTemplate.json
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             DevTestLabArtifactResource devTestLabArtifact = client.GetDevTestLabArtifactResource(devTestLabArtifactResourceId);
 
             // invoke the operation
-            DevTestLabArtifactGenerateArmTemplateContent content = new DevTestLabArtifactGenerateArmTemplateContent()
+            DevTestLabArtifactGenerateArmTemplateContent content = new DevTestLabArtifactGenerateArmTemplateContent
             {
                 VmName = "{vmName}",
                 Location = new AzureLocation("{location}"),

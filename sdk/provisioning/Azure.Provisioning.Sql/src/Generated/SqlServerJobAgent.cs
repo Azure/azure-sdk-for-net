@@ -21,56 +21,89 @@ public partial class SqlServerJobAgent : ProvisionableResource
     /// <summary>
     /// The name of the job agent to be created or updated.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Resource ID of the database to store job metadata in.
     /// </summary>
-    public BicepValue<ResourceIdentifier> DatabaseId { get => _databaseId; set => _databaseId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _databaseId;
+    public BicepValue<ResourceIdentifier> DatabaseId 
+    {
+        get { Initialize(); return _databaseId!; }
+        set { Initialize(); _databaseId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _databaseId;
 
     /// <summary>
     /// The name and tier of the SKU.
     /// </summary>
-    public BicepValue<SqlSku> Sku { get => _sku; set => _sku.Assign(value); }
-    private readonly BicepValue<SqlSku> _sku;
+    public SqlSku Sku 
+    {
+        get { Initialize(); return _sku!; }
+        set { Initialize(); AssignOrReplace(ref _sku, value); }
+    }
+    private SqlSku? _sku;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The state of the job agent.
     /// </summary>
-    public BicepValue<JobAgentState> State { get => _state; }
-    private readonly BicepValue<JobAgentState> _state;
+    public BicepValue<JobAgentState> State 
+    {
+        get { Initialize(); return _state!; }
+    }
+    private BicepValue<JobAgentState>? _state;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent SqlServer.
     /// </summary>
-    public SqlServer? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<SqlServer> _parent;
+    public SqlServer? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<SqlServer>? _parent;
 
     /// <summary>
     /// Creates a new SqlServerJobAgent.
@@ -85,15 +118,22 @@ public partial class SqlServerJobAgent : ProvisionableResource
     public SqlServerJobAgent(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Sql/servers/jobAgents", resourceVersion ?? "2021-11-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _databaseId = BicepValue<ResourceIdentifier>.DefineProperty(this, "DatabaseId", ["properties", "databaseId"]);
-        _sku = BicepValue<SqlSku>.DefineProperty(this, "Sku", ["sku"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _state = BicepValue<JobAgentState>.DefineProperty(this, "State", ["properties", "state"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<SqlServer>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of SqlServerJobAgent.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _databaseId = DefineProperty<ResourceIdentifier>("DatabaseId", ["properties", "databaseId"]);
+        _sku = DefineModelProperty<SqlSku>("Sku", ["sku"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _state = DefineProperty<JobAgentState>("State", ["properties", "state"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<SqlServer>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

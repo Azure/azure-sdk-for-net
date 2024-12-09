@@ -119,11 +119,11 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedConsumerGroup = "fakeGroup";
             var expectedPartition = "fakePart";
             var expectedProcessorId = "Id";
-            var expectedSequence = 999;
+            var expectedOffset = "999";
             var mockCheckpointStore = new Mock<CheckpointStore>();
             var blobCheckpointStore = new BlobCheckpointStore(mockCheckpointStore.Object);
 
-            await blobCheckpointStore.UpdateCheckpointAsync(expectedNamespace, expectedHub, expectedConsumerGroup, expectedPartition, expectedProcessorId, new CheckpointPosition(expectedSequence), cancellationSource.Token);
+            await blobCheckpointStore.UpdateCheckpointAsync(expectedNamespace, expectedHub, expectedConsumerGroup, expectedPartition, expectedProcessorId, new CheckpointPosition(expectedOffset), cancellationSource.Token);
 
             mockCheckpointStore.Verify(store => store.UpdateCheckpointAsync(
                 expectedNamespace,
@@ -132,39 +132,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 expectedPartition,
                 expectedProcessorId,
                 It.Is<CheckpointPosition>(csp =>
-                    csp.SequenceNumber == expectedSequence),
-                cancellationSource.Token),
-            Times.Once);
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="BlobCheckpointStore.UpdateCheckpointAsync" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public async Task UpdateCheckpointAsyncOldOverloadDelegatesTheCall()
-        {
-            using var cancellationSource = new CancellationTokenSource();
-
-            var expectedNamespace = "fakeNS";
-            var expectedHub = "fakeHub";
-            var expectedConsumerGroup = "fakeGroup";
-            var expectedPartition = "fakePart";
-            var expectedOffset = 123;
-            var expectedSequence = 999;
-            var mockCheckpointStore = new Mock<CheckpointStore>();
-            var blobCheckpointStore = new BlobCheckpointStore(mockCheckpointStore.Object);
-
-            await blobCheckpointStore.UpdateCheckpointAsync(expectedNamespace, expectedHub, expectedConsumerGroup, expectedPartition, expectedOffset, expectedSequence, cancellationSource.Token);
-
-            mockCheckpointStore.Verify(store => store.UpdateCheckpointAsync(
-                expectedNamespace,
-                expectedHub,
-                expectedConsumerGroup,
-                expectedPartition,
-                expectedOffset,
-                expectedSequence,
+                    csp.OffsetString == expectedOffset),
                 cancellationSource.Token),
             Times.Once);
         }

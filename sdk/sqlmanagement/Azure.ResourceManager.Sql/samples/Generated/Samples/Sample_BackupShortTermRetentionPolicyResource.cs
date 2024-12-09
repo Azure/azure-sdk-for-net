@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Sql.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Samples
 {
     public partial class Sample_BackupShortTermRetentionPolicyResource
     {
-        // Get the short term retention policy for the database.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetTheShortTermRetentionPolicyForTheDatabase()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-02-01-preview/examples/GetShortTermRetentionPolicy.json
@@ -48,9 +48,8 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update the short term retention policy for the database.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateTheShortTermRetentionPolicyForTheDatabase()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-02-01-preview/examples/UpdateShortTermRetentionPolicy.json
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.Sql.Samples
             BackupShortTermRetentionPolicyResource backupShortTermRetentionPolicy = client.GetBackupShortTermRetentionPolicyResource(backupShortTermRetentionPolicyResourceId);
 
             // invoke the operation
-            BackupShortTermRetentionPolicyData data = new BackupShortTermRetentionPolicyData()
+            BackupShortTermRetentionPolicyData data = new BackupShortTermRetentionPolicyData
             {
                 RetentionDays = 7,
                 DiffBackupIntervalInHours = DiffBackupIntervalInHours.TwentyFour,

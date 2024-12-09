@@ -6,19 +6,18 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Resources.Samples
 {
     public partial class Sample_ArmDeploymentCollection
     {
-        // Create deployment at a given scope.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateDeploymentAtAGivenScope()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2024-03-01/examples/PutDeploymentAtScope.json
@@ -42,20 +41,18 @@ namespace Azure.ResourceManager.Resources.Samples
             string deploymentName = "my-deployment";
             ArmDeploymentContent content = new ArmDeploymentContent(new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
             {
-                TemplateLink = new ArmDeploymentTemplateLink()
+                TemplateLink = new ArmDeploymentTemplateLink
                 {
                     Uri = new Uri("https://example.com/exampleTemplate.json"),
                 },
-                Parameters = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
-                {
-                }),
+                Parameters = BinaryData.FromObjectAsJson(new object()),
             })
             {
                 Location = new AzureLocation("eastus"),
                 Tags =
 {
 ["tagKey1"] = "tag-value-1",
-["tagKey2"] = "tag-value-2",
+["tagKey2"] = "tag-value-2"
 },
             };
             ArmOperation<ArmDeploymentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, content);

@@ -20,7 +20,6 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
-use-write-core: true
 
 update-required-copy:
   GalleryImage: OSType
@@ -262,7 +261,8 @@ rename-mapping:
   VirtualMachineScaleSetUpdateNetworkConfiguration.properties.disableTcpStateTracking: IsTcpStateTrackingDisabled
   AlternativeOption: ImageAlternativeOption
   AlternativeType: ImageAlternativeType
-  VirtualMachineScaleSet.properties.constrainedMaximumCapacity : IsMaximumCapacityConstrained
+  VirtualMachineScaleSetProperties.constrainedMaximumCapacity : IsMaximumCapacityConstrained
+  VirtualMachineScaleSetUpdateProperties: VirtualMachineScaleSetPatchProperties
   RollingUpgradePolicy.maxSurge : IsMaxSurgeEnabled
   ScheduledEventsProfile: ComputeScheduledEventsProfile
   ExpandTypeForListVMs: GetVirtualMachineExpandType
@@ -282,7 +282,7 @@ rename-mapping:
   SkuProfile : ComputeSkuProfile
   SkuProfileVMSize : ComputeSkuProfileVMSize
   AllocationStrategy : ComputeAllocationStrategy
-  
+
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced
   - from: common.json
@@ -391,6 +391,17 @@ directive:
       $.dummyProperty = {
         "type": "string",
         "description": "This is a dummy property to prevent flattening."
-      };      
-    
+      };
+  # add additionalproperties to a few models to support private properties supported by the service
+  - from: virtualMachineScaleSet.json
+    where: $.definitions
+    transform: >
+      $.VirtualMachineScaleSetProperties.additionalProperties = true;
+      $.VirtualMachineScaleSet.properties.properties["x-ms-client-flatten"] = false;
+      $.VirtualMachineScaleSetUpdate.properties.properties["x-ms-client-flatten"] = false;
+      $.UpgradePolicy.additionalProperties = true;
+  - from: computeRPCommon.json
+    where: $.definitions.VMSizeProperties
+    transform: >
+      $.additionalProperties = true;
 ```

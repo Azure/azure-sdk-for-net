@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> The type of private cloud addon. </summary>
+    /// <summary> Addon type. </summary>
     internal readonly partial struct AddonType : IEquatable<AddonType>
     {
         private readonly string _value;

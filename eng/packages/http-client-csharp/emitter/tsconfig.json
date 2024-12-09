@@ -22,6 +22,14 @@
     "experimentalDecorators": true,
     "newLine": "LF"
   },
-  "include": ["src/**/*.ts", "test/**/*.ts", "vitest.config.ts", "**/*.ts", "**/*.tsx", "**/.storybook/**/*.ts", "**/.storybook/**/*.tsx"],
+  "include": [
+    "src/**/*.ts",
+    "test/**/*.ts",
+    "vitest.config.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/.storybook/**/*.ts",
+    "**/.storybook/**/*.tsx"
+  ],
   "exclude": ["**/node_modules/", "**/dist/", "**/build/", "**/coverage/"]
 }

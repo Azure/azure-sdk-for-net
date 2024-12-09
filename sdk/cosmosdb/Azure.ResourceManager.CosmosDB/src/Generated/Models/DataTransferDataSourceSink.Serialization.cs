@@ -83,6 +83,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     case "BaseCosmosDataTransferDataSourceSink": return BaseCosmosDataTransferDataSourceSink.DeserializeBaseCosmosDataTransferDataSourceSink(element, options);
                     case "CosmosDBCassandra": return CosmosCassandraDataTransferDataSourceSink.DeserializeCosmosCassandraDataTransferDataSourceSink(element, options);
                     case "CosmosDBMongo": return CosmosMongoDataTransferDataSourceSink.DeserializeCosmosMongoDataTransferDataSourceSink(element, options);
+                    case "CosmosDBMongoVCore": return CosmosMongoVCoreDataTransferDataSourceSink.DeserializeCosmosMongoVCoreDataTransferDataSourceSink(element, options);
                     case "CosmosDBSql": return CosmosSqlDataTransferDataSourceSink.DeserializeCosmosSqlDataTransferDataSourceSink(element, options);
                 }
             }

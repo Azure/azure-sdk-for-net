@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Pool change request
-    /// Serialized Name: PoolChangeRequest
-    /// </summary>
+    /// <summary> Pool change request. </summary>
     public partial class NetAppVolumePoolChangeContent
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumePoolChangeContent"/>. </summary>
-        /// <param name="newPoolResourceId">
-        /// Resource id of the pool to move volume to
-        /// Serialized Name: PoolChangeRequest.newPoolResourceId
-        /// </param>
+        /// <param name="newPoolResourceId"> Resource id of the pool to move volume to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="newPoolResourceId"/> is null. </exception>
         public NetAppVolumePoolChangeContent(ResourceIdentifier newPoolResourceId)
         {
@@ -63,10 +57,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumePoolChangeContent"/>. </summary>
-        /// <param name="newPoolResourceId">
-        /// Resource id of the pool to move volume to
-        /// Serialized Name: PoolChangeRequest.newPoolResourceId
-        /// </param>
+        /// <param name="newPoolResourceId"> Resource id of the pool to move volume to. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetAppVolumePoolChangeContent(ResourceIdentifier newPoolResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -79,10 +70,7 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
-        /// <summary>
-        /// Resource id of the pool to move volume to
-        /// Serialized Name: PoolChangeRequest.newPoolResourceId
-        /// </summary>
+        /// <summary> Resource id of the pool to move volume to. </summary>
         public ResourceIdentifier NewPoolResourceId { get; }
     }
 }

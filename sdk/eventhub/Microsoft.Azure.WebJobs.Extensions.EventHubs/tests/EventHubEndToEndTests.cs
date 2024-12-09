@@ -1,6 +1,8 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+// Ignore Spelling: Poco evt
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -925,7 +927,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                         EventHubConsumerClient.DefaultConsumerGroupName,
                         partition,
                         producer.Identifier,
-                        new CheckpointPosition(-1),
+                        new CheckpointPosition("-1", -1),
                         CancellationToken.None);
                 }
             }

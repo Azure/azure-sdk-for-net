@@ -11,18 +11,18 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.MachineLearning.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.MachineLearning.Samples
 {
     public partial class Sample_MachineLearningScheduleCollection
     {
-        // List Schedules.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ListSchedules()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateOrUpdateSchedule()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Schedule/list.json
-            // this example is just showing the usage of "Schedules_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Schedule/createOrUpdate.json
+            // this example is just showing the usage of "Schedules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -40,22 +40,42 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             // get the collection of this MachineLearningScheduleResource
             MachineLearningScheduleCollection collection = machineLearningWorkspace.GetMachineLearningSchedules();
 
-            // invoke the operation and iterate over the result
-            await foreach (MachineLearningScheduleResource item in collection.GetAllAsync())
+            // invoke the operation
+            string name = "string";
+            MachineLearningScheduleData data = new MachineLearningScheduleData(new MachineLearningScheduleProperties(new CronTrigger("string")
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                MachineLearningScheduleData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                EndTime = "string",
+                StartTime = "string",
+                TimeZone = "string",
+            }, new MachineLearningEndpointScheduleAction(BinaryData.FromObjectAsJson(new Dictionary<string, object>
+            {
+                ["9965593e-526f-4b89-bb36-761138cf2794"] = null
+            })))
+            {
+                DisplayName = "string",
+                IsEnabled = false,
+                Description = "string",
+                Tags =
+{
+["string"] = "string"
+},
+                Properties =
+{
+["string"] = "string"
+},
+            });
+            ArmOperation<MachineLearningScheduleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
+            MachineLearningScheduleResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            MachineLearningScheduleData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Schedule.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSchedule()
         {
             // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Schedule/get.json
@@ -88,9 +108,44 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Schedule.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListSchedules()
+        {
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Schedule/list.json
+            // this example is just showing the usage of "Schedules_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MachineLearningWorkspaceResource created on azure
+            // for more information of creating MachineLearningWorkspaceResource, please refer to the document of MachineLearningWorkspaceResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "test-rg";
+            string workspaceName = "my-aml-workspace";
+            ResourceIdentifier machineLearningWorkspaceResourceId = MachineLearningWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            MachineLearningWorkspaceResource machineLearningWorkspace = client.GetMachineLearningWorkspaceResource(machineLearningWorkspaceResourceId);
+
+            // get the collection of this MachineLearningScheduleResource
+            MachineLearningScheduleCollection collection = machineLearningWorkspace.GetMachineLearningSchedules();
+
+            // invoke the operation and iterate over the result
+            await foreach (MachineLearningScheduleResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                MachineLearningScheduleData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetSchedule()
         {
             // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Schedule/get.json
@@ -119,9 +174,8 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get Schedule.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetSchedule()
         {
             // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Schedule/get.json
@@ -150,7 +204,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -160,64 +214,6 @@ namespace Azure.ResourceManager.MachineLearning.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        // CreateOrUpdate Schedule.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateOrUpdateSchedule()
-        {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Schedule/createOrUpdate.json
-            // this example is just showing the usage of "Schedules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MachineLearningWorkspaceResource created on azure
-            // for more information of creating MachineLearningWorkspaceResource, please refer to the document of MachineLearningWorkspaceResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "test-rg";
-            string workspaceName = "my-aml-workspace";
-            ResourceIdentifier machineLearningWorkspaceResourceId = MachineLearningWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            MachineLearningWorkspaceResource machineLearningWorkspace = client.GetMachineLearningWorkspaceResource(machineLearningWorkspaceResourceId);
-
-            // get the collection of this MachineLearningScheduleResource
-            MachineLearningScheduleCollection collection = machineLearningWorkspace.GetMachineLearningSchedules();
-
-            // invoke the operation
-            string name = "string";
-            MachineLearningScheduleData data = new MachineLearningScheduleData(new MachineLearningScheduleProperties(new CronTrigger("string")
-            {
-                EndTime = "string",
-                StartTime = "string",
-                TimeZone = "string",
-            }, new MachineLearningEndpointScheduleAction(BinaryData.FromObjectAsJson(new Dictionary<string, object>()
-            {
-                ["9965593e-526f-4b89-bb36-761138cf2794"] = null
-            })))
-            {
-                DisplayName = "string",
-                IsEnabled = false,
-                Description = "string",
-                Tags =
-{
-["string"] = "string",
-},
-                Properties =
-{
-["string"] = "string",
-},
-            });
-            ArmOperation<MachineLearningScheduleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
-            MachineLearningScheduleResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            MachineLearningScheduleData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

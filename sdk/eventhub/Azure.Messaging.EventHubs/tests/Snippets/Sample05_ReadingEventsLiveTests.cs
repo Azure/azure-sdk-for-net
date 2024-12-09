@@ -453,7 +453,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
                 string firstPartition = (await consumer.GetPartitionIdsAsync(cancellationSource.Token)).First();
                 PartitionProperties properties = await consumer.GetPartitionPropertiesAsync(firstPartition, cancellationSource.Token);
-                EventPosition startingPosition = EventPosition.FromOffset(properties.LastEnqueuedOffset);
+                EventPosition startingPosition = EventPosition.FromOffset(properties.LastEnqueuedOffsetString);
 
                 await foreach (PartitionEvent partitionEvent in consumer.ReadEventsFromPartitionAsync(
                     firstPartition,
@@ -592,7 +592,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
                     Debug.WriteLine($"Partition: { partitionEvent.Partition.PartitionId }");
                     Debug.WriteLine($"\tThe last sequence number is: { properties.SequenceNumber }");
-                    Debug.WriteLine($"\tThe last offset is: { properties.Offset }");
+                    Debug.WriteLine($"\tThe last offset is: { properties.OffsetString }");
                     Debug.WriteLine($"\tThe last enqueued time is: { properties.EnqueuedTime }, in UTC.");
                     Debug.WriteLine($"\tThe information was updated at: { properties.LastReceivedTime }, in UTC.");
                 }

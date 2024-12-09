@@ -32,6 +32,19 @@ steps:
             -ArtifactPath '${{ parameters.DiffDirectory }}'
           pwsh: true
 
+      # When running in PR mode, we want the detected changed services to be attached to the build as tags.
+      # However, the public identity does not have the permissions to attach tags to the build.
+      # Instead, we will save the changed services to a file, attach it as an attachment for PiplineWitness to pick up and utilize.
+      - pwsh: |
+          $changedServices = (Get-Content -Path '${{ parameters.DiffDirectory }}/diff.json' -Raw | ConvertFrom-Json).ChangedServices
+
+          if ($changedServices) {
+            Write-Host "Attaching changed service names to the build for additional tag generation."
+            $changedServices | ConvertTo-Json -AsArray | Out-File -FilePath $(System.DefaultWorkingDirectory)/tags.json -Encoding utf8
+            Write-Host '##vso[task.addattachment type=AdditionalTags;name=AdditionalTags;]$(System.DefaultWorkingDirectory)/tags.json'
+          }
+        displayName: Upload tags.json with changed services
+
       - task: Powershell@2
         displayName: Save package properties filtered for PR
         inputs:

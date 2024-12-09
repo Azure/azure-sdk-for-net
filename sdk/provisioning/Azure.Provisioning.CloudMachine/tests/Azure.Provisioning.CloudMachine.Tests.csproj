@@ -1,9 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <LangVersion>12</LangVersion>
-  </PropertyGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\src\Azure.Provisioning.CloudMachine.csproj" />
-    <ProjectReference Include="..\..\Azure.Provisioning.Deployment\src\Azure.Provisioning.Deployment.csproj" />
-  </ItemGroup>
-</Project>

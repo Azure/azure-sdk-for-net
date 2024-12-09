@@ -91,7 +91,7 @@ public class BasicAppContainersTests(bool async)
                                         Resources =
                                             new AppContainerResources
                                             {
-                                                Cpu = BicepFunction.ParseJson("0.5").Expression!,
+                                                Cpu = (BicepExpression?)BicepFunction.ParseJson("0.5"),
                                                 Memory = "1Gi"
                                             }
                                     }

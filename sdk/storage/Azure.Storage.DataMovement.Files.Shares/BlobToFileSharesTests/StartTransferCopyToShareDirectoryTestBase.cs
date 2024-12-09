@@ -326,7 +326,6 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
         }
 
         [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public override Task DirectoryToDirectory_OAuth()
         {
             // NoOp this test since File To Blob

@@ -9,7 +9,7 @@ Azure.Provisioning.AppService simplifies declarative resource provisioning in .N
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Provisioning.AppService --prerelease
+dotnet add package Azure.Provisioning.AppService
 ```
 
 ### Prerequisites

@@ -395,7 +395,14 @@ namespace Azure.Core.Pipeline
                     ? await _credential.GetTokenAsync(context, cancellationToken).ConfigureAwait(false)
                     : _credential.GetToken(context, cancellationToken);
 
-                targetTcs.SetResult(new AuthHeaderValueInfo("Bearer " + token.Token, token.ExpiresOn, token.RefreshOn.HasValue ? token.RefreshOn.Value : token.ExpiresOn - _tokenRefreshOffset));
+                DateTimeOffset refreshOn = token.RefreshOn.HasValue switch
+                {
+                    true => token.RefreshOn.Value,
+                    false when _tokenRefreshOffset.Ticks > token.ExpiresOn.Ticks => token.ExpiresOn,
+                    _ => token.ExpiresOn - _tokenRefreshOffset
+                };
+
+                targetTcs.SetResult(new AuthHeaderValueInfo("Bearer " + token.Token, token.ExpiresOn, refreshOn));
             }
 
             internal readonly struct AuthHeaderValueInfo

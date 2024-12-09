@@ -19,7 +19,6 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
-use-write-core: true
 deserialize-null-collection-as-null-value: true
 
 # mgmt-debug:

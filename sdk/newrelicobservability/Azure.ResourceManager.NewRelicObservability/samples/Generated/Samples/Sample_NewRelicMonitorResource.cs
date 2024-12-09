@@ -11,48 +11,15 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NewRelicObservability.Models;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.NewRelicObservability.Samples
 {
     public partial class Sample_NewRelicMonitorResource
     {
-        // Monitors_ListBySubscription_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetNewRelicMonitorResources_MonitorsListBySubscriptionMaximumSetGen()
-        {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_ListBySubscription_MaximumSet_Gen.json
-            // this example is just showing the usage of "Monitors_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (NewRelicMonitorResource item in subscriptionResource.GetNewRelicMonitorResourcesAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                NewRelicMonitorResourceData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Monitors_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_MonitorsGetMaximumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_Get_MaximumSet_Gen.json
@@ -81,90 +48,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Monitors_Update_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_MonitorsUpdateMaximumSetGen()
-        {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_Update_MaximumSet_Gen.json
-            // this example is just showing the usage of "Monitors_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this NewRelicMonitorResource created on azure
-            // for more information of creating NewRelicMonitorResource, please refer to the document of NewRelicMonitorResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rgNewRelic";
-            string monitorName = "cdlymktqw";
-            ResourceIdentifier newRelicMonitorResourceId = NewRelicMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
-            NewRelicMonitorResource newRelicMonitorResource = client.GetNewRelicMonitorResource(newRelicMonitorResourceId);
-
-            // invoke the operation
-            NewRelicMonitorResourcePatch patch = new NewRelicMonitorResourcePatch()
-            {
-                Identity = new ManagedServiceIdentity("None")
-                {
-                    UserAssignedIdentities =
-{
-[new ResourceIdentifier("key8903")] = new UserAssignedIdentity(),
-},
-                },
-                Tags =
-{
-["key164"] = "jqakdrrmmyzytqu",
-},
-                NewRelicAccountProperties = new NewRelicAccountProperties()
-                {
-                    UserId = "vcscxlncofcuduadesd",
-                    AccountInfo = new NewRelicObservabilityAccountInfo()
-                    {
-                        AccountId = "xhqmg",
-                        IngestionKey = "wltnimmhqt",
-                        Region = new AzureLocation("ljcf"),
-                    },
-                    OrganizationId = "k",
-                    SingleSignOnProperties = new NewRelicSingleSignOnProperties()
-                    {
-                        SingleSignOnState = NewRelicSingleSignOnState.Initial,
-                        EnterpriseAppId = "kwiwfz",
-                        SingleSignOnUri = new Uri("kvseueuljsxmfwpqctz"),
-                        ProvisioningState = NewRelicProvisioningState.Accepted,
-                    },
-                },
-                UserInfo = new NewRelicObservabilityUserInfo()
-                {
-                    FirstName = "vdftzcggirefejajwahhwhyibutramdaotvnuf",
-                    LastName = "bcsztgqovdlmzfkjdrngidwzqsevagexzzilnlc",
-                    EmailAddress = "%6%@4-g.N1.3F-kI1.Ue-.lJso",
-                    PhoneNumber = "krf",
-                    Country = "hslqnwdanrconqyekwbnttaetv",
-                },
-                PlanData = new NewRelicPlanDetails()
-                {
-                    UsageType = NewRelicObservabilityUsageType.Payg,
-                    NewRelicPlanBillingCycle = "Yearly",
-                    PlanDetails = "tbbiaga",
-                    EffectiveOn = DateTimeOffset.Parse("2022-12-05T14:11:37.786Z"),
-                },
-                OrgCreationSource = NewRelicObservabilityOrgCreationSource.Liftr,
-                AccountCreationSource = NewRelicObservabilityAccountCreationSource.Liftr,
-            };
-            ArmOperation<NewRelicMonitorResource> lro = await newRelicMonitorResource.UpdateAsync(WaitUntil.Completed, patch);
-            NewRelicMonitorResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            NewRelicMonitorResourceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Monitors_Delete_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_MonitorsDeleteMaximumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_Delete_MaximumSet_Gen.json
@@ -187,12 +72,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             string userEmail = "ruxvg@xqkmdhrnoo.hlmbpm";
             await newRelicMonitorResource.DeleteAsync(WaitUntil.Completed, userEmail);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Monitors_Delete_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_MonitorsDeleteMinimumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_Delete_MinimumSet_Gen.json
@@ -215,12 +99,91 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             string userEmail = "ruxvg@xqkmdhrnoo.hlmbpm";
             await newRelicMonitorResource.DeleteAsync(WaitUntil.Completed, userEmail);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Monitors_GetMetricRules_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_MonitorsUpdateMaximumSetGen()
+        {
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_Update_MaximumSet_Gen.json
+            // this example is just showing the usage of "Monitors_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NewRelicMonitorResource created on azure
+            // for more information of creating NewRelicMonitorResource, please refer to the document of NewRelicMonitorResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rgNewRelic";
+            string monitorName = "cdlymktqw";
+            ResourceIdentifier newRelicMonitorResourceId = NewRelicMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
+            NewRelicMonitorResource newRelicMonitorResource = client.GetNewRelicMonitorResource(newRelicMonitorResourceId);
+
+            // invoke the operation
+            NewRelicMonitorResourcePatch patch = new NewRelicMonitorResourcePatch
+            {
+                Identity = new ManagedServiceIdentity("None")
+                {
+                    UserAssignedIdentities =
+{
+[new ResourceIdentifier("key8903")] = new UserAssignedIdentity()
+},
+                },
+                Tags =
+{
+["key164"] = "jqakdrrmmyzytqu"
+},
+                NewRelicAccountProperties = new NewRelicAccountProperties
+                {
+                    UserId = "vcscxlncofcuduadesd",
+                    AccountInfo = new NewRelicObservabilityAccountInfo
+                    {
+                        AccountId = "xhqmg",
+                        IngestionKey = "wltnimmhqt",
+                        Region = new AzureLocation("ljcf"),
+                    },
+                    OrganizationId = "k",
+                    SingleSignOnProperties = new NewRelicSingleSignOnProperties
+                    {
+                        SingleSignOnState = NewRelicSingleSignOnState.Initial,
+                        EnterpriseAppId = "kwiwfz",
+                        SingleSignOnUri = new Uri("kvseueuljsxmfwpqctz"),
+                        ProvisioningState = NewRelicProvisioningState.Accepted,
+                    },
+                },
+                UserInfo = new NewRelicObservabilityUserInfo
+                {
+                    FirstName = "vdftzcggirefejajwahhwhyibutramdaotvnuf",
+                    LastName = "bcsztgqovdlmzfkjdrngidwzqsevagexzzilnlc",
+                    EmailAddress = "%6%@4-g.N1.3F-kI1.Ue-.lJso",
+                    PhoneNumber = "krf",
+                    Country = "hslqnwdanrconqyekwbnttaetv",
+                },
+                PlanData = new NewRelicPlanDetails
+                {
+                    UsageType = NewRelicObservabilityUsageType.Payg,
+                    NewRelicPlanBillingCycle = "Yearly",
+                    PlanDetails = "tbbiaga",
+                    EffectiveOn = DateTimeOffset.Parse("2022-12-05T14:11:37.786Z"),
+                },
+                OrgCreationSource = NewRelicObservabilityOrgCreationSource.Liftr,
+                AccountCreationSource = NewRelicObservabilityAccountCreationSource.Liftr,
+            };
+            ArmOperation<NewRelicMonitorResource> lro = await newRelicMonitorResource.UpdateAsync(WaitUntil.Completed, patch);
+            NewRelicMonitorResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            NewRelicMonitorResourceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetMetricRules_MonitorsGetMetricRulesMaximumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_GetMetricRules_MaximumSet_Gen.json
@@ -246,9 +209,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Monitors_GetMetricRules_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetMetricRules_MonitorsGetMetricRulesMinimumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_GetMetricRules_MinimumSet_Gen.json
@@ -274,9 +236,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Monitors_GetMetricStatus_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetMetricStatus_MonitorsGetMetricStatusMaximumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_GetMetricStatus_MaximumSet_Gen.json
@@ -298,19 +259,15 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             // invoke the operation
             NewRelicMetricsStatusContent content = new NewRelicMetricsStatusContent("ruxvg@xqkmdhrnoo.hlmbpm")
             {
-                AzureResourceIds =
-{
-"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgNewRelic/providers/NewRelic.Observability/monitors/fhcjxnxumkdlgpwanewtkdnyuz"
-},
+                AzureResourceIds = { "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgNewRelic/providers/NewRelic.Observability/monitors/fhcjxnxumkdlgpwanewtkdnyuz" },
             };
             NewRelicMetricsStatusResult result = await newRelicMonitorResource.GetMetricStatusAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Monitors_GetMetricStatus_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetMetricStatus_MonitorsGetMetricStatusMinimumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_GetMetricStatus_MinimumSet_Gen.json
@@ -332,19 +289,15 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             // invoke the operation
             NewRelicMetricsStatusContent content = new NewRelicMetricsStatusContent("ruxvg@xqkmdhrnoo.hlmbpm")
             {
-                AzureResourceIds =
-{
-"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgNewRelic/providers/NewRelic.Observability/monitors/fhcjxnxumkdlgpwanewtkdnyuz"
-},
+                AzureResourceIds = { "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgNewRelic/providers/NewRelic.Observability/monitors/fhcjxnxumkdlgpwanewtkdnyuz" },
             };
             NewRelicMetricsStatusResult result = await newRelicMonitorResource.GetMetricStatusAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Monitors_ListAppServices_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAppServices_MonitorsListAppServicesMaximumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_ListAppServices_MaximumSet_Gen.json
@@ -366,22 +319,18 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             // invoke the operation and iterate over the result
             NewRelicAppServicesGetContent content = new NewRelicAppServicesGetContent("ruxvg@xqkmdhrnoo.hlmbpm")
             {
-                AzureResourceIds =
-{
-new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgNewRelic/providers/NewRelic.Observability/monitors/fhcjxnxumkdlgpwanewtkdnyuz")
-},
+                AzureResourceIds = { new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgNewRelic/providers/NewRelic.Observability/monitors/fhcjxnxumkdlgpwanewtkdnyuz") },
             };
             await foreach (NewRelicObservabilityAppServiceInfo item in newRelicMonitorResource.GetAppServicesAsync(content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Monitors_ListAppServices_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAppServices_MonitorsListAppServicesMinimumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_ListAppServices_MinimumSet_Gen.json
@@ -403,22 +352,18 @@ new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/reso
             // invoke the operation and iterate over the result
             NewRelicAppServicesGetContent content = new NewRelicAppServicesGetContent("ruxvg@xqkmdhrnoo.hlmbpm")
             {
-                AzureResourceIds =
-{
-new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgNewRelic/providers/NewRelic.Observability/monitors/fhcjxnxumkdlgpwanewtkdnyuz")
-},
+                AzureResourceIds = { new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgNewRelic/providers/NewRelic.Observability/monitors/fhcjxnxumkdlgpwanewtkdnyuz") },
             };
             await foreach (NewRelicObservabilityAppServiceInfo item in newRelicMonitorResource.GetAppServicesAsync(content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Monitors_SwitchBilling_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SwitchBilling_MonitorsSwitchBillingMaximumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_SwitchBilling_MaximumSet_Gen.json
@@ -442,7 +387,7 @@ new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/reso
             {
                 AzureResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rgNewRelic/providers/NewRelic.Observability/monitors/fhcjxnxumkdlgpwanewtkdnyuz"),
                 OrganizationId = "k",
-                PlanData = new NewRelicPlanDetails()
+                PlanData = new NewRelicPlanDetails
                 {
                     UsageType = NewRelicObservabilityUsageType.Payg,
                     NewRelicPlanBillingCycle = "Yearly",
@@ -459,9 +404,8 @@ new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/reso
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Monitors_SwitchBilling_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SwitchBilling_MonitorsSwitchBillingMinimumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_SwitchBilling_MinimumSet_Gen.json
@@ -491,9 +435,8 @@ new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/reso
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Monitors_ListHosts_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetHosts_MonitorsListHostsMaximumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_ListHosts_MaximumSet_Gen.json
@@ -515,22 +458,18 @@ new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/reso
             // invoke the operation and iterate over the result
             NewRelicHostsGetContent content = new NewRelicHostsGetContent("ruxvg@xqkmdhrnoo.hlmbpm")
             {
-                VmIds =
-{
-new ResourceIdentifier("xzphvxvfmvjrnsgyns")
-},
+                VmIds = { new ResourceIdentifier("xzphvxvfmvjrnsgyns") },
             };
             await foreach (NewRelicObservabilityVmInfo item in newRelicMonitorResource.GetHostsAsync(content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Monitors_ListHosts_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetHosts_MonitorsListHostsMinimumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_ListHosts_MinimumSet_Gen.json
@@ -552,22 +491,18 @@ new ResourceIdentifier("xzphvxvfmvjrnsgyns")
             // invoke the operation and iterate over the result
             NewRelicHostsGetContent content = new NewRelicHostsGetContent("ruxvg@xqkmdhrnoo.hlmbpm")
             {
-                VmIds =
-{
-new ResourceIdentifier("xzphvxvfmvjrnsgyns")
-},
+                VmIds = { new ResourceIdentifier("xzphvxvfmvjrnsgyns") },
             };
             await foreach (NewRelicObservabilityVmInfo item in newRelicMonitorResource.GetHostsAsync(content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Monitors_ListMonitoredResources_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetMonitoredResources_MonitorsListMonitoredResourcesMaximumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_ListMonitoredResources_MaximumSet_Gen.json
@@ -592,12 +527,11 @@ new ResourceIdentifier("xzphvxvfmvjrnsgyns")
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Monitors_ListMonitoredResources_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetMonitoredResources_MonitorsListMonitoredResourcesMinimumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_ListMonitoredResources_MinimumSet_Gen.json
@@ -622,12 +556,11 @@ new ResourceIdentifier("xzphvxvfmvjrnsgyns")
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Monitors_ListLinkedResources
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetLinkedResources_MonitorsListLinkedResources()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/LinkedResources_List.json
@@ -652,12 +585,11 @@ new ResourceIdentifier("xzphvxvfmvjrnsgyns")
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Monitors_VmHostPayload_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task VmHostPayload_MonitorsVmHostPayloadMaximumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_VmHostPayload_MaximumSet_Gen.json
@@ -682,9 +614,8 @@ new ResourceIdentifier("xzphvxvfmvjrnsgyns")
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Monitors_VmHostPayload_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task VmHostPayload_MonitorsVmHostPayloadMinimumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/Monitors_VmHostPayload_MinimumSet_Gen.json
@@ -709,9 +640,8 @@ new ResourceIdentifier("xzphvxvfmvjrnsgyns")
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // BillingInfo_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBillingInfo_BillingInfoGet()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/BillingInfo_Get.json
@@ -736,9 +666,8 @@ new ResourceIdentifier("xzphvxvfmvjrnsgyns")
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ConnectedPartnerResources_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetConnectedPartnerResources_ConnectedPartnerResourcesList()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/ConnectedPartnerResources_List.json
@@ -763,7 +692,7 @@ new ResourceIdentifier("xzphvxvfmvjrnsgyns")
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -21,71 +21,112 @@ public partial class InstancePool : ProvisionableResource
     /// <summary>
     /// The name of the instance pool to be created or updated.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// The license type. Possible values are &apos;LicenseIncluded&apos;
     /// (price for SQL license is included) and &apos;BasePrice&apos; (without
     /// SQL license price).
     /// </summary>
-    public BicepValue<InstancePoolLicenseType> LicenseType { get => _licenseType; set => _licenseType.Assign(value); }
-    private readonly BicepValue<InstancePoolLicenseType> _licenseType;
+    public BicepValue<InstancePoolLicenseType> LicenseType 
+    {
+        get { Initialize(); return _licenseType!; }
+        set { Initialize(); _licenseType!.Assign(value); }
+    }
+    private BicepValue<InstancePoolLicenseType>? _licenseType;
 
     /// <summary>
     /// Specifies maintenance configuration id to apply to this managed
     /// instance.
     /// </summary>
-    public BicepValue<ResourceIdentifier> MaintenanceConfigurationId { get => _maintenanceConfigurationId; set => _maintenanceConfigurationId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _maintenanceConfigurationId;
+    public BicepValue<ResourceIdentifier> MaintenanceConfigurationId 
+    {
+        get { Initialize(); return _maintenanceConfigurationId!; }
+        set { Initialize(); _maintenanceConfigurationId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _maintenanceConfigurationId;
 
     /// <summary>
     /// The name and tier of the SKU.
     /// </summary>
-    public BicepValue<SqlSku> Sku { get => _sku; set => _sku.Assign(value); }
-    private readonly BicepValue<SqlSku> _sku;
+    public SqlSku Sku 
+    {
+        get { Initialize(); return _sku!; }
+        set { Initialize(); AssignOrReplace(ref _sku, value); }
+    }
+    private SqlSku? _sku;
 
     /// <summary>
     /// Resource ID of the subnet to place this instance pool in.
     /// </summary>
-    public BicepValue<ResourceIdentifier> SubnetId { get => _subnetId; set => _subnetId.Assign(value); }
-    private readonly BicepValue<ResourceIdentifier> _subnetId;
+    public BicepValue<ResourceIdentifier> SubnetId 
+    {
+        get { Initialize(); return _subnetId!; }
+        set { Initialize(); _subnetId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _subnetId;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Count of vCores belonging to this instance pool.
     /// </summary>
-    public BicepValue<int> VCores { get => _vCores; set => _vCores.Assign(value); }
-    private readonly BicepValue<int> _vCores;
+    public BicepValue<int> VCores 
+    {
+        get { Initialize(); return _vCores!; }
+        set { Initialize(); _vCores!.Assign(value); }
+    }
+    private BicepValue<int>? _vCores;
 
     /// <summary>
     /// The Dns Zone that the managed instance pool is in.
     /// </summary>
-    public BicepValue<string> DnsZone { get => _dnsZone; }
-    private readonly BicepValue<string> _dnsZone;
+    public BicepValue<string> DnsZone 
+    {
+        get { Initialize(); return _dnsZone!; }
+    }
+    private BicepValue<string>? _dnsZone;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new InstancePool.
@@ -100,17 +141,24 @@ public partial class InstancePool : ProvisionableResource
     public InstancePool(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Sql/instancePools", resourceVersion ?? "2021-11-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _licenseType = BicepValue<InstancePoolLicenseType>.DefineProperty(this, "LicenseType", ["properties", "licenseType"]);
-        _maintenanceConfigurationId = BicepValue<ResourceIdentifier>.DefineProperty(this, "MaintenanceConfigurationId", ["properties", "maintenanceConfigurationId"]);
-        _sku = BicepValue<SqlSku>.DefineProperty(this, "Sku", ["sku"]);
-        _subnetId = BicepValue<ResourceIdentifier>.DefineProperty(this, "SubnetId", ["properties", "subnetId"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _vCores = BicepValue<int>.DefineProperty(this, "VCores", ["properties", "vCores"]);
-        _dnsZone = BicepValue<string>.DefineProperty(this, "DnsZone", ["properties", "dnsZone"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of InstancePool.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _licenseType = DefineProperty<InstancePoolLicenseType>("LicenseType", ["properties", "licenseType"]);
+        _maintenanceConfigurationId = DefineProperty<ResourceIdentifier>("MaintenanceConfigurationId", ["properties", "maintenanceConfigurationId"]);
+        _sku = DefineModelProperty<SqlSku>("Sku", ["sku"]);
+        _subnetId = DefineProperty<ResourceIdentifier>("SubnetId", ["properties", "subnetId"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _vCores = DefineProperty<int>("VCores", ["properties", "vCores"]);
+        _dnsZone = DefineProperty<string>("DnsZone", ["properties", "dnsZone"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>

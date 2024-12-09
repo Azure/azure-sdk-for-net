@@ -20,44 +20,68 @@ public partial class ManagedInstanceServerTrustCertificate : ProvisionableResour
     /// <summary>
     /// Name of of the certificate to upload.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The certificate public blob.
     /// </summary>
-    public BicepValue<string> PublicBlob { get => _publicBlob; set => _publicBlob.Assign(value); }
-    private readonly BicepValue<string> _publicBlob;
+    public BicepValue<string> PublicBlob 
+    {
+        get { Initialize(); return _publicBlob!; }
+        set { Initialize(); _publicBlob!.Assign(value); }
+    }
+    private BicepValue<string>? _publicBlob;
 
     /// <summary>
     /// The certificate name.
     /// </summary>
-    public BicepValue<string> CertificateName { get => _certificateName; }
-    private readonly BicepValue<string> _certificateName;
+    public BicepValue<string> CertificateName 
+    {
+        get { Initialize(); return _certificateName!; }
+    }
+    private BicepValue<string>? _certificateName;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// The certificate thumbprint.
     /// </summary>
-    public BicepValue<string> Thumbprint { get => _thumbprint; }
-    private readonly BicepValue<string> _thumbprint;
+    public BicepValue<string> Thumbprint 
+    {
+        get { Initialize(); return _thumbprint!; }
+    }
+    private BicepValue<string>? _thumbprint;
 
     /// <summary>
     /// Gets or sets a reference to the parent ManagedInstance.
     /// </summary>
-    public ManagedInstance? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<ManagedInstance> _parent;
+    public ManagedInstance? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<ManagedInstance>? _parent;
 
     /// <summary>
     /// Creates a new ManagedInstanceServerTrustCertificate.
@@ -72,13 +96,21 @@ public partial class ManagedInstanceServerTrustCertificate : ProvisionableResour
     public ManagedInstanceServerTrustCertificate(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Sql/managedInstances/serverTrustCertificates", resourceVersion ?? "2021-11-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _publicBlob = BicepValue<string>.DefineProperty(this, "PublicBlob", ["properties", "publicBlob"]);
-        _certificateName = BicepValue<string>.DefineProperty(this, "CertificateName", ["properties", "certificateName"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _thumbprint = BicepValue<string>.DefineProperty(this, "Thumbprint", ["properties", "thumbprint"], isOutput: true);
-        _parent = ResourceReference<ManagedInstance>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// ManagedInstanceServerTrustCertificate.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _publicBlob = DefineProperty<string>("PublicBlob", ["properties", "publicBlob"]);
+        _certificateName = DefineProperty<string>("CertificateName", ["properties", "certificateName"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _thumbprint = DefineProperty<string>("Thumbprint", ["properties", "thumbprint"], isOutput: true);
+        _parent = DefineResource<ManagedInstance>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

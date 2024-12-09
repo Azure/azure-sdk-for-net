@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="webApplicationFirewallActivationState"> Settings for the NGINX App Protect Web Application Firewall (WAF). </param>
         /// <param name="webApplicationFirewallStatus"> The status of the NGINX App Protect Web Application Firewall. </param>
         /// <returns> A new <see cref="Models.NginxDeploymentPropertiesNginxAppProtect"/> instance for mocking. </returns>
-        public static NginxDeploymentPropertiesNginxAppProtect NginxDeploymentPropertiesNginxAppProtect(ActivationState? webApplicationFirewallActivationState = null, WebApplicationFirewallStatus webApplicationFirewallStatus = null)
+        public static NginxDeploymentPropertiesNginxAppProtect NginxDeploymentPropertiesNginxAppProtect(WebApplicationFirewallActivationState? webApplicationFirewallActivationState = null, WebApplicationFirewallStatus webApplicationFirewallStatus = null)
         {
             return new NginxDeploymentPropertiesNginxAppProtect(webApplicationFirewallActivationState != null ? new WebApplicationFirewallSettings(webApplicationFirewallActivationState, serializedAdditionalRawData: null) : null, webApplicationFirewallStatus, serializedAdditionalRawData: null);
         }

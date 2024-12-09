@@ -83,5 +83,13 @@ namespace Azure.Storage.Files.Shares
         public string StructuredBodyType => _response.Headers.TryGetValue("x-ms-structured-body", out string value) ? value : null;
         /// <summary> The length of the blob/file content inside the message body when the response body is returned as a structured message. Will always be smaller than Content-Length. </summary>
         public long? StructuredContentLength => _response.Headers.TryGetValue("x-ms-structured-content-length", out long? value) ? value : null;
+        /// <summary> NFS only. The mode of the file or directory. </summary>
+        public string FileMode => _response.Headers.TryGetValue("x-ms-mode", out string value) ? value : null;
+        /// <summary> NFS only. The owner of the file or directory. </summary>
+        public string Owner => _response.Headers.TryGetValue("x-ms-owner", out string value) ? value : null;
+        /// <summary> NFS only. The owning group of the file or directory. </summary>
+        public string Group => _response.Headers.TryGetValue("x-ms-group", out string value) ? value : null;
+        /// <summary> NFS only. The link count of the file or directory. </summary>
+        public long? LinkCount => _response.Headers.TryGetValue("x-ms-link-count", out long? value) ? value : null;
     }
 }

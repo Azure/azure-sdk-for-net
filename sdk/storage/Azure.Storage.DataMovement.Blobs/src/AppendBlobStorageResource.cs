@@ -25,21 +25,12 @@ namespace Azure.Storage.DataMovement.Blobs
 
         public override string ProviderId => "blob";
 
-        /// <summary>
-        /// Defines the recommended Transfer Type for the storage resource.
-        /// </summary>
         protected override DataTransferOrder TransferType => DataTransferOrder.Sequential;
 
-        /// <summary>
-        /// Defines the maximum chunk size for the storage resource.
-        /// </summary>
+        protected override long MaxSupportedSingleTransferSize => Constants.Blob.Append.MaxAppendBlockBytes;
+
         protected override long MaxSupportedChunkSize => Constants.Blob.Append.MaxAppendBlockBytes;
 
-        /// <summary>
-        /// Length of the storage resource. This information is obtained during a GetStorageResources API call.
-        ///
-        /// Will return default if the length was not set by a GetStorageResources API call.
-        /// </summary>
         protected override long? Length => ResourceProperties?.ResourceLength;
 
         internal AppendBlobStorageResource()

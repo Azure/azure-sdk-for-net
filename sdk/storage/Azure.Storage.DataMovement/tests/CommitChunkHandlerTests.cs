@@ -10,6 +10,7 @@ using System.Threading;
 using Azure.Core;
 using Azure.Storage.Test;
 using Azure.Core.Pipeline;
+using System.Threading.Channels;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -166,20 +167,14 @@ namespace Azure.Storage.DataMovement.Tests
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
                 DataTransferOrder.Unordered,
-                ClientDiagnostics,
                 default,
                 CancellationToken.None);
 
             // Make one chunk that would meet the expected length
-            await commitBlockHandler.InvokeEvent(new StageChunkEventArgs(
-                transferId: "fake-id",
-                success: true,
+            await commitBlockHandler.QueueChunkAsync(new QueueStageChunkArgs(
                 // Before commit block is called, one block chunk has already been added when creating the destination
                 offset: blockSize,
-                bytesTransferred: blockSize,
-                exception: default,
-                isRunningSynchronously: false,
-                cancellationToken: CancellationToken.None));
+                bytesTransferred: blockSize));
 
             VerifyDelegateInvocations(
                 behaviors: mockCommitChunkBehaviors,
@@ -209,20 +204,14 @@ namespace Azure.Storage.DataMovement.Tests
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
                 DataTransferOrder.Unordered,
-                ClientDiagnostics,
                 default,
                 CancellationToken.None);
 
             // Make one chunk that would update the bytes but not cause a commit block list to occur
-            await commitBlockHandler.InvokeEvent(new StageChunkEventArgs(
-                transferId: "fake-id",
-                success: true,
+            await commitBlockHandler.QueueChunkAsync(new QueueStageChunkArgs(
                 // Before commit block is called, one block chunk has already been added when creating the destination
                 offset: blockSize,
-                bytesTransferred: blockSize,
-                exception: default,
-                isRunningSynchronously: false,
-                cancellationToken: CancellationToken.None));
+                bytesTransferred: blockSize));
 
             // Assert
             VerifyDelegateInvocations(
@@ -233,15 +222,10 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedCompleteFileCount: 0);
 
             // Now add the last block to meet the required commited block amount.
-            await commitBlockHandler.InvokeEvent(new StageChunkEventArgs(
-                transferId: "fake-id",
-                success: true,
+            await commitBlockHandler.QueueChunkAsync(new QueueStageChunkArgs(
                 // Before commit block is called, one block chunk has already been added when creating the destination
                 offset: blockSize * 2,
-                bytesTransferred: blockSize,
-                exception: default,
-                isRunningSynchronously: false,
-                cancellationToken: CancellationToken.None));
+                bytesTransferred: blockSize));
 
             // Assert
             VerifyDelegateInvocations(
@@ -272,20 +256,14 @@ namespace Azure.Storage.DataMovement.Tests
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
                 DataTransferOrder.Unordered,
-                ClientDiagnostics,
                 default,
                 CancellationToken.None);
 
             // Make one chunk that would update the bytes that would cause the bytes to exceed the expected amount
-            await commitBlockHandler.InvokeEvent(new StageChunkEventArgs(
-                transferId: "fake-id",
-                success: true,
+            await commitBlockHandler.QueueChunkAsync(new QueueStageChunkArgs(
                 // Before commit block is called, one block chunk has already been added when creating the destination
                 offset: blockSize,
-                bytesTransferred: blockSize * 2,
-                exception: default,
-                isRunningSynchronously: false,
-                cancellationToken: CancellationToken.None));
+                bytesTransferred: blockSize * 2));
 
             // Assert
             VerifyDelegateInvocations(
@@ -318,7 +296,6 @@ namespace Azure.Storage.DataMovement.Tests
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
                 DataTransferOrder.Unordered,
-                ClientDiagnostics,
                 default,
                 CancellationToken.None);
 
@@ -326,15 +303,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             for (int i = 0; i < taskSize; i++)
             {
-                Task task = commitBlockHandler.InvokeEvent(new StageChunkEventArgs(
-                    transferId: "fake-id",
-                    success: true,
+                Task task = Task.Run(async () => await commitBlockHandler.QueueChunkAsync(new QueueStageChunkArgs(
                     // Before commit block is called, one block chunk has already been added when creating the destination
                     offset: blockSize,
-                    bytesTransferred: blockSize,
-                    exception: default,
-                    isRunningSynchronously: false,
-                    cancellationToken: CancellationToken.None));
+                    bytesTransferred: blockSize)));
                 runningTasks.Add(task);
             }
 
@@ -371,20 +343,14 @@ namespace Azure.Storage.DataMovement.Tests
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
                 DataTransferOrder.Sequential,
-                ClientDiagnostics,
                 default,
                 CancellationToken.None);
 
             // Make one chunk that would update the bytes but not cause a commit block list to occur
-            await commitBlockHandler.InvokeEvent(new StageChunkEventArgs(
-                transferId: "fake-id",
-                success: true,
+            await commitBlockHandler.QueueChunkAsync(new QueueStageChunkArgs(
                 // Before commit block is called, one block chunk has already been added when creating the destination
                 offset: blockSize,
-                bytesTransferred: blockSize,
-                exception: default,
-                isRunningSynchronously: false,
-                cancellationToken: CancellationToken.None));
+                bytesTransferred: blockSize));
 
             // Assert
             VerifyDelegateInvocations(
@@ -395,15 +361,10 @@ namespace Azure.Storage.DataMovement.Tests
                 expectedCompleteFileCount: 0);
 
             // Now add the last block to meet the required commited block amount.
-            await commitBlockHandler.InvokeEvent(new StageChunkEventArgs(
-                transferId: "fake-id",
-                success: true,
+            await commitBlockHandler.QueueChunkAsync(new QueueStageChunkArgs(
                 // Before commit block is called, one block chunk has already been added when creating the destination
                 offset: blockSize * 2,
-                bytesTransferred: blockSize,
-                exception: default,
-                isRunningSynchronously: false,
-                cancellationToken: CancellationToken.None));
+                bytesTransferred: blockSize));
 
             // Assert
             VerifyDelegateInvocations(
@@ -434,20 +395,14 @@ namespace Azure.Storage.DataMovement.Tests
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
                 DataTransferOrder.Sequential,
-                ClientDiagnostics,
                 default,
                 CancellationToken.None);
 
             // Make one chunk that would update the bytes that would cause the bytes to exceed the expected amount
-            await commitBlockHandler.InvokeEvent(new StageChunkEventArgs(
-                transferId: "fake-id",
-                success: true,
+            await commitBlockHandler.QueueChunkAsync(new QueueStageChunkArgs(
                 // Before commit block is called, one block chunk has already been added when creating the destination
                 offset: blockSize,
-                bytesTransferred: blockSize * 2,
-                exception: default,
-                isRunningSynchronously: false,
-                cancellationToken: CancellationToken.None));
+                bytesTransferred: blockSize * 2));
 
             // Assert
             VerifyDelegateInvocations(
@@ -479,19 +434,13 @@ namespace Azure.Storage.DataMovement.Tests
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
                 transferOrder: DataTransferOrder.Sequential,
-                ClientDiagnostics,
                 default,
                 CancellationToken.None);
 
             // Act
-            await commitBlockHandler.InvokeEvent(new StageChunkEventArgs(
-                transferId: "fake-id",
-                success: true,
+            await commitBlockHandler.QueueChunkAsync(new QueueStageChunkArgs(
                 offset: blockSize,
-                bytesTransferred: blockSize,
-                exception: default,
-                isRunningSynchronously: false,
-                cancellationToken: CancellationToken.None));
+                bytesTransferred: blockSize));
 
             // Assert
             VerifyDelegateInvocations(
@@ -522,19 +471,13 @@ namespace Azure.Storage.DataMovement.Tests
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
                 transferOrder: DataTransferOrder.Unordered,
-                ClientDiagnostics,
                 default,
                 CancellationToken.None);
 
             // Act
-            await commitBlockHandler.InvokeEvent(new StageChunkEventArgs(
-                transferId: "fake-id",
-                success: true,
+            await commitBlockHandler.QueueChunkAsync(new QueueStageChunkArgs(
                 offset: 0,
-                bytesTransferred: blockSize,
-                exception: default,
-                isRunningSynchronously: false,
-                cancellationToken: CancellationToken.None));
+                bytesTransferred: blockSize));
 
             // Assert
             VerifyDelegateInvocations(
@@ -546,7 +489,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        public async Task DisposedEventHandler()
+        public void Dispose()
         {
             // Arrange - Create CommitChunkHandler then Dispose it so the event handler is disposed
             MockCommitChunkBehaviors mockCommitChunkBehaviors = GetCommitChunkBehaviors();
@@ -564,15 +507,14 @@ namespace Azure.Storage.DataMovement.Tests
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
                 transferOrder: DataTransferOrder.Unordered,
-                ClientDiagnostics,
                 default,
                 CancellationToken.None);
 
             // Act
             commitBlockHandler.Dispose();
 
-            // Assert - Do not throw when trying to invoke the event handler when disposed
-            await commitBlockHandler.InvokeEvent(default);
+            Assert.ThrowsAsync<ChannelClosedException>(async () =>
+                await commitBlockHandler.QueueChunkAsync(default));
 
             VerifyDelegateInvocations(
                 behaviors: mockCommitChunkBehaviors,
@@ -618,20 +560,14 @@ namespace Azure.Storage.DataMovement.Tests
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
                 DataTransferOrder.Unordered,
-                ClientDiagnostics,
                 properties,
                 CancellationToken.None);
 
             // Make one chunk that would meet the expected length
-            await commitBlockHandler.InvokeEvent(new StageChunkEventArgs(
-                transferId: "fake-id",
-                success: true,
+            await commitBlockHandler.QueueChunkAsync(new QueueStageChunkArgs(
                 // Before commit block is called, one block chunk has already been added when creating the destination
                 offset: blockSize,
-                bytesTransferred: blockSize,
-                exception: default,
-                isRunningSynchronously: false,
-                cancellationToken: CancellationToken.None));
+                bytesTransferred: blockSize));
 
             VerifyDelegateInvocations(
                 behaviors: mockCommitChunkBehaviors,

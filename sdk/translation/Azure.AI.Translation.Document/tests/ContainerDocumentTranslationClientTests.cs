@@ -40,7 +40,7 @@ namespace Azure.AI.Translation.Document.Tests
             DocumentTranslateContent content = new DocumentTranslateContent(sourceDocument);
 
             //make sure this language model "hi" is downloaded
-            var response = await client.DocumentTranslateAsync("hi", content, "en").ConfigureAwait(false);
+            var response = await client.TranslateAsync("hi", content, "en").ConfigureAwait(false);
             var requestString = File.ReadAllText(filePath);
             var responseString = Encoding.UTF8.GetString(response.Value.ToArray());
             Assert.IsNotEmpty(responseString);

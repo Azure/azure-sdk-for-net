@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Synapse.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Synapse.Samples
 {
     public partial class Sample_SynapseManagedIdentitySqlControlSettingResource
     {
-        // Get managed identity sql control settings
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetManagedIdentitySqlControlSettings()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/GetManagedIdentitySqlControlSettings.json
@@ -46,9 +46,8 @@ namespace Azure.ResourceManager.Synapse.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or update managed identity sql control settings
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateManagedIdentitySqlControlSettings()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/CreateOrUpdateManagedIdentitySqlControlSettings.json
@@ -68,9 +67,9 @@ namespace Azure.ResourceManager.Synapse.Samples
             SynapseManagedIdentitySqlControlSettingResource synapseManagedIdentitySqlControlSetting = client.GetSynapseManagedIdentitySqlControlSettingResource(synapseManagedIdentitySqlControlSettingResourceId);
 
             // invoke the operation
-            SynapseManagedIdentitySqlControlSettingData data = new SynapseManagedIdentitySqlControlSettingData()
+            SynapseManagedIdentitySqlControlSettingData data = new SynapseManagedIdentitySqlControlSettingData
             {
-                GrantSqlControlToManagedIdentity = new SynapseGrantSqlControlToManagedIdentity()
+                GrantSqlControlToManagedIdentity = new SynapseGrantSqlControlToManagedIdentity
                 {
                     DesiredState = SynapseDesiredState.Enabled,
                 },

@@ -10,14 +10,108 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ServiceFabric.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceFabric.Samples
 {
     public partial class Sample_ServiceFabricServiceCollection
     {
-        // Get a service
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_PutAServiceWithMaximumParameters()
+        {
+            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/preview/2023-11-01-preview/examples/ServicePutOperation_example_max.json
+            // this example is just showing the usage of "Services_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ServiceFabricApplicationResource created on azure
+            // for more information of creating ServiceFabricApplicationResource, please refer to the document of ServiceFabricApplicationResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "resRg";
+            string clusterName = "myCluster";
+            string applicationName = "myApp";
+            ResourceIdentifier serviceFabricApplicationResourceId = ServiceFabricApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, applicationName);
+            ServiceFabricApplicationResource serviceFabricApplication = client.GetServiceFabricApplicationResource(serviceFabricApplicationResourceId);
+
+            // get the collection of this ServiceFabricServiceResource
+            ServiceFabricServiceCollection collection = serviceFabricApplication.GetServiceFabricServices();
+
+            // invoke the operation
+            string serviceName = "myService";
+            ServiceFabricServiceData data = new ServiceFabricServiceData(default)
+            {
+                PlacementConstraints = "NodeType==frontend",
+                CorrelationScheme = { new ServiceCorrelationDescription(ServiceCorrelationScheme.Affinity, "fabric:/app1/app1~svc1") },
+                ServiceLoadMetrics = {new ServiceLoadMetricDescription("metric1")
+{
+Weight = ServiceLoadMetricWeight.Low,
+}},
+                ServicePlacementPolicies = { },
+                DefaultMoveCost = ApplicationMoveCost.Medium,
+                ServiceTypeName = "myServiceType",
+                PartitionDescription = new SingletonPartitionSchemeDescription(),
+                ServicePackageActivationMode = ArmServicePackageActivationMode.SharedProcess,
+                ServiceDnsName = "my.service.dns",
+                Tags = { },
+            };
+            ArmOperation<ServiceFabricServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serviceName, data);
+            ServiceFabricServiceResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ServiceFabricServiceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_PutAServiceWithMinimumParameters()
+        {
+            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/preview/2023-11-01-preview/examples/ServicePutOperation_example_min.json
+            // this example is just showing the usage of "Services_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ServiceFabricApplicationResource created on azure
+            // for more information of creating ServiceFabricApplicationResource, please refer to the document of ServiceFabricApplicationResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "resRg";
+            string clusterName = "myCluster";
+            string applicationName = "myApp";
+            ResourceIdentifier serviceFabricApplicationResourceId = ServiceFabricApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, applicationName);
+            ServiceFabricApplicationResource serviceFabricApplication = client.GetServiceFabricApplicationResource(serviceFabricApplicationResourceId);
+
+            // get the collection of this ServiceFabricServiceResource
+            ServiceFabricServiceCollection collection = serviceFabricApplication.GetServiceFabricServices();
+
+            // invoke the operation
+            string serviceName = "myService";
+            ServiceFabricServiceData data = new ServiceFabricServiceData(default)
+            {
+                ServiceTypeName = "myServiceType",
+                PartitionDescription = new SingletonPartitionSchemeDescription(),
+                Tags = { },
+            };
+            ArmOperation<ServiceFabricServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serviceName, data);
+            ServiceFabricServiceResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ServiceFabricServiceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAService()
         {
             // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/preview/2023-11-01-preview/examples/ServiceGetOperation_example.json
@@ -51,193 +145,8 @@ namespace Azure.ResourceManager.ServiceFabric.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a service
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetAService()
-        {
-            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/preview/2023-11-01-preview/examples/ServiceGetOperation_example.json
-            // this example is just showing the usage of "Services_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ServiceFabricApplicationResource created on azure
-            // for more information of creating ServiceFabricApplicationResource, please refer to the document of ServiceFabricApplicationResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "resRg";
-            string clusterName = "myCluster";
-            string applicationName = "myApp";
-            ResourceIdentifier serviceFabricApplicationResourceId = ServiceFabricApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, applicationName);
-            ServiceFabricApplicationResource serviceFabricApplication = client.GetServiceFabricApplicationResource(serviceFabricApplicationResourceId);
-
-            // get the collection of this ServiceFabricServiceResource
-            ServiceFabricServiceCollection collection = serviceFabricApplication.GetServiceFabricServices();
-
-            // invoke the operation
-            string serviceName = "myService";
-            bool result = await collection.ExistsAsync(serviceName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Get a service
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetAService()
-        {
-            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/preview/2023-11-01-preview/examples/ServiceGetOperation_example.json
-            // this example is just showing the usage of "Services_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ServiceFabricApplicationResource created on azure
-            // for more information of creating ServiceFabricApplicationResource, please refer to the document of ServiceFabricApplicationResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "resRg";
-            string clusterName = "myCluster";
-            string applicationName = "myApp";
-            ResourceIdentifier serviceFabricApplicationResourceId = ServiceFabricApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, applicationName);
-            ServiceFabricApplicationResource serviceFabricApplication = client.GetServiceFabricApplicationResource(serviceFabricApplicationResourceId);
-
-            // get the collection of this ServiceFabricServiceResource
-            ServiceFabricServiceCollection collection = serviceFabricApplication.GetServiceFabricServices();
-
-            // invoke the operation
-            string serviceName = "myService";
-            NullableResponse<ServiceFabricServiceResource> response = await collection.GetIfExistsAsync(serviceName);
-            ServiceFabricServiceResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ServiceFabricServiceData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // Put a service with maximum parameters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_PutAServiceWithMaximumParameters()
-        {
-            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/preview/2023-11-01-preview/examples/ServicePutOperation_example_max.json
-            // this example is just showing the usage of "Services_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ServiceFabricApplicationResource created on azure
-            // for more information of creating ServiceFabricApplicationResource, please refer to the document of ServiceFabricApplicationResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "resRg";
-            string clusterName = "myCluster";
-            string applicationName = "myApp";
-            ResourceIdentifier serviceFabricApplicationResourceId = ServiceFabricApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, applicationName);
-            ServiceFabricApplicationResource serviceFabricApplication = client.GetServiceFabricApplicationResource(serviceFabricApplicationResourceId);
-
-            // get the collection of this ServiceFabricServiceResource
-            ServiceFabricServiceCollection collection = serviceFabricApplication.GetServiceFabricServices();
-
-            // invoke the operation
-            string serviceName = "myService";
-            ServiceFabricServiceData data = new ServiceFabricServiceData(new AzureLocation("placeholder"))
-            {
-                PlacementConstraints = "NodeType==frontend",
-                CorrelationScheme =
-{
-new ServiceCorrelationDescription(ServiceCorrelationScheme.Affinity,"fabric:/app1/app1~svc1")
-},
-                ServiceLoadMetrics =
-{
-new ServiceLoadMetricDescription("metric1")
-{
-Weight = ServiceLoadMetricWeight.Low,
-}
-},
-                ServicePlacementPolicies =
-{
-},
-                DefaultMoveCost = ApplicationMoveCost.Medium,
-                ServiceTypeName = "myServiceType",
-                PartitionDescription = new SingletonPartitionSchemeDescription(),
-                ServicePackageActivationMode = ArmServicePackageActivationMode.SharedProcess,
-                ServiceDnsName = "my.service.dns",
-                Tags =
-{
-},
-            };
-            ArmOperation<ServiceFabricServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serviceName, data);
-            ServiceFabricServiceResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ServiceFabricServiceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Put a service with minimum parameters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_PutAServiceWithMinimumParameters()
-        {
-            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/preview/2023-11-01-preview/examples/ServicePutOperation_example_min.json
-            // this example is just showing the usage of "Services_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ServiceFabricApplicationResource created on azure
-            // for more information of creating ServiceFabricApplicationResource, please refer to the document of ServiceFabricApplicationResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "resRg";
-            string clusterName = "myCluster";
-            string applicationName = "myApp";
-            ResourceIdentifier serviceFabricApplicationResourceId = ServiceFabricApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, applicationName);
-            ServiceFabricApplicationResource serviceFabricApplication = client.GetServiceFabricApplicationResource(serviceFabricApplicationResourceId);
-
-            // get the collection of this ServiceFabricServiceResource
-            ServiceFabricServiceCollection collection = serviceFabricApplication.GetServiceFabricServices();
-
-            // invoke the operation
-            string serviceName = "myService";
-            ServiceFabricServiceData data = new ServiceFabricServiceData(new AzureLocation("placeholder"))
-            {
-                ServiceTypeName = "myServiceType",
-                PartitionDescription = new SingletonPartitionSchemeDescription(),
-                Tags =
-{
-},
-            };
-            ArmOperation<ServiceFabricServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serviceName, data);
-            ServiceFabricServiceResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ServiceFabricServiceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Get a list of service resources
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetAListOfServiceResources()
         {
             // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/preview/2023-11-01-preview/examples/ServiceListOperation_example.json
@@ -270,7 +179,81 @@ Weight = ServiceLoadMetricWeight.Low,
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetAService()
+        {
+            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/preview/2023-11-01-preview/examples/ServiceGetOperation_example.json
+            // this example is just showing the usage of "Services_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ServiceFabricApplicationResource created on azure
+            // for more information of creating ServiceFabricApplicationResource, please refer to the document of ServiceFabricApplicationResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "resRg";
+            string clusterName = "myCluster";
+            string applicationName = "myApp";
+            ResourceIdentifier serviceFabricApplicationResourceId = ServiceFabricApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, applicationName);
+            ServiceFabricApplicationResource serviceFabricApplication = client.GetServiceFabricApplicationResource(serviceFabricApplicationResourceId);
+
+            // get the collection of this ServiceFabricServiceResource
+            ServiceFabricServiceCollection collection = serviceFabricApplication.GetServiceFabricServices();
+
+            // invoke the operation
+            string serviceName = "myService";
+            bool result = await collection.ExistsAsync(serviceName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetAService()
+        {
+            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/preview/2023-11-01-preview/examples/ServiceGetOperation_example.json
+            // this example is just showing the usage of "Services_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ServiceFabricApplicationResource created on azure
+            // for more information of creating ServiceFabricApplicationResource, please refer to the document of ServiceFabricApplicationResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "resRg";
+            string clusterName = "myCluster";
+            string applicationName = "myApp";
+            ResourceIdentifier serviceFabricApplicationResourceId = ServiceFabricApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, applicationName);
+            ServiceFabricApplicationResource serviceFabricApplication = client.GetServiceFabricApplicationResource(serviceFabricApplicationResourceId);
+
+            // get the collection of this ServiceFabricServiceResource
+            ServiceFabricServiceCollection collection = serviceFabricApplication.GetServiceFabricServices();
+
+            // invoke the operation
+            string serviceName = "myService";
+            NullableResponse<ServiceFabricServiceResource> response = await collection.GetIfExistsAsync(serviceName);
+            ServiceFabricServiceResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ServiceFabricServiceData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

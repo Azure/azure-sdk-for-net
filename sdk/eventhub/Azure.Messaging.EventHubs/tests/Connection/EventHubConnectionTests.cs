@@ -746,7 +746,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var date = DateTimeOffset.Parse("2015-10-27T12:00:00Z");
             var partitionIds = new[] { "first", "second", "third" };
-            var properties = new EventHubProperties("dummy", date, partitionIds);
+            var properties = new EventHubProperties("dummy", date, partitionIds, false);
             var mockConnection = new Mock<EventHubConnection> { CallBase = true };
 
             mockConnection
@@ -835,7 +835,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var transportClient = new ObservableTransportClientMock();
             var connection = new InjectableTransportClientMock(transportClient, "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake");
-            var expectedPosition = EventPosition.FromOffset(65);
+            var expectedPosition = EventPosition.FromOffset("65");
             var expectedPartition = "2123";
             var expectedIdentifier = "OMG-ID";
             var expectedConsumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
@@ -851,7 +851,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(actualPartition, Is.EqualTo(expectedPartition), "The partition should have been passed.");
             Assert.That(actualConsumerGroup, Is.EqualTo(expectedConsumerGroup), "The consumer group should match.");
             Assert.That(actualIdentifier, Is.EqualTo(expectedIdentifier), "The identifier should match.");
-            Assert.That(actualPosition.Offset, Is.EqualTo(expectedPosition.Offset), "The event position to receive should match.");
+            Assert.That(actualPosition.OffsetString, Is.EqualTo(expectedPosition.OffsetString), "The event position to receive should match.");
             Assert.That(actualRetry, Is.SameAs(expectedRetryPolicy), "The retryPolicy should match.");
             Assert.That(actualOwnerLevel, Is.EqualTo(expectedOwnerLevel), "The owner levels should match.");
             Assert.That(actualPrefetch, Is.EqualTo(expectedPrefetch), "The prefetch counts should match.");

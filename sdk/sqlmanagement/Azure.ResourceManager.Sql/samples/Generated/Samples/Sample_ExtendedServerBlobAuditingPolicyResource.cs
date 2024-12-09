@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Sql.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Samples
 {
     public partial class Sample_ExtendedServerBlobAuditingPolicyResource
     {
-        // Get a server's blob extended auditing policy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAServerSBlobExtendedAuditingPolicy()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-11-01-preview/examples/ExtendedServerBlobAuditingGet.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update a server's extended blob auditing policy with all parameters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAServerSExtendedBlobAuditingPolicyWithAllParameters()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-11-01-preview/examples/ExtendedServerBlobAuditingCreateMax.json
@@ -70,14 +69,11 @@ namespace Azure.ResourceManager.Sql.Samples
             ExtendedServerBlobAuditingPolicyResource extendedServerBlobAuditingPolicy = client.GetExtendedServerBlobAuditingPolicyResource(extendedServerBlobAuditingPolicyResourceId);
 
             // invoke the operation
-            ExtendedServerBlobAuditingPolicyData data = new ExtendedServerBlobAuditingPolicyData()
+            ExtendedServerBlobAuditingPolicyData data = new ExtendedServerBlobAuditingPolicyData
             {
                 PredicateExpression = "object_name = 'SensitiveData'",
                 RetentionDays = 6,
-                AuditActionsAndGroups =
-{
-"SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP","FAILED_DATABASE_AUTHENTICATION_GROUP","BATCH_COMPLETED_GROUP"
-},
+                AuditActionsAndGroups = { "SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP", "FAILED_DATABASE_AUTHENTICATION_GROUP", "BATCH_COMPLETED_GROUP" },
                 IsStorageSecondaryKeyInUse = false,
                 IsAzureMonitorTargetEnabled = true,
                 QueueDelayMs = 4000,
@@ -96,9 +92,8 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update a server's extended blob auditing policy with minimal parameters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAServerSExtendedBlobAuditingPolicyWithMinimalParameters()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2021-11-01-preview/examples/ExtendedServerBlobAuditingCreateMin.json
@@ -119,7 +114,7 @@ namespace Azure.ResourceManager.Sql.Samples
             ExtendedServerBlobAuditingPolicyResource extendedServerBlobAuditingPolicy = client.GetExtendedServerBlobAuditingPolicyResource(extendedServerBlobAuditingPolicyResourceId);
 
             // invoke the operation
-            ExtendedServerBlobAuditingPolicyData data = new ExtendedServerBlobAuditingPolicyData()
+            ExtendedServerBlobAuditingPolicyData data = new ExtendedServerBlobAuditingPolicyData
             {
                 State = BlobAuditingPolicyState.Enabled,
                 StorageEndpoint = "https://mystorage.blob.core.windows.net",

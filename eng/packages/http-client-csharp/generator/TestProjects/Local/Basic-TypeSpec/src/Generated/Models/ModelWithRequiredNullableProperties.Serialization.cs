@@ -186,6 +186,10 @@ namespace BasicTypeSpec.Models
         /// <param name="modelWithRequiredNullableProperties"> The <see cref="ModelWithRequiredNullableProperties"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(ModelWithRequiredNullableProperties modelWithRequiredNullableProperties)
         {
+            if (modelWithRequiredNullableProperties == null)
+            {
+                return null;
+            }
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
             content.JsonWriter.WriteObjectValue(modelWithRequiredNullableProperties, ModelSerializationExtensions.WireOptions);
             return content;

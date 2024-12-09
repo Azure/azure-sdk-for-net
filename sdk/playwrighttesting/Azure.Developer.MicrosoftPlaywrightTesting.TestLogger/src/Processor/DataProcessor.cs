@@ -29,7 +29,19 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
         {
             var startTime = _cloudRunMetadata.TestRunStartTime.ToString("yyyy-MM-ddTHH:mm:ssZ");
             var gitBasedRunName = ReporterUtils.GetRunName(CiInfoProvider.GetCIInfo())?.Trim();
-            string runName = string.IsNullOrEmpty(gitBasedRunName) ? _cloudRunMetadata.RunId! : gitBasedRunName!;
+            string runName;
+            if (!string.IsNullOrEmpty(_cloudRunMetadata.RunName))
+            {
+                runName = _cloudRunMetadata.RunName!;
+            }
+            else if (!string.IsNullOrEmpty(gitBasedRunName))
+            {
+                runName = gitBasedRunName!;
+            }
+            else
+            {
+                runName = _cloudRunMetadata.RunId!;
+            }
             var run = new TestRunDto
             {
                 TestRunId = _cloudRunMetadata.RunId!,
@@ -49,13 +61,13 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                 },
                 TestRunConfig = new ClientConfig // TODO fetch some of these dynamically
                 {
-                    Workers = 1,
+                    Workers = _cloudRunMetadata.NumberOfTestWorkers,
                     PwVersion = "1.40",
                     Timeout = 60000,
                     TestType = "WebTest",
                     TestSdkLanguage = "CSHARP",
                     TestFramework = new TestFramework() { Name = "PLAYWRIGHT", RunnerName = "NUNIT", Version = "3.1" }, // TODO fetch runner name MSTest/Nunit
-                    ReporterPackageVersion = "1.0.0-beta.1",
+                    ReporterPackageVersion = "1.0.0-beta.3",
                     Shards = new Shard() { Total = 1 }
                 }
             };
@@ -74,7 +86,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                     Status = "RUNNING",
                     StartTime = startTime,
                 },
-                Workers = 1
+                Workers = _cloudRunMetadata.NumberOfTestWorkers
             };
             return shard;
         }
@@ -143,13 +155,14 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
         {
             if (testResultSource == null)
                 return new RawTestResult();
-            List <MPTError> errors = new();//[testResultSource.ErrorMessage];
+            List <MPTError> errors = new();
             if (testResultSource.ErrorMessage != null)
                 errors.Add(new MPTError() { message = testResultSource.ErrorMessage });
+            if (testResultSource.ErrorStackTrace != null)
+                errors.Add(new MPTError() { message = testResultSource.ErrorStackTrace });
             var rawTestResult = new RawTestResult
             {
-                errors = JsonSerializer.Serialize(errors),
-                stdErr = testResultSource?.ErrorStackTrace ?? string.Empty
+                errors = JsonSerializer.Serialize(errors)
             };
             return rawTestResult;
         }

@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ContainerService.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ContainerService.Samples
 {
     public partial class Sample_ContainerServiceAgentPoolCollection
     {
-        // List Agent Pools by Managed Cluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ListAgentPoolsByManagedCluster()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateAgentPoolUsingAnAgentPoolSnapshot()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsList.json
-            // this example is just showing the usage of "AgentPools_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_Snapshot.json
+            // this example is just showing the usage of "AgentPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -39,22 +39,852 @@ namespace Azure.ResourceManager.ContainerService.Samples
             // get the collection of this ContainerServiceAgentPoolResource
             ContainerServiceAgentPoolCollection collection = containerServiceManagedCluster.GetContainerServiceAgentPools();
 
-            // invoke the operation and iterate over the result
-            await foreach (ContainerServiceAgentPoolResource item in collection.GetAllAsync())
+            // invoke the operation
+            string agentPoolName = "agentpool1";
+            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ContainerServiceAgentPoolData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                Count = 3,
+                VmSize = "Standard_DS2_v2",
+                OSType = ContainerServiceOSType.Linux,
+                OrchestratorVersion = "",
+                EnableFips = true,
+                CreationDataSourceResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/Microsoft.ContainerService/snapshots/snapshot1"),
+            };
+            ArmOperation<ContainerServiceAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
+            ContainerServiceAgentPoolResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ContainerServiceAgentPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Agent Pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateAgentPoolWithCapacityReservationGroup()
+        {
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_CRG.json
+            // this example is just showing the usage of "AgentPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ContainerServiceManagedClusterResource created on azure
+            // for more information of creating ContainerServiceManagedClusterResource, please refer to the document of ContainerServiceManagedClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string resourceName = "clustername1";
+            ResourceIdentifier containerServiceManagedClusterResourceId = ContainerServiceManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
+
+            // get the collection of this ContainerServiceAgentPoolResource
+            ContainerServiceAgentPoolCollection collection = containerServiceManagedCluster.GetContainerServiceAgentPools();
+
+            // invoke the operation
+            string agentPoolName = "agentpool1";
+            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData
+            {
+                Count = 3,
+                VmSize = "Standard_DS2_v2",
+                OSType = ContainerServiceOSType.Linux,
+                OrchestratorVersion = "",
+                CapacityReservationGroupId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/Microsoft.Compute/CapacityReservationGroups/crg1"),
+            };
+            ArmOperation<ContainerServiceAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
+            ContainerServiceAgentPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ContainerServiceAgentPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateAgentPoolWithDedicatedHostGroup()
+        {
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_DedicatedHostGroup.json
+            // this example is just showing the usage of "AgentPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ContainerServiceManagedClusterResource created on azure
+            // for more information of creating ContainerServiceManagedClusterResource, please refer to the document of ContainerServiceManagedClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string resourceName = "clustername1";
+            ResourceIdentifier containerServiceManagedClusterResourceId = ContainerServiceManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
+
+            // get the collection of this ContainerServiceAgentPoolResource
+            ContainerServiceAgentPoolCollection collection = containerServiceManagedCluster.GetContainerServiceAgentPools();
+
+            // invoke the operation
+            string agentPoolName = "agentpool1";
+            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData
+            {
+                Count = 3,
+                VmSize = "Standard_DS2_v2",
+                OSType = ContainerServiceOSType.Linux,
+                OrchestratorVersion = "",
+                HostGroupId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg/providers/Microsoft.Compute/hostGroups/hostgroup1"),
+            };
+            ArmOperation<ContainerServiceAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
+            ContainerServiceAgentPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ContainerServiceAgentPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateAgentPoolWithEncryptionAtHostEnabled()
+        {
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_EnableEncryptionAtHost.json
+            // this example is just showing the usage of "AgentPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ContainerServiceManagedClusterResource created on azure
+            // for more information of creating ContainerServiceManagedClusterResource, please refer to the document of ContainerServiceManagedClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string resourceName = "clustername1";
+            ResourceIdentifier containerServiceManagedClusterResourceId = ContainerServiceManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
+
+            // get the collection of this ContainerServiceAgentPoolResource
+            ContainerServiceAgentPoolCollection collection = containerServiceManagedCluster.GetContainerServiceAgentPools();
+
+            // invoke the operation
+            string agentPoolName = "agentpool1";
+            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData
+            {
+                Count = 3,
+                VmSize = "Standard_DS2_v2",
+                OSType = ContainerServiceOSType.Linux,
+                OrchestratorVersion = "",
+                EnableEncryptionAtHost = true,
+            };
+            ArmOperation<ContainerServiceAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
+            ContainerServiceAgentPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ContainerServiceAgentPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateAgentPoolWithEphemeralOSDisk()
+        {
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_Ephemeral.json
+            // this example is just showing the usage of "AgentPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ContainerServiceManagedClusterResource created on azure
+            // for more information of creating ContainerServiceManagedClusterResource, please refer to the document of ContainerServiceManagedClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string resourceName = "clustername1";
+            ResourceIdentifier containerServiceManagedClusterResourceId = ContainerServiceManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
+
+            // get the collection of this ContainerServiceAgentPoolResource
+            ContainerServiceAgentPoolCollection collection = containerServiceManagedCluster.GetContainerServiceAgentPools();
+
+            // invoke the operation
+            string agentPoolName = "agentpool1";
+            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData
+            {
+                Count = 3,
+                VmSize = "Standard_DS2_v2",
+                OSDiskSizeInGB = 64,
+                OSDiskType = ContainerServiceOSDiskType.Ephemeral,
+                OSType = ContainerServiceOSType.Linux,
+                OrchestratorVersion = "",
+            };
+            ArmOperation<ContainerServiceAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
+            ContainerServiceAgentPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ContainerServiceAgentPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateAgentPoolWithFIPSEnabledOS()
+        {
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_EnableFIPS.json
+            // this example is just showing the usage of "AgentPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ContainerServiceManagedClusterResource created on azure
+            // for more information of creating ContainerServiceManagedClusterResource, please refer to the document of ContainerServiceManagedClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string resourceName = "clustername1";
+            ResourceIdentifier containerServiceManagedClusterResourceId = ContainerServiceManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
+
+            // get the collection of this ContainerServiceAgentPoolResource
+            ContainerServiceAgentPoolCollection collection = containerServiceManagedCluster.GetContainerServiceAgentPools();
+
+            // invoke the operation
+            string agentPoolName = "agentpool1";
+            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData
+            {
+                Count = 3,
+                VmSize = "Standard_DS2_v2",
+                OSType = ContainerServiceOSType.Linux,
+                OrchestratorVersion = "",
+                EnableFips = true,
+            };
+            ArmOperation<ContainerServiceAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
+            ContainerServiceAgentPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ContainerServiceAgentPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateAgentPoolWithGPUMIG()
+        {
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_GPUMIG.json
+            // this example is just showing the usage of "AgentPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ContainerServiceManagedClusterResource created on azure
+            // for more information of creating ContainerServiceManagedClusterResource, please refer to the document of ContainerServiceManagedClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string resourceName = "clustername1";
+            ResourceIdentifier containerServiceManagedClusterResourceId = ContainerServiceManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
+
+            // get the collection of this ContainerServiceAgentPoolResource
+            ContainerServiceAgentPoolCollection collection = containerServiceManagedCluster.GetContainerServiceAgentPools();
+
+            // invoke the operation
+            string agentPoolName = "agentpool1";
+            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData
+            {
+                Count = 3,
+                VmSize = "Standard_ND96asr_v4",
+                OSType = ContainerServiceOSType.Linux,
+                OrchestratorVersion = "",
+                KubeletConfig = new KubeletConfig
+                {
+                    CpuManagerPolicy = "static",
+                    IsCpuCfsQuotaEnabled = true,
+                    CpuCfsQuotaPeriod = "200ms",
+                    ImageGcHighThreshold = 90,
+                    ImageGcLowThreshold = 70,
+                    TopologyManagerPolicy = "best-effort",
+                    AllowedUnsafeSysctls = { "kernel.msg*", "net.core.somaxconn" },
+                    FailStartWithSwapOn = false,
+                },
+                LinuxOSConfig = new LinuxOSConfig
+                {
+                    Sysctls = new SysctlConfig
+                    {
+                        NetCoreWmemDefault = 12345,
+                        NetIPv4TcpTwReuse = true,
+                        NetIPv4IPLocalPortRange = "20000 60000",
+                        KernelThreadsMax = 99999,
+                    },
+                    TransparentHugePageEnabled = "always",
+                    TransparentHugePageDefrag = "madvise",
+                    SwapFileSizeInMB = 1500,
+                },
+                GpuInstanceProfile = GpuInstanceProfile.Mig2G,
+            };
+            ArmOperation<ContainerServiceAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
+            ContainerServiceAgentPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ContainerServiceAgentPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateAgentPoolWithKrustletAndTheWASIRuntime()
+        {
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_WasmWasi.json
+            // this example is just showing the usage of "AgentPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ContainerServiceManagedClusterResource created on azure
+            // for more information of creating ContainerServiceManagedClusterResource, please refer to the document of ContainerServiceManagedClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string resourceName = "clustername1";
+            ResourceIdentifier containerServiceManagedClusterResourceId = ContainerServiceManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
+
+            // get the collection of this ContainerServiceAgentPoolResource
+            ContainerServiceAgentPoolCollection collection = containerServiceManagedCluster.GetContainerServiceAgentPools();
+
+            // invoke the operation
+            string agentPoolName = "agentpool1";
+            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData
+            {
+                Count = 3,
+                VmSize = "Standard_DS2_v2",
+                OSDiskSizeInGB = 64,
+                WorkloadRuntime = WorkloadRuntime.WasmWasi,
+                OSType = ContainerServiceOSType.Linux,
+                Mode = AgentPoolMode.User,
+                OrchestratorVersion = "",
+            };
+            ArmOperation<ContainerServiceAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
+            ContainerServiceAgentPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ContainerServiceAgentPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateAgentPoolWithKubeletConfigAndLinuxOSConfig()
+        {
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_CustomNodeConfig.json
+            // this example is just showing the usage of "AgentPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ContainerServiceManagedClusterResource created on azure
+            // for more information of creating ContainerServiceManagedClusterResource, please refer to the document of ContainerServiceManagedClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string resourceName = "clustername1";
+            ResourceIdentifier containerServiceManagedClusterResourceId = ContainerServiceManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
+
+            // get the collection of this ContainerServiceAgentPoolResource
+            ContainerServiceAgentPoolCollection collection = containerServiceManagedCluster.GetContainerServiceAgentPools();
+
+            // invoke the operation
+            string agentPoolName = "agentpool1";
+            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData
+            {
+                Count = 3,
+                VmSize = "Standard_DS2_v2",
+                OSType = ContainerServiceOSType.Linux,
+                OrchestratorVersion = "",
+                KubeletConfig = new KubeletConfig
+                {
+                    CpuManagerPolicy = "static",
+                    IsCpuCfsQuotaEnabled = true,
+                    CpuCfsQuotaPeriod = "200ms",
+                    ImageGcHighThreshold = 90,
+                    ImageGcLowThreshold = 70,
+                    TopologyManagerPolicy = "best-effort",
+                    AllowedUnsafeSysctls = { "kernel.msg*", "net.core.somaxconn" },
+                    FailStartWithSwapOn = false,
+                },
+                LinuxOSConfig = new LinuxOSConfig
+                {
+                    Sysctls = new SysctlConfig
+                    {
+                        NetCoreWmemDefault = 12345,
+                        NetIPv4TcpTwReuse = true,
+                        NetIPv4IPLocalPortRange = "20000 60000",
+                        KernelThreadsMax = 99999,
+                    },
+                    TransparentHugePageEnabled = "always",
+                    TransparentHugePageDefrag = "madvise",
+                    SwapFileSizeInMB = 1500,
+                },
+            };
+            ArmOperation<ContainerServiceAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
+            ContainerServiceAgentPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ContainerServiceAgentPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateAgentPoolWithOSSKU()
+        {
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_OSSKU.json
+            // this example is just showing the usage of "AgentPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ContainerServiceManagedClusterResource created on azure
+            // for more information of creating ContainerServiceManagedClusterResource, please refer to the document of ContainerServiceManagedClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string resourceName = "clustername1";
+            ResourceIdentifier containerServiceManagedClusterResourceId = ContainerServiceManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
+
+            // get the collection of this ContainerServiceAgentPoolResource
+            ContainerServiceAgentPoolCollection collection = containerServiceManagedCluster.GetContainerServiceAgentPools();
+
+            // invoke the operation
+            string agentPoolName = "agentpool1";
+            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData
+            {
+                Count = 3,
+                VmSize = "Standard_DS2_v2",
+                OSType = ContainerServiceOSType.Linux,
+                OSSku = ContainerServiceOSSku.AzureLinux,
+                OrchestratorVersion = "",
+                KubeletConfig = new KubeletConfig
+                {
+                    CpuManagerPolicy = "static",
+                    IsCpuCfsQuotaEnabled = true,
+                    CpuCfsQuotaPeriod = "200ms",
+                    ImageGcHighThreshold = 90,
+                    ImageGcLowThreshold = 70,
+                    TopologyManagerPolicy = "best-effort",
+                    AllowedUnsafeSysctls = { "kernel.msg*", "net.core.somaxconn" },
+                    FailStartWithSwapOn = false,
+                },
+                LinuxOSConfig = new LinuxOSConfig
+                {
+                    Sysctls = new SysctlConfig
+                    {
+                        NetCoreWmemDefault = 12345,
+                        NetIPv4TcpTwReuse = true,
+                        NetIPv4IPLocalPortRange = "20000 60000",
+                        KernelThreadsMax = 99999,
+                    },
+                    TransparentHugePageEnabled = "always",
+                    TransparentHugePageDefrag = "madvise",
+                    SwapFileSizeInMB = 1500,
+                },
+            };
+            ArmOperation<ContainerServiceAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
+            ContainerServiceAgentPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ContainerServiceAgentPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateAgentPoolWithPPG()
+        {
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_PPG.json
+            // this example is just showing the usage of "AgentPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ContainerServiceManagedClusterResource created on azure
+            // for more information of creating ContainerServiceManagedClusterResource, please refer to the document of ContainerServiceManagedClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string resourceName = "clustername1";
+            ResourceIdentifier containerServiceManagedClusterResourceId = ContainerServiceManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
+
+            // get the collection of this ContainerServiceAgentPoolResource
+            ContainerServiceAgentPoolCollection collection = containerServiceManagedCluster.GetContainerServiceAgentPools();
+
+            // invoke the operation
+            string agentPoolName = "agentpool1";
+            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData
+            {
+                Count = 3,
+                VmSize = "Standard_DS2_v2",
+                OSType = ContainerServiceOSType.Linux,
+                OrchestratorVersion = "",
+                ProximityPlacementGroupId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/Microsoft.Compute/proximityPlacementGroups/ppg1"),
+            };
+            ArmOperation<ContainerServiceAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
+            ContainerServiceAgentPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ContainerServiceAgentPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateAgentPoolWithUltraSSDEnabled()
+        {
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_EnableUltraSSD.json
+            // this example is just showing the usage of "AgentPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ContainerServiceManagedClusterResource created on azure
+            // for more information of creating ContainerServiceManagedClusterResource, please refer to the document of ContainerServiceManagedClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string resourceName = "clustername1";
+            ResourceIdentifier containerServiceManagedClusterResourceId = ContainerServiceManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
+
+            // get the collection of this ContainerServiceAgentPoolResource
+            ContainerServiceAgentPoolCollection collection = containerServiceManagedCluster.GetContainerServiceAgentPools();
+
+            // invoke the operation
+            string agentPoolName = "agentpool1";
+            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData
+            {
+                Count = 3,
+                VmSize = "Standard_DS2_v2",
+                OSType = ContainerServiceOSType.Linux,
+                OrchestratorVersion = "",
+                EnableUltraSsd = true,
+            };
+            ArmOperation<ContainerServiceAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
+            ContainerServiceAgentPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ContainerServiceAgentPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateAgentPoolWithWindowsOSSKU()
+        {
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_WindowsOSSKU.json
+            // this example is just showing the usage of "AgentPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ContainerServiceManagedClusterResource created on azure
+            // for more information of creating ContainerServiceManagedClusterResource, please refer to the document of ContainerServiceManagedClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string resourceName = "clustername1";
+            ResourceIdentifier containerServiceManagedClusterResourceId = ContainerServiceManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
+
+            // get the collection of this ContainerServiceAgentPoolResource
+            ContainerServiceAgentPoolCollection collection = containerServiceManagedCluster.GetContainerServiceAgentPools();
+
+            // invoke the operation
+            string agentPoolName = "wnp2";
+            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData
+            {
+                Count = 3,
+                VmSize = "Standard_D4s_v3",
+                OSType = ContainerServiceOSType.Windows,
+                OSSku = ContainerServiceOSSku.Windows2022,
+                OrchestratorVersion = "1.23.3",
+            };
+            ArmOperation<ContainerServiceAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
+            ContainerServiceAgentPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ContainerServiceAgentPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateSpotAgentPool()
+        {
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_Spot.json
+            // this example is just showing the usage of "AgentPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ContainerServiceManagedClusterResource created on azure
+            // for more information of creating ContainerServiceManagedClusterResource, please refer to the document of ContainerServiceManagedClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string resourceName = "clustername1";
+            ResourceIdentifier containerServiceManagedClusterResourceId = ContainerServiceManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
+
+            // get the collection of this ContainerServiceAgentPoolResource
+            ContainerServiceAgentPoolCollection collection = containerServiceManagedCluster.GetContainerServiceAgentPools();
+
+            // invoke the operation
+            string agentPoolName = "agentpool1";
+            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData
+            {
+                Count = 3,
+                VmSize = "Standard_DS1_v2",
+                OSType = ContainerServiceOSType.Linux,
+                OrchestratorVersion = "",
+                ScaleSetPriority = ScaleSetPriority.Spot,
+                ScaleSetEvictionPolicy = ScaleSetEvictionPolicy.Delete,
+                Tags =
+{
+["name1"] = "val1"
+},
+                NodeLabels =
+{
+["key1"] = "val1"
+},
+                NodeTaints = { "Key1=Value1:NoSchedule" },
+            };
+            ArmOperation<ContainerServiceAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
+            ContainerServiceAgentPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ContainerServiceAgentPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateUpdateAgentPool()
+        {
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_Update.json
+            // this example is just showing the usage of "AgentPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ContainerServiceManagedClusterResource created on azure
+            // for more information of creating ContainerServiceManagedClusterResource, please refer to the document of ContainerServiceManagedClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string resourceName = "clustername1";
+            ResourceIdentifier containerServiceManagedClusterResourceId = ContainerServiceManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
+
+            // get the collection of this ContainerServiceAgentPoolResource
+            ContainerServiceAgentPoolCollection collection = containerServiceManagedCluster.GetContainerServiceAgentPools();
+
+            // invoke the operation
+            string agentPoolName = "agentpool1";
+            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData
+            {
+                Count = 3,
+                VmSize = "Standard_DS1_v2",
+                OSType = ContainerServiceOSType.Linux,
+                Mode = AgentPoolMode.User,
+                OrchestratorVersion = "",
+                ScaleSetPriority = ScaleSetPriority.Spot,
+                ScaleSetEvictionPolicy = ScaleSetEvictionPolicy.Delete,
+                Tags =
+{
+["name1"] = "val1"
+},
+                NodeLabels =
+{
+["key1"] = "val1"
+},
+                NodeTaints = { "Key1=Value1:NoSchedule" },
+            };
+            ArmOperation<ContainerServiceAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
+            ContainerServiceAgentPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ContainerServiceAgentPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_StartAgentPool()
+        {
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPools_Start.json
+            // this example is just showing the usage of "AgentPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ContainerServiceManagedClusterResource created on azure
+            // for more information of creating ContainerServiceManagedClusterResource, please refer to the document of ContainerServiceManagedClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string resourceName = "clustername1";
+            ResourceIdentifier containerServiceManagedClusterResourceId = ContainerServiceManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
+
+            // get the collection of this ContainerServiceAgentPoolResource
+            ContainerServiceAgentPoolCollection collection = containerServiceManagedCluster.GetContainerServiceAgentPools();
+
+            // invoke the operation
+            string agentPoolName = "agentpool1";
+            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData
+            {
+                PowerStateCode = ContainerServiceStateCode.Running,
+            };
+            ArmOperation<ContainerServiceAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
+            ContainerServiceAgentPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ContainerServiceAgentPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_StopAgentPool()
+        {
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPools_Stop.json
+            // this example is just showing the usage of "AgentPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ContainerServiceManagedClusterResource created on azure
+            // for more information of creating ContainerServiceManagedClusterResource, please refer to the document of ContainerServiceManagedClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string resourceName = "clustername1";
+            ResourceIdentifier containerServiceManagedClusterResourceId = ContainerServiceManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
+
+            // get the collection of this ContainerServiceAgentPoolResource
+            ContainerServiceAgentPoolCollection collection = containerServiceManagedCluster.GetContainerServiceAgentPools();
+
+            // invoke the operation
+            string agentPoolName = "agentpool1";
+            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData
+            {
+                PowerStateCode = ContainerServiceStateCode.Stopped,
+            };
+            ArmOperation<ContainerServiceAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
+            ContainerServiceAgentPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ContainerServiceAgentPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_UpdateAgentPool()
+        {
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPools_Update.json
+            // this example is just showing the usage of "AgentPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ContainerServiceManagedClusterResource created on azure
+            // for more information of creating ContainerServiceManagedClusterResource, please refer to the document of ContainerServiceManagedClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string resourceName = "clustername1";
+            ResourceIdentifier containerServiceManagedClusterResourceId = ContainerServiceManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
+
+            // get the collection of this ContainerServiceAgentPoolResource
+            ContainerServiceAgentPoolCollection collection = containerServiceManagedCluster.GetContainerServiceAgentPools();
+
+            // invoke the operation
+            string agentPoolName = "agentpool1";
+            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData
+            {
+                Count = 3,
+                VmSize = "Standard_DS1_v2",
+                OSType = ContainerServiceOSType.Linux,
+                MaxCount = 2,
+                MinCount = 2,
+                EnableAutoScaling = true,
+                OrchestratorVersion = "",
+                ScaleSetPriority = ScaleSetPriority.Spot,
+                ScaleSetEvictionPolicy = ScaleSetEvictionPolicy.Delete,
+                NodeTaints = { "Key1=Value1:NoSchedule" },
+            };
+            ArmOperation<ContainerServiceAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
+            ContainerServiceAgentPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ContainerServiceAgentPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAgentPool()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsGet.json
@@ -87,9 +917,44 @@ namespace Azure.ResourceManager.ContainerService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Agent Pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListAgentPoolsByManagedCluster()
+        {
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsList.json
+            // this example is just showing the usage of "AgentPools_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ContainerServiceManagedClusterResource created on azure
+            // for more information of creating ContainerServiceManagedClusterResource, please refer to the document of ContainerServiceManagedClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string resourceName = "clustername1";
+            ResourceIdentifier containerServiceManagedClusterResourceId = ContainerServiceManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
+
+            // get the collection of this ContainerServiceAgentPoolResource
+            ContainerServiceAgentPoolCollection collection = containerServiceManagedCluster.GetContainerServiceAgentPools();
+
+            // invoke the operation and iterate over the result
+            await foreach (ContainerServiceAgentPoolResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ContainerServiceAgentPoolData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAgentPool()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsGet.json
@@ -118,9 +983,8 @@ namespace Azure.ResourceManager.ContainerService.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get Agent Pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAgentPool()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsGet.json
@@ -149,7 +1013,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -159,909 +1023,6 @@ namespace Azure.ResourceManager.ContainerService.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        // Create Agent Pool using an agent pool snapshot
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateAgentPoolUsingAnAgentPoolSnapshot()
-        {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_Snapshot.json
-            // this example is just showing the usage of "AgentPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ContainerServiceManagedClusterResource created on azure
-            // for more information of creating ContainerServiceManagedClusterResource, please refer to the document of ContainerServiceManagedClusterResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string resourceName = "clustername1";
-            ResourceIdentifier containerServiceManagedClusterResourceId = ContainerServiceManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
-
-            // get the collection of this ContainerServiceAgentPoolResource
-            ContainerServiceAgentPoolCollection collection = containerServiceManagedCluster.GetContainerServiceAgentPools();
-
-            // invoke the operation
-            string agentPoolName = "agentpool1";
-            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData()
-            {
-                Count = 3,
-                VmSize = "Standard_DS2_v2",
-                OSType = ContainerServiceOSType.Linux,
-                OrchestratorVersion = "",
-                EnableFips = true,
-                CreationDataSourceResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/Microsoft.ContainerService/snapshots/snapshot1"),
-            };
-            ArmOperation<ContainerServiceAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
-            ContainerServiceAgentPoolResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ContainerServiceAgentPoolData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Create Agent Pool with Capacity Reservation Group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateAgentPoolWithCapacityReservationGroup()
-        {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_CRG.json
-            // this example is just showing the usage of "AgentPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ContainerServiceManagedClusterResource created on azure
-            // for more information of creating ContainerServiceManagedClusterResource, please refer to the document of ContainerServiceManagedClusterResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string resourceName = "clustername1";
-            ResourceIdentifier containerServiceManagedClusterResourceId = ContainerServiceManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
-
-            // get the collection of this ContainerServiceAgentPoolResource
-            ContainerServiceAgentPoolCollection collection = containerServiceManagedCluster.GetContainerServiceAgentPools();
-
-            // invoke the operation
-            string agentPoolName = "agentpool1";
-            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData()
-            {
-                Count = 3,
-                VmSize = "Standard_DS2_v2",
-                OSType = ContainerServiceOSType.Linux,
-                OrchestratorVersion = "",
-                CapacityReservationGroupId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/Microsoft.Compute/CapacityReservationGroups/crg1"),
-            };
-            ArmOperation<ContainerServiceAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
-            ContainerServiceAgentPoolResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ContainerServiceAgentPoolData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Create Agent Pool with Dedicated Host Group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateAgentPoolWithDedicatedHostGroup()
-        {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_DedicatedHostGroup.json
-            // this example is just showing the usage of "AgentPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ContainerServiceManagedClusterResource created on azure
-            // for more information of creating ContainerServiceManagedClusterResource, please refer to the document of ContainerServiceManagedClusterResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string resourceName = "clustername1";
-            ResourceIdentifier containerServiceManagedClusterResourceId = ContainerServiceManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
-
-            // get the collection of this ContainerServiceAgentPoolResource
-            ContainerServiceAgentPoolCollection collection = containerServiceManagedCluster.GetContainerServiceAgentPools();
-
-            // invoke the operation
-            string agentPoolName = "agentpool1";
-            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData()
-            {
-                Count = 3,
-                VmSize = "Standard_DS2_v2",
-                OSType = ContainerServiceOSType.Linux,
-                OrchestratorVersion = "",
-                HostGroupId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg/providers/Microsoft.Compute/hostGroups/hostgroup1"),
-            };
-            ArmOperation<ContainerServiceAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
-            ContainerServiceAgentPoolResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ContainerServiceAgentPoolData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Create Agent Pool with EncryptionAtHost enabled
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateAgentPoolWithEncryptionAtHostEnabled()
-        {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_EnableEncryptionAtHost.json
-            // this example is just showing the usage of "AgentPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ContainerServiceManagedClusterResource created on azure
-            // for more information of creating ContainerServiceManagedClusterResource, please refer to the document of ContainerServiceManagedClusterResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string resourceName = "clustername1";
-            ResourceIdentifier containerServiceManagedClusterResourceId = ContainerServiceManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
-
-            // get the collection of this ContainerServiceAgentPoolResource
-            ContainerServiceAgentPoolCollection collection = containerServiceManagedCluster.GetContainerServiceAgentPools();
-
-            // invoke the operation
-            string agentPoolName = "agentpool1";
-            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData()
-            {
-                Count = 3,
-                VmSize = "Standard_DS2_v2",
-                OSType = ContainerServiceOSType.Linux,
-                OrchestratorVersion = "",
-                EnableEncryptionAtHost = true,
-            };
-            ArmOperation<ContainerServiceAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
-            ContainerServiceAgentPoolResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ContainerServiceAgentPoolData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Create Agent Pool with Ephemeral OS Disk
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateAgentPoolWithEphemeralOSDisk()
-        {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_Ephemeral.json
-            // this example is just showing the usage of "AgentPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ContainerServiceManagedClusterResource created on azure
-            // for more information of creating ContainerServiceManagedClusterResource, please refer to the document of ContainerServiceManagedClusterResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string resourceName = "clustername1";
-            ResourceIdentifier containerServiceManagedClusterResourceId = ContainerServiceManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
-
-            // get the collection of this ContainerServiceAgentPoolResource
-            ContainerServiceAgentPoolCollection collection = containerServiceManagedCluster.GetContainerServiceAgentPools();
-
-            // invoke the operation
-            string agentPoolName = "agentpool1";
-            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData()
-            {
-                Count = 3,
-                VmSize = "Standard_DS2_v2",
-                OSDiskSizeInGB = 64,
-                OSDiskType = ContainerServiceOSDiskType.Ephemeral,
-                OSType = ContainerServiceOSType.Linux,
-                OrchestratorVersion = "",
-            };
-            ArmOperation<ContainerServiceAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
-            ContainerServiceAgentPoolResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ContainerServiceAgentPoolData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Create Agent Pool with FIPS enabled OS
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateAgentPoolWithFIPSEnabledOS()
-        {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_EnableFIPS.json
-            // this example is just showing the usage of "AgentPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ContainerServiceManagedClusterResource created on azure
-            // for more information of creating ContainerServiceManagedClusterResource, please refer to the document of ContainerServiceManagedClusterResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string resourceName = "clustername1";
-            ResourceIdentifier containerServiceManagedClusterResourceId = ContainerServiceManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
-
-            // get the collection of this ContainerServiceAgentPoolResource
-            ContainerServiceAgentPoolCollection collection = containerServiceManagedCluster.GetContainerServiceAgentPools();
-
-            // invoke the operation
-            string agentPoolName = "agentpool1";
-            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData()
-            {
-                Count = 3,
-                VmSize = "Standard_DS2_v2",
-                OSType = ContainerServiceOSType.Linux,
-                OrchestratorVersion = "",
-                EnableFips = true,
-            };
-            ArmOperation<ContainerServiceAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
-            ContainerServiceAgentPoolResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ContainerServiceAgentPoolData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Create Agent Pool with GPUMIG
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateAgentPoolWithGPUMIG()
-        {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_GPUMIG.json
-            // this example is just showing the usage of "AgentPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ContainerServiceManagedClusterResource created on azure
-            // for more information of creating ContainerServiceManagedClusterResource, please refer to the document of ContainerServiceManagedClusterResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string resourceName = "clustername1";
-            ResourceIdentifier containerServiceManagedClusterResourceId = ContainerServiceManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
-
-            // get the collection of this ContainerServiceAgentPoolResource
-            ContainerServiceAgentPoolCollection collection = containerServiceManagedCluster.GetContainerServiceAgentPools();
-
-            // invoke the operation
-            string agentPoolName = "agentpool1";
-            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData()
-            {
-                Count = 3,
-                VmSize = "Standard_ND96asr_v4",
-                OSType = ContainerServiceOSType.Linux,
-                OrchestratorVersion = "",
-                KubeletConfig = new KubeletConfig()
-                {
-                    CpuManagerPolicy = "static",
-                    IsCpuCfsQuotaEnabled = true,
-                    CpuCfsQuotaPeriod = "200ms",
-                    ImageGcHighThreshold = 90,
-                    ImageGcLowThreshold = 70,
-                    TopologyManagerPolicy = "best-effort",
-                    AllowedUnsafeSysctls =
-{
-"kernel.msg*","net.core.somaxconn"
-},
-                    FailStartWithSwapOn = false,
-                },
-                LinuxOSConfig = new LinuxOSConfig()
-                {
-                    Sysctls = new SysctlConfig()
-                    {
-                        NetCoreWmemDefault = 12345,
-                        NetIPv4TcpTwReuse = true,
-                        NetIPv4IPLocalPortRange = "20000 60000",
-                        KernelThreadsMax = 99999,
-                    },
-                    TransparentHugePageEnabled = "always",
-                    TransparentHugePageDefrag = "madvise",
-                    SwapFileSizeInMB = 1500,
-                },
-                GpuInstanceProfile = GpuInstanceProfile.Mig2G,
-            };
-            ArmOperation<ContainerServiceAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
-            ContainerServiceAgentPoolResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ContainerServiceAgentPoolData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Create Agent Pool with Krustlet and the WASI runtime
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateAgentPoolWithKrustletAndTheWASIRuntime()
-        {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_WasmWasi.json
-            // this example is just showing the usage of "AgentPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ContainerServiceManagedClusterResource created on azure
-            // for more information of creating ContainerServiceManagedClusterResource, please refer to the document of ContainerServiceManagedClusterResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string resourceName = "clustername1";
-            ResourceIdentifier containerServiceManagedClusterResourceId = ContainerServiceManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
-
-            // get the collection of this ContainerServiceAgentPoolResource
-            ContainerServiceAgentPoolCollection collection = containerServiceManagedCluster.GetContainerServiceAgentPools();
-
-            // invoke the operation
-            string agentPoolName = "agentpool1";
-            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData()
-            {
-                Count = 3,
-                VmSize = "Standard_DS2_v2",
-                OSDiskSizeInGB = 64,
-                WorkloadRuntime = WorkloadRuntime.WasmWasi,
-                OSType = ContainerServiceOSType.Linux,
-                Mode = AgentPoolMode.User,
-                OrchestratorVersion = "",
-            };
-            ArmOperation<ContainerServiceAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
-            ContainerServiceAgentPoolResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ContainerServiceAgentPoolData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Create Agent Pool with KubeletConfig and LinuxOSConfig
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateAgentPoolWithKubeletConfigAndLinuxOSConfig()
-        {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_CustomNodeConfig.json
-            // this example is just showing the usage of "AgentPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ContainerServiceManagedClusterResource created on azure
-            // for more information of creating ContainerServiceManagedClusterResource, please refer to the document of ContainerServiceManagedClusterResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string resourceName = "clustername1";
-            ResourceIdentifier containerServiceManagedClusterResourceId = ContainerServiceManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
-
-            // get the collection of this ContainerServiceAgentPoolResource
-            ContainerServiceAgentPoolCollection collection = containerServiceManagedCluster.GetContainerServiceAgentPools();
-
-            // invoke the operation
-            string agentPoolName = "agentpool1";
-            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData()
-            {
-                Count = 3,
-                VmSize = "Standard_DS2_v2",
-                OSType = ContainerServiceOSType.Linux,
-                OrchestratorVersion = "",
-                KubeletConfig = new KubeletConfig()
-                {
-                    CpuManagerPolicy = "static",
-                    IsCpuCfsQuotaEnabled = true,
-                    CpuCfsQuotaPeriod = "200ms",
-                    ImageGcHighThreshold = 90,
-                    ImageGcLowThreshold = 70,
-                    TopologyManagerPolicy = "best-effort",
-                    AllowedUnsafeSysctls =
-{
-"kernel.msg*","net.core.somaxconn"
-},
-                    FailStartWithSwapOn = false,
-                },
-                LinuxOSConfig = new LinuxOSConfig()
-                {
-                    Sysctls = new SysctlConfig()
-                    {
-                        NetCoreWmemDefault = 12345,
-                        NetIPv4TcpTwReuse = true,
-                        NetIPv4IPLocalPortRange = "20000 60000",
-                        KernelThreadsMax = 99999,
-                    },
-                    TransparentHugePageEnabled = "always",
-                    TransparentHugePageDefrag = "madvise",
-                    SwapFileSizeInMB = 1500,
-                },
-            };
-            ArmOperation<ContainerServiceAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
-            ContainerServiceAgentPoolResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ContainerServiceAgentPoolData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Create Agent Pool with OSSKU
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateAgentPoolWithOSSKU()
-        {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_OSSKU.json
-            // this example is just showing the usage of "AgentPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ContainerServiceManagedClusterResource created on azure
-            // for more information of creating ContainerServiceManagedClusterResource, please refer to the document of ContainerServiceManagedClusterResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string resourceName = "clustername1";
-            ResourceIdentifier containerServiceManagedClusterResourceId = ContainerServiceManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
-
-            // get the collection of this ContainerServiceAgentPoolResource
-            ContainerServiceAgentPoolCollection collection = containerServiceManagedCluster.GetContainerServiceAgentPools();
-
-            // invoke the operation
-            string agentPoolName = "agentpool1";
-            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData()
-            {
-                Count = 3,
-                VmSize = "Standard_DS2_v2",
-                OSType = ContainerServiceOSType.Linux,
-                OSSku = ContainerServiceOSSku.AzureLinux,
-                OrchestratorVersion = "",
-                KubeletConfig = new KubeletConfig()
-                {
-                    CpuManagerPolicy = "static",
-                    IsCpuCfsQuotaEnabled = true,
-                    CpuCfsQuotaPeriod = "200ms",
-                    ImageGcHighThreshold = 90,
-                    ImageGcLowThreshold = 70,
-                    TopologyManagerPolicy = "best-effort",
-                    AllowedUnsafeSysctls =
-{
-"kernel.msg*","net.core.somaxconn"
-},
-                    FailStartWithSwapOn = false,
-                },
-                LinuxOSConfig = new LinuxOSConfig()
-                {
-                    Sysctls = new SysctlConfig()
-                    {
-                        NetCoreWmemDefault = 12345,
-                        NetIPv4TcpTwReuse = true,
-                        NetIPv4IPLocalPortRange = "20000 60000",
-                        KernelThreadsMax = 99999,
-                    },
-                    TransparentHugePageEnabled = "always",
-                    TransparentHugePageDefrag = "madvise",
-                    SwapFileSizeInMB = 1500,
-                },
-            };
-            ArmOperation<ContainerServiceAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
-            ContainerServiceAgentPoolResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ContainerServiceAgentPoolData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Create Agent Pool with PPG
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateAgentPoolWithPPG()
-        {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_PPG.json
-            // this example is just showing the usage of "AgentPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ContainerServiceManagedClusterResource created on azure
-            // for more information of creating ContainerServiceManagedClusterResource, please refer to the document of ContainerServiceManagedClusterResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string resourceName = "clustername1";
-            ResourceIdentifier containerServiceManagedClusterResourceId = ContainerServiceManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
-
-            // get the collection of this ContainerServiceAgentPoolResource
-            ContainerServiceAgentPoolCollection collection = containerServiceManagedCluster.GetContainerServiceAgentPools();
-
-            // invoke the operation
-            string agentPoolName = "agentpool1";
-            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData()
-            {
-                Count = 3,
-                VmSize = "Standard_DS2_v2",
-                OSType = ContainerServiceOSType.Linux,
-                OrchestratorVersion = "",
-                ProximityPlacementGroupId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/Microsoft.Compute/proximityPlacementGroups/ppg1"),
-            };
-            ArmOperation<ContainerServiceAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
-            ContainerServiceAgentPoolResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ContainerServiceAgentPoolData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Create Agent Pool with UltraSSD enabled
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateAgentPoolWithUltraSSDEnabled()
-        {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_EnableUltraSSD.json
-            // this example is just showing the usage of "AgentPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ContainerServiceManagedClusterResource created on azure
-            // for more information of creating ContainerServiceManagedClusterResource, please refer to the document of ContainerServiceManagedClusterResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string resourceName = "clustername1";
-            ResourceIdentifier containerServiceManagedClusterResourceId = ContainerServiceManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
-
-            // get the collection of this ContainerServiceAgentPoolResource
-            ContainerServiceAgentPoolCollection collection = containerServiceManagedCluster.GetContainerServiceAgentPools();
-
-            // invoke the operation
-            string agentPoolName = "agentpool1";
-            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData()
-            {
-                Count = 3,
-                VmSize = "Standard_DS2_v2",
-                OSType = ContainerServiceOSType.Linux,
-                OrchestratorVersion = "",
-                EnableUltraSsd = true,
-            };
-            ArmOperation<ContainerServiceAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
-            ContainerServiceAgentPoolResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ContainerServiceAgentPoolData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Create Agent Pool with Windows OSSKU
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateAgentPoolWithWindowsOSSKU()
-        {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_WindowsOSSKU.json
-            // this example is just showing the usage of "AgentPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ContainerServiceManagedClusterResource created on azure
-            // for more information of creating ContainerServiceManagedClusterResource, please refer to the document of ContainerServiceManagedClusterResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string resourceName = "clustername1";
-            ResourceIdentifier containerServiceManagedClusterResourceId = ContainerServiceManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
-
-            // get the collection of this ContainerServiceAgentPoolResource
-            ContainerServiceAgentPoolCollection collection = containerServiceManagedCluster.GetContainerServiceAgentPools();
-
-            // invoke the operation
-            string agentPoolName = "wnp2";
-            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData()
-            {
-                Count = 3,
-                VmSize = "Standard_D4s_v3",
-                OSType = ContainerServiceOSType.Windows,
-                OSSku = ContainerServiceOSSku.Windows2022,
-                OrchestratorVersion = "1.23.3",
-            };
-            ArmOperation<ContainerServiceAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
-            ContainerServiceAgentPoolResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ContainerServiceAgentPoolData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Create Spot Agent Pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateSpotAgentPool()
-        {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_Spot.json
-            // this example is just showing the usage of "AgentPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ContainerServiceManagedClusterResource created on azure
-            // for more information of creating ContainerServiceManagedClusterResource, please refer to the document of ContainerServiceManagedClusterResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string resourceName = "clustername1";
-            ResourceIdentifier containerServiceManagedClusterResourceId = ContainerServiceManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
-
-            // get the collection of this ContainerServiceAgentPoolResource
-            ContainerServiceAgentPoolCollection collection = containerServiceManagedCluster.GetContainerServiceAgentPools();
-
-            // invoke the operation
-            string agentPoolName = "agentpool1";
-            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData()
-            {
-                Count = 3,
-                VmSize = "Standard_DS1_v2",
-                OSType = ContainerServiceOSType.Linux,
-                OrchestratorVersion = "",
-                ScaleSetPriority = ScaleSetPriority.Spot,
-                ScaleSetEvictionPolicy = ScaleSetEvictionPolicy.Delete,
-                Tags =
-{
-["name1"] = "val1",
-},
-                NodeLabels =
-{
-["key1"] = "val1",
-},
-                NodeTaints =
-{
-"Key1=Value1:NoSchedule"
-},
-            };
-            ArmOperation<ContainerServiceAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
-            ContainerServiceAgentPoolResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ContainerServiceAgentPoolData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Create/Update Agent Pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateUpdateAgentPool()
-        {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPoolsCreate_Update.json
-            // this example is just showing the usage of "AgentPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ContainerServiceManagedClusterResource created on azure
-            // for more information of creating ContainerServiceManagedClusterResource, please refer to the document of ContainerServiceManagedClusterResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string resourceName = "clustername1";
-            ResourceIdentifier containerServiceManagedClusterResourceId = ContainerServiceManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
-
-            // get the collection of this ContainerServiceAgentPoolResource
-            ContainerServiceAgentPoolCollection collection = containerServiceManagedCluster.GetContainerServiceAgentPools();
-
-            // invoke the operation
-            string agentPoolName = "agentpool1";
-            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData()
-            {
-                Count = 3,
-                VmSize = "Standard_DS1_v2",
-                OSType = ContainerServiceOSType.Linux,
-                Mode = AgentPoolMode.User,
-                OrchestratorVersion = "",
-                ScaleSetPriority = ScaleSetPriority.Spot,
-                ScaleSetEvictionPolicy = ScaleSetEvictionPolicy.Delete,
-                Tags =
-{
-["name1"] = "val1",
-},
-                NodeLabels =
-{
-["key1"] = "val1",
-},
-                NodeTaints =
-{
-"Key1=Value1:NoSchedule"
-},
-            };
-            ArmOperation<ContainerServiceAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
-            ContainerServiceAgentPoolResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ContainerServiceAgentPoolData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Start Agent Pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_StartAgentPool()
-        {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPools_Start.json
-            // this example is just showing the usage of "AgentPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ContainerServiceManagedClusterResource created on azure
-            // for more information of creating ContainerServiceManagedClusterResource, please refer to the document of ContainerServiceManagedClusterResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string resourceName = "clustername1";
-            ResourceIdentifier containerServiceManagedClusterResourceId = ContainerServiceManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
-
-            // get the collection of this ContainerServiceAgentPoolResource
-            ContainerServiceAgentPoolCollection collection = containerServiceManagedCluster.GetContainerServiceAgentPools();
-
-            // invoke the operation
-            string agentPoolName = "agentpool1";
-            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData()
-            {
-                PowerStateCode = ContainerServiceStateCode.Running,
-            };
-            ArmOperation<ContainerServiceAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
-            ContainerServiceAgentPoolResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ContainerServiceAgentPoolData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Stop Agent Pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_StopAgentPool()
-        {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPools_Stop.json
-            // this example is just showing the usage of "AgentPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ContainerServiceManagedClusterResource created on azure
-            // for more information of creating ContainerServiceManagedClusterResource, please refer to the document of ContainerServiceManagedClusterResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string resourceName = "clustername1";
-            ResourceIdentifier containerServiceManagedClusterResourceId = ContainerServiceManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
-
-            // get the collection of this ContainerServiceAgentPoolResource
-            ContainerServiceAgentPoolCollection collection = containerServiceManagedCluster.GetContainerServiceAgentPools();
-
-            // invoke the operation
-            string agentPoolName = "agentpool1";
-            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData()
-            {
-                PowerStateCode = ContainerServiceStateCode.Stopped,
-            };
-            ArmOperation<ContainerServiceAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
-            ContainerServiceAgentPoolResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ContainerServiceAgentPoolData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Update Agent Pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_UpdateAgentPool()
-        {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/AgentPools_Update.json
-            // this example is just showing the usage of "AgentPools_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ContainerServiceManagedClusterResource created on azure
-            // for more information of creating ContainerServiceManagedClusterResource, please refer to the document of ContainerServiceManagedClusterResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string resourceName = "clustername1";
-            ResourceIdentifier containerServiceManagedClusterResourceId = ContainerServiceManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
-
-            // get the collection of this ContainerServiceAgentPoolResource
-            ContainerServiceAgentPoolCollection collection = containerServiceManagedCluster.GetContainerServiceAgentPools();
-
-            // invoke the operation
-            string agentPoolName = "agentpool1";
-            ContainerServiceAgentPoolData data = new ContainerServiceAgentPoolData()
-            {
-                Count = 3,
-                VmSize = "Standard_DS1_v2",
-                OSType = ContainerServiceOSType.Linux,
-                MaxCount = 2,
-                MinCount = 2,
-                EnableAutoScaling = true,
-                OrchestratorVersion = "",
-                ScaleSetPriority = ScaleSetPriority.Spot,
-                ScaleSetEvictionPolicy = ScaleSetEvictionPolicy.Delete,
-                NodeTaints =
-{
-"Key1=Value1:NoSchedule"
-},
-            };
-            ArmOperation<ContainerServiceAgentPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
-            ContainerServiceAgentPoolResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ContainerServiceAgentPoolData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

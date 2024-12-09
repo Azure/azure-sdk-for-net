@@ -109,7 +109,7 @@ namespace Azure.Storage.DataMovement
         public bool SetSkippedItemsState() => _status.SetSkippedItem();
 
         internal bool CanPause()
-            => DataTransferState.InProgress == _status.State;
+            => DataTransferState.InProgress == _status.State || DataTransferState.Queued == _status.State;
 
         public async Task PauseIfRunningAsync(CancellationToken cancellationToken)
         {

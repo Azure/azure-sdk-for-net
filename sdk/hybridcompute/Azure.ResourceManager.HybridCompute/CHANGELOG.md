@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,14 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.1 (2024-12-02)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-preview-2024-05' to 'package-preview-2024-07'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/0f300277e21972f20b32ffbff96180217875909b/specification/hybridcompute/resource-manager/readme.md.
+    - Added license profile operations for hybrid machine
+    - Added gateway and settings operations for hybrid machine
 
 ## 1.0.0 (2024-10-18)
 

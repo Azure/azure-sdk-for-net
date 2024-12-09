@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.AppService.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppService.Samples
 {
     public partial class Sample_SiteBackupResource
     {
-        // Get web app backup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetWebAppBackup()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetWebAppBackup.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/GetWebAppBackup.json
             // this example is just showing the usage of "WebApps_GetBackupStatus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -47,12 +47,11 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete web app backup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteWebAppBackup()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/DeleteWebAppBackup.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/DeleteWebAppBackup.json
             // this example is just showing the usage of "WebApps_DeleteBackup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -72,15 +71,14 @@ namespace Azure.ResourceManager.AppService.Samples
             // invoke the operation
             await siteBackup.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get web app backup with secrets
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBackupStatusSecrets_GetWebAppBackupWithSecrets()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetWebAppBackupWithSecrets.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/GetWebAppBackupWithSecrets.json
             // this example is just showing the usage of "WebApps_ListBackupStatusSecrets" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -98,7 +96,7 @@ namespace Azure.ResourceManager.AppService.Samples
             SiteBackupResource siteBackup = client.GetSiteBackupResource(siteBackupResourceId);
 
             // invoke the operation
-            WebAppBackupInfo info = new WebAppBackupInfo()
+            WebAppBackupInfo info = new WebAppBackupInfo
             {
                 BackupName = "abcdwe",
                 IsEnabled = true,
@@ -107,20 +105,17 @@ namespace Azure.ResourceManager.AppService.Samples
                 {
                     StartOn = DateTimeOffset.Parse("2022-09-02T17:33:11.641Z"),
                 },
-                Databases =
-{
-new AppServiceDatabaseBackupSetting(AppServiceDatabaseType.SqlAzure)
+                Databases = {new AppServiceDatabaseBackupSetting(AppServiceDatabaseType.SqlAzure)
 {
 Name = "backenddb",
 ConnectionStringName = "backend",
 ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value] [;<Attribute>=<value>]",
-},new AppServiceDatabaseBackupSetting(AppServiceDatabaseType.SqlAzure)
+}, new AppServiceDatabaseBackupSetting(AppServiceDatabaseType.SqlAzure)
 {
 Name = "statsdb",
 ConnectionStringName = "stats",
 ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value] [;<Attribute>=<value>]",
-}
-},
+}},
             };
             SiteBackupResource result = await siteBackup.GetBackupStatusSecretsAsync(info);
 
@@ -131,12 +126,11 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Restore web app from backup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Restore_RestoreWebAppFromBackup()
         {
-            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/RestoreWebAppBackup.json
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2024-04-01/examples/RestoreWebAppBackup.json
             // this example is just showing the usage of "WebApps_Restore" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -154,29 +148,26 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
             SiteBackupResource siteBackup = client.GetSiteBackupResource(siteBackupResourceId);
 
             // invoke the operation
-            RestoreRequestInfo info = new RestoreRequestInfo()
+            RestoreRequestInfo info = new RestoreRequestInfo
             {
                 StorageAccountUri = new Uri("DefaultEndpointsProtocol=https;AccountName=storagesample;AccountKey=<account-key>"),
                 CanOverwrite = true,
                 SiteName = "sitef6141",
-                Databases =
-{
-new AppServiceDatabaseBackupSetting(AppServiceDatabaseType.SqlAzure)
+                Databases = {new AppServiceDatabaseBackupSetting(AppServiceDatabaseType.SqlAzure)
 {
 Name = "backenddb",
 ConnectionStringName = "backend",
 ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value] [;<Attribute>=<value>]",
-},new AppServiceDatabaseBackupSetting(AppServiceDatabaseType.SqlAzure)
+}, new AppServiceDatabaseBackupSetting(AppServiceDatabaseType.SqlAzure)
 {
 Name = "statsdb",
 ConnectionStringName = "stats",
 ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value] [;<Attribute>=<value>]",
-}
-},
+}},
             };
             await siteBackup.RestoreAsync(WaitUntil.Completed, info);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

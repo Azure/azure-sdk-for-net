@@ -117,5 +117,89 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             CommitmentPlanAccountAssociationResource.ValidateResourceId(id);
             return new CommitmentPlanAccountAssociationResource(Client, id);
         }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="CognitiveServicesEncryptionScopeResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CognitiveServicesEncryptionScopeResource.CreateResourceIdentifier" /> to create a <see cref="CognitiveServicesEncryptionScopeResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CognitiveServicesEncryptionScopeResource"/> object. </returns>
+        public virtual CognitiveServicesEncryptionScopeResource GetCognitiveServicesEncryptionScopeResource(ResourceIdentifier id)
+        {
+            CognitiveServicesEncryptionScopeResource.ValidateResourceId(id);
+            return new CognitiveServicesEncryptionScopeResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RaiPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RaiPolicyResource.CreateResourceIdentifier" /> to create a <see cref="RaiPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RaiPolicyResource"/> object. </returns>
+        public virtual RaiPolicyResource GetRaiPolicyResource(ResourceIdentifier id)
+        {
+            RaiPolicyResource.ValidateResourceId(id);
+            return new RaiPolicyResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RaiBlocklistResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RaiBlocklistResource.CreateResourceIdentifier" /> to create a <see cref="RaiBlocklistResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RaiBlocklistResource"/> object. </returns>
+        public virtual RaiBlocklistResource GetRaiBlocklistResource(ResourceIdentifier id)
+        {
+            RaiBlocklistResource.ValidateResourceId(id);
+            return new RaiBlocklistResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RaiBlocklistItemResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RaiBlocklistItemResource.CreateResourceIdentifier" /> to create a <see cref="RaiBlocklistItemResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RaiBlocklistItemResource"/> object. </returns>
+        public virtual RaiBlocklistItemResource GetRaiBlocklistItemResource(ResourceIdentifier id)
+        {
+            RaiBlocklistItemResource.ValidateResourceId(id);
+            return new RaiBlocklistItemResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RaiContentFilterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RaiContentFilterResource.CreateResourceIdentifier" /> to create a <see cref="RaiContentFilterResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RaiContentFilterResource"/> object. </returns>
+        public virtual RaiContentFilterResource GetRaiContentFilterResource(ResourceIdentifier id)
+        {
+            RaiContentFilterResource.ValidateResourceId(id);
+            return new RaiContentFilterResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkSecurityPerimeterConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkSecurityPerimeterConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="NetworkSecurityPerimeterConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NetworkSecurityPerimeterConfigurationResource"/> object. </returns>
+        public virtual NetworkSecurityPerimeterConfigurationResource GetNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier id)
+        {
+            NetworkSecurityPerimeterConfigurationResource.ValidateResourceId(id);
+            return new NetworkSecurityPerimeterConfigurationResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DefenderForAISettingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DefenderForAISettingResource.CreateResourceIdentifier" /> to create a <see cref="DefenderForAISettingResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DefenderForAISettingResource"/> object. </returns>
+        public virtual DefenderForAISettingResource GetDefenderForAISettingResource(ResourceIdentifier id)
+        {
+            DefenderForAISettingResource.ValidateResourceId(id);
+            return new DefenderForAISettingResource(Client, id);
+        }
     }
 }

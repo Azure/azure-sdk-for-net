@@ -8,12 +8,8 @@ using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
 {
-    public class TransferValidationTests : DataMovementTestBase
+    public class TransferValidationTests
     {
-        public TransferValidationTests(bool async) : base(async, default)
-        {
-        }
-
         [Test, Pairwise]
         public async Task LargeSingleFile(
             [Values(TransferDirection.Copy, TransferDirection.Upload, TransferDirection.Download)] TransferDirection transferDirection,
@@ -82,7 +78,7 @@ namespace Azure.Storage.DataMovement.Tests
             TestEventsRaised events = new(options);
             DataTransfer transfer = await transferManager.StartTransferAsync(srcResource, dstResource, options);
 
-            CancellationTokenSource tokenSource = new(TimeSpan.FromSeconds(10));
+            CancellationTokenSource tokenSource = new(TimeSpan.FromSeconds(30));
             await transfer.WaitForCompletionAsync(tokenSource.Token);
 
             Assert.That(transfer.HasCompleted, Is.True);

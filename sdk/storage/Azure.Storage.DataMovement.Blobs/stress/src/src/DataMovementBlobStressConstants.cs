@@ -21,10 +21,17 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
 
             /// <summary>
             ///   The name of the environment variable that holds the connection string for the
-            ///   Event Hubs Namespace resource for the test runs.
+            ///   Storage Blob Namespace resource for the test runs.
             /// </summary>
             ///
-            public const string StorageBlobEndpoint = "STRESS_STORAGE_BLOB_ENDPOINT";
+            public const string StorageSourceBlobEndpoint = "STRESS_STORAGE_SRC_BLOB_ENDPOINT";
+
+            /// <summary>
+            ///   The name of the environment variable that holds the connection string for the
+            ///   Storage Blob Namespace resource for the test runs.
+            /// </summary>
+            ///
+            public const string StorageDestinationBlobEndpoint = "STRESS_STORAGE_DEST_BLOB_ENDPOINT";
 
             // Job Index Information
 

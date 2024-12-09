@@ -3,7 +3,9 @@
 
 using System;
 using System.ComponentModel;
+using System.Globalization;
 using Azure.Core;
+using Azure.Messaging.EventHubs.Core;
 
 namespace Azure.Messaging.EventHubs.Consumer
 {
@@ -20,10 +22,39 @@ namespace Azure.Messaging.EventHubs.Consumer
         public long? SequenceNumber { get; }
 
         /// <summary>
+        ///   Obsolete.
+        ///   A numeric representation of the offset of the last observed event to be enqueued in the partition.
+        /// </summary>
+        ///
+        /// <value>
+        ///   This value is obsolete and should no longer be used.  Please use <see cref="OffsetString"/> instead.
+        /// </value>
+        ///
+        [Obsolete(AttributeMessageText.LongOffsetOffsetPropertyObsolete, false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public long? Offset
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(OffsetString))
+                {
+                    return null;
+                }
+
+                if (long.TryParse(OffsetString, out var value))
+                {
+                    return value;
+                }
+
+                throw new NotSupportedException(Resources.LongOffsetOffsetUnsupported);
+            }
+        }
+
+        /// <summary>
         ///   The offset of the last observed event to be enqueued in the partition.
         /// </summary>
         ///
-        public long? Offset { get; }
+        public string OffsetString { get; }
 
         /// <summary>
         ///   The date and time, in UTC, that the last observed event was enqueued in the partition.
@@ -38,6 +69,8 @@ namespace Azure.Messaging.EventHubs.Consumer
         public DateTimeOffset? LastReceivedTime { get; }
 
         /// <summary>
+        ///   Obsolete.
+        ///
         ///   Initializes a new instance of the <see cref="LastEnqueuedEventProperties"/> class.
         /// </summary>
         ///
@@ -46,13 +79,65 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
         /// <param name="lastReceivedTime">The date and time, in UTC, that the information was last received.</param>
         ///
+        /// <remarks>
+        ///   This constructor is obsolete and should no longer be used.  Please use the string-based offset overload instead.
+        /// </remarks>
+        ///
+        [Obsolete(AttributeMessageText.LongOffsetOffsetParameterObsolete, false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public LastEnqueuedEventProperties(long? lastSequenceNumber,
+                                           long lastOffset,
+                                           DateTimeOffset? lastEnqueuedTime,
+                                           DateTimeOffset? lastReceivedTime) : this(lastSequenceNumber,
+                                                                                    (lastOffset > long.MinValue) ? lastOffset.ToString(CultureInfo.InvariantCulture) : null,
+                                                                                    lastEnqueuedTime,
+                                                                                    lastReceivedTime)
+        {
+        }
+
+        /// <summary>
+        ///   Obsolete.
+        ///
+        ///   Initializes a new instance of the <see cref="LastEnqueuedEventProperties"/> class.
+        /// </summary>
+        ///
+        /// <param name="lastSequenceNumber">The sequence number observed the last event to be enqueued in the partition.</param>
+        /// <param name="lastOffset">The offset of the last event to be enqueued in the partition.</param>
+        /// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
+        /// <param name="lastReceivedTime">The date and time, in UTC, that the information was last received.</param>
+        ///
+        /// <remarks>
+        ///   This constructor is obsolete and should no longer be used.  Please use the string-based offset overload instead.
+        /// </remarks>
+        ///
+        [Obsolete(AttributeMessageText.LongOffsetOffsetParameterObsolete, false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public LastEnqueuedEventProperties(long? lastSequenceNumber,
                                            long? lastOffset,
+                                           DateTimeOffset? lastEnqueuedTime,
+                                           DateTimeOffset? lastReceivedTime) : this(lastSequenceNumber,
+                                                                                    lastOffset?.ToString(CultureInfo.InvariantCulture),
+                                                                                    lastEnqueuedTime,
+                                                                                    lastReceivedTime)
+        {
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="LastEnqueuedEventProperties"/> class.
+        /// </summary>
+        ///
+        /// <param name="lastSequenceNumber">The sequence number observed the last event to be enqueued in the partition.</param>
+        /// <param name="lastOffsetString">The offset of the last event to be enqueued in the partition.</param>
+        /// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
+        /// <param name="lastReceivedTime">The date and time, in UTC, that the information was last received.</param>
+        ///
+        public LastEnqueuedEventProperties(long? lastSequenceNumber,
+                                           string lastOffsetString,
                                            DateTimeOffset? lastEnqueuedTime,
                                            DateTimeOffset? lastReceivedTime)
         {
             SequenceNumber = lastSequenceNumber;
-            Offset = lastOffset;
+            OffsetString = lastOffsetString;
             EnqueuedTime = lastEnqueuedTime;
             LastReceivedTime = lastReceivedTime;
         }
@@ -81,7 +166,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///
         public bool Equals(LastEnqueuedEventProperties other)
         {
-            return (Offset == other.Offset)
+            return (OffsetString == other.OffsetString)
                 && (SequenceNumber == other.SequenceNumber)
                 && (EnqueuedTime == other.EnqueuedTime)
                 && (LastReceivedTime == other.LastReceivedTime);
@@ -113,7 +198,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         public override int GetHashCode()
         {
             var hashCode = new HashCodeBuilder();
-            hashCode.Add(Offset);
+            hashCode.Add(OffsetString);
             hashCode.Add(SequenceNumber);
             hashCode.Add(EnqueuedTime);
             hashCode.Add(LastReceivedTime);
@@ -128,7 +213,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString() => $"Sequence: [{ SequenceNumber }] | Offset: [{ Offset }] | Enqueued: [{ EnqueuedTime }] | Last Received: [{ LastReceivedTime }]";
+        public override string ToString() => $"Sequence: [{ SequenceNumber }] | Offset: [{ OffsetString }] | Enqueued: [{ EnqueuedTime }] | Last Received: [{ LastReceivedTime }]";
 
         /// <summary>
         ///   Determines whether the specified <see cref="LastEnqueuedEventProperties" /> instances are equal to each other.

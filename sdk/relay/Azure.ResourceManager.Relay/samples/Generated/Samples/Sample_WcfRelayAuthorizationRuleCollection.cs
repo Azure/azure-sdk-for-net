@@ -10,52 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Relay.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Relay.Samples
 {
     public partial class Sample_WcfRelayAuthorizationRuleCollection
     {
-        // RelayAuthorizationRuleListAll
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_RelayAuthorizationRuleListAll()
-        {
-            // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/Relay/RelayAuthorizationRuleListAll.json
-            // this example is just showing the usage of "WCFRelays_ListAuthorizationRules" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this WcfRelayResource created on azure
-            // for more information of creating WcfRelayResource, please refer to the document of WcfRelayResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "resourcegroup";
-            string namespaceName = "example-RelayNamespace-01";
-            string relayName = "example-Relay-Wcf-01";
-            ResourceIdentifier wcfRelayResourceId = WcfRelayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName, relayName);
-            WcfRelayResource wcfRelay = client.GetWcfRelayResource(wcfRelayResourceId);
-
-            // get the collection of this WcfRelayAuthorizationRuleResource
-            WcfRelayAuthorizationRuleCollection collection = wcfRelay.GetWcfRelayAuthorizationRules();
-
-            // invoke the operation and iterate over the result
-            await foreach (WcfRelayAuthorizationRuleResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                RelayAuthorizationRuleData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // RelayAuthorizationRuleCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_RelayAuthorizationRuleCreate()
         {
             // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/Relay/RelayAuthorizationRuleCreate.json
@@ -80,12 +42,9 @@ namespace Azure.ResourceManager.Relay.Samples
 
             // invoke the operation
             string authorizationRuleName = "example-RelayAuthRules-01";
-            RelayAuthorizationRuleData data = new RelayAuthorizationRuleData()
+            RelayAuthorizationRuleData data = new RelayAuthorizationRuleData
             {
-                Rights =
-{
-RelayAccessRight.Listen,RelayAccessRight.Send
-},
+                Rights = { RelayAccessRight.Listen, RelayAccessRight.Send },
             };
             ArmOperation<WcfRelayAuthorizationRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, authorizationRuleName, data);
             WcfRelayAuthorizationRuleResource result = lro.Value;
@@ -97,9 +56,8 @@ RelayAccessRight.Listen,RelayAccessRight.Send
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RelayAuthorizationRuleGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RelayAuthorizationRuleGet()
         {
             // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/Relay/RelayAuthorizationRuleGet.json
@@ -133,9 +91,45 @@ RelayAccessRight.Listen,RelayAccessRight.Send
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RelayAuthorizationRuleGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_RelayAuthorizationRuleListAll()
+        {
+            // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/Relay/RelayAuthorizationRuleListAll.json
+            // this example is just showing the usage of "WCFRelays_ListAuthorizationRules" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this WcfRelayResource created on azure
+            // for more information of creating WcfRelayResource, please refer to the document of WcfRelayResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "resourcegroup";
+            string namespaceName = "example-RelayNamespace-01";
+            string relayName = "example-Relay-Wcf-01";
+            ResourceIdentifier wcfRelayResourceId = WcfRelayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName, relayName);
+            WcfRelayResource wcfRelay = client.GetWcfRelayResource(wcfRelayResourceId);
+
+            // get the collection of this WcfRelayAuthorizationRuleResource
+            WcfRelayAuthorizationRuleCollection collection = wcfRelay.GetWcfRelayAuthorizationRules();
+
+            // invoke the operation and iterate over the result
+            await foreach (WcfRelayAuthorizationRuleResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                RelayAuthorizationRuleData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_RelayAuthorizationRuleGet()
         {
             // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/Relay/RelayAuthorizationRuleGet.json
@@ -165,9 +159,8 @@ RelayAccessRight.Listen,RelayAccessRight.Send
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // RelayAuthorizationRuleGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_RelayAuthorizationRuleGet()
         {
             // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/Relay/RelayAuthorizationRuleGet.json
@@ -197,7 +190,7 @@ RelayAccessRight.Listen,RelayAccessRight.Send
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

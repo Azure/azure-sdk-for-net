@@ -22,14 +22,22 @@ public partial class OperationalInsightsDataSource : ProvisionableResource
     /// <summary>
     /// The name of the datasource resource.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The kind of the DataSource.
     /// </summary>
-    public BicepValue<OperationalInsightsDataSourceKind> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<OperationalInsightsDataSourceKind> _kind;
+    public BicepValue<OperationalInsightsDataSourceKind> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<OperationalInsightsDataSourceKind>? _kind;
 
     /// <summary>
     /// The data source properties in raw json format, each kind of data source
@@ -48,38 +56,60 @@ public partial class OperationalInsightsDataSource : ProvisionableResource
     /// \&quot;value\&quot;}&quot;)Creates a payload of { &quot;key&quot;:
     /// &quot;value&quot; }.
     /// </summary>
-    public BicepValue<BinaryData> Properties { get => _properties; set => _properties.Assign(value); }
-    private readonly BicepValue<BinaryData> _properties;
+    public BicepValue<BinaryData> Properties 
+    {
+        get { Initialize(); return _properties!; }
+        set { Initialize(); _properties!.Assign(value); }
+    }
+    private BicepValue<BinaryData>? _properties;
 
     /// <summary>
     /// The ETag of the data source.
     /// </summary>
-    public BicepValue<ETag> ETag { get => _eTag; set => _eTag.Assign(value); }
-    private readonly BicepValue<ETag> _eTag;
+    public BicepValue<ETag> ETag 
+    {
+        get { Initialize(); return _eTag!; }
+        set { Initialize(); _eTag!.Assign(value); }
+    }
+    private BicepValue<ETag>? _eTag;
 
     /// <summary>
     /// Resource tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent OperationalInsightsWorkspace.
     /// </summary>
-    public OperationalInsightsWorkspace? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<OperationalInsightsWorkspace> _parent;
+    public OperationalInsightsWorkspace? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<OperationalInsightsWorkspace>? _parent;
 
     /// <summary>
     /// Creates a new OperationalInsightsDataSource.
@@ -94,14 +124,22 @@ public partial class OperationalInsightsDataSource : ProvisionableResource
     public OperationalInsightsDataSource(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.OperationalInsights/workspaces/dataSources", resourceVersion ?? "2023-09-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _kind = BicepValue<OperationalInsightsDataSourceKind>.DefineProperty(this, "Kind", ["kind"], isRequired: true);
-        _properties = BicepValue<BinaryData>.DefineProperty(this, "Properties", ["properties"], isRequired: true);
-        _eTag = BicepValue<ETag>.DefineProperty(this, "ETag", ["etag"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<OperationalInsightsWorkspace>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// OperationalInsightsDataSource.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _kind = DefineProperty<OperationalInsightsDataSourceKind>("Kind", ["kind"], isRequired: true);
+        _properties = DefineProperty<BinaryData>("Properties", ["properties"], isRequired: true);
+        _eTag = DefineProperty<ETag>("ETag", ["etag"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<OperationalInsightsWorkspace>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

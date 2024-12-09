@@ -19,13 +19,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         void IJsonModel<ResourceNotificationsResourceUpdatedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ResourceNotificationsResourceUpdatedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResourceNotificationsResourceUpdatedEventData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("resourceInfo"u8);
             writer.WriteObjectValue(ResourceDetails, options);
             writer.WritePropertyName("operationalInfo"u8);
@@ -50,7 +58,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ResourceNotificationsResourceUpdatedEventData IJsonModel<ResourceNotificationsResourceUpdatedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

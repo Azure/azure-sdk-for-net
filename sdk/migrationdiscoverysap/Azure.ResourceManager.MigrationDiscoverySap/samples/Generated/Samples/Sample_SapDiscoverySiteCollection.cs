@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap.Samples
 {
     public partial class Sample_SapDiscoverySiteCollection
     {
-        // List SAP Migration discovery site resources by Resource group.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ListSAPMigrationDiscoverySiteResourcesByResourceGroup()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateResourceForImportBasedInput()
         {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/SAPDiscoverySites/preview/2023-10-01-preview/examples/SAPDiscoverySites_ListByResourceGroup.json
-            // this example is just showing the usage of "SapDiscoverySites_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/SAPDiscoverySites/preview/2023-10-01-preview/examples/SAPDiscoverySites_Create.json
+            // this example is just showing the usage of "SapDiscoverySites_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -38,22 +38,30 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Samples
             // get the collection of this SapDiscoverySiteResource
             SapDiscoverySiteCollection collection = resourceGroupResource.GetSapDiscoverySites();
 
-            // invoke the operation and iterate over the result
-            await foreach (SapDiscoverySiteResource item in collection.GetAllAsync())
+            // invoke the operation
+            string sapDiscoverySiteName = "SampleSite";
+            SapDiscoverySiteData data = new SapDiscoverySiteData(new AzureLocation("eastus"))
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                SapDiscoverySiteData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                MasterSiteId = "MasterSiteIdResourceId",
+                MigrateProjectId = "MigrateProjectId",
+                Tags =
+{
+["property1"] = "value1",
+["property2"] = "value2"
+},
+            };
+            ArmOperation<SapDiscoverySiteResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, sapDiscoverySiteName, data);
+            SapDiscoverySiteResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SapDiscoverySiteData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GET a SAP Migration discovery site resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GETASAPMigrationDiscoverySiteResource()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/SAPDiscoverySites/preview/2023-10-01-preview/examples/SAPDiscoverySites_Get.json
@@ -85,9 +93,43 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GET a SAP Migration discovery site resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListSAPMigrationDiscoverySiteResourcesByResourceGroup()
+        {
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/SAPDiscoverySites/preview/2023-10-01-preview/examples/SAPDiscoverySites_ListByResourceGroup.json
+            // this example is just showing the usage of "SapDiscoverySites_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "6d875e77-e412-4d7d-9af4-8895278b4443";
+            string resourceGroupName = "test-rg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this SapDiscoverySiteResource
+            SapDiscoverySiteCollection collection = resourceGroupResource.GetSapDiscoverySites();
+
+            // invoke the operation and iterate over the result
+            await foreach (SapDiscoverySiteResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                SapDiscoverySiteData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GETASAPMigrationDiscoverySiteResource()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/SAPDiscoverySites/preview/2023-10-01-preview/examples/SAPDiscoverySites_Get.json
@@ -115,9 +157,8 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GET a SAP Migration discovery site resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GETASAPMigrationDiscoverySiteResource()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/SAPDiscoverySites/preview/2023-10-01-preview/examples/SAPDiscoverySites_Get.json
@@ -145,7 +186,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -155,51 +196,6 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        // Create resource for Import based input.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateResourceForImportBasedInput()
-        {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/SAPDiscoverySites/preview/2023-10-01-preview/examples/SAPDiscoverySites_Create.json
-            // this example is just showing the usage of "SapDiscoverySites_Create" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "6d875e77-e412-4d7d-9af4-8895278b4443";
-            string resourceGroupName = "test-rg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this SapDiscoverySiteResource
-            SapDiscoverySiteCollection collection = resourceGroupResource.GetSapDiscoverySites();
-
-            // invoke the operation
-            string sapDiscoverySiteName = "SampleSite";
-            SapDiscoverySiteData data = new SapDiscoverySiteData(new AzureLocation("eastus"))
-            {
-                MasterSiteId = "MasterSiteIdResourceId",
-                MigrateProjectId = "MigrateProjectId",
-                Tags =
-{
-["property1"] = "value1",
-["property2"] = "value2",
-},
-            };
-            ArmOperation<SapDiscoverySiteResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, sapDiscoverySiteName, data);
-            SapDiscoverySiteResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            SapDiscoverySiteData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

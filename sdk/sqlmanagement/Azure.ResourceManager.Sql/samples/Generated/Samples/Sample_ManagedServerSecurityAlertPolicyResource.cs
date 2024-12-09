@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Sql.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Samples
 {
     public partial class Sample_ManagedServerSecurityAlertPolicyResource
     {
-        // Get a managed server's threat detection policy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAManagedServerSThreatDetectionPolicy()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/ManagedServerSecurityAlertGet.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update a managed server's threat detection policy with all parameters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAManagedServerSThreatDetectionPolicyWithAllParameters()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/ManagedServerSecurityAlertCreateMax.json
@@ -70,17 +69,11 @@ namespace Azure.ResourceManager.Sql.Samples
             ManagedServerSecurityAlertPolicyResource managedServerSecurityAlertPolicy = client.GetManagedServerSecurityAlertPolicyResource(managedServerSecurityAlertPolicyResourceId);
 
             // invoke the operation
-            ManagedServerSecurityAlertPolicyData data = new ManagedServerSecurityAlertPolicyData()
+            ManagedServerSecurityAlertPolicyData data = new ManagedServerSecurityAlertPolicyData
             {
                 State = SecurityAlertsPolicyState.Enabled,
-                DisabledAlerts =
-{
-"Access_Anomaly","Usage_Anomaly"
-},
-                EmailAddresses =
-{
-"testSecurityAlert@microsoft.com"
-},
+                DisabledAlerts = { "Access_Anomaly", "Usage_Anomaly" },
+                EmailAddresses = { "testSecurityAlert@microsoft.com" },
                 SendToEmailAccountAdmins = true,
                 StorageEndpoint = "https://mystorage.blob.core.windows.net",
                 StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
@@ -96,9 +89,8 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update a managed server's threat detection policy with minimal parameters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAManagedServerSThreatDetectionPolicyWithMinimalParameters()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/ManagedServerSecurityAlertCreateMin.json
@@ -119,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Samples
             ManagedServerSecurityAlertPolicyResource managedServerSecurityAlertPolicy = client.GetManagedServerSecurityAlertPolicyResource(managedServerSecurityAlertPolicyResourceId);
 
             // invoke the operation
-            ManagedServerSecurityAlertPolicyData data = new ManagedServerSecurityAlertPolicyData()
+            ManagedServerSecurityAlertPolicyData data = new ManagedServerSecurityAlertPolicyData
             {
                 State = SecurityAlertsPolicyState.Enabled,
             };

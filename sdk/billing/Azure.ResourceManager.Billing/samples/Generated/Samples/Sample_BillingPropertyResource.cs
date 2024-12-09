@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Billing.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Billing.Samples
 {
     public partial class Sample_BillingPropertyResource
     {
-        // BillingPropertyGetMCA
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_BillingPropertyGetMCA()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingPropertyGetMCA.json
@@ -44,9 +44,8 @@ namespace Azure.ResourceManager.Billing.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // BillingPropertyGetMOSP
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_BillingPropertyGetMOSP()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingPropertyGetMOSP.json
@@ -73,9 +72,8 @@ namespace Azure.ResourceManager.Billing.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // BillingPropertyGetMPA
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_BillingPropertyGetMPA()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingPropertyGetMPA.json
@@ -102,9 +100,8 @@ namespace Azure.ResourceManager.Billing.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // BillingPropertyPatchCostCenter
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_BillingPropertyPatchCostCenter()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingPropertyPatchCostCenter.json
@@ -122,9 +119,9 @@ namespace Azure.ResourceManager.Billing.Samples
             BillingPropertyResource billingProperty = client.GetBillingPropertyResource(billingPropertyResourceId);
 
             // invoke the operation
-            BillingPropertyData data = new BillingPropertyData()
+            BillingPropertyData data = new BillingPropertyData
             {
-                Properties = new BillingPropertyProperties()
+                Properties = new BillingPropertyProperties
                 {
                     CostCenter = "1010",
                 },
@@ -138,9 +135,8 @@ namespace Azure.ResourceManager.Billing.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // BillingPropertyPatchSubscriptionServiceUsageAddress
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_BillingPropertyPatchSubscriptionServiceUsageAddress()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingPropertyPatchSubscriptionServiceUsageAddress.json
@@ -158,9 +154,9 @@ namespace Azure.ResourceManager.Billing.Samples
             BillingPropertyResource billingProperty = client.GetBillingPropertyResource(billingPropertyResourceId);
 
             // invoke the operation
-            BillingPropertyData data = new BillingPropertyData()
+            BillingPropertyData data = new BillingPropertyData
             {
-                Properties = new BillingPropertyProperties()
+                Properties = new BillingPropertyProperties
                 {
                     SubscriptionServiceUsageAddress = new BillingAddressDetails("Address line 1", "US")
                     {

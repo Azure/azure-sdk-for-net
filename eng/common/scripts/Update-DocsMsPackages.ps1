@@ -20,20 +20,13 @@ docs generation from pacakges which are not published to the default feed). This
 variable is meant to be used in the domain-specific business logic in
 &$UpdateDocsMsPackagesFn
 
-.PARAMETER ImageId
-Optional The docker image for package validation in format of '$containerRegistry/$imageName:$tag'.
-e.g. azuresdkimages.azurecr.io/jsrefautocr:latest
-
 #>
 param (
   [Parameter(Mandatory = $true)]
   [string] $DocRepoLocation, # the location of the cloned doc repo
 
   [Parameter(Mandatory = $false)]
-  [string] $PackageSourceOverride,
-
-  [Parameter(Mandatory = $false)]
-  [string] $ImageId
+  [string] $PackageSourceOverride
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
@@ -61,7 +54,6 @@ function PackageIsValidForDocsOnboarding($package) {
 
   return &$ValidateDocsMsPackagesFn `
     -PackageInfo $package `
-    -DocValidationImageId $ImageId `
     -DocRepoLocation $DocRepoLocation
 }
 

@@ -53,15 +53,15 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of <see cref="FunctionAppScaleAndConcurrency"/>. </summary>
         /// <param name="alwaysReady"> 'Always Ready' configuration for the function app. </param>
-        /// <param name="maximumInstanceCount"> The maximum number of instances for the function app. </param>
-        /// <param name="instanceMemoryMB"> Set the amount of memory allocated to each instance of the function app in MB. CPU and network bandwidth are allocated proportionally. </param>
+        /// <param name="functionAppMaximumInstanceCount"> The maximum number of instances for the function app. </param>
+        /// <param name="functionAppInstanceMemoryMB"> Set the amount of memory allocated to each instance of the function app in MB. CPU and network bandwidth are allocated proportionally. </param>
         /// <param name="triggers"> Scale and concurrency settings for the function app triggers. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FunctionAppScaleAndConcurrency(IList<FunctionAppAlwaysReadyConfig> alwaysReady, float? maximumInstanceCount, float? instanceMemoryMB, FunctionsScaleAndConcurrencyTriggers triggers, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FunctionAppScaleAndConcurrency(IList<FunctionAppAlwaysReadyConfig> alwaysReady, int? functionAppMaximumInstanceCount, int? functionAppInstanceMemoryMB, FunctionsScaleAndConcurrencyTriggers triggers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AlwaysReady = alwaysReady;
-            MaximumInstanceCount = maximumInstanceCount;
-            InstanceMemoryMB = instanceMemoryMB;
+            FunctionAppMaximumInstanceCount = functionAppMaximumInstanceCount;
+            FunctionAppInstanceMemoryMB = functionAppInstanceMemoryMB;
             Triggers = triggers;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -71,22 +71,22 @@ namespace Azure.ResourceManager.AppService.Models
         public IList<FunctionAppAlwaysReadyConfig> AlwaysReady { get; }
         /// <summary> The maximum number of instances for the function app. </summary>
         [WirePath("maximumInstanceCount")]
-        public float? MaximumInstanceCount { get; set; }
+        public int? FunctionAppMaximumInstanceCount { get; set; }
         /// <summary> Set the amount of memory allocated to each instance of the function app in MB. CPU and network bandwidth are allocated proportionally. </summary>
         [WirePath("instanceMemoryMB")]
-        public float? InstanceMemoryMB { get; set; }
+        public int? FunctionAppInstanceMemoryMB { get; set; }
         /// <summary> Scale and concurrency settings for the function app triggers. </summary>
         internal FunctionsScaleAndConcurrencyTriggers Triggers { get; set; }
         /// <summary> The maximum number of concurrent HTTP trigger invocations per instance. </summary>
         [WirePath("triggers.http.perInstanceConcurrency")]
-        public float? HttpPerInstanceConcurrency
+        public int? ConcurrentHttpPerInstanceConcurrency
         {
-            get => Triggers is null ? default : Triggers.HttpPerInstanceConcurrency;
+            get => Triggers is null ? default : Triggers.ConcurrentHttpPerInstanceConcurrency;
             set
             {
                 if (Triggers is null)
                     Triggers = new FunctionsScaleAndConcurrencyTriggers();
-                Triggers.HttpPerInstanceConcurrency = value;
+                Triggers.ConcurrentHttpPerInstanceConcurrency = value;
             }
         }
     }

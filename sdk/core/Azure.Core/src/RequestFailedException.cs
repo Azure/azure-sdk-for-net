@@ -129,6 +129,9 @@ namespace Azure
         }
 
         /// <inheritdoc />
+#if NET8_0_OR_GREATER
+        [Obsolete(DiagnosticId = "SYSLIB0051")]
+#endif
         protected RequestFailedException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
@@ -137,6 +140,9 @@ namespace Azure
         }
 
         /// <inheritdoc />
+#if NET8_0_OR_GREATER
+        [Obsolete(DiagnosticId = "SYSLIB0051")]
+#endif
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             Argument.AssertNotNull(info, nameof(info));

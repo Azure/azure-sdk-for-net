@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call InferRadiologyInsightsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
@@ -15,7 +15,7 @@ RadiologyInsightsInferenceResult responseData = operation.Value;
 ]]></code>
 This sample shows how to call InferRadiologyInsightsAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
@@ -192,7 +192,7 @@ RadiologyInsightsInferenceResult responseData = operation.Value;
       <example>
 This sample shows how to call InferRadiologyInsights.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
@@ -202,7 +202,7 @@ RadiologyInsightsInferenceResult responseData = operation.Value;
 ]]></code>
 This sample shows how to call InferRadiologyInsights with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
@@ -379,7 +379,7 @@ RadiologyInsightsInferenceResult responseData = operation.Value;
       <example>
 This sample shows how to call InferRadiologyInsightsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
@@ -394,7 +394,7 @@ Console.WriteLine(result.GetProperty("modelVersion").ToString());
 ]]></code>
 This sample shows how to call InferRadiologyInsightsAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
@@ -1758,7 +1758,7 @@ Console.WriteLine(result.GetProperty("modelVersion").ToString());
       <example>
 This sample shows how to call InferRadiologyInsights and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 
@@ -1773,7 +1773,7 @@ Console.WriteLine(result.GetProperty("modelVersion").ToString());
 ]]></code>
 This sample shows how to call InferRadiologyInsights with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 RadiologyInsightsClient client = new RadiologyInsightsClient(endpoint, credential);
 

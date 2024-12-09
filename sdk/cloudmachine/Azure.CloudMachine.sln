@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Azure.CloudMachine", "Azure.CloudMachine", "{780138CF-68C6-4323-982F-F18989E2FA86}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.CloudMachine", "Azure.CloudMachine\src\Azure.CloudMachine.csproj", "{0EA29D2F-41E0-4826-9CD4-111109A2CFF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.CloudMachine.Tests", "Azure.CloudMachine\tests\Azure.CloudMachine.Tests.csproj", "{8C1A29AE-E357-4C40-ACCC-7215FBFB368C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0EA29D2F-41E0-4826-9CD4-111109A2CFF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EA29D2F-41E0-4826-9CD4-111109A2CFF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EA29D2F-41E0-4826-9CD4-111109A2CFF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EA29D2F-41E0-4826-9CD4-111109A2CFF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C1A29AE-E357-4C40-ACCC-7215FBFB368C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C1A29AE-E357-4C40-ACCC-7215FBFB368C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C1A29AE-E357-4C40-ACCC-7215FBFB368C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C1A29AE-E357-4C40-ACCC-7215FBFB368C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0EA29D2F-41E0-4826-9CD4-111109A2CFF7} = {780138CF-68C6-4323-982F-F18989E2FA86}
+		{8C1A29AE-E357-4C40-ACCC-7215FBFB368C} = {780138CF-68C6-4323-982F-F18989E2FA86}
+	EndGlobalSection
+EndGlobal

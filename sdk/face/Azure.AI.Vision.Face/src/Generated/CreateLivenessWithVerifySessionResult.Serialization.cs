@@ -19,13 +19,21 @@ namespace Azure.AI.Vision.Face
 
         void IJsonModel<CreateLivenessWithVerifySessionResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CreateLivenessWithVerifySessionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CreateLivenessWithVerifySessionResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("sessionId"u8);
             writer.WriteStringValue(SessionId);
             writer.WritePropertyName("authToken"u8);
@@ -50,7 +58,6 @@ namespace Azure.AI.Vision.Face
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CreateLivenessWithVerifySessionResult IJsonModel<CreateLivenessWithVerifySessionResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

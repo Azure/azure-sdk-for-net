@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.NewRelicObservability.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.NewRelicObservability.Samples
 {
     public partial class Sample_NewRelicObservabilityTagRuleResource
     {
-        // TagRules_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_TagRulesGetMaximumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/TagRules_Get_MaximumSet_Gen.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // TagRules_Get_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_TagRulesGetMinimumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/TagRules_Get_MinimumSet_Gen.json
@@ -79,9 +78,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // TagRules_Delete_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_TagRulesDeleteMaximumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/TagRules_Delete_MaximumSet_Gen.json
@@ -104,12 +102,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             // invoke the operation
             await newRelicObservabilityTagRule.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // TagRules_Delete_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_TagRulesDeleteMinimumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/TagRules_Delete_MinimumSet_Gen.json
@@ -132,12 +129,11 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             // invoke the operation
             await newRelicObservabilityTagRule.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // TagRules_Update_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_TagRulesUpdateMaximumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/TagRules_Update_MaximumSet_Gen.json
@@ -158,34 +154,28 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             NewRelicObservabilityTagRuleResource newRelicObservabilityTagRule = client.GetNewRelicObservabilityTagRuleResource(newRelicObservabilityTagRuleResourceId);
 
             // invoke the operation
-            NewRelicObservabilityTagRulePatch patch = new NewRelicObservabilityTagRulePatch()
+            NewRelicObservabilityTagRulePatch patch = new NewRelicObservabilityTagRulePatch
             {
-                LogRules = new NewRelicObservabilityLogRules()
+                LogRules = new NewRelicObservabilityLogRules
                 {
                     SendAadLogs = NewRelicObservabilitySendAadLogsStatus.IsEnabled,
                     SendSubscriptionLogs = NewRelicObservabilitySendSubscriptionLogsStatus.IsEnabled,
                     SendActivityLogs = NewRelicObservabilitySendActivityLogsStatus.IsEnabled,
-                    FilteringTags =
-{
-new NewRelicObservabilityFilteringTag()
+                    FilteringTags = {new NewRelicObservabilityFilteringTag
 {
 Name = "saokgpjvdlorciqbjmjxazpee",
 Value = "sarxrqsxouhdjwsrqqicbeirdb",
 Action = NewRelicObservabilityTagAction.Include,
-}
-},
+}},
                 },
-                MetricRules = new NewRelicObservabilityMetricRules()
+                MetricRules = new NewRelicObservabilityMetricRules
                 {
-                    FilteringTags =
-{
-new NewRelicObservabilityFilteringTag()
+                    FilteringTags = {new NewRelicObservabilityFilteringTag
 {
 Name = "saokgpjvdlorciqbjmjxazpee",
 Value = "sarxrqsxouhdjwsrqqicbeirdb",
 Action = NewRelicObservabilityTagAction.Include,
-}
-},
+}},
                     UserEmail = "test@testing.com",
                 },
             };
@@ -198,9 +188,8 @@ Action = NewRelicObservabilityTagAction.Include,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // TagRules_Update_MinimumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_TagRulesUpdateMinimumSetGen()
         {
             // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/TagRules_Update_MinimumSet_Gen.json

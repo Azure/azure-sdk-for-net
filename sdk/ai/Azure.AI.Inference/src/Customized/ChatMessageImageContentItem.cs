@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace Azure.AI.Inference
 {
@@ -49,6 +50,21 @@ namespace Azure.AI.Inference
         public ChatMessageImageContentItem(Stream stream, string mimeType, ChatMessageImageDetailLevel? detailLevel = null)
             : this(new ChatMessageImageUrl(stream, mimeType, detailLevel))
         { }
+
+        /// <summary>
+        /// Initializes a new instance of ChatMessageImageContentItem from a file pointer to an image
+        /// in a known format.
+        /// </summary>
+        /// <param name="imageFilePath"> The path to the image to use. </param>
+        /// <param name="mimeType"> The MIME type, e.g. <c>image/png</c>, matching the format of the image data. </param>
+        /// <param name="detailLevel"> The image detail level the model should use when evaluating the image. </param>
+        public ChatMessageImageContentItem(string imageFilePath, string mimeType, ChatMessageImageDetailLevel? detailLevel = null)
+        {
+            Stream fileStream = File.OpenRead(imageFilePath);
+
+            Type = "image_url";
+            ImageUrl = new ChatMessageImageUrl(fileStream, mimeType, detailLevel);
+        }
 
         /// <summary> Initializes a new instance of <see cref="ChatMessageImageContentItem"/>. </summary>
         /// <param name="imageUrl"> An internet location, which must be accessible to the model,from which the image may be retrieved. </param>

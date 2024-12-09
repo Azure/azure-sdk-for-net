@@ -49,8 +49,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("replicationSchedule"u8);
                 writer.WriteStringValue(ReplicationSchedule.Value.ToString());
             }
-            writer.WritePropertyName("remoteVolumeResourceId"u8);
-            writer.WriteStringValue(RemoteVolumeResourceId);
+            if (Optional.IsDefined(RemoteVolumeResourceId))
+            {
+                writer.WritePropertyName("remoteVolumeResourceId"u8);
+                writer.WriteStringValue(RemoteVolumeResourceId);
+            }
             if (Optional.IsDefined(RemotePath))
             {
                 writer.WritePropertyName("remotePath"u8);
@@ -133,6 +136,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (property.NameEquals("remoteVolumeResourceId"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     remoteVolumeResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }

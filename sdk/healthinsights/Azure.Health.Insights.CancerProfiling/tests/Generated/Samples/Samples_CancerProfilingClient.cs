@@ -20,7 +20,7 @@ namespace Azure.Health.Insights.CancerProfiling.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CancerProfilingClient_InferCancerProfile_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CancerProfilingClient client = new CancerProfilingClient(endpoint, credential);
 
@@ -48,7 +48,7 @@ id = "<id>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CancerProfilingClient_InferCancerProfile_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CancerProfilingClient client = new CancerProfilingClient(endpoint, credential);
 
@@ -76,7 +76,7 @@ id = "<id>",
         [Ignore("Only validating compilation of examples")]
         public void Example_CancerProfilingClient_InferCancerProfile_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CancerProfilingClient client = new CancerProfilingClient(endpoint, credential);
 
@@ -92,7 +92,7 @@ new PatientRecord("<id>")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CancerProfilingClient_InferCancerProfile_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CancerProfilingClient client = new CancerProfilingClient(endpoint, credential);
 
@@ -108,7 +108,7 @@ new PatientRecord("<id>")
         [Ignore("Only validating compilation of examples")]
         public void Example_CancerProfilingClient_InferCancerProfile_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CancerProfilingClient client = new CancerProfilingClient(endpoint, credential);
 
@@ -189,7 +189,7 @@ value = "<value>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CancerProfilingClient_InferCancerProfile_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CancerProfilingClient client = new CancerProfilingClient(endpoint, credential);
 
@@ -270,7 +270,7 @@ value = "<value>",
         [Ignore("Only validating compilation of examples")]
         public void Example_CancerProfilingClient_InferCancerProfile_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CancerProfilingClient client = new CancerProfilingClient(endpoint, credential);
 
@@ -313,7 +313,7 @@ CreatedDateTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CancerProfilingClient_InferCancerProfile_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CancerProfilingClient client = new CancerProfilingClient(endpoint, credential);
 

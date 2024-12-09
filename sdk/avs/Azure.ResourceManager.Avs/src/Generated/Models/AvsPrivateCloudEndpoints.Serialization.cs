@@ -49,6 +49,21 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WritePropertyName("hcxCloudManager"u8);
                 writer.WriteStringValue(HcxCloudManager);
             }
+            if (options.Format != "W" && Optional.IsDefined(NsxtManagerIP))
+            {
+                writer.WritePropertyName("nsxtManagerIp"u8);
+                writer.WriteStringValue(NsxtManagerIP);
+            }
+            if (options.Format != "W" && Optional.IsDefined(VcenterIP))
+            {
+                writer.WritePropertyName("vcenterIp"u8);
+                writer.WriteStringValue(VcenterIP);
+            }
+            if (options.Format != "W" && Optional.IsDefined(HcxCloudManagerIP))
+            {
+                writer.WritePropertyName("hcxCloudManagerIp"u8);
+                writer.WriteStringValue(HcxCloudManagerIP);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -89,6 +104,9 @@ namespace Azure.ResourceManager.Avs.Models
             string nsxtManager = default;
             string vcsa = default;
             string hcxCloudManager = default;
+            string nsxtManagerIP = default;
+            string vcenterIP = default;
+            string hcxCloudManagerIP = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,13 +126,35 @@ namespace Azure.ResourceManager.Avs.Models
                     hcxCloudManager = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("nsxtManagerIp"u8))
+                {
+                    nsxtManagerIP = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("vcenterIp"u8))
+                {
+                    vcenterIP = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("hcxCloudManagerIp"u8))
+                {
+                    hcxCloudManagerIP = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AvsPrivateCloudEndpoints(nsxtManager, vcsa, hcxCloudManager, serializedAdditionalRawData);
+            return new AvsPrivateCloudEndpoints(
+                nsxtManager,
+                vcsa,
+                hcxCloudManager,
+                nsxtManagerIP,
+                vcenterIP,
+                hcxCloudManagerIP,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvsPrivateCloudEndpoints>.Write(ModelReaderWriterOptions options)

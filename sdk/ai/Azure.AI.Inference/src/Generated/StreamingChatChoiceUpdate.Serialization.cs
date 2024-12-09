@@ -19,13 +19,21 @@ namespace Azure.AI.Inference
 
         void IJsonModel<StreamingChatChoiceUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<StreamingChatChoiceUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StreamingChatChoiceUpdate)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("index"u8);
             writer.WriteNumberValue(Index);
             if (FinishReason != null)
@@ -38,7 +46,7 @@ namespace Azure.AI.Inference
                 writer.WriteNull("finish_reason");
             }
             writer.WritePropertyName("delta"u8);
-            writer.WriteObjectValue(Delta, options);
+            writer.WriteObjectValue<StreamingChatResponseMessageUpdate>(Delta, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -54,7 +62,6 @@ namespace Azure.AI.Inference
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         StreamingChatChoiceUpdate IJsonModel<StreamingChatChoiceUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -79,7 +86,7 @@ namespace Azure.AI.Inference
             }
             int index = default;
             CompletionsFinishReason? finishReason = default;
-            ChatResponseMessage delta = default;
+            StreamingChatResponseMessageUpdate delta = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +108,7 @@ namespace Azure.AI.Inference
                 }
                 if (property.NameEquals("delta"u8))
                 {
-                    delta = ChatResponseMessage.DeserializeChatResponseMessage(property.Value, options);
+                    delta = StreamingChatResponseMessageUpdate.DeserializeStreamingChatResponseMessageUpdate(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

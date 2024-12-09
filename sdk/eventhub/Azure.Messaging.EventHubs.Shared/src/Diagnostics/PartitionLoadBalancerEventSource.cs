@@ -43,13 +43,14 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// </summary>
         ///
         /// <param name="count"> Minimum partitions per event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the load balancer is associated with.</param>
         ///
-        [Event(1, Level = EventLevel.Verbose, Message = "Expected minimum partitions per event processor '{0}'.")]
-        public virtual void MinimumPartitionsPerEventProcessor(int count)
+        [Event(1, Level = EventLevel.Verbose, Message = "Expected minimum partitions per event processor '{0}' for Event Hub '{1}'.")]
+        public virtual void MinimumPartitionsPerEventProcessor(int count, string eventHubName)
         {
             if (IsEnabled())
             {
-                WriteEvent(1, count);
+                WriteEvent(1, count, eventHubName);
             }
         }
 
@@ -59,14 +60,16 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         /// <param name="identifier">A unique name used to identify the associated event processor.</param>
         /// <param name="count"> Current ownership count.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the load balancer is associated with.</param>
         ///
-        [Event(2, Level = EventLevel.Informational, Message = "Current ownership count is {0}. (Identifier: '{1}')")]
+        [Event(2, Level = EventLevel.Informational, Message = "Current ownership count is {0} for Event Hub '{2}'. (Identifier: '{1}')")]
         public virtual void CurrentOwnershipCount(int count,
-                                                  string identifier)
+                                                  string identifier,
+                                                  string eventHubName)
         {
             if (IsEnabled())
             {
-                WriteEvent(2, count, identifier ?? string.Empty);
+                WriteEvent(2, count, identifier ?? string.Empty, eventHubName);
             }
         }
 
@@ -75,13 +78,14 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// </summary>
         ///
         /// <param name="unclaimedPartitions">List of unclaimed partitions.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the load balancer is associated with.</param>
         ///
-        [Event(3, Level = EventLevel.Informational, Message = "Unclaimed partitions: '{0}'.")]
-        public virtual void UnclaimedPartitions(HashSet<string> unclaimedPartitions)
+        [Event(3, Level = EventLevel.Informational, Message = "Unclaimed partitions: '{0}' for Event Hub '{1}'.")]
+        public virtual void UnclaimedPartitions(HashSet<string> unclaimedPartitions, string eventHubName)
         {
             if (IsEnabled())
             {
-                WriteEvent(3, string.Join(", ", unclaimedPartitions));
+                WriteEvent(3, string.Join(", ", unclaimedPartitions), eventHubName);
             }
         }
 
@@ -90,13 +94,14 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the Event Hub partition whose ownership claim attempt is starting.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the load balancer is associated with.</param>
         ///
-        [Event(4, Level = EventLevel.Informational, Message = "Attempting to claim ownership of partition '{0}'.")]
-        public virtual void ClaimOwnershipStart(string partitionId)
+        [Event(4, Level = EventLevel.Informational, Message = "Attempting to claim ownership of partition '{0}' for Event Hub '{1}'.")]
+        public virtual void ClaimOwnershipStart(string partitionId, string eventHubName)
         {
             if (IsEnabled())
             {
-                WriteEvent(4, partitionId ?? string.Empty);
+                WriteEvent(4, partitionId ?? string.Empty, eventHubName);
             }
         }
 
@@ -106,14 +111,16 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         /// <param name="partitionId">The identifier of the Event Hub partition.</param>
         /// <param name="errorMessage">The message for the exception that occurred.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the load balancer is associated with.</param>
         ///
-        [Event(5, Level = EventLevel.Error, Message = "Failed to claim ownership of partition '{0}'. (ErrorMessage: '{1}')")]
+        [Event(5, Level = EventLevel.Error, Message = "Failed to claim ownership of partition '{0}' for Event Hub '{2}'. (ErrorMessage: '{1}')")]
         public virtual void ClaimOwnershipError(string partitionId,
-                                                string errorMessage)
+                                                string errorMessage,
+                                                string eventHubName)
         {
             if (IsEnabled())
             {
-                WriteEvent(5, partitionId ?? string.Empty, errorMessage ?? string.Empty);
+                WriteEvent(5, partitionId ?? string.Empty, errorMessage ?? string.Empty, eventHubName);
             }
         }
 
@@ -122,13 +129,14 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// </summary>
         ///
         /// <param name="identifier">A unique name used to identify the associated event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the load balancer is associated with.</param>
         ///
-        [Event(6, Level = EventLevel.Informational, Message = "Load is unbalanced and this load balancer should steal a partition. (Identifier: '{0}')")]
-        public virtual void ShouldStealPartition(string identifier)
+        [Event(6, Level = EventLevel.Informational, Message = "Load is unbalanced and this load balancer should steal a partition for Event Hub '{1}'. (Identifier: '{0}')")]
+        public virtual void ShouldStealPartition(string identifier, string eventHubName)
         {
             if (IsEnabled())
             {
-                WriteEvent(6, identifier ?? string.Empty);
+                WriteEvent(6, identifier ?? string.Empty, eventHubName);
             }
         }
 
@@ -139,15 +147,17 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <param name="partitionId">The identifier of the partition that was selected to be stolen.</param>
         /// <param name="stolenFrom">The identifier of the event processor that is being stolen from.</param>
         /// <param name="identifier">A unique name used to identify the associated event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the load balancer is associated with.</param>
         ///
-        [Event(7, Level = EventLevel.Informational, Message = "No unclaimed partitions, attempting to steal partition '{0}' from event processor '{1}'. (Identifier: '{2}')")]
+        [Event(7, Level = EventLevel.Informational, Message = "No unclaimed partitions, attempting to steal partition '{0}' from event processor '{1}' for Event Hub '{3}'. (Identifier: '{2}').")]
         public virtual void StealPartition(string partitionId,
                                            string stolenFrom,
-                                           string identifier)
+                                           string identifier,
+                                           string eventHubName)
         {
             if (IsEnabled())
             {
-                WriteEvent(7, partitionId ?? string.Empty, stolenFrom ?? string.Empty, identifier ?? string.Empty);
+                WriteEvent(7, partitionId ?? string.Empty, stolenFrom ?? string.Empty, identifier ?? string.Empty, eventHubName);
             }
         }
 
@@ -156,13 +166,14 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// </summary>
         ///
         /// <param name="identifier">A unique name used to identify the associated event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the load balancer is associated with.</param>
         ///
-        [Event(8, Level = EventLevel.Verbose, Message = "Attempting to renew ownership. (Identifier: '{0}')")]
-        public virtual void RenewOwnershipStart(string identifier)
+        [Event(8, Level = EventLevel.Verbose, Message = "Attempting to renew ownership for Event Hub '{1}'. (Identifier: '{0}')")]
+        public virtual void RenewOwnershipStart(string identifier, string eventHubName)
         {
             if (IsEnabled())
             {
-                WriteEvent(8, identifier ?? string.Empty);
+                WriteEvent(8, identifier ?? string.Empty, eventHubName);
             }
         }
 
@@ -172,14 +183,16 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///
         /// <param name="identifier">A unique name used to identify the associated event processor.</param>
         /// <param name="errorMessage">The message for the exception that occurred.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the load balancer is associated with.</param>
         ///
-        [Event(9, Level = EventLevel.Error, Message = "Failed to renew ownership. (Identifier: '{0}'; ErrorMessage: '{0}')")]
+        [Event(9, Level = EventLevel.Error, Message = "Failed to renew ownership for Event Hub '{2}'. (Identifier: '{0}'; ErrorMessage: '{1}')")]
         public virtual void RenewOwnershipError(string identifier,
-                                                string errorMessage)
+                                                string errorMessage,
+                                                string eventHubName)
         {
             if (IsEnabled())
             {
-                WriteEvent(9, identifier ?? string.Empty, errorMessage ?? string.Empty);
+                WriteEvent(9, identifier ?? string.Empty, errorMessage ?? string.Empty, eventHubName);
             }
         }
 
@@ -188,13 +201,14 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// </summary>
         ///
         /// <param name="identifier">A unique name used to identify the associated event processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub that the load balancer is associated with.</param>
         ///
-        [Event(10, Level = EventLevel.Verbose, Message = "Attempt to renew ownership has completed. (Identifier: '{0}')")]
-        public virtual void RenewOwnershipComplete(string identifier)
+        [Event(10, Level = EventLevel.Verbose, Message = "Attempt to renew ownership has completed for Event Hub '{1}'. (Identifier: '{0}')")]
+        public virtual void RenewOwnershipComplete(string identifier, string eventHubName)
         {
             if (IsEnabled())
             {
-                WriteEvent(10, identifier ?? string.Empty);
+                WriteEvent(10, identifier ?? string.Empty, eventHubName);
             }
         }
     }

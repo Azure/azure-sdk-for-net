@@ -11,14 +11,159 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Resources.Samples
 {
     public partial class Sample_PolicyAssignmentResource
     {
-        // Delete a policy assignment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_RetrieveAPolicyAssignment()
+        {
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignment.json
+            // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PolicyAssignmentResource created on azure
+            // for more information of creating PolicyAssignmentResource, please refer to the document of PolicyAssignmentResource
+            string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
+            string policyAssignmentName = "EnforceNaming";
+            ResourceIdentifier policyAssignmentResourceId = PolicyAssignmentResource.CreateResourceIdentifier(scope, policyAssignmentName);
+            PolicyAssignmentResource policyAssignment = client.GetPolicyAssignmentResource(policyAssignmentResourceId);
+
+            // invoke the operation
+            PolicyAssignmentResource result = await policyAssignment.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            PolicyAssignmentData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_RetrieveAPolicyAssignmentWithASystemAssignedIdentity()
+        {
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithIdentity.json
+            // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PolicyAssignmentResource created on azure
+            // for more information of creating PolicyAssignmentResource, please refer to the document of PolicyAssignmentResource
+            string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
+            string policyAssignmentName = "EnforceNaming";
+            ResourceIdentifier policyAssignmentResourceId = PolicyAssignmentResource.CreateResourceIdentifier(scope, policyAssignmentName);
+            PolicyAssignmentResource policyAssignment = client.GetPolicyAssignmentResource(policyAssignmentResourceId);
+
+            // invoke the operation
+            PolicyAssignmentResource result = await policyAssignment.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            PolicyAssignmentData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_RetrieveAPolicyAssignmentWithAUserAssignedIdentity()
+        {
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithUserAssignedIdentity.json
+            // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PolicyAssignmentResource created on azure
+            // for more information of creating PolicyAssignmentResource, please refer to the document of PolicyAssignmentResource
+            string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
+            string policyAssignmentName = "EnforceNaming";
+            ResourceIdentifier policyAssignmentResourceId = PolicyAssignmentResource.CreateResourceIdentifier(scope, policyAssignmentName);
+            PolicyAssignmentResource policyAssignment = client.GetPolicyAssignmentResource(policyAssignmentResourceId);
+
+            // invoke the operation
+            PolicyAssignmentResource result = await policyAssignment.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            PolicyAssignmentData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_RetrieveAPolicyAssignmentWithOverrides()
+        {
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithOverrides.json
+            // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PolicyAssignmentResource created on azure
+            // for more information of creating PolicyAssignmentResource, please refer to the document of PolicyAssignmentResource
+            string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
+            string policyAssignmentName = "CostManagement";
+            ResourceIdentifier policyAssignmentResourceId = PolicyAssignmentResource.CreateResourceIdentifier(scope, policyAssignmentName);
+            PolicyAssignmentResource policyAssignment = client.GetPolicyAssignmentResource(policyAssignmentResourceId);
+
+            // invoke the operation
+            PolicyAssignmentResource result = await policyAssignment.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            PolicyAssignmentData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_RetrieveAPolicyAssignmentWithResourceSelectors()
+        {
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithResourceSelectors.json
+            // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PolicyAssignmentResource created on azure
+            // for more information of creating PolicyAssignmentResource, please refer to the document of PolicyAssignmentResource
+            string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
+            string policyAssignmentName = "CostManagement";
+            ResourceIdentifier policyAssignmentResourceId = PolicyAssignmentResource.CreateResourceIdentifier(scope, policyAssignmentName);
+            PolicyAssignmentResource policyAssignment = client.GetPolicyAssignmentResource(policyAssignmentResourceId);
+
+            // invoke the operation
+            PolicyAssignmentResource result = await policyAssignment.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            PolicyAssignmentData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAPolicyAssignment()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/deletePolicyAssignment.json
@@ -47,159 +192,8 @@ namespace Azure.ResourceManager.Resources.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Retrieve a policy assignment
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_RetrieveAPolicyAssignment()
-        {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignment.json
-            // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PolicyAssignmentResource created on azure
-            // for more information of creating PolicyAssignmentResource, please refer to the document of PolicyAssignmentResource
-            string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            string policyAssignmentName = "EnforceNaming";
-            ResourceIdentifier policyAssignmentResourceId = PolicyAssignmentResource.CreateResourceIdentifier(scope, policyAssignmentName);
-            PolicyAssignmentResource policyAssignment = client.GetPolicyAssignmentResource(policyAssignmentResourceId);
-
-            // invoke the operation
-            PolicyAssignmentResource result = await policyAssignment.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            PolicyAssignmentData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Retrieve a policy assignment with a system assigned identity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_RetrieveAPolicyAssignmentWithASystemAssignedIdentity()
-        {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithIdentity.json
-            // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PolicyAssignmentResource created on azure
-            // for more information of creating PolicyAssignmentResource, please refer to the document of PolicyAssignmentResource
-            string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            string policyAssignmentName = "EnforceNaming";
-            ResourceIdentifier policyAssignmentResourceId = PolicyAssignmentResource.CreateResourceIdentifier(scope, policyAssignmentName);
-            PolicyAssignmentResource policyAssignment = client.GetPolicyAssignmentResource(policyAssignmentResourceId);
-
-            // invoke the operation
-            PolicyAssignmentResource result = await policyAssignment.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            PolicyAssignmentData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Retrieve a policy assignment with a user assigned identity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_RetrieveAPolicyAssignmentWithAUserAssignedIdentity()
-        {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithUserAssignedIdentity.json
-            // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PolicyAssignmentResource created on azure
-            // for more information of creating PolicyAssignmentResource, please refer to the document of PolicyAssignmentResource
-            string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            string policyAssignmentName = "EnforceNaming";
-            ResourceIdentifier policyAssignmentResourceId = PolicyAssignmentResource.CreateResourceIdentifier(scope, policyAssignmentName);
-            PolicyAssignmentResource policyAssignment = client.GetPolicyAssignmentResource(policyAssignmentResourceId);
-
-            // invoke the operation
-            PolicyAssignmentResource result = await policyAssignment.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            PolicyAssignmentData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Retrieve a policy assignment with overrides
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_RetrieveAPolicyAssignmentWithOverrides()
-        {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithOverrides.json
-            // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PolicyAssignmentResource created on azure
-            // for more information of creating PolicyAssignmentResource, please refer to the document of PolicyAssignmentResource
-            string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            string policyAssignmentName = "CostManagement";
-            ResourceIdentifier policyAssignmentResourceId = PolicyAssignmentResource.CreateResourceIdentifier(scope, policyAssignmentName);
-            PolicyAssignmentResource policyAssignment = client.GetPolicyAssignmentResource(policyAssignmentResourceId);
-
-            // invoke the operation
-            PolicyAssignmentResource result = await policyAssignment.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            PolicyAssignmentData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Retrieve a policy assignment with resource selectors
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_RetrieveAPolicyAssignmentWithResourceSelectors()
-        {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithResourceSelectors.json
-            // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PolicyAssignmentResource created on azure
-            // for more information of creating PolicyAssignmentResource, please refer to the document of PolicyAssignmentResource
-            string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            string policyAssignmentName = "CostManagement";
-            ResourceIdentifier policyAssignmentResourceId = PolicyAssignmentResource.CreateResourceIdentifier(scope, policyAssignmentName);
-            PolicyAssignmentResource policyAssignment = client.GetPolicyAssignmentResource(policyAssignmentResourceId);
-
-            // invoke the operation
-            PolicyAssignmentResource result = await policyAssignment.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            PolicyAssignmentData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Update a policy assignment with a system assigned identity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAPolicyAssignmentWithASystemAssignedIdentity()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/updatePolicyAssignmentWithIdentity.json
@@ -218,7 +212,7 @@ namespace Azure.ResourceManager.Resources.Samples
             PolicyAssignmentResource policyAssignment = client.GetPolicyAssignmentResource(policyAssignmentResourceId);
 
             // invoke the operation
-            PolicyAssignmentPatch patch = new PolicyAssignmentPatch()
+            PolicyAssignmentPatch patch = new PolicyAssignmentPatch
             {
                 Location = new AzureLocation("eastus"),
                 Identity = new ManagedServiceIdentity("SystemAssigned"),
@@ -232,9 +226,8 @@ namespace Azure.ResourceManager.Resources.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update a policy assignment with a user assigned identity
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAPolicyAssignmentWithAUserAssignedIdentity()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/updatePolicyAssignmentWithUserAssignedIdentity.json
@@ -253,14 +246,14 @@ namespace Azure.ResourceManager.Resources.Samples
             PolicyAssignmentResource policyAssignment = client.GetPolicyAssignmentResource(policyAssignmentResourceId);
 
             // invoke the operation
-            PolicyAssignmentPatch patch = new PolicyAssignmentPatch()
+            PolicyAssignmentPatch patch = new PolicyAssignmentPatch
             {
                 Location = new AzureLocation("eastus"),
                 Identity = new ManagedServiceIdentity("UserAssigned")
                 {
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("/subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2/resourceGroups/testResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-identity")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("/subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2/resourceGroups/testResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-identity")] = new UserAssignedIdentity()
 },
                 },
             };
@@ -273,9 +266,8 @@ namespace Azure.ResourceManager.Resources.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update a policy assignment with overrides
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAPolicyAssignmentWithOverrides()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/updatePolicyAssignmentWithOverrides.json
@@ -294,27 +286,18 @@ namespace Azure.ResourceManager.Resources.Samples
             PolicyAssignmentResource policyAssignment = client.GetPolicyAssignmentResource(policyAssignmentResourceId);
 
             // invoke the operation
-            PolicyAssignmentPatch patch = new PolicyAssignmentPatch()
+            PolicyAssignmentPatch patch = new PolicyAssignmentPatch
             {
-                Overrides =
-{
-new PolicyOverride()
+                Overrides = {new PolicyOverride
 {
 Kind = PolicyOverrideKind.PolicyEffect,
 Value = "Audit",
-Selectors =
-{
-new ResourceSelectorExpression()
+Selectors = {new ResourceSelectorExpression
 {
 Kind = ResourceSelectorKind.PolicyDefinitionReferenceId,
-In =
-{
-"Limit_Skus","Limit_Locations"
-},
-}
-},
-}
-},
+In = {"Limit_Skus", "Limit_Locations"},
+}},
+}},
             };
             PolicyAssignmentResource result = await policyAssignment.UpdateAsync(patch);
 
@@ -325,9 +308,8 @@ In =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update a policy assignment with resource selectors
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAPolicyAssignmentWithResourceSelectors()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/updatePolicyAssignmentWithResourceSelectors.json
@@ -346,26 +328,17 @@ In =
             PolicyAssignmentResource policyAssignment = client.GetPolicyAssignmentResource(policyAssignmentResourceId);
 
             // invoke the operation
-            PolicyAssignmentPatch patch = new PolicyAssignmentPatch()
+            PolicyAssignmentPatch patch = new PolicyAssignmentPatch
             {
-                ResourceSelectors =
-{
-new ResourceSelector()
+                ResourceSelectors = {new ResourceSelector
 {
 Name = "SDPRegions",
-Selectors =
-{
-new ResourceSelectorExpression()
+Selectors = {new ResourceSelectorExpression
 {
 Kind = ResourceSelectorKind.ResourceLocation,
-In =
-{
-"eastus2euap","centraluseuap"
-},
-}
-},
-}
-},
+In = {"eastus2euap", "centraluseuap"},
+}},
+}},
             };
             PolicyAssignmentResource result = await policyAssignment.UpdateAsync(patch);
 

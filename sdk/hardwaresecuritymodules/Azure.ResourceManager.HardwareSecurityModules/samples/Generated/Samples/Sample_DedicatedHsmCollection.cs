@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.HardwareSecurityModules.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Samples
 {
     public partial class Sample_DedicatedHsmCollection
     {
-        // Create a new or update an existing dedicated HSM
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateANewOrUpdateAnExistingDedicatedHSM()
         {
             // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/DedicatedHsm_CreateOrUpdate.json
@@ -41,21 +41,18 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
 
             // invoke the operation
             string name = "hsm1";
-            DedicatedHsmData data = new DedicatedHsmData(new AzureLocation("westus"), new DedicatedHsmSku()
+            DedicatedHsmData data = new DedicatedHsmData(new AzureLocation("westus"), new DedicatedHsmSku
             {
                 Name = new DedicatedHsmSkuName("SafeNet Luna Network HSM A790"),
-            }, new DedicatedHsmProperties()
+            }, new DedicatedHsmProperties
             {
-                NetworkProfile = new DedicatedHsmNetworkProfile()
+                NetworkProfile = new DedicatedHsmNetworkProfile
                 {
                     SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hsm-group/providers/Microsoft.Network/virtualNetworks/stamp01/subnets/stamp01"),
-                    NetworkInterfaces =
-{
-new DedicatedHsmNetworkInterface()
+                    NetworkInterfaces = {new DedicatedHsmNetworkInterface
 {
 PrivateIPAddress = "1.0.0.1",
-}
-},
+}},
                 },
                 StampId = "stamp01",
             })
@@ -63,7 +60,7 @@ PrivateIPAddress = "1.0.0.1",
                 Tags =
 {
 ["Dept"] = "hsm",
-["Environment"] = "dogfood",
+["Environment"] = "dogfood"
 },
             };
             ArmOperation<DedicatedHsmResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
@@ -76,9 +73,8 @@ PrivateIPAddress = "1.0.0.1",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a new or update an existing payment HSM
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateANewOrUpdateAnExistingPaymentHSM()
         {
             // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/PaymentHsm_CreateOrUpdate.json
@@ -101,21 +97,18 @@ PrivateIPAddress = "1.0.0.1",
 
             // invoke the operation
             string name = "hsm1";
-            DedicatedHsmData data = new DedicatedHsmData(new AzureLocation("westus"), new DedicatedHsmSku()
+            DedicatedHsmData data = new DedicatedHsmData(new AzureLocation("westus"), new DedicatedHsmSku
             {
                 Name = DedicatedHsmSkuName.PayShield10KLmk1Cps60,
-            }, new DedicatedHsmProperties()
+            }, new DedicatedHsmProperties
             {
-                NetworkProfile = new DedicatedHsmNetworkProfile()
+                NetworkProfile = new DedicatedHsmNetworkProfile
                 {
                     SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hsm-group/providers/Microsoft.Network/virtualNetworks/stamp01/subnets/stamp01"),
-                    NetworkInterfaces =
-{
-new DedicatedHsmNetworkInterface()
+                    NetworkInterfaces = {new DedicatedHsmNetworkInterface
 {
 PrivateIPAddress = "1.0.0.1",
-}
-},
+}},
                 },
                 StampId = "stamp01",
             })
@@ -123,7 +116,7 @@ PrivateIPAddress = "1.0.0.1",
                 Tags =
 {
 ["Dept"] = "hsm",
-["Environment"] = "dogfood",
+["Environment"] = "dogfood"
 },
             };
             ArmOperation<DedicatedHsmResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
@@ -136,9 +129,8 @@ PrivateIPAddress = "1.0.0.1",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a new or update an existing payment HSM with management profile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateANewOrUpdateAnExistingPaymentHSMWithManagementProfile()
         {
             // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/PaymentHsm_CreateOrUpdate_WithManagementProfile.json
@@ -161,32 +153,26 @@ PrivateIPAddress = "1.0.0.1",
 
             // invoke the operation
             string name = "hsm1";
-            DedicatedHsmData data = new DedicatedHsmData(new AzureLocation("westus"), new DedicatedHsmSku()
+            DedicatedHsmData data = new DedicatedHsmData(new AzureLocation("westus"), new DedicatedHsmSku
             {
                 Name = DedicatedHsmSkuName.PayShield10KLmk1Cps60,
-            }, new DedicatedHsmProperties()
+            }, new DedicatedHsmProperties
             {
-                NetworkProfile = new DedicatedHsmNetworkProfile()
+                NetworkProfile = new DedicatedHsmNetworkProfile
                 {
                     SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hsm-group/providers/Microsoft.Network/virtualNetworks/stamp01/subnets/stamp01"),
-                    NetworkInterfaces =
-{
-new DedicatedHsmNetworkInterface()
+                    NetworkInterfaces = {new DedicatedHsmNetworkInterface
 {
 PrivateIPAddress = "1.0.0.1",
-}
-},
+}},
                 },
-                ManagementNetworkProfile = new DedicatedHsmNetworkProfile()
+                ManagementNetworkProfile = new DedicatedHsmNetworkProfile
                 {
                     SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hsm-group/providers/Microsoft.Network/virtualNetworks/stamp01/subnets/stamp01"),
-                    NetworkInterfaces =
-{
-new DedicatedHsmNetworkInterface()
+                    NetworkInterfaces = {new DedicatedHsmNetworkInterface
 {
 PrivateIPAddress = "1.0.0.2",
-}
-},
+}},
                 },
                 StampId = "stamp01",
             })
@@ -194,7 +180,7 @@ PrivateIPAddress = "1.0.0.2",
                 Tags =
 {
 ["Dept"] = "hsm",
-["Environment"] = "dogfood",
+["Environment"] = "dogfood"
 },
             };
             ArmOperation<DedicatedHsmResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
@@ -207,9 +193,8 @@ PrivateIPAddress = "1.0.0.2",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a dedicated HSM
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetADedicatedHSM()
         {
             // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/DedicatedHsm_Get.json
@@ -241,81 +226,8 @@ PrivateIPAddress = "1.0.0.2",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a dedicated HSM
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetADedicatedHSM()
-        {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/DedicatedHsm_Get.json
-            // this example is just showing the usage of "DedicatedHsm_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "hsm-group";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this DedicatedHsmResource
-            DedicatedHsmCollection collection = resourceGroupResource.GetDedicatedHsms();
-
-            // invoke the operation
-            string name = "hsm1";
-            bool result = await collection.ExistsAsync(name);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Get a dedicated HSM
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetADedicatedHSM()
-        {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/DedicatedHsm_Get.json
-            // this example is just showing the usage of "DedicatedHsm_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "hsm-group";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this DedicatedHsmResource
-            DedicatedHsmCollection collection = resourceGroupResource.GetDedicatedHsms();
-
-            // invoke the operation
-            string name = "hsm1";
-            NullableResponse<DedicatedHsmResource> response = await collection.GetIfExistsAsync(name);
-            DedicatedHsmResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                DedicatedHsmData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // Get a payment HSM
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAPaymentHSM()
         {
             // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/PaymentHsm_Get.json
@@ -347,81 +259,8 @@ PrivateIPAddress = "1.0.0.2",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a payment HSM
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetAPaymentHSM()
-        {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/PaymentHsm_Get.json
-            // this example is just showing the usage of "DedicatedHsm_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "hsm-group";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this DedicatedHsmResource
-            DedicatedHsmCollection collection = resourceGroupResource.GetDedicatedHsms();
-
-            // invoke the operation
-            string name = "hsm1";
-            bool result = await collection.ExistsAsync(name);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Get a payment HSM
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetAPaymentHSM()
-        {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/PaymentHsm_Get.json
-            // this example is just showing the usage of "DedicatedHsm_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "hsm-group";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this DedicatedHsmResource
-            DedicatedHsmCollection collection = resourceGroupResource.GetDedicatedHsms();
-
-            // invoke the operation
-            string name = "hsm1";
-            NullableResponse<DedicatedHsmResource> response = await collection.GetIfExistsAsync(name);
-            DedicatedHsmResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                DedicatedHsmData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // Get a payment HSM with 2018-10-31Preview api version
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAPaymentHSMWith20181031PreviewApiVersion()
         {
             // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/PaymentHsm_Get_With_2018-10-31Preview_Version.json
@@ -453,81 +292,8 @@ PrivateIPAddress = "1.0.0.2",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a payment HSM with 2018-10-31Preview api version
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetAPaymentHSMWith20181031PreviewApiVersion()
-        {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/PaymentHsm_Get_With_2018-10-31Preview_Version.json
-            // this example is just showing the usage of "DedicatedHsm_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "hsm-group";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this DedicatedHsmResource
-            DedicatedHsmCollection collection = resourceGroupResource.GetDedicatedHsms();
-
-            // invoke the operation
-            string name = "hsm1";
-            bool result = await collection.ExistsAsync(name);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Get a payment HSM with 2018-10-31Preview api version
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetAPaymentHSMWith20181031PreviewApiVersion()
-        {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/PaymentHsm_Get_With_2018-10-31Preview_Version.json
-            // this example is just showing the usage of "DedicatedHsm_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "hsm-group";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this DedicatedHsmResource
-            DedicatedHsmCollection collection = resourceGroupResource.GetDedicatedHsms();
-
-            // invoke the operation
-            string name = "hsm1";
-            NullableResponse<DedicatedHsmResource> response = await collection.GetIfExistsAsync(name);
-            DedicatedHsmResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                DedicatedHsmData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // List dedicated HSM devices in a resource group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListDedicatedHSMDevicesInAResourceGroup()
         {
             // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/DedicatedHsm_ListByResourceGroup.json
@@ -558,12 +324,11 @@ PrivateIPAddress = "1.0.0.2",
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List dedicated HSM devices in a resource group including payment HSM
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListDedicatedHSMDevicesInAResourceGroupIncludingPaymentHSM()
         {
             // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/PaymentHsm_ListByResourceGroup.json
@@ -594,7 +359,217 @@ PrivateIPAddress = "1.0.0.2",
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetADedicatedHSM()
+        {
+            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/DedicatedHsm_Get.json
+            // this example is just showing the usage of "DedicatedHsm_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "hsm-group";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this DedicatedHsmResource
+            DedicatedHsmCollection collection = resourceGroupResource.GetDedicatedHsms();
+
+            // invoke the operation
+            string name = "hsm1";
+            bool result = await collection.ExistsAsync(name);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetAPaymentHSM()
+        {
+            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/PaymentHsm_Get.json
+            // this example is just showing the usage of "DedicatedHsm_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "hsm-group";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this DedicatedHsmResource
+            DedicatedHsmCollection collection = resourceGroupResource.GetDedicatedHsms();
+
+            // invoke the operation
+            string name = "hsm1";
+            bool result = await collection.ExistsAsync(name);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetAPaymentHSMWith20181031PreviewApiVersion()
+        {
+            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/PaymentHsm_Get_With_2018-10-31Preview_Version.json
+            // this example is just showing the usage of "DedicatedHsm_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "hsm-group";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this DedicatedHsmResource
+            DedicatedHsmCollection collection = resourceGroupResource.GetDedicatedHsms();
+
+            // invoke the operation
+            string name = "hsm1";
+            bool result = await collection.ExistsAsync(name);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetADedicatedHSM()
+        {
+            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/DedicatedHsm_Get.json
+            // this example is just showing the usage of "DedicatedHsm_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "hsm-group";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this DedicatedHsmResource
+            DedicatedHsmCollection collection = resourceGroupResource.GetDedicatedHsms();
+
+            // invoke the operation
+            string name = "hsm1";
+            NullableResponse<DedicatedHsmResource> response = await collection.GetIfExistsAsync(name);
+            DedicatedHsmResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                DedicatedHsmData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetAPaymentHSM()
+        {
+            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/PaymentHsm_Get.json
+            // this example is just showing the usage of "DedicatedHsm_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "hsm-group";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this DedicatedHsmResource
+            DedicatedHsmCollection collection = resourceGroupResource.GetDedicatedHsms();
+
+            // invoke the operation
+            string name = "hsm1";
+            NullableResponse<DedicatedHsmResource> response = await collection.GetIfExistsAsync(name);
+            DedicatedHsmResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                DedicatedHsmData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetAPaymentHSMWith20181031PreviewApiVersion()
+        {
+            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/PaymentHsm_Get_With_2018-10-31Preview_Version.json
+            // this example is just showing the usage of "DedicatedHsm_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "hsm-group";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this DedicatedHsmResource
+            DedicatedHsmCollection collection = resourceGroupResource.GetDedicatedHsms();
+
+            // invoke the operation
+            string name = "hsm1";
+            NullableResponse<DedicatedHsmResource> response = await collection.GetIfExistsAsync(name);
+            DedicatedHsmResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                DedicatedHsmData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

@@ -15,27 +15,35 @@ internal delegate Task ProcessAsync<T>(T item, CancellationToken cancellationTok
 internal interface IProcessor<TItem> : IDisposable
 {
     ValueTask QueueAsync(TItem item, CancellationToken cancellationToken = default);
+    bool TryComplete();
     ProcessAsync<TItem> Process { get; set; }
 }
 
 internal static class ChannelProcessing
 {
-    public static IProcessor<T> NewProcessor<T>(int parallelism)
+    public static IProcessor<T> NewProcessor<T>(int readers, int? capacity = null)
     {
-        Argument.AssertInRange(parallelism, 1, int.MaxValue, nameof(parallelism));
-        return parallelism == 1
-            ? new SequentialChannelProcessor<T>(
-                Channel.CreateUnbounded<T>(new UnboundedChannelOptions()
-                {
-                    AllowSynchronousContinuations = true,
-                    SingleReader = true,
-                }))
-            : new ParallelChannelProcessor<T>(
-                Channel.CreateUnbounded<T>(new UnboundedChannelOptions()
-                {
-                    AllowSynchronousContinuations = true,
-                }),
-                parallelism);
+        Argument.AssertInRange(readers, 1, int.MaxValue, nameof(readers));
+        if (capacity.HasValue)
+        {
+            Argument.AssertInRange(capacity.Value, 1, int.MaxValue, nameof(capacity));
+        }
+
+        Channel<T> channel = capacity.HasValue
+            ? Channel.CreateBounded<T>(new BoundedChannelOptions(capacity.Value)
+            {
+                AllowSynchronousContinuations = true,
+                SingleReader = readers == 1,
+                FullMode = BoundedChannelFullMode.Wait,
+            })
+            : Channel.CreateUnbounded<T>(new UnboundedChannelOptions()
+            {
+                AllowSynchronousContinuations = true,
+                SingleReader = readers == 1,
+            });
+        return readers == 1
+            ? new SequentialChannelProcessor<T>(channel)
+            : new ParallelChannelProcessor<T>(channel, readers);
     }
 
     private abstract class ChannelProcessor<TItem> : IProcessor<TItem>, IDisposable
@@ -82,6 +90,8 @@ internal static class ChannelProcessing
             await _channel.Writer.WriteAsync(item, cancellationToken).ConfigureAwait(false);
         }
 
+        public bool TryComplete() => _channel.Writer.TryComplete();
+
         protected abstract ValueTask NotifyOfPendingItemProcessing();
 
         public void Dispose()
@@ -126,11 +136,11 @@ internal static class ChannelProcessing
 
         protected override async ValueTask NotifyOfPendingItemProcessing()
         {
-            List<Task> chunkRunners = new List<Task>(DataMovementConstants.MaxJobPartReaders);
+            List<Task> chunkRunners = new List<Task>(_maxConcurrentProcessing);
             while (await _channel.Reader.WaitToReadAsync(_cancellationToken).ConfigureAwait(false))
             {
                 TItem item = await _channel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
-                if (chunkRunners.Count >= DataMovementConstants.MaxJobPartReaders)
+                if (chunkRunners.Count >= _maxConcurrentProcessing)
                 {
                     // Clear any completed blocks from the task list
                     int removedRunners = chunkRunners.RemoveAll(x => x.IsCompleted || x.IsCanceled || x.IsFaulted);

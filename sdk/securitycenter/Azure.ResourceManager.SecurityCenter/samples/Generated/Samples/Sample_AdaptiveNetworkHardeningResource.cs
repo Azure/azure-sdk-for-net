@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.SecurityCenter.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.SecurityCenter.Samples
 {
     public partial class Sample_AdaptiveNetworkHardeningResource
     {
-        // Get a single Adaptive Network Hardening resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetASingleAdaptiveNetworkHardeningResource()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2020-01-01/examples/AdaptiveNetworkHardenings/GetAdaptiveNetworkHardening_example.json
@@ -49,9 +49,8 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Enforces the given rules on the NSG(s) listed in the request
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Enforce_EnforcesTheGivenRulesOnTheNSGSListedInTheRequest()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2020-01-01/examples/AdaptiveNetworkHardenings/EnforceAdaptiveNetworkHardeningRules_example.json
@@ -76,39 +75,26 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             // invoke the operation
             AdaptiveNetworkHardeningEnforceContent content = new AdaptiveNetworkHardeningEnforceContent(new RecommendedSecurityRule[]
             {
-new RecommendedSecurityRule()
+new RecommendedSecurityRule
 {
 Name = "rule1",
 Direction = SecurityTrafficDirection.Inbound,
 DestinationPort = 3389,
-Protocols =
-{
-SecurityTransportProtocol.Tcp
+Protocols = {SecurityTransportProtocol.Tcp},
+IPAddresses = {"100.10.1.1", "200.20.2.2", "81.199.3.0/24"},
 },
-IPAddresses =
-{
-"100.10.1.1","200.20.2.2","81.199.3.0/24"
-},
-},new RecommendedSecurityRule()
+new RecommendedSecurityRule
 {
 Name = "rule2",
 Direction = SecurityTrafficDirection.Inbound,
 DestinationPort = 22,
-Protocols =
-{
-SecurityTransportProtocol.Tcp
-},
-IPAddresses =
-{
-},
+Protocols = {SecurityTransportProtocol.Tcp},
+IPAddresses = {},
 }
-            }, new string[]
-            {
-"/subscriptions/20ff7fc3-e762-44dd-bd96-b71116dcdc23/resourceGroups/rg1/providers/Microsoft.Network/networkSecurityGroups/nsg1","/subscriptions/20ff7fc3-e762-44dd-bd96-b71116dcdc23/resourceGroups/rg2/providers/Microsoft.Network/networkSecurityGroups/nsg2"
-            });
+            }, new string[] { "/subscriptions/20ff7fc3-e762-44dd-bd96-b71116dcdc23/resourceGroups/rg1/providers/Microsoft.Network/networkSecurityGroups/nsg1", "/subscriptions/20ff7fc3-e762-44dd-bd96-b71116dcdc23/resourceGroups/rg2/providers/Microsoft.Network/networkSecurityGroups/nsg2" });
             await adaptiveNetworkHardening.EnforceAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

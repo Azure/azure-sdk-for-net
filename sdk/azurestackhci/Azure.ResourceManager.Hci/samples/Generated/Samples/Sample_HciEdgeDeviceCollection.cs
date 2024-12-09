@@ -10,148 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Hci.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Hci.Samples
 {
     public partial class Sample_HciEdgeDeviceCollection
     {
-        // List Edge Devices
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ListEdgeDevices()
-        {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/ListEdgeDevices.json
-            // this example is just showing the usage of "EdgeDevices_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this HciEdgeDeviceResource
-            string resourceUri = "subscriptions/fd3c3665-1729-4b7b-9a38-238e83b0f98b/resourceGroups/ArcInstance-rg/providers/Microsoft.HybridCompute/machines/Node-1";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceUri));
-            HciEdgeDeviceCollection collection = client.GetHciEdgeDevices(scopeId);
-
-            // invoke the operation and iterate over the result
-            await foreach (HciEdgeDeviceResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                HciEdgeDeviceData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get Edge Device
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetEdgeDevice()
-        {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/GetEdgeDevices.json
-            // this example is just showing the usage of "EdgeDevices_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this HciEdgeDeviceResource
-            string resourceUri = "subscriptions/fd3c3665-1729-4b7b-9a38-238e83b0f98b/resourceGroups/ArcInstance-rg/providers/Microsoft.HybridCompute/machines/Node-1";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceUri));
-            HciEdgeDeviceCollection collection = client.GetHciEdgeDevices(scopeId);
-
-            // invoke the operation
-            string edgeDeviceName = "default";
-            HciEdgeDeviceResource result = await collection.GetAsync(edgeDeviceName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            HciEdgeDeviceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Get Edge Device
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetEdgeDevice()
-        {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/GetEdgeDevices.json
-            // this example is just showing the usage of "EdgeDevices_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this HciEdgeDeviceResource
-            string resourceUri = "subscriptions/fd3c3665-1729-4b7b-9a38-238e83b0f98b/resourceGroups/ArcInstance-rg/providers/Microsoft.HybridCompute/machines/Node-1";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceUri));
-            HciEdgeDeviceCollection collection = client.GetHciEdgeDevices(scopeId);
-
-            // invoke the operation
-            string edgeDeviceName = "default";
-            bool result = await collection.ExistsAsync(edgeDeviceName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Get Edge Device
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetEdgeDevice()
-        {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/GetEdgeDevices.json
-            // this example is just showing the usage of "EdgeDevices_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this HciEdgeDeviceResource
-            string resourceUri = "subscriptions/fd3c3665-1729-4b7b-9a38-238e83b0f98b/resourceGroups/ArcInstance-rg/providers/Microsoft.HybridCompute/machines/Node-1";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceUri));
-            HciEdgeDeviceCollection collection = client.GetHciEdgeDevices(scopeId);
-
-            // invoke the operation
-            string edgeDeviceName = "default";
-            NullableResponse<HciEdgeDeviceResource> response = await collection.GetIfExistsAsync(edgeDeviceName);
-            HciEdgeDeviceResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                HciEdgeDeviceData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // Create HCI Edge Device
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateHCIEdgeDevice()
         {
             // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/CreateHciEdgeDevice.json
@@ -162,25 +28,19 @@ namespace Azure.ResourceManager.Hci.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this HciEdgeDeviceResource
             string resourceUri = "subscriptions/fd3c3665-1729-4b7b-9a38-238e83b0f98b/resourceGroups/ArcInstance-rg/providers/Microsoft.HybridCompute/machines/Node-1";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceUri));
-            HciEdgeDeviceCollection collection = client.GetHciEdgeDevices(scopeId);
+            HciEdgeDeviceCollection collection = client.GetHciEdgeDevices(new ResourceIdentifier(resourceUri));
 
             // invoke the operation
             string edgeDeviceName = "default";
-            HciEdgeDeviceData data = new HciArcEnabledEdgeDevice()
+            HciEdgeDeviceData data = new HciArcEnabledEdgeDevice
             {
-                Properties = new HciArcEnabledEdgeDeviceProperties()
+                Properties = new HciArcEnabledEdgeDeviceProperties
                 {
-                    DeviceConfiguration = new HciEdgeDeviceConfiguration()
+                    DeviceConfiguration = new HciEdgeDeviceConfiguration
                     {
-                        NicDetails =
-{
-new HciEdgeDeviceNicDetail()
+                        NicDetails = {new HciEdgeDeviceNicDetail
 {
 AdapterName = "ethernet",
 InterfaceDescription = "NDIS 6.70 ",
@@ -189,13 +49,9 @@ DriverVersion = "10.0.20348.1547 ",
 IPv4Address = "10.10.10.10",
 SubnetMask = "255.255.255.0",
 DefaultGateway = "10.10.10.1",
-DnsServers =
-{
-"100.10.10.1"
-},
+DnsServers = {"100.10.10.1"},
 DefaultIsolationId = "0",
-}
-},
+}},
                         DeviceMetadata = "",
                     },
                 },
@@ -208,6 +64,120 @@ DefaultIsolationId = "0",
             HciEdgeDeviceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetEdgeDevice()
+        {
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/GetEdgeDevices.json
+            // this example is just showing the usage of "EdgeDevices_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this HciEdgeDeviceResource
+            string resourceUri = "subscriptions/fd3c3665-1729-4b7b-9a38-238e83b0f98b/resourceGroups/ArcInstance-rg/providers/Microsoft.HybridCompute/machines/Node-1";
+            HciEdgeDeviceCollection collection = client.GetHciEdgeDevices(new ResourceIdentifier(resourceUri));
+
+            // invoke the operation
+            string edgeDeviceName = "default";
+            HciEdgeDeviceResource result = await collection.GetAsync(edgeDeviceName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            HciEdgeDeviceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListEdgeDevices()
+        {
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/ListEdgeDevices.json
+            // this example is just showing the usage of "EdgeDevices_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this HciEdgeDeviceResource
+            string resourceUri = "subscriptions/fd3c3665-1729-4b7b-9a38-238e83b0f98b/resourceGroups/ArcInstance-rg/providers/Microsoft.HybridCompute/machines/Node-1";
+            HciEdgeDeviceCollection collection = client.GetHciEdgeDevices(new ResourceIdentifier(resourceUri));
+
+            // invoke the operation and iterate over the result
+            await foreach (HciEdgeDeviceResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                HciEdgeDeviceData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetEdgeDevice()
+        {
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/GetEdgeDevices.json
+            // this example is just showing the usage of "EdgeDevices_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this HciEdgeDeviceResource
+            string resourceUri = "subscriptions/fd3c3665-1729-4b7b-9a38-238e83b0f98b/resourceGroups/ArcInstance-rg/providers/Microsoft.HybridCompute/machines/Node-1";
+            HciEdgeDeviceCollection collection = client.GetHciEdgeDevices(new ResourceIdentifier(resourceUri));
+
+            // invoke the operation
+            string edgeDeviceName = "default";
+            bool result = await collection.ExistsAsync(edgeDeviceName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetEdgeDevice()
+        {
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/GetEdgeDevices.json
+            // this example is just showing the usage of "EdgeDevices_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this HciEdgeDeviceResource
+            string resourceUri = "subscriptions/fd3c3665-1729-4b7b-9a38-238e83b0f98b/resourceGroups/ArcInstance-rg/providers/Microsoft.HybridCompute/machines/Node-1";
+            HciEdgeDeviceCollection collection = client.GetHciEdgeDevices(new ResourceIdentifier(resourceUri));
+
+            // invoke the operation
+            string edgeDeviceName = "default";
+            NullableResponse<HciEdgeDeviceResource> response = await collection.GetIfExistsAsync(edgeDeviceName);
+            HciEdgeDeviceResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                HciEdgeDeviceData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.Health.Insights.ClinicalMatching.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_ClinicalMatchingClient_MatchTrials_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
@@ -48,7 +48,7 @@ id = "<id>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ClinicalMatchingClient_MatchTrials_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
@@ -76,7 +76,7 @@ id = "<id>",
         [Ignore("Only validating compilation of examples")]
         public void Example_ClinicalMatchingClient_MatchTrials_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
@@ -92,7 +92,7 @@ new PatientRecord("<id>")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ClinicalMatchingClient_MatchTrials_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
@@ -108,7 +108,7 @@ new PatientRecord("<id>")
         [Ignore("Only validating compilation of examples")]
         public void Example_ClinicalMatchingClient_MatchTrials_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
@@ -335,7 +335,7 @@ radius = 123.45,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ClinicalMatchingClient_MatchTrials_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
@@ -562,7 +562,7 @@ radius = 123.45,
         [Ignore("Only validating compilation of examples")]
         public void Example_ClinicalMatchingClient_MatchTrials_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
@@ -653,7 +653,7 @@ FacilityAreas = {new GeographicArea(GeoJsonType.Feature, new AreaGeometry(GeoJso
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ClinicalMatchingClient_MatchTrials_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 

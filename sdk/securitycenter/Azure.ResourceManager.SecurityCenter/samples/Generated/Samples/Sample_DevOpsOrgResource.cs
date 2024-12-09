@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.SecurityCenter.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.SecurityCenter.Samples
 {
     public partial class Sample_DevOpsOrgResource
     {
-        // Get_AzureDevOpsOrgs
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAzureDevOpsOrgs()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2023-09-01-preview/examples/SecurityConnectorsDevOps/GetAzureDevOpsOrgs_example.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update_AzureDevOpsOrgs
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAzureDevOpsOrgs()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2023-09-01-preview/examples/SecurityConnectorsDevOps/UpdateAzureDevOpsOrgs_example.json
@@ -70,12 +69,12 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             DevOpsOrgResource devOpsOrg = client.GetDevOpsOrgResource(devOpsOrgResourceId);
 
             // invoke the operation
-            DevOpsOrgData data = new DevOpsOrgData()
+            DevOpsOrgData data = new DevOpsOrgData
             {
-                Properties = new DevOpsOrgProperties()
+                Properties = new DevOpsOrgProperties
                 {
                     OnboardingState = ResourceOnboardingState.NotApplicable,
-                    ActionableRemediation = new ActionableRemediation()
+                    ActionableRemediation = new ActionableRemediation
                     {
                         State = ActionableRemediationState.Enabled,
                     },

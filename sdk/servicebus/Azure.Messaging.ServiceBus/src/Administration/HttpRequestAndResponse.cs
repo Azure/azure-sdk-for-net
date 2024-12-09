@@ -22,6 +22,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         private readonly int _port;
         private readonly ClientDiagnostics _diagnostics;
         private readonly string _versionQuery;
+        private readonly string _scheme;
 
         /// <summary>
         /// Initializes a new <see cref="HttpRequestAndResponse"/> which can be used to send http request and response.
@@ -31,7 +32,8 @@ namespace Azure.Messaging.ServiceBus.Administration
             ClientDiagnostics diagnostics,
             TokenCredential tokenCredential,
             string fullyQualifiedNamespace,
-            ServiceBusAdministrationClientOptions.ServiceVersion version)
+            ServiceBusAdministrationClientOptions.ServiceVersion version,
+            bool useTls)
         {
             _pipeline = pipeline;
             _diagnostics = diagnostics;
@@ -39,6 +41,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             _tokenCredential = tokenCredential;
             _fullyQualifiedNamespace = fullyQualifiedNamespace;
             _port = GetPort(_fullyQualifiedNamespace);
+            _scheme = useTls ? Uri.UriSchemeHttps : Uri.UriSchemeHttp;
         }
 
         internal void ThrowIfRequestFailed(Request request, Response response)
@@ -171,7 +174,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             Uri uri = new UriBuilder(_fullyQualifiedNamespace)
             {
                 Path = entityPath,
-                Scheme = Uri.UriSchemeHttps,
+                Scheme = _scheme,
                 Port = _port,
                 Query = queryString
             }.Uri;
@@ -199,7 +202,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             {
                 Path = entityPath,
                 Port = _port,
-                Scheme = Uri.UriSchemeHttps,
+                Scheme = _scheme,
                 Query = _versionQuery
             }.Uri;
             var requestUriBuilder = new RequestUriBuilder();
@@ -245,7 +248,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             Uri uri = new UriBuilder(_fullyQualifiedNamespace)
             {
                 Path = entityPath,
-                Scheme = Uri.UriSchemeHttps,
+                Scheme = _scheme,
                 Port = _port,
                 Query = _versionQuery
             }.Uri;

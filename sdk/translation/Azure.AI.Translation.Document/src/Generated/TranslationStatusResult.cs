@@ -47,13 +47,13 @@ namespace Azure.AI.Translation.Document
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="TranslationStatusResult"/>. </summary>
-        /// <param name="id"> Id of the operation. </param>
+        /// <param name="id"> Id of the translation operation. </param>
         /// <param name="createdOn"> Operation created date time. </param>
         /// <param name="lastModified"> Date time in which the operation's status has been updated. </param>
         /// <param name="status"> List of possible statuses for job or document. </param>
         /// <param name="summary"> Status Summary. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="summary"/> is null. </exception>
-        internal TranslationStatusResult(string id, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, StatusSummary summary)
+        internal TranslationStatusResult(string id, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, TranslationStatusSummary summary)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(summary, nameof(summary));
@@ -66,7 +66,7 @@ namespace Azure.AI.Translation.Document
         }
 
         /// <summary> Initializes a new instance of <see cref="TranslationStatusResult"/>. </summary>
-        /// <param name="id"> Id of the operation. </param>
+        /// <param name="id"> Id of the translation operation. </param>
         /// <param name="createdOn"> Operation created date time. </param>
         /// <param name="lastModified"> Date time in which the operation's status has been updated. </param>
         /// <param name="status"> List of possible statuses for job or document. </param>
@@ -76,7 +76,7 @@ namespace Azure.AI.Translation.Document
         /// </param>
         /// <param name="summary"> Status Summary. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TranslationStatusResult(string id, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, JsonElement error, StatusSummary summary, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TranslationStatusResult(string id, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, JsonElement error, TranslationStatusSummary summary, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             CreatedOn = createdOn;

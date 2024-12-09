@@ -11,7 +11,7 @@ This guide will walk you through the steps to integrate your Playwright project 
 ```C# Snippet:Sample2_SetDefaultAuthenticationMechanism
 using Azure.Developer.MicrosoftPlaywrightTesting.NUnit;
 
-namespace PlaywrightTests; // Remember to change this as per your project namespace
+namespace PlaywrightTests.Sample2; // Remember to change this as per your project namespace
 
 [SetUpFixture]
 public class PlaywrightServiceSetup : PlaywrightServiceNUnit {};

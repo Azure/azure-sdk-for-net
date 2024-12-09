@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WritePropertyName("attachedNetworkId"u8);
-            writer.WriteStringValue(AttachedNetworkId);
+            writer.WriteStringValue(AttachedNetworkArmId);
             if (Optional.IsDefined(DefaultGateway))
             {
                 writer.WritePropertyName("defaultGateway"u8);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            string attachedNetworkId = default;
+            ResourceIdentifier attachedNetworkId = default;
             DefaultGateway? defaultGateway = default;
             VirtualMachineIPAllocationMethod ipAllocationMethod = default;
             string ipv4Address = default;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 if (property.NameEquals("attachedNetworkId"u8))
                 {
-                    attachedNetworkId = property.Value.GetString();
+                    attachedNetworkId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("defaultGateway"u8))

@@ -22,7 +22,7 @@ These prerequisites allow you to create an Azure OpenAI resource and get both a 
 Install the client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.AI.OpenAI --prerelease
+dotnet add package Azure.AI.OpenAI
 ```
 
 The `Azure.AI.OpenAI` package builds on the [official OpenAI package](https://www.nuget.org/packages/OpenAI), which is included as a dependency.

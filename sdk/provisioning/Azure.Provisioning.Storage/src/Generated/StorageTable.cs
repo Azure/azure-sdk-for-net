@@ -24,38 +24,59 @@ public partial class StorageTable : ProvisionableResource
     /// between 3 and 63 characters.The name must comprise of only
     /// alphanumeric characters and it cannot begin with a numeric character.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// List of stored access policies specified on the table.
     /// </summary>
-    public BicepList<StorageTableSignedIdentifier> SignedIdentifiers { get => _signedIdentifiers; set => _signedIdentifiers.Assign(value); }
-    private readonly BicepList<StorageTableSignedIdentifier> _signedIdentifiers;
+    public BicepList<StorageTableSignedIdentifier> SignedIdentifiers 
+    {
+        get { Initialize(); return _signedIdentifiers!; }
+        set { Initialize(); _signedIdentifiers!.Assign(value); }
+    }
+    private BicepList<StorageTableSignedIdentifier>? _signedIdentifiers;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Table name under the specified account.
     /// </summary>
-    public BicepValue<string> TableName { get => _tableName; }
-    private readonly BicepValue<string> _tableName;
+    public BicepValue<string> TableName 
+    {
+        get { Initialize(); return _tableName!; }
+    }
+    private BicepValue<string>? _tableName;
 
     /// <summary>
     /// Gets or sets a reference to the parent TableService.
     /// </summary>
-    public TableService? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<TableService> _parent;
+    public TableService? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<TableService>? _parent;
 
     /// <summary>
     /// Creates a new StorageTable.
@@ -70,12 +91,19 @@ public partial class StorageTable : ProvisionableResource
     public StorageTable(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/tableServices/tables", resourceVersion ?? "2024-01-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _signedIdentifiers = BicepList<StorageTableSignedIdentifier>.DefineProperty(this, "SignedIdentifiers", ["properties", "signedIdentifiers"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _tableName = BicepValue<string>.DefineProperty(this, "TableName", ["properties", "tableName"], isOutput: true);
-        _parent = ResourceReference<TableService>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of StorageTable.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _signedIdentifiers = DefineListProperty<StorageTableSignedIdentifier>("SignedIdentifiers", ["properties", "signedIdentifiers"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _tableName = DefineProperty<string>("TableName", ["properties", "tableName"], isOutput: true);
+        _parent = DefineResource<TableService>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

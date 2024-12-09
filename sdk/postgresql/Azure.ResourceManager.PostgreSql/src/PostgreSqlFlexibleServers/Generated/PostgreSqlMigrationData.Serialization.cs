@@ -51,10 +51,30 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 writer.WritePropertyName("currentStatus"u8);
                 writer.WriteObjectValue(CurrentStatus, options);
             }
+            if (Optional.IsDefined(MigrationInstanceResourceId))
+            {
+                writer.WritePropertyName("migrationInstanceResourceId"u8);
+                writer.WriteStringValue(MigrationInstanceResourceId);
+            }
             if (Optional.IsDefined(MigrationMode))
             {
                 writer.WritePropertyName("migrationMode"u8);
                 writer.WriteStringValue(MigrationMode.Value.ToString());
+            }
+            if (Optional.IsDefined(MigrationOption))
+            {
+                writer.WritePropertyName("migrationOption"u8);
+                writer.WriteStringValue(MigrationOption.Value.ToString());
+            }
+            if (Optional.IsDefined(SourceType))
+            {
+                writer.WritePropertyName("sourceType"u8);
+                writer.WriteStringValue(SourceType.Value.ToString());
+            }
+            if (Optional.IsDefined(SslMode))
+            {
+                writer.WritePropertyName("sslMode"u8);
+                writer.WriteStringValue(SslMode.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(SourceDbServerMetadata))
             {
@@ -120,6 +140,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 writer.WritePropertyName("migrationWindowEndTimeInUtc"u8);
                 writer.WriteStringValue(MigrationWindowEndTimeInUtc.Value, "O");
+            }
+            if (Optional.IsDefined(MigrateRoles))
+            {
+                writer.WritePropertyName("migrateRoles"u8);
+                writer.WriteStringValue(MigrateRoles.Value.ToString());
             }
             if (Optional.IsDefined(StartDataMigration))
             {
@@ -187,7 +212,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             SystemData systemData = default;
             string migrationId = default;
             PostgreSqlMigrationStatus currentStatus = default;
+            ResourceIdentifier migrationInstanceResourceId = default;
             PostgreSqlMigrationMode? migrationMode = default;
+            MigrationOption? migrationOption = default;
+            PostgreSqlFlexibleServersSourceType? sourceType = default;
+            PostgreSqlFlexibleServersSslMode? sslMode = default;
             PostgreSqlServerMetadata sourceDbServerMetadata = default;
             PostgreSqlServerMetadata targetDbServerMetadata = default;
             ResourceIdentifier sourceDbServerResourceId = default;
@@ -200,6 +229,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget = default;
             DateTimeOffset? migrationWindowStartTimeInUtc = default;
             DateTimeOffset? migrationWindowEndTimeInUtc = default;
+            MigrateRolesEnum? migrateRoles = default;
             PostgreSqlMigrationStartDataMigration? startDataMigration = default;
             PostgreSqlMigrationTriggerCutover? triggerCutover = default;
             IList<string> dbsToTriggerCutoverOn = default;
@@ -275,6 +305,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             currentStatus = PostgreSqlMigrationStatus.DeserializePostgreSqlMigrationStatus(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("migrationInstanceResourceId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            migrationInstanceResourceId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("migrationMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -282,6 +321,33 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                                 continue;
                             }
                             migrationMode = new PostgreSqlMigrationMode(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("migrationOption"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            migrationOption = new MigrationOption(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("sourceType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            sourceType = new PostgreSqlFlexibleServersSourceType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("sslMode"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            sslMode = new PostgreSqlFlexibleServersSslMode(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("sourceDbServerMetadata"u8))
@@ -389,6 +455,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             migrationWindowEndTimeInUtc = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
+                        if (property0.NameEquals("migrateRoles"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            migrateRoles = new MigrateRolesEnum(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("startDataMigration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -462,7 +537,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 location,
                 migrationId,
                 currentStatus,
+                migrationInstanceResourceId,
                 migrationMode,
+                migrationOption,
+                sourceType,
+                sslMode,
                 sourceDbServerMetadata,
                 targetDbServerMetadata,
                 sourceDbServerResourceId,
@@ -475,6 +554,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 overwriteDbsInTarget,
                 migrationWindowStartTimeInUtc,
                 migrationWindowEndTimeInUtc,
+                migrateRoles,
                 startDataMigration,
                 triggerCutover,
                 dbsToTriggerCutoverOn ?? new ChangeTrackingList<string>(),
@@ -636,6 +716,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MigrationInstanceResourceId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    migrationInstanceResourceId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MigrationInstanceResourceId))
+                {
+                    builder.Append("    migrationInstanceResourceId: ");
+                    builder.AppendLine($"'{MigrationInstanceResourceId.ToString()}'");
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MigrationMode), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -648,6 +743,51 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     builder.Append("    migrationMode: ");
                     builder.AppendLine($"'{MigrationMode.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MigrationOption), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    migrationOption: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MigrationOption))
+                {
+                    builder.Append("    migrationOption: ");
+                    builder.AppendLine($"'{MigrationOption.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    sourceType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SourceType))
+                {
+                    builder.Append("    sourceType: ");
+                    builder.AppendLine($"'{SourceType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SslMode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    sslMode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SslMode))
+                {
+                    builder.Append("    sslMode: ");
+                    builder.AppendLine($"'{SslMode.Value.ToString()}'");
                 }
             }
 
@@ -867,6 +1007,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     builder.Append("    migrationWindowEndTimeInUtc: ");
                     var formattedDateTimeString = TypeFormatters.ToString(MigrationWindowEndTimeInUtc.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MigrateRoles), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    migrateRoles: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MigrateRoles))
+                {
+                    builder.Append("    migrateRoles: ");
+                    builder.AppendLine($"'{MigrateRoles.Value.ToString()}'");
                 }
             }
 

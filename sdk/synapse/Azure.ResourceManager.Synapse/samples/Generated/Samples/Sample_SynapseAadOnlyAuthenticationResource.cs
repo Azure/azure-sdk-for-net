@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Synapse.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Synapse.Samples
 {
     public partial class Sample_SynapseAadOnlyAuthenticationResource
     {
-        // Get Azure Active Directory Only Authentication property
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAzureActiveDirectoryOnlyAuthenticationProperty()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/GetAzureADOnlyAuthentication.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.Synapse.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or Update Azure Active Directory Only Authentication property
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateAzureActiveDirectoryOnlyAuthenticationProperty()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/CreateOrUpdateAzureADOnlyAuthentication.json
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.Synapse.Samples
             SynapseAadOnlyAuthenticationResource synapseAadOnlyAuthentication = client.GetSynapseAadOnlyAuthenticationResource(synapseAadOnlyAuthenticationResourceId);
 
             // invoke the operation
-            SynapseAadOnlyAuthenticationData data = new SynapseAadOnlyAuthenticationData()
+            SynapseAadOnlyAuthenticationData data = new SynapseAadOnlyAuthenticationData
             {
                 IsAadOnlyAuthenticationEnabled = true,
             };

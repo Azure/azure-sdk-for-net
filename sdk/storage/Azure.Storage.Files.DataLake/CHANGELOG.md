@@ -1,21 +1,21 @@
 # Release History
 
-## 12.21.0-beta.3 (Unreleased)
+## 12.22.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added support for service version 2025-05-05.
 
-### Breaking Changes
+## 12.21.0 (2024-11-12)
 
-### Bugs Fixed
+### Features Added
+- Includes all features from 12.21.0-beta.1 and 12.21.0-beta.2.
 
-### Other Changes
-
-## 12.20.1 (2024-10-10)
+## 12.21.0-beta.2 (2024-10-10)
 
 ### Other Changes
 - Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix.
 
-## 12.21.0-beta.2 (2024-10-10)
+## 12.20.1 (2024-10-10)
 
 ### Other Changes
 - Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix.

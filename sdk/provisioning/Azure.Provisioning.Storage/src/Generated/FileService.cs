@@ -18,50 +18,75 @@ namespace Azure.Provisioning.Storage;
 /// </summary>
 public partial class FileService : ProvisionableResource
 {
-    private readonly BicepValue<string> _name;
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The List of CORS rules. You can include up to five CorsRule elements in
     /// the request.
     /// </summary>
-    public BicepList<StorageCorsRule> CorsRules { get => _corsRules; set => _corsRules.Assign(value); }
-    private readonly BicepList<StorageCorsRule> _corsRules;
+    public BicepList<StorageCorsRule> CorsRules 
+    {
+        get { Initialize(); return _corsRules!; }
+        set { Initialize(); _corsRules!.Assign(value); }
+    }
+    private BicepList<StorageCorsRule>? _corsRules;
 
     /// <summary>
     /// Setting for SMB protocol.
     /// </summary>
-    public BicepValue<SmbSetting> ProtocolSmbSetting { get => _protocolSmbSetting; set => _protocolSmbSetting.Assign(value); }
-    private readonly BicepValue<SmbSetting> _protocolSmbSetting;
+    public SmbSetting ProtocolSmbSetting 
+    {
+        get { Initialize(); return _protocolSmbSetting!; }
+        set { Initialize(); AssignOrReplace(ref _protocolSmbSetting, value); }
+    }
+    private SmbSetting? _protocolSmbSetting;
 
     /// <summary>
     /// The file service properties for share soft delete.
     /// </summary>
-    public BicepValue<DeleteRetentionPolicy> ShareDeleteRetentionPolicy { get => _shareDeleteRetentionPolicy; set => _shareDeleteRetentionPolicy.Assign(value); }
-    private readonly BicepValue<DeleteRetentionPolicy> _shareDeleteRetentionPolicy;
+    public DeleteRetentionPolicy ShareDeleteRetentionPolicy 
+    {
+        get { Initialize(); return _shareDeleteRetentionPolicy!; }
+        set { Initialize(); AssignOrReplace(ref _shareDeleteRetentionPolicy, value); }
+    }
+    private DeleteRetentionPolicy? _shareDeleteRetentionPolicy;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Sku name and tier.
     /// </summary>
-    public BicepValue<StorageSku> Sku { get => _sku; }
-    private readonly BicepValue<StorageSku> _sku;
+    public StorageSku Sku 
+    {
+        get { Initialize(); return _sku!; }
+    }
+    private StorageSku? _sku;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent StorageAccount.
     /// </summary>
-    public StorageAccount? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<StorageAccount> _parent;
+    public StorageAccount? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<StorageAccount>? _parent;
 
     /// <summary>
     /// Get the default value for the Name property.
@@ -81,14 +106,21 @@ public partial class FileService : ProvisionableResource
     public FileService(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/fileServices", resourceVersion ?? "2024-01-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], defaultValue: GetNameDefaultValue());
-        _corsRules = BicepList<StorageCorsRule>.DefineProperty(this, "CorsRules", ["properties", "cors", "corsRules"]);
-        _protocolSmbSetting = BicepValue<SmbSetting>.DefineProperty(this, "ProtocolSmbSetting", ["properties", "protocolSettings", "smb"]);
-        _shareDeleteRetentionPolicy = BicepValue<DeleteRetentionPolicy>.DefineProperty(this, "ShareDeleteRetentionPolicy", ["properties", "shareDeleteRetentionPolicy"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _sku = BicepValue<StorageSku>.DefineProperty(this, "Sku", ["sku"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<StorageAccount>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of FileService.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], defaultValue: GetNameDefaultValue());
+        _corsRules = DefineListProperty<StorageCorsRule>("CorsRules", ["properties", "cors", "corsRules"]);
+        _protocolSmbSetting = DefineModelProperty<SmbSetting>("ProtocolSmbSetting", ["properties", "protocolSettings", "smb"]);
+        _shareDeleteRetentionPolicy = DefineModelProperty<DeleteRetentionPolicy>("ShareDeleteRetentionPolicy", ["properties", "shareDeleteRetentionPolicy"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _sku = DefineModelProperty<StorageSku>("Sku", ["sku"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<StorageAccount>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
