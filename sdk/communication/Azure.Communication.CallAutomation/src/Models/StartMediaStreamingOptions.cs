@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.Communication.CallAutomation.Models
+namespace Azure.Communication.CallAutomation
 {
     /// <summary>
     /// Options for the Start Media Streaming Request.

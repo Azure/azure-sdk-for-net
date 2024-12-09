@@ -9,7 +9,6 @@ using Azure.Core.TestFramework;
 using Microsoft.AspNetCore.Http;
 using Azure.Communication.PhoneNumbers;
 using System.Collections.Generic;
-using Azure.Communication.CallAutomation.Models;
 
 namespace Azure.Communication.CallAutomation.Tests.CallMedias
 {

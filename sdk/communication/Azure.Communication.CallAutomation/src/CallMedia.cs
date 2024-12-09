@@ -7,7 +7,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Azure.Communication.CallAutomation.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
