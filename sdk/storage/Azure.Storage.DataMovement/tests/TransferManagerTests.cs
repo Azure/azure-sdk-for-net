@@ -443,6 +443,10 @@ public class TransferManagerTests
             It.IsAny<CancellationToken>()));
         checkpointer.Verify(c => c.SetJobStatusAsync(transferId, It.IsAny<DataTransferStatus>(),
             It.IsAny<CancellationToken>()), Times.Exactly(3));
+        if (!isContainer)
+        {
+            checkpointer.Verify(c => c.GetCurrentJobPartCountAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()), Times.Once);
+        }
         Assert.That(capturedTransferStatuses[0].State, Is.EqualTo(DataTransferState.InProgress));
         Assert.That(capturedTransferStatuses[1].State, Is.EqualTo(DataTransferState.Stopping));
         Assert.That(capturedTransferStatuses[2].IsCompletedWithFailedItems);
@@ -605,6 +609,10 @@ internal static partial class MockExtensions
                     new(itemSize, default, default, new())));
             });
 
+        items.Source.Setup(r => r.IsContainer).Returns(false);
+
+        items.Source.Setup(r => r.ProviderId).Returns("mock");
+
         items.Destination.Setup(r => r.CopyFromStreamAsync(
             It.IsAny<Stream>(), It.IsAny<long>(), It.IsAny<bool>(), It.IsAny<long>(),
             It.IsAny<StorageResourceWriteToOffsetOptions>(), It.IsAny<CancellationToken>()))
@@ -623,6 +631,10 @@ internal static partial class MockExtensions
                 CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
                 return Task.CompletedTask;
             });
+
+        items.Destination.Setup(r => r.IsContainer).Returns(false);
+
+        items.Destination.Setup(r => r.ProviderId).Returns("mock");
     }
 
     public static void BasicSetup(
@@ -660,11 +672,25 @@ internal static partial class MockExtensions
         containers.Source.Setup(r => r.GetStorageResourcesAsync(It.IsAny<StorageResourceContainer>(), It.IsAny<CancellationToken>()))
             .Returns(SubResourcesAsAsyncEnumerable);
 
+        containers.Source.Setup(r => r.GetStorageResourceReference(It.IsAny<string>(), It.IsAny<string>()))
+            .Returns<string, string>((path, resId) => subResources
+                .Where(pair => pair.Source.Object.Uri.AbsolutePath.Contains(path))
+                .FirstOrDefault().Source?.Object
+        );
+
         containers.Destination.Setup(r => r.GetStorageResourceReference(It.IsAny<string>(), It.IsAny<string>()))
             .Returns<string, string>((path, resId) => subResources
                 .Where(pair => pair.Source.Object.Uri.AbsolutePath.Contains(path))
                 .FirstOrDefault().Destination?.Object
-            );
+        );
+
+        containers.Source.Setup(r => r.IsContainer).Returns(true);
+
+        containers.Source.Setup(r => r.ProviderId).Returns("mock");
+
+        containers.Destination.Setup(r => r.IsContainer).Returns(true);
+
+        containers.Destination.Setup(r => r.ProviderId).Returns("mock");
     }
 
     public static void VerifyTransferManagerCtorInvocations<T>(this Mock<IProcessor<T>> processor)
