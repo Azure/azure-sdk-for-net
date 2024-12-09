@@ -2,7 +2,6 @@ namespace Azure.CloudMachine
 {
     public static partial class CloudMachineExtensions
     {
-        public static void AddCloudMachine(this Microsoft.Extensions.Hosting.IHostApplicationBuilder builder, Azure.Core.ClientWorkspace workspace) { }
         public static void MapCloudMachineApplication<T>(this Microsoft.AspNetCore.Builder.WebApplication application) where T : class { }
         public static void Map<T>(this Microsoft.AspNetCore.Routing.IEndpointRouteBuilder routeBuilder, T serviceImplementation) where T : class { }
         public static System.Threading.Tasks.Task UploadFormAsync(this Azure.CloudMachine.StorageServices storage, Microsoft.AspNetCore.Http.HttpRequest multiPartFormData) { throw null; }
