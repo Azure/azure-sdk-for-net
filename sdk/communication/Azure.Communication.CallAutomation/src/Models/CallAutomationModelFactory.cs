@@ -554,5 +554,17 @@ namespace Azure.Communication.CallAutomation
         {
             return new HoldFailed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
         }
+
+        /// <summary> Initializes a new instance of ConnectFailed. </summary>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        /// <returns> A new <see cref="CallAutomation.ConnectFailed"/> instance for mocking. </returns>
+        public static ConnectFailed ConnectFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
+        {
+            return new ConnectFailed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+        }
     }
 }
