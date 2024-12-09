@@ -24,15 +24,19 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="isReportedForPolicyViolation"> Indicates whether this image has been reported as violating Microsoft's policies. </param>
         /// <param name="policyViolations"> A list of Policy Violations that have been reported for this Gallery Image Version. </param>
-        internal GalleryImageVersionSafetyProfile(bool? allowDeletionOfReplicatedLocations, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? isReportedForPolicyViolation, IReadOnlyList<GalleryImageVersionPolicyViolation> policyViolations) : base(allowDeletionOfReplicatedLocations, serializedAdditionalRawData)
+        /// <param name="blockDeletionBeforeEndOfLife"> Indicates whether or not the deletion is blocked for this Gallery Image Version if its End Of Life has not expired. </param>
+        internal GalleryImageVersionSafetyProfile(bool? allowDeletionOfReplicatedLocations, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? isReportedForPolicyViolation, IReadOnlyList<GalleryImageVersionPolicyViolation> policyViolations, bool? blockDeletionBeforeEndOfLife) : base(allowDeletionOfReplicatedLocations, serializedAdditionalRawData)
         {
             IsReportedForPolicyViolation = isReportedForPolicyViolation;
             PolicyViolations = policyViolations;
+            BlockDeletionBeforeEndOfLife = blockDeletionBeforeEndOfLife;
         }
 
         /// <summary> Indicates whether this image has been reported as violating Microsoft's policies. </summary>
         public bool? IsReportedForPolicyViolation { get; }
         /// <summary> A list of Policy Violations that have been reported for this Gallery Image Version. </summary>
         public IReadOnlyList<GalleryImageVersionPolicyViolation> PolicyViolations { get; }
+        /// <summary> Indicates whether or not the deletion is blocked for this Gallery Image Version if its End Of Life has not expired. </summary>
+        public bool? BlockDeletionBeforeEndOfLife { get; set; }
     }
 }
