@@ -17,7 +17,7 @@ namespace Azure.Storage.DataMovement
         /// The default value is 4 MiB.
         /// <para/>
         /// When resuming a transfer, the default value will be the value specified
-        /// when the transfer was first started.
+        /// when the transfer was first started but can still be overriden.
         /// <para/>
         /// This value may be clamped to the maximum allowed for the particular transfer/resource type.
         /// </summary>
@@ -31,7 +31,7 @@ namespace Azure.Storage.DataMovement
         /// The default value is 32 MiB.
         /// <para/>
         /// When resuming a transfer, the default value will be the value specified
-        /// when the transfer was first started.
+        /// when the transfer was first started but can still be overriden.
         /// <para/>
         /// This value may be clamped to the maximum allowed for the particular transfer/resource type.
         /// </summary>

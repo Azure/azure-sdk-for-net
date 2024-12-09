@@ -27,7 +27,9 @@ namespace Azure.AI.Translation.Document
             return content;
         }
 
-        void global::System.ClientModel.Primitives.IJsonModel<global::Azure.AI.Translation.Document.DocumentTranslateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DocumentTranslateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -35,16 +37,13 @@ namespace Azure.AI.Translation.Document
                 throw new FormatException($"The model {nameof(DocumentTranslateContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("document"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(global::System.BinaryData.FromStream(Document));
-#else
+
             using (JsonDocument document = JsonDocument.Parse(BinaryData.FromStream(MultipartDocument.Content)))
             {
                 JsonSerializer.Serialize(writer, document.RootElement);
             }
-#endif
+
             if (Optional.IsCollectionDefined(MultipartGlossary))
             {
                 writer.WritePropertyName("glossary"u8);
@@ -56,14 +55,11 @@ namespace Azure.AI.Translation.Document
                         writer.WriteNullValue();
                         continue;
                     }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(global::System.BinaryData.FromStream(item));
-#else
+
                     using (JsonDocument document = JsonDocument.Parse(BinaryData.FromStream(item.Content)))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
-#endif
                 }
                 writer.WriteEndArray();
             }
@@ -72,17 +68,13 @@ namespace Azure.AI.Translation.Document
                 foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
+
                     using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
-#endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         internal static DocumentTranslateContent DeserializeDocumentTranslateContent(JsonElement element, ModelReaderWriterOptions options = null)

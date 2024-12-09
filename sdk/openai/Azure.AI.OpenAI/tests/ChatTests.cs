@@ -142,6 +142,69 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         Assert.That(sourcesFromOptions[1], Is.InstanceOf<CosmosChatDataSource>());
     }
 
+#if !AZURE_OPENAI_GA
+    [Test]
+    [Category("Smoke")]
+    public async Task MaxTokensSerializationConfigurationWorks()
+    {
+        using MockHttpMessageHandler pipeline = new(MockHttpMessageHandler.ReturnEmptyJson);
+
+        Uri endpoint = new Uri("https://www.bing.com/");
+        string apiKey = "not-a-real-one";
+        string model = "ignore";
+
+        AzureOpenAIClient topLevel = new(
+            endpoint,
+            new ApiKeyCredential(apiKey),
+            new AzureOpenAIClientOptions()
+            {
+                Transport = pipeline.Transport
+            });
+
+        ChatClient client = topLevel.GetChatClient(model);
+
+        ChatCompletionOptions options = new();
+        bool GetSerializedOptionsContains(string value)
+        {
+            BinaryData serialized = ModelReaderWriter.Write(options);
+            return serialized.ToString().Contains(value);
+        }
+        async Task AssertExpectedSerializationAsync(bool hasOldMaxTokens, bool hasNewMaxCompletionTokens)
+        {
+            _ = await client.CompleteChatAsync(["Just mocking, no call here"], options);
+            Assert.That(GetSerializedOptionsContains("max_tokens"), Is.EqualTo(hasOldMaxTokens));
+            Assert.That(GetSerializedOptionsContains("max_completion_tokens"), Is.EqualTo(hasNewMaxCompletionTokens));
+        }
+
+        await AssertExpectedSerializationAsync(false, false);
+        await AssertExpectedSerializationAsync(false, false);
+
+        options.MaxOutputTokenCount = 42;
+        await AssertExpectedSerializationAsync(true, false);
+        await AssertExpectedSerializationAsync(true, false);
+        options.MaxOutputTokenCount = null;
+        await AssertExpectedSerializationAsync(false, false);
+        options.MaxOutputTokenCount = 42;
+        await AssertExpectedSerializationAsync(true, false);
+
+        options.SetNewMaxCompletionTokensPropertyEnabled();
+        await AssertExpectedSerializationAsync(false, true);
+        await AssertExpectedSerializationAsync(false, true);
+        options.MaxOutputTokenCount = null;
+        await AssertExpectedSerializationAsync(false, false);
+        options.MaxOutputTokenCount = 42;
+        await AssertExpectedSerializationAsync(false, true);
+
+        options.SetNewMaxCompletionTokensPropertyEnabled(false);
+        await AssertExpectedSerializationAsync(true, false);
+        await AssertExpectedSerializationAsync(true, false);
+        options.MaxOutputTokenCount = null;
+        await AssertExpectedSerializationAsync(false, false);
+        options.MaxOutputTokenCount = 42;
+        await AssertExpectedSerializationAsync(true, false);
+    }
+#endif
+
     [RecordedTest]
     public async Task ChatCompletionBadKeyGivesHelpfulError()
     {
@@ -162,7 +225,6 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
     }
 
     [RecordedTest]
-    [Category("Smoke")]
     public async Task DefaultAzureCredentialWorks()
     {
         ChatClient chatClient = GetTestClient(tokenCredential: this.TestEnvironment.Credential);
@@ -492,6 +554,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         StringBuilder builder = new();
         bool foundPromptFilter = false;
         bool foundResponseFilter = false;
+        ChatTokenUsage? usage = null;
 
         ChatClient chatClient = GetTestClient();
 
@@ -512,11 +575,13 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
 
         await foreach (StreamingChatCompletionUpdate update in streamingResults)
         {
-            ValidateUpdate(update, builder, ref foundPromptFilter, ref foundResponseFilter);
+            ValidateUpdate(update, builder, ref foundPromptFilter, ref foundResponseFilter, ref usage);
         }
 
         string allText = builder.ToString();
         Assert.That(allText, Is.Not.Null.Or.Empty);
+
+        Assert.That(usage, Is.Not.Null);
 
         Assert.That(foundPromptFilter, Is.True);
         Assert.That(foundResponseFilter, Is.True);
@@ -528,6 +593,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         StringBuilder builder = new();
         bool foundPromptFilter = false;
         bool foundResponseFilter = false;
+        ChatTokenUsage? usage = null;
         List<ChatMessageContext> contexts = new();
 
         var searchConfig = TestConfig.GetConfig("search")!;
@@ -555,7 +621,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
 
         await foreach (StreamingChatCompletionUpdate update in chatUpdates)
         {
-            ValidateUpdate(update, builder, ref foundPromptFilter, ref foundResponseFilter);
+            ValidateUpdate(update, builder, ref foundPromptFilter, ref foundResponseFilter, ref usage);
 
             ChatMessageContext context = update.GetMessageContext();
             if (context != null)
@@ -566,6 +632,8 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
 
         string allText = builder.ToString();
         Assert.That(allText, Is.Not.Null.Or.Empty);
+
+        // Assert.That(usage, Is.Not.Null);
 
         // TODO FIXME: When using data sources, the service does not appear to return request nor response filtering information
         //Assert.That(foundPromptFilter, Is.True);
@@ -636,7 +704,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
     #endregion
     #region Helper methods
 
-    private void ValidateUpdate(StreamingChatCompletionUpdate update, StringBuilder builder, ref bool foundPromptFilter, ref bool foundResponseFilter)
+    private void ValidateUpdate(StreamingChatCompletionUpdate update, StringBuilder builder, ref bool foundPromptFilter, ref bool foundResponseFilter, ref ChatTokenUsage? usage)
     {
         if (update.CreatedAt == UNIX_EPOCH)
         {
@@ -656,6 +724,8 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
             Assert.That(update.FinishReason, Is.Null.Or.EqualTo(ChatFinishReason.Stop));
             if (update.Usage != null)
             {
+                Assert.That(usage, Is.Null);
+                usage = update.Usage;
                 Assert.That(update.Usage.InputTokenCount, Is.GreaterThanOrEqualTo(0));
                 Assert.That(update.Usage.OutputTokenCount, Is.GreaterThanOrEqualTo(0));
                 Assert.That(update.Usage.TotalTokenCount, Is.GreaterThanOrEqualTo(0));

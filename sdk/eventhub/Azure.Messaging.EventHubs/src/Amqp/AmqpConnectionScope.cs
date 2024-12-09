@@ -702,6 +702,9 @@ namespace Azure.Messaging.EventHubs.Amqp
                     linkSettings.AddProperty(AmqpProperty.ConsumerIdentifier, linkIdentifier);
                 }
 
+                linkSettings.DesiredCapabilities ??= new Multiple<AmqpSymbol>();
+                linkSettings.DesiredCapabilities.Add(AmqpProperty.GeoReplication);
+
                 if (trackLastEnqueuedEventProperties)
                 {
                     linkSettings.DesiredCapabilities ??= new Multiple<AmqpSymbol>();
@@ -806,6 +809,9 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 linkSettings.AddProperty(AmqpProperty.Timeout, (uint)linkTimeout.CalculateRemaining(stopWatch.GetElapsedTime()).TotalMilliseconds);
                 linkSettings.AddProperty(AmqpProperty.EntityType, (int)AmqpProperty.Entity.EventHub);
+
+                linkSettings.DesiredCapabilities ??= new Multiple<AmqpSymbol>();
+                linkSettings.DesiredCapabilities.Add(AmqpProperty.GeoReplication);
 
                 if ((features & TransportProducerFeatures.IdempotentPublishing) != 0)
                 {

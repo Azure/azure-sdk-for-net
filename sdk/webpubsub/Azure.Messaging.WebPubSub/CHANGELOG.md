@@ -3,6 +3,7 @@
 ## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added support for SocketIO when generating ClientAccessURI
 
 ### Breaking Changes
 

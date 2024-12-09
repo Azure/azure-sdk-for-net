@@ -20,26 +20,41 @@ public partial class LogAnalyticsQuery : ProvisionableResource
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Body of the query.
     /// </summary>
-    public BicepValue<string> Body { get => _body; set => _body.Assign(value); }
-    private readonly BicepValue<string> _body;
+    public BicepValue<string> Body 
+    {
+        get { Initialize(); return _body!; }
+        set { Initialize(); _body!.Assign(value); }
+    }
+    private BicepValue<string>? _body;
 
     /// <summary>
     /// Description of the query.
     /// </summary>
-    public BicepValue<string> Description { get => _description; set => _description.Assign(value); }
-    private readonly BicepValue<string> _description;
+    public BicepValue<string> Description 
+    {
+        get { Initialize(); return _description!; }
+        set { Initialize(); _description!.Assign(value); }
+    }
+    private BicepValue<string>? _description;
 
     /// <summary>
     /// Unique display name for your query within the Query Pack.
     /// </summary>
-    public BicepValue<string> DisplayName { get => _displayName; set => _displayName.Assign(value); }
-    private readonly BicepValue<string> _displayName;
+    public BicepValue<string> DisplayName 
+    {
+        get { Initialize(); return _displayName!; }
+        set { Initialize(); _displayName!.Assign(value); }
+    }
+    private BicepValue<string>? _displayName;
 
     /// <summary>
     /// Additional properties that can be set for the query.
@@ -57,56 +72,87 @@ public partial class LogAnalyticsQuery : ProvisionableResource
     /// \&quot;value\&quot;}&quot;)Creates a payload of { &quot;key&quot;:
     /// &quot;value&quot; }.
     /// </summary>
-    public BicepValue<BinaryData> Properties { get => _properties; set => _properties.Assign(value); }
-    private readonly BicepValue<BinaryData> _properties;
+    public BicepValue<BinaryData> Properties 
+    {
+        get { Initialize(); return _properties!; }
+        set { Initialize(); _properties!.Assign(value); }
+    }
+    private BicepValue<BinaryData>? _properties;
 
     /// <summary>
     /// The related metadata items for the function.
     /// </summary>
-    public BicepValue<LogAnalyticsQueryRelatedMetadata> Related { get => _related; set => _related.Assign(value); }
-    private readonly BicepValue<LogAnalyticsQueryRelatedMetadata> _related;
+    public LogAnalyticsQueryRelatedMetadata Related 
+    {
+        get { Initialize(); return _related!; }
+        set { Initialize(); AssignOrReplace(ref _related, value); }
+    }
+    private LogAnalyticsQueryRelatedMetadata? _related;
 
     /// <summary>
     /// Tags associated with the query.
     /// </summary>
-    public BicepDictionary<BicepList<string>> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<BicepList<string>> _tags;
+    public BicepDictionary<BicepList<string>> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<BicepList<string>>? _tags;
 
     /// <summary>
     /// The unique ID of your application. This field cannot be changed.
     /// </summary>
-    public BicepValue<Guid> ApplicationId { get => _applicationId; }
-    private readonly BicepValue<Guid> _applicationId;
+    public BicepValue<Guid> ApplicationId 
+    {
+        get { Initialize(); return _applicationId!; }
+    }
+    private BicepValue<Guid>? _applicationId;
 
     /// <summary>
     /// Object Id of user creating the query.
     /// </summary>
-    public BicepValue<string> Author { get => _author; }
-    private readonly BicepValue<string> _author;
+    public BicepValue<string> Author 
+    {
+        get { Initialize(); return _author!; }
+    }
+    private BicepValue<string>? _author;
 
     /// <summary>
     /// Creation Date for the Log Analytics Query, in ISO 8601 format.
     /// </summary>
-    public BicepValue<DateTimeOffset> CreatedOn { get => _createdOn; }
-    private readonly BicepValue<DateTimeOffset> _createdOn;
+    public BicepValue<DateTimeOffset> CreatedOn 
+    {
+        get { Initialize(); return _createdOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _createdOn;
 
     /// <summary>
     /// Last modified date of the Log Analytics Query, in ISO 8601 format.
     /// </summary>
-    public BicepValue<DateTimeOffset> ModifiedOn { get => _modifiedOn; }
-    private readonly BicepValue<DateTimeOffset> _modifiedOn;
+    public BicepValue<DateTimeOffset> ModifiedOn 
+    {
+        get { Initialize(); return _modifiedOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _modifiedOn;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent LogAnalyticsQueryPack.
     /// </summary>
-    public LogAnalyticsQueryPack? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<LogAnalyticsQueryPack> _parent;
+    public LogAnalyticsQueryPack? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<LogAnalyticsQueryPack>? _parent;
 
     /// <summary>
     /// Creates a new LogAnalyticsQuery.
@@ -121,19 +167,26 @@ public partial class LogAnalyticsQuery : ProvisionableResource
     public LogAnalyticsQuery(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.OperationalInsights/queryPacks/queries", resourceVersion ?? "2023-09-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _body = BicepValue<string>.DefineProperty(this, "Body", ["properties", "body"]);
-        _description = BicepValue<string>.DefineProperty(this, "Description", ["properties", "description"]);
-        _displayName = BicepValue<string>.DefineProperty(this, "DisplayName", ["properties", "displayName"]);
-        _properties = BicepValue<BinaryData>.DefineProperty(this, "Properties", ["properties", "properties"]);
-        _related = BicepValue<LogAnalyticsQueryRelatedMetadata>.DefineProperty(this, "Related", ["properties", "related"]);
-        _tags = BicepDictionary<BicepList<string>>.DefineProperty(this, "Tags", ["properties", "tags"]);
-        _applicationId = BicepValue<Guid>.DefineProperty(this, "ApplicationId", ["properties", "id"], isOutput: true);
-        _author = BicepValue<string>.DefineProperty(this, "Author", ["properties", "author"], isOutput: true);
-        _createdOn = BicepValue<DateTimeOffset>.DefineProperty(this, "CreatedOn", ["properties", "timeCreated"], isOutput: true);
-        _modifiedOn = BicepValue<DateTimeOffset>.DefineProperty(this, "ModifiedOn", ["properties", "timeModified"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<LogAnalyticsQueryPack>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of LogAnalyticsQuery.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _body = DefineProperty<string>("Body", ["properties", "body"]);
+        _description = DefineProperty<string>("Description", ["properties", "description"]);
+        _displayName = DefineProperty<string>("DisplayName", ["properties", "displayName"]);
+        _properties = DefineProperty<BinaryData>("Properties", ["properties", "properties"]);
+        _related = DefineModelProperty<LogAnalyticsQueryRelatedMetadata>("Related", ["properties", "related"]);
+        _tags = DefineDictionaryProperty<BicepList<string>>("Tags", ["properties", "tags"]);
+        _applicationId = DefineProperty<Guid>("ApplicationId", ["properties", "id"], isOutput: true);
+        _author = DefineProperty<string>("Author", ["properties", "author"], isOutput: true);
+        _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "timeCreated"], isOutput: true);
+        _modifiedOn = DefineProperty<DateTimeOffset>("ModifiedOn", ["properties", "timeModified"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<LogAnalyticsQueryPack>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

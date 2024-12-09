@@ -8,6 +8,8 @@ namespace Azure.AI.OpenAI.Internal;
 
 internal static class AdditionalPropertyHelpers
 {
+    private static string SARD_EMPTY_SENTINEL = "__EMPTY__";
+
     internal static T GetAdditionalProperty<T>(IDictionary<string, BinaryData> additionalProperties, string key)
         where T : class, IJsonModel<T>
     {
@@ -44,5 +46,18 @@ internal static class AdditionalPropertyHelpers
         stream.Position = 0;
         BinaryData binaryValue = BinaryData.FromStream(stream);
         additionalProperties[key] = binaryValue;
+    }
+
+    internal static void SetEmptySentinelValue(IDictionary<string, BinaryData> additionalProperties, string key)
+    {
+        Argument.AssertNotNull(additionalProperties, nameof(additionalProperties));
+        additionalProperties[key] = BinaryData.FromObjectAsJson(SARD_EMPTY_SENTINEL);
+    }
+
+    internal static bool GetIsEmptySentinelValue(IDictionary<string, BinaryData> additionalProperties, string key)
+    {
+        return additionalProperties is not null
+            && additionalProperties.TryGetValue(key, out BinaryData existingValue)
+            && StringComparer.OrdinalIgnoreCase.Equals(existingValue.ToString(), $@"""{SARD_EMPTY_SENTINEL}""");
     }
 }

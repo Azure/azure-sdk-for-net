@@ -4,8 +4,6 @@ parameters:
   ArtifactName: 'not-specified'
   # Publish to https://dev.azure.com/azure-sdk/public/_packaging?_a=feed&feed=azure-sdk-for-net
   DevOpsFeedId: '29ec6040-b234-4e31-b139-33dc4287b756/fa8c16a3-dbe0-4de2-a297-03065ec1ba3f'
-  TargetDocRepoOwner: 'not-specified'
-  TargetDocRepoName: 'not-specified'
 
 
 stages:
@@ -132,11 +130,6 @@ stages:
                       packageParentPath: '$(Pipeline.Workspace)'
                       packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
                       publishVstsFeed: ${{ parameters.DevOpsFeedID }}
-                    - ${{if ne(artifact.skipSymbolsUpload, 'true')}}:
-                      - output: pipelineArtifact
-                        displayName: 'Store converted symbols in ${{parameters.ArtifactName}}-windows-symbols artifact'
-                        targetPath: $(Build.ArtifactStagingDirectory)/symbols
-                        artifactName: ${{parameters.ArtifactName}}-windows-symbols
 
                 strategy:
                   runOnce:
@@ -155,6 +148,14 @@ stages:
                     name: azsdk-pool-mms-win-2022-general
                     image: azsdk-pool-mms-win-2022-1espt
                     os: windows
+
+                  templateContext:
+                    outputs:
+                      - ${{if ne(artifact.skipSymbolsUpload, 'true')}}:
+                        - output: pipelineArtifact
+                          displayName: 'Store converted symbols in ${{parameters.ArtifactName}}-symbols artifact'
+                          targetPath: $(Build.ArtifactStagingDirectory)/symbols
+                          artifactName: ${{parameters.ArtifactName}}-symbols
 
                   strategy:
                     runOnce:
@@ -205,8 +206,8 @@ stages:
                               PackageInfoLocations:
                                 - $(Pipeline.Workspace)/${{parameters.ArtifactName}}/PackageInfo/${{artifact.name}}.json
                               WorkingDirectory: $(System.DefaultWorkingDirectory)
-                              TargetDocRepoOwner: ${{parameters.TargetDocRepoOwner}}
-                              TargetDocRepoName: ${{parameters.TargetDocRepoName}}
+                              TargetDocRepoOwner: $(DocRepoOwner)
+                              TargetDocRepoName: $(DocRepoName)
                               Language: 'dotnet'
                               SparseCheckoutPaths:
                                 - /api/overview/azure/
@@ -339,8 +340,8 @@ stages:
                   - ${{if ne(artifact.skipPublishDocMs, 'true')}}:
                     - $(Pipeline.Workspace)/${{parameters.ArtifactName}}/PackageInfo/${{artifact.name}}.json
               WorkingDirectory: $(System.DefaultWorkingDirectory)
-              TargetDocRepoOwner: ${{parameters.TargetDocRepoOwner}}
-              TargetDocRepoName: ${{parameters.TargetDocRepoName}}
+              TargetDocRepoOwner: $(DocRepoOwner)
+              TargetDocRepoName: $(DocRepoName)
               Language: 'dotnet'
               DailyDocsBuild: true
               SparseCheckoutPaths:

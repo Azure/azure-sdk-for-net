@@ -62,22 +62,30 @@ namespace Azure.ResourceManager.Avs
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="description"> Description of the scripts functionality. </param>
         /// <param name="timeout"> Recommended time limit for execution. </param>
+        /// <param name="audience"> Specifies whether a script cmdlet is intended to be invoked only through automation or visible to customers. </param>
         /// <param name="parameters"> Parameters the script will accept. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScriptCmdletData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, TimeSpan? timeout, IReadOnlyList<ScriptParameter> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ScriptCmdletData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ScriptCmdletProvisioningState? provisioningState, string description, TimeSpan? timeout, ScriptCmdletAudience? audience, IReadOnlyList<ScriptParameter> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            ProvisioningState = provisioningState;
             Description = description;
             Timeout = timeout;
+            Audience = audience;
             Parameters = parameters;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> The provisioning state of the resource. </summary>
+        public ScriptCmdletProvisioningState? ProvisioningState { get; }
         /// <summary> Description of the scripts functionality. </summary>
         public string Description { get; }
         /// <summary> Recommended time limit for execution. </summary>
         public TimeSpan? Timeout { get; }
+        /// <summary> Specifies whether a script cmdlet is intended to be invoked only through automation or visible to customers. </summary>
+        public ScriptCmdletAudience? Audience { get; }
         /// <summary> Parameters the script will accept. </summary>
         public IReadOnlyList<ScriptParameter> Parameters { get; }
     }

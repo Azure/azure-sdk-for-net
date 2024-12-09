@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> ControlPlaneNodePatchConfiguration represents the properties of the control plane that can be patched for this Kubernetes cluster. </summary>
-    internal partial class ControlPlaneNodePatchConfiguration
+    public partial class ControlPlaneNodePatchConfiguration
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,12 +51,27 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ControlPlaneNodePatchConfiguration"/>. </summary>
+        /// <param name="administratorConfiguration"> The configuration of administrator credentials for the control plane nodes. </param>
         /// <param name="count"> The number of virtual machines that use this configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ControlPlaneNodePatchConfiguration(long? count, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ControlPlaneNodePatchConfiguration(AdministratorConfigurationPatch administratorConfiguration, long? count, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            AdministratorConfiguration = administratorConfiguration;
             Count = count;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> The configuration of administrator credentials for the control plane nodes. </summary>
+        internal AdministratorConfigurationPatch AdministratorConfiguration { get; set; }
+        /// <summary> SshPublicKey represents the public key used to authenticate with a resource through SSH. </summary>
+        public IList<NetworkCloudSshPublicKey> AdministratorSshPublicKeys
+        {
+            get
+            {
+                if (AdministratorConfiguration is null)
+                    AdministratorConfiguration = new AdministratorConfigurationPatch();
+                return AdministratorConfiguration.SshPublicKeys;
+            }
         }
 
         /// <summary> The number of virtual machines that use this configuration. </summary>

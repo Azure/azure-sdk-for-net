@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Return information about a script cmdlet resource in a specific package on a private cloud
+        /// Get a ScriptCmdlet
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Return information about a script cmdlet resource in a specific package on a private cloud
+        /// Get a ScriptCmdlet
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

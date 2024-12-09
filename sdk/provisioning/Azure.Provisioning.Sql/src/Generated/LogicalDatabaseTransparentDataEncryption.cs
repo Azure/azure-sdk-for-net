@@ -20,32 +20,49 @@ public partial class LogicalDatabaseTransparentDataEncryption : ProvisionableRes
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Specifies the state of the transparent data encryption.
     /// </summary>
-    public BicepValue<TransparentDataEncryptionState> State { get => _state; set => _state.Assign(value); }
-    private readonly BicepValue<TransparentDataEncryptionState> _state;
+    public BicepValue<TransparentDataEncryptionState> State 
+    {
+        get { Initialize(); return _state!; }
+        set { Initialize(); _state!.Assign(value); }
+    }
+    private BicepValue<TransparentDataEncryptionState>? _state;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent SqlDatabase.
     /// </summary>
-    public SqlDatabase? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<SqlDatabase> _parent;
+    public SqlDatabase? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<SqlDatabase>? _parent;
 
     /// <summary>
     /// Creates a new LogicalDatabaseTransparentDataEncryption.
@@ -61,11 +78,19 @@ public partial class LogicalDatabaseTransparentDataEncryption : ProvisionableRes
     public LogicalDatabaseTransparentDataEncryption(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Sql/servers/databases/transparentDataEncryption", resourceVersion ?? "2021-11-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _state = BicepValue<TransparentDataEncryptionState>.DefineProperty(this, "State", ["properties", "state"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<SqlDatabase>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// LogicalDatabaseTransparentDataEncryption.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _state = DefineProperty<TransparentDataEncryptionState>("State", ["properties", "state"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<SqlDatabase>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>

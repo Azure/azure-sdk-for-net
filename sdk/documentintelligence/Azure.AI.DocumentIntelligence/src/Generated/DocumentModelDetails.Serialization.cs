@@ -19,13 +19,21 @@ namespace Azure.AI.DocumentIntelligence
 
         void IJsonModel<DocumentModelDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DocumentModelDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DocumentModelDetails)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("modelId"u8);
             writer.WriteStringValue(ModelId);
             if (Optional.IsDefined(Description))
@@ -125,7 +133,6 @@ namespace Azure.AI.DocumentIntelligence
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DocumentModelDetails IJsonModel<DocumentModelDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

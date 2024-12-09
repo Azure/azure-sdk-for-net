@@ -21,32 +21,8 @@ public class BicepValue<T> : BicepValue
     /// Gets or sets the literal value.  You can also rely on implicit
     /// conversions most of the time.
     /// </summary>
-    public T? Value
-    {
-        get
-        {
-            // If someone is referencing an output of a named resource, rather
-            // than just return null, we'll return a reference expression
-            if (IsOutput &&
-                Kind == BicepValueKind.Unset &&
-                typeof(ProvisionableConstruct).IsAssignableFrom(typeof(T)) &&
-                Self?.Construct is NamedProvisionableConstruct)
-            {
-                // TODO: This is obviously a hack but we need to decide if we'd
-                // rather have a separate type for outputs (kind of like we
-                // do with ResourceReference<T>) or whether we want to merge
-                // this concept into BicepValue<T>.
-                T val = Activator.CreateInstance<T>();
-                (val as ProvisionableConstruct)!.OverrideWithExpression(Self.GetReference());
-                return val;
-            }
-
-            return _value;
-        }
-        private protected set => _value = value;
-    }
-    private T? _value;
-    internal override object? GetLiteralValue() => Value;
+    public T? Value { get; private protected set; }
+    private protected override object? GetLiteralValue() => Value;
 
     // Get the closest primitive to T
     private protected override BicepExpression GetBicepType() =>
@@ -64,14 +40,25 @@ public class BicepValue<T> : BicepValue
     /// <param name="expression">An expression that evaluates to the value.</param>
     public BicepValue(BicepExpression expression) : this(self: null, expression) { }
 
-    private protected BicepValue(BicepValueReference? self) : base(self) { }
+    internal BicepValue(BicepValueReference? self) : base(self) { }
     private protected BicepValue(BicepValueReference? self, T literal) : base(self, (object)literal!) { Value = literal; }
     private protected BicepValue(BicepValueReference? self, BicepExpression expression) : base(self, expression) { }
+
+    /// <summary>
+    /// Clears a previously assigned literal or expression value.
+    /// </summary>
+    public void ClearValue()
+    {
+        _kind = BicepValueKind.Unset;
+        Value = default;
+        _expression = null;
+        _source = null;
+    }
 
     // Move strongly typed literal values when assigning
     [EditorBrowsable(EditorBrowsableState.Never)]
     public void Assign(BicepValue<T> source) => Assign((BicepValue)source);
-    internal override void Assign(BicepValue source)
+    internal override void Assign(IBicepValue source)
     {
         if (source is BicepValue<T> typed)
         {
@@ -85,15 +72,15 @@ public class BicepValue<T> : BicepValue
     // Convert literals, raw expressions, and vars/params/outputs
     public static implicit operator BicepValue<T>(T value)
     {
-        if (value is BicepValue e)
+        if (value is IBicepValue e)
         {
             if (e.Kind == BicepValueKind.Expression)
             {
-                return new BicepValue<T>(e.Self, e.Expression!) { IsSecure = e.IsSecure };
+                return new BicepValue<T>(e.Self, e.Expression!) { _isSecure = e.IsSecure };
             }
             else if (e.Kind == BicepValueKind.Unset && e.Self is not null)
             {
-                return new BicepValue<T>(e.Self, e.Self.GetReference()) { IsSecure = e.IsSecure };
+                return new BicepValue<T>(e.Self, e.Self.GetReference()) { _isSecure = e.IsSecure };
             }
         }
 
@@ -106,48 +93,24 @@ public class BicepValue<T> : BicepValue
             // We'll create a new BicepValue<T> but copy the Self reference so the
             // relationship is tracked.  This is likely to come up when we're assigning
             // something like BicepValue<string> to a property of type BicepValue<object>.
-            BicepValue bicep = (value as BicepValue)!; // Cast will always succeed so !
-            return new BicepValue<T>(bicep.Self, (T)bicep.GetLiteralValue()!) { IsSecure = bicep.IsSecure };
+            IBicepValue bicep = (value as IBicepValue)!; // Cast will always succeed so !
+            return new BicepValue<T>(bicep.Self, (T)bicep.LiteralValue!) { _isSecure = bicep.IsSecure };
         }
 
         // Otherwise just wrap the literal
         return new(value);
     }
-    public static implicit operator BicepValue<T>(BicepExpression expression) => new(expression);
+    public static implicit operator BicepValue<T>(BicepExpression? expression) => new(expression ?? BicepSyntax.Null());
     public static implicit operator BicepValue<T>(ProvisioningVariable reference) =>
-        new(new BicepValueReference(reference, "<value>"), BicepSyntax.Var(reference.BicepIdentifier)) { IsSecure = reference is ProvisioningParameter p && p.IsSecure };
+        new(new BicepValueReference(reference, "<value>"), BicepSyntax.Var(reference.BicepIdentifier)) { _isSecure = reference is ProvisioningParameter p && p.IsSecure };
 
     // Special case conversions to string for things like Uri, AzureLocation, etc.
     public static implicit operator BicepValue<string>(BicepValue<T> value) =>
-        value.Kind switch
+        value._kind switch
         {
-            BicepValueKind.Unset => new(value.Self),
-            BicepValueKind.Expression => new(value.Self, value.Expression!),
-            BicepValueKind.Literal => new(value.Self, BicepTypeMapping.ToLiteralString(value.Value!, value.Format)),
+            BicepValueKind.Unset => new(value._self),
+            BicepValueKind.Expression => new(value._self, value._expression!),
+            BicepValueKind.Literal => new(value._self, BicepTypeMapping.ToLiteralString(value.Value!, value.Format)),
             _ => throw new InvalidOperationException($"Unknown {nameof(BicepValueKind)}!")
         };
-
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public static BicepValue<T> DefineProperty(
-        ProvisionableConstruct construct,
-        string propertyName,
-        string[]? bicepPath,
-        bool isOutput = false,
-        bool isRequired = false,
-        bool isSecure = false,
-        BicepValue<T>? defaultValue = null,
-        string? format = null)
-    {
-        BicepValue<T> val =
-            new(new BicepValueReference(construct, propertyName, bicepPath))
-            {
-                IsOutput = isOutput,
-                IsRequired = isRequired,
-                IsSecure = isSecure,
-                Format = format
-            };
-        if (defaultValue is not null) { val.Assign(defaultValue); }
-        construct.ProvisioningProperties[propertyName] = val;
-        return val;
-    }
 }

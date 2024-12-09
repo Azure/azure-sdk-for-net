@@ -45,13 +45,14 @@ namespace Azure.AI.OpenAI
     }
     public partial class AzureOpenAIClientOptions : System.ClientModel.Primitives.ClientPipelineOptions
     {
-        public AzureOpenAIClientOptions(Azure.AI.OpenAI.AzureOpenAIClientOptions.ServiceVersion version = Azure.AI.OpenAI.AzureOpenAIClientOptions.ServiceVersion.V2024_08_01_Preview) { }
+        public AzureOpenAIClientOptions(Azure.AI.OpenAI.AzureOpenAIClientOptions.ServiceVersion version = Azure.AI.OpenAI.AzureOpenAIClientOptions.ServiceVersion.V2024_10_01_Preview) { }
         public Azure.AI.OpenAI.AzureOpenAIAudience? Audience { get { throw null; } set { } }
         public string UserAgentApplicationId { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2024_06_01 = 0,
             V2024_08_01_Preview = 1,
+            V2024_09_01_Preview = 2,
             V2024_10_01_Preview = 3,
         }
     }
@@ -131,6 +132,29 @@ namespace Azure.AI.OpenAI
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ContentFilterSeverityResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ContentFilterSeverityResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ContentFilterTextSpan : System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ContentFilterTextSpan>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ContentFilterTextSpan>
+    {
+        internal ContentFilterTextSpan() { }
+        public int CompletionEndOffset { get { throw null; } }
+        public int CompletionStartOffset { get { throw null; } }
+        Azure.AI.OpenAI.ContentFilterTextSpan System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ContentFilterTextSpan>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ContentFilterTextSpan>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.OpenAI.ContentFilterTextSpan System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ContentFilterTextSpan>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ContentFilterTextSpan>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ContentFilterTextSpan>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ContentFilterTextSpanResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ContentFilterTextSpanResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ContentFilterTextSpanResult>
+    {
+        internal ContentFilterTextSpanResult() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.ContentFilterTextSpan> Details { get { throw null; } }
+        public bool Detected { get { throw null; } }
+        public bool Filtered { get { throw null; } }
+        Azure.AI.OpenAI.ContentFilterTextSpanResult System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ContentFilterTextSpanResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ContentFilterTextSpanResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.OpenAI.ContentFilterTextSpanResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ContentFilterTextSpanResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ContentFilterTextSpanResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ContentFilterTextSpanResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class RequestContentFilterResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.RequestContentFilterResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.RequestContentFilterResult>
     {
         internal RequestContentFilterResult() { }
@@ -170,6 +194,7 @@ namespace Azure.AI.OpenAI
         public Azure.AI.OpenAI.ContentFilterDetectionResult ProtectedMaterialText { get { throw null; } }
         public Azure.AI.OpenAI.ContentFilterSeverityResult SelfHarm { get { throw null; } }
         public Azure.AI.OpenAI.ContentFilterSeverityResult Sexual { get { throw null; } }
+        public Azure.AI.OpenAI.ContentFilterTextSpanResult UngroundedMaterial { get { throw null; } }
         public Azure.AI.OpenAI.ContentFilterSeverityResult Violence { get { throw null; } }
         Azure.AI.OpenAI.ResponseContentFilterResult System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ResponseContentFilterResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ResponseContentFilterResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -203,6 +228,7 @@ namespace Azure.AI.OpenAI.Chat
         public static Azure.AI.OpenAI.RequestContentFilterResult GetRequestContentFilterResult(this OpenAI.Chat.StreamingChatCompletionUpdate chatUpdate) { throw null; }
         public static Azure.AI.OpenAI.ResponseContentFilterResult GetResponseContentFilterResult(this OpenAI.Chat.ChatCompletion chatCompletion) { throw null; }
         public static Azure.AI.OpenAI.ResponseContentFilterResult GetResponseContentFilterResult(this OpenAI.Chat.StreamingChatCompletionUpdate chatUpdate) { throw null; }
+        public static void SetNewMaxCompletionTokensPropertyEnabled(this OpenAI.Chat.ChatCompletionOptions options, bool newPropertyEnabled = true) { }
     }
     public partial class AzureSearchChatDataSource : Azure.AI.OpenAI.Chat.ChatDataSource, System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Chat.AzureSearchChatDataSource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Chat.AzureSearchChatDataSource>
     {
@@ -236,7 +262,7 @@ namespace Azure.AI.OpenAI.Chat
         public string FilePath { get { throw null; } }
         public double? RerankScore { get { throw null; } }
         public string Title { get { throw null; } }
-        public System.Uri Uri { get { throw null; } }
+        public string Url { get { throw null; } }
         Azure.AI.OpenAI.Chat.ChatCitation System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Chat.ChatCitation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Chat.ChatCitation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Chat.ChatCitation System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Chat.ChatCitation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -294,7 +320,7 @@ namespace Azure.AI.OpenAI.Chat
         public double? RerankScore { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SearchQueries { get { throw null; } }
         public string Title { get { throw null; } }
-        public System.Uri Uri { get { throw null; } }
+        public string Url { get { throw null; } }
         Azure.AI.OpenAI.Chat.ChatRetrievedDocument System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Chat.ChatRetrievedDocument>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Chat.ChatRetrievedDocument>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Chat.ChatRetrievedDocument System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Chat.ChatRetrievedDocument>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

@@ -7,7 +7,7 @@ extends:
     ServiceDirectory: storage
     BuildInParallel: true
     TimeoutInMinutes: 180
-    Location: canadacentral
+    Location: westus2
     CloudConfig:
       Public:
       # PrivatePreview:

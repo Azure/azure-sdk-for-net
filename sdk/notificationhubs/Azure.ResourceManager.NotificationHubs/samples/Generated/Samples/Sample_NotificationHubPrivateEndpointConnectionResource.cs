@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.NotificationHubs.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.NotificationHubs.Samples
 {
     public partial class Sample_NotificationHubPrivateEndpointConnectionResource
     {
-        // PrivateEndpointConnections_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_PrivateEndpointConnectionsUpdate()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_PrivateEndpointConnectionsGet()
         {
-            // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/preview/2023-10-01-preview/examples/Namespaces/PrivateEndpointConnectionUpdate.json
-            // this example is just showing the usage of "PrivateEndpointConnections_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/preview/2023-10-01-preview/examples/Namespaces/PrivateEndpointConnectionGet.json
+            // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -38,18 +38,7 @@ namespace Azure.ResourceManager.NotificationHubs.Samples
             NotificationHubPrivateEndpointConnectionResource notificationHubPrivateEndpointConnection = client.GetNotificationHubPrivateEndpointConnectionResource(notificationHubPrivateEndpointConnectionResourceId);
 
             // invoke the operation
-            NotificationHubPrivateEndpointConnectionData data = new NotificationHubPrivateEndpointConnectionData()
-            {
-                Properties = new NotificationHubPrivateEndpointConnectionProperties()
-                {
-                    ConnectionState = new RemotePrivateLinkServiceConnectionState()
-                    {
-                        Status = NotificationHubPrivateLinkConnectionStatus.Approved,
-                    },
-                },
-            };
-            ArmOperation<NotificationHubPrivateEndpointConnectionResource> lro = await notificationHubPrivateEndpointConnection.UpdateAsync(WaitUntil.Completed, data);
-            NotificationHubPrivateEndpointConnectionResource result = lro.Value;
+            NotificationHubPrivateEndpointConnectionResource result = await notificationHubPrivateEndpointConnection.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -58,9 +47,8 @@ namespace Azure.ResourceManager.NotificationHubs.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PrivateEndpointConnections_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_PrivateEndpointConnectionsDelete()
         {
             // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/preview/2023-10-01-preview/examples/Namespaces/PrivateEndpointConnectionDelete.json
@@ -83,16 +71,15 @@ namespace Azure.ResourceManager.NotificationHubs.Samples
             // invoke the operation
             await notificationHubPrivateEndpointConnection.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // PrivateEndpointConnections_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_PrivateEndpointConnectionsGet()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_PrivateEndpointConnectionsUpdate()
         {
-            // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/preview/2023-10-01-preview/examples/Namespaces/PrivateEndpointConnectionGet.json
-            // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/notificationhubs/resource-manager/Microsoft.NotificationHubs/preview/2023-10-01-preview/examples/Namespaces/PrivateEndpointConnectionUpdate.json
+            // this example is just showing the usage of "PrivateEndpointConnections_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -109,7 +96,18 @@ namespace Azure.ResourceManager.NotificationHubs.Samples
             NotificationHubPrivateEndpointConnectionResource notificationHubPrivateEndpointConnection = client.GetNotificationHubPrivateEndpointConnectionResource(notificationHubPrivateEndpointConnectionResourceId);
 
             // invoke the operation
-            NotificationHubPrivateEndpointConnectionResource result = await notificationHubPrivateEndpointConnection.GetAsync();
+            NotificationHubPrivateEndpointConnectionData data = new NotificationHubPrivateEndpointConnectionData
+            {
+                Properties = new NotificationHubPrivateEndpointConnectionProperties
+                {
+                    ConnectionState = new RemotePrivateLinkServiceConnectionState
+                    {
+                        Status = NotificationHubPrivateLinkConnectionStatus.Approved,
+                    },
+                },
+            };
+            ArmOperation<NotificationHubPrivateEndpointConnectionResource> lro = await notificationHubPrivateEndpointConnection.UpdateAsync(WaitUntil.Completed, data);
+            NotificationHubPrivateEndpointConnectionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

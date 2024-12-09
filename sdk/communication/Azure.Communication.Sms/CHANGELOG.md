@@ -1,14 +1,12 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.1.0-beta.2 (2024-12-10)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+ - Added support for Opt Out Management Api to:
+    - Opt-out the recipient.
+    - Opt-in the recipient.
+    - Check if the recpient is opted-out or not.
 
 ## 1.1.0-beta.1 (2024-05-07)
 
