@@ -598,6 +598,108 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
+        /// <summary>
+        /// Create a connect request.
+        /// </summary>
+        /// <param name="callLocator"></param>
+        /// <param name="callbackUri"></param>
+        /// <param name="cancellationToken"></param>
+        /// <exception cref="ArgumentNullException"><paramref name="callLocator"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="callbackUri"/> callbackUrl is not formatted correctly or empty. </exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <returns></returns>
+        public virtual async Task<Response<ConnectCallResult>> ConnectCallAsync(CallLocator callLocator, Uri callbackUri, CancellationToken cancellationToken = default)
+        {
+            ConnectCallOptions options = new ConnectCallOptions(callLocator, callbackUri);
+
+            return await ConnectCallAsync(options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Create a connect request.
+        /// </summary>
+        /// <param name="connectCallOptions">ConnectOptions for connect request.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="connectCallOptions"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="connectCallOptions"/> CallbackUrl is not formatted correctly. </exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <returns></returns>
+        public virtual async Task<Response<ConnectCallResult>> ConnectCallAsync(ConnectCallOptions connectCallOptions, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(ConnectCall)}");
+            scope.Start();
+            try
+            {
+                if (connectCallOptions == null)
+                    throw new ArgumentNullException(nameof(connectCallOptions));
+
+                ConnectRequestInternal connectRequest = ConnectRequest(connectCallOptions);
+                Response<CallConnectionPropertiesInternal> response = await AzureCommunicationServicesRestClient.ConnectAsync(connectRequest).ConfigureAwait(false);
+
+                var callConnection = GetCallConnection(response.Value.CallConnectionId);
+                ConnectCallResult connectResult = new ConnectCallResult(new CallConnectionProperties(response.Value), callConnection);
+                connectResult.SetEventProcessor(EventProcessor, response.Value.CallConnectionId);
+
+                return Response.FromValue(connectResult, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create a connect request.
+        /// </summary>
+        /// <param name="callLocator"></param>
+        /// <param name="callbackUri"></param>
+        /// <param name="cancellationToken"></param>
+        /// <exception cref="ArgumentNullException"><paramref name="callLocator"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="callbackUri"/> callbackUrl is not formatted correctly or empty. </exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <returns></returns>
+        public virtual Response<ConnectCallResult> ConnectCall(CallLocator callLocator, Uri callbackUri, CancellationToken cancellationToken = default)
+        {
+            ConnectCallOptions options = new ConnectCallOptions(callLocator, callbackUri);
+
+            return ConnectCall(options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Create a connect request.
+        /// </summary>
+        /// <param name="connectCallOptions">ConnectOptions for connect request.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="connectCallOptions"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="connectCallOptions"/> CallbackUrl is not formatted correctly. </exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <returns></returns>
+        public virtual Response<ConnectCallResult> ConnectCall(ConnectCallOptions connectCallOptions, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(ConnectCall)}");
+            scope.Start();
+            try
+            {
+                if (connectCallOptions == null)
+                    throw new ArgumentNullException(nameof(connectCallOptions));
+
+                ConnectRequestInternal connectRequest = ConnectRequest(connectCallOptions);
+                Response<CallConnectionPropertiesInternal> response = AzureCommunicationServicesRestClient.Connect(connectRequest);
+
+                var callConnection = GetCallConnection(response.Value.CallConnectionId);
+                ConnectCallResult connectResult = new ConnectCallResult(new CallConnectionProperties(response.Value), callConnection);
+                connectResult.SetEventProcessor(EventProcessor, response.Value.CallConnectionId);
+
+                return Response.FromValue(connectResult, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
         private CreateCallRequestInternal CreateCallRequest(CreateCallOptions options)
         {
             CreateCallRequestInternal request = new(
@@ -656,6 +758,26 @@ namespace Azure.Communication.CallAutomation
             request.MediaStreamingConfiguration = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
 
             return request;
+        }
+
+        private ConnectRequestInternal ConnectRequest(ConnectCallOptions options)
+        {
+            CallLocatorInternal callLocatorInternal = CallLocatorSerializer.Serialize(options.CallLocator);
+            ConnectRequestInternal connectRequest = new ConnectRequestInternal(callLocatorInternal, options.CallbackUri?.AbsoluteUri);
+            connectRequest.OperationContext = options.OperationContext;
+            connectRequest.MediaStreamingConfiguration = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
+            connectRequest.TranscriptionConfiguration = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
+
+            if (options.CallIntelligenceOptions != null && options.CallIntelligenceOptions.CognitiveServicesEndpoint != null)
+            {
+                CallIntelligenceOptionsInternal callIntelligenceOptionsInternal = new CallIntelligenceOptionsInternal
+                {
+                    CognitiveServicesEndpoint = options.CallIntelligenceOptions?.CognitiveServicesEndpoint?.AbsoluteUri
+                };
+                connectRequest.CallIntelligenceOptions = callIntelligenceOptionsInternal;
+            }
+
+            return connectRequest;
         }
 
         /// <summary>
