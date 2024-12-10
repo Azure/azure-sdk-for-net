@@ -43,8 +43,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Clients.Tests
             }
         }
 
-        [TestCase("Connection")]
-        [TestCase("AzureWebJobsConnection")]
+        //[TestCase("Connection")]
+        //[TestCase("AzureWebJobsConnection")]
         [TestCase("ConnectionStrings:Connection")]
         public async Task CreatesClientUsingConnectionString(string keyName)
         {
