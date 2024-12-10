@@ -7,10 +7,13 @@ using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using Azure.CloudMachine;
+using Azure.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Azure.CloudMachine;
 
@@ -19,6 +22,18 @@ namespace Azure.CloudMachine;
 /// </summary>
 public static class CloudMachineExtensions
 {
+    /// <summary>
+    /// Maps TSP endpoints. CloudMachineClient needs to be in the container for this method to work.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="application"></param>
+    public static void MapCloudMachineApplication<T>(this WebApplication application) where T : class
+    {
+        CloudMachineClient cm = application.Services.GetRequiredService<CloudMachineClient>();
+        T service = (T)Activator.CreateInstance(typeof(T), cm)!;
+        application.Map<T>(service);
+    }
+
     /// <summary>
     /// Uploads a document to the storage service.
     /// </summary>

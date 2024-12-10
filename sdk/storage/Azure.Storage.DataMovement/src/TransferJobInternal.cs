@@ -97,11 +97,10 @@ namespace Azure.Storage.DataMovement
         internal StorageResourceCreationPreference _creationPreference;
 
         /// <summary>
-        /// Considering if there's more than one job part, the transfer status will need to be set to
-        /// completed all job parts have been set to completed.
+        /// Event handler for tracking status changes in job parts.
         /// </summary>
-        public event SyncAsyncEventHandler<TransferStatusEventArgs> JobPartStatusEvents;
-        public SyncAsyncEventHandler<TransferStatusEventArgs> GetJobPartStatus() => JobPartStatusEvents;
+        public event SyncAsyncEventHandler<JobPartStatusEventArgs> JobPartStatusEvents;
+        public SyncAsyncEventHandler<JobPartStatusEventArgs> GetJobPartStatusEventHandler() => JobPartStatusEvents;
 
         /// <summary>
         /// If the transfer status of the job changes then the event will get added to this handler.
@@ -184,7 +183,7 @@ namespace Azure.Storage.DataMovement
             _errorMode = errorHandling;
             _creationPreference = creationPreference;
 
-            JobPartStatusEvents += JobPartEventAsync;
+            JobPartStatusEvents += JobPartStatusEventAsync;
             TransferStatusEventHandler = statusEventHandler;
             TransferFailedEventHandler = failedEventHandler;
             TransferSkippedEventHandler = skippedEventHandler;
@@ -271,7 +270,7 @@ namespace Azure.Storage.DataMovement
         {
             if (JobPartStatusEvents != default)
             {
-                JobPartStatusEvents -= JobPartEventAsync;
+                JobPartStatusEvents -= JobPartStatusEventAsync;
             }
         }
 
@@ -336,6 +335,7 @@ namespace Azure.Storage.DataMovement
                         yield return part;
                     }
                 }
+                DataMovementEventSource.Singleton.ResumeEnumerationComplete(_dataTransfer.Id, _jobParts.Count);
 
                 bool isEnumerationComplete;
                 try
@@ -465,6 +465,7 @@ namespace Azure.Storage.DataMovement
                     }
                 }
             }
+            DataMovementEventSource.Singleton.EnumerationComplete(_dataTransfer.Id, _jobParts.Count);
         }
 
         /// <summary>
@@ -544,10 +545,12 @@ namespace Azure.Storage.DataMovement
         /// In order to properly propagate the transfer status events of each job part up
         /// until all job parts have completed.
         /// </summary>
-        public async Task JobPartEventAsync(TransferStatusEventArgs args)
+        public async Task JobPartStatusEventAsync(JobPartStatusEventArgs args)
         {
             DataTransferStatus jobPartStatus = args.TransferStatus;
             DataTransferState jobState = _dataTransfer._state.GetTransferStatus().State;
+
+            DataMovementEventSource.Singleton.JobPartStatus(_dataTransfer.Id, args.PartNumber, jobPartStatus);
 
             // Keep track of paused, failed, and skipped which we will use to determine final job status
             // Since this is each Job Part coming in, the state of skipped or failed is mutually exclusive.
