@@ -228,7 +228,7 @@ namespace Microsoft.Extensions.Azure
 
             if (!string.IsNullOrWhiteSpace(objectId))
             {
-                throw new ArgumentException("Managed identity 'objectId' is only supported when the credential type is 'managedidentity'.");
+                throw new ArgumentException("'managedIdentityObjectId' is only supported when the credential type is 'managedidentity'.");
             }
 
             if (additionallyAllowedTenantsList != null

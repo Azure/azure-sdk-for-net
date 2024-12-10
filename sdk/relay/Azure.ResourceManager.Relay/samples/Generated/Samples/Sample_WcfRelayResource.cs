@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Relay.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Relay.Samples
 {
     public partial class Sample_WcfRelayResource
     {
-        // RelayCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_RelayCreate()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_RelayGet()
         {
-            // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/Relay/RelayCreate.json
-            // this example is just showing the usage of "WCFRelays_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/Relay/RelayGet.json
+            // this example is just showing the usage of "WCFRelays_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -38,14 +38,7 @@ namespace Azure.ResourceManager.Relay.Samples
             WcfRelayResource wcfRelay = client.GetWcfRelayResource(wcfRelayResourceId);
 
             // invoke the operation
-            WcfRelayData data = new WcfRelayData()
-            {
-                RelayType = RelayType.NetTcp,
-                IsClientAuthorizationRequired = true,
-                IsTransportSecurityRequired = true,
-            };
-            ArmOperation<WcfRelayResource> lro = await wcfRelay.UpdateAsync(WaitUntil.Completed, data);
-            WcfRelayResource result = lro.Value;
+            WcfRelayResource result = await wcfRelay.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -54,9 +47,8 @@ namespace Azure.ResourceManager.Relay.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RelayDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_RelayDelete()
         {
             // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/Relay/RelayDelete.json
@@ -79,16 +71,15 @@ namespace Azure.ResourceManager.Relay.Samples
             // invoke the operation
             await wcfRelay.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // RelayGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_RelayGet()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_RelayCreate()
         {
-            // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/Relay/RelayGet.json
-            // this example is just showing the usage of "WCFRelays_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/relay/resource-manager/Microsoft.Relay/stable/2021-11-01/examples/Relay/RelayCreate.json
+            // this example is just showing the usage of "WCFRelays_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -105,7 +96,14 @@ namespace Azure.ResourceManager.Relay.Samples
             WcfRelayResource wcfRelay = client.GetWcfRelayResource(wcfRelayResourceId);
 
             // invoke the operation
-            WcfRelayResource result = await wcfRelay.GetAsync();
+            WcfRelayData data = new WcfRelayData
+            {
+                RelayType = RelayType.NetTcp,
+                IsClientAuthorizationRequired = true,
+                IsTransportSecurityRequired = true,
+            };
+            ArmOperation<WcfRelayResource> lro = await wcfRelay.UpdateAsync(WaitUntil.Completed, data);
+            WcfRelayResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

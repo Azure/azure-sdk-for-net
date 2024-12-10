@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ContainerInstance.Samples
 {
     public partial class Sample_ResourceGroupResourceExtensions
     {
-        // SubnetServiceAssociationLinkDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DeleteSubnetServiceAssociationLink_SubnetServiceAssociationLinkDelete()
         {
             // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-05-01-preview/examples/SubnetServiceAssociationLinkDelete.json
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
             string subnetName = "demo3";
             await resourceGroupResource.DeleteSubnetServiceAssociationLinkAsync(WaitUntil.Completed, virtualNetworkName, subnetName);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

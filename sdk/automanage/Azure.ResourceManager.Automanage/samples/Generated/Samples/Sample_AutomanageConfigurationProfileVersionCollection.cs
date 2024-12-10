@@ -10,14 +10,14 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Automanage.Samples
 {
     public partial class Sample_AutomanageConfigurationProfileVersionCollection
     {
-        // Create or update configuration profile version
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateConfigurationProfileVersion()
         {
             // Generated from example definition: specification/automanage/resource-manager/Microsoft.Automanage/stable/2022-05-04/examples/createOrUpdateConfigurationProfileVersion.json
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Automanage.Samples
             string versionName = "version1";
             AutomanageConfigurationProfileData data = new AutomanageConfigurationProfileData(new AzureLocation("East US"))
             {
-                Configuration = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+                Configuration = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
                     ["Antimalware/Enable"] = "false",
                     ["AzureSecurityCenter/Enable"] = "true",
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Automanage.Samples
                 }),
                 Tags =
 {
-["Organization"] = "Administration",
+["Organization"] = "Administration"
 },
             };
             ArmOperation<AutomanageConfigurationProfileVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, versionName, data);
@@ -70,9 +70,8 @@ namespace Azure.ResourceManager.Automanage.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a configuration profile version
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAConfigurationProfileVersion()
         {
             // Generated from example definition: specification/automanage/resource-manager/Microsoft.Automanage/stable/2022-05-04/examples/getConfigurationProfileVersion.json
@@ -105,83 +104,8 @@ namespace Azure.ResourceManager.Automanage.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a configuration profile version
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetAConfigurationProfileVersion()
-        {
-            // Generated from example definition: specification/automanage/resource-manager/Microsoft.Automanage/stable/2022-05-04/examples/getConfigurationProfileVersion.json
-            // this example is just showing the usage of "ConfigurationProfilesVersions_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AutomanageConfigurationProfileResource created on azure
-            // for more information of creating AutomanageConfigurationProfileResource, please refer to the document of AutomanageConfigurationProfileResource
-            string subscriptionId = "mySubscriptionId";
-            string resourceGroupName = "myResourceGroupName";
-            string configurationProfileName = "customConfigurationProfile";
-            ResourceIdentifier automanageConfigurationProfileResourceId = AutomanageConfigurationProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configurationProfileName);
-            AutomanageConfigurationProfileResource automanageConfigurationProfile = client.GetAutomanageConfigurationProfileResource(automanageConfigurationProfileResourceId);
-
-            // get the collection of this AutomanageConfigurationProfileVersionResource
-            AutomanageConfigurationProfileVersionCollection collection = automanageConfigurationProfile.GetAutomanageConfigurationProfileVersions();
-
-            // invoke the operation
-            string versionName = "version1";
-            bool result = await collection.ExistsAsync(versionName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Get a configuration profile version
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetAConfigurationProfileVersion()
-        {
-            // Generated from example definition: specification/automanage/resource-manager/Microsoft.Automanage/stable/2022-05-04/examples/getConfigurationProfileVersion.json
-            // this example is just showing the usage of "ConfigurationProfilesVersions_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AutomanageConfigurationProfileResource created on azure
-            // for more information of creating AutomanageConfigurationProfileResource, please refer to the document of AutomanageConfigurationProfileResource
-            string subscriptionId = "mySubscriptionId";
-            string resourceGroupName = "myResourceGroupName";
-            string configurationProfileName = "customConfigurationProfile";
-            ResourceIdentifier automanageConfigurationProfileResourceId = AutomanageConfigurationProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configurationProfileName);
-            AutomanageConfigurationProfileResource automanageConfigurationProfile = client.GetAutomanageConfigurationProfileResource(automanageConfigurationProfileResourceId);
-
-            // get the collection of this AutomanageConfigurationProfileVersionResource
-            AutomanageConfigurationProfileVersionCollection collection = automanageConfigurationProfile.GetAutomanageConfigurationProfileVersions();
-
-            // invoke the operation
-            string versionName = "version1";
-            NullableResponse<AutomanageConfigurationProfileVersionResource> response = await collection.GetIfExistsAsync(versionName);
-            AutomanageConfigurationProfileVersionResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                AutomanageConfigurationProfileData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // List configuration profile versions by configuration profile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListConfigurationProfileVersionsByConfigurationProfile()
         {
             // Generated from example definition: specification/automanage/resource-manager/Microsoft.Automanage/stable/2022-05-04/examples/listConfigurationProfileVersions.json
@@ -213,7 +137,79 @@ namespace Azure.ResourceManager.Automanage.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetAConfigurationProfileVersion()
+        {
+            // Generated from example definition: specification/automanage/resource-manager/Microsoft.Automanage/stable/2022-05-04/examples/getConfigurationProfileVersion.json
+            // this example is just showing the usage of "ConfigurationProfilesVersions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AutomanageConfigurationProfileResource created on azure
+            // for more information of creating AutomanageConfigurationProfileResource, please refer to the document of AutomanageConfigurationProfileResource
+            string subscriptionId = "mySubscriptionId";
+            string resourceGroupName = "myResourceGroupName";
+            string configurationProfileName = "customConfigurationProfile";
+            ResourceIdentifier automanageConfigurationProfileResourceId = AutomanageConfigurationProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configurationProfileName);
+            AutomanageConfigurationProfileResource automanageConfigurationProfile = client.GetAutomanageConfigurationProfileResource(automanageConfigurationProfileResourceId);
+
+            // get the collection of this AutomanageConfigurationProfileVersionResource
+            AutomanageConfigurationProfileVersionCollection collection = automanageConfigurationProfile.GetAutomanageConfigurationProfileVersions();
+
+            // invoke the operation
+            string versionName = "version1";
+            bool result = await collection.ExistsAsync(versionName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetAConfigurationProfileVersion()
+        {
+            // Generated from example definition: specification/automanage/resource-manager/Microsoft.Automanage/stable/2022-05-04/examples/getConfigurationProfileVersion.json
+            // this example is just showing the usage of "ConfigurationProfilesVersions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AutomanageConfigurationProfileResource created on azure
+            // for more information of creating AutomanageConfigurationProfileResource, please refer to the document of AutomanageConfigurationProfileResource
+            string subscriptionId = "mySubscriptionId";
+            string resourceGroupName = "myResourceGroupName";
+            string configurationProfileName = "customConfigurationProfile";
+            ResourceIdentifier automanageConfigurationProfileResourceId = AutomanageConfigurationProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configurationProfileName);
+            AutomanageConfigurationProfileResource automanageConfigurationProfile = client.GetAutomanageConfigurationProfileResource(automanageConfigurationProfileResourceId);
+
+            // get the collection of this AutomanageConfigurationProfileVersionResource
+            AutomanageConfigurationProfileVersionCollection collection = automanageConfigurationProfile.GetAutomanageConfigurationProfileVersions();
+
+            // invoke the operation
+            string versionName = "version1";
+            NullableResponse<AutomanageConfigurationProfileVersionResource> response = await collection.GetIfExistsAsync(versionName);
+            AutomanageConfigurationProfileVersionResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                AutomanageConfigurationProfileData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

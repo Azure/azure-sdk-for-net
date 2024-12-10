@@ -10,47 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.EdgeOrder.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.EdgeOrder.Samples
 {
     public partial class Sample_EdgeOrderAddressResource
     {
-        // ListAddressesAtSubscriptionLevel
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetEdgeOrderAddresses_ListAddressesAtSubscriptionLevel()
-        {
-            // Generated from example definition: specification/edgeorder/resource-manager/Microsoft.EdgeOrder/stable/2021-12-01/examples/ListAddressesAtSubscriptionLevel.json
-            // this example is just showing the usage of "ListAddressesAtSubscriptionLevel" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "fa68082f-8ff7-4a25-95c7-ce9da541242f";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (EdgeOrderAddressResource item in subscriptionResource.GetEdgeOrderAddressesAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                EdgeOrderAddressData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // GetAddressByName
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAddressByName()
         {
             // Generated from example definition: specification/edgeorder/resource-manager/Microsoft.EdgeOrder/stable/2021-12-01/examples/GetAddressByName.json
@@ -79,9 +46,8 @@ namespace Azure.ResourceManager.EdgeOrder.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DeleteAddressByName
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAddressByName()
         {
             // Generated from example definition: specification/edgeorder/resource-manager/Microsoft.EdgeOrder/stable/2021-12-01/examples/DeleteAddressByName.json
@@ -103,12 +69,11 @@ namespace Azure.ResourceManager.EdgeOrder.Samples
             // invoke the operation
             await edgeOrderAddress.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // UpdateAddress
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAddress()
         {
             // Generated from example definition: specification/edgeorder/resource-manager/Microsoft.EdgeOrder/stable/2021-12-01/examples/UpdateAddress.json
@@ -128,14 +93,14 @@ namespace Azure.ResourceManager.EdgeOrder.Samples
             EdgeOrderAddressResource edgeOrderAddress = client.GetEdgeOrderAddressResource(edgeOrderAddressResourceId);
 
             // invoke the operation
-            EdgeOrderAddressPatch patch = new EdgeOrderAddressPatch()
+            EdgeOrderAddressPatch patch = new EdgeOrderAddressPatch
             {
                 Tags =
 {
 ["Hobby"] = "Web Series Added",
 ["Name"] = "Smile-Updated",
 ["WhatElse"] = "Web Series Added",
-["Work"] = "Engineering",
+["Work"] = "Engineering"
 },
                 ShippingAddress = new EdgeOrderShippingAddress("16 TOWNSEND STT", "US")
                 {
@@ -146,10 +111,7 @@ namespace Azure.ResourceManager.EdgeOrder.Samples
                     CompanyName = "Microsoft",
                     AddressType = EdgeOrderAddressType.None,
                 },
-                ContactDetails = new EdgeOrderAddressContactDetails("Petr Cech", "1234567890", new string[]
-            {
-"ssemcr@microsoft.com"
-            })
+                ContactDetails = new EdgeOrderAddressContactDetails("Petr Cech", "1234567890", new string[] { "ssemcr@microsoft.com" })
                 {
                     PhoneExtension = "",
                 },

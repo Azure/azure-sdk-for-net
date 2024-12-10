@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -23,14 +24,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("Nee re-record")]
         public async Task BasicClusterTestAsync()
         {
             resourceGroupResource = await CreateResourceGroupWithTag();
 
-            clusterName = Recording.GenerateAssetName("sfmctestcluster");
+            clusterName = Recording.GenerateAssetName("sfmctestclusternet");
             clusterCollection = resourceGroupResource.GetServiceFabricManagedClusters();
 
-            ServiceFabricManagedClusterData data = new ServiceFabricManagedClusterData(new AzureLocation("southcentralus"))
+            ServiceFabricManagedClusterData data = new ServiceFabricManagedClusterData(new AzureLocation("westus"))
             {
                 DnsName = clusterName,
                 AdminUserName = "Myusername4",
@@ -39,6 +41,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
                 ClientConnectionPort = 19000,
                 HttpGatewayConnectionPort = 19080
             };
+            data.Tags.Add(new KeyValuePair<string, string>("SFRP.EnableDiagnosticMI", "true"));
 
             serviceFabricManagedCluster = (await clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data)).Value;
 

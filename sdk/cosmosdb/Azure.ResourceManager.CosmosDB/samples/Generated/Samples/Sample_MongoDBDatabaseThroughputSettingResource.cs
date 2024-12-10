@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.CosmosDB.Samples
 {
     public partial class Sample_MongoDBDatabaseThroughputSettingResource
     {
-        // CosmosDBMongoDBDatabaseThroughputGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_CosmosDBMongoDBDatabaseThroughputGet()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBMongoDBDatabaseThroughputGet.json
@@ -48,9 +48,8 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CosmosDBMongoDBDatabaseThroughputUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CosmosDBMongoDBDatabaseThroughputUpdate()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBMongoDBDatabaseThroughputUpdate.json
@@ -71,14 +70,12 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             MongoDBDatabaseThroughputSettingResource mongoDBDatabaseThroughputSetting = client.GetMongoDBDatabaseThroughputSettingResource(mongoDBDatabaseThroughputSettingResourceId);
 
             // invoke the operation
-            ThroughputSettingsUpdateData data = new ThroughputSettingsUpdateData(new AzureLocation("West US"), new ThroughputSettingsResourceInfo()
+            ThroughputSettingsUpdateData data = new ThroughputSettingsUpdateData(new AzureLocation("West US"), new ThroughputSettingsResourceInfo
             {
                 Throughput = 400,
             })
             {
-                Tags =
-{
-},
+                Tags = { },
             };
             ArmOperation<MongoDBDatabaseThroughputSettingResource> lro = await mongoDBDatabaseThroughputSetting.CreateOrUpdateAsync(WaitUntil.Completed, data);
             MongoDBDatabaseThroughputSettingResource result = lro.Value;
@@ -90,9 +87,8 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CosmosDBMongoDBDatabaseMigrateToAutoscale
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task MigrateMongoDBDatabaseToAutoscale_CosmosDBMongoDBDatabaseMigrateToAutoscale()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBMongoDBDatabaseMigrateToAutoscale.json
@@ -123,9 +119,8 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CosmosDBMongoDBDatabaseMigrateToManualThroughput
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task MigrateMongoDBDatabaseToManualThroughput_CosmosDBMongoDBDatabaseMigrateToManualThroughput()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBMongoDBDatabaseMigrateToManualThroughput.json
@@ -156,9 +151,8 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CosmosDBMongoDBDatabaseRetrieveThroughputDistribution
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task MongoDBDatabaseRetrieveThroughputDistribution_CosmosDBMongoDBDatabaseRetrieveThroughputDistribution()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBMongoDBDatabaseRetrieveThroughputDistribution.json
@@ -179,12 +173,13 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             MongoDBDatabaseThroughputSettingResource mongoDBDatabaseThroughputSetting = client.GetMongoDBDatabaseThroughputSettingResource(mongoDBDatabaseThroughputSettingResourceId);
 
             // invoke the operation
-            RetrieveThroughputParameters retrieveThroughputParameters = new RetrieveThroughputParameters(new AzureLocation("placeholder"), new RetrieveThroughputPropertiesResource(new WritableSubResource[]
+            RetrieveThroughputParameters retrieveThroughputParameters = new RetrieveThroughputParameters(default, new RetrieveThroughputPropertiesResource(new WritableSubResource[]
             {
-new WritableSubResource()
+new WritableSubResource
 {
 Id = new ResourceIdentifier("0"),
-},new WritableSubResource()
+},
+new WritableSubResource
 {
 Id = new ResourceIdentifier("1"),
 }
@@ -195,9 +190,8 @@ Id = new ResourceIdentifier("1"),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // CosmosDBMongoDBDatabaseRedistributeThroughput
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task MongoDBDatabaseRedistributeThroughput_CosmosDBMongoDBDatabaseRedistributeThroughput()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBMongoDBDatabaseRedistributeThroughput.json
@@ -218,12 +212,13 @@ Id = new ResourceIdentifier("1"),
             MongoDBDatabaseThroughputSettingResource mongoDBDatabaseThroughputSetting = client.GetMongoDBDatabaseThroughputSettingResource(mongoDBDatabaseThroughputSettingResourceId);
 
             // invoke the operation
-            RedistributeThroughputParameters redistributeThroughputParameters = new RedistributeThroughputParameters(new AzureLocation("placeholder"), new RedistributeThroughputPropertiesResource(ThroughputPolicyType.Custom, new PhysicalPartitionThroughputInfoResource[]
+            RedistributeThroughputParameters redistributeThroughputParameters = new RedistributeThroughputParameters(default, new RedistributeThroughputPropertiesResource(ThroughputPolicyType.Custom, new PhysicalPartitionThroughputInfoResource[]
             {
 new PhysicalPartitionThroughputInfoResource("0")
 {
 Throughput = 5000,
-},new PhysicalPartitionThroughputInfoResource("1")
+},
+new PhysicalPartitionThroughputInfoResource("1")
 {
 Throughput = 5000,
 }
@@ -232,7 +227,8 @@ Throughput = 5000,
 new PhysicalPartitionThroughputInfoResource("2")
 {
 Throughput = 5000,
-},new PhysicalPartitionThroughputInfoResource("3")
+},
+new PhysicalPartitionThroughputInfoResource("3")
             }));
             ArmOperation<PhysicalPartitionThroughputInfoResult> lro = await mongoDBDatabaseThroughputSetting.MongoDBDatabaseRedistributeThroughputAsync(WaitUntil.Completed, redistributeThroughputParameters);
             PhysicalPartitionThroughputInfoResult result = lro.Value;

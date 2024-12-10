@@ -11,14 +11,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.NetApp.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetApp.Samples
 {
     public partial class Sample_NetAppVolumeResource
     {
-        // Volumes_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_VolumesGet()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Volumes_Get.json
@@ -49,44 +49,8 @@ namespace Azure.ResourceManager.NetApp.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Volumes_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_VolumesUpdate()
-        {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Volumes_Update.json
-            // this example is just showing the usage of "Volumes_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this NetAppVolumeResource created on azure
-            // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
-            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
-            string resourceGroupName = "myRG";
-            string accountName = "account1";
-            string poolName = "pool1";
-            string volumeName = "volume1";
-            ResourceIdentifier netAppVolumeResourceId = NetAppVolumeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
-            NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
-
-            // invoke the operation
-            NetAppVolumePatch patch = new NetAppVolumePatch(new AzureLocation("placeholder"));
-            ArmOperation<NetAppVolumeResource> lro = await netAppVolume.UpdateAsync(WaitUntil.Completed, patch);
-            NetAppVolumeResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            NetAppVolumeData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Volumes_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_VolumesDelete()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Volumes_Delete.json
@@ -110,12 +74,45 @@ namespace Azure.ResourceManager.NetApp.Samples
             // invoke the operation
             await netAppVolume.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Volumes_PopulateAvailabilityZones
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_VolumesUpdate()
+        {
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Volumes_Update.json
+            // this example is just showing the usage of "Volumes_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetAppVolumeResource created on azure
+            // for more information of creating NetAppVolumeResource, please refer to the document of NetAppVolumeResource
+            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
+            string resourceGroupName = "myRG";
+            string accountName = "account1";
+            string poolName = "pool1";
+            string volumeName = "volume1";
+            ResourceIdentifier netAppVolumeResourceId = NetAppVolumeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
+            NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
+
+            // invoke the operation
+            NetAppVolumePatch patch = new NetAppVolumePatch(default);
+            ArmOperation<NetAppVolumeResource> lro = await netAppVolume.UpdateAsync(WaitUntil.Completed, patch);
+            NetAppVolumeResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            NetAppVolumeData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task PopulateAvailabilityZone_VolumesPopulateAvailabilityZones()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Volumes_PopulateAvailabilityZones.json
@@ -147,9 +144,8 @@ namespace Azure.ResourceManager.NetApp.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Volumes_Revert
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Revert_VolumesRevert()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Volumes_Revert.json
@@ -171,18 +167,17 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
 
             // invoke the operation
-            NetAppVolumeRevertContent content = new NetAppVolumeRevertContent()
+            NetAppVolumeRevertContent content = new NetAppVolumeRevertContent
             {
                 SnapshotId = "/subscriptions/D633CC2E-722B-4AE1-B636-BBD9E4C60ED9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1/volumes/volume1/snapshots/snapshot1",
             };
             await netAppVolume.RevertAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Volumes_ResetCifsPassword
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ResetCifsPassword_VolumesResetCifsPassword()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Volumes_ResetCifsPassword.json
@@ -206,12 +201,11 @@ namespace Azure.ResourceManager.NetApp.Samples
             // invoke the operation
             await netAppVolume.ResetCifsPasswordAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Volumes_BreakFileLocks
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task BreakFileLocks_VolumesBreakFileLocks()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Volumes_BreakFileLocks.json
@@ -233,19 +227,18 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
 
             // invoke the operation
-            NetAppVolumeBreakFileLocksContent content = new NetAppVolumeBreakFileLocksContent()
+            NetAppVolumeBreakFileLocksContent content = new NetAppVolumeBreakFileLocksContent
             {
                 ClientIP = IPAddress.Parse("101.102.103.104"),
                 ConfirmRunningDisruptiveOperation = true,
             };
             await netAppVolume.BreakFileLocksAsync(WaitUntil.Completed, content: content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // GetGroupIdListForUser
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetGetGroupIdListForLdapUser_GetGroupIdListForUser()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/GroupIdListForLDAPUser.json
@@ -274,9 +267,8 @@ namespace Azure.ResourceManager.NetApp.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Volumes_BreakReplication
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task BreakReplication_VolumesBreakReplication()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Volumes_BreakReplication.json
@@ -298,18 +290,17 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
 
             // invoke the operation
-            NetAppVolumeBreakReplicationContent content = new NetAppVolumeBreakReplicationContent()
+            NetAppVolumeBreakReplicationContent content = new NetAppVolumeBreakReplicationContent
             {
                 ForceBreakReplication = false,
             };
             await netAppVolume.BreakReplicationAsync(WaitUntil.Completed, content: content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Volumes_ReestablishReplication
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ReestablishReplication_VolumesReestablishReplication()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Volumes_ReestablishReplication.json
@@ -331,18 +322,17 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
 
             // invoke the operation
-            NetAppVolumeReestablishReplicationContent content = new NetAppVolumeReestablishReplicationContent()
+            NetAppVolumeReestablishReplicationContent content = new NetAppVolumeReestablishReplicationContent
             {
                 SourceVolumeId = new ResourceIdentifier("/subscriptions/D633CC2E-722B-4AE1-B636-BBD9E4C60ED9/resourceGroups/mySourceRG/providers/Microsoft.NetApp/netAppAccounts/sourceAccount1/capacityPools/sourcePool1/volumes/sourceVolume1"),
             };
             await netAppVolume.ReestablishReplicationAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Volumes_ReplicationStatus
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetReplicationStatus_VolumesReplicationStatus()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Volumes_ReplicationStatus.json
@@ -369,9 +359,8 @@ namespace Azure.ResourceManager.NetApp.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Volumes_ListReplications
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetReplications_VolumesListReplications()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Volumes_ListReplications.json
@@ -398,12 +387,11 @@ namespace Azure.ResourceManager.NetApp.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Volumes_ResyncReplication
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ResyncReplication_VolumesResyncReplication()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Volumes_ResyncReplication.json
@@ -427,12 +415,11 @@ namespace Azure.ResourceManager.NetApp.Samples
             // invoke the operation
             await netAppVolume.ResyncReplicationAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Volumes_DeleteReplication
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DeleteReplication_VolumesDeleteReplication()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Volumes_DeleteReplication.json
@@ -456,12 +443,11 @@ namespace Azure.ResourceManager.NetApp.Samples
             // invoke the operation
             await netAppVolume.DeleteReplicationAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Volumes_AuthorizeReplication
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task AuthorizeReplication_VolumesAuthorizeReplication()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Volumes_AuthorizeReplication.json
@@ -483,18 +469,17 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
 
             // invoke the operation
-            NetAppVolumeAuthorizeReplicationContent content = new NetAppVolumeAuthorizeReplicationContent()
+            NetAppVolumeAuthorizeReplicationContent content = new NetAppVolumeAuthorizeReplicationContent
             {
                 RemoteVolumeResourceId = new ResourceIdentifier("/subscriptions/D633CC2E-722B-4AE1-B636-BBD9E4C60ED9/resourceGroups/myRemoteRG/providers/Microsoft.NetApp/netAppAccounts/remoteAccount1/capacityPools/remotePool1/volumes/remoteVolume1"),
             };
             await netAppVolume.AuthorizeReplicationAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Volumes_ReInitializeReplication
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ReInitializeReplication_VolumesReInitializeReplication()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Volumes_ReInitializeReplication.json
@@ -518,12 +503,11 @@ namespace Azure.ResourceManager.NetApp.Samples
             // invoke the operation
             await netAppVolume.ReInitializeReplicationAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Volumes_PeerExternalCluster
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task PeerExternalCluster_VolumesPeerExternalCluster()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Volumes_PeerExternalCluster.json
@@ -545,19 +529,15 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
 
             // invoke the operation
-            PeerClusterForVolumeMigrationContent content = new PeerClusterForVolumeMigrationContent(new string[]
-            {
-"0.0.0.1","0.0.0.2","0.0.0.3","0.0.0.4","0.0.0.5","0.0.0.6"
-            });
+            PeerClusterForVolumeMigrationContent content = new PeerClusterForVolumeMigrationContent(new string[] { "0.0.0.1", "0.0.0.2", "0.0.0.3", "0.0.0.4", "0.0.0.5", "0.0.0.6" });
             ArmOperation<ClusterPeerCommandResult> lro = await netAppVolume.PeerExternalClusterAsync(WaitUntil.Completed, content);
             ClusterPeerCommandResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Volumes_AuthorizeExternalReplication
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task AuthorizeExternalReplication_VolumesAuthorizeExternalReplication()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Volumes_AuthorizeExternalReplication.json
@@ -585,9 +565,8 @@ namespace Azure.ResourceManager.NetApp.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Volumes_FinalizeExternalReplication
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task FinalizeExternalReplication_VolumesFinalizeExternalReplication()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Volumes_FinalizeExternalReplication.json
@@ -611,12 +590,11 @@ namespace Azure.ResourceManager.NetApp.Samples
             // invoke the operation
             await netAppVolume.FinalizeExternalReplicationAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Volumes_PerformReplicationTransfer
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task PerformReplicationTransfer_VolumesPerformReplicationTransfer()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Volumes_PerformReplicationTransfer.json
@@ -640,12 +618,11 @@ namespace Azure.ResourceManager.NetApp.Samples
             // invoke the operation
             await netAppVolume.PerformReplicationTransferAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Volumes_AuthorizeReplication
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task PoolChange_VolumesAuthorizeReplication()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Volumes_PoolChange.json
@@ -670,12 +647,11 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppVolumePoolChangeContent content = new NetAppVolumePoolChangeContent(new ResourceIdentifier("/subscriptions/D633CC2E-722B-4AE1-B636-BBD9E4C60ED9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/capacityPools/pool1"));
             await netAppVolume.PoolChangeAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Volumes_Relocate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Relocate_VolumesRelocate()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Volumes_Relocate.json
@@ -700,12 +676,11 @@ namespace Azure.ResourceManager.NetApp.Samples
             RelocateVolumeContent content = new RelocateVolumeContent();
             await netAppVolume.RelocateAsync(WaitUntil.Completed, content: content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Volumes_FinalizeRelocation
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task FinalizeRelocation_VolumesFinalizeRelocation()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Volumes_FinalizeRelocation.json
@@ -729,12 +704,11 @@ namespace Azure.ResourceManager.NetApp.Samples
             // invoke the operation
             await netAppVolume.FinalizeRelocationAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Volumes_RevertRelocation
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RevertRelocation_VolumesRevertRelocation()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Volumes_RevertRelocation.json
@@ -758,12 +732,11 @@ namespace Azure.ResourceManager.NetApp.Samples
             // invoke the operation
             await netAppVolume.RevertRelocationAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Volumes_BackupStatus
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetLatestStatusBackup_VolumesBackupStatus()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Volumes_LatestBackupStatus.json
@@ -790,9 +763,8 @@ namespace Azure.ResourceManager.NetApp.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Volumes_RestoreStatus
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetVolumeLatestRestoreStatusBackup_VolumesRestoreStatus()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Volumes_LatestRestoreStatus.json
@@ -819,9 +791,8 @@ namespace Azure.ResourceManager.NetApp.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // BackupsUnderVolume_Migrate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task MigrateBackupsBackupsUnderVolume_BackupsUnderVolumeMigrate()
         {
             // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/BackupsUnderVolume_Migrate.json
@@ -846,7 +817,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             BackupsMigrationContent content = new BackupsMigrationContent("/subscriptions/D633CC2E-722B-4AE1-B636-BBD9E4C60ED9/resourceGroups/myRG/providers/Microsoft.NetApp/netAppAccounts/account1/backupVaults/backupVault1");
             await netAppVolume.MigrateBackupsBackupsUnderVolumeAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

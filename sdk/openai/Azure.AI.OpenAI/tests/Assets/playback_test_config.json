@@ -12,6 +12,11 @@
   "audio": {
     "deployment": "whisper"
   },
+  "batch": {
+    "endpoint": "https://Sanitized.openai.azure.com/",
+    "key": "Sanitized",
+    "deployment": "gpt-4o-mini-global-batch"
+  },
   "chat": {
     "endpoint": "https://Sanitized.openai.azure.com/",
     "key": "Sanitized",

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.CosmosDB.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.CosmosDB.Samples
 {
     public partial class Sample_CassandraKeyspaceThroughputSettingResource
     {
-        // CosmosDBCassandraKeyspaceThroughputGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_CosmosDBCassandraKeyspaceThroughputGet()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBCassandraKeyspaceThroughputGet.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CosmosDBCassandraKeyspaceThroughputUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CosmosDBCassandraKeyspaceThroughputUpdate()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBCassandraKeyspaceThroughputUpdate.json
@@ -70,14 +69,12 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             CassandraKeyspaceThroughputSettingResource cassandraKeyspaceThroughputSetting = client.GetCassandraKeyspaceThroughputSettingResource(cassandraKeyspaceThroughputSettingResourceId);
 
             // invoke the operation
-            ThroughputSettingsUpdateData data = new ThroughputSettingsUpdateData(new AzureLocation("West US"), new ThroughputSettingsResourceInfo()
+            ThroughputSettingsUpdateData data = new ThroughputSettingsUpdateData(new AzureLocation("West US"), new ThroughputSettingsResourceInfo
             {
                 Throughput = 400,
             })
             {
-                Tags =
-{
-},
+                Tags = { },
             };
             ArmOperation<CassandraKeyspaceThroughputSettingResource> lro = await cassandraKeyspaceThroughputSetting.CreateOrUpdateAsync(WaitUntil.Completed, data);
             CassandraKeyspaceThroughputSettingResource result = lro.Value;
@@ -89,9 +86,8 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CosmosDBCassandraKeyspaceMigrateToAutoscale
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task MigrateCassandraKeyspaceToAutoscale_CosmosDBCassandraKeyspaceMigrateToAutoscale()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBCassandraKeyspaceMigrateToAutoscale.json
@@ -122,9 +118,8 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CosmosDBCassandraKeyspaceMigrateToManualThroughput
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task MigrateCassandraKeyspaceToManualThroughput_CosmosDBCassandraKeyspaceMigrateToManualThroughput()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBCassandraKeyspaceMigrateToManualThroughput.json

@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.CosmosDB.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.CosmosDB.Samples
 {
     public partial class Sample_CassandraTableCollection
     {
-        // CosmosDBCassandraTableList
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_CosmosDBCassandraTableList()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CosmosDBCassandraTableCreateUpdate()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBCassandraTableList.json
-            // this example is just showing the usage of "CassandraResources_ListCassandraTables" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBCassandraTableCreateUpdate.json
+            // this example is just showing the usage of "CassandraResources_CreateUpdateCassandraTable" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             // this example assumes you already have this CassandraKeyspaceResource created on azure
             // for more information of creating CassandraKeyspaceResource, please refer to the document of CassandraKeyspaceResource
             string subscriptionId = "subid";
-            string resourceGroupName = "rgName";
+            string resourceGroupName = "rg1";
             string accountName = "ddb1";
             string keyspaceName = "keyspaceName";
             ResourceIdentifier cassandraKeyspaceResourceId = CassandraKeyspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, keyspaceName);
@@ -40,22 +40,46 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             // get the collection of this CassandraTableResource
             CassandraTableCollection collection = cassandraKeyspace.GetCassandraTables();
 
-            // invoke the operation and iterate over the result
-            await foreach (CassandraTableResource item in collection.GetAllAsync())
+            // invoke the operation
+            string tableName = "tableName";
+            CassandraTableCreateOrUpdateContent content = new CassandraTableCreateOrUpdateContent(new AzureLocation("West US"), new CassandraTableResourceInfo("tableName")
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                CassandraTableData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                DefaultTtl = 100,
+                Schema = new CassandraSchema
+                {
+                    Columns = {new CassandraColumn
+{
+Name = "columnA",
+CassandraColumnType = "Ascii",
+}},
+                    PartitionKeys = {new CassandraPartitionKey
+{
+Name = "columnA",
+}},
+                    ClusterKeys = {new CassandraClusterKey
+{
+Name = "columnA",
+OrderBy = "Asc",
+}},
+                },
+                AnalyticalStorageTtl = 500,
+            })
+            {
+                Options = new CosmosDBCreateUpdateConfig(),
+                Tags = { },
+            };
+            ArmOperation<CassandraTableResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, tableName, content);
+            CassandraTableResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CassandraTableData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CosmosDBCassandraTableGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_CosmosDBCassandraTableGet()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBCassandraTableGet.json
@@ -89,9 +113,45 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CosmosDBCassandraTableGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_CosmosDBCassandraTableList()
+        {
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBCassandraTableList.json
+            // this example is just showing the usage of "CassandraResources_ListCassandraTables" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CassandraKeyspaceResource created on azure
+            // for more information of creating CassandraKeyspaceResource, please refer to the document of CassandraKeyspaceResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rgName";
+            string accountName = "ddb1";
+            string keyspaceName = "keyspaceName";
+            ResourceIdentifier cassandraKeyspaceResourceId = CassandraKeyspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, keyspaceName);
+            CassandraKeyspaceResource cassandraKeyspace = client.GetCassandraKeyspaceResource(cassandraKeyspaceResourceId);
+
+            // get the collection of this CassandraTableResource
+            CassandraTableCollection collection = cassandraKeyspace.GetCassandraTables();
+
+            // invoke the operation and iterate over the result
+            await foreach (CassandraTableResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                CassandraTableData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_CosmosDBCassandraTableGet()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBCassandraTableGet.json
@@ -121,9 +181,8 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // CosmosDBCassandraTableGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_CosmosDBCassandraTableGet()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBCassandraTableGet.json
@@ -153,7 +212,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -163,80 +222,6 @@ namespace Azure.ResourceManager.CosmosDB.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        // CosmosDBCassandraTableCreateUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CosmosDBCassandraTableCreateUpdate()
-        {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBCassandraTableCreateUpdate.json
-            // this example is just showing the usage of "CassandraResources_CreateUpdateCassandraTable" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CassandraKeyspaceResource created on azure
-            // for more information of creating CassandraKeyspaceResource, please refer to the document of CassandraKeyspaceResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string accountName = "ddb1";
-            string keyspaceName = "keyspaceName";
-            ResourceIdentifier cassandraKeyspaceResourceId = CassandraKeyspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, keyspaceName);
-            CassandraKeyspaceResource cassandraKeyspace = client.GetCassandraKeyspaceResource(cassandraKeyspaceResourceId);
-
-            // get the collection of this CassandraTableResource
-            CassandraTableCollection collection = cassandraKeyspace.GetCassandraTables();
-
-            // invoke the operation
-            string tableName = "tableName";
-            CassandraTableCreateOrUpdateContent content = new CassandraTableCreateOrUpdateContent(new AzureLocation("West US"), new CassandraTableResourceInfo("tableName")
-            {
-                DefaultTtl = 100,
-                Schema = new CassandraSchema()
-                {
-                    Columns =
-{
-new CassandraColumn()
-{
-Name = "columnA",
-CassandraColumnType = "Ascii",
-}
-},
-                    PartitionKeys =
-{
-new CassandraPartitionKey()
-{
-Name = "columnA",
-}
-},
-                    ClusterKeys =
-{
-new CassandraClusterKey()
-{
-Name = "columnA",
-OrderBy = "Asc",
-}
-},
-                },
-                AnalyticalStorageTtl = 500,
-            })
-            {
-                Options = new CosmosDBCreateUpdateConfig(),
-                Tags =
-{
-},
-            };
-            ArmOperation<CassandraTableResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, tableName, content);
-            CassandraTableResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            CassandraTableData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }
