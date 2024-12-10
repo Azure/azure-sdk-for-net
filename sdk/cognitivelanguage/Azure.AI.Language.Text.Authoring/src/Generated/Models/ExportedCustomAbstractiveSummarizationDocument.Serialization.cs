@@ -19,13 +19,21 @@ namespace Azure.AI.Language.Text.Authoring.Models
 
         void IJsonModel<ExportedCustomAbstractiveSummarizationDocument>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ExportedCustomAbstractiveSummarizationDocument>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExportedCustomAbstractiveSummarizationDocument)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("summaryLocation"u8);
             writer.WriteStringValue(SummaryLocation);
             if (Optional.IsDefined(Location))
@@ -58,7 +66,6 @@ namespace Azure.AI.Language.Text.Authoring.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ExportedCustomAbstractiveSummarizationDocument IJsonModel<ExportedCustomAbstractiveSummarizationDocument>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

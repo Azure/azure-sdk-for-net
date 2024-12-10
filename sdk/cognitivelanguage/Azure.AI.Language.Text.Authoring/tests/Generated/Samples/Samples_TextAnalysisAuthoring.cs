@@ -21,7 +21,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringProjectMetadata_GetProject_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -40,7 +40,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringProjectMetadata_GetProject_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -59,7 +59,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringProjectMetadata_GetProject_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -70,7 +70,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringProjectMetadata_GetProject_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -81,7 +81,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringProjectMetadata_GetProject_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -109,7 +109,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringProjectMetadata_GetProject_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -137,7 +137,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringProjectMetadata_GetProject_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -148,7 +148,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringProjectMetadata_GetProject_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -159,7 +159,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringProjectMetadata_CreateProject_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -185,7 +185,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringProjectMetadata_CreateProject_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -211,7 +211,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringProjectMetadata_CreateProject_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -256,7 +256,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringProjectMetadata_CreateProject_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -301,7 +301,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_CopyProjectAuthorization_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -324,7 +324,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_CopyProjectAuthorization_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -347,7 +347,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_CopyProjectAuthorization_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -358,7 +358,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_CopyProjectAuthorization_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -369,7 +369,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_CopyProjectAuthorization_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -394,7 +394,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_CopyProjectAuthorization_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -419,7 +419,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_CopyProjectAuthorization_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -430,7 +430,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_CopyProjectAuthorization_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -441,7 +441,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringCopyProjectJobState_GetCopyProjectStatus_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -458,7 +458,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringCopyProjectJobState_GetCopyProjectStatus_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -475,7 +475,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringCopyProjectJobState_GetCopyProjectStatus_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -486,7 +486,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringCopyProjectJobState_GetCopyProjectStatus_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -497,7 +497,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringCopyProjectJobState_GetCopyProjectStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -531,7 +531,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringCopyProjectJobState_GetCopyProjectStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -565,7 +565,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringCopyProjectJobState_GetCopyProjectStatus_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -576,7 +576,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringCopyProjectJobState_GetCopyProjectStatus_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -587,7 +587,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringProjectDeployment_GetDeployment_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -608,7 +608,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringProjectDeployment_GetDeployment_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -629,7 +629,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringProjectDeployment_GetDeployment_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -640,7 +640,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringProjectDeployment_GetDeployment_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -651,7 +651,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringProjectDeployment_GetDeployment_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -672,7 +672,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringProjectDeployment_GetDeployment_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -693,7 +693,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringProjectDeployment_GetDeployment_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -704,7 +704,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringProjectDeployment_GetDeployment_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -715,7 +715,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringDeploymentDeleteFromResourcesJobState_GetDeploymentDeleteFromResourcesStatus_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -732,7 +732,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringDeploymentDeleteFromResourcesJobState_GetDeploymentDeleteFromResourcesStatus_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -749,7 +749,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringDeploymentDeleteFromResourcesJobState_GetDeploymentDeleteFromResourcesStatus_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -760,7 +760,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringDeploymentDeleteFromResourcesJobState_GetDeploymentDeleteFromResourcesStatus_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -771,7 +771,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringDeploymentDeleteFromResourcesJobState_GetDeploymentDeleteFromResourcesStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -805,7 +805,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringDeploymentDeleteFromResourcesJobState_GetDeploymentDeleteFromResourcesStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -839,7 +839,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringDeploymentDeleteFromResourcesJobState_GetDeploymentDeleteFromResourcesStatus_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -850,7 +850,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringDeploymentDeleteFromResourcesJobState_GetDeploymentDeleteFromResourcesStatus_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -861,7 +861,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringDeploymentJobState_GetDeploymentStatus_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -878,7 +878,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringDeploymentJobState_GetDeploymentStatus_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -895,7 +895,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringDeploymentJobState_GetDeploymentStatus_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -906,7 +906,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringDeploymentJobState_GetDeploymentStatus_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -917,7 +917,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringDeploymentJobState_GetDeploymentStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -951,7 +951,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringDeploymentJobState_GetDeploymentStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -985,7 +985,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringDeploymentJobState_GetDeploymentStatus_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -996,7 +996,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringDeploymentJobState_GetDeploymentStatus_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1007,7 +1007,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringSwapDeploymentsJobState_GetSwapDeploymentsStatus_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1024,7 +1024,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringSwapDeploymentsJobState_GetSwapDeploymentsStatus_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1041,7 +1041,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringSwapDeploymentsJobState_GetSwapDeploymentsStatus_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1052,7 +1052,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringSwapDeploymentsJobState_GetSwapDeploymentsStatus_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1063,7 +1063,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringSwapDeploymentsJobState_GetSwapDeploymentsStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1097,7 +1097,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringSwapDeploymentsJobState_GetSwapDeploymentsStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1131,7 +1131,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringSwapDeploymentsJobState_GetSwapDeploymentsStatus_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1142,7 +1142,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringSwapDeploymentsJobState_GetSwapDeploymentsStatus_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1153,7 +1153,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringExportProjectJobState_GetExportStatus_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1170,7 +1170,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringExportProjectJobState_GetExportStatus_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1187,7 +1187,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringExportProjectJobState_GetExportStatus_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1198,7 +1198,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringExportProjectJobState_GetExportStatus_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1209,7 +1209,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringExportProjectJobState_GetExportStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1244,7 +1244,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringExportProjectJobState_GetExportStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1279,7 +1279,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringExportProjectJobState_GetExportStatus_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1290,7 +1290,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringExportProjectJobState_GetExportStatus_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1301,7 +1301,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringExportedTrainedModel_GetExportedModel_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1320,7 +1320,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringExportedTrainedModel_GetExportedModel_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1339,7 +1339,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringExportedTrainedModel_GetExportedModel_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1350,7 +1350,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringExportedTrainedModel_GetExportedModel_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1361,7 +1361,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringExportedTrainedModel_GetExportedModel_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1380,7 +1380,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringExportedTrainedModel_GetExportedModel_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1399,7 +1399,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringExportedTrainedModel_GetExportedModel_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1410,7 +1410,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringExportedTrainedModel_GetExportedModel_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1421,7 +1421,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringExportedModelJobState_GetExportedModelJobStatus_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1438,7 +1438,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringExportedModelJobState_GetExportedModelJobStatus_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1455,7 +1455,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringExportedModelJobState_GetExportedModelJobStatus_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1466,7 +1466,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringExportedModelJobState_GetExportedModelJobStatus_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1477,7 +1477,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringExportedModelJobState_GetExportedModelJobStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1511,7 +1511,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringExportedModelJobState_GetExportedModelJobStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1545,7 +1545,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringExportedModelJobState_GetExportedModelJobStatus_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1556,7 +1556,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringExportedModelJobState_GetExportedModelJobStatus_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1567,7 +1567,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_GetExportedModelManifest_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1582,7 +1582,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_GetExportedModelManifest_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1597,7 +1597,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_GetExportedModelManifest_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1608,7 +1608,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_GetExportedModelManifest_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1619,7 +1619,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_GetExportedModelManifest_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1634,7 +1634,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_GetExportedModelManifest_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1649,7 +1649,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_GetExportedModelManifest_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1660,7 +1660,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_GetExportedModelManifest_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1671,7 +1671,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringImportProjectJobState_GetImportStatus_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1688,7 +1688,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringImportProjectJobState_GetImportStatus_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1705,7 +1705,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringImportProjectJobState_GetImportStatus_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1716,7 +1716,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringImportProjectJobState_GetImportStatus_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1727,7 +1727,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringImportProjectJobState_GetImportStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1761,7 +1761,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringImportProjectJobState_GetImportStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1795,7 +1795,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringImportProjectJobState_GetImportStatus_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1806,7 +1806,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringImportProjectJobState_GetImportStatus_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1817,7 +1817,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringProjectTrainedModel_GetTrainedModel_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1837,7 +1837,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringProjectTrainedModel_GetTrainedModel_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1857,7 +1857,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringProjectTrainedModel_GetTrainedModel_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1868,7 +1868,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringProjectTrainedModel_GetTrainedModel_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1879,7 +1879,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringProjectTrainedModel_GetTrainedModel_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1899,7 +1899,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringProjectTrainedModel_GetTrainedModel_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1919,7 +1919,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringProjectTrainedModel_GetTrainedModel_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1930,7 +1930,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringProjectTrainedModel_GetTrainedModel_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1941,7 +1941,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringProjectTrainedModel_DeleteTrainedModel_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1954,7 +1954,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringProjectTrainedModel_DeleteTrainedModel_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1967,7 +1967,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringProjectTrainedModel_DeleteTrainedModel_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1980,7 +1980,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringProjectTrainedModel_DeleteTrainedModel_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1993,7 +1993,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringEvaluationJobState_GetEvaluationStatus_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2014,7 +2014,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringEvaluationJobState_GetEvaluationStatus_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2035,7 +2035,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringEvaluationJobState_GetEvaluationStatus_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2046,7 +2046,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringEvaluationJobState_GetEvaluationStatus_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2057,7 +2057,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringEvaluationJobState_GetEvaluationStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2097,7 +2097,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringEvaluationJobState_GetEvaluationStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2137,7 +2137,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringEvaluationJobState_GetEvaluationStatus_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2148,7 +2148,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringEvaluationJobState_GetEvaluationStatus_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2159,7 +2159,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_GetModelEvaluationSummary_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2174,7 +2174,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_GetModelEvaluationSummary_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2189,7 +2189,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_GetModelEvaluationSummary_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2200,7 +2200,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_GetModelEvaluationSummary_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2211,7 +2211,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_GetModelEvaluationSummary_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2228,7 +2228,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_GetModelEvaluationSummary_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2245,7 +2245,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_GetModelEvaluationSummary_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2256,7 +2256,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_GetModelEvaluationSummary_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2267,7 +2267,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringLoadSnapshotJobState_GetLoadSnapshotStatus_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2284,7 +2284,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringLoadSnapshotJobState_GetLoadSnapshotStatus_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2301,7 +2301,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringLoadSnapshotJobState_GetLoadSnapshotStatus_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2312,7 +2312,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringLoadSnapshotJobState_GetLoadSnapshotStatus_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2323,7 +2323,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringLoadSnapshotJobState_GetLoadSnapshotStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2357,7 +2357,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringLoadSnapshotJobState_GetLoadSnapshotStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2391,7 +2391,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringLoadSnapshotJobState_GetLoadSnapshotStatus_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2402,7 +2402,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringLoadSnapshotJobState_GetLoadSnapshotStatus_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2413,7 +2413,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringAssignDeploymentResourcesJobState_GetAssignDeploymentResourcesStatus_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2430,7 +2430,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringAssignDeploymentResourcesJobState_GetAssignDeploymentResourcesStatus_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2447,7 +2447,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringAssignDeploymentResourcesJobState_GetAssignDeploymentResourcesStatus_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2458,7 +2458,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringAssignDeploymentResourcesJobState_GetAssignDeploymentResourcesStatus_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2469,7 +2469,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringAssignDeploymentResourcesJobState_GetAssignDeploymentResourcesStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2503,7 +2503,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringAssignDeploymentResourcesJobState_GetAssignDeploymentResourcesStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2537,7 +2537,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringAssignDeploymentResourcesJobState_GetAssignDeploymentResourcesStatus_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2548,7 +2548,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringAssignDeploymentResourcesJobState_GetAssignDeploymentResourcesStatus_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2559,7 +2559,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringUnassignDeploymentResourcesJobState_GetUnassignDeploymentResourcesStatus_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2576,7 +2576,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringUnassignDeploymentResourcesJobState_GetUnassignDeploymentResourcesStatus_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2593,7 +2593,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringUnassignDeploymentResourcesJobState_GetUnassignDeploymentResourcesStatus_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2604,7 +2604,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringUnassignDeploymentResourcesJobState_GetUnassignDeploymentResourcesStatus_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2615,7 +2615,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringUnassignDeploymentResourcesJobState_GetUnassignDeploymentResourcesStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2649,7 +2649,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringUnassignDeploymentResourcesJobState_GetUnassignDeploymentResourcesStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2683,7 +2683,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringUnassignDeploymentResourcesJobState_GetUnassignDeploymentResourcesStatus_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2694,7 +2694,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringUnassignDeploymentResourcesJobState_GetUnassignDeploymentResourcesStatus_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2705,7 +2705,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringTrainingJobState_GetTrainingStatus_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2726,7 +2726,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringTrainingJobState_GetTrainingStatus_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2747,7 +2747,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringTrainingJobState_GetTrainingStatus_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2758,7 +2758,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringTrainingJobState_GetTrainingStatus_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2769,7 +2769,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringTrainingJobState_GetTrainingStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2814,7 +2814,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringTrainingJobState_GetTrainingStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2859,7 +2859,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringTrainingJobState_GetTrainingStatus_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2870,7 +2870,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringTrainingJobState_GetTrainingStatus_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2881,7 +2881,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringProjectDeletionJobState_GetProjectDeletionStatus_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2898,7 +2898,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringProjectDeletionJobState_GetProjectDeletionStatus_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2915,7 +2915,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringProjectDeletionJobState_GetProjectDeletionStatus_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2926,7 +2926,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringProjectDeletionJobState_GetProjectDeletionStatus_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2937,7 +2937,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringProjectDeletionJobState_GetProjectDeletionStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2971,7 +2971,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringProjectDeletionJobState_GetProjectDeletionStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3005,7 +3005,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringProjectDeletionJobState_GetProjectDeletionStatus_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3016,7 +3016,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringProjectDeletionJobState_GetProjectDeletionStatus_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3027,7 +3027,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringProjectMetadata_GetProjects_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3047,7 +3047,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringProjectMetadata_GetProjects_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3067,7 +3067,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringProjectMetadata_GetProjects_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3080,7 +3080,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringProjectMetadata_GetProjects_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3093,7 +3093,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringProjectMetadata_GetProjects_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3122,7 +3122,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringProjectMetadata_GetProjects_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3151,7 +3151,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringProjectMetadata_GetProjects_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3164,7 +3164,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringProjectMetadata_GetProjects_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3177,7 +3177,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringProjectDeployment_GetDeployments_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3199,7 +3199,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringProjectDeployment_GetDeployments_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3221,7 +3221,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringProjectDeployment_GetDeployments_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3234,7 +3234,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringProjectDeployment_GetDeployments_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3247,7 +3247,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringProjectDeployment_GetDeployments_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3269,7 +3269,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringProjectDeployment_GetDeployments_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3291,7 +3291,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringProjectDeployment_GetDeployments_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3304,7 +3304,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringProjectDeployment_GetDeployments_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3317,7 +3317,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringExportedTrainedModel_GetExportedModels_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3337,7 +3337,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringExportedTrainedModel_GetExportedModels_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3357,7 +3357,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringExportedTrainedModel_GetExportedModels_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3370,7 +3370,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringExportedTrainedModel_GetExportedModels_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3383,7 +3383,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringExportedTrainedModel_GetExportedModels_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3403,7 +3403,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringExportedTrainedModel_GetExportedModels_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3423,7 +3423,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringExportedTrainedModel_GetExportedModels_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3436,7 +3436,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringExportedTrainedModel_GetExportedModels_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3449,7 +3449,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringProjectTrainedModel_GetTrainedModels_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3470,7 +3470,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringProjectTrainedModel_GetTrainedModels_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3491,7 +3491,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringProjectTrainedModel_GetTrainedModels_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3504,7 +3504,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringProjectTrainedModel_GetTrainedModels_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3517,7 +3517,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringProjectTrainedModel_GetTrainedModels_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3538,7 +3538,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringProjectTrainedModel_GetTrainedModels_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3559,7 +3559,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringProjectTrainedModel_GetTrainedModels_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3572,7 +3572,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringProjectTrainedModel_GetTrainedModels_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3585,7 +3585,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringDocumentEvaluationResult_GetModelEvaluationResults_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3602,7 +3602,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringDocumentEvaluationResult_GetModelEvaluationResults_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3619,7 +3619,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringDocumentEvaluationResult_GetModelEvaluationResults_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3632,7 +3632,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringDocumentEvaluationResult_GetModelEvaluationResults_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3645,7 +3645,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringDocumentEvaluationResult_GetModelEvaluationResults_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3662,7 +3662,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringDocumentEvaluationResult_GetModelEvaluationResults_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3679,7 +3679,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringDocumentEvaluationResult_GetModelEvaluationResults_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3692,7 +3692,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringDocumentEvaluationResult_GetModelEvaluationResults_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3705,7 +3705,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringAssignedDeploymentResource_GetDeploymentResources_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3721,7 +3721,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringAssignedDeploymentResource_GetDeploymentResources_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3737,7 +3737,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringAssignedDeploymentResource_GetDeploymentResources_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3750,7 +3750,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringAssignedDeploymentResource_GetDeploymentResources_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3763,7 +3763,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringAssignedDeploymentResource_GetDeploymentResources_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3779,7 +3779,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringAssignedDeploymentResource_GetDeploymentResources_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3795,7 +3795,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringAssignedDeploymentResource_GetDeploymentResources_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3808,7 +3808,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringAssignedDeploymentResource_GetDeploymentResources_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3821,7 +3821,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringTrainingJobState_GetTrainingJobs_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3843,7 +3843,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringTrainingJobState_GetTrainingJobs_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3865,7 +3865,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringTrainingJobState_GetTrainingJobs_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3878,7 +3878,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringTrainingJobState_GetTrainingJobs_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3891,7 +3891,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringTrainingJobState_GetTrainingJobs_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3937,7 +3937,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringTrainingJobState_GetTrainingJobs_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3983,7 +3983,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringTrainingJobState_GetTrainingJobs_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3996,7 +3996,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringTrainingJobState_GetTrainingJobs_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4009,7 +4009,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringAssignedProjectDeploymentsMetadata_GetAssignedResourceDeployments_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4027,7 +4027,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringAssignedProjectDeploymentsMetadata_GetAssignedResourceDeployments_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4045,7 +4045,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringAssignedProjectDeploymentsMetadata_GetAssignedResourceDeployments_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4058,7 +4058,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringAssignedProjectDeploymentsMetadata_GetAssignedResourceDeployments_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4071,7 +4071,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringAssignedProjectDeploymentsMetadata_GetAssignedResourceDeployments_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4089,7 +4089,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringAssignedProjectDeploymentsMetadata_GetAssignedResourceDeployments_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4107,7 +4107,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringAssignedProjectDeploymentsMetadata_GetAssignedResourceDeployments_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4120,7 +4120,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringAssignedProjectDeploymentsMetadata_GetAssignedResourceDeployments_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4133,7 +4133,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringSupportedLanguage_GetSupportedLanguages_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4149,7 +4149,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringSupportedLanguage_GetSupportedLanguages_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4165,7 +4165,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringSupportedLanguage_GetSupportedLanguages_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4178,7 +4178,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringSupportedLanguage_GetSupportedLanguages_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4191,7 +4191,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringSupportedLanguage_GetSupportedLanguages_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4207,7 +4207,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringSupportedLanguage_GetSupportedLanguages_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4223,7 +4223,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringSupportedLanguage_GetSupportedLanguages_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4236,7 +4236,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringSupportedLanguage_GetSupportedLanguages_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4249,7 +4249,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringPrebuiltEntity_GetSupportedPrebuiltEntities_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4266,7 +4266,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringPrebuiltEntity_GetSupportedPrebuiltEntities_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4283,7 +4283,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringPrebuiltEntity_GetSupportedPrebuiltEntities_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4296,7 +4296,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringPrebuiltEntity_GetSupportedPrebuiltEntities_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4309,7 +4309,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringPrebuiltEntity_GetSupportedPrebuiltEntities_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4326,7 +4326,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringPrebuiltEntity_GetSupportedPrebuiltEntities_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4343,7 +4343,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringPrebuiltEntity_GetSupportedPrebuiltEntities_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4356,7 +4356,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringPrebuiltEntity_GetSupportedPrebuiltEntities_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4369,7 +4369,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringTrainingConfigVersion_GetTrainingConfigVersions_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4385,7 +4385,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringTrainingConfigVersion_GetTrainingConfigVersions_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4401,7 +4401,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringTrainingConfigVersion_GetTrainingConfigVersions_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4414,7 +4414,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringTrainingConfigVersion_GetTrainingConfigVersions_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4427,7 +4427,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringTrainingConfigVersion_GetTrainingConfigVersions_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4443,7 +4443,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringTrainingConfigVersion_GetTrainingConfigVersions_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4459,7 +4459,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoringTrainingConfigVersion_GetTrainingConfigVersions_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4472,7 +4472,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoringTrainingConfigVersion_GetTrainingConfigVersions_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4485,7 +4485,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_DeleteProject_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4496,7 +4496,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_DeleteProject_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4507,7 +4507,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_DeleteProject_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4518,7 +4518,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_DeleteProject_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4529,7 +4529,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_CopyProject_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4549,7 +4549,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_CopyProject_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4569,7 +4569,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_CopyProject_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4587,7 +4587,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_CopyProject_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4605,7 +4605,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_CopyProject_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4625,7 +4625,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_CopyProject_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4645,7 +4645,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_CopyProject_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4663,7 +4663,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_CopyProject_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4681,7 +4681,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_Export_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4692,7 +4692,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_Export_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4703,7 +4703,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_Export_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4714,7 +4714,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_Export_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4725,7 +4725,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_Export_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4736,7 +4736,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_Export_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4747,7 +4747,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_Export_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4758,7 +4758,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_Export_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4769,7 +4769,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_Import_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4792,7 +4792,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_Import_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4815,7 +4815,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_Import_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4827,7 +4827,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_Import_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4839,7 +4839,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_Import_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4886,7 +4886,7 @@ dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_Import_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4933,7 +4933,7 @@ dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_Import_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4968,7 +4968,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_Import_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5003,7 +5003,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_Train_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5026,7 +5026,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_Train_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5049,7 +5049,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_Train_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5062,7 +5062,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_Train_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5075,7 +5075,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_Train_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5121,7 +5121,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_Train_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5167,7 +5167,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_Train_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5189,7 +5189,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_Train_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5211,7 +5211,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_DeployProject_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5226,7 +5226,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_DeployProject_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5241,7 +5241,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_DeployProject_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5253,7 +5253,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_DeployProject_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5265,7 +5265,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_DeployProject_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5284,7 +5284,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_DeployProject_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5303,7 +5303,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_DeployProject_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5318,7 +5318,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_DeployProject_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5333,7 +5333,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_DeleteDeployment_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5344,7 +5344,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_DeleteDeployment_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5355,7 +5355,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_DeleteDeployment_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5366,7 +5366,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_DeleteDeployment_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5377,7 +5377,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_DeleteDeploymentFromResources_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5389,7 +5389,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_DeleteDeploymentFromResources_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5401,7 +5401,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_DeleteDeploymentFromResources_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5413,7 +5413,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_DeleteDeploymentFromResources_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5425,7 +5425,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_DeleteDeploymentFromResources_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5443,7 +5443,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_DeleteDeploymentFromResources_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5461,7 +5461,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_DeleteDeploymentFromResources_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5476,7 +5476,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_DeleteDeploymentFromResources_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5491,7 +5491,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_SwapDeployments_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5507,7 +5507,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_SwapDeployments_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5523,7 +5523,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_SwapDeployments_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5535,7 +5535,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_SwapDeployments_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5547,7 +5547,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_SwapDeployments_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5563,7 +5563,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_SwapDeployments_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5579,7 +5579,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_SwapDeployments_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5591,7 +5591,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_SwapDeployments_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5603,7 +5603,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_CreateOrUpdateExportedModel_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5618,7 +5618,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_CreateOrUpdateExportedModel_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5633,7 +5633,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_CreateOrUpdateExportedModel_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5645,7 +5645,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_CreateOrUpdateExportedModel_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5657,7 +5657,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_CreateOrUpdateExportedModel_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5672,7 +5672,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_CreateOrUpdateExportedModel_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5687,7 +5687,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_CreateOrUpdateExportedModel_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5699,7 +5699,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_CreateOrUpdateExportedModel_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5711,7 +5711,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_DeleteExportedModel_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5722,7 +5722,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_DeleteExportedModel_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5733,7 +5733,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_DeleteExportedModel_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5744,7 +5744,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_DeleteExportedModel_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5755,7 +5755,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_EvaluateModel_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5774,7 +5774,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_EvaluateModel_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5793,7 +5793,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_EvaluateModel_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5806,7 +5806,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_EvaluateModel_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5819,7 +5819,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_EvaluateModel_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5845,7 +5845,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_EvaluateModel_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5871,7 +5871,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_EvaluateModel_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5889,7 +5889,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_EvaluateModel_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5907,7 +5907,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_LoadSnapshot_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5918,7 +5918,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_LoadSnapshot_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5929,7 +5929,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_LoadSnapshot_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5940,7 +5940,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_LoadSnapshot_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5951,7 +5951,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_AssignDeploymentResources_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5974,7 +5974,7 @@ region = "<region>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_AssignDeploymentResources_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5997,7 +5997,7 @@ region = "<region>",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_AssignDeploymentResources_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6012,7 +6012,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_AssignDeploymentResources_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6027,7 +6027,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_AssignDeploymentResources_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6050,7 +6050,7 @@ region = "<region>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_AssignDeploymentResources_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6073,7 +6073,7 @@ region = "<region>",
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_AssignDeploymentResources_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6088,7 +6088,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_AssignDeploymentResources_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6103,7 +6103,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_UnassignDeploymentResources_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6121,7 +6121,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_UnassignDeploymentResources_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6139,7 +6139,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_UnassignDeploymentResources_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6151,7 +6151,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_UnassignDeploymentResources_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6163,7 +6163,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_UnassignDeploymentResources_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6181,7 +6181,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_UnassignDeploymentResources_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6199,7 +6199,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_UnassignDeploymentResources_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6211,7 +6211,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_UnassignDeploymentResources_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6223,7 +6223,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_CancelTrainingJob_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6241,7 +6241,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_CancelTrainingJob_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6259,7 +6259,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_CancelTrainingJob_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6271,7 +6271,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_CancelTrainingJob_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6283,7 +6283,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_CancelTrainingJob_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6308,7 +6308,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_CancelTrainingJob_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6333,7 +6333,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public void Example_TextAnalysisAuthoring_CancelTrainingJob_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6345,7 +6345,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TextAnalysisAuthoring_CancelTrainingJob_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 

@@ -19,13 +19,21 @@ namespace Azure.AI.Language.Text.Authoring.Models
 
         void IJsonModel<EntityEvaluationSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<EntityEvaluationSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EntityEvaluationSummary)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("f1"u8);
             writer.WriteNumberValue(F1);
             writer.WritePropertyName("precision"u8);
@@ -55,7 +63,6 @@ namespace Azure.AI.Language.Text.Authoring.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         EntityEvaluationSummary IJsonModel<EntityEvaluationSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

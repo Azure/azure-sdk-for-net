@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call GetProjectAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -13,7 +13,7 @@ Response<ProjectMetadata> response = await client.GetProjectAsync("<projectName>
 ]]></code>
 This sample shows how to call GetProjectAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -24,7 +24,7 @@ Response<ProjectMetadata> response = await client.GetProjectAsync("<projectName>
       <example>
 This sample shows how to call GetProject.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -32,7 +32,7 @@ Response<ProjectMetadata> response = client.GetProject("<projectName>");
 ]]></code>
 This sample shows how to call GetProject with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -43,7 +43,7 @@ Response<ProjectMetadata> response = client.GetProject("<projectName>");
       <example>
 This sample shows how to call GetProjectAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -59,7 +59,7 @@ Console.WriteLine(result.GetProperty("language").ToString());
 ]]></code>
 This sample shows how to call GetProjectAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -87,7 +87,7 @@ Console.WriteLine(result.GetProperty("language").ToString());
       <example>
 This sample shows how to call GetProject and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -103,7 +103,7 @@ Console.WriteLine(result.GetProperty("language").ToString());
 ]]></code>
 This sample shows how to call GetProject with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -131,7 +131,7 @@ Console.WriteLine(result.GetProperty("language").ToString());
       <example>
 This sample shows how to call CreateProjectAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -154,7 +154,7 @@ Console.WriteLine(result.GetProperty("language").ToString());
 ]]></code>
 This sample shows how to call CreateProjectAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -199,7 +199,7 @@ Console.WriteLine(result.GetProperty("language").ToString());
       <example>
 This sample shows how to call CreateProject and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -222,7 +222,7 @@ Console.WriteLine(result.GetProperty("language").ToString());
 ]]></code>
 This sample shows how to call CreateProject with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -267,7 +267,7 @@ Console.WriteLine(result.GetProperty("language").ToString());
       <example>
 This sample shows how to call CopyProjectAuthorizationAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -275,7 +275,7 @@ Response<CopyProjectDetails> response = await client.CopyProjectAuthorizationAsy
 ]]></code>
 This sample shows how to call CopyProjectAuthorizationAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -286,7 +286,7 @@ Response<CopyProjectDetails> response = await client.CopyProjectAuthorizationAsy
       <example>
 This sample shows how to call CopyProjectAuthorization.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -294,7 +294,7 @@ Response<CopyProjectDetails> response = client.CopyProjectAuthorization("<projec
 ]]></code>
 This sample shows how to call CopyProjectAuthorization with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -305,7 +305,7 @@ Response<CopyProjectDetails> response = client.CopyProjectAuthorization("<projec
       <example>
 This sample shows how to call CopyProjectAuthorizationAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -325,7 +325,7 @@ Console.WriteLine(result.GetProperty("targetResourceRegion").ToString());
 ]]></code>
 This sample shows how to call CopyProjectAuthorizationAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -350,7 +350,7 @@ Console.WriteLine(result.GetProperty("targetResourceRegion").ToString());
       <example>
 This sample shows how to call CopyProjectAuthorization and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -370,7 +370,7 @@ Console.WriteLine(result.GetProperty("targetResourceRegion").ToString());
 ]]></code>
 This sample shows how to call CopyProjectAuthorization with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -395,7 +395,7 @@ Console.WriteLine(result.GetProperty("targetResourceRegion").ToString());
       <example>
 This sample shows how to call GetCopyProjectStatusAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -403,7 +403,7 @@ Response<CopyProjectJobState> response = await client.GetCopyProjectStatusAsync(
 ]]></code>
 This sample shows how to call GetCopyProjectStatusAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -414,7 +414,7 @@ Response<CopyProjectJobState> response = await client.GetCopyProjectStatusAsync(
       <example>
 This sample shows how to call GetCopyProjectStatus.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -422,7 +422,7 @@ Response<CopyProjectJobState> response = client.GetCopyProjectStatus("<projectNa
 ]]></code>
 This sample shows how to call GetCopyProjectStatus with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -433,7 +433,7 @@ Response<CopyProjectJobState> response = client.GetCopyProjectStatus("<projectNa
       <example>
 This sample shows how to call GetCopyProjectStatusAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -447,7 +447,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetCopyProjectStatusAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -481,7 +481,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
       <example>
 This sample shows how to call GetCopyProjectStatus and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -495,7 +495,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetCopyProjectStatus with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -529,7 +529,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
       <example>
 This sample shows how to call GetDeploymentAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -537,7 +537,7 @@ Response<ProjectDeployment> response = await client.GetDeploymentAsync("<project
 ]]></code>
 This sample shows how to call GetDeploymentAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -548,7 +548,7 @@ Response<ProjectDeployment> response = await client.GetDeploymentAsync("<project
       <example>
 This sample shows how to call GetDeployment.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -556,7 +556,7 @@ Response<ProjectDeployment> response = client.GetDeployment("<projectName>", "<d
 ]]></code>
 This sample shows how to call GetDeployment with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -567,7 +567,7 @@ Response<ProjectDeployment> response = client.GetDeployment("<projectName>", "<d
       <example>
 This sample shows how to call GetDeploymentAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -585,7 +585,7 @@ Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("region
 ]]></code>
 This sample shows how to call GetDeploymentAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -606,7 +606,7 @@ Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("region
       <example>
 This sample shows how to call GetDeployment and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -624,7 +624,7 @@ Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("region
 ]]></code>
 This sample shows how to call GetDeployment with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -645,7 +645,7 @@ Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("region
       <example>
 This sample shows how to call GetDeploymentDeleteFromResourcesStatusAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -653,7 +653,7 @@ Response<DeploymentDeleteFromResourcesJobState> response = await client.GetDeplo
 ]]></code>
 This sample shows how to call GetDeploymentDeleteFromResourcesStatusAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -664,7 +664,7 @@ Response<DeploymentDeleteFromResourcesJobState> response = await client.GetDeplo
       <example>
 This sample shows how to call GetDeploymentDeleteFromResourcesStatus.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -672,7 +672,7 @@ Response<DeploymentDeleteFromResourcesJobState> response = client.GetDeploymentD
 ]]></code>
 This sample shows how to call GetDeploymentDeleteFromResourcesStatus with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -683,7 +683,7 @@ Response<DeploymentDeleteFromResourcesJobState> response = client.GetDeploymentD
       <example>
 This sample shows how to call GetDeploymentDeleteFromResourcesStatusAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -697,7 +697,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetDeploymentDeleteFromResourcesStatusAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -731,7 +731,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
       <example>
 This sample shows how to call GetDeploymentDeleteFromResourcesStatus and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -745,7 +745,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetDeploymentDeleteFromResourcesStatus with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -779,7 +779,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
       <example>
 This sample shows how to call GetDeploymentStatusAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -787,7 +787,7 @@ Response<DeploymentJobState> response = await client.GetDeploymentStatusAsync("<
 ]]></code>
 This sample shows how to call GetDeploymentStatusAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -798,7 +798,7 @@ Response<DeploymentJobState> response = await client.GetDeploymentStatusAsync("<
       <example>
 This sample shows how to call GetDeploymentStatus.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -806,7 +806,7 @@ Response<DeploymentJobState> response = client.GetDeploymentStatus("<projectName
 ]]></code>
 This sample shows how to call GetDeploymentStatus with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -817,7 +817,7 @@ Response<DeploymentJobState> response = client.GetDeploymentStatus("<projectName
       <example>
 This sample shows how to call GetDeploymentStatusAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -831,7 +831,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetDeploymentStatusAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -865,7 +865,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
       <example>
 This sample shows how to call GetDeploymentStatus and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -879,7 +879,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetDeploymentStatus with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -913,7 +913,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
       <example>
 This sample shows how to call GetSwapDeploymentsStatusAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -921,7 +921,7 @@ Response<SwapDeploymentsJobState> response = await client.GetSwapDeploymentsStat
 ]]></code>
 This sample shows how to call GetSwapDeploymentsStatusAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -932,7 +932,7 @@ Response<SwapDeploymentsJobState> response = await client.GetSwapDeploymentsStat
       <example>
 This sample shows how to call GetSwapDeploymentsStatus.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -940,7 +940,7 @@ Response<SwapDeploymentsJobState> response = client.GetSwapDeploymentsStatus("<p
 ]]></code>
 This sample shows how to call GetSwapDeploymentsStatus with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -951,7 +951,7 @@ Response<SwapDeploymentsJobState> response = client.GetSwapDeploymentsStatus("<p
       <example>
 This sample shows how to call GetSwapDeploymentsStatusAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -965,7 +965,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetSwapDeploymentsStatusAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -999,7 +999,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
       <example>
 This sample shows how to call GetSwapDeploymentsStatus and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1013,7 +1013,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetSwapDeploymentsStatus with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1047,7 +1047,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
       <example>
 This sample shows how to call GetExportStatusAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1055,7 +1055,7 @@ Response<ExportProjectJobState> response = await client.GetExportStatusAsync("<p
 ]]></code>
 This sample shows how to call GetExportStatusAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1066,7 +1066,7 @@ Response<ExportProjectJobState> response = await client.GetExportStatusAsync("<p
       <example>
 This sample shows how to call GetExportStatus.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1074,7 +1074,7 @@ Response<ExportProjectJobState> response = client.GetExportStatus("<projectName>
 ]]></code>
 This sample shows how to call GetExportStatus with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1085,7 +1085,7 @@ Response<ExportProjectJobState> response = client.GetExportStatus("<projectName>
       <example>
 This sample shows how to call GetExportStatusAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1099,7 +1099,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetExportStatusAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1134,7 +1134,7 @@ Console.WriteLine(result.GetProperty("resultUrl").ToString());
       <example>
 This sample shows how to call GetExportStatus and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1148,7 +1148,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetExportStatus with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1183,7 +1183,7 @@ Console.WriteLine(result.GetProperty("resultUrl").ToString());
       <example>
 This sample shows how to call GetExportedModelAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1191,7 +1191,7 @@ Response<ExportedTrainedModel> response = await client.GetExportedModelAsync("<p
 ]]></code>
 This sample shows how to call GetExportedModelAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1202,7 +1202,7 @@ Response<ExportedTrainedModel> response = await client.GetExportedModelAsync("<p
       <example>
 This sample shows how to call GetExportedModel.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1210,7 +1210,7 @@ Response<ExportedTrainedModel> response = client.GetExportedModel("<projectName>
 ]]></code>
 This sample shows how to call GetExportedModel with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1221,7 +1221,7 @@ Response<ExportedTrainedModel> response = client.GetExportedModel("<projectName>
       <example>
 This sample shows how to call GetExportedModelAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1237,7 +1237,7 @@ Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
 ]]></code>
 This sample shows how to call GetExportedModelAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1256,7 +1256,7 @@ Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
       <example>
 This sample shows how to call GetExportedModel and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1272,7 +1272,7 @@ Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
 ]]></code>
 This sample shows how to call GetExportedModel with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1291,7 +1291,7 @@ Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
       <example>
 This sample shows how to call GetExportedModelJobStatusAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1299,7 +1299,7 @@ Response<ExportedModelJobState> response = await client.GetExportedModelJobStatu
 ]]></code>
 This sample shows how to call GetExportedModelJobStatusAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1310,7 +1310,7 @@ Response<ExportedModelJobState> response = await client.GetExportedModelJobStatu
       <example>
 This sample shows how to call GetExportedModelJobStatus.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1318,7 +1318,7 @@ Response<ExportedModelJobState> response = client.GetExportedModelJobStatus("<pr
 ]]></code>
 This sample shows how to call GetExportedModelJobStatus with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1329,7 +1329,7 @@ Response<ExportedModelJobState> response = client.GetExportedModelJobStatus("<pr
       <example>
 This sample shows how to call GetExportedModelJobStatusAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1343,7 +1343,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetExportedModelJobStatusAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1377,7 +1377,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
       <example>
 This sample shows how to call GetExportedModelJobStatus and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1391,7 +1391,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetExportedModelJobStatus with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1425,7 +1425,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
       <example>
 This sample shows how to call GetExportedModelManifestAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1433,7 +1433,7 @@ Response<ExportedModelManifest> response = await client.GetExportedModelManifest
 ]]></code>
 This sample shows how to call GetExportedModelManifestAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1444,7 +1444,7 @@ Response<ExportedModelManifest> response = await client.GetExportedModelManifest
       <example>
 This sample shows how to call GetExportedModelManifest.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1452,7 +1452,7 @@ Response<ExportedModelManifest> response = client.GetExportedModelManifest("<pro
 ]]></code>
 This sample shows how to call GetExportedModelManifest with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1463,7 +1463,7 @@ Response<ExportedModelManifest> response = client.GetExportedModelManifest("<pro
       <example>
 This sample shows how to call GetExportedModelManifestAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1475,7 +1475,7 @@ Console.WriteLine(result.GetProperty("modelFiles")[0].GetProperty("contentUri").
 ]]></code>
 This sample shows how to call GetExportedModelManifestAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1490,7 +1490,7 @@ Console.WriteLine(result.GetProperty("modelFiles")[0].GetProperty("contentUri").
       <example>
 This sample shows how to call GetExportedModelManifest and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1502,7 +1502,7 @@ Console.WriteLine(result.GetProperty("modelFiles")[0].GetProperty("contentUri").
 ]]></code>
 This sample shows how to call GetExportedModelManifest with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1517,7 +1517,7 @@ Console.WriteLine(result.GetProperty("modelFiles")[0].GetProperty("contentUri").
       <example>
 This sample shows how to call GetImportStatusAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1525,7 +1525,7 @@ Response<ImportProjectJobState> response = await client.GetImportStatusAsync("<p
 ]]></code>
 This sample shows how to call GetImportStatusAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1536,7 +1536,7 @@ Response<ImportProjectJobState> response = await client.GetImportStatusAsync("<p
       <example>
 This sample shows how to call GetImportStatus.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1544,7 +1544,7 @@ Response<ImportProjectJobState> response = client.GetImportStatus("<projectName>
 ]]></code>
 This sample shows how to call GetImportStatus with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1555,7 +1555,7 @@ Response<ImportProjectJobState> response = client.GetImportStatus("<projectName>
       <example>
 This sample shows how to call GetImportStatusAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1569,7 +1569,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetImportStatusAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1603,7 +1603,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
       <example>
 This sample shows how to call GetImportStatus and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1617,7 +1617,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetImportStatus with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1651,7 +1651,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
       <example>
 This sample shows how to call GetTrainedModelAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1659,7 +1659,7 @@ Response<ProjectTrainedModel> response = await client.GetTrainedModelAsync("<pro
 ]]></code>
 This sample shows how to call GetTrainedModelAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1670,7 +1670,7 @@ Response<ProjectTrainedModel> response = await client.GetTrainedModelAsync("<pro
       <example>
 This sample shows how to call GetTrainedModel.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1678,7 +1678,7 @@ Response<ProjectTrainedModel> response = client.GetTrainedModel("<projectName>",
 ]]></code>
 This sample shows how to call GetTrainedModel with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1689,7 +1689,7 @@ Response<ProjectTrainedModel> response = client.GetTrainedModel("<projectName>",
       <example>
 This sample shows how to call GetTrainedModelAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1706,7 +1706,7 @@ Console.WriteLine(result.GetProperty("hasSnapshot").ToString());
 ]]></code>
 This sample shows how to call GetTrainedModelAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1726,7 +1726,7 @@ Console.WriteLine(result.GetProperty("hasSnapshot").ToString());
       <example>
 This sample shows how to call GetTrainedModel and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1743,7 +1743,7 @@ Console.WriteLine(result.GetProperty("hasSnapshot").ToString());
 ]]></code>
 This sample shows how to call GetTrainedModel with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1763,7 +1763,7 @@ Console.WriteLine(result.GetProperty("hasSnapshot").ToString());
       <example>
 This sample shows how to call DeleteTrainedModelAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1773,7 +1773,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteTrainedModelAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1786,7 +1786,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteTrainedModel.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1796,7 +1796,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteTrainedModel with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1809,7 +1809,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetEvaluationStatusAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1817,7 +1817,7 @@ Response<EvaluationJobState> response = await client.GetEvaluationStatusAsync("<
 ]]></code>
 This sample shows how to call GetEvaluationStatusAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1828,7 +1828,7 @@ Response<EvaluationJobState> response = await client.GetEvaluationStatusAsync("<
       <example>
 This sample shows how to call GetEvaluationStatus.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1836,7 +1836,7 @@ Response<EvaluationJobState> response = client.GetEvaluationStatus("<projectName
 ]]></code>
 This sample shows how to call GetEvaluationStatus with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1847,7 +1847,7 @@ Response<EvaluationJobState> response = client.GetEvaluationStatus("<projectName
       <example>
 This sample shows how to call GetEvaluationStatusAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1865,7 +1865,7 @@ Console.WriteLine(result.GetProperty("result").GetProperty("percentComplete").To
 ]]></code>
 This sample shows how to call GetEvaluationStatusAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1905,7 +1905,7 @@ Console.WriteLine(result.GetProperty("result").GetProperty("percentComplete").To
       <example>
 This sample shows how to call GetEvaluationStatus and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1923,7 +1923,7 @@ Console.WriteLine(result.GetProperty("result").GetProperty("percentComplete").To
 ]]></code>
 This sample shows how to call GetEvaluationStatus with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1963,7 +1963,7 @@ Console.WriteLine(result.GetProperty("result").GetProperty("percentComplete").To
       <example>
 This sample shows how to call GetModelEvaluationSummaryAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1971,7 +1971,7 @@ Response<EvaluationSummary> response = await client.GetModelEvaluationSummaryAsy
 ]]></code>
 This sample shows how to call GetModelEvaluationSummaryAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1982,7 +1982,7 @@ Response<EvaluationSummary> response = await client.GetModelEvaluationSummaryAsy
       <example>
 This sample shows how to call GetModelEvaluationSummary.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1990,7 +1990,7 @@ Response<EvaluationSummary> response = client.GetModelEvaluationSummary("<projec
 ]]></code>
 This sample shows how to call GetModelEvaluationSummary with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2001,7 +2001,7 @@ Response<EvaluationSummary> response = client.GetModelEvaluationSummary("<projec
       <example>
 This sample shows how to call GetModelEvaluationSummaryAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2013,7 +2013,7 @@ Console.WriteLine(result.GetProperty("evaluationOptions").ToString());
 ]]></code>
 This sample shows how to call GetModelEvaluationSummaryAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2030,7 +2030,7 @@ Console.WriteLine(result.GetProperty("evaluationOptions").GetProperty("testingSp
       <example>
 This sample shows how to call GetModelEvaluationSummary and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2042,7 +2042,7 @@ Console.WriteLine(result.GetProperty("evaluationOptions").ToString());
 ]]></code>
 This sample shows how to call GetModelEvaluationSummary with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2059,7 +2059,7 @@ Console.WriteLine(result.GetProperty("evaluationOptions").GetProperty("testingSp
       <example>
 This sample shows how to call GetLoadSnapshotStatusAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2067,7 +2067,7 @@ Response<LoadSnapshotJobState> response = await client.GetLoadSnapshotStatusAsyn
 ]]></code>
 This sample shows how to call GetLoadSnapshotStatusAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2078,7 +2078,7 @@ Response<LoadSnapshotJobState> response = await client.GetLoadSnapshotStatusAsyn
       <example>
 This sample shows how to call GetLoadSnapshotStatus.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2086,7 +2086,7 @@ Response<LoadSnapshotJobState> response = client.GetLoadSnapshotStatus("<project
 ]]></code>
 This sample shows how to call GetLoadSnapshotStatus with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2097,7 +2097,7 @@ Response<LoadSnapshotJobState> response = client.GetLoadSnapshotStatus("<project
       <example>
 This sample shows how to call GetLoadSnapshotStatusAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2111,7 +2111,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetLoadSnapshotStatusAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2145,7 +2145,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
       <example>
 This sample shows how to call GetLoadSnapshotStatus and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2159,7 +2159,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetLoadSnapshotStatus with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2193,7 +2193,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
       <example>
 This sample shows how to call GetAssignDeploymentResourcesStatusAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2201,7 +2201,7 @@ Response<AssignDeploymentResourcesJobState> response = await client.GetAssignDep
 ]]></code>
 This sample shows how to call GetAssignDeploymentResourcesStatusAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2212,7 +2212,7 @@ Response<AssignDeploymentResourcesJobState> response = await client.GetAssignDep
       <example>
 This sample shows how to call GetAssignDeploymentResourcesStatus.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2220,7 +2220,7 @@ Response<AssignDeploymentResourcesJobState> response = client.GetAssignDeploymen
 ]]></code>
 This sample shows how to call GetAssignDeploymentResourcesStatus with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2231,7 +2231,7 @@ Response<AssignDeploymentResourcesJobState> response = client.GetAssignDeploymen
       <example>
 This sample shows how to call GetAssignDeploymentResourcesStatusAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2245,7 +2245,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetAssignDeploymentResourcesStatusAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2279,7 +2279,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
       <example>
 This sample shows how to call GetAssignDeploymentResourcesStatus and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2293,7 +2293,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetAssignDeploymentResourcesStatus with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2327,7 +2327,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
       <example>
 This sample shows how to call GetUnassignDeploymentResourcesStatusAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2335,7 +2335,7 @@ Response<UnassignDeploymentResourcesJobState> response = await client.GetUnassig
 ]]></code>
 This sample shows how to call GetUnassignDeploymentResourcesStatusAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2346,7 +2346,7 @@ Response<UnassignDeploymentResourcesJobState> response = await client.GetUnassig
       <example>
 This sample shows how to call GetUnassignDeploymentResourcesStatus.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2354,7 +2354,7 @@ Response<UnassignDeploymentResourcesJobState> response = client.GetUnassignDeplo
 ]]></code>
 This sample shows how to call GetUnassignDeploymentResourcesStatus with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2365,7 +2365,7 @@ Response<UnassignDeploymentResourcesJobState> response = client.GetUnassignDeplo
       <example>
 This sample shows how to call GetUnassignDeploymentResourcesStatusAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2379,7 +2379,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetUnassignDeploymentResourcesStatusAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2413,7 +2413,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
       <example>
 This sample shows how to call GetUnassignDeploymentResourcesStatus and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2427,7 +2427,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetUnassignDeploymentResourcesStatus with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2461,7 +2461,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
       <example>
 This sample shows how to call GetTrainingStatusAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2469,7 +2469,7 @@ Response<TrainingJobState> response = await client.GetTrainingStatusAsync("<proj
 ]]></code>
 This sample shows how to call GetTrainingStatusAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2480,7 +2480,7 @@ Response<TrainingJobState> response = await client.GetTrainingStatusAsync("<proj
       <example>
 This sample shows how to call GetTrainingStatus.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2488,7 +2488,7 @@ Response<TrainingJobState> response = client.GetTrainingStatus("<projectName>", 
 ]]></code>
 This sample shows how to call GetTrainingStatus with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2499,7 +2499,7 @@ Response<TrainingJobState> response = client.GetTrainingStatus("<projectName>", 
       <example>
 This sample shows how to call GetTrainingStatusAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2517,7 +2517,7 @@ Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").Get
 ]]></code>
 This sample shows how to call GetTrainingStatusAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2562,7 +2562,7 @@ Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime
       <example>
 This sample shows how to call GetTrainingStatus and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2580,7 +2580,7 @@ Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").Get
 ]]></code>
 This sample shows how to call GetTrainingStatus with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2625,7 +2625,7 @@ Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime
       <example>
 This sample shows how to call GetProjectDeletionStatusAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2633,7 +2633,7 @@ Response<ProjectDeletionJobState> response = await client.GetProjectDeletionStat
 ]]></code>
 This sample shows how to call GetProjectDeletionStatusAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2644,7 +2644,7 @@ Response<ProjectDeletionJobState> response = await client.GetProjectDeletionStat
       <example>
 This sample shows how to call GetProjectDeletionStatus.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2652,7 +2652,7 @@ Response<ProjectDeletionJobState> response = client.GetProjectDeletionStatus("<j
 ]]></code>
 This sample shows how to call GetProjectDeletionStatus with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2663,7 +2663,7 @@ Response<ProjectDeletionJobState> response = client.GetProjectDeletionStatus("<j
       <example>
 This sample shows how to call GetProjectDeletionStatusAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2677,7 +2677,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetProjectDeletionStatusAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2711,7 +2711,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
       <example>
 This sample shows how to call GetProjectDeletionStatus and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2725,7 +2725,7 @@ Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetProjectDeletionStatus with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2759,7 +2759,7 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetP
       <example>
 This sample shows how to call GetProjectsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2769,7 +2769,7 @@ await foreach (ProjectMetadata item in client.GetProjectsAsync())
 ]]></code>
 This sample shows how to call GetProjectsAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2782,7 +2782,7 @@ await foreach (ProjectMetadata item in client.GetProjectsAsync(maxCount: 1234, s
       <example>
 This sample shows how to call GetProjects.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2792,7 +2792,7 @@ foreach (ProjectMetadata item in client.GetProjects())
 ]]></code>
 This sample shows how to call GetProjects with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2805,7 +2805,7 @@ foreach (ProjectMetadata item in client.GetProjects(maxCount: 1234, skip: 1234, 
       <example>
 This sample shows how to call GetProjectsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2822,7 +2822,7 @@ await foreach (BinaryData item in client.GetProjectsAsync(null, null, null, null
 ]]></code>
 This sample shows how to call GetProjectsAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2851,7 +2851,7 @@ await foreach (BinaryData item in client.GetProjectsAsync(1234, 1234, 1234, null
       <example>
 This sample shows how to call GetProjects and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2868,7 +2868,7 @@ foreach (BinaryData item in client.GetProjects(null, null, null, null))
 ]]></code>
 This sample shows how to call GetProjects with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2897,7 +2897,7 @@ foreach (BinaryData item in client.GetProjects(1234, 1234, 1234, null))
       <example>
 This sample shows how to call GetDeploymentsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2907,7 +2907,7 @@ await foreach (ProjectDeployment item in client.GetDeploymentsAsync("<projectNam
 ]]></code>
 This sample shows how to call GetDeploymentsAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2920,7 +2920,7 @@ await foreach (ProjectDeployment item in client.GetDeploymentsAsync("<projectNam
       <example>
 This sample shows how to call GetDeployments.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2930,7 +2930,7 @@ foreach (ProjectDeployment item in client.GetDeployments("<projectName>"))
 ]]></code>
 This sample shows how to call GetDeployments with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2943,7 +2943,7 @@ foreach (ProjectDeployment item in client.GetDeployments("<projectName>", maxCou
       <example>
 This sample shows how to call GetDeploymentsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2962,7 +2962,7 @@ await foreach (BinaryData item in client.GetDeploymentsAsync("<projectName>", nu
 ]]></code>
 This sample shows how to call GetDeploymentsAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2984,7 +2984,7 @@ await foreach (BinaryData item in client.GetDeploymentsAsync("<projectName>", 12
       <example>
 This sample shows how to call GetDeployments and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3003,7 +3003,7 @@ foreach (BinaryData item in client.GetDeployments("<projectName>", null, null, n
 ]]></code>
 This sample shows how to call GetDeployments with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3025,7 +3025,7 @@ foreach (BinaryData item in client.GetDeployments("<projectName>", 1234, 1234, 1
       <example>
 This sample shows how to call GetExportedModelsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3035,7 +3035,7 @@ await foreach (ExportedTrainedModel item in client.GetExportedModelsAsync("<proj
 ]]></code>
 This sample shows how to call GetExportedModelsAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3048,7 +3048,7 @@ await foreach (ExportedTrainedModel item in client.GetExportedModelsAsync("<proj
       <example>
 This sample shows how to call GetExportedModels.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3058,7 +3058,7 @@ foreach (ExportedTrainedModel item in client.GetExportedModels("<projectName>"))
 ]]></code>
 This sample shows how to call GetExportedModels with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3071,7 +3071,7 @@ foreach (ExportedTrainedModel item in client.GetExportedModels("<projectName>", 
       <example>
 This sample shows how to call GetExportedModelsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3088,7 +3088,7 @@ await foreach (BinaryData item in client.GetExportedModelsAsync("<projectName>",
 ]]></code>
 This sample shows how to call GetExportedModelsAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3108,7 +3108,7 @@ await foreach (BinaryData item in client.GetExportedModelsAsync("<projectName>",
       <example>
 This sample shows how to call GetExportedModels and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3125,7 +3125,7 @@ foreach (BinaryData item in client.GetExportedModels("<projectName>", null, null
 ]]></code>
 This sample shows how to call GetExportedModels with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3145,7 +3145,7 @@ foreach (BinaryData item in client.GetExportedModels("<projectName>", 1234, 1234
       <example>
 This sample shows how to call GetTrainedModelsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3155,7 +3155,7 @@ await foreach (ProjectTrainedModel item in client.GetTrainedModelsAsync("<projec
 ]]></code>
 This sample shows how to call GetTrainedModelsAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3168,7 +3168,7 @@ await foreach (ProjectTrainedModel item in client.GetTrainedModelsAsync("<projec
       <example>
 This sample shows how to call GetTrainedModels.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3178,7 +3178,7 @@ foreach (ProjectTrainedModel item in client.GetTrainedModels("<projectName>"))
 ]]></code>
 This sample shows how to call GetTrainedModels with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3191,7 +3191,7 @@ foreach (ProjectTrainedModel item in client.GetTrainedModels("<projectName>", ma
       <example>
 This sample shows how to call GetTrainedModelsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3209,7 +3209,7 @@ await foreach (BinaryData item in client.GetTrainedModelsAsync("<projectName>", 
 ]]></code>
 This sample shows how to call GetTrainedModelsAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3230,7 +3230,7 @@ await foreach (BinaryData item in client.GetTrainedModelsAsync("<projectName>", 
       <example>
 This sample shows how to call GetTrainedModels and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3248,7 +3248,7 @@ foreach (BinaryData item in client.GetTrainedModels("<projectName>", null, null,
 ]]></code>
 This sample shows how to call GetTrainedModels with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3269,7 +3269,7 @@ foreach (BinaryData item in client.GetTrainedModels("<projectName>", 1234, 1234,
       <example>
 This sample shows how to call GetModelEvaluationResultsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3279,7 +3279,7 @@ await foreach (DocumentEvaluationResult item in client.GetModelEvaluationResults
 ]]></code>
 This sample shows how to call GetModelEvaluationResultsAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3292,7 +3292,7 @@ await foreach (DocumentEvaluationResult item in client.GetModelEvaluationResults
       <example>
 This sample shows how to call GetModelEvaluationResults.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3302,7 +3302,7 @@ foreach (DocumentEvaluationResult item in client.GetModelEvaluationResults("<pro
 ]]></code>
 This sample shows how to call GetModelEvaluationResults with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3315,7 +3315,7 @@ foreach (DocumentEvaluationResult item in client.GetModelEvaluationResults("<pro
       <example>
 This sample shows how to call GetModelEvaluationResultsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3329,7 +3329,7 @@ await foreach (BinaryData item in client.GetModelEvaluationResultsAsync("<projec
 ]]></code>
 This sample shows how to call GetModelEvaluationResultsAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3346,7 +3346,7 @@ await foreach (BinaryData item in client.GetModelEvaluationResultsAsync("<projec
       <example>
 This sample shows how to call GetModelEvaluationResults and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3360,7 +3360,7 @@ foreach (BinaryData item in client.GetModelEvaluationResults("<projectName>", "<
 ]]></code>
 This sample shows how to call GetModelEvaluationResults with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3377,7 +3377,7 @@ foreach (BinaryData item in client.GetModelEvaluationResults("<projectName>", "<
       <example>
 This sample shows how to call GetDeploymentResourcesAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3387,7 +3387,7 @@ await foreach (AssignedDeploymentResource item in client.GetDeploymentResourcesA
 ]]></code>
 This sample shows how to call GetDeploymentResourcesAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3400,7 +3400,7 @@ await foreach (AssignedDeploymentResource item in client.GetDeploymentResourcesA
       <example>
 This sample shows how to call GetDeploymentResources.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3410,7 +3410,7 @@ foreach (AssignedDeploymentResource item in client.GetDeploymentResources("<proj
 ]]></code>
 This sample shows how to call GetDeploymentResources with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3423,7 +3423,7 @@ foreach (AssignedDeploymentResource item in client.GetDeploymentResources("<proj
       <example>
 This sample shows how to call GetDeploymentResourcesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3436,7 +3436,7 @@ await foreach (BinaryData item in client.GetDeploymentResourcesAsync("<projectNa
 ]]></code>
 This sample shows how to call GetDeploymentResourcesAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3452,7 +3452,7 @@ await foreach (BinaryData item in client.GetDeploymentResourcesAsync("<projectNa
       <example>
 This sample shows how to call GetDeploymentResources and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3465,7 +3465,7 @@ foreach (BinaryData item in client.GetDeploymentResources("<projectName>", null,
 ]]></code>
 This sample shows how to call GetDeploymentResources with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3481,7 +3481,7 @@ foreach (BinaryData item in client.GetDeploymentResources("<projectName>", 1234,
       <example>
 This sample shows how to call GetTrainingJobsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3491,7 +3491,7 @@ await foreach (TrainingJobState item in client.GetTrainingJobsAsync("<projectNam
 ]]></code>
 This sample shows how to call GetTrainingJobsAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3504,7 +3504,7 @@ await foreach (TrainingJobState item in client.GetTrainingJobsAsync("<projectNam
       <example>
 This sample shows how to call GetTrainingJobs.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3514,7 +3514,7 @@ foreach (TrainingJobState item in client.GetTrainingJobs("<projectName>"))
 ]]></code>
 This sample shows how to call GetTrainingJobs with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3527,7 +3527,7 @@ foreach (TrainingJobState item in client.GetTrainingJobs("<projectName>", maxCou
       <example>
 This sample shows how to call GetTrainingJobsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3546,7 +3546,7 @@ await foreach (BinaryData item in client.GetTrainingJobsAsync("<projectName>", n
 ]]></code>
 This sample shows how to call GetTrainingJobsAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3592,7 +3592,7 @@ await foreach (BinaryData item in client.GetTrainingJobsAsync("<projectName>", 1
       <example>
 This sample shows how to call GetTrainingJobs and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3611,7 +3611,7 @@ foreach (BinaryData item in client.GetTrainingJobs("<projectName>", null, null, 
 ]]></code>
 This sample shows how to call GetTrainingJobs with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3657,7 +3657,7 @@ foreach (BinaryData item in client.GetTrainingJobs("<projectName>", 1234, 1234, 
       <example>
 This sample shows how to call GetAssignedResourceDeploymentsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3667,7 +3667,7 @@ await foreach (AssignedProjectDeploymentsMetadata item in client.GetAssignedReso
 ]]></code>
 This sample shows how to call GetAssignedResourceDeploymentsAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3680,7 +3680,7 @@ await foreach (AssignedProjectDeploymentsMetadata item in client.GetAssignedReso
       <example>
 This sample shows how to call GetAssignedResourceDeployments.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3690,7 +3690,7 @@ foreach (AssignedProjectDeploymentsMetadata item in client.GetAssignedResourceDe
 ]]></code>
 This sample shows how to call GetAssignedResourceDeployments with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3703,7 +3703,7 @@ foreach (AssignedProjectDeploymentsMetadata item in client.GetAssignedResourceDe
       <example>
 This sample shows how to call GetAssignedResourceDeploymentsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3718,7 +3718,7 @@ await foreach (BinaryData item in client.GetAssignedResourceDeploymentsAsync(nul
 ]]></code>
 This sample shows how to call GetAssignedResourceDeploymentsAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3736,7 +3736,7 @@ await foreach (BinaryData item in client.GetAssignedResourceDeploymentsAsync(123
       <example>
 This sample shows how to call GetAssignedResourceDeployments and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3751,7 +3751,7 @@ foreach (BinaryData item in client.GetAssignedResourceDeployments(null, null, nu
 ]]></code>
 This sample shows how to call GetAssignedResourceDeployments with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3769,7 +3769,7 @@ foreach (BinaryData item in client.GetAssignedResourceDeployments(1234, 1234, 12
       <example>
 This sample shows how to call GetSupportedLanguagesAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3779,7 +3779,7 @@ await foreach (SupportedLanguage item in client.GetSupportedLanguagesAsync())
 ]]></code>
 This sample shows how to call GetSupportedLanguagesAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3792,7 +3792,7 @@ await foreach (SupportedLanguage item in client.GetSupportedLanguagesAsync(proje
       <example>
 This sample shows how to call GetSupportedLanguages.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3802,7 +3802,7 @@ foreach (SupportedLanguage item in client.GetSupportedLanguages())
 ]]></code>
 This sample shows how to call GetSupportedLanguages with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3815,7 +3815,7 @@ foreach (SupportedLanguage item in client.GetSupportedLanguages(projectKind: Pro
       <example>
 This sample shows how to call GetSupportedLanguagesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3828,7 +3828,7 @@ await foreach (BinaryData item in client.GetSupportedLanguagesAsync(null, null, 
 ]]></code>
 This sample shows how to call GetSupportedLanguagesAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3844,7 +3844,7 @@ await foreach (BinaryData item in client.GetSupportedLanguagesAsync("CustomSingl
       <example>
 This sample shows how to call GetSupportedLanguages and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3857,7 +3857,7 @@ foreach (BinaryData item in client.GetSupportedLanguages(null, null, null, null,
 ]]></code>
 This sample shows how to call GetSupportedLanguages with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3873,7 +3873,7 @@ foreach (BinaryData item in client.GetSupportedLanguages("CustomSingleLabelClass
       <example>
 This sample shows how to call GetSupportedPrebuiltEntitiesAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3883,7 +3883,7 @@ await foreach (PrebuiltEntity item in client.GetSupportedPrebuiltEntitiesAsync()
 ]]></code>
 This sample shows how to call GetSupportedPrebuiltEntitiesAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3896,7 +3896,7 @@ await foreach (PrebuiltEntity item in client.GetSupportedPrebuiltEntitiesAsync()
       <example>
 This sample shows how to call GetSupportedPrebuiltEntities.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3906,7 +3906,7 @@ foreach (PrebuiltEntity item in client.GetSupportedPrebuiltEntities())
 ]]></code>
 This sample shows how to call GetSupportedPrebuiltEntities with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3919,7 +3919,7 @@ foreach (PrebuiltEntity item in client.GetSupportedPrebuiltEntities())
       <example>
 This sample shows how to call GetSupportedPrebuiltEntitiesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3933,7 +3933,7 @@ await foreach (BinaryData item in client.GetSupportedPrebuiltEntitiesAsync(null)
 ]]></code>
 This sample shows how to call GetSupportedPrebuiltEntitiesAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3950,7 +3950,7 @@ await foreach (BinaryData item in client.GetSupportedPrebuiltEntitiesAsync(null)
       <example>
 This sample shows how to call GetSupportedPrebuiltEntities and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3964,7 +3964,7 @@ foreach (BinaryData item in client.GetSupportedPrebuiltEntities(null))
 ]]></code>
 This sample shows how to call GetSupportedPrebuiltEntities with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3981,7 +3981,7 @@ foreach (BinaryData item in client.GetSupportedPrebuiltEntities(null))
       <example>
 This sample shows how to call GetTrainingConfigVersionsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3991,7 +3991,7 @@ await foreach (TrainingConfigVersion item in client.GetTrainingConfigVersionsAsy
 ]]></code>
 This sample shows how to call GetTrainingConfigVersionsAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4004,7 +4004,7 @@ await foreach (TrainingConfigVersion item in client.GetTrainingConfigVersionsAsy
       <example>
 This sample shows how to call GetTrainingConfigVersions.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4014,7 +4014,7 @@ foreach (TrainingConfigVersion item in client.GetTrainingConfigVersions())
 ]]></code>
 This sample shows how to call GetTrainingConfigVersions with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4027,7 +4027,7 @@ foreach (TrainingConfigVersion item in client.GetTrainingConfigVersions(projectK
       <example>
 This sample shows how to call GetTrainingConfigVersionsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4040,7 +4040,7 @@ await foreach (BinaryData item in client.GetTrainingConfigVersionsAsync(null, nu
 ]]></code>
 This sample shows how to call GetTrainingConfigVersionsAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4056,7 +4056,7 @@ await foreach (BinaryData item in client.GetTrainingConfigVersionsAsync("CustomS
       <example>
 This sample shows how to call GetTrainingConfigVersions and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4069,7 +4069,7 @@ foreach (BinaryData item in client.GetTrainingConfigVersions(null, null, null, n
 ]]></code>
 This sample shows how to call GetTrainingConfigVersions with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4085,7 +4085,7 @@ foreach (BinaryData item in client.GetTrainingConfigVersions("CustomSingleLabelC
       <example>
 This sample shows how to call DeleteProjectAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4093,7 +4093,7 @@ Operation operation = await client.DeleteProjectAsync(WaitUntil.Completed, "<pro
 ]]></code>
 This sample shows how to call DeleteProjectAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4104,7 +4104,7 @@ Operation operation = await client.DeleteProjectAsync(WaitUntil.Completed, "<pro
       <example>
 This sample shows how to call DeleteProject.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4112,7 +4112,7 @@ Operation operation = client.DeleteProject(WaitUntil.Completed, "<projectName>")
 ]]></code>
 This sample shows how to call DeleteProject with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4123,7 +4123,7 @@ Operation operation = client.DeleteProject(WaitUntil.Completed, "<projectName>")
       <example>
 This sample shows how to call CopyProjectAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4138,7 +4138,7 @@ Operation operation = await client.CopyProjectAsync(WaitUntil.Completed, "<proje
 ]]></code>
 This sample shows how to call CopyProjectAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4156,7 +4156,7 @@ Operation operation = await client.CopyProjectAsync(WaitUntil.Completed, "<proje
       <example>
 This sample shows how to call CopyProject.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4171,7 +4171,7 @@ Operation operation = client.CopyProject(WaitUntil.Completed, "<projectName>", b
 ]]></code>
 This sample shows how to call CopyProject with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4189,7 +4189,7 @@ Operation operation = client.CopyProject(WaitUntil.Completed, "<projectName>", b
       <example>
 This sample shows how to call CopyProjectAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4206,7 +4206,7 @@ Operation operation = await client.CopyProjectAsync(WaitUntil.Completed, "<proje
 ]]></code>
 This sample shows how to call CopyProjectAsync with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4226,7 +4226,7 @@ Operation operation = await client.CopyProjectAsync(WaitUntil.Completed, "<proje
       <example>
 This sample shows how to call CopyProject.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4243,7 +4243,7 @@ Operation operation = client.CopyProject(WaitUntil.Completed, "<projectName>", c
 ]]></code>
 This sample shows how to call CopyProject with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4263,7 +4263,7 @@ Operation operation = client.CopyProject(WaitUntil.Completed, "<projectName>", c
       <example>
 This sample shows how to call ExportAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4271,7 +4271,7 @@ Operation operation = await client.ExportAsync(WaitUntil.Completed, "<projectNam
 ]]></code>
 This sample shows how to call ExportAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4282,7 +4282,7 @@ Operation operation = await client.ExportAsync(WaitUntil.Completed, "<projectNam
       <example>
 This sample shows how to call Export.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4290,7 +4290,7 @@ Operation operation = client.Export(WaitUntil.Completed, "<projectName>", String
 ]]></code>
 This sample shows how to call Export with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4301,7 +4301,7 @@ Operation operation = client.Export(WaitUntil.Completed, "<projectName>", String
       <example>
 This sample shows how to call ExportAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4309,7 +4309,7 @@ Operation operation = await client.ExportAsync(WaitUntil.Completed, "<projectNam
 ]]></code>
 This sample shows how to call ExportAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4320,7 +4320,7 @@ Operation operation = await client.ExportAsync(WaitUntil.Completed, "<projectNam
       <example>
 This sample shows how to call Export.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4328,7 +4328,7 @@ Operation operation = client.Export(WaitUntil.Completed, "<projectName>", "Utf16
 ]]></code>
 This sample shows how to call Export with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4339,7 +4339,7 @@ Operation operation = client.Export(WaitUntil.Completed, "<projectName>", "Utf16
       <example>
 This sample shows how to call ImportAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4348,7 +4348,7 @@ Operation operation = await client.ImportAsync(WaitUntil.Completed, "<projectNam
 ]]></code>
 This sample shows how to call ImportAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4383,7 +4383,7 @@ Operation operation = await client.ImportAsync(WaitUntil.Completed, "<projectNam
       <example>
 This sample shows how to call Import.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4392,7 +4392,7 @@ Operation operation = client.Import(WaitUntil.Completed, "<projectName>", body);
 ]]></code>
 This sample shows how to call Import with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4427,7 +4427,7 @@ Operation operation = client.Import(WaitUntil.Completed, "<projectName>", body, 
       <example>
 This sample shows how to call ImportAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4447,7 +4447,7 @@ Operation operation = await client.ImportAsync(WaitUntil.Completed, "<projectNam
 ]]></code>
 This sample shows how to call ImportAsync with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4494,7 +4494,7 @@ Operation operation = await client.ImportAsync(WaitUntil.Completed, "<projectNam
       <example>
 This sample shows how to call Import.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4514,7 +4514,7 @@ Operation operation = client.Import(WaitUntil.Completed, "<projectName>", conten
 ]]></code>
 This sample shows how to call Import with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4561,7 +4561,7 @@ Operation operation = client.Import(WaitUntil.Completed, "<projectName>", conten
       <example>
 This sample shows how to call TrainAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4571,7 +4571,7 @@ TrainingJobResult responseData = operation.Value;
 ]]></code>
 This sample shows how to call TrainAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4593,7 +4593,7 @@ TrainingJobResult responseData = operation.Value;
       <example>
 This sample shows how to call Train.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4603,7 +4603,7 @@ TrainingJobResult responseData = operation.Value;
 ]]></code>
 This sample shows how to call Train with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4625,7 +4625,7 @@ TrainingJobResult responseData = operation.Value;
       <example>
 This sample shows how to call TrainAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4645,7 +4645,7 @@ Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("status").ToS
 ]]></code>
 This sample shows how to call TrainAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4691,7 +4691,7 @@ Console.WriteLine(result.GetProperty("estimatedEndDateTime").ToString());
       <example>
 This sample shows how to call Train and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4711,7 +4711,7 @@ Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("status").ToS
 ]]></code>
 This sample shows how to call Train with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4757,7 +4757,7 @@ Console.WriteLine(result.GetProperty("estimatedEndDateTime").ToString());
       <example>
 This sample shows how to call DeployProjectAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4766,7 +4766,7 @@ Operation operation = await client.DeployProjectAsync(WaitUntil.Completed, "<pro
 ]]></code>
 This sample shows how to call DeployProjectAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4781,7 +4781,7 @@ Operation operation = await client.DeployProjectAsync(WaitUntil.Completed, "<pro
       <example>
 This sample shows how to call DeployProject.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4790,7 +4790,7 @@ Operation operation = client.DeployProject(WaitUntil.Completed, "<projectName>",
 ]]></code>
 This sample shows how to call DeployProject with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4805,7 +4805,7 @@ Operation operation = client.DeployProject(WaitUntil.Completed, "<projectName>",
       <example>
 This sample shows how to call DeployProjectAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4817,7 +4817,7 @@ Operation operation = await client.DeployProjectAsync(WaitUntil.Completed, "<pro
 ]]></code>
 This sample shows how to call DeployProjectAsync with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4836,7 +4836,7 @@ Operation operation = await client.DeployProjectAsync(WaitUntil.Completed, "<pro
       <example>
 This sample shows how to call DeployProject.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4848,7 +4848,7 @@ Operation operation = client.DeployProject(WaitUntil.Completed, "<projectName>",
 ]]></code>
 This sample shows how to call DeployProject with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4867,7 +4867,7 @@ Operation operation = client.DeployProject(WaitUntil.Completed, "<projectName>",
       <example>
 This sample shows how to call DeleteDeploymentAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4875,7 +4875,7 @@ Operation operation = await client.DeleteDeploymentAsync(WaitUntil.Completed, "<
 ]]></code>
 This sample shows how to call DeleteDeploymentAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4886,7 +4886,7 @@ Operation operation = await client.DeleteDeploymentAsync(WaitUntil.Completed, "<
       <example>
 This sample shows how to call DeleteDeployment.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4894,7 +4894,7 @@ Operation operation = client.DeleteDeployment(WaitUntil.Completed, "<projectName
 ]]></code>
 This sample shows how to call DeleteDeployment with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4905,7 +4905,7 @@ Operation operation = client.DeleteDeployment(WaitUntil.Completed, "<projectName
       <example>
 This sample shows how to call DeleteDeploymentFromResourcesAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4914,7 +4914,7 @@ Operation operation = await client.DeleteDeploymentFromResourcesAsync(WaitUntil.
 ]]></code>
 This sample shows how to call DeleteDeploymentFromResourcesAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4929,7 +4929,7 @@ Operation operation = await client.DeleteDeploymentFromResourcesAsync(WaitUntil.
       <example>
 This sample shows how to call DeleteDeploymentFromResources.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4938,7 +4938,7 @@ Operation operation = client.DeleteDeploymentFromResources(WaitUntil.Completed, 
 ]]></code>
 This sample shows how to call DeleteDeploymentFromResources with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4953,7 +4953,7 @@ Operation operation = client.DeleteDeploymentFromResources(WaitUntil.Completed, 
       <example>
 This sample shows how to call DeleteDeploymentFromResourcesAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4962,7 +4962,7 @@ Operation operation = await client.DeleteDeploymentFromResourcesAsync(WaitUntil.
 ]]></code>
 This sample shows how to call DeleteDeploymentFromResourcesAsync with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4980,7 +4980,7 @@ Operation operation = await client.DeleteDeploymentFromResourcesAsync(WaitUntil.
       <example>
 This sample shows how to call DeleteDeploymentFromResources.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4989,7 +4989,7 @@ Operation operation = client.DeleteDeploymentFromResources(WaitUntil.Completed, 
 ]]></code>
 This sample shows how to call DeleteDeploymentFromResources with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5007,7 +5007,7 @@ Operation operation = client.DeleteDeploymentFromResources(WaitUntil.Completed, 
       <example>
 This sample shows how to call SwapDeploymentsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5016,7 +5016,7 @@ Operation operation = await client.SwapDeploymentsAsync(WaitUntil.Completed, "<p
 ]]></code>
 This sample shows how to call SwapDeploymentsAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5028,7 +5028,7 @@ Operation operation = await client.SwapDeploymentsAsync(WaitUntil.Completed, "<p
       <example>
 This sample shows how to call SwapDeployments.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5037,7 +5037,7 @@ Operation operation = client.SwapDeployments(WaitUntil.Completed, "<projectName>
 ]]></code>
 This sample shows how to call SwapDeployments with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5049,7 +5049,7 @@ Operation operation = client.SwapDeployments(WaitUntil.Completed, "<projectName>
       <example>
 This sample shows how to call SwapDeploymentsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5062,7 +5062,7 @@ Operation operation = await client.SwapDeploymentsAsync(WaitUntil.Completed, "<p
 ]]></code>
 This sample shows how to call SwapDeploymentsAsync with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5078,7 +5078,7 @@ Operation operation = await client.SwapDeploymentsAsync(WaitUntil.Completed, "<p
       <example>
 This sample shows how to call SwapDeployments.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5091,7 +5091,7 @@ Operation operation = client.SwapDeployments(WaitUntil.Completed, "<projectName>
 ]]></code>
 This sample shows how to call SwapDeployments with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5107,7 +5107,7 @@ Operation operation = client.SwapDeployments(WaitUntil.Completed, "<projectName>
       <example>
 This sample shows how to call CreateOrUpdateExportedModelAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5116,7 +5116,7 @@ Operation operation = await client.CreateOrUpdateExportedModelAsync(WaitUntil.Co
 ]]></code>
 This sample shows how to call CreateOrUpdateExportedModelAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5128,7 +5128,7 @@ Operation operation = await client.CreateOrUpdateExportedModelAsync(WaitUntil.Co
       <example>
 This sample shows how to call CreateOrUpdateExportedModel.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5137,7 +5137,7 @@ Operation operation = client.CreateOrUpdateExportedModel(WaitUntil.Completed, "<
 ]]></code>
 This sample shows how to call CreateOrUpdateExportedModel with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5149,7 +5149,7 @@ Operation operation = client.CreateOrUpdateExportedModel(WaitUntil.Completed, "<
       <example>
 This sample shows how to call CreateOrUpdateExportedModelAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5161,7 +5161,7 @@ Operation operation = await client.CreateOrUpdateExportedModelAsync(WaitUntil.Co
 ]]></code>
 This sample shows how to call CreateOrUpdateExportedModelAsync with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5176,7 +5176,7 @@ Operation operation = await client.CreateOrUpdateExportedModelAsync(WaitUntil.Co
       <example>
 This sample shows how to call CreateOrUpdateExportedModel.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5188,7 +5188,7 @@ Operation operation = client.CreateOrUpdateExportedModel(WaitUntil.Completed, "<
 ]]></code>
 This sample shows how to call CreateOrUpdateExportedModel with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5203,7 +5203,7 @@ Operation operation = client.CreateOrUpdateExportedModel(WaitUntil.Completed, "<
       <example>
 This sample shows how to call DeleteExportedModelAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5211,7 +5211,7 @@ Operation operation = await client.DeleteExportedModelAsync(WaitUntil.Completed,
 ]]></code>
 This sample shows how to call DeleteExportedModelAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5222,7 +5222,7 @@ Operation operation = await client.DeleteExportedModelAsync(WaitUntil.Completed,
       <example>
 This sample shows how to call DeleteExportedModel.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5230,7 +5230,7 @@ Operation operation = client.DeleteExportedModel(WaitUntil.Completed, "<projectN
 ]]></code>
 This sample shows how to call DeleteExportedModel with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5241,7 +5241,7 @@ Operation operation = client.DeleteExportedModel(WaitUntil.Completed, "<projectN
       <example>
 This sample shows how to call EvaluateModelAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5251,7 +5251,7 @@ EvaluationJobResult responseData = operation.Value;
 ]]></code>
 This sample shows how to call EvaluateModelAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5269,7 +5269,7 @@ EvaluationJobResult responseData = operation.Value;
       <example>
 This sample shows how to call EvaluateModel.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5279,7 +5279,7 @@ EvaluationJobResult responseData = operation.Value;
 ]]></code>
 This sample shows how to call EvaluateModel with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5297,7 +5297,7 @@ EvaluationJobResult responseData = operation.Value;
       <example>
 This sample shows how to call EvaluateModelAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5313,7 +5313,7 @@ Console.WriteLine(result.GetProperty("percentComplete").ToString());
 ]]></code>
 This sample shows how to call EvaluateModelAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5339,7 +5339,7 @@ Console.WriteLine(result.GetProperty("percentComplete").ToString());
       <example>
 This sample shows how to call EvaluateModel and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5355,7 +5355,7 @@ Console.WriteLine(result.GetProperty("percentComplete").ToString());
 ]]></code>
 This sample shows how to call EvaluateModel with all parameters and request content and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5381,7 +5381,7 @@ Console.WriteLine(result.GetProperty("percentComplete").ToString());
       <example>
 This sample shows how to call LoadSnapshotAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5389,7 +5389,7 @@ Operation operation = await client.LoadSnapshotAsync(WaitUntil.Completed, "<proj
 ]]></code>
 This sample shows how to call LoadSnapshotAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5400,7 +5400,7 @@ Operation operation = await client.LoadSnapshotAsync(WaitUntil.Completed, "<proj
       <example>
 This sample shows how to call LoadSnapshot.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5408,7 +5408,7 @@ Operation operation = client.LoadSnapshot(WaitUntil.Completed, "<projectName>", 
 ]]></code>
 This sample shows how to call LoadSnapshot with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5419,7 +5419,7 @@ Operation operation = client.LoadSnapshot(WaitUntil.Completed, "<projectName>", 
       <example>
 This sample shows how to call AssignDeploymentResourcesAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5431,7 +5431,7 @@ Operation operation = await client.AssignDeploymentResourcesAsync(WaitUntil.Comp
 ]]></code>
 This sample shows how to call AssignDeploymentResourcesAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5446,7 +5446,7 @@ Operation operation = await client.AssignDeploymentResourcesAsync(WaitUntil.Comp
       <example>
 This sample shows how to call AssignDeploymentResources.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5458,7 +5458,7 @@ Operation operation = client.AssignDeploymentResources(WaitUntil.Completed, "<pr
 ]]></code>
 This sample shows how to call AssignDeploymentResources with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5473,7 +5473,7 @@ Operation operation = client.AssignDeploymentResources(WaitUntil.Completed, "<pr
       <example>
 This sample shows how to call AssignDeploymentResourcesAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5493,7 +5493,7 @@ Operation operation = await client.AssignDeploymentResourcesAsync(WaitUntil.Comp
 ]]></code>
 This sample shows how to call AssignDeploymentResourcesAsync with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5516,7 +5516,7 @@ Operation operation = await client.AssignDeploymentResourcesAsync(WaitUntil.Comp
       <example>
 This sample shows how to call AssignDeploymentResources.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5536,7 +5536,7 @@ Operation operation = client.AssignDeploymentResources(WaitUntil.Completed, "<pr
 ]]></code>
 This sample shows how to call AssignDeploymentResources with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5559,7 +5559,7 @@ Operation operation = client.AssignDeploymentResources(WaitUntil.Completed, "<pr
       <example>
 This sample shows how to call UnassignDeploymentResourcesAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5568,7 +5568,7 @@ Operation operation = await client.UnassignDeploymentResourcesAsync(WaitUntil.Co
 ]]></code>
 This sample shows how to call UnassignDeploymentResourcesAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5580,7 +5580,7 @@ Operation operation = await client.UnassignDeploymentResourcesAsync(WaitUntil.Co
       <example>
 This sample shows how to call UnassignDeploymentResources.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5589,7 +5589,7 @@ Operation operation = client.UnassignDeploymentResources(WaitUntil.Completed, "<
 ]]></code>
 This sample shows how to call UnassignDeploymentResources with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5601,7 +5601,7 @@ Operation operation = client.UnassignDeploymentResources(WaitUntil.Completed, "<
       <example>
 This sample shows how to call UnassignDeploymentResourcesAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5616,7 +5616,7 @@ Operation operation = await client.UnassignDeploymentResourcesAsync(WaitUntil.Co
 ]]></code>
 This sample shows how to call UnassignDeploymentResourcesAsync with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5634,7 +5634,7 @@ Operation operation = await client.UnassignDeploymentResourcesAsync(WaitUntil.Co
       <example>
 This sample shows how to call UnassignDeploymentResources.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5649,7 +5649,7 @@ Operation operation = client.UnassignDeploymentResources(WaitUntil.Completed, "<
 ]]></code>
 This sample shows how to call UnassignDeploymentResources with all parameters and request content.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5667,7 +5667,7 @@ Operation operation = client.UnassignDeploymentResources(WaitUntil.Completed, "<
       <example>
 This sample shows how to call CancelTrainingJobAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5676,7 +5676,7 @@ TrainingJobResult responseData = operation.Value;
 ]]></code>
 This sample shows how to call CancelTrainingJobAsync with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5688,7 +5688,7 @@ TrainingJobResult responseData = operation.Value;
       <example>
 This sample shows how to call CancelTrainingJob.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5697,7 +5697,7 @@ TrainingJobResult responseData = operation.Value;
 ]]></code>
 This sample shows how to call CancelTrainingJob with all parameters.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5709,7 +5709,7 @@ TrainingJobResult responseData = operation.Value;
       <example>
 This sample shows how to call CancelTrainingJobAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5724,7 +5724,7 @@ Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("status").ToS
 ]]></code>
 This sample shows how to call CancelTrainingJobAsync with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5749,7 +5749,7 @@ Console.WriteLine(result.GetProperty("estimatedEndDateTime").ToString());
       <example>
 This sample shows how to call CancelTrainingJob and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5764,7 +5764,7 @@ Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("status").ToS
 ]]></code>
 This sample shows how to call CancelTrainingJob with all parameters and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
+Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 TextAnalysisAuthoring client = new AuthoringClient(endpoint, credential).GetTextAnalysisAuthoringClient(apiVersion: "2024-11-15-preview");
 

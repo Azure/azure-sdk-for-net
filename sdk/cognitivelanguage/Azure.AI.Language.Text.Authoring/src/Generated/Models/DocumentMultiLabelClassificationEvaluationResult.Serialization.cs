@@ -19,13 +19,21 @@ namespace Azure.AI.Language.Text.Authoring.Models
 
         void IJsonModel<DocumentMultiLabelClassificationEvaluationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DocumentMultiLabelClassificationEvaluationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DocumentMultiLabelClassificationEvaluationResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("expectedClasses"u8);
             writer.WriteStartArray();
             foreach (var item in ExpectedClasses)
@@ -55,7 +63,6 @@ namespace Azure.AI.Language.Text.Authoring.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DocumentMultiLabelClassificationEvaluationResult IJsonModel<DocumentMultiLabelClassificationEvaluationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

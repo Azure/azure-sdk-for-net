@@ -19,35 +19,24 @@ namespace Azure.AI.Language.Text.Authoring.Models
 
         void IJsonModel<CustomMultiLabelClassificationEvaluationSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CustomMultiLabelClassificationEvaluationSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CustomMultiLabelClassificationEvaluationSummary)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("customMultiLabelClassificationEvaluation"u8);
             writer.WriteObjectValue(CustomMultiLabelClassificationEvaluation, options);
-            writer.WritePropertyName("projectKind"u8);
-            writer.WriteStringValue(ProjectKind.ToString());
-            writer.WritePropertyName("evaluationOptions"u8);
-            writer.WriteObjectValue(EvaluationOptions, options);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         CustomMultiLabelClassificationEvaluationSummary IJsonModel<CustomMultiLabelClassificationEvaluationSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

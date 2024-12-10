@@ -19,13 +19,21 @@ namespace Azure.AI.Language.Text.Authoring.Models
 
         void IJsonModel<PrebuiltEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<PrebuiltEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PrebuiltEntity)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W")
             {
                 writer.WritePropertyName("category"u8);
@@ -50,7 +58,6 @@ namespace Azure.AI.Language.Text.Authoring.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         PrebuiltEntity IJsonModel<PrebuiltEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
