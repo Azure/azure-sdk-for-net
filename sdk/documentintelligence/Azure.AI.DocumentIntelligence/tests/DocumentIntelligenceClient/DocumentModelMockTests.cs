@@ -69,7 +69,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
         private static object[] s_AnalyzeDocumentSendsFeaturesTestCases =
         {
-            new object[] { "features=", Array.Empty<DocumentAnalysisFeature>() },
+            new object[] { null, Array.Empty<DocumentAnalysisFeature>() },
             new object[] { "features=formulas",
                 new[] { DocumentAnalysisFeature.Formulas } },
             new object[] { "features=formulas%2CstyleFont",
@@ -97,7 +97,14 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
 
-            Assert.That(requestUriQuery.Contains(expectedQuerySubstring));
+            if (features.Length > 0)
+            {
+                Assert.That(requestUriQuery.Contains(expectedQuerySubstring));
+            }
+            else
+            {
+                Assert.That(requestUriQuery.Contains("features"), Is.False);
+            }
         }
 
         [Test]
@@ -122,9 +129,17 @@ namespace Azure.AI.DocumentIntelligence.Tests
             await client.AnalyzeDocumentAsync(WaitUntil.Started, options);
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
-            var expectedQuerySubstring = "queryFields=" + string.Join("%2C", queryFields);
 
-            Assert.That(requestUriQuery.Contains(expectedQuerySubstring));
+            if (queryFields.Length > 0)
+            {
+                var expectedQuerySubstring = "queryFields=" + string.Join("%2C", queryFields);
+
+                Assert.That(requestUriQuery.Contains(expectedQuerySubstring));
+            }
+            else
+            {
+                Assert.That(requestUriQuery.Contains("queryFields"), Is.False);
+            }
         }
 
         private static object[] s_AnalyzeDocumentSendsOutputContentFormatTestCases =

@@ -20,7 +20,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
         #region Build
 
         [RecordedTest]
-        public async Task BuildClassifierWithAzureBlobContentSource()
+        public async Task BuildClassifierWithBlobContentSource()
         {
             var client = CreateDocumentIntelligenceAdministrationClient();
             var classifierId = Recording.GenerateId();
@@ -78,7 +78,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
         }
 
         [RecordedTest]
-        public async Task BuildClassifierWithAzureBlobFileListContentSource()
+        public async Task BuildClassifierWithBlobFileListContentSource()
         {
             var client = CreateDocumentIntelligenceAdministrationClient();
             var classifierId = Recording.GenerateId();
