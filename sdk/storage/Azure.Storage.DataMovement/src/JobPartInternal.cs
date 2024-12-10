@@ -139,8 +139,6 @@ namespace Azure.Storage.DataMovement
         public ArrayPool<byte> UploadArrayPool => _arrayPool;
         internal ArrayPool<byte> _arrayPool;
 
-        private SemaphoreSlim _completedCountStatusLock;
-
         protected JobPartInternal() { }
 
         internal JobPartInternal(
@@ -201,8 +199,6 @@ namespace Azure.Storage.DataMovement
             Length = length;
             _currentChunkCount = 0;
             _completedChunkCount = 0;
-
-            _completedCountStatusLock = new SemaphoreSlim(1, 1);
         }
 
         public void SetQueueChunkDelegate(QueueChunkDelegate chunkDelegate)
@@ -559,23 +555,19 @@ namespace Azure.Storage.DataMovement
 
         internal async Task CheckAndUpdateCancellationStateAsync()
         {
-            if (await _completedCountStatusLock.WaitAsync(TimeSpan.FromMilliseconds(50)).ConfigureAwait(false))
+            if (JobPartStatus.State == DataTransferState.Pausing ||
+                JobPartStatus.State == DataTransferState.Stopping)
             {
-                if (JobPartStatus.State == DataTransferState.Pausing ||
-                    JobPartStatus.State == DataTransferState.Stopping)
+                Console.WriteLine($"{PartNumber}: _currentChunkCount: {_currentChunkCount}; _completedChunkCount: {_completedChunkCount}");
+                if (!_queueingTasks && _currentChunkCount == _completedChunkCount)
                 {
-                    Console.WriteLine($"{PartNumber}: _currentChunkCount: {_currentChunkCount}; _completedChunkCount: {_completedChunkCount}");
-                    if (!_queueingTasks && _currentChunkCount == _completedChunkCount)
-                    {
-                        DataTransferState newState = JobPartStatus.State == DataTransferState.Pausing ?
-                            DataTransferState.Paused :
-                            DataTransferState.Completed;
-                        await DisposeHandlersAsync().ConfigureAwait(false);
-                        Console.WriteLine($"{PartNumber}: newState: {newState}");
-                        await OnTransferStateChangedAsync(newState).ConfigureAwait(false);
-                    }
+                    DataTransferState newState = JobPartStatus.State == DataTransferState.Pausing ?
+                        DataTransferState.Paused :
+                        DataTransferState.Completed;
+                    await DisposeHandlersAsync().ConfigureAwait(false);
+                    Console.WriteLine($"{PartNumber}: newState: {newState}");
+                    await OnTransferStateChangedAsync(newState).ConfigureAwait(false);
                 }
-                _completedCountStatusLock.Release();
             }
         }
 
