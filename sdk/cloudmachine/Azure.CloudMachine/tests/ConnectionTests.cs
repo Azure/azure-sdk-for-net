@@ -6,7 +6,6 @@
 using System;
 using System.Linq;
 using System.Text.Json;
-using Azure.CloudMachine.OpenAI;
 using Azure.Core;
 using Azure.Storage.Blobs;
 using Microsoft.Extensions.Configuration;
@@ -23,7 +22,6 @@ public class ConnectionTests
     public void TwoClients(string[] args)
     {
         CloudMachineInfrastructure infra = new();
-        infra.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
         if (args.Contains("-azd")) Azd.Init(infra);
 
         CloudMachineClient client = infra.GetClient();
@@ -38,7 +36,6 @@ public class ConnectionTests
     {
         // app 1 (with a dependency on the CDK)
         CloudMachineInfrastructure infra = new();
-        infra.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
         //if (args.Contains("-azd")) Azd.Init(infra);
         BinaryData serializedConnections = BinaryData.FromObjectAsJson(infra.Connections);
 
@@ -55,7 +52,6 @@ public class ConnectionTests
     public void SingleClientAdd(string[] args)
     {
         CloudMachineClient client = new();
-        client.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
 
         if (args.Contains("-azd")) Azd.Init(client);
     }
@@ -64,7 +60,6 @@ public class ConnectionTests
     public void ConfigurationDemo()
     {
         CloudMachineInfrastructure infra = new();
-        infra.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
 
         IConfiguration configuration = new ConfigurationBuilder()
             .AddCloudMachineConfiguration(infra)
