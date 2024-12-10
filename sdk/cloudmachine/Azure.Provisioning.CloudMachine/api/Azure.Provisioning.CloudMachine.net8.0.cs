@@ -43,7 +43,8 @@ namespace Azure.CloudMachine
     }
     public static partial class CloudMachineInfrastructureConfiguration
     {
-        public static Microsoft.Extensions.Configuration.IConfigurationBuilder AddCloudMachineInfrastructure(this Microsoft.Extensions.Configuration.IConfigurationBuilder builder, Azure.CloudMachine.CloudMachineInfrastructure cm) { throw null; }
+        public static Microsoft.Extensions.Hosting.IHostApplicationBuilder AddCloudMachine(this Microsoft.Extensions.Hosting.IHostApplicationBuilder builder, Azure.CloudMachine.CloudMachineInfrastructure cm) { throw null; }
+        public static Microsoft.Extensions.Configuration.IConfigurationBuilder AddCloudMachineConfiguration(this Microsoft.Extensions.Configuration.IConfigurationBuilder builder, Azure.CloudMachine.CloudMachineInfrastructure cm) { throw null; }
     }
 }
 namespace Azure.CloudMachine.AppService
