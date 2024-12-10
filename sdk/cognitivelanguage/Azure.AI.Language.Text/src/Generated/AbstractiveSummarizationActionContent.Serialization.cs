@@ -59,10 +59,10 @@ namespace Azure.AI.Language.Text
                 writer.WritePropertyName("summaryLength"u8);
                 writer.WriteStringValue(SummaryLength.Value.ToString());
             }
-            if (Optional.IsDefined(Query))
+            if (Optional.IsDefined(Instruction))
             {
-                writer.WritePropertyName("query"u8);
-                writer.WriteStringValue(Query);
+                writer.WritePropertyName("instruction"u8);
+                writer.WriteStringValue(Instruction);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -106,7 +106,7 @@ namespace Azure.AI.Language.Text
             int? sentenceCount = default;
             StringIndexType? stringIndexType = default;
             SummaryLengthBucket? summaryLength = default;
-            string query = default;
+            string instruction = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,9 +152,9 @@ namespace Azure.AI.Language.Text
                     summaryLength = new SummaryLengthBucket(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("query"u8))
+                if (property.NameEquals("instruction"u8))
                 {
-                    query = property.Value.GetString();
+                    instruction = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -169,7 +169,7 @@ namespace Azure.AI.Language.Text
                 sentenceCount,
                 stringIndexType,
                 summaryLength,
-                query,
+                instruction,
                 serializedAdditionalRawData);
         }
 
