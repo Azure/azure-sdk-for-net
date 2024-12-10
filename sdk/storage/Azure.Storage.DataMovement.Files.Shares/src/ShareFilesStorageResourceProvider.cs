@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Storage.Files.Shares;
+using Azure.Storage.Files.Shares.Models;
 
 namespace Azure.Storage.DataMovement.Files.Shares
 {
@@ -300,7 +301,10 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 CredentialType.None => new ShareDirectoryClient(directoryUri),
                 CredentialType.SharedKey => new ShareDirectoryClient(directoryUri, _getStorageSharedKeyCredential(directoryUri, false)),
-                CredentialType.Token => new ShareDirectoryClient(directoryUri, _getTokenCredential(directoryUri, false)),
+                CredentialType.Token => new ShareDirectoryClient(
+                    directoryUri,
+                    _getTokenCredential(directoryUri, false),
+                    new ShareClientOptions { ShareTokenIntent = ShareTokenIntent.Backup }),
                 CredentialType.Sas => new ShareDirectoryClient(directoryUri, _getAzureSasCredential(directoryUri, false)),
                 _ => throw BadCredentialTypeException(_credentialType),
             };
@@ -327,7 +331,10 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 CredentialType.None => new ShareFileClient(fileUri),
                 CredentialType.SharedKey => new ShareFileClient(fileUri, _getStorageSharedKeyCredential(fileUri, false)),
-                CredentialType.Token => new ShareFileClient(fileUri, _getTokenCredential(fileUri, false)),
+                CredentialType.Token => new ShareFileClient(
+                    fileUri,
+                    _getTokenCredential(fileUri, false),
+                    new ShareClientOptions { ShareTokenIntent = ShareTokenIntent.Backup }),
                 CredentialType.Sas => new ShareFileClient(fileUri, _getAzureSasCredential(fileUri, false)),
                 _ => throw BadCredentialTypeException(_credentialType),
             };
@@ -341,6 +348,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// </summary>
         /// <param name="client">
         /// Target resource presented within an Azure SDK client.
+        /// Note: It is NOT guaranteed that properties set within the client's <see cref="ShareClientOptions"/>
+        /// will be respected when resuming a transfer.
         /// </param>
         /// <param name="options">
         /// Options for creating the storage resource.
@@ -360,6 +369,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// </summary>
         /// <param name="client">
         /// Target resource presented within an Azure SDK client.
+        /// Note: It is NOT guaranteed that properties set within the client's <see cref="ShareClientOptions"/>
+        /// will be respected when resuming a transfer.
         /// </param>
         /// <param name="options">
         /// Options for creating the storage resource.

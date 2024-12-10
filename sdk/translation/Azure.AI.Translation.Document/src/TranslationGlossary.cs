@@ -21,8 +21,8 @@ namespace Azure.AI.Translation.Document
         /// Storage Source. Default value: "AzureBlob".
         /// Currently only "AzureBlob" is supported.
         /// </summary>
-        [CodeGenMember("StorageSource")]
-        internal string StorageSource { get; set; }
+        [CodeGenMember("TranslationStorageSource")]
+        internal string TranslationStorageSource { get; set; }
 
         /// <summary>
         /// Optional file format version. If not specified, the service will

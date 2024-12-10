@@ -7,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -102,9 +103,9 @@ namespace Azure.Storage.DataMovement
         internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
-        /// If the transfer status of the job changes then the event will get added to this handler.
+        /// If the transfer status of the job part changes then the event will get added to this handler.
         /// </summary>
-        public SyncAsyncEventHandler<TransferStatusEventArgs> PartTransferStatusEventHandler { get; internal set; }
+        public SyncAsyncEventHandler<JobPartStatusEventArgs> PartTransferStatusEventHandler { get; internal set; }
 
         /// <summary>
         /// If the transfer status of the job changes then the event will get added to this handler.
@@ -154,7 +155,7 @@ namespace Azure.Storage.DataMovement
             ITransferCheckpointer checkpointer,
             TransferProgressTracker progressTracker,
             ArrayPool<byte> arrayPool,
-            SyncAsyncEventHandler<TransferStatusEventArgs> jobPartEventHandler,
+            SyncAsyncEventHandler<JobPartStatusEventArgs> jobPartEventHandler,
             SyncAsyncEventHandler<TransferStatusEventArgs> statusEventHandler,
             SyncAsyncEventHandler<TransferItemFailedEventArgs> failedEventHandler,
             SyncAsyncEventHandler<TransferItemSkippedEventArgs> skippedEventHandler,
@@ -225,7 +226,7 @@ namespace Azure.Storage.DataMovement
                     }
                     catch (Exception ex)
                     {
-                        await InvokeFailedArg(ex).ConfigureAwait(false);
+                        await InvokeFailedArgAsync(ex).ConfigureAwait(false);
                     }
                     Interlocked.Increment(ref _completedChunkCount);
                     await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
@@ -234,9 +235,9 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Processes the job to job parts
+        /// Processes the job part to chunks
         /// </summary>
-        /// <returns>An IEnumerable that contains the job chunks</returns>
+        /// <returns>The task that's queueing up the chunks</returns>
         public abstract Task ProcessPartToChunkAsync();
 
         /// <summary>
@@ -285,15 +286,16 @@ namespace Azure.Storage.DataMovement
                 else if (JobPartStatus.HasCompletedSuccessfully)
                 {
                     _progressTracker.IncrementCompletedFiles();
-                    await InvokeSingleCompletedArg().ConfigureAwait(false);
+                    await InvokeSingleCompletedArgAsync().ConfigureAwait(false);
                 }
 
                 // Set the status in the checkpointer
-                await SetCheckpointerStatus().ConfigureAwait(false);
+                await SetCheckpointerStatusAsync().ConfigureAwait(false);
 
                 await PartTransferStatusEventHandler.RaiseAsync(
-                    new TransferStatusEventArgs(
+                    new JobPartStatusEventArgs(
                         _dataTransfer.Id,
+                        PartNumber,
                         JobPartStatus.DeepCopy(),
                         false,
                         _cancellationToken),
@@ -313,7 +315,7 @@ namespace Azure.Storage.DataMovement
             _progressTracker.IncrementBytesTransferred(bytesTransferred);
         }
 
-        public async virtual Task InvokeSingleCompletedArg()
+        public async virtual Task InvokeSingleCompletedArgAsync()
         {
             if (SingleTransferCompletedEventHandler != null)
             {
@@ -334,7 +336,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Invokes Skipped Argument Event.
         /// </summary>
-        public async virtual Task InvokeSkippedArg()
+        public async virtual Task InvokeSkippedArgAsync()
         {
             if (TransferSkippedEventHandler != null)
             {
@@ -358,8 +360,9 @@ namespace Azure.Storage.DataMovement
             if (JobPartStatus.SetSkippedItem())
             {
                 await PartTransferStatusEventHandler.RaiseAsync(
-                    new TransferStatusEventArgs(
+                    new JobPartStatusEventArgs(
                         _dataTransfer.Id,
+                        PartNumber,
                         JobPartStatus.DeepCopy(),
                         false,
                         _cancellationToken),
@@ -375,10 +378,11 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Invokes Failed Argument Event.
         /// </summary>
-        public async virtual Task InvokeFailedArg(Exception ex)
+        public async virtual Task InvokeFailedArgAsync(Exception ex)
         {
             if (ex is not OperationCanceledException &&
                 ex is not TaskCanceledException &&
+                ex is not ChannelClosedException &&
                 ex.InnerException is not TaskCanceledException &&
                 !ex.Message.Contains("The request was canceled."))
             {
@@ -412,8 +416,9 @@ namespace Azure.Storage.DataMovement
                 if (JobPartStatus.SetFailedItem())
                 {
                     await PartTransferStatusEventHandler.RaiseAsync(
-                        new TransferStatusEventArgs(
+                        new JobPartStatusEventArgs(
                             _dataTransfer.Id,
+                            PartNumber,
                             JobPartStatus.DeepCopy(),
                             false,
                             _cancellationToken),
@@ -473,19 +478,14 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public async virtual Task AddJobPartToCheckpointerAsync()
         {
-            JobPartPlanHeader header = this.ToJobPartPlanHeader();
-            using (Stream stream = new MemoryStream())
-            {
-                header.Serialize(stream);
-                await _checkpointer.AddNewJobPartAsync(
-                    transferId: _dataTransfer.Id,
-                    partNumber: PartNumber,
-                    headerStream: stream,
-                    cancellationToken: _cancellationToken).ConfigureAwait(false);
-            }
+            await _checkpointer.AddNewJobPartAsync(
+                transferId: _dataTransfer.Id,
+                partNumber: PartNumber,
+                header: this.ToJobPartPlanHeader(),
+                cancellationToken: _cancellationToken).ConfigureAwait(false);
         }
 
-        internal async virtual Task SetCheckpointerStatus()
+        internal async virtual Task SetCheckpointerStatusAsync()
         {
             await _checkpointer.SetJobPartStatusAsync(
                 transferId: _dataTransfer.Id,
@@ -507,26 +507,7 @@ namespace Azure.Storage.DataMovement
             return long.Parse(range.Substring(lengthSeparator + 1), CultureInfo.InvariantCulture);
         }
 
-        internal static List<(long Offset, long Size)> GetRangeList(long blockSize, long fileLength)
-        {
-            // The list tracking blocks IDs we're going to commit
-            List<(long Offset, long Size)> partitions = new List<(long, long)>();
-
-            // Partition the stream into individual blocks
-            foreach ((long Offset, long Length) block in GetPartitionIndexes(fileLength, blockSize))
-            {
-                /* We need to do this first! Length is calculated on the fly based on stream buffer
-                    * contents; We need to record the partition data first before consuming the stream
-                    * asynchronously. */
-                partitions.Add(block);
-            }
-            return partitions;
-        }
-
-        /// <summary>
-        /// Partition a stream into a series of blocks buffered as needed by an array pool.
-        /// </summary>
-        private static IEnumerable<(long Offset, long Length)> GetPartitionIndexes(
+        protected static IEnumerable<(long Offset, long Length)> GetRanges(
             long streamLength, // StreamLength needed to divide before hand
             long blockSize)
         {

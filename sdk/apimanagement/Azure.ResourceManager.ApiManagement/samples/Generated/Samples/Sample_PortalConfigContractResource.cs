@@ -10,42 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ApiManagement.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ApiManagement.Samples
 {
     public partial class Sample_PortalConfigContractResource
     {
-        // ApiManagementHeadPortalConfig
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetEntityTag_ApiManagementHeadPortalConfig()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementHeadPortalConfig.json
-            // this example is just showing the usage of "PortalConfig_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PortalConfigContractResource created on azure
-            // for more information of creating PortalConfigContractResource, please refer to the document of PortalConfigContractResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string portalConfigId = "default";
-            ResourceIdentifier portalConfigContractResourceId = PortalConfigContractResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, portalConfigId);
-            PortalConfigContractResource portalConfigContract = client.GetPortalConfigContractResource(portalConfigContractResourceId);
-
-            // invoke the operation
-            bool result = await portalConfigContract.GetEntityTagAsync();
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // ApiManagementPortalConfig
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementPortalConfig()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementPortalConfig.json
@@ -75,9 +47,8 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ApiManagementUpdatePortalConfig
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ApiManagementUpdatePortalConfig()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementUpdatePortalConfig.json
@@ -99,37 +70,28 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             ETag ifMatch = new ETag("*");
-            PortalConfigContractData data = new PortalConfigContractData()
+            PortalConfigContractData data = new PortalConfigContractData
             {
                 EnableBasicAuth = true,
                 Require = false,
-                SignupTermsOfService = new PortalConfigTermsOfServiceProperties()
+                SignupTermsOfService = new PortalConfigTermsOfServiceProperties
                 {
                     Text = "I agree to the service terms and conditions.",
                     RequireConsent = false,
                 },
-                Delegation = new PortalConfigDelegationProperties()
+                Delegation = new PortalConfigDelegationProperties
                 {
                     DelegateRegistration = false,
                     DelegateSubscription = false,
                     DelegationUri = null,
                     ValidationKey = null,
                 },
-                CorsAllowedOrigins =
-{
-"https://contoso.com"
-},
-                Csp = new PortalConfigCspProperties()
+                CorsAllowedOrigins = { "https://contoso.com" },
+                Csp = new PortalConfigCspProperties
                 {
                     Mode = PortalSettingsCspMode.ReportOnly,
-                    ReportUri =
-{
-new Uri("https://report.contoso.com")
-},
-                    AllowedSources =
-{
-"*.contoso.com"
-},
+                    ReportUri = { new Uri("https://report.contoso.com") },
+                    AllowedSources = { "*.contoso.com" },
                 },
             };
             PortalConfigContractResource result = await portalConfigContract.UpdateAsync(ifMatch, data);
@@ -139,6 +101,33 @@ new Uri("https://report.contoso.com")
             PortalConfigContractData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetEntityTag_ApiManagementHeadPortalConfig()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementHeadPortalConfig.json
+            // this example is just showing the usage of "PortalConfig_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PortalConfigContractResource created on azure
+            // for more information of creating PortalConfigContractResource, please refer to the document of PortalConfigContractResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string portalConfigId = "default";
+            ResourceIdentifier portalConfigContractResourceId = PortalConfigContractResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, portalConfigId);
+            PortalConfigContractResource portalConfigContract = client.GetPortalConfigContractResource(portalConfigContractResourceId);
+
+            // invoke the operation
+            bool result = await portalConfigContract.GetEntityTagAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

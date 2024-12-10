@@ -10,42 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.HybridNetwork.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.HybridNetwork.Samples
 {
     public partial class Sample_SiteNetworkServiceResource
     {
-        // Delete network site
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_DeleteNetworkSite()
-        {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/SiteNetworkServiceDelete.json
-            // this example is just showing the usage of "SiteNetworkServices_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SiteNetworkServiceResource created on azure
-            // for more information of creating SiteNetworkServiceResource, please refer to the document of SiteNetworkServiceResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string siteNetworkServiceName = "testSiteNetworkServiceName";
-            ResourceIdentifier siteNetworkServiceResourceId = SiteNetworkServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteNetworkServiceName);
-            SiteNetworkServiceResource siteNetworkService = client.GetSiteNetworkServiceResource(siteNetworkServiceResourceId);
-
-            // invoke the operation
-            await siteNetworkService.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get network site
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetNetworkSite()
         {
             // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/SiteNetworkServiceGet.json
@@ -74,9 +46,34 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update network site tags
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteNetworkSite()
+        {
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/SiteNetworkServiceDelete.json
+            // this example is just showing the usage of "SiteNetworkServices_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SiteNetworkServiceResource created on azure
+            // for more information of creating SiteNetworkServiceResource, please refer to the document of SiteNetworkServiceResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string siteNetworkServiceName = "testSiteNetworkServiceName";
+            ResourceIdentifier siteNetworkServiceResourceId = SiteNetworkServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteNetworkServiceName);
+            SiteNetworkServiceResource siteNetworkService = client.GetSiteNetworkServiceResource(siteNetworkServiceResourceId);
+
+            // invoke the operation
+            await siteNetworkService.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateNetworkSiteTags()
         {
             // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/SiteNetworkServiceUpdateTags.json
@@ -96,12 +93,12 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
             SiteNetworkServiceResource siteNetworkService = client.GetSiteNetworkServiceResource(siteNetworkServiceResourceId);
 
             // invoke the operation
-            TagsObject tagsObject = new TagsObject()
+            TagsObject tagsObject = new TagsObject
             {
                 Tags =
 {
 ["tag1"] = "value1",
-["tag2"] = "value2",
+["tag2"] = "value2"
 },
             };
             SiteNetworkServiceResource result = await siteNetworkService.UpdateAsync(tagsObject);
@@ -111,38 +108,6 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
             SiteNetworkServiceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // List all hybrid network sites in a subscription.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetSiteNetworkServices_ListAllHybridNetworkSitesInASubscription()
-        {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/SiteNetworkServiceListBySubscription.json
-            // this example is just showing the usage of "SiteNetworkServices_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (SiteNetworkServiceResource item in subscriptionResource.GetSiteNetworkServicesAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                SiteNetworkServiceData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
         }
     }
 }

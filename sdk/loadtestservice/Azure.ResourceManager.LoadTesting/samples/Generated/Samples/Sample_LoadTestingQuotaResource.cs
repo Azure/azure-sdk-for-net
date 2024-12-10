@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.LoadTesting.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.LoadTesting.Samples
 {
     public partial class Sample_LoadTestingQuotaResource
     {
-        // Quotas_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_QuotasGet()
         {
             // Generated from example definition: specification/loadtestservice/resource-manager/Microsoft.LoadTestService/stable/2022-12-01/examples/Quotas_Get.json
@@ -46,9 +46,8 @@ namespace Azure.ResourceManager.LoadTesting.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Quotas_CheckAvailability
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckLoadTestingQuotaAvailability_QuotasCheckAvailability()
         {
             // Generated from example definition: specification/loadtestservice/resource-manager/Microsoft.LoadTestService/stable/2022-12-01/examples/Quotas_CheckAvailability.json
@@ -68,12 +67,12 @@ namespace Azure.ResourceManager.LoadTesting.Samples
             LoadTestingQuotaResource loadTestingQuota = client.GetLoadTestingQuotaResource(loadTestingQuotaResourceId);
 
             // invoke the operation
-            LoadTestingQuotaBucketContent content = new LoadTestingQuotaBucketContent()
+            LoadTestingQuotaBucketContent content = new LoadTestingQuotaBucketContent
             {
                 CurrentUsage = 20,
                 CurrentQuota = 40,
                 NewQuota = 50,
-                Dimensions = new LoadTestingQuotaBucketDimensions()
+                Dimensions = new LoadTestingQuotaBucketDimensions
                 {
                     SubscriptionId = "testsubscriptionId",
                     Location = new AzureLocation("westus"),

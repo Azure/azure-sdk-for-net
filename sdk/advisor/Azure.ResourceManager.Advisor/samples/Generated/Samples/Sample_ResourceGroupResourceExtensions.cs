@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Advisor.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Advisor.Samples
 {
     public partial class Sample_ResourceGroupResourceExtensions
     {
-        // GetConfigurations
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetConfigurations_GetConfigurations()
         {
             // Generated from example definition: specification/advisor/resource-manager/Microsoft.Advisor/stable/2020-01-01/examples/ListConfigurations.json
@@ -42,12 +42,11 @@ namespace Azure.ResourceManager.Advisor.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // PutConfigurations
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateConfiguration_PutConfigurations()
         {
             // Generated from example definition: specification/advisor/resource-manager/Microsoft.Advisor/stable/2020-01-01/examples/CreateConfiguration.json
@@ -67,25 +66,19 @@ namespace Azure.ResourceManager.Advisor.Samples
 
             // invoke the operation
             ConfigurationName configurationName = ConfigurationName.Default;
-            ConfigData data = new ConfigData()
+            ConfigData data = new ConfigData
             {
                 Exclude = true,
                 LowCpuThreshold = CpuThreshold.Five,
-                Digests =
-{
-new DigestConfig()
+                Digests = {new DigestConfig
 {
 Name = "digestConfigName",
 ActionGroupResourceId = "/subscriptions/subscriptionId/resourceGroups/resourceGroup/providers/microsoft.insights/actionGroups/actionGroupName",
 Frequency = 30,
-Categories =
-{
-Category.HighAvailability,Category.Security,Category.Performance,Category.Cost,Category.OperationalExcellence
-},
+Categories = {Category.HighAvailability, Category.Security, Category.Performance, Category.Cost, Category.OperationalExcellence},
 Language = "en",
 State = DigestConfigState.Active,
-}
-},
+}},
             };
             ConfigData result = await resourceGroupResource.CreateConfigurationAsync(configurationName, data);
 

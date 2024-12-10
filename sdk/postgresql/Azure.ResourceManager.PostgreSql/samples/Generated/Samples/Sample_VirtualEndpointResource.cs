@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 {
     public partial class Sample_VirtualEndpointResource
     {
-        // Update a virtual endpoint for a server to update the
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_UpdateAVirtualEndpointForAServerToUpdateThe()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetAVirtualEndpoint()
         {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/VirtualEndpointUpdate.json
-            // this example is just showing the usage of "VirtualEndpoints_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/VirtualEndpointsGet.json
+            // this example is just showing the usage of "VirtualEndpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -38,16 +38,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             VirtualEndpointResource virtualEndpointResource = client.GetVirtualEndpointResource(virtualEndpointResourceId);
 
             // invoke the operation
-            VirtualEndpointResourcePatch patch = new VirtualEndpointResourcePatch()
-            {
-                EndpointType = VirtualEndpointType.ReadWrite,
-                Members =
-{
-"testReplica1"
-},
-            };
-            ArmOperation<VirtualEndpointResource> lro = await virtualEndpointResource.UpdateAsync(WaitUntil.Completed, patch);
-            VirtualEndpointResource result = lro.Value;
+            VirtualEndpointResource result = await virtualEndpointResource.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -56,9 +47,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Delete a virtual endpoint
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAVirtualEndpoint()
         {
             // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/VirtualEndpointDelete.json
@@ -81,16 +71,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // invoke the operation
             await virtualEndpointResource.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get a virtual endpoint
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetAVirtualEndpoint()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateAVirtualEndpointForAServerToUpdateThe()
         {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/VirtualEndpointsGet.json
-            // this example is just showing the usage of "VirtualEndpoints_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/VirtualEndpointUpdate.json
+            // this example is just showing the usage of "VirtualEndpoints_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -107,7 +96,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             VirtualEndpointResource virtualEndpointResource = client.GetVirtualEndpointResource(virtualEndpointResourceId);
 
             // invoke the operation
-            VirtualEndpointResource result = await virtualEndpointResource.GetAsync();
+            VirtualEndpointResourcePatch patch = new VirtualEndpointResourcePatch
+            {
+                EndpointType = VirtualEndpointType.ReadWrite,
+                Members = { "testReplica1" },
+            };
+            ArmOperation<VirtualEndpointResource> lro = await virtualEndpointResource.UpdateAsync(WaitUntil.Completed, patch);
+            VirtualEndpointResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

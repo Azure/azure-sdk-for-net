@@ -58,7 +58,7 @@ namespace Azure.Identity
 
         private bool TryWrapException(ref Exception exception, string additionalMessageText = null, bool isCredentialUnavailable = false)
         {
-            if (exception is OperationCanceledException || exception is AuthenticationFailedException)
+            if (!isCredentialUnavailable && (exception is OperationCanceledException || exception is AuthenticationFailedException || exception is CredentialUnavailableException))
             {
                 return false;
             }

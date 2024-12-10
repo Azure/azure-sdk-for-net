@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Subscription.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Subscription.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {
-        // cancelSubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CancelSubscription_CancelSubscription()
         {
             // Generated from example definition: specification/subscription/resource-manager/Microsoft.Subscription/stable/2021-10-01/examples/cancelSubscription.json
@@ -41,9 +41,8 @@ namespace Azure.ResourceManager.Subscription.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // renameSubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RenameSubscription_RenameSubscription()
         {
             // Generated from example definition: specification/subscription/resource-manager/Microsoft.Subscription/stable/2021-10-01/examples/renameSubscription.json
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.Subscription.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            SubscriptionName body = new SubscriptionName()
+            SubscriptionName body = new SubscriptionName
             {
                 SubscriptionNameValue = "Test Sub",
             };
@@ -70,9 +69,8 @@ namespace Azure.ResourceManager.Subscription.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // enableSubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task EnableSubscription_EnableSubscription()
         {
             // Generated from example definition: specification/subscription/resource-manager/Microsoft.Subscription/stable/2021-10-01/examples/enableSubscription.json

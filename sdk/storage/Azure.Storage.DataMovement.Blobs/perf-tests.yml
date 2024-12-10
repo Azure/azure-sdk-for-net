@@ -1,0 +1,27 @@
+Service: storage-datamovement-blob
+
+Project: sdk/storage/Azure.Storage.DataMovement.Blobs/perf/Azure.Storage.DataMovement.Blobs.Perf/Azure.Storage.DataMovement.Blobs.Perf.csproj
+# For Track1, comment above line, uncomment next line
+# Project: sdk/storage/Azure.Storage.DataMovement.Blobs/perf/Microsoft.Azure.Storage.DataMovement.Perf/Microsoft.Azure.Storage.DataMovement.Perf.csproj
+
+PackageVersions:
+- Azure.Storage.DataMovement.Blobs: source
+# For Track1, comment above line, uncomment next line
+# - Microsoft.Azure.Storage.DataMovement: 2.0.5
+
+Tests:
+- Test: download
+  Class: DownloadDirectory
+  Arguments: &sizes
+  - --size 1024 --count 5000 --duration 60 --concurrency 64
+  - --size 10485760 --count 500 --duration 90 --concurrency 64
+  - --size 52428800 --count 200 --duration 120 --concurrency 64
+  - --size 1073741824 --count 5 --duration 120 --concurrency 64
+
+- Test: upload
+  Class: UploadDirectory
+  Arguments: *sizes
+
+- Test: copy
+  Class: CopyDirectory
+  Arguments: *sizes

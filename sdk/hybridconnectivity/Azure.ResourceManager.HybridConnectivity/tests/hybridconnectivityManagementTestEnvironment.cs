@@ -5,7 +5,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.ResourceManager.HybridConnectivity.Tests
 {
-    public class hybridconnectivityManagementTestEnvironment : TestEnvironment
+    public class HybridconnectivityManagementTestEnvironment : TestEnvironment
     {
     }
 }
