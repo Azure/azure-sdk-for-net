@@ -19,13 +19,21 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
 
         void IJsonModel<ConversationExportedEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ConversationExportedEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConversationExportedEntity)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("category"u8);
             writer.WriteStringValue(Category);
             if (Optional.IsDefined(CompositionSetting))
@@ -78,7 +86,6 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ConversationExportedEntity IJsonModel<ConversationExportedEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

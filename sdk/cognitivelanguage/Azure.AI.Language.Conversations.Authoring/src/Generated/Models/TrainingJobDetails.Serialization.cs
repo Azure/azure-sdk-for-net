@@ -19,13 +19,21 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
 
         void IJsonModel<TrainingJobDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<TrainingJobDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TrainingJobDetails)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("modelLabel"u8);
             writer.WriteStringValue(ModelLabel);
             if (Optional.IsDefined(TrainingConfigVersion))
@@ -55,7 +63,6 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         TrainingJobDetails IJsonModel<TrainingJobDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

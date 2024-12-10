@@ -19,13 +19,21 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
 
         void IJsonModel<EntitiesEvaluationSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<EntitiesEvaluationSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EntitiesEvaluationSummary)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("confusionMatrix"u8);
             writer.WriteObjectValue(ConfusionMatrix, options);
             writer.WritePropertyName("entities"u8);
@@ -63,7 +71,6 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         EntitiesEvaluationSummary IJsonModel<EntitiesEvaluationSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -21,7 +21,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringProjectMetadata_GetProject_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -39,7 +39,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringProjectMetadata_GetProject_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -57,7 +57,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringProjectMetadata_GetProject_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -68,7 +68,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringProjectMetadata_GetProject_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -79,7 +79,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringProjectMetadata_GetProject_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -103,7 +103,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringProjectMetadata_GetProject_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -127,7 +127,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringProjectMetadata_GetProject_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -138,7 +138,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringProjectMetadata_GetProject_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -149,7 +149,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringProjectMetadata_CreateProject_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -173,7 +173,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringProjectMetadata_CreateProject_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -197,7 +197,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringProjectMetadata_CreateProject_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -234,7 +234,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringProjectMetadata_CreateProject_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -271,7 +271,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_CopyProjectAuthorization_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -294,7 +294,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_CopyProjectAuthorization_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -317,7 +317,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_CopyProjectAuthorization_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -328,7 +328,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_CopyProjectAuthorization_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -339,7 +339,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_CopyProjectAuthorization_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -364,7 +364,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_CopyProjectAuthorization_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -389,7 +389,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_CopyProjectAuthorization_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -400,7 +400,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_CopyProjectAuthorization_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -411,7 +411,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringCopyProjectJobState_GetCopyProjectStatus_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -428,7 +428,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringCopyProjectJobState_GetCopyProjectStatus_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -445,7 +445,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringCopyProjectJobState_GetCopyProjectStatus_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -456,7 +456,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringCopyProjectJobState_GetCopyProjectStatus_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -467,7 +467,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringCopyProjectJobState_GetCopyProjectStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -501,7 +501,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringCopyProjectJobState_GetCopyProjectStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -535,7 +535,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringCopyProjectJobState_GetCopyProjectStatus_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -546,7 +546,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringCopyProjectJobState_GetCopyProjectStatus_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -557,7 +557,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringProjectDeployment_GetDeployment_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -578,7 +578,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringProjectDeployment_GetDeployment_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -599,7 +599,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringProjectDeployment_GetDeployment_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -610,7 +610,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringProjectDeployment_GetDeployment_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -621,7 +621,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringProjectDeployment_GetDeployment_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -642,7 +642,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringProjectDeployment_GetDeployment_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -663,7 +663,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringProjectDeployment_GetDeployment_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -674,7 +674,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringProjectDeployment_GetDeployment_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -685,7 +685,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringDeploymentDeleteFromResourcesJobState_GetDeploymentDeleteFromResourcesStatus_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -702,7 +702,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringDeploymentDeleteFromResourcesJobState_GetDeploymentDeleteFromResourcesStatus_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -719,7 +719,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringDeploymentDeleteFromResourcesJobState_GetDeploymentDeleteFromResourcesStatus_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -730,7 +730,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringDeploymentDeleteFromResourcesJobState_GetDeploymentDeleteFromResourcesStatus_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -741,7 +741,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringDeploymentDeleteFromResourcesJobState_GetDeploymentDeleteFromResourcesStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -775,7 +775,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringDeploymentDeleteFromResourcesJobState_GetDeploymentDeleteFromResourcesStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -809,7 +809,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringDeploymentDeleteFromResourcesJobState_GetDeploymentDeleteFromResourcesStatus_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -820,7 +820,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringDeploymentDeleteFromResourcesJobState_GetDeploymentDeleteFromResourcesStatus_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -831,7 +831,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringDeploymentJobState_GetDeploymentStatus_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -848,7 +848,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringDeploymentJobState_GetDeploymentStatus_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -865,7 +865,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringDeploymentJobState_GetDeploymentStatus_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -876,7 +876,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringDeploymentJobState_GetDeploymentStatus_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -887,7 +887,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringDeploymentJobState_GetDeploymentStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -921,7 +921,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringDeploymentJobState_GetDeploymentStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -955,7 +955,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringDeploymentJobState_GetDeploymentStatus_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -966,7 +966,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringDeploymentJobState_GetDeploymentStatus_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -977,7 +977,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringSwapDeploymentsJobState_GetSwapDeploymentsStatus_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -994,7 +994,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringSwapDeploymentsJobState_GetSwapDeploymentsStatus_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1011,7 +1011,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringSwapDeploymentsJobState_GetSwapDeploymentsStatus_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1022,7 +1022,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringSwapDeploymentsJobState_GetSwapDeploymentsStatus_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1033,7 +1033,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringSwapDeploymentsJobState_GetSwapDeploymentsStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1067,7 +1067,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringSwapDeploymentsJobState_GetSwapDeploymentsStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1101,7 +1101,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringSwapDeploymentsJobState_GetSwapDeploymentsStatus_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1112,7 +1112,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringSwapDeploymentsJobState_GetSwapDeploymentsStatus_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1123,7 +1123,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringExportProjectJobState_GetExportStatus_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1140,7 +1140,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringExportProjectJobState_GetExportStatus_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1157,7 +1157,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringExportProjectJobState_GetExportStatus_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1168,7 +1168,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringExportProjectJobState_GetExportStatus_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1179,7 +1179,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringExportProjectJobState_GetExportStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1214,7 +1214,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringExportProjectJobState_GetExportStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1249,7 +1249,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringExportProjectJobState_GetExportStatus_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1260,7 +1260,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringExportProjectJobState_GetExportStatus_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1271,7 +1271,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringImportProjectJobState_GetImportStatus_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1288,7 +1288,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringImportProjectJobState_GetImportStatus_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1305,7 +1305,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringImportProjectJobState_GetImportStatus_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1316,7 +1316,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringImportProjectJobState_GetImportStatus_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1327,7 +1327,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringImportProjectJobState_GetImportStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1361,7 +1361,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringImportProjectJobState_GetImportStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1395,7 +1395,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringImportProjectJobState_GetImportStatus_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1406,7 +1406,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringImportProjectJobState_GetImportStatus_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1417,7 +1417,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringProjectTrainedModel_GetTrainedModel_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1437,7 +1437,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringProjectTrainedModel_GetTrainedModel_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1457,7 +1457,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringProjectTrainedModel_GetTrainedModel_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1468,7 +1468,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringProjectTrainedModel_GetTrainedModel_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1479,7 +1479,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringProjectTrainedModel_GetTrainedModel_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1499,7 +1499,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringProjectTrainedModel_GetTrainedModel_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1519,7 +1519,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringProjectTrainedModel_GetTrainedModel_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1530,7 +1530,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringProjectTrainedModel_GetTrainedModel_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1541,7 +1541,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringProjectTrainedModel_DeleteTrainedModel_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1554,7 +1554,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringProjectTrainedModel_DeleteTrainedModel_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1567,7 +1567,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringProjectTrainedModel_DeleteTrainedModel_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1580,7 +1580,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringProjectTrainedModel_DeleteTrainedModel_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1593,7 +1593,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringEvaluationJobState_GetEvaluationStatus_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1614,7 +1614,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringEvaluationJobState_GetEvaluationStatus_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1635,7 +1635,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringEvaluationJobState_GetEvaluationStatus_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1646,7 +1646,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringEvaluationJobState_GetEvaluationStatus_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1657,7 +1657,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringEvaluationJobState_GetEvaluationStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1697,7 +1697,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringEvaluationJobState_GetEvaluationStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1737,7 +1737,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringEvaluationJobState_GetEvaluationStatus_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1748,7 +1748,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringEvaluationJobState_GetEvaluationStatus_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1759,7 +1759,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_GetModelEvaluationSummary_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1800,7 +1800,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_GetModelEvaluationSummary_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1841,7 +1841,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_GetModelEvaluationSummary_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1852,7 +1852,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_GetModelEvaluationSummary_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1863,7 +1863,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_GetModelEvaluationSummary_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1907,7 +1907,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_GetModelEvaluationSummary_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1951,7 +1951,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_GetModelEvaluationSummary_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1962,7 +1962,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_GetModelEvaluationSummary_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1973,7 +1973,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringLoadSnapshotJobState_GetLoadSnapshotStatus_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -1990,7 +1990,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringLoadSnapshotJobState_GetLoadSnapshotStatus_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2007,7 +2007,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringLoadSnapshotJobState_GetLoadSnapshotStatus_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2018,7 +2018,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringLoadSnapshotJobState_GetLoadSnapshotStatus_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2029,7 +2029,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringLoadSnapshotJobState_GetLoadSnapshotStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2063,7 +2063,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringLoadSnapshotJobState_GetLoadSnapshotStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2097,7 +2097,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringLoadSnapshotJobState_GetLoadSnapshotStatus_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2108,7 +2108,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringLoadSnapshotJobState_GetLoadSnapshotStatus_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2119,7 +2119,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringDeploymentResourcesJobState_GetAssignDeploymentResourcesStatus_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2136,7 +2136,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringDeploymentResourcesJobState_GetAssignDeploymentResourcesStatus_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2153,7 +2153,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringDeploymentResourcesJobState_GetAssignDeploymentResourcesStatus_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2164,7 +2164,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringDeploymentResourcesJobState_GetAssignDeploymentResourcesStatus_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2175,7 +2175,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringDeploymentResourcesJobState_GetAssignDeploymentResourcesStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2209,7 +2209,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringDeploymentResourcesJobState_GetAssignDeploymentResourcesStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2243,7 +2243,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringDeploymentResourcesJobState_GetAssignDeploymentResourcesStatus_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2254,7 +2254,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringDeploymentResourcesJobState_GetAssignDeploymentResourcesStatus_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2265,7 +2265,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_GetUnassignDeploymentResourcesStatus_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2282,7 +2282,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_GetUnassignDeploymentResourcesStatus_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2299,7 +2299,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_GetUnassignDeploymentResourcesStatus_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2310,7 +2310,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_GetUnassignDeploymentResourcesStatus_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2321,7 +2321,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_GetUnassignDeploymentResourcesStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2355,7 +2355,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_GetUnassignDeploymentResourcesStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2389,7 +2389,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_GetUnassignDeploymentResourcesStatus_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2400,7 +2400,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_GetUnassignDeploymentResourcesStatus_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2411,7 +2411,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringTrainingJobState_GetTrainingStatus_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2432,7 +2432,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringTrainingJobState_GetTrainingStatus_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2453,7 +2453,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringTrainingJobState_GetTrainingStatus_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2464,7 +2464,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringTrainingJobState_GetTrainingStatus_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2475,7 +2475,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringTrainingJobState_GetTrainingStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2521,7 +2521,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringTrainingJobState_GetTrainingStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2567,7 +2567,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringTrainingJobState_GetTrainingStatus_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2578,7 +2578,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringTrainingJobState_GetTrainingStatus_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2589,7 +2589,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_GetProjectDeletionStatus_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2606,7 +2606,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_GetProjectDeletionStatus_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2623,7 +2623,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_GetProjectDeletionStatus_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2634,7 +2634,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_GetProjectDeletionStatus_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2645,7 +2645,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_GetProjectDeletionStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2679,7 +2679,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_GetProjectDeletionStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2713,7 +2713,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_GetProjectDeletionStatus_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2724,7 +2724,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_GetProjectDeletionStatus_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2735,7 +2735,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_GetAssignedResourceDeployments_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2752,7 +2752,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_GetAssignedResourceDeployments_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2769,7 +2769,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_GetAssignedResourceDeployments_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2780,7 +2780,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_GetAssignedResourceDeployments_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2791,7 +2791,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_GetAssignedResourceDeployments_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2809,7 +2809,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_GetAssignedResourceDeployments_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2827,7 +2827,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_GetAssignedResourceDeployments_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2838,7 +2838,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_GetAssignedResourceDeployments_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2849,7 +2849,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_GetSupportedLanguages_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2864,7 +2864,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_GetSupportedLanguages_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2879,7 +2879,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_GetSupportedLanguages_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2890,7 +2890,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_GetSupportedLanguages_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2901,7 +2901,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_GetSupportedLanguages_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2917,7 +2917,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_GetSupportedLanguages_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2933,7 +2933,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_GetSupportedLanguages_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2944,7 +2944,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_GetSupportedLanguages_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2955,7 +2955,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_GetSupportedPrebuiltEntities_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2971,7 +2971,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_GetSupportedPrebuiltEntities_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2987,7 +2987,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_GetSupportedPrebuiltEntities_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -2998,7 +2998,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_GetSupportedPrebuiltEntities_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3009,7 +3009,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_GetSupportedPrebuiltEntities_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3026,7 +3026,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_GetSupportedPrebuiltEntities_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3043,7 +3043,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_GetSupportedPrebuiltEntities_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3054,7 +3054,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_GetSupportedPrebuiltEntities_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3065,7 +3065,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_GetTrainingConfigVersions_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3080,7 +3080,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_GetTrainingConfigVersions_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3095,7 +3095,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_GetTrainingConfigVersions_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3106,7 +3106,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_GetTrainingConfigVersions_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3117,7 +3117,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_GetTrainingConfigVersions_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3133,7 +3133,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_GetTrainingConfigVersions_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3149,7 +3149,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_GetTrainingConfigVersions_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3160,7 +3160,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_GetTrainingConfigVersions_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3171,7 +3171,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringExportedTrainedModel_GetExportedModel_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3190,7 +3190,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringExportedTrainedModel_GetExportedModel_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3209,7 +3209,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringExportedTrainedModel_GetExportedModel_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3220,7 +3220,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringExportedTrainedModel_GetExportedModel_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3231,7 +3231,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringExportedTrainedModel_GetExportedModel_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3250,7 +3250,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringExportedTrainedModel_GetExportedModel_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3269,7 +3269,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringExportedTrainedModel_GetExportedModel_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3280,7 +3280,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringExportedTrainedModel_GetExportedModel_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3291,7 +3291,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringExportedModelJobState_GetExportedModelJobStatus_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3308,7 +3308,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringExportedModelJobState_GetExportedModelJobStatus_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3325,7 +3325,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringExportedModelJobState_GetExportedModelJobStatus_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3336,7 +3336,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringExportedModelJobState_GetExportedModelJobStatus_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3347,7 +3347,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringExportedModelJobState_GetExportedModelJobStatus_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3381,7 +3381,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringExportedModelJobState_GetExportedModelJobStatus_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3415,7 +3415,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringExportedModelJobState_GetExportedModelJobStatus_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3426,7 +3426,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringExportedModelJobState_GetExportedModelJobStatus_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3437,7 +3437,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringProjectMetadata_GetProjects_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3456,7 +3456,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringProjectMetadata_GetProjects_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3475,7 +3475,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringProjectMetadata_GetProjects_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3488,7 +3488,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringProjectMetadata_GetProjects_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3501,7 +3501,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringProjectMetadata_GetProjects_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3526,7 +3526,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringProjectMetadata_GetProjects_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3551,7 +3551,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringProjectMetadata_GetProjects_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3564,7 +3564,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringProjectMetadata_GetProjects_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3577,7 +3577,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringProjectDeployment_GetDeployments_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3599,7 +3599,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringProjectDeployment_GetDeployments_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3621,7 +3621,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringProjectDeployment_GetDeployments_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3634,7 +3634,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringProjectDeployment_GetDeployments_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3647,7 +3647,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringProjectDeployment_GetDeployments_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3669,7 +3669,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringProjectDeployment_GetDeployments_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3691,7 +3691,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringProjectDeployment_GetDeployments_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3704,7 +3704,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringProjectDeployment_GetDeployments_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3717,7 +3717,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringProjectTrainedModel_GetTrainedModels_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3738,7 +3738,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringProjectTrainedModel_GetTrainedModels_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3759,7 +3759,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringProjectTrainedModel_GetTrainedModels_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3772,7 +3772,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringProjectTrainedModel_GetTrainedModels_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3785,7 +3785,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringProjectTrainedModel_GetTrainedModels_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3806,7 +3806,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringProjectTrainedModel_GetTrainedModels_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3827,7 +3827,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringProjectTrainedModel_GetTrainedModels_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3840,7 +3840,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringProjectTrainedModel_GetTrainedModels_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3853,7 +3853,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringUtteranceEvaluationResult_GetModelEvaluationResults_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3877,7 +3877,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringUtteranceEvaluationResult_GetModelEvaluationResults_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3901,7 +3901,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringUtteranceEvaluationResult_GetModelEvaluationResults_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3914,7 +3914,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringUtteranceEvaluationResult_GetModelEvaluationResults_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3927,7 +3927,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringUtteranceEvaluationResult_GetModelEvaluationResults_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3951,7 +3951,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringUtteranceEvaluationResult_GetModelEvaluationResults_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3975,7 +3975,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringUtteranceEvaluationResult_GetModelEvaluationResults_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -3988,7 +3988,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringUtteranceEvaluationResult_GetModelEvaluationResults_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4001,7 +4001,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringAssignedDeploymentResource_GetDeploymentResources_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4017,7 +4017,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringAssignedDeploymentResource_GetDeploymentResources_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4033,7 +4033,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringAssignedDeploymentResource_GetDeploymentResources_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4046,7 +4046,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringAssignedDeploymentResource_GetDeploymentResources_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4059,7 +4059,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringAssignedDeploymentResource_GetDeploymentResources_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4075,7 +4075,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringAssignedDeploymentResource_GetDeploymentResources_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4091,7 +4091,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringAssignedDeploymentResource_GetDeploymentResources_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4104,7 +4104,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringAssignedDeploymentResource_GetDeploymentResources_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4117,7 +4117,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringTrainingJobState_GetTrainingJobs_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4139,7 +4139,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringTrainingJobState_GetTrainingJobs_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4161,7 +4161,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringTrainingJobState_GetTrainingJobs_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4174,7 +4174,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringTrainingJobState_GetTrainingJobs_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4187,7 +4187,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringTrainingJobState_GetTrainingJobs_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4234,7 +4234,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringTrainingJobState_GetTrainingJobs_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4281,7 +4281,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringTrainingJobState_GetTrainingJobs_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4294,7 +4294,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringTrainingJobState_GetTrainingJobs_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4307,7 +4307,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringExportedTrainedModel_GetExportedModels_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4327,7 +4327,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringExportedTrainedModel_GetExportedModels_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4347,7 +4347,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringExportedTrainedModel_GetExportedModels_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4360,7 +4360,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringExportedTrainedModel_GetExportedModels_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4373,7 +4373,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringExportedTrainedModel_GetExportedModels_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4393,7 +4393,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringExportedTrainedModel_GetExportedModels_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4413,7 +4413,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringExportedTrainedModel_GetExportedModels_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4426,7 +4426,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoringExportedTrainedModel_GetExportedModels_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4439,7 +4439,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_DeleteProject_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4450,7 +4450,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_DeleteProject_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4461,7 +4461,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_DeleteProject_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4472,7 +4472,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_DeleteProject_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4483,7 +4483,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_CopyProject_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4503,7 +4503,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_CopyProject_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4523,7 +4523,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_CopyProject_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4541,7 +4541,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_CopyProject_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4559,7 +4559,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_CopyProject_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4579,7 +4579,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_CopyProject_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4599,7 +4599,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_CopyProject_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4617,7 +4617,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_CopyProject_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4635,7 +4635,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_Export_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4646,7 +4646,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_Export_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4657,7 +4657,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_Export_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4668,7 +4668,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_Export_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4679,7 +4679,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_Export_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4690,7 +4690,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_Export_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4701,7 +4701,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_Export_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4712,7 +4712,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_Export_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4723,7 +4723,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_Import_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4745,7 +4745,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_Import_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4767,7 +4767,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_Import_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4779,7 +4779,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_Import_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4791,7 +4791,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_Import_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -4902,7 +4902,7 @@ dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_Import_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5013,7 +5013,7 @@ dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_Import_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5070,7 +5070,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_Import_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5127,7 +5127,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_Train_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5150,7 +5150,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_Train_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5173,7 +5173,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_Train_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5186,7 +5186,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_Train_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5199,7 +5199,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_Train_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5237,7 +5237,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_Train_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5275,7 +5275,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_Train_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5297,7 +5297,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_Train_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5319,7 +5319,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_SwapDeployments_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5335,7 +5335,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_SwapDeployments_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5351,7 +5351,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_SwapDeployments_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5363,7 +5363,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_SwapDeployments_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5375,7 +5375,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_SwapDeployments_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5391,7 +5391,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_SwapDeployments_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5407,7 +5407,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_SwapDeployments_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5419,7 +5419,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_SwapDeployments_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5431,7 +5431,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_DeployProject_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5446,7 +5446,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_DeployProject_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5461,7 +5461,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_DeployProject_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5473,7 +5473,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_DeployProject_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5485,7 +5485,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_DeployProject_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5504,7 +5504,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_DeployProject_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5523,7 +5523,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_DeployProject_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5538,7 +5538,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_DeployProject_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5553,7 +5553,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_DeleteDeployment_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5564,7 +5564,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_DeleteDeployment_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5575,7 +5575,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_DeleteDeployment_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5586,7 +5586,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_DeleteDeployment_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5597,7 +5597,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_DeleteDeploymentFromResources_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5609,7 +5609,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_DeleteDeploymentFromResources_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5621,7 +5621,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_DeleteDeploymentFromResources_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5633,7 +5633,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_DeleteDeploymentFromResources_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5645,7 +5645,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_DeleteDeploymentFromResources_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5663,7 +5663,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_DeleteDeploymentFromResources_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5681,7 +5681,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_DeleteDeploymentFromResources_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5696,7 +5696,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_DeleteDeploymentFromResources_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5711,7 +5711,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_EvaluateModel_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5730,7 +5730,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_EvaluateModel_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5749,7 +5749,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_EvaluateModel_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5762,7 +5762,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_EvaluateModel_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5775,7 +5775,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_EvaluateModel_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5801,7 +5801,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_EvaluateModel_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5827,7 +5827,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_EvaluateModel_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5845,7 +5845,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_EvaluateModel_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5863,7 +5863,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_LoadSnapshot_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5874,7 +5874,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_LoadSnapshot_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5885,7 +5885,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_LoadSnapshot_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5896,7 +5896,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_LoadSnapshot_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5907,7 +5907,7 @@ Dataset = "<dataset>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_AssignDeploymentResources_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5930,7 +5930,7 @@ region = "<region>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_AssignDeploymentResources_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5953,7 +5953,7 @@ region = "<region>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_AssignDeploymentResources_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5968,7 +5968,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_AssignDeploymentResources_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -5983,7 +5983,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_AssignDeploymentResources_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6006,7 +6006,7 @@ region = "<region>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_AssignDeploymentResources_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6029,7 +6029,7 @@ region = "<region>",
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_AssignDeploymentResources_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6044,7 +6044,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_AssignDeploymentResources_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6059,7 +6059,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_UnassignDeploymentResources_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6077,7 +6077,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_UnassignDeploymentResources_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6095,7 +6095,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_UnassignDeploymentResources_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6107,7 +6107,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_UnassignDeploymentResources_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6119,7 +6119,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_UnassignDeploymentResources_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6137,7 +6137,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_UnassignDeploymentResources_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6155,7 +6155,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_UnassignDeploymentResources_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6167,7 +6167,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_UnassignDeploymentResources_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6179,7 +6179,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_CancelTrainingJob_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6197,7 +6197,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_CancelTrainingJob_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6215,7 +6215,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_CancelTrainingJob_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6227,7 +6227,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_CancelTrainingJob_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6239,7 +6239,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_CancelTrainingJob_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6265,7 +6265,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_CancelTrainingJob_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6291,7 +6291,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_CancelTrainingJob_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6303,7 +6303,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_CancelTrainingJob_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6315,7 +6315,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_DeleteExportedModel_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6326,7 +6326,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_DeleteExportedModel_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6337,7 +6337,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_DeleteExportedModel_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6348,7 +6348,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_DeleteExportedModel_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6359,7 +6359,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_CreateOrUpdateExportedModel_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6374,7 +6374,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_CreateOrUpdateExportedModel_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6389,7 +6389,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_CreateOrUpdateExportedModel_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6401,7 +6401,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_CreateOrUpdateExportedModel_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6413,7 +6413,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_CreateOrUpdateExportedModel_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6428,7 +6428,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_CreateOrUpdateExportedModel_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6443,7 +6443,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoring_CreateOrUpdateExportedModel_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 
@@ -6455,7 +6455,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_AnalyzeConversationAuthoring_CreateOrUpdateExportedModel_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             AnalyzeConversationAuthoring client = new AuthoringClient(endpoint, credential).GetAnalyzeConversationAuthoringClient(apiVersion: "2024-11-15-preview");
 

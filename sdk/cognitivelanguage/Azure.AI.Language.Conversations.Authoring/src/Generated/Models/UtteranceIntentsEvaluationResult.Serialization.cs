@@ -19,13 +19,21 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
 
         void IJsonModel<UtteranceIntentsEvaluationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<UtteranceIntentsEvaluationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(UtteranceIntentsEvaluationResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("expectedIntent"u8);
             writer.WriteStringValue(ExpectedIntent);
             writer.WritePropertyName("predictedIntent"u8);
@@ -45,7 +53,6 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         UtteranceIntentsEvaluationResult IJsonModel<UtteranceIntentsEvaluationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -19,13 +19,21 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
 
         void IJsonModel<ConfusionMatrixRow>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ConfusionMatrixRow>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConfusionMatrixRow)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -38,7 +46,6 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
         ConfusionMatrixRow IJsonModel<ConfusionMatrixRow>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
