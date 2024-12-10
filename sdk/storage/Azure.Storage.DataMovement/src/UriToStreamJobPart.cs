@@ -387,16 +387,13 @@ namespace Azure.Storage.DataMovement
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
 
                 // Dispose the handlers
-                Console.WriteLine($"{PartNumber}: CompleteFileDownload, disposing handlers");
                 await DisposeHandlersAsync().ConfigureAwait(false);
 
                 // Update the transfer status
-                Console.WriteLine($"{PartNumber}: CompleteFileDownload, Setting to Completed");
                 await OnTransferStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"{PartNumber}: CompleteFileDownload, failed with exception: {ex.Message}");
                 await InvokeFailedArgAsync(ex).ConfigureAwait(false);
             }
         }

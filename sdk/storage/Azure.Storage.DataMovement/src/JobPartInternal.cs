@@ -558,14 +558,12 @@ namespace Azure.Storage.DataMovement
             if (JobPartStatus.State == DataTransferState.Pausing ||
                 JobPartStatus.State == DataTransferState.Stopping)
             {
-                Console.WriteLine($"{PartNumber}: _currentChunkCount: {_currentChunkCount}; _completedChunkCount: {_completedChunkCount}");
                 if (!_queueingTasks && _currentChunkCount == _completedChunkCount)
                 {
                     DataTransferState newState = JobPartStatus.State == DataTransferState.Pausing ?
                         DataTransferState.Paused :
                         DataTransferState.Completed;
                     await DisposeHandlersAsync().ConfigureAwait(false);
-                    Console.WriteLine($"{PartNumber}: newState: {newState}");
                     await OnTransferStateChangedAsync(newState).ConfigureAwait(false);
                 }
             }
