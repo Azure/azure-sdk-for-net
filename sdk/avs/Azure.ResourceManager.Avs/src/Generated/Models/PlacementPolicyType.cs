@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> placement policy type. </summary>
+    /// <summary> Placement Policy type. </summary>
     internal readonly partial struct PlacementPolicyType : IEquatable<PlacementPolicyType>
     {
         private readonly string _value;

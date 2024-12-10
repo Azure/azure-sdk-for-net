@@ -19,13 +19,21 @@ namespace Azure.AI.Vision.ImageAnalysis
 
         void IJsonModel<DetectedObject>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<DetectedObject>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DetectedObject)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("boundingBox"u8);
             writer.WriteObjectValue(BoundingBox, options);
             writer.WritePropertyName("tags"u8);
@@ -50,7 +58,6 @@ namespace Azure.AI.Vision.ImageAnalysis
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DetectedObject IJsonModel<DetectedObject>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

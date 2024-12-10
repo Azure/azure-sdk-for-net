@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Confluent.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Confluent.Samples
 {
     public partial class Sample_ResourceGroupResourceExtensions
     {
-        // Validations_ValidateOrganizations
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ValidateOrganization_ValidationsValidateOrganizations()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Validations_ValidateOrganizations.json
@@ -41,10 +41,7 @@ namespace Azure.ResourceManager.Confluent.Samples
             ConfluentOrganizationData data = new ConfluentOrganizationData(new AzureLocation("West US"), new ConfluentOfferDetail("string", "string", "string", "string", "string")
             {
                 PrivateOfferId = "string",
-                PrivateOfferIds =
-{
-"string"
-},
+                PrivateOfferIds = { "string" },
             }, new ConfluentUserDetail("abc@microsoft.com")
             {
                 FirstName = "string",
@@ -55,7 +52,7 @@ namespace Azure.ResourceManager.Confluent.Samples
             {
                 Tags =
 {
-["Environment"] = "Dev",
+["Environment"] = "Dev"
 },
             };
             ConfluentOrganizationResource result = await resourceGroupResource.ValidateOrganizationAsync(organizationName, data);
@@ -67,9 +64,8 @@ namespace Azure.ResourceManager.Confluent.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Validations_ValidateOrganizations
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ValidateOrganizationV2_ValidationsValidateOrganizations()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Validations_ValidateOrganizationsV2.json
@@ -92,10 +88,7 @@ namespace Azure.ResourceManager.Confluent.Samples
             ConfluentOrganizationData data = new ConfluentOrganizationData(new AzureLocation("West US"), new ConfluentOfferDetail("string", "string", "string", "string", "string")
             {
                 PrivateOfferId = "string",
-                PrivateOfferIds =
-{
-"string"
-},
+                PrivateOfferIds = { "string" },
             }, new ConfluentUserDetail("abc@microsoft.com")
             {
                 FirstName = "string",
@@ -106,7 +99,7 @@ namespace Azure.ResourceManager.Confluent.Samples
             {
                 Tags =
 {
-["Environment"] = "Dev",
+["Environment"] = "Dev"
 },
             };
             ConfluentOrganizationValidationResult result = await resourceGroupResource.ValidateOrganizationV2Async(organizationName, data);

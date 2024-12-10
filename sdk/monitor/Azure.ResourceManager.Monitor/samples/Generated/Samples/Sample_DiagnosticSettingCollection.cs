@@ -10,214 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Monitor.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Monitor.Samples
 {
     public partial class Sample_DiagnosticSettingCollection
     {
-        // Gets the diagnostic setting
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetsTheDiagnosticSetting()
-        {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2021-05-01-preview/examples/getDiagnosticSetting.json
-            // this example is just showing the usage of "DiagnosticSettings_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this DiagnosticSettingResource
-            string resourceUri = "subscriptions/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/resourcegroups/viruela1/providers/microsoft.logic/workflows/viruela6";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceUri));
-            DiagnosticSettingCollection collection = client.GetDiagnosticSettings(scopeId);
-
-            // invoke the operation
-            string name = "mysetting";
-            DiagnosticSettingResource result = await collection.GetAsync(name);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            DiagnosticSettingData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Gets the diagnostic setting
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetsTheDiagnosticSetting()
-        {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2021-05-01-preview/examples/getDiagnosticSetting.json
-            // this example is just showing the usage of "DiagnosticSettings_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this DiagnosticSettingResource
-            string resourceUri = "subscriptions/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/resourcegroups/viruela1/providers/microsoft.logic/workflows/viruela6";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceUri));
-            DiagnosticSettingCollection collection = client.GetDiagnosticSettings(scopeId);
-
-            // invoke the operation
-            string name = "mysetting";
-            bool result = await collection.ExistsAsync(name);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Gets the diagnostic setting
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetsTheDiagnosticSetting()
-        {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2021-05-01-preview/examples/getDiagnosticSetting.json
-            // this example is just showing the usage of "DiagnosticSettings_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this DiagnosticSettingResource
-            string resourceUri = "subscriptions/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/resourcegroups/viruela1/providers/microsoft.logic/workflows/viruela6";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceUri));
-            DiagnosticSettingCollection collection = client.GetDiagnosticSettings(scopeId);
-
-            // invoke the operation
-            string name = "mysetting";
-            NullableResponse<DiagnosticSettingResource> response = await collection.GetIfExistsAsync(name);
-            DiagnosticSettingResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                DiagnosticSettingData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // Gets the diagnostic setting for category
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetsTheDiagnosticSettingForCategory()
-        {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2021-05-01-preview/examples/getDiagnosticSettingCategory.json
-            // this example is just showing the usage of "DiagnosticSettings_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this DiagnosticSettingResource
-            string resourceUri = "subscriptions/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/resourcegroups/viruela1/providers/microsoft.logic/workflows/viruela6";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceUri));
-            DiagnosticSettingCollection collection = client.GetDiagnosticSettings(scopeId);
-
-            // invoke the operation
-            string name = "mysetting";
-            DiagnosticSettingResource result = await collection.GetAsync(name);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            DiagnosticSettingData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Gets the diagnostic setting for category
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetsTheDiagnosticSettingForCategory()
-        {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2021-05-01-preview/examples/getDiagnosticSettingCategory.json
-            // this example is just showing the usage of "DiagnosticSettings_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this DiagnosticSettingResource
-            string resourceUri = "subscriptions/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/resourcegroups/viruela1/providers/microsoft.logic/workflows/viruela6";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceUri));
-            DiagnosticSettingCollection collection = client.GetDiagnosticSettings(scopeId);
-
-            // invoke the operation
-            string name = "mysetting";
-            bool result = await collection.ExistsAsync(name);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Gets the diagnostic setting for category
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetsTheDiagnosticSettingForCategory()
-        {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2021-05-01-preview/examples/getDiagnosticSettingCategory.json
-            // this example is just showing the usage of "DiagnosticSettings_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this DiagnosticSettingResource
-            string resourceUri = "subscriptions/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/resourcegroups/viruela1/providers/microsoft.logic/workflows/viruela6";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceUri));
-            DiagnosticSettingCollection collection = client.GetDiagnosticSettings(scopeId);
-
-            // invoke the operation
-            string name = "mysetting";
-            NullableResponse<DiagnosticSettingResource> response = await collection.GetIfExistsAsync(name);
-            DiagnosticSettingResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                DiagnosticSettingData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // Creates or Updates the diagnostic setting
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesOrUpdatesTheDiagnosticSetting()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2021-05-01-preview/examples/createOrUpdateDiagnosticSetting.json
@@ -228,37 +28,27 @@ namespace Azure.ResourceManager.Monitor.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this DiagnosticSettingResource
             string resourceUri = "subscriptions/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/resourcegroups/viruela1/providers/microsoft.logic/workflows/viruela6";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceUri));
-            DiagnosticSettingCollection collection = client.GetDiagnosticSettings(scopeId);
+            DiagnosticSettingCollection collection = client.GetDiagnosticSettings(new ResourceIdentifier(resourceUri));
 
             // invoke the operation
             string name = "mysetting";
-            DiagnosticSettingData data = new DiagnosticSettingData()
+            DiagnosticSettingData data = new DiagnosticSettingData
             {
                 StorageAccountId = new ResourceIdentifier("/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/apptest/providers/Microsoft.Storage/storageAccounts/appteststorage1"),
                 EventHubAuthorizationRuleId = new ResourceIdentifier("/subscriptions/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/resourceGroups/montest/providers/microsoft.eventhub/namespaces/mynamespace/authorizationrules/myrule"),
                 EventHubName = "myeventhub",
-                Metrics =
-{
-new MetricSettings(true)
+                Metrics = {new MetricSettings(true)
 {
 Category = "WorkflowMetrics",
-RetentionPolicy = new RetentionPolicy(false,0),
-}
-},
-                Logs =
-{
-new LogSettings(true)
+RetentionPolicy = new RetentionPolicy(false, 0),
+}},
+                Logs = {new LogSettings(true)
 {
 CategoryGroup = "allLogs",
-RetentionPolicy = new RetentionPolicy(false,0),
-}
-},
+RetentionPolicy = new RetentionPolicy(false, 0),
+}},
                 WorkspaceId = new ResourceIdentifier(""),
                 MarketplacePartnerId = new ResourceIdentifier("/subscriptions/abcdeabc-1234-1234-ab12-123a1234567a/resourceGroups/test-rg/providers/Microsoft.Datadog/monitors/dd1"),
                 LogAnalyticsDestinationType = "Dedicated",
@@ -273,9 +63,8 @@ RetentionPolicy = new RetentionPolicy(false,0),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Creates or Updates the diagnostic setting for category
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesOrUpdatesTheDiagnosticSettingForCategory()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2021-05-01-preview/examples/createOrUpdateDiagnosticSettingCategory.json
@@ -286,37 +75,27 @@ RetentionPolicy = new RetentionPolicy(false,0),
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this DiagnosticSettingResource
             string resourceUri = "subscriptions/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/resourcegroups/viruela1/providers/microsoft.logic/workflows/viruela6";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceUri));
-            DiagnosticSettingCollection collection = client.GetDiagnosticSettings(scopeId);
+            DiagnosticSettingCollection collection = client.GetDiagnosticSettings(new ResourceIdentifier(resourceUri));
 
             // invoke the operation
             string name = "mysetting";
-            DiagnosticSettingData data = new DiagnosticSettingData()
+            DiagnosticSettingData data = new DiagnosticSettingData
             {
                 StorageAccountId = new ResourceIdentifier("/subscriptions/df602c9c-7aa0-407d-a6fb-eb20c8bd1192/resourceGroups/apptest/providers/Microsoft.Storage/storageAccounts/appteststorage1"),
                 EventHubAuthorizationRuleId = new ResourceIdentifier("/subscriptions/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/resourceGroups/montest/providers/microsoft.eventhub/namespaces/mynamespace/authorizationrules/myrule"),
                 EventHubName = "myeventhub",
-                Metrics =
-{
-new MetricSettings(true)
+                Metrics = {new MetricSettings(true)
 {
 Category = "WorkflowMetrics",
-RetentionPolicy = new RetentionPolicy(false,0),
-}
-},
-                Logs =
-{
-new LogSettings(true)
+RetentionPolicy = new RetentionPolicy(false, 0),
+}},
+                Logs = {new LogSettings(true)
 {
 Category = "WorkflowRuntime",
-RetentionPolicy = new RetentionPolicy(false,0),
-}
-},
+RetentionPolicy = new RetentionPolicy(false, 0),
+}},
                 WorkspaceId = new ResourceIdentifier(""),
                 MarketplacePartnerId = new ResourceIdentifier("/subscriptions/abcdeabc-1234-1234-ab12-123a1234567a/resourceGroups/test-rg/providers/Microsoft.Datadog/monitors/dd1"),
                 LogAnalyticsDestinationType = "Dedicated",
@@ -331,9 +110,62 @@ RetentionPolicy = new RetentionPolicy(false,0),
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Gets the diagnostic setting
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetsTheDiagnosticSetting()
+        {
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2021-05-01-preview/examples/getDiagnosticSetting.json
+            // this example is just showing the usage of "DiagnosticSettings_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this DiagnosticSettingResource
+            string resourceUri = "subscriptions/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/resourcegroups/viruela1/providers/microsoft.logic/workflows/viruela6";
+            DiagnosticSettingCollection collection = client.GetDiagnosticSettings(new ResourceIdentifier(resourceUri));
+
+            // invoke the operation
+            string name = "mysetting";
+            DiagnosticSettingResource result = await collection.GetAsync(name);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DiagnosticSettingData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetsTheDiagnosticSettingForCategory()
+        {
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2021-05-01-preview/examples/getDiagnosticSettingCategory.json
+            // this example is just showing the usage of "DiagnosticSettings_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this DiagnosticSettingResource
+            string resourceUri = "subscriptions/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/resourcegroups/viruela1/providers/microsoft.logic/workflows/viruela6";
+            DiagnosticSettingCollection collection = client.GetDiagnosticSettings(new ResourceIdentifier(resourceUri));
+
+            // invoke the operation
+            string name = "mysetting";
+            DiagnosticSettingResource result = await collection.GetAsync(name);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DiagnosticSettingData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetsTheDiagnosticSetting()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2021-05-01-preview/examples/listDiagnosticSettings.json
@@ -344,13 +176,9 @@ RetentionPolicy = new RetentionPolicy(false,0),
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this DiagnosticSettingResource
             string resourceUri = "subscriptions/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/resourcegroups/viruela1/providers/microsoft.logic/workflows/viruela6";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceUri));
-            DiagnosticSettingCollection collection = client.GetDiagnosticSettings(scopeId);
+            DiagnosticSettingCollection collection = client.GetDiagnosticSettings(new ResourceIdentifier(resourceUri));
 
             // invoke the operation and iterate over the result
             await foreach (DiagnosticSettingResource item in collection.GetAllAsync())
@@ -362,12 +190,11 @@ RetentionPolicy = new RetentionPolicy(false,0),
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Gets the diagnostic setting for category
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetsTheDiagnosticSettingForCategory()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2021-05-01-preview/examples/listDiagnosticSettingsCategory.json
@@ -378,13 +205,9 @@ RetentionPolicy = new RetentionPolicy(false,0),
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this DiagnosticSettingResource
             string resourceUri = "subscriptions/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/resourcegroups/viruela1/providers/microsoft.logic/workflows/viruela6";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceUri));
-            DiagnosticSettingCollection collection = client.GetDiagnosticSettings(scopeId);
+            DiagnosticSettingCollection collection = client.GetDiagnosticSettings(new ResourceIdentifier(resourceUri));
 
             // invoke the operation and iterate over the result
             await foreach (DiagnosticSettingResource item in collection.GetAllAsync())
@@ -396,7 +219,123 @@ RetentionPolicy = new RetentionPolicy(false,0),
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetsTheDiagnosticSetting()
+        {
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2021-05-01-preview/examples/getDiagnosticSetting.json
+            // this example is just showing the usage of "DiagnosticSettings_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this DiagnosticSettingResource
+            string resourceUri = "subscriptions/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/resourcegroups/viruela1/providers/microsoft.logic/workflows/viruela6";
+            DiagnosticSettingCollection collection = client.GetDiagnosticSettings(new ResourceIdentifier(resourceUri));
+
+            // invoke the operation
+            string name = "mysetting";
+            bool result = await collection.ExistsAsync(name);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetsTheDiagnosticSettingForCategory()
+        {
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2021-05-01-preview/examples/getDiagnosticSettingCategory.json
+            // this example is just showing the usage of "DiagnosticSettings_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this DiagnosticSettingResource
+            string resourceUri = "subscriptions/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/resourcegroups/viruela1/providers/microsoft.logic/workflows/viruela6";
+            DiagnosticSettingCollection collection = client.GetDiagnosticSettings(new ResourceIdentifier(resourceUri));
+
+            // invoke the operation
+            string name = "mysetting";
+            bool result = await collection.ExistsAsync(name);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetsTheDiagnosticSetting()
+        {
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2021-05-01-preview/examples/getDiagnosticSetting.json
+            // this example is just showing the usage of "DiagnosticSettings_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this DiagnosticSettingResource
+            string resourceUri = "subscriptions/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/resourcegroups/viruela1/providers/microsoft.logic/workflows/viruela6";
+            DiagnosticSettingCollection collection = client.GetDiagnosticSettings(new ResourceIdentifier(resourceUri));
+
+            // invoke the operation
+            string name = "mysetting";
+            NullableResponse<DiagnosticSettingResource> response = await collection.GetIfExistsAsync(name);
+            DiagnosticSettingResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                DiagnosticSettingData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetsTheDiagnosticSettingForCategory()
+        {
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2021-05-01-preview/examples/getDiagnosticSettingCategory.json
+            // this example is just showing the usage of "DiagnosticSettings_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this DiagnosticSettingResource
+            string resourceUri = "subscriptions/1a66ce04-b633-4a0b-b2bc-a912ec8986a6/resourcegroups/viruela1/providers/microsoft.logic/workflows/viruela6";
+            DiagnosticSettingCollection collection = client.GetDiagnosticSettings(new ResourceIdentifier(resourceUri));
+
+            // invoke the operation
+            string name = "mysetting";
+            NullableResponse<DiagnosticSettingResource> response = await collection.GetIfExistsAsync(name);
+            DiagnosticSettingResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                DiagnosticSettingData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

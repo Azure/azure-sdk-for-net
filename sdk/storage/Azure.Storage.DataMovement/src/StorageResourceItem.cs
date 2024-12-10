@@ -28,6 +28,12 @@ namespace Azure.Storage.DataMovement
         protected internal abstract DataTransferOrder TransferType { get; }
 
         /// <summary>
+        /// Defines the maximum supported size for the storage resource to be created
+        /// in a single API call.
+        /// </summary>
+        protected internal abstract long MaxSupportedSingleTransferSize { get; }
+
+        /// <summary>
         /// Defines the maximum supported chunk size for the storage resource.
         /// </summary>
         protected internal abstract long MaxSupportedChunkSize { get; }

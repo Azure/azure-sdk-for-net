@@ -2,6 +2,12 @@
 
 ## 5.12.0-beta.2 (Unreleased)
 
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- tovyhnal _([GitHub](https://github.com/tovyhnal))_
+
 ### Features Added
 
 ### Breaking Changes
@@ -11,6 +17,10 @@
 ### Other Changes
 
 - Added annotations to make the package compatible with trimming and native AOT compilation.
+
+- Added Event Hub name to processor load balancing logs for additional context.  _(A community contribution, courtesy of [tovyhnal](https://github.com/tovyhnal))_
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.9, which contains several bug fixes. _(see: [commits](https://github.com/Azure/azure-amqp/commits/hotfix/))_
 
 ## 5.11.5 (2024-08-14)
 

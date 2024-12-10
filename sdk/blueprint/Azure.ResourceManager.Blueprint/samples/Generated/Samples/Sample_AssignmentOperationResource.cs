@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Blueprint.Samples
 {
     public partial class Sample_AssignmentOperationResource
     {
-        // Assignment at management group scope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_AssignmentAtManagementGroupScope()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/managementGroupBPAssignment/BlueprintAssignmentOperation_Get.json
@@ -45,9 +45,8 @@ namespace Azure.ResourceManager.Blueprint.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Assignment at subscription scope
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_AssignmentAtSubscriptionScope()
         {
             // Generated from example definition: specification/blueprint/resource-manager/Microsoft.Blueprint/preview/2018-11-01-preview/examples/subscriptionBPAssignment/BlueprintAssignmentOperation_Get.json

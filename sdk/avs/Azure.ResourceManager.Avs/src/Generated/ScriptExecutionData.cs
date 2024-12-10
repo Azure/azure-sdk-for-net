@@ -74,11 +74,15 @@ namespace Azure.ResourceManager.Avs
         /// The available derived classes include <see cref="PSCredentialExecutionParameterDetails"/>, <see cref="ScriptSecureStringExecutionParameterDetails"/> and <see cref="ScriptStringExecutionParameterDetails"/>.
         /// </param>
         /// <param name="hiddenParameters">
-        /// Parameters that will be hidden/not visible to ARM, such as passwords and credentials
+        /// Parameters that will be hidden/not visible to ARM, such as passwords and
+        /// credentials
         /// Please note <see cref="ScriptExecutionParameterDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="PSCredentialExecutionParameterDetails"/>, <see cref="ScriptSecureStringExecutionParameterDetails"/> and <see cref="ScriptStringExecutionParameterDetails"/>.
         /// </param>
-        /// <param name="failureReason"> Error message if the script was able to run, but if the script itself had errors or powershell threw an exception. </param>
+        /// <param name="failureReason">
+        /// Error message if the script was able to run, but if the script itself had
+        /// errors or powershell threw an exception
+        /// </param>
         /// <param name="timeout"> Time limit for execution. </param>
         /// <param name="retention"> Time to live for the resource. If not provided, will be available for 60 days. </param>
         /// <param name="submittedOn"> Time the script execution was submitted. </param>
@@ -120,12 +124,16 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         public IList<ScriptExecutionParameterDetails> Parameters { get; }
         /// <summary>
-        /// Parameters that will be hidden/not visible to ARM, such as passwords and credentials
+        /// Parameters that will be hidden/not visible to ARM, such as passwords and
+        /// credentials
         /// Please note <see cref="ScriptExecutionParameterDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="PSCredentialExecutionParameterDetails"/>, <see cref="ScriptSecureStringExecutionParameterDetails"/> and <see cref="ScriptStringExecutionParameterDetails"/>.
         /// </summary>
         public IList<ScriptExecutionParameterDetails> HiddenParameters { get; }
-        /// <summary> Error message if the script was able to run, but if the script itself had errors or powershell threw an exception. </summary>
+        /// <summary>
+        /// Error message if the script was able to run, but if the script itself had
+        /// errors or powershell threw an exception
+        /// </summary>
         public string FailureReason { get; set; }
         /// <summary> Time limit for execution. </summary>
         public string Timeout { get; set; }

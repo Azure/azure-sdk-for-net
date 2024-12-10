@@ -47,15 +47,18 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            if (_roleDefinition != null)
+            if (Mode != RecordedTestMode.Playback)
             {
-                if (await SqlRoleDefinitionCollection.ExistsAsync(RoleDefinitionId))
+                if (_roleDefinition != null)
                 {
-                    await _roleDefinition.DeleteAsync(WaitUntil.Completed);
+                    if (await SqlRoleDefinitionCollection.ExistsAsync(RoleDefinitionId))
+                    {
+                        await _roleDefinition.DeleteAsync(WaitUntil.Completed);
+                    }
                 }
+                await _sqlDatabase.DeleteAsync(WaitUntil.Completed);
+                await _databaseAccount.DeleteAsync(WaitUntil.Completed);
             }
-            await _sqlDatabase.DeleteAsync(WaitUntil.Completed);
-            await _databaseAccount.DeleteAsync(WaitUntil.Completed);
         }
 
         [Test]

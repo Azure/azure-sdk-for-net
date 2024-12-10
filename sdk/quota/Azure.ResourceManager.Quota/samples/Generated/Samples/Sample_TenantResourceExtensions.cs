@@ -10,14 +10,15 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Quota.Models;
+using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Quota.Samples
 {
     public partial class Sample_TenantResourceExtensions
     {
-        // GetOperations
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetQuotaOperations_GetOperations()
         {
             // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GetOperations.json
@@ -28,9 +29,7 @@ namespace Azure.ResourceManager.Quota.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation and iterate over the result
             await foreach (QuotaOperationResult item in tenantResource.GetQuotaOperationsAsync())
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.Quota.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

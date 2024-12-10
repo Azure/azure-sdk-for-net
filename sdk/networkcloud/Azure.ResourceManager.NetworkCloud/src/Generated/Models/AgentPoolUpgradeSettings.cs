@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> AgentPoolUpgradeSettings specifies the upgrade settings for an agent pool. </summary>
-    internal partial class AgentPoolUpgradeSettings
+    public partial class AgentPoolUpgradeSettings
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,15 +51,23 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AgentPoolUpgradeSettings"/>. </summary>
-        /// <param name="maxSurge"> The maximum number or percentage of nodes that are surged during upgrade. This can either be set to an integer (e.g. '5') or a percentage (e.g. '50%'). If a percentage is specified, it is the percentage of the total agent pool size at the time of the upgrade. For percentages, fractional nodes are rounded up. If not specified, the default is 1. </param>
+        /// <param name="drainTimeout"> The maximum time in seconds that is allowed for a node drain to complete before proceeding with the upgrade of the agent pool. If not specified during creation, a value of 1800 seconds is used. </param>
+        /// <param name="maxSurge"> The maximum number or percentage of nodes that are surged during upgrade. This can either be set to an integer (e.g. '5') or a percentage (e.g. '50%'). If a percentage is specified, it is the percentage of the total agent pool size at the time of the upgrade. For percentages, fractional nodes are rounded up. If not specified during creation, a value of 1 is used. One of MaxSurge and MaxUnavailable must be greater than 0. </param>
+        /// <param name="maxUnavailable"> The maximum number or percentage of nodes that can be unavailable during upgrade. This can either be set to an integer (e.g. '5') or a percentage (e.g. '50%'). If a percentage is specified, it is the percentage of the total agent pool size at the time of the upgrade. For percentages, fractional nodes are rounded up. If not specified during creation, a value of 0 is used. One of MaxSurge and MaxUnavailable must be greater than 0. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AgentPoolUpgradeSettings(string maxSurge, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AgentPoolUpgradeSettings(long? drainTimeout, string maxSurge, string maxUnavailable, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            DrainTimeout = drainTimeout;
             MaxSurge = maxSurge;
+            MaxUnavailable = maxUnavailable;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The maximum number or percentage of nodes that are surged during upgrade. This can either be set to an integer (e.g. '5') or a percentage (e.g. '50%'). If a percentage is specified, it is the percentage of the total agent pool size at the time of the upgrade. For percentages, fractional nodes are rounded up. If not specified, the default is 1. </summary>
+        /// <summary> The maximum time in seconds that is allowed for a node drain to complete before proceeding with the upgrade of the agent pool. If not specified during creation, a value of 1800 seconds is used. </summary>
+        public long? DrainTimeout { get; set; }
+        /// <summary> The maximum number or percentage of nodes that are surged during upgrade. This can either be set to an integer (e.g. '5') or a percentage (e.g. '50%'). If a percentage is specified, it is the percentage of the total agent pool size at the time of the upgrade. For percentages, fractional nodes are rounded up. If not specified during creation, a value of 1 is used. One of MaxSurge and MaxUnavailable must be greater than 0. </summary>
         public string MaxSurge { get; set; }
+        /// <summary> The maximum number or percentage of nodes that can be unavailable during upgrade. This can either be set to an integer (e.g. '5') or a percentage (e.g. '50%'). If a percentage is specified, it is the percentage of the total agent pool size at the time of the upgrade. For percentages, fractional nodes are rounded up. If not specified during creation, a value of 0 is used. One of MaxSurge and MaxUnavailable must be greater than 0. </summary>
+        public string MaxUnavailable { get; set; }
     }
 }

@@ -134,6 +134,10 @@ namespace BasicTypeSpec.Models
         /// <param name="friend"> The <see cref="Friend"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(Friend friend)
         {
+            if (friend == null)
+            {
+                return null;
+            }
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
             content.JsonWriter.WriteObjectValue(friend, ModelSerializationExtensions.WireOptions);
             return content;

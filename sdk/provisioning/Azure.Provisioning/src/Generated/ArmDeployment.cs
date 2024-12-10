@@ -23,38 +23,57 @@ public partial class ArmDeployment : ProvisionableResource
     /// <summary>
     /// The name of the deployment.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// the location of the deployment.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Deployment properties.
     /// </summary>
-    public BicepValue<ArmDeploymentPropertiesExtended> Properties { get => _properties; }
-    private readonly BicepValue<ArmDeploymentPropertiesExtended> _properties;
+    public ArmDeploymentPropertiesExtended Properties 
+    {
+        get { Initialize(); return _properties!; }
+    }
+    private ArmDeploymentPropertiesExtended? _properties;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Deployment tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Creates a new ArmDeployment.
@@ -69,12 +88,19 @@ public partial class ArmDeployment : ProvisionableResource
     public ArmDeployment(string bicepIdentifier, string? resourceVersion = default)
         : base(bicepIdentifier, "Microsoft.Resources/deployments", resourceVersion ?? "2023-07-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isOutput: true);
-        _properties = BicepValue<ArmDeploymentPropertiesExtended>.DefineProperty(this, "Properties", ["properties"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of ArmDeployment.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isOutput: true);
+        _properties = DefineModelProperty<ArmDeploymentPropertiesExtended>("Properties", ["properties"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"], isOutput: true);
     }
 
     /// <summary>
@@ -241,22 +267,6 @@ public partial class ArmDeployment : ProvisionableResource
     /// <returns>The existing ArmDeployment resource.</returns>
     public static ArmDeployment FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
         new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
-
-    /// <summary>
-    /// Creates a new ArmDeployment resource from a Bicep expression that
-    /// evaluates to a ArmDeployment.
-    /// </summary>
-    /// <param name="expression">
-    /// A Bicep expression that evaluates to a ArmDeployment resource.
-    /// </param>
-    /// <returns>A ArmDeployment resource.</returns>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public static ArmDeployment FromExpression(BicepExpression expression)
-    {
-        ArmDeployment resource = new(nameof(ArmDeployment));
-        resource.OverrideWithExpression(expression);
-        return resource;
-    }
 
     /// <summary>
     /// Get the requirements for naming this ArmDeployment resource.

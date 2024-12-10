@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.InformaticaDataManagement.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.InformaticaDataManagement.Samples
 {
     public partial class Sample_InformaticaServerlessRuntimeResource
     {
-        // ServerlessRuntimes_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ServerlessRuntimesGet()
         {
             // Generated from example definition: 2024-05-08/ServerlessRuntimes_Get_MaximumSet_Gen.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ServerlessRuntimes_Get_Min
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ServerlessRuntimesGetMin()
         {
             // Generated from example definition: 2024-05-08/ServerlessRuntimes_Get_MinimumSet_Gen.json
@@ -79,9 +78,8 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ServerlessRuntimes_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ServerlessRuntimesDelete()
         {
             // Generated from example definition: 2024-05-08/ServerlessRuntimes_Delete_MaximumSet_Gen.json
@@ -104,12 +102,11 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             // invoke the operation
             await informaticaServerlessRuntime.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ServerlessRuntimes_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ServerlessRuntimesUpdate()
         {
             // Generated from example definition: 2024-05-08/ServerlessRuntimes_Update_MaximumSet_Gen.json
@@ -130,9 +127,9 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             InformaticaServerlessRuntimeResource informaticaServerlessRuntime = client.GetInformaticaServerlessRuntimeResource(informaticaServerlessRuntimeResourceId);
 
             // invoke the operation
-            InformaticaServerlessRuntimePatch patch = new InformaticaServerlessRuntimePatch()
+            InformaticaServerlessRuntimePatch patch = new InformaticaServerlessRuntimePatch
             {
-                Properties = new ServerlessRuntimePropertiesUpdate()
+                Properties = new ServerlessRuntimePropertiesUpdate
                 {
                     Description = "ocprslpljoikxyduackzqnkuhyzrh",
                     Platform = InformaticaPlatformType.Azure,
@@ -140,46 +137,46 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
                     ComputeUnits = "uncwbpu",
                     ExecutionTimeout = "tjyfytuywriabt",
                     ServerlessAccountLocation = "goaugkyfanqfnvcmntreibqrswfpis",
-                    NetworkInterfaceConfiguration = new InformaticaNetworkInterfaceConfigurationUpdate()
+                    NetworkInterfaceConfiguration = new InformaticaNetworkInterfaceConfigurationUpdate
                     {
                         VnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/HypernetVnet1"),
                         SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/subnet1"),
                         VnetResourceGuid = "5328d299-1462-4be0-bef1-303a28e556a0",
                     },
-                    AdvancedCustomProperties =
-{
-new AdvancedCustomProperties()
+                    AdvancedCustomProperties = {new AdvancedCustomProperties
 {
 Key = "qcmc",
 Value = "unraxmnohdmvutt",
-}
-},
+}},
                     SupplementaryFileLocation = "csxaqzpxu",
-                    ServerlessRuntimeConfig = new ServerlessRuntimeConfigPropertiesUpdate()
+                    ServerlessRuntimeConfig = new ServerlessRuntimeConfigPropertiesUpdate
                     {
-                        CdiConfigProps =
+                        CdiConfigProps = {new CdiConfigProperties("hngsdqvtjdhwqlbqfotipaiwjuys", "zlrlbg", new InformaticaApplicationConfigs[]
 {
-new CdiConfigProperties("hngsdqvtjdhwqlbqfotipaiwjuys","zlrlbg",new InformaticaApplicationConfigs[]
+new InformaticaApplicationConfigs(
+    "lw",
+    "upfvjrqcrwwedfujkmsodeinw",
+    "mozgsetpwjmtyl",
+    "dixfyeobngivyvf",
+    "j",
+    "zvgkqwmi")
+})},
+                        CdieConfigProps = {new CdiConfigProperties("hngsdqvtjdhwqlbqfotipaiwjuys", "zlrlbg", new InformaticaApplicationConfigs[]
 {
-new InformaticaApplicationConfigs("lw","upfvjrqcrwwedfujkmsodeinw","mozgsetpwjmtyl","dixfyeobngivyvf","j","zvgkqwmi")
-})
-},
-                        CdieConfigProps =
-{
-new CdiConfigProperties("hngsdqvtjdhwqlbqfotipaiwjuys","zlrlbg",new InformaticaApplicationConfigs[]
-{
-new InformaticaApplicationConfigs("lw","upfvjrqcrwwedfujkmsodeinw","mozgsetpwjmtyl","dixfyeobngivyvf","j","zvgkqwmi")
-})
-},
+new InformaticaApplicationConfigs(
+    "lw",
+    "upfvjrqcrwwedfujkmsodeinw",
+    "mozgsetpwjmtyl",
+    "dixfyeobngivyvf",
+    "j",
+    "zvgkqwmi")
+})},
                     },
-                    ServerlessRuntimeTags =
-{
-new ServerlessRuntimeTag()
+                    ServerlessRuntimeTags = {new ServerlessRuntimeTag
 {
 Name = "korveuycuwhs",
 Value = "uyiuegxnkgp",
-}
-},
+}},
                     UserContextToken = "ctgebtvjhwh",
                 },
             };
@@ -192,9 +189,8 @@ Value = "uyiuegxnkgp",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ServerlessRuntimes_Update_Min
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ServerlessRuntimesUpdateMin()
         {
             // Generated from example definition: 2024-05-08/ServerlessRuntimes_Update_MinimumSet_Gen.json
@@ -225,9 +221,8 @@ Value = "uyiuegxnkgp",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ServerlessRuntimes_CheckDependencies
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckDependencies_ServerlessRuntimesCheckDependencies()
         {
             // Generated from example definition: 2024-05-08/ServerlessRuntimes_CheckDependencies_MaximumSet_Gen.json
@@ -253,9 +248,8 @@ Value = "uyiuegxnkgp",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ServerlessRuntimes_CheckDependencies_Min
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CheckDependencies_ServerlessRuntimesCheckDependenciesMin()
         {
             // Generated from example definition: 2024-05-08/ServerlessRuntimes_CheckDependencies_MinimumSet_Gen.json
@@ -281,9 +275,8 @@ Value = "uyiuegxnkgp",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ServerlessRuntimes_StartFailedServerlessRuntime
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task StartFailedServerlessRuntime_ServerlessRuntimesStartFailedServerlessRuntime()
         {
             // Generated from example definition: 2024-05-08/ServerlessRuntimes_StartFailedServerlessRuntime_MaximumSet_Gen.json
@@ -306,12 +299,11 @@ Value = "uyiuegxnkgp",
             // invoke the operation
             await informaticaServerlessRuntime.StartFailedServerlessRuntimeAsync();
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ServerlessRuntimes_ServerlessResourceById
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetServerlessResourceById_ServerlessRuntimesServerlessResourceById()
         {
             // Generated from example definition: 2024-05-08/ServerlessRuntimes_ServerlessResourceById_MaximumSet_Gen.json

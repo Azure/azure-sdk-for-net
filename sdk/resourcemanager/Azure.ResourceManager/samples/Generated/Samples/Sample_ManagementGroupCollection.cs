@@ -11,48 +11,55 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ManagementGroups.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ManagementGroups.Samples
 {
     public partial class Sample_ManagementGroupCollection
     {
-        // ListManagementGroups
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ListManagementGroups()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_PutManagementGroup()
         {
-            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/examples/ListManagementGroups.json
-            // this example is just showing the usage of "ManagementGroups_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/examples/PutManagementGroup.json
+            // this example is just showing the usage of "ManagementGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this ManagementGroupResource
             ManagementGroupCollection collection = tenantResource.GetManagementGroups();
 
-            // invoke the operation and iterate over the result
-            string cacheControl = "no-cache";
-            await foreach (ManagementGroupResource item in collection.GetAllAsync(cacheControl: cacheControl))
+            // invoke the operation
+            string groupId = "ChildGroup";
+            ManagementGroupCreateOrUpdateContent content = new ManagementGroupCreateOrUpdateContent
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ManagementGroupData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                DisplayName = "ChildGroup",
+                Details = new CreateManagementGroupDetails
+                {
+                    Parent = new ManagementGroupParentCreateOptions
+                    {
+                        Id = "/providers/Microsoft.Management/managementGroups/RootGroup",
+                    },
+                },
+            };
+            string cacheControl = "no-cache";
+            ArmOperation<ManagementGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, groupId, content, cacheControl: cacheControl);
+            ManagementGroupResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ManagementGroupData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetManagementGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetManagementGroup()
         {
             // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/examples/GetManagementGroup.json
@@ -63,9 +70,7 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this ManagementGroupResource
             ManagementGroupCollection collection = tenantResource.GetManagementGroups();
@@ -82,77 +87,8 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetManagementGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetManagementGroup()
-        {
-            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/examples/GetManagementGroup.json
-            // this example is just showing the usage of "ManagementGroups_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // get the collection of this ManagementGroupResource
-            ManagementGroupCollection collection = tenantResource.GetManagementGroups();
-
-            // invoke the operation
-            string groupId = "20000000-0001-0000-0000-000000000000";
-            string cacheControl = "no-cache";
-            bool result = await collection.ExistsAsync(groupId, cacheControl: cacheControl);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // GetManagementGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetManagementGroup()
-        {
-            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/examples/GetManagementGroup.json
-            // this example is just showing the usage of "ManagementGroups_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // get the collection of this ManagementGroupResource
-            ManagementGroupCollection collection = tenantResource.GetManagementGroups();
-
-            // invoke the operation
-            string groupId = "20000000-0001-0000-0000-000000000000";
-            string cacheControl = "no-cache";
-            NullableResponse<ManagementGroupResource> response = await collection.GetIfExistsAsync(groupId, cacheControl: cacheControl);
-            ManagementGroupResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ManagementGroupData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // GetManagementGroupWithAncestors
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetManagementGroupWithAncestors()
         {
             // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/examples/GetManagementGroupWithAncestors.json
@@ -163,9 +99,7 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this ManagementGroupResource
             ManagementGroupCollection collection = tenantResource.GetManagementGroups();
@@ -183,79 +117,8 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetManagementGroupWithAncestors
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetManagementGroupWithAncestors()
-        {
-            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/examples/GetManagementGroupWithAncestors.json
-            // this example is just showing the usage of "ManagementGroups_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // get the collection of this ManagementGroupResource
-            ManagementGroupCollection collection = tenantResource.GetManagementGroups();
-
-            // invoke the operation
-            string groupId = "20000000-0001-0000-0000-00000000000";
-            ManagementGroupExpandType? expand = ManagementGroupExpandType.Ancestors;
-            string cacheControl = "no-cache";
-            bool result = await collection.ExistsAsync(groupId, expand: expand, cacheControl: cacheControl);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // GetManagementGroupWithAncestors
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetManagementGroupWithAncestors()
-        {
-            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/examples/GetManagementGroupWithAncestors.json
-            // this example is just showing the usage of "ManagementGroups_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // get the collection of this ManagementGroupResource
-            ManagementGroupCollection collection = tenantResource.GetManagementGroups();
-
-            // invoke the operation
-            string groupId = "20000000-0001-0000-0000-00000000000";
-            ManagementGroupExpandType? expand = ManagementGroupExpandType.Ancestors;
-            string cacheControl = "no-cache";
-            NullableResponse<ManagementGroupResource> response = await collection.GetIfExistsAsync(groupId, expand: expand, cacheControl: cacheControl);
-            ManagementGroupResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ManagementGroupData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // GetManagementGroupWithExpand
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetManagementGroupWithExpand()
         {
             // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/examples/GetManagementGroupWithExpand.json
@@ -266,9 +129,7 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this ManagementGroupResource
             ManagementGroupCollection collection = tenantResource.GetManagementGroups();
@@ -286,79 +147,8 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetManagementGroupWithExpand
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetManagementGroupWithExpand()
-        {
-            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/examples/GetManagementGroupWithExpand.json
-            // this example is just showing the usage of "ManagementGroups_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // get the collection of this ManagementGroupResource
-            ManagementGroupCollection collection = tenantResource.GetManagementGroups();
-
-            // invoke the operation
-            string groupId = "20000000-0001-0000-0000-000000000000";
-            ManagementGroupExpandType? expand = ManagementGroupExpandType.Children;
-            string cacheControl = "no-cache";
-            bool result = await collection.ExistsAsync(groupId, expand: expand, cacheControl: cacheControl);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // GetManagementGroupWithExpand
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetManagementGroupWithExpand()
-        {
-            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/examples/GetManagementGroupWithExpand.json
-            // this example is just showing the usage of "ManagementGroups_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // get the collection of this ManagementGroupResource
-            ManagementGroupCollection collection = tenantResource.GetManagementGroups();
-
-            // invoke the operation
-            string groupId = "20000000-0001-0000-0000-000000000000";
-            ManagementGroupExpandType? expand = ManagementGroupExpandType.Children;
-            string cacheControl = "no-cache";
-            NullableResponse<ManagementGroupResource> response = await collection.GetIfExistsAsync(groupId, expand: expand, cacheControl: cacheControl);
-            ManagementGroupResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ManagementGroupData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // GetManagementGroupWithPath
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetManagementGroupWithPath()
         {
             // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/examples/GetManagementGroupWithPath.json
@@ -369,9 +159,7 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this ManagementGroupResource
             ManagementGroupCollection collection = tenantResource.GetManagementGroups();
@@ -389,79 +177,8 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetManagementGroupWithPath
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetManagementGroupWithPath()
-        {
-            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/examples/GetManagementGroupWithPath.json
-            // this example is just showing the usage of "ManagementGroups_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // get the collection of this ManagementGroupResource
-            ManagementGroupCollection collection = tenantResource.GetManagementGroups();
-
-            // invoke the operation
-            string groupId = "20000000-0001-0000-0000-000000000000";
-            ManagementGroupExpandType? expand = ManagementGroupExpandType.Path;
-            string cacheControl = "no-cache";
-            bool result = await collection.ExistsAsync(groupId, expand: expand, cacheControl: cacheControl);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // GetManagementGroupWithPath
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetManagementGroupWithPath()
-        {
-            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/examples/GetManagementGroupWithPath.json
-            // this example is just showing the usage of "ManagementGroups_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // get the collection of this ManagementGroupResource
-            ManagementGroupCollection collection = tenantResource.GetManagementGroups();
-
-            // invoke the operation
-            string groupId = "20000000-0001-0000-0000-000000000000";
-            ManagementGroupExpandType? expand = ManagementGroupExpandType.Path;
-            string cacheControl = "no-cache";
-            NullableResponse<ManagementGroupResource> response = await collection.GetIfExistsAsync(groupId, expand: expand, cacheControl: cacheControl);
-            ManagementGroupResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ManagementGroupData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // GetManagementGroupsWithExpandAndRecurse
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetManagementGroupsWithExpandAndRecurse()
         {
             // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/examples/GetManagementGroupWithExpandAndRecurse.json
@@ -472,9 +189,7 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this ManagementGroupResource
             ManagementGroupCollection collection = tenantResource.GetManagementGroups();
@@ -493,9 +208,197 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetManagementGroupsWithExpandAndRecurse
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListManagementGroups()
+        {
+            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/examples/ListManagementGroups.json
+            // this example is just showing the usage of "ManagementGroups_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // get the collection of this ManagementGroupResource
+            ManagementGroupCollection collection = tenantResource.GetManagementGroups();
+
+            // invoke the operation and iterate over the result
+            string cacheControl = "no-cache";
+            await foreach (ManagementGroupResource item in collection.GetAllAsync(cacheControl: cacheControl))
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ManagementGroupData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CheckNameAvailability_CheckManagementGroupNameAvailability()
+        {
+            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/examples/CheckManagementGroupNameAvailability.json
+            // this example is just showing the usage of "ManagementGroups_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // get the collection of this ManagementGroupResource
+            ManagementGroupCollection collection = tenantResource.GetManagementGroups();
+
+            // invoke the operation
+            ManagementGroupNameAvailabilityContent content = new ManagementGroupNameAvailabilityContent
+            {
+                Name = "nameTocheck",
+                ResourceType = new ResourceType("Microsoft.Management/managementGroups"),
+            };
+            ManagementGroupNameAvailabilityResult result = await collection.CheckNameAvailabilityAsync(content);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetEntities_GetEntities()
+        {
+            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/examples/GetEntities.json
+            // this example is just showing the usage of "Entities_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // get the collection of this ManagementGroupResource
+            ManagementGroupCollection collection = tenantResource.GetManagementGroups();
+
+            // invoke the operation and iterate over the result
+            ManagementGroupCollectionGetEntitiesOptions options = new ManagementGroupCollectionGetEntitiesOptions();
+            await foreach (EntityData item in collection.GetEntitiesAsync(options))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetManagementGroup()
+        {
+            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/examples/GetManagementGroup.json
+            // this example is just showing the usage of "ManagementGroups_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // get the collection of this ManagementGroupResource
+            ManagementGroupCollection collection = tenantResource.GetManagementGroups();
+
+            // invoke the operation
+            string groupId = "20000000-0001-0000-0000-000000000000";
+            string cacheControl = "no-cache";
+            bool result = await collection.ExistsAsync(groupId, cacheControl: cacheControl);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetManagementGroupWithAncestors()
+        {
+            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/examples/GetManagementGroupWithAncestors.json
+            // this example is just showing the usage of "ManagementGroups_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // get the collection of this ManagementGroupResource
+            ManagementGroupCollection collection = tenantResource.GetManagementGroups();
+
+            // invoke the operation
+            string groupId = "20000000-0001-0000-0000-00000000000";
+            ManagementGroupExpandType? expand = ManagementGroupExpandType.Ancestors;
+            string cacheControl = "no-cache";
+            bool result = await collection.ExistsAsync(groupId, expand: expand, cacheControl: cacheControl);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetManagementGroupWithExpand()
+        {
+            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/examples/GetManagementGroupWithExpand.json
+            // this example is just showing the usage of "ManagementGroups_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // get the collection of this ManagementGroupResource
+            ManagementGroupCollection collection = tenantResource.GetManagementGroups();
+
+            // invoke the operation
+            string groupId = "20000000-0001-0000-0000-000000000000";
+            ManagementGroupExpandType? expand = ManagementGroupExpandType.Children;
+            string cacheControl = "no-cache";
+            bool result = await collection.ExistsAsync(groupId, expand: expand, cacheControl: cacheControl);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetManagementGroupWithPath()
+        {
+            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/examples/GetManagementGroupWithPath.json
+            // this example is just showing the usage of "ManagementGroups_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // get the collection of this ManagementGroupResource
+            ManagementGroupCollection collection = tenantResource.GetManagementGroups();
+
+            // invoke the operation
+            string groupId = "20000000-0001-0000-0000-000000000000";
+            ManagementGroupExpandType? expand = ManagementGroupExpandType.Path;
+            string cacheControl = "no-cache";
+            bool result = await collection.ExistsAsync(groupId, expand: expand, cacheControl: cacheControl);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetManagementGroupsWithExpandAndRecurse()
         {
             // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/examples/GetManagementGroupWithExpandAndRecurse.json
@@ -506,9 +409,7 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this ManagementGroupResource
             ManagementGroupCollection collection = tenantResource.GetManagementGroups();
@@ -523,9 +424,159 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // GetManagementGroupsWithExpandAndRecurse
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetManagementGroup()
+        {
+            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/examples/GetManagementGroup.json
+            // this example is just showing the usage of "ManagementGroups_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // get the collection of this ManagementGroupResource
+            ManagementGroupCollection collection = tenantResource.GetManagementGroups();
+
+            // invoke the operation
+            string groupId = "20000000-0001-0000-0000-000000000000";
+            string cacheControl = "no-cache";
+            NullableResponse<ManagementGroupResource> response = await collection.GetIfExistsAsync(groupId, cacheControl: cacheControl);
+            ManagementGroupResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ManagementGroupData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetManagementGroupWithAncestors()
+        {
+            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/examples/GetManagementGroupWithAncestors.json
+            // this example is just showing the usage of "ManagementGroups_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // get the collection of this ManagementGroupResource
+            ManagementGroupCollection collection = tenantResource.GetManagementGroups();
+
+            // invoke the operation
+            string groupId = "20000000-0001-0000-0000-00000000000";
+            ManagementGroupExpandType? expand = ManagementGroupExpandType.Ancestors;
+            string cacheControl = "no-cache";
+            NullableResponse<ManagementGroupResource> response = await collection.GetIfExistsAsync(groupId, expand: expand, cacheControl: cacheControl);
+            ManagementGroupResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ManagementGroupData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetManagementGroupWithExpand()
+        {
+            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/examples/GetManagementGroupWithExpand.json
+            // this example is just showing the usage of "ManagementGroups_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // get the collection of this ManagementGroupResource
+            ManagementGroupCollection collection = tenantResource.GetManagementGroups();
+
+            // invoke the operation
+            string groupId = "20000000-0001-0000-0000-000000000000";
+            ManagementGroupExpandType? expand = ManagementGroupExpandType.Children;
+            string cacheControl = "no-cache";
+            NullableResponse<ManagementGroupResource> response = await collection.GetIfExistsAsync(groupId, expand: expand, cacheControl: cacheControl);
+            ManagementGroupResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ManagementGroupData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetManagementGroupWithPath()
+        {
+            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/examples/GetManagementGroupWithPath.json
+            // this example is just showing the usage of "ManagementGroups_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // get the collection of this ManagementGroupResource
+            ManagementGroupCollection collection = tenantResource.GetManagementGroups();
+
+            // invoke the operation
+            string groupId = "20000000-0001-0000-0000-000000000000";
+            ManagementGroupExpandType? expand = ManagementGroupExpandType.Path;
+            string cacheControl = "no-cache";
+            NullableResponse<ManagementGroupResource> response = await collection.GetIfExistsAsync(groupId, expand: expand, cacheControl: cacheControl);
+            ManagementGroupResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ManagementGroupData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetManagementGroupsWithExpandAndRecurse()
         {
             // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/examples/GetManagementGroupWithExpandAndRecurse.json
@@ -536,9 +587,7 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this ManagementGroupResource
             ManagementGroupCollection collection = tenantResource.GetManagementGroups();
@@ -553,7 +602,7 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -563,111 +612,6 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        // PutManagementGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_PutManagementGroup()
-        {
-            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/examples/PutManagementGroup.json
-            // this example is just showing the usage of "ManagementGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // get the collection of this ManagementGroupResource
-            ManagementGroupCollection collection = tenantResource.GetManagementGroups();
-
-            // invoke the operation
-            string groupId = "ChildGroup";
-            ManagementGroupCreateOrUpdateContent content = new ManagementGroupCreateOrUpdateContent()
-            {
-                DisplayName = "ChildGroup",
-                Details = new CreateManagementGroupDetails()
-                {
-                    Parent = new ManagementGroupParentCreateOptions()
-                    {
-                        Id = "/providers/Microsoft.Management/managementGroups/RootGroup",
-                    },
-                },
-            };
-            string cacheControl = "no-cache";
-            ArmOperation<ManagementGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, groupId, content, cacheControl: cacheControl);
-            ManagementGroupResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ManagementGroupData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // CheckManagementGroupNameAvailability
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CheckNameAvailability_CheckManagementGroupNameAvailability()
-        {
-            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/examples/CheckManagementGroupNameAvailability.json
-            // this example is just showing the usage of "ManagementGroups_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // get the collection of this ManagementGroupResource
-            ManagementGroupCollection collection = tenantResource.GetManagementGroups();
-
-            // invoke the operation
-            ManagementGroupNameAvailabilityContent content = new ManagementGroupNameAvailabilityContent()
-            {
-                Name = "nameTocheck",
-                ResourceType = new ResourceType("Microsoft.Management/managementGroups"),
-            };
-            ManagementGroupNameAvailabilityResult result = await collection.CheckNameAvailabilityAsync(content);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // GetEntities
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetEntities_GetEntities()
-        {
-            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/examples/GetEntities.json
-            // this example is just showing the usage of "Entities_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // get the collection of this ManagementGroupResource
-            ManagementGroupCollection collection = tenantResource.GetManagementGroups();
-
-            // invoke the operation and iterate over the result
-            ManagementGroupCollectionGetEntitiesOptions options = new ManagementGroupCollectionGetEntitiesOptions() { };
-            await foreach (EntityData item in collection.GetEntitiesAsync(options))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine($"Succeeded");
         }
     }
 }

@@ -10,14 +10,77 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Reservations.Models;
+using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Reservations.Samples
 {
     public partial class Sample_TenantResourceExtensions
     {
-        // CalculateExchange
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetReservationDetails_ReservationListAll()
+        {
+            // Generated from example definition: specification/reservations/resource-manager/Microsoft.Capacity/stable/2022-11-01/examples/GetReservations.json
+            // this example is just showing the usage of "Reservation_ListAll" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // invoke the operation and iterate over the result
+            TenantResourceGetReservationDetailsOptions options = new TenantResourceGetReservationDetailsOptions { Filter = "(properties%2farchived+eq+false)", Orderby = "properties/displayName asc", Skiptoken = 50, Take = 1 };
+            await foreach (ReservationDetailResource item in tenantResource.GetReservationDetailsAsync(options))
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ReservationDetailData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CalculateReservationOrder_CalculatePrice()
+        {
+            // Generated from example definition: specification/reservations/resource-manager/Microsoft.Capacity/stable/2022-11-01/examples/CalculateReservationOrder.json
+            // this example is just showing the usage of "ReservationOrder_Calculate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // invoke the operation
+            ReservationPurchaseContent content = new ReservationPurchaseContent
+            {
+                SkuName = "standard_D1",
+                Location = new AzureLocation("westus"),
+                ReservedResourceType = ReservedResourceType.VirtualMachines,
+                BillingScopeId = new ResourceIdentifier("/subscriptions/ed3a1871-612d-abcd-a849-c2542a68be83"),
+                Term = ReservationTerm.P1Y,
+                BillingPlan = ReservationBillingPlan.Monthly,
+                Quantity = 1,
+                DisplayName = "TestReservationOrder",
+                AppliedScopeType = AppliedScopeType.Shared,
+                AppliedScopes = { },
+                ReservedResourceInstanceFlexibility = InstanceFlexibility.On,
+            };
+            CalculatePriceResult result = await tenantResource.CalculateReservationOrderAsync(content);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CalculateReservationExchange_CalculateExchange()
         {
             // Generated from example definition: specification/reservations/resource-manager/Microsoft.Capacity/stable/2022-11-01/examples/CalculateExchange.json
@@ -28,18 +91,14 @@ namespace Azure.ResourceManager.Reservations.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
-            CalculateExchangeContent content = new CalculateExchangeContent()
+            CalculateExchangeContent content = new CalculateExchangeContent
             {
-                Properties = new CalculateExchangeContentProperties()
+                Properties = new CalculateExchangeContentProperties
                 {
-                    ReservationsToPurchase =
-{
-new ReservationPurchaseContent()
+                    ReservationsToPurchase = {new ReservationPurchaseContent
 {
 SkuName = "Standard_B1ls",
 Location = new AzureLocation("westus"),
@@ -50,42 +109,33 @@ BillingPlan = ReservationBillingPlan.Upfront,
 Quantity = 1,
 DisplayName = "testDisplayName",
 AppliedScopeType = AppliedScopeType.Shared,
-AppliedScopes =
-{
-},
+AppliedScopes = {},
 IsRenewEnabled = false,
 ReservedResourceInstanceFlexibility = InstanceFlexibility.On,
-}
-},
-                    SavingsPlansToPurchase =
-{
-new SavingsPlanPurchase()
+}},
+                    SavingsPlansToPurchase = {new SavingsPlanPurchase
 {
 SkuName = "Compute_Savings_Plan",
 DisplayName = "ComputeSavingsPlan",
 BillingScopeId = new ResourceIdentifier("/subscriptions/10000000-0000-0000-0000-000000000000"),
 Term = SavingsPlanTerm.P1Y,
 AppliedScopeType = AppliedScopeType.Single,
-AppliedScopeProperties = new AppliedScopeProperties()
+AppliedScopeProperties = new AppliedScopeProperties
 {
 ResourceGroupId = new ResourceIdentifier("/subscriptions/10000000-0000-0000-0000-000000000000/resourceGroups/testrg"),
 },
-Commitment = new BenefitsCommitment()
+Commitment = new BenefitsCommitment
 {
 Grain = BenefitsCommitmentGrain.Hourly,
 CurrencyCode = "USD",
 Amount = 15.23,
 },
-}
-},
-                    ReservationsToExchange =
-{
-new ReservationToReturn()
+}},
+                    ReservationsToExchange = {new ReservationToReturn
 {
 ReservationId = new ResourceIdentifier("/providers/microsoft.capacity/reservationOrders/1f14354c-dc12-4c8d-8090-6f295a3a34aa/reservations/c8c926bd-fc5d-4e29-9d43-b68340ac23a6"),
 Quantity = 1,
-}
-},
+}},
                 },
             };
             ArmOperation<CalculateExchangeResult> lro = await tenantResource.CalculateReservationExchangeAsync(WaitUntil.Completed, content);
@@ -94,9 +144,8 @@ Quantity = 1,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Exchange
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exchange_Exchange()
         {
             // Generated from example definition: specification/reservations/resource-manager/Microsoft.Capacity/stable/2022-11-01/examples/Exchange.json
@@ -107,12 +156,10 @@ Quantity = 1,
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
-            ExchangeContent content = new ExchangeContent()
+            ExchangeContent content = new ExchangeContent
             {
                 ExchangeRequestSessionId = Guid.Parse("66e2ac8f-439e-4345-8235-6fef07608081"),
             };

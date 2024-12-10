@@ -83,12 +83,8 @@ public class Trycep(ProvisioningTestBase test) : IAsyncDisposable
 
     public Trycep Define(ProvisionableConstruct resource)
     {
-        Infra = resource.ParentInfrastructure;
-        if (Infra is null)
-        {
-            Infra = new Infrastructure();
-            Infra.Add(resource);
-        }
+        Infra = new Infrastructure();
+        Infra.Add(resource);
         Plan = Infra.Build(BuildOptions);
         return this;
     }
