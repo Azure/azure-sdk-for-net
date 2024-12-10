@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
@@ -20,8 +19,8 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetATargetThatExtendsAVirtualMachineResource()
         {
-            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/GetTarget.json
-            // this example is just showing the usage of "Targets_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01-preview/Targets_Get.json
+            // this example is just showing the usage of "Target_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -53,8 +52,8 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteATargetThatExtendsAVirtualMachineResource()
         {
-            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/DeleteTarget.json
-            // this example is just showing the usage of "Targets_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01-preview/Targets_Delete.json
+            // this example is just showing the usage of "Target_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -82,8 +81,8 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateUpdateATargetThatExtendsAVirtualMachineResource()
         {
-            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/CreateUpdateTarget.json
-            // this example is just showing the usage of "Targets_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01-preview/Targets_CreateOrUpdate.json
+            // this example is just showing the usage of "Target_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -97,22 +96,15 @@ namespace Azure.ResourceManager.Chaos.Samples
             string parentProviderNamespace = "Microsoft.Compute";
             string parentResourceType = "virtualMachines";
             string parentResourceName = "exampleVM";
-            string targetName = "Microsoft-Agent";
+            string targetName = "Microsoft-VirtualMachine";
             ResourceIdentifier chaosTargetResourceId = ChaosTargetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, parentProviderNamespace, parentResourceType, parentResourceName, targetName);
             ChaosTargetResource chaosTarget = client.GetChaosTargetResource(chaosTargetResourceId);
 
             // invoke the operation
-            ChaosTargetData data = new ChaosTargetData(new Dictionary<string, BinaryData>
+            ChaosTargetData data = new ChaosTargetData
             {
-                ["identities"] = BinaryData.FromObjectAsJson(new object[]
-            {
-new
-{
-type = "CertificateSubjectIssuer",
-subject = "CN=example.subject",
-}
-            })
-            });
+                Properties = { },
+            };
             ArmOperation<ChaosTargetResource> lro = await chaosTarget.UpdateAsync(WaitUntil.Completed, data);
             ChaosTargetResource result = lro.Value;
 

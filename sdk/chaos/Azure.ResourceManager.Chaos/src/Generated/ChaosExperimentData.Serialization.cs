@@ -40,7 +40,8 @@ namespace Azure.ResourceManager.Chaos
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -63,6 +64,11 @@ namespace Azure.ResourceManager.Chaos
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(CustomerDataStorage))
+            {
+                writer.WritePropertyName("customerDataStorage"u8);
+                writer.WriteObjectValue(CustomerDataStorage, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -96,6 +102,7 @@ namespace Azure.ResourceManager.Chaos
             ChaosProvisioningState? provisioningState = default;
             IList<ChaosExperimentStep> steps = default;
             IList<ChaosTargetSelector> selectors = default;
+            CustomerDataStorageProperties customerDataStorage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +113,8 @@ namespace Azure.ResourceManager.Chaos
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -190,6 +198,15 @@ namespace Azure.ResourceManager.Chaos
                             selectors = array;
                             continue;
                         }
+                        if (property0.NameEquals("customerDataStorage"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            customerDataStorage = CustomerDataStorageProperties.DeserializeCustomerDataStorageProperties(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -206,10 +223,11 @@ namespace Azure.ResourceManager.Chaos
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                identity,
                 provisioningState,
                 steps,
                 selectors,
+                customerDataStorage,
+                identity,
                 serializedAdditionalRawData);
         }
 
