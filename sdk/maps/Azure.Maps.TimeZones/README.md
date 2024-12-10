@@ -58,7 +58,7 @@ MapsTimeZoneClient client = new MapsTimeZoneClient(credential, clientId);
 
 Shared access signature (SAS) tokens are authentication tokens created using the JSON Web token (JWT) format and are cryptographically signed to prove authentication for an application to the Azure Maps REST API.
 
-Before integrating SAS token authentication, we need to install `Azure.ResourceManager` and `Azure.ResourceManager.Maps` (version `1.1.0-beta.2` or higher):
+Before integrating SAS token authentication, we need to install `Azure.ResourceManager` and `Azure.ResourceManager.Maps` (version `1.1.0` or higher):
 
 ```powershell
 dotnet add package Azure.ResourceManager

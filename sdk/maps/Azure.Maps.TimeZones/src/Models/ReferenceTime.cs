@@ -26,7 +26,7 @@ namespace Azure.Maps.TimeZones
             _standardOffset = standardOffset;
             if (TimeSpan.TryParse(standardOffset, out TimeSpan StandardOffsetValue))
             {
-                StandardOffsetTimeSpan = StandardOffsetValue;
+                StandardOffset = StandardOffsetValue;
             }
 
             _daylightSavings = daylightSavings;
@@ -50,7 +50,7 @@ namespace Azure.Maps.TimeZones
         [CodeGenMember("StandardOffset")]
         internal string _standardOffset { get; }
         /// <summary> UTC offset in <see cref="TimeSpan"/> format in effect at the <c>ReferenceUTCTimestamp</c>. </summary>
-        public TimeSpan StandardOffsetTimeSpan { get; }
+        public TimeSpan StandardOffset { get; }
 
         [CodeGenMember("DaylightSavings")]
         internal string _daylightSavings { get; }

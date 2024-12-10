@@ -103,9 +103,9 @@ namespace Azure.Storage.DataMovement
         internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
-        /// If the transfer status of the job changes then the event will get added to this handler.
+        /// If the transfer status of the job part changes then the event will get added to this handler.
         /// </summary>
-        public SyncAsyncEventHandler<TransferStatusEventArgs> PartTransferStatusEventHandler { get; internal set; }
+        public SyncAsyncEventHandler<JobPartStatusEventArgs> PartTransferStatusEventHandler { get; internal set; }
 
         /// <summary>
         /// If the transfer status of the job changes then the event will get added to this handler.
@@ -155,7 +155,7 @@ namespace Azure.Storage.DataMovement
             ITransferCheckpointer checkpointer,
             TransferProgressTracker progressTracker,
             ArrayPool<byte> arrayPool,
-            SyncAsyncEventHandler<TransferStatusEventArgs> jobPartEventHandler,
+            SyncAsyncEventHandler<JobPartStatusEventArgs> jobPartEventHandler,
             SyncAsyncEventHandler<TransferStatusEventArgs> statusEventHandler,
             SyncAsyncEventHandler<TransferItemFailedEventArgs> failedEventHandler,
             SyncAsyncEventHandler<TransferItemSkippedEventArgs> skippedEventHandler,
@@ -293,8 +293,9 @@ namespace Azure.Storage.DataMovement
                 await SetCheckpointerStatusAsync().ConfigureAwait(false);
 
                 await PartTransferStatusEventHandler.RaiseAsync(
-                    new TransferStatusEventArgs(
+                    new JobPartStatusEventArgs(
                         _dataTransfer.Id,
+                        PartNumber,
                         JobPartStatus.DeepCopy(),
                         false,
                         _cancellationToken),
@@ -359,8 +360,9 @@ namespace Azure.Storage.DataMovement
             if (JobPartStatus.SetSkippedItem())
             {
                 await PartTransferStatusEventHandler.RaiseAsync(
-                    new TransferStatusEventArgs(
+                    new JobPartStatusEventArgs(
                         _dataTransfer.Id,
+                        PartNumber,
                         JobPartStatus.DeepCopy(),
                         false,
                         _cancellationToken),
@@ -414,8 +416,9 @@ namespace Azure.Storage.DataMovement
                 if (JobPartStatus.SetFailedItem())
                 {
                     await PartTransferStatusEventHandler.RaiseAsync(
-                        new TransferStatusEventArgs(
+                        new JobPartStatusEventArgs(
                             _dataTransfer.Id,
+                            PartNumber,
                             JobPartStatus.DeepCopy(),
                             false,
                             _cancellationToken),
