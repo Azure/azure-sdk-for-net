@@ -17,7 +17,7 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 
-#mgmt-debug: 
+# mgmt-debug:
 #  show-serialized-names: true
 
 format-by-name-rules:
@@ -257,6 +257,7 @@ rename-mapping:
   SecureScoreLevel: BackupVaultSecureScoreLevel
   FeatureSettings: BackupVaultFeatureSettings
   IdentityDetails: DataProtectionIdentityDetails
+  IdentityDetails.userAssignedIdentityArmUrl: UserAssignedIdentityArmUriString
   NamespacedNameResource: NamespacedName
   CrossRegionRestoreDetails.sourceBackupInstanceId : -|arm-id
   CrossRegionRestoreDetails.sourceRegion  : -|azure-location
