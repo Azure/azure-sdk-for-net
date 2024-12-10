@@ -605,7 +605,11 @@ namespace Azure.Storage.DataMovement
         internal async Task<bool> IsTransferJobInProgress()
         {
             // If the main transfer has been stopped, do not process this part.
-            if (_dataTransfer.TransferStatus.State == DataTransferState.Pausing)
+            if (_dataTransfer.TransferStatus.State == DataTransferState.InProgress)
+            {
+                return true;
+            }
+            else if (_dataTransfer.TransferStatus.State == DataTransferState.Pausing)
             {
                 await OnTransferStateChangedAsync(DataTransferState.Paused).ConfigureAwait(false);
                 return false;
@@ -615,7 +619,8 @@ namespace Azure.Storage.DataMovement
                 await OnTransferStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
                 return false;
             }
-            return true;
+            // We're in an unexpected state, we should stop processing the job part.
+            throw Errors.JobStatusInvalidProcessingJobPart(_dataTransfer.TransferStatus.State);
         }
     }
 }
