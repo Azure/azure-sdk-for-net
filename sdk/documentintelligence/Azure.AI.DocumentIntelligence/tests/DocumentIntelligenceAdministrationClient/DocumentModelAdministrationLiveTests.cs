@@ -28,7 +28,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
         [RecordedTest]
         [TestCaseSource(nameof(s_buildDocumentModelTestCases))]
-        public async Task BuildDocumentModelWithAzureBlobContentSource(DocumentBuildMode buildMode)
+        public async Task BuildDocumentModelWithBlobContentSource(DocumentBuildMode buildMode)
         {
             if (buildMode == DocumentBuildMode.Neural && Recording.Mode == RecordedTestMode.Live)
             {

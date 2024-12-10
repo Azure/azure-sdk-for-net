@@ -16,7 +16,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="buildMode"> Custom document model build mode. </param>
         /// <param name="blobSource"> Azure Blob Storage location containing the training data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="blobSource"/> is null. </exception>
-        public BuildDocumentModelOptions(string modelId, DocumentBuildMode buildMode, BlobContentSource blobSource)
+        public BuildDocumentModelOptions(string modelId, DocumentBuildMode buildMode, BlobContentSource blobSource) : this(modelId, buildMode)
         {
             Argument.AssertNotNull(blobSource, nameof(blobSource));
 
@@ -28,7 +28,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="buildMode"> Custom document model build mode. </param>
         /// <param name="blobFileListSource"> Azure Blob Storage file list specifying the training data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="blobFileListSource"/> is null. </exception>
-        public BuildDocumentModelOptions(string modelId, DocumentBuildMode buildMode, BlobFileListContentSource blobFileListSource)
+        public BuildDocumentModelOptions(string modelId, DocumentBuildMode buildMode, BlobFileListContentSource blobFileListSource) : this(modelId, buildMode)
         {
             Argument.AssertNotNull(blobFileListSource, nameof(blobFileListSource));
 

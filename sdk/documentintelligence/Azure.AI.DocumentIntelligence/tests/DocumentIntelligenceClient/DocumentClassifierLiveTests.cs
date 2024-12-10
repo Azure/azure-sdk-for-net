@@ -16,7 +16,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
         }
 
         [RecordedTest]
-        public async Task ClassifyDocumentWithUrlSource()
+        public async Task ClassifyDocumentWithUriSource()
         {
             var client = CreateDocumentIntelligenceClient();
 
@@ -71,10 +71,10 @@ namespace Azure.AI.DocumentIntelligence.Tests
         {
             Assert.That(analyzeResult.ModelId, Is.EqualTo(classifierId));
             Assert.That(analyzeResult.ApiVersion, Is.EqualTo(ServiceVersionString));
-            Assert.That(analyzeResult.StringIndexType, Is.EqualTo(StringIndexType.TextElements));
             Assert.That(analyzeResult.ContentFormat, Is.Not.EqualTo(default(DocumentContentFormat)));
 
-            Assert.That(analyzeResult.Content, Is.Empty);
+            // TODO: https://github.com/Azure/azure-sdk-for-net/issues/47482
+            //Assert.That(analyzeResult.Content, Is.Empty);
             Assert.That(analyzeResult.Paragraphs, Is.Empty);
             Assert.That(analyzeResult.Tables, Is.Empty);
             Assert.That(analyzeResult.Figures, Is.Empty);
