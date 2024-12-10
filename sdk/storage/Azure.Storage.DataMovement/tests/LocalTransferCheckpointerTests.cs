@@ -855,5 +855,39 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.CatchAsync<ArgumentException>(
                 async () => await transferCheckpointer.SetJobPartTransferStatusAsync(transferId, partNumber, newStatus));
         }
+
+        [Test]
+        public async Task JobDeletedOnComplete()
+        {
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
+            LocalTransferCheckpointer transferCheckpointer = new(test.DirectoryPath);
+
+            string transferId = GetNewTransferId();
+            await AddJobToCheckpointer(transferCheckpointer, transferId);
+
+            Assert.That(await transferCheckpointer.GetJobStatusAsync(transferId), Is.Not.Null);
+
+            await transferCheckpointer.SetJobTransferStatusAsync(transferId, SuccessfulCompletedStatus);
+
+            Assert.That(async () => await transferCheckpointer.GetJobStatusAsync(transferId), Throws.TypeOf<ArgumentException>());
+        }
+
+        [Test]
+        public async Task JobUncachedOnPause()
+        {
+            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
+            LocalTransferCheckpointer transferCheckpointer = new(test.DirectoryPath);
+
+            string transferId = GetNewTransferId();
+            await AddJobToCheckpointer(transferCheckpointer, transferId);
+
+            Assert.That(await transferCheckpointer.GetJobStatusAsync(transferId), Is.Not.Null);
+
+            await transferCheckpointer.SetJobTransferStatusAsync(transferId, PausedStatus);
+
+            Assert.That(transferCheckpointer._transferStates.ContainsKey(transferId), Is.False);
+            Assert.That(await transferCheckpointer.GetJobStatusAsync(transferId), Is.Not.Null);
+            Assert.That(transferCheckpointer._transferStates.ContainsKey(transferId), Is.True);
+        }
     }
 }

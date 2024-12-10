@@ -27,7 +27,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Stores references to the memory mapped files stored by IDs.
         /// </summary>
-        private Dictionary<string, JobPlanFile> _transferStates;
+        internal readonly Dictionary<string, JobPlanFile> _transferStates;
 
         /// <summary>
         /// Initializes a new instance of <see cref="LocalTransferCheckpointer"/> class.
