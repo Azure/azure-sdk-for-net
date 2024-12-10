@@ -442,7 +442,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
 
         ClientPipeline pipeline = ClientPipeline.Create();
 
-        using TestServer testServer = new TestServer(
+        using TestServer testServer = new(
             async context =>
             {
                 context.Response.StatusCode = 201;
@@ -477,7 +477,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
 
         ClientPipeline pipeline = ClientPipeline.Create();
 
-        using TestServer testServer = new TestServer(
+        using TestServer testServer = new(
             async context =>
             {
                 await context.Response.WriteAsync("Hello World!");
@@ -515,7 +515,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
 
         ClientPipeline pipeline = ClientPipeline.Create();
 
-        using TestServer testServer = new TestServer(
+        using TestServer testServer = new(
             async context =>
             {
                 context.Response.StatusCode = 400;

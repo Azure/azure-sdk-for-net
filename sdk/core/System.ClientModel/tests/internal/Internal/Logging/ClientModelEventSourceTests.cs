@@ -339,7 +339,7 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
     [Test]
     public async Task ReceivingAnErrorResponseProducesAnErrorResponseLogMessage() // ErrorResponseEvent, ErrorResponseContentEvent
     {
-        byte[] responseContent = new byte[] { 6, 7, 8, 9, 0 };
+        byte[] responseContent = [6, 7, 8, 9, 0];
 
         ClientLoggingOptions loggingOptions = new()
         {
@@ -649,11 +649,13 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         CollectionAssert.IsEmpty(_listener.EventsById(LoggingEventIds.RequestContentTextEvent));
 
         CollectionAssert.IsEmpty(_listener.EventsById(LoggingEventIds.ResponseContentEvent));
+        CollectionAssert.IsEmpty(_listener.EventsById(LoggingEventIds.ResponseContentTextEvent));
         CollectionAssert.IsEmpty(_listener.EventsById(LoggingEventIds.ResponseContentBlockEvent));
         CollectionAssert.IsEmpty(_listener.EventsById(LoggingEventIds.ResponseContentTextBlockEvent));
 
         CollectionAssert.IsEmpty(_listener.EventsById(LoggingEventIds.ErrorResponseContentEvent));
         CollectionAssert.IsEmpty(_listener.EventsById(LoggingEventIds.ErrorResponseContentTextEvent));
+        CollectionAssert.IsEmpty(_listener.EventsById(LoggingEventIds.ErrorResponseContentBlockEvent));
         CollectionAssert.IsEmpty(_listener.EventsById(LoggingEventIds.ErrorResponseContentTextBlockEvent));
     }
 

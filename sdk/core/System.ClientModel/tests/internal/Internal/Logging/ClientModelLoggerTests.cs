@@ -66,7 +66,7 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
     [Test]
     public async Task NoEventsAreWrittenToEventSourceWhenILoggerIsConfigured()
     {
-        TestClientEventListener listener = new();
+        using TestClientEventListener listener = new();
 
         string requestContent = "Hello";
         string responseContent = "World";
@@ -349,7 +349,7 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
     [Test]
     public async Task ReceivingAnErrorResponseProducesAnErrorResponseLogMessage() // ErrorResponseEvent, ErrorResponseContentEvent
     {
-        byte[] responseContent = new byte[] { 6, 7, 8, 9, 0 };
+        byte[] responseContent = [ 6, 7, 8, 9, 0 ];
 
         _loggingOptions.EnableMessageContentLogging = true;
         _loggingOptions.MessageContentSizeLimit = int.MaxValue;
@@ -566,7 +566,7 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
 
         ClientPipeline pipeline = ClientPipeline.Create(options);
 
-        PipelineMessage message = pipeline.CreateMessage();
+        using PipelineMessage message = pipeline.CreateMessage();
         message.Request.Method = "GET";
         message.Request.Uri = new Uri("http://example.com");
         message.Request.Headers.Add("User-Agent", "agent");
@@ -596,7 +596,7 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
 
         ClientPipeline pipeline = ClientPipeline.Create(options);
 
-        PipelineMessage message = pipeline.CreateMessage();
+        using PipelineMessage message = pipeline.CreateMessage();
         message.Request.Method = "GET";
         message.Request.Uri = new Uri("http://example.com");
         message.Request.Content = BinaryContent.Create(new BinaryData(requestContent));
@@ -630,7 +630,7 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
         };
         ClientPipeline pipeline = ClientPipeline.Create(options);
 
-        PipelineMessage message = pipeline.CreateMessage();
+        using PipelineMessage message = pipeline.CreateMessage();
         message.Request.Method = "GET";
         message.Request.Uri = new Uri("http://example.com");
         message.Request.Content = BinaryContent.Create(new BinaryData(requestContent));
@@ -663,11 +663,13 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
         CollectionAssert.IsEmpty(logger.EventsById(LoggingEventIds.RequestContentTextEvent));
 
         CollectionAssert.IsEmpty(logger.EventsById(LoggingEventIds.ResponseContentEvent));
+        CollectionAssert.IsEmpty(logger.EventsById(LoggingEventIds.ResponseContentTextEvent));
         CollectionAssert.IsEmpty(logger.EventsById(LoggingEventIds.ResponseContentBlockEvent));
         CollectionAssert.IsEmpty(logger.EventsById(LoggingEventIds.ResponseContentTextBlockEvent));
 
         CollectionAssert.IsEmpty(logger.EventsById(LoggingEventIds.ErrorResponseContentEvent));
         CollectionAssert.IsEmpty(logger.EventsById(LoggingEventIds.ErrorResponseContentTextEvent));
+        CollectionAssert.IsEmpty(logger.EventsById(LoggingEventIds.ErrorResponseContentBlockEvent));
         CollectionAssert.IsEmpty(logger.EventsById(LoggingEventIds.ErrorResponseContentTextBlockEvent));
     }
 
@@ -678,7 +680,7 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
     {
         MockPipelineResponse response = new(status: statusCode, mockHeaders: responseHeaders);
 
-        byte[] responseContent = Encoding.UTF8.GetBytes("Hello world");
+        byte[] responseContent = Encoding.UTF8.GetBytes("Hello world...");
         if (isSeekable)
         {
             response.ContentStream = new MemoryStream(responseContent);
@@ -701,9 +703,15 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
 
         if (IsAsync)
         {
+#if NET462
             Assert.AreEqual(6, await response.ContentStream.ReadAsync(buffer, 5, 6));
             Assert.AreEqual(5, await response.ContentStream.ReadAsync(buffer, 6, 5));
             Assert.AreEqual(0, await response.ContentStream.ReadAsync(buffer, 0, 5));
+#else
+            Assert.AreEqual(6, await response.ContentStream.ReadAsync(buffer.AsMemory(5, 6)));
+            Assert.AreEqual(5, await response.ContentStream.ReadAsync(buffer.AsMemory(6, 5)));
+            Assert.AreEqual(0, await response.ContentStream.ReadAsync(buffer.AsMemory(0, 5)));
+#endif
         }
         else
         {
@@ -732,7 +740,7 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
 
         ClientPipeline pipeline = ClientPipeline.Create(options);
 
-        PipelineMessage message = pipeline.CreateMessage();
+        using PipelineMessage message = pipeline.CreateMessage();
         message.Request.Method = "GET";
         message.Request.Uri = requestUri ?? new Uri("http://example.com");
 
@@ -763,6 +771,7 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
         }
 
         await pipeline.SendSyncOrAsync(message, IsAsync);
+        Console.WriteLine("");
     }
 
     #endregion
