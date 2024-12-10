@@ -135,8 +135,5 @@ namespace Azure.Storage
 
         public static InvalidOperationException CollisionTransferId(string id)
             => new InvalidOperationException($"Transfer Id Collision: The transfer id, {id}, already exists in the transfer manager.");
-
-        public static InvalidOperationException JobStatusInvalidProcessingJobPart(DataTransferState state)
-            => new InvalidOperationException($"Error: The transfer job part unexpectedly has a job status of {state} and can not continue from this state.");
     }
 }
