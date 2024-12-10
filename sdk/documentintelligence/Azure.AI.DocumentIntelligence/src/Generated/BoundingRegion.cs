@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary> Bounding polygon on a specific page of the input. </summary>
-    public partial class BoundingRegion
+    public readonly partial struct BoundingRegion
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -44,7 +44,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private readonly IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BoundingRegion"/>. </summary>
         /// <param name="pageNumber"> 1-based page number of page containing the bounding region. </param>
@@ -80,7 +80,7 @@ namespace Azure.AI.DocumentIntelligence
         }
 
         /// <summary> Initializes a new instance of <see cref="BoundingRegion"/> for deserialization. </summary>
-        internal BoundingRegion()
+        public BoundingRegion()
         {
         }
 
