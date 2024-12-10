@@ -20,7 +20,6 @@ namespace Azure.Storage.DataMovement
         ///  Will handle the calling the commit block list API once
         ///  all commit blocks have been uploaded.
         /// </summary>
-        private SemaphoreSlim _chunkHandlerLock = new SemaphoreSlim(1, 1);
         private CommitChunkHandler _commitBlockHandler;
 
         /// <summary>
@@ -544,13 +543,11 @@ namespace Azure.Storage.DataMovement
 
         public override async Task DisposeHandlersAsync()
         {
-            _chunkHandlerLock.Wait();
             if (_commitBlockHandler != default)
             {
                 await _commitBlockHandler.DisposeAsync().ConfigureAwait(false);
                 _commitBlockHandler = null;
             }
-            _chunkHandlerLock.Release();
         }
     }
 }

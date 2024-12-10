@@ -1076,8 +1076,8 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory sourceDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory destinationDirectory = DisposingLocalDirectory.GetTestDirectory();
             BlobServiceClient service = GetServiceClient_OAuth();
-            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync(service);
-            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
+            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync(service, publicAccessType: PublicAccessType.None);
+            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service, publicAccessType: PublicAccessType.None);
 
             BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
             LocalFilesStorageResourceProvider localProvider = new();
@@ -1157,7 +1157,7 @@ namespace Azure.Storage.DataMovement.Tests
         [LiveOnly]
         public async Task ResumeTransferAsync_Directory_Large(
             [Values(TransferDirection.Upload, TransferDirection.Download, TransferDirection.Copy)] TransferDirection transferType,
-            [Values(20)] int blobCount,
+            [Values(100)] int blobCount,
             [Values(0, 500, 2000)] int delayInMs)
         {
             // This test is not really meant to run in a pipeline and may fail locally

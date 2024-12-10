@@ -20,7 +20,6 @@ namespace Azure.Storage.DataMovement
         ///  Will handle the calling the commit block list API once
         ///  all commit blocks have been uploaded.
         /// </summary>
-        private SemaphoreSlim _chunkHandlerLock = new SemaphoreSlim(1, 1);
         private DownloadChunkHandler _downloadChunkHandler;
 
         /// <summary>
@@ -515,13 +514,11 @@ namespace Azure.Storage.DataMovement
 
         public override async Task DisposeHandlersAsync()
         {
-            _chunkHandlerLock.Wait();
             if (_downloadChunkHandler != default)
             {
                 await _downloadChunkHandler.DisposeAsync().ConfigureAwait(false);
                 _downloadChunkHandler = null;
             }
-            _chunkHandlerLock.Release();
         }
 
         private async Task CreateZeroLengthDownload()
