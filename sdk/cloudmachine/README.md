@@ -50,19 +50,20 @@ Open `Program.cs` file and add the following two lines of code to the top of the
 ```csharp
 using Azure.CloudMachine;
 
-if (CloudMachineInfrastructure.Configure(args)) return;
+CloudMachineInfrastructure infrastrucutre = new();
+if (infrastrucutre.TryExecuteCommand(args)) return;
 ```
-The `CloudMachineInfrastructure.Configure` call allows running the app with a `-bicep` switch, which will generate bicep files required to provision CloudMachine resources in Azure. Let's generate these bicep files now.
+
+The `TryExecuteCommand` call allows running the app with a `-init` switch, which will generate bicep files required to provision CloudMachine resources in Azure. Let's generate these bicep files now.
 ```dotnetcli
-dotnet run -bicep
+dotnet run -init
 ```
 As you can see, a folder called `infra` was created with several bicep files in it. Let's now initialize the project.
+
 ```dotnetcli
 azd init
 ```
-select template, choose 'yes' when asked 'Continue initializing an app here?', choose the 'minimal' template, and use 'cmserver' as the environment name
-
-Once the initialization completes, let's provision the resources. Select `eastus` as the region
+type 'demo' as the environment name, and then let's provision the resources (select `eastus` as the region):
 ```dotnetcli
 azd provision
 ```
@@ -77,213 +78,53 @@ az resource list --resource-group <resource_group_from_command_line> --output ta
 
 #### Use CDK to add resources to the CloudMachine
 
-Since we are writing an AI application, we need to provision Azure OpenAI resources. To do this, add the follwoing class to the end of the `Program.cs` file:
+Since we are writing an AI application, we need to provision Azure OpenAI resources. To do this, add the follwoing line of code right below where the infrastructure instance is created:
 ```csharp
-class AssistantService {
-    internal static void Configure(CloudMachineInfrastructure cm) {
-        cm.AddFeature(new OpenAIFeature() { Chat = new AIModel("gpt-4o-mini", "2024-07-18") });
-    }
-}
-```
-Then change the configuration call at the beginning of the file to:
-```csharp
-if (CloudMachineInfrastructure.Configure(args, AssistantService.Configure)) return;
+infrastrucutre.AddFeature(new OpenAIModelFeature("gpt-4o-mini", "2024-07-18"));
 ```
 Now regenerate the bicep files and re-provision
 ```dotnetcli
-dotnet run -bicep
+dotnet run -init
 azd provision
 ```
 
+#### Add CloudMachineClient to ASP.NET DI Container
+You will be using `CloudMachineClient` to access rources provisioned in the cloud machine. Let's add such client to the DI container such that it is avaliable to ASP.NET handlers
+```dotnetcli
+builder.AddCloudMachine(infrastrucutre);
+```
 #### Call CloudMachine APIs
 
-You are now ready to call Azure OpenAI service from the app. To do this, add `CloudMachineClient` field and a `Chat` method to `AssistantService`:
-```csharp
-class AssistantService {
-    CloudMachineClient cm = new CloudMachineClient();
+You are now ready to call Azure OpenAI service from the app. To do this, change the line of code that maps the application root to the following:
 
-    public async Task<string> Chat(string message) {
-        var client = cm.GetOpenAIChatClient();
-        ChatCompletion completion = await client.CompleteChatAsync(message);
-        return completion.Content[0].Text;
-    }
-}
-```
-Lastly, create an instance of the service and call the `Chat` method when the user navigates to the root URL:
 ```csharp
-var service = new AssistantService();
-app.MapGet("/", async () => await service.Chat("List all noble gases"));
+app.MapGet("/", (CloudMachineClient cm) => cm.GetOpenAIChatClient().CompleteChat("list all noble gases").AsText());
 ```
+
 The full program should now look like the following:
 ```csharp
 using Azure.CloudMachine;
 using Azure.CloudMachine.OpenAI;
-using OpenAI.Chat;
 
-if (CloudMachineInfrastructure.Configure(args, AssistantService.Configure)) return;
+CloudMachineInfrastructure infrastrucutre = new();
+infrastrucutre.AddFeature(new OpenAIModelFeature("gpt-4o-mini", "2024-07-18"));
+if (infrastrucutre.TryExecuteCommand(args)) return;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.AddCloudMachine(infrastrucutre);
+
 var app = builder.Build();
 
-var service = new AssistantService();
-app.MapGet("/", async () => await service.Chat("List all noble gases"));
+app.MapGet("/", (CloudMachineClient cm) => cm.GetOpenAIChatClient().CompleteChat("list all noble gases").AsText());
 
 app.Run();
-
-class AssistantService {
-    CloudMachineClient cm = new CloudMachineClient();
-
-    public async Task<string> Chat(string message) {
-        var client = cm.GetOpenAIChatClient();
-        ChatCompletion completion = await client.CompleteChatAsync(message);
-        return completion.Content[0].Text;
-    }
-
-    internal static void Configure(CloudMachineInfrastructure cm) {
-        cm.AddFeature(new OpenAIFeature() {
-            Chat = new AIModel("gpt-4o-mini", "2024-07-18")
-        });
-    }
-}
 ```
+
 You can now start the application
 ```dotnetcli
 dotnet run
 ```
 and navigate to the URL printed in the console.
-
-#### Use TDK to expose Web APIs and generate TypeSpec
-First, let's define an API we want to expose. We will do it using a C# interface. Add the following interface to the end of `Program.cs`:
-```csharp
-interface IAssistantService {
-    Task<string> Chat(string message);
-}
-```
-Make sure that the `AssistantService` class implements the interface:
-```csharp
-class AssistantService : IAssistantService
-```
-Expose the service methods as web APIs by adding the following line after the existing `var service = new AssistantService();` line:
-```csharp
-app.Map(service);
-```
-Lastly, add the ability to generate TypeSpec for the new API by adding a new statement to the `Configure` method
-```csharp
-cm.AddEndpoints<IAssistantService>();
-```
-Your program shoud now look like the following:
-```csharp
-using Azure.CloudMachine;
-using Azure.CloudMachine.OpenAI;
-using OpenAI.Chat;
-
-if (CloudMachineInfrastructure.Configure(args, AssistantService.Configure)) return;
-
-var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
-
-var service = new AssistantService();
-app.Map(service);
-app.MapGet("/", async () => await service.Chat("List all noble gases"));
-
-app.Run();
-
-class AssistantService : IAssistantService {
-    CloudMachineClient cm = new CloudMachineClient();
-
-    public async Task<string> Chat(string message) {
-        var client = cm.GetOpenAIChatClient();
-        ChatCompletion completion = await client.CompleteChatAsync(message);
-        return completion.Content[0].Text;
-    }
-
-    internal static void Configure(CloudMachineInfrastructure cm) {
-        cm.AddFeature(new OpenAIFeature() {
-            Chat = new AIModel("gpt-4o-mini", "2024-07-18")
-        });
-        cm.AddEndpoints<IAssistantService>();
-    }
-}
-
-interface IAssistantService {
-    Task<string> Chat(string message);
-}
-```
-You can now start the application and browse to the /chat endpoint [TBD on how to pass the parameter]
-
-But what's more interesting, you can run the app with the -tsp switch to generate TypeSpec for the endpoint:
-```dotnetcli
-dotnet run -tsp
-```
-This will create a `tsp` directory, `AssistantService.tsp` file, with the following contents:
-```tsp
-import "@typespec/http";
-import "@typespec/rest";
-import "@azure-tools/typespec-client-generator-core";
-
-@service({
-  title: "AssistantService",
-})
-
-namespace AssistantService;
-
-using TypeSpec.Http;
-using TypeSpec.Rest;
-using Azure.ClientGenerator.Core;
-
-@client interface AssistantServiceClient {
-  @get @route("chat") Chat(@body message: string) : {
-    @statusCode statusCode: 200;
-    @body response : string;
-  };
-}
-```
-#### Generate client libraries from TypeSpec
-Let's now generate and build a C# client library from the `AssistantService.tsp` file:
-```dotnetcli
-cd ..
-npm install @typespec/http-client-csharp
-tsp compile .\server\tsp\AssistantService.tsp --emit "@typespec/http-client-csharp"
-dotnet build tsp-output\@typespec\http-client-csharp\src\AssistantService.csproj
-```
-You can also generate libraries for other languages, e.g.
-```dotnetcli
-npm install @typespec/http-client-python
-tsp compile .\server\tsp\AssistantService.tsp --emit "@typespec/http-client-python"
-```
-
-#### Create command line client app for the service
-```dotnetcli
-mkdir cmdclient
-cd cmdclient
-dotnet new console
-dotnet add reference ..\tsp-output\@typespec\http-client-csharp\src\AssistantService.csproj
-```
-And change the `Program.cs` file to the following, replacing the client URI with the URI in your server's launchsettings.json file ('cmdemo\server\Properties' folder)
-
-```csharp
-using AssistantService;
-
-var client = new AssistantServiceClient(new Uri("http://localhost:5121/"));
-
-while(true){
-    string message = Console.ReadLine();
-    var completion = client.Chat(message);
-    Console.WriteLine(completion);
-}
-```
-Now start the server
-```dotnetcli
-start cmd
-cd..
-cd server
-dotnet run
-```
-Go back to the client project command window and start the client:
-```dotnetcli
-dotnet run
-```
-You can use the simple command line app to ask Azure OpenAI some questions.
 
 ## Examples
 
