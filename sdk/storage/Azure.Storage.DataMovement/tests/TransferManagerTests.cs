@@ -51,6 +51,28 @@ public class TransferManagerTests
         }
     }
 
+    private static async Task ProcessChunksAssert(
+        StepProcessor<Func<Task>> chunksProcessor,
+        int chunksPerPart,
+        int numChunks,
+        int totalJobParts)
+    {
+        // process chunks
+        int chunksStepped = await chunksProcessor.StepAll();
+        // Check if all chunks stepped through
+        if (chunksPerPart > 1)
+        {
+            // Multichunk transfer sends a completion chunk after all the other chunks stepped through.
+            await Task.Delay(50);
+            Assert.That(await chunksProcessor.StepAll() + chunksStepped, Is.EqualTo(numChunks + totalJobParts));
+        }
+        else
+        {
+            Assert.That(chunksStepped, Is.EqualTo(numChunks));
+        }
+        Assert.That(chunksProcessor.ItemsInQueue, Is.EqualTo(0), "Failed to step through chunks queue.");
+    }
+
     [Test]
     public async Task BasicProcessorLifetime()
     {
@@ -181,20 +203,12 @@ public class TransferManagerTests
             }
         }
 
-        // process chunks
-        int chunksStepped = await chunksProcessor.StepAll();
-        // Check if all chunks stepped through
-        if (chunksPerPart > 1)
-        {
-            // Multichunk transfer sends a completion chunk after all the other chunks stepped through.
-            await Task.Delay(50);
-            Assert.That(await chunksProcessor.StepAll() + chunksStepped, Is.EqualTo(expectedChunksInQueue + items));
-        }
-        else
-        {
-            Assert.That(chunksStepped, Is.EqualTo(expectedChunksInQueue));
-        }
-        Assert.That(chunksProcessor.ItemsInQueue, Is.EqualTo(0));
+        await ProcessChunksAssert(
+            chunksProcessor,
+            chunksPerPart,
+            expectedChunksInQueue,
+            items);
+
         foreach ((Mock<StorageResourceItem> srcResource, Mock<StorageResourceItem> dstResource) in resources)
         {
             srcResource.VerifySourceResourceOnChunkProcess();
@@ -306,20 +320,12 @@ public class TransferManagerTests
             dstResource.VerifyNoOtherCalls();
         }
 
-        // process chunks
-        int chunksStepped = await chunksProcessor.StepAll();
-        // Check if all chunks stepped through
-        if (chunksPerPart > 1)
-        {
-            // Multichunk transfer sends a completion chunk after all the other chunks stepped through.
-            await Task.Delay(50);
-            Assert.That(await chunksProcessor.StepAll() + chunksStepped, Is.EqualTo(numChunks + totalJobParts));
-        }
-        else
-        {
-            Assert.That(chunksStepped, Is.EqualTo(numChunks));
-        }
-        Assert.That(chunksProcessor.ItemsInQueue, Is.EqualTo(0), "Failed to step through chunks queue.");
+        await ProcessChunksAssert(
+            chunksProcessor,
+            chunksPerPart,
+            numChunks,
+            totalJobParts);
+
         foreach ((DataTransfer transfer, int parts, Mock<StorageResourceContainer> srcResource, Mock<StorageResourceContainer> dstResource) in transfers)
         {
             srcResource.VerifyNoOtherCalls();
