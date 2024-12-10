@@ -3,8 +3,10 @@
 
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.AI.DocumentIntelligence.Tests
@@ -14,6 +16,122 @@ namespace Azure.AI.DocumentIntelligence.Tests
         public DocumentModelMockTests(bool isAsync)
             : base(isAsync)
         {
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task AnalyzeDocumentAsyncFromUriSourceInvokesMainMethod()
+        {
+            var mockClient = new Mock<DocumentIntelligenceClient>() { CallBase = true };
+            var uriSource = new Uri("https://fakeuri.com/");
+            using var tokenSource = new CancellationTokenSource();
+            var expectedResult = Mock.Of<Operation<AnalyzeResult>>();
+
+            mockClient.Setup(c => c.AnalyzeDocumentAsync(
+                WaitUntil.Started,
+                It.Is<AnalyzeDocumentOptions>(options =>
+                    options.ModelId == "<modelId>"
+                    && options.UriSource == uriSource
+                    && options.BytesSource == null
+                    && options.Pages == null
+                    && options.Locale == null
+                    && !options.Features.Any()
+                    && !options.QueryFields.Any()
+                    && options.OutputContentFormat == null
+                    && !options.Output.Any()),
+                tokenSource.Token
+            )).Returns(Task.FromResult(expectedResult));
+
+            var result = await mockClient.Object.AnalyzeDocumentAsync(WaitUntil.Started, "<modelId>", uriSource, tokenSource.Token);
+
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        [SyncOnly]
+        public void AnalyzeDocumentFromUriSourceInvokesMainMethod()
+        {
+            var mockClient = new Mock<DocumentIntelligenceClient>() { CallBase = true };
+            var uriSource = new Uri("https://fakeuri.com/");
+            using var tokenSource = new CancellationTokenSource();
+            var expectedResult = Mock.Of<Operation<AnalyzeResult>>();
+
+            mockClient.Setup(c => c.AnalyzeDocument(
+                WaitUntil.Started,
+                It.Is<AnalyzeDocumentOptions>(options =>
+                    options.ModelId == "<modelId>"
+                    && options.UriSource == uriSource
+                    && options.BytesSource == null
+                    && options.Pages == null
+                    && options.Locale == null
+                    && !options.Features.Any()
+                    && !options.QueryFields.Any()
+                    && options.OutputContentFormat == null
+                    && !options.Output.Any()),
+                tokenSource.Token
+            )).Returns(expectedResult);
+
+            var result = mockClient.Object.AnalyzeDocument(WaitUntil.Started, "<modelId>", uriSource, tokenSource.Token);
+
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        [AsyncOnly]
+        public async Task AnalyzeDocumentAsyncFromBytesSourceInvokesMainMethod()
+        {
+            var mockClient = new Mock<DocumentIntelligenceClient>() { CallBase = true };
+            var bytesSource = BinaryData.FromBytes(new byte[] { 0x48, 0x65, 0x6C, 0x6C, 0x6F });
+            using var tokenSource = new CancellationTokenSource();
+            var expectedResult = Mock.Of<Operation<AnalyzeResult>>();
+
+            mockClient.Setup(c => c.AnalyzeDocumentAsync(
+                WaitUntil.Started,
+                It.Is<AnalyzeDocumentOptions>(options =>
+                    options.ModelId == "<modelId>"
+                    && options.UriSource == null
+                    && options.BytesSource == bytesSource
+                    && options.Pages == null
+                    && options.Locale == null
+                    && !options.Features.Any()
+                    && !options.QueryFields.Any()
+                    && options.OutputContentFormat == null
+                    && !options.Output.Any()),
+                tokenSource.Token
+            )).Returns(Task.FromResult(expectedResult));
+
+            var result = await mockClient.Object.AnalyzeDocumentAsync(WaitUntil.Started, "<modelId>", bytesSource, tokenSource.Token);
+
+            Assert.That(result, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        [SyncOnly]
+        public void AnalyzeDocumentFromBytesSourceInvokesMainMethod()
+        {
+            var mockClient = new Mock<DocumentIntelligenceClient>() { CallBase = true };
+            var bytesSource = BinaryData.FromBytes(new byte[] { 0x48, 0x65, 0x6C, 0x6C, 0x6F });
+            using var tokenSource = new CancellationTokenSource();
+            var expectedResult = Mock.Of<Operation<AnalyzeResult>>();
+
+            mockClient.Setup(c => c.AnalyzeDocument(
+                WaitUntil.Started,
+                It.Is<AnalyzeDocumentOptions>(options =>
+                    options.ModelId == "<modelId>"
+                    && options.UriSource == null
+                    && options.BytesSource == bytesSource
+                    && options.Pages == null
+                    && options.Locale == null
+                    && !options.Features.Any()
+                    && !options.QueryFields.Any()
+                    && options.OutputContentFormat == null
+                    && !options.Output.Any()),
+                tokenSource.Token
+            )).Returns(expectedResult);
+
+            var result = mockClient.Object.AnalyzeDocument(WaitUntil.Started, "<modelId>", bytesSource, tokenSource.Token);
+
+            Assert.That(result, Is.EqualTo(expectedResult));
         }
 
         [Test]
