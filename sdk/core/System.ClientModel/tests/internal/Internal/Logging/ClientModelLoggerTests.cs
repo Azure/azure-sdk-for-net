@@ -680,7 +680,7 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
     {
         MockPipelineResponse response = new(status: statusCode, mockHeaders: responseHeaders);
 
-        byte[] responseContent = Encoding.UTF8.GetBytes("Hello world...");
+        byte[] responseContent = Encoding.UTF8.GetBytes("Hello world");
         if (isSeekable)
         {
             response.ContentStream = new MemoryStream(responseContent);
@@ -740,7 +740,7 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
 
         ClientPipeline pipeline = ClientPipeline.Create(options);
 
-        using PipelineMessage message = pipeline.CreateMessage();
+        PipelineMessage message = pipeline.CreateMessage();
         message.Request.Method = "GET";
         message.Request.Uri = requestUri ?? new Uri("http://example.com");
 
@@ -771,7 +771,6 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
         }
 
         await pipeline.SendSyncOrAsync(message, IsAsync);
-        Console.WriteLine("");
     }
 
     #endregion

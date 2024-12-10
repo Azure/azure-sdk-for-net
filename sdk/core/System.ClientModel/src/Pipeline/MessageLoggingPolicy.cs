@@ -207,8 +207,7 @@ public class MessageLoggingPolicy : PipelinePolicy
     private class LoggingStream : Stream
     {
         private readonly string _requestId;
-        private int _maxLoggedBytes;
-        private readonly int _originalMaxLength;
+        private int _remainingBytesToLog;
         private readonly Stream _originalStream;
         private readonly bool _error;
         private readonly Encoding? _textEncoding;
@@ -220,86 +219,44 @@ public class MessageLoggingPolicy : PipelinePolicy
             // Should only wrap non-seekable streams
             Debug.Assert(!originalStream.CanSeek);
             _requestId = requestId;
-            _maxLoggedBytes = maxLoggedBytes;
-            _originalMaxLength = maxLoggedBytes;
+            _remainingBytesToLog = maxLoggedBytes;
             _originalStream = originalStream;
             _error = error;
             _textEncoding = textEncoding;
             _messageLogger = messageLogger;
         }
 
-        public override long Seek(long offset, SeekOrigin origin)
-        {
-            throw new NotSupportedException("This stream does not support seek operations.");
-        }
-
         public override int Read(byte[] buffer, int offset, int count)
         {
-            var result = _originalStream.Read(buffer, offset, count);
+            var numBytesRead = _originalStream.Read(buffer, offset, count);
 
-            var countToLog = result;
-            DecrementLength(ref countToLog);
-            LogBuffer(buffer, offset, countToLog, false);
+            LogBuffer(buffer, offset, numBytesRead);
 
-            return result;
-        }
-
-        private void LogBuffer(byte[] buffer, int offset, int length, bool async)
-        {
-            if (length == 0 || buffer == null)
-            {
-                return;
-            }
-
-            var logLength = Math.Min(length, _originalMaxLength);
-
-            byte[] bytes;
-            if (length == logLength && offset == 0)
-            {
-                bytes = buffer;
-            }
-            else
-            {
-                bytes = new byte[logLength];
-                Buffer.BlockCopy(buffer, offset, bytes, 0, logLength);
-            }
-
-            if (_error)
-            {
-                _messageLogger.LogErrorResponseContentBlock(_requestId, _blockNumber, bytes, _textEncoding);
-            }
-            else
-            {
-                _messageLogger.LogResponseContentBlock(_requestId, _blockNumber, bytes, _textEncoding);
-            }
-
-            _blockNumber++;
+            return numBytesRead;
         }
 
         public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
         {
-            var result = await _originalStream.ReadAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
+            var numBytesRead = await _originalStream.ReadAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
 
-            var countToLog = result;
-            DecrementLength(ref countToLog);
-            LogBuffer(buffer, offset, countToLog, true);
+            LogBuffer(buffer, offset, numBytesRead);
 
-            return result;
+            return numBytesRead;
         }
 
 #if !NETSTANDARD2_0
 
         public override async ValueTask<int> ReadAsync(Memory<byte> buffer, CancellationToken cancellationToken = default)
         {
-            var result = await _originalStream.ReadAsync(buffer, cancellationToken).ConfigureAwait(false);
+            var numBytesRead = await _originalStream.ReadAsync(buffer, cancellationToken).ConfigureAwait(false);
 
-            var countToLog = result;
-            DecrementLength(ref countToLog);
-            LogBuffer(buffer.ToArray(), 0, countToLog, true);
+            LogMemory(buffer, numBytesRead);
 
-            return result;
+            return numBytesRead;
         }
 #endif
+
+        #region Additional stream implementation
 
         public override bool CanRead => _originalStream.CanRead;
         public override bool CanSeek => _originalStream.CanSeek;
@@ -312,6 +269,11 @@ public class MessageLoggingPolicy : PipelinePolicy
 
         // Make this stream readonly
         public override bool CanWrite => false;
+
+        public override long Seek(long offset, SeekOrigin origin)
+        {
+            throw new NotSupportedException("This stream does not support seek operations.");
+        }
 
         // Make this stream readonly
         public override void Write(byte[] buffer, int offset, int count)
@@ -341,12 +303,72 @@ public class MessageLoggingPolicy : PipelinePolicy
             _originalStream.Dispose();
         }
 
-        private void DecrementLength(ref int count)
+        #endregion
+
+        #region Helpers
+
+        private void LogMemory(Memory<byte> memory, int numBytesReadIntoMemory)
         {
-            var left = Math.Min(count, _maxLoggedBytes);
-            count = left;
-            _maxLoggedBytes -= count;
+            // This is intentionally not thread-safe because synchronizing reads
+            // should be done by the caller.
+            var bytesToLog = Math.Min(numBytesReadIntoMemory, _remainingBytesToLog);
+            _remainingBytesToLog -= bytesToLog;
+
+            if (bytesToLog == 0)
+            {
+                return;
+            }
+
+            byte[] bytes = new byte[bytesToLog];
+            memory.Slice(0, bytesToLog).Span.CopyTo(bytes);
+
+            if (_error)
+            {
+                _messageLogger.LogErrorResponseContentBlock(_requestId, _blockNumber, bytes, _textEncoding);
+            }
+            else
+            {
+                _messageLogger.LogResponseContentBlock(_requestId, _blockNumber, bytes, _textEncoding);
+            }
+
+            _blockNumber++;
         }
+
+        private void LogBuffer(byte[] buffer, int offset, int numBytesReadIntoBuffer)
+        {
+            // This is intentionally not thread-safe because synchronizing reads
+            // should be done by the caller.
+            var bytesToLog = Math.Min(numBytesReadIntoBuffer, _remainingBytesToLog);
+            _remainingBytesToLog -= bytesToLog;
+
+            if (bytesToLog == 0 || buffer == null)
+            {
+                return;
+            }
+
+            byte[] bytes;
+            if (bytesToLog == numBytesReadIntoBuffer && offset == 0)
+            {
+                bytes = buffer;
+            }
+            else
+            {
+                bytes = new byte[bytesToLog];
+                Buffer.BlockCopy(buffer, offset, bytes, 0, bytesToLog);
+            }
+
+            if (_error)
+            {
+                _messageLogger.LogErrorResponseContentBlock(_requestId, _blockNumber, bytes, _textEncoding);
+            }
+            else
+            {
+                _messageLogger.LogResponseContentBlock(_requestId, _blockNumber, bytes, _textEncoding);
+            }
+
+            _blockNumber++;
+        }
+        #endregion
     }
-#endregion
+    #endregion
 }
