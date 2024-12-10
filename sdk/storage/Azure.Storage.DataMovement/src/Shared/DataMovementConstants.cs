@@ -1,25 +1,27 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+
 namespace Azure.Storage.DataMovement
 {
     internal class DataMovementConstants
     {
-        /// <summary>
-        /// Constants of the Data Movement library
-        /// </summary>
-        internal const int InitialMainPoolSize = 32;
-        internal const int InitialDownloadFileThreads = 32; // Max is 3000
-        internal const int CpuTuningMultiplier = 16;
-        internal const int MaxJobPartReaders = 64;
-        internal const int MaxJobChunkTasks = 3000;
-        internal const int StatusCheckInSec = 10;
         internal const int DefaultStreamCopyBufferSize = 81920;  // Use the .NET default
-
         internal const long DefaultInitialTransferSize = 32 * Constants.MB;
         internal const long DefaultChunkSize = 4 * Constants.MB;
 
         public const char PathForwardSlashDelimiterChar = '/';
+
+        internal static class Channels
+        {
+            internal const int MaxJobPartReaders = 32;
+            internal static int MaxJobChunkReaders = Environment.ProcessorCount * 8;
+            internal const int JobPartCapacity = 1000;
+            internal const int JobChunkCapacity = 1000;
+            internal const int DownloadChunkCapacity = 16;
+            internal const int StageChunkCapacity = 1000;
+        }
 
         internal static class ConcurrencyTuner
         {

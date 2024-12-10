@@ -7,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -102,9 +103,9 @@ namespace Azure.Storage.DataMovement
         internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
-        /// If the transfer status of the job changes then the event will get added to this handler.
+        /// If the transfer status of the job part changes then the event will get added to this handler.
         /// </summary>
-        public SyncAsyncEventHandler<TransferStatusEventArgs> PartTransferStatusEventHandler { get; internal set; }
+        public SyncAsyncEventHandler<JobPartStatusEventArgs> PartTransferStatusEventHandler { get; internal set; }
 
         /// <summary>
         /// If the transfer status of the job changes then the event will get added to this handler.
@@ -154,7 +155,7 @@ namespace Azure.Storage.DataMovement
             ITransferCheckpointer checkpointer,
             TransferProgressTracker progressTracker,
             ArrayPool<byte> arrayPool,
-            SyncAsyncEventHandler<TransferStatusEventArgs> jobPartEventHandler,
+            SyncAsyncEventHandler<JobPartStatusEventArgs> jobPartEventHandler,
             SyncAsyncEventHandler<TransferStatusEventArgs> statusEventHandler,
             SyncAsyncEventHandler<TransferItemFailedEventArgs> failedEventHandler,
             SyncAsyncEventHandler<TransferItemSkippedEventArgs> skippedEventHandler,
@@ -292,8 +293,9 @@ namespace Azure.Storage.DataMovement
                 await SetCheckpointerStatusAsync().ConfigureAwait(false);
 
                 await PartTransferStatusEventHandler.RaiseAsync(
-                    new TransferStatusEventArgs(
+                    new JobPartStatusEventArgs(
                         _dataTransfer.Id,
+                        PartNumber,
                         JobPartStatus.DeepCopy(),
                         false,
                         _cancellationToken),
@@ -358,8 +360,9 @@ namespace Azure.Storage.DataMovement
             if (JobPartStatus.SetSkippedItem())
             {
                 await PartTransferStatusEventHandler.RaiseAsync(
-                    new TransferStatusEventArgs(
+                    new JobPartStatusEventArgs(
                         _dataTransfer.Id,
+                        PartNumber,
                         JobPartStatus.DeepCopy(),
                         false,
                         _cancellationToken),
@@ -379,6 +382,7 @@ namespace Azure.Storage.DataMovement
         {
             if (ex is not OperationCanceledException &&
                 ex is not TaskCanceledException &&
+                ex is not ChannelClosedException &&
                 ex.InnerException is not TaskCanceledException &&
                 !ex.Message.Contains("The request was canceled."))
             {
@@ -412,8 +416,9 @@ namespace Azure.Storage.DataMovement
                 if (JobPartStatus.SetFailedItem())
                 {
                     await PartTransferStatusEventHandler.RaiseAsync(
-                        new TransferStatusEventArgs(
+                        new JobPartStatusEventArgs(
                             _dataTransfer.Id,
+                            PartNumber,
                             JobPartStatus.DeepCopy(),
                             false,
                             _cancellationToken),
@@ -502,26 +507,7 @@ namespace Azure.Storage.DataMovement
             return long.Parse(range.Substring(lengthSeparator + 1), CultureInfo.InvariantCulture);
         }
 
-        internal static List<(long Offset, long Size)> GetRangeList(long blockSize, long fileLength)
-        {
-            // The list tracking blocks IDs we're going to commit
-            List<(long Offset, long Size)> partitions = new List<(long, long)>();
-
-            // Partition the stream into individual blocks
-            foreach ((long Offset, long Length) block in GetPartitionIndexes(fileLength, blockSize))
-            {
-                /* We need to do this first! Length is calculated on the fly based on stream buffer
-                    * contents; We need to record the partition data first before consuming the stream
-                    * asynchronously. */
-                partitions.Add(block);
-            }
-            return partitions;
-        }
-
-        /// <summary>
-        /// Partition a stream into a series of blocks buffered as needed by an array pool.
-        /// </summary>
-        private static IEnumerable<(long Offset, long Length)> GetPartitionIndexes(
+        protected static IEnumerable<(long Offset, long Length)> GetRanges(
             long streamLength, // StreamLength needed to divide before hand
             long blockSize)
         {

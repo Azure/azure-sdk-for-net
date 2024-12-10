@@ -98,6 +98,8 @@ namespace Azure.Communication.CallAutomation
                     return AddParticipantSucceeded.Deserialize(eventData);
                 case nameof(CallConnected):
                     return CallConnected.Deserialize(eventData);
+                case nameof(ConnectFailed):
+                    return ConnectFailed.Deserialize(eventData);
                 case nameof(CallDisconnected):
                     return CallDisconnected.Deserialize(eventData);
                 case nameof(CallTransferAccepted):
@@ -146,6 +148,8 @@ namespace Azure.Communication.CallAutomation
                     return TranscriptionStopped.Deserialize(eventData);
                 case nameof(TranscriptionFailed):
                     return TranscriptionFailed.Deserialize(eventData);
+                case nameof(PlayStarted):
+                    return PlayStarted.Deserialize(eventData);
                 case nameof(AnswerFailed):
                     return AnswerFailed.Deserialize(eventData);
                 case nameof(CreateCallFailed):
@@ -177,6 +181,10 @@ namespace Azure.Communication.CallAutomation
                     return DialogLanguageChange.Deserialize(eventData);
                 case nameof(DialogUpdated):
                     return DialogUpdated.Deserialize(eventData);
+                #endregion
+                #region Incoming Call
+                case nameof(IncomingCall):
+                    return IncomingCall.Deserialize(eventData);
                 #endregion
                 default:
                     return null;

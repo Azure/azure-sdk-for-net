@@ -39,7 +39,7 @@ namespace Azure.Storage.DataMovement
                   checkpointer: job._checkpointer,
                   progressTracker: job._progressTracker,
                   arrayPool: job.UploadArrayPool,
-                  jobPartEventHandler: job.GetJobPartStatus(),
+                  jobPartEventHandler: job.GetJobPartStatusEventHandler(),
                   statusEventHandler: job.TransferStatusEventHandler,
                   failedEventHandler: job.TransferFailedEventHandler,
                   skippedEventHandler: job.TransferSkippedEventHandler,
@@ -68,7 +68,7 @@ namespace Azure.Storage.DataMovement
                   checkpointer: job._checkpointer,
                   progressTracker: job._progressTracker,
                   arrayPool: job.UploadArrayPool,
-                  jobPartEventHandler: job.GetJobPartStatus(),
+                  jobPartEventHandler: job.GetJobPartStatusEventHandler(),
                   statusEventHandler: job.TransferStatusEventHandler,
                   failedEventHandler: job.TransferFailedEventHandler,
                   skippedEventHandler: job.TransferSkippedEventHandler,
@@ -103,7 +103,7 @@ namespace Azure.Storage.DataMovement
                   checkpointer: job._checkpointer,
                   progressTracker: job._progressTracker,
                   arrayPool: job.UploadArrayPool,
-                  jobPartEventHandler: job.GetJobPartStatus(),
+                  jobPartEventHandler: job.GetJobPartStatusEventHandler(),
                   statusEventHandler: job.TransferStatusEventHandler,
                   failedEventHandler: job.TransferFailedEventHandler,
                   skippedEventHandler: job.TransferSkippedEventHandler,
@@ -405,10 +405,13 @@ namespace Azure.Storage.DataMovement
                 content.Position = 0;
 
                 // The chunk handler may have been disposed in failure case
-                _downloadChunkHandler?.QueueChunk(new QueueDownloadChunkArgs(
-                    offset: range.Offset,
-                    length: (long)range.Length,
-                    content: content));
+                if (_downloadChunkHandler != null)
+                {
+                    await _downloadChunkHandler.QueueChunkAsync(new QueueDownloadChunkArgs(
+                        offset: range.Offset,
+                        length: (long)range.Length,
+                        content: content)).ConfigureAwait(false);
+                }
             }
             catch (Exception ex)
             {

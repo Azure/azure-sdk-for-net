@@ -12,7 +12,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Messaging.EventHubs" />
+    <!-- TEMP TEMP -->
+    <ProjectReference Include="../../Azure.Messaging.EventHubs/src/Azure.Messaging.EventHubs.csproj" />
+    <!-- PackageReference Include="Azure.Messaging.EventHubs" /-->
     <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Microsoft.Azure.WebJobs" />
     <PackageReference Include="Microsoft.Extensions.Azure" />
@@ -22,6 +24,7 @@
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="SharedSource" />
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="SharedSource" />
     <Compile Include="$(AzureCoreSharedSources)ValueStopwatch.cs" LinkBase="SharedSource" />
+    <Compile Include="../../Azure.Messaging.EventHubs.Shared/src/Core/AttributeMessageText.cs" LinkBase="SharedSource" />
     <Compile Include="../../Azure.Messaging.EventHubs.Shared/src/Core/CancellationTokenExtensions.cs" LinkBase="SharedSource" />
     <Compile Include="../../Azure.Messaging.EventHubs.Shared/src/Core/BasicRetryPolicy.cs" LinkBase="SharedSource" />
     <Compile Include="../../Azure.Messaging.EventHubs.Shared/src/Core/EventHubsRetryOptionsExtensions.cs" LinkBase="SharedSource" />

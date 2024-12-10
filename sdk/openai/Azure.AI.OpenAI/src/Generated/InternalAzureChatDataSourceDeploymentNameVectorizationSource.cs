@@ -62,4 +62,3 @@ namespace Azure.AI.OpenAI.Chat
         public int? Dimensions { get; set; }
     }
 }
-

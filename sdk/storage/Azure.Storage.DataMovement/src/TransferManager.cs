@@ -60,9 +60,13 @@ namespace Azure.Storage.DataMovement
         /// <param name="options">Options that will apply to all transfers started by this TransferManager.</param>
         public TransferManager(TransferManagerOptions options = default)
             : this(
-            ChannelProcessing.NewProcessor<TransferJobInternal>(parallelism: 1),
-            ChannelProcessing.NewProcessor<JobPartInternal>(DataMovementConstants.MaxJobPartReaders),
-            ChannelProcessing.NewProcessor<Func<Task>>(options?.MaximumConcurrency ?? DataMovementConstants.MaxJobChunkTasks),
+            ChannelProcessing.NewProcessor<TransferJobInternal>(readers: 1),
+            ChannelProcessing.NewProcessor<JobPartInternal>(
+                readers: DataMovementConstants.Channels.MaxJobPartReaders,
+                capacity: DataMovementConstants.Channels.JobPartCapacity),
+            ChannelProcessing.NewProcessor<Func<Task>>(
+                readers: options?.MaximumConcurrency ?? DataMovementConstants.Channels.MaxJobChunkReaders,
+                capacity: DataMovementConstants.Channels.JobChunkCapacity),
             new(ArrayPool<byte>.Shared,
                 options?.ErrorHandling ?? DataTransferErrorMode.StopOnAnyFailure,
                 new ClientDiagnostics(options?.ClientOptions ?? ClientOptions.Default)),
@@ -306,14 +310,17 @@ namespace Azure.Storage.DataMovement
                 throw Errors.NoResourceProviderFound(false, dataTransferProperties.DestinationProviderId);
             }
 
+            StorageResource source = await sourceProvider.FromSourceAsync(dataTransferProperties, cancellationToken).ConfigureAwait(false);
+            StorageResource destination = await destinationProvider.FromDestinationAsync(dataTransferProperties, cancellationToken).ConfigureAwait(false);
             DataTransfer dataTransfer = await BuildAndAddTransferJobAsync(
-                await sourceProvider.FromSourceAsync(dataTransferProperties, cancellationToken).ConfigureAwait(false),
-                await destinationProvider.FromDestinationAsync(dataTransferProperties, cancellationToken).ConfigureAwait(false),
+                source,
+                destination,
                 transferOptions,
                 dataTransferProperties.TransferId,
                 true,
                 cancellationToken).ConfigureAwait(false);
 
+            DataMovementEventSource.Singleton.ResumeTransfer(dataTransfer.Id, source, destination);
             return dataTransfer;
         }
 
@@ -385,6 +392,7 @@ namespace Azure.Storage.DataMovement
                     false,
                     cancellationToken).ConfigureAwait(false);
 
+                DataMovementEventSource.Singleton.TransferQueued(transferId, sourceResource, destinationResource);
                 return dataTransfer;
             }
             catch (Exception ex)

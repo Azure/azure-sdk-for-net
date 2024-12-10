@@ -11,6 +11,7 @@
 ### Bugs Fixed
 
 ### Other Changes
+- Improved the performance of `TableServiceClient.GetTableClient()`
 
 ## 12.9.1 (2024-09-17)
 
