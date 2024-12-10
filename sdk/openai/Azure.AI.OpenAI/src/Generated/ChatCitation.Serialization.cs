@@ -31,10 +31,10 @@ namespace Azure.AI.OpenAI.Chat
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (SerializedAdditionalRawData?.ContainsKey("url") != true && Optional.IsDefined(Uri))
+            if (SerializedAdditionalRawData?.ContainsKey("url") != true && Optional.IsDefined(Url))
             {
                 writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Uri.AbsoluteUri);
+                writer.WriteStringValue(Url);
             }
             if (SerializedAdditionalRawData?.ContainsKey("filepath") != true && Optional.IsDefined(FilePath))
             {
@@ -95,7 +95,7 @@ namespace Azure.AI.OpenAI.Chat
             }
             string content = default;
             string title = default;
-            Uri url = default;
+            string url = default;
             string filepath = default;
             string chunkId = default;
             double? rerankScore = default;
@@ -115,11 +115,7 @@ namespace Azure.AI.OpenAI.Chat
                 }
                 if (property.NameEquals("url"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    url = new Uri(property.Value.GetString());
+                    url = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("filepath"u8))

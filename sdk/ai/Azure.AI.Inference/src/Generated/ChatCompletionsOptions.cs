@@ -89,9 +89,8 @@ namespace Azure.AI.Inference
         /// </param>
         /// <param name="stopSequences"> A collection of textual sequences that will end completions generation. </param>
         /// <param name="tools">
-        /// The available tool definitions that the chat completions request can use, including caller-defined functions.
-        /// Please note <see cref="ChatCompletionsToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ChatCompletionsFunctionToolDefinition"/>.
+        /// A list of tools the model may request to call. Currently, only functions are supported as a tool. The model
+        /// may response with a function call request and provide the input arguments in JSON format for that function.
         /// </param>
         /// <param name="internalSuppressedToolChoice"> If specified, the model will configure which of the provided tools it can use for the chat completions response. </param>
         /// <param name="seed">
@@ -117,16 +116,6 @@ namespace Azure.AI.Inference
             Model = model;
             AdditionalProperties = additionalProperties;
         }
-
-        /// <summary>
-        /// The collection of context messages associated with this chat completions request.
-        /// Typical usage begins with a chat message for the System role that provides instructions for
-        /// the behavior of the assistant, followed by alternating messages between the User and
-        /// Assistant roles.
-        /// Please note <see cref="ChatRequestMessage"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ChatRequestAssistantMessage"/>, <see cref="ChatRequestSystemMessage"/>, <see cref="ChatRequestToolMessage"/> and <see cref="ChatRequestUserMessage"/>.
-        /// </summary>
-        public IList<ChatRequestMessage> Messages { get; }
         /// <summary>
         /// A value that influences the probability of generated tokens appearing based on their cumulative
         /// frequency in generated text.
@@ -175,9 +164,8 @@ namespace Azure.AI.Inference
         /// <summary> A collection of textual sequences that will end completions generation. </summary>
         public IList<string> StopSequences { get; }
         /// <summary>
-        /// The available tool definitions that the chat completions request can use, including caller-defined functions.
-        /// Please note <see cref="ChatCompletionsToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ChatCompletionsFunctionToolDefinition"/>.
+        /// A list of tools the model may request to call. Currently, only functions are supported as a tool. The model
+        /// may response with a function call request and provide the input arguments in JSON format for that function.
         /// </summary>
         public IList<ChatCompletionsToolDefinition> Tools { get; }
         /// <summary>

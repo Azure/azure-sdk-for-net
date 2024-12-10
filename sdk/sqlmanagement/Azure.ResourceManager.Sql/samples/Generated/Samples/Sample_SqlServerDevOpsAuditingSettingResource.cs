@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Sql.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Sql.Samples
 {
     public partial class Sample_SqlServerDevOpsAuditingSettingResource
     {
-        // Get a server's DevOps audit settings
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAServerSDevOpsAuditSettings()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-02-01-preview/examples/ServerDevOpsAuditGet.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update a server's DevOps audit settings with all params
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAServerSDevOpsAuditSettingsWithAllParams()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-02-01-preview/examples/ServerDevOpsAuditCreateMax.json
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlServerDevOpsAuditingSettingResource sqlServerDevOpsAuditingSetting = client.GetSqlServerDevOpsAuditingSettingResource(sqlServerDevOpsAuditingSettingResourceId);
 
             // invoke the operation
-            SqlServerDevOpsAuditingSettingData data = new SqlServerDevOpsAuditingSettingData()
+            SqlServerDevOpsAuditingSettingData data = new SqlServerDevOpsAuditingSettingData
             {
                 IsAzureMonitorTargetEnabled = true,
                 State = BlobAuditingPolicyState.Enabled,
@@ -88,9 +87,8 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update a server's DevOps audit settings with minimal input
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAServerSDevOpsAuditSettingsWithMinimalInput()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-02-01-preview/examples/ServerDevOpsAuditCreateMin.json
@@ -111,7 +109,7 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlServerDevOpsAuditingSettingResource sqlServerDevOpsAuditingSetting = client.GetSqlServerDevOpsAuditingSettingResource(sqlServerDevOpsAuditingSettingResourceId);
 
             // invoke the operation
-            SqlServerDevOpsAuditingSettingData data = new SqlServerDevOpsAuditingSettingData()
+            SqlServerDevOpsAuditingSettingData data = new SqlServerDevOpsAuditingSettingData
             {
                 State = BlobAuditingPolicyState.Enabled,
                 StorageEndpoint = "https://mystorage.blob.core.windows.net",

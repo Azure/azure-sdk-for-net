@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.SecurityDevOps.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.SecurityDevOps.Samples
 {
     public partial class Sample_AzureDevOpsOrgResource
     {
-        // AzureDevOpsOrg_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_AzureDevOpsOrgGet()
         {
             // Generated from example definition: specification/securitydevops/resource-manager/Microsoft.SecurityDevOps/preview/2022-09-01-preview/examples/AzureDevOpsOrgGet.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.SecurityDevOps.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // AzureDevOpsOrg_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_AzureDevOpsOrgUpdate()
         {
             // Generated from example definition: specification/securitydevops/resource-manager/Microsoft.SecurityDevOps/preview/2022-09-01-preview/examples/AzureDevOpsOrgUpdate.json
@@ -70,9 +69,9 @@ namespace Azure.ResourceManager.SecurityDevOps.Samples
             AzureDevOpsOrgResource azureDevOpsOrg = client.GetAzureDevOpsOrgResource(azureDevOpsOrgResourceId);
 
             // invoke the operation
-            AzureDevOpsOrgData data = new AzureDevOpsOrgData()
+            AzureDevOpsOrgData data = new AzureDevOpsOrgData
             {
-                Properties = new AzureDevOpsOrgProperties()
+                Properties = new AzureDevOpsOrgProperties
                 {
                     AutoDiscovery = AutoDiscovery.Disabled,
                 },

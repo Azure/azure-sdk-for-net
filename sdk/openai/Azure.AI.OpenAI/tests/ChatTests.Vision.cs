@@ -87,6 +87,7 @@ namespace Azure.AI.OpenAI.Tests
         {
             bool foundPromptFilter = false;
             bool foundResponseFilter = false;
+            ChatTokenUsage? usage = null;
             StringBuilder content = new();
 
             ChatClient client = GetTestClient("vision");
@@ -123,8 +124,10 @@ namespace Azure.AI.OpenAI.Tests
 
             await foreach (StreamingChatCompletionUpdate update in response)
             {
-                ValidateUpdate(update, content, ref foundPromptFilter, ref foundResponseFilter);
+                ValidateUpdate(update, content, ref foundPromptFilter, ref foundResponseFilter, ref usage);
             }
+
+            // Assert.That(usage, Is.Not.Null);
 
             // TODO FIXME: gpt-4o models seem to return inconsistent prompt filters to skip this for now
             //Assert.That(foundPromptFilter, Is.True);

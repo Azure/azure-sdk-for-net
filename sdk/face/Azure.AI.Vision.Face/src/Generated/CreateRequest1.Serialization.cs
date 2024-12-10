@@ -19,13 +19,21 @@ namespace Azure.AI.Vision.Face
 
         void IJsonModel<CreateRequest1>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CreateRequest1>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CreateRequest1)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(UserData))
@@ -53,7 +61,6 @@ namespace Azure.AI.Vision.Face
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CreateRequest1 IJsonModel<CreateRequest1>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -7,6 +7,7 @@ using Azure.Core;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests.Scenario
 {
@@ -26,10 +27,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests.Scenario
         {
             resourceGroupResource = await CreateResourceGroupWithTag();
 
-            clusterName = Recording.GenerateAssetName("sfmctestcluster");
+            clusterName = Recording.GenerateAssetName("sfmctestclusternet");
             clusterCollection = resourceGroupResource.GetServiceFabricManagedClusters();
 
-            ServiceFabricManagedClusterData data = new ServiceFabricManagedClusterData(new AzureLocation("southcentralus"))
+            ServiceFabricManagedClusterData data = new ServiceFabricManagedClusterData(new AzureLocation("westus"))
             {
                 DnsName = clusterName,
                 AdminUserName = "Myusername4",
@@ -38,6 +39,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests.Scenario
                 ClientConnectionPort = 19000,
                 HttpGatewayConnectionPort = 19080
             };
+            data.Tags.Add(new KeyValuePair<string, string>("SFRP.EnableDiagnosticMI", "true"));
 
             serviceFabricManagedCluster = (await clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data)).Value;
         }
@@ -57,7 +59,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests.Scenario
                 VmSize = "Standard_D4ds_v5",
                 VmImagePublisher = "MicrosoftWindowsServer",
                 VmImageOffer = "WindowsServer",
-                VmImageSku = "2019-datacenter-gensecond",
+                VmImageSku = "2022-datacenter-azure-edition",
                 VmImageVersion = "latest",
                 SecurityType = "TrustedLaunch",
                 IsSecureBootEnabled = true,

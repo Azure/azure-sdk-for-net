@@ -42,9 +42,12 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [OneTimeTearDown]
         public async Task GlobalTeardown()
         {
-            await _sqlContainer.DeleteAsync(WaitUntil.Completed);
-            await _sqlDatabase.DeleteAsync(WaitUntil.Completed);
-            await _databaseAccount.DeleteAsync(WaitUntil.Completed);
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await _sqlContainer.DeleteAsync(WaitUntil.Completed);
+                await _sqlDatabase.DeleteAsync(WaitUntil.Completed);
+                await _databaseAccount.DeleteAsync(WaitUntil.Completed);
+            }
         }
 
         [SetUp]
@@ -56,12 +59,15 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            if (await SqlTriggerCollection.ExistsAsync(_triggerName))
+            if (Mode != RecordedTestMode.Playback)
             {
-                var id = SqlTriggerCollection.Id;
-                id = CosmosDBSqlTriggerResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Parent.Parent.Name, id.Parent.Name, id.Name, _triggerName);
-                CosmosDBSqlTriggerResource trigger = this.ArmClient.GetCosmosDBSqlTriggerResource(id);
-                await trigger.DeleteAsync(WaitUntil.Completed);
+                if (await SqlTriggerCollection.ExistsAsync(_triggerName))
+                {
+                    var id = SqlTriggerCollection.Id;
+                    id = CosmosDBSqlTriggerResource.CreateResourceIdentifier(id.SubscriptionId, id.ResourceGroupName, id.Parent.Parent.Name, id.Parent.Name, id.Name, _triggerName);
+                    CosmosDBSqlTriggerResource trigger = this.ArmClient.GetCosmosDBSqlTriggerResource(id);
+                    await trigger.DeleteAsync(WaitUntil.Completed);
+                }
             }
         }
 

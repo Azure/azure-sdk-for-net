@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Samples
 {
     public partial class Sample_DiskImageCollection
     {
-        // Create a virtual machine image from a blob with DiskEncryptionSet resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVirtualMachineImageFromABlobWithDiskEncryptionSetResource()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/imageExamples/Image_CreateFromABlobWithDiskEncryptionSet.json
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute.Samples
             string imageName = "myImage";
             DiskImageData data = new DiskImageData(new AzureLocation("West US"))
             {
-                StorageProfile = new ImageStorageProfile()
+                StorageProfile = new ImageStorageProfile
                 {
                     OSDisk = new ImageOSDisk(SupportedOperatingSystemType.Linux, OperatingSystemStateType.Generalized)
                     {
@@ -62,9 +62,8 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a virtual machine image from a blob.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVirtualMachineImageFromABlob()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/imageExamples/Image_CreateFromABlob.json
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Samples
             string imageName = "myImage";
             DiskImageData data = new DiskImageData(new AzureLocation("West US"))
             {
-                StorageProfile = new ImageStorageProfile()
+                StorageProfile = new ImageStorageProfile
                 {
                     OSDisk = new ImageOSDisk(SupportedOperatingSystemType.Linux, OperatingSystemStateType.Generalized)
                     {
@@ -108,9 +107,8 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a virtual machine image from a managed disk with DiskEncryptionSet resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVirtualMachineImageFromAManagedDiskWithDiskEncryptionSetResource()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/imageExamples/Image_CreateFromAManagedDiskWithDiskEncryptionSet.json
@@ -135,7 +133,7 @@ namespace Azure.ResourceManager.Compute.Samples
             string imageName = "myImage";
             DiskImageData data = new DiskImageData(new AzureLocation("West US"))
             {
-                StorageProfile = new ImageStorageProfile()
+                StorageProfile = new ImageStorageProfile
                 {
                     OSDisk = new ImageOSDisk(SupportedOperatingSystemType.Linux, OperatingSystemStateType.Generalized)
                     {
@@ -154,9 +152,8 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a virtual machine image from a managed disk.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVirtualMachineImageFromAManagedDisk()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/imageExamples/Image_CreateFromAManagedDisk.json
@@ -181,7 +178,7 @@ namespace Azure.ResourceManager.Compute.Samples
             string imageName = "myImage";
             DiskImageData data = new DiskImageData(new AzureLocation("West US"))
             {
-                StorageProfile = new ImageStorageProfile()
+                StorageProfile = new ImageStorageProfile
                 {
                     OSDisk = new ImageOSDisk(SupportedOperatingSystemType.Linux, OperatingSystemStateType.Generalized)
                     {
@@ -200,9 +197,8 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a virtual machine image from a snapshot with DiskEncryptionSet resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVirtualMachineImageFromASnapshotWithDiskEncryptionSetResource()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/imageExamples/Image_CreateFromASnapshotWithDiskEncryptionSet.json
@@ -227,7 +223,7 @@ namespace Azure.ResourceManager.Compute.Samples
             string imageName = "myImage";
             DiskImageData data = new DiskImageData(new AzureLocation("West US"))
             {
-                StorageProfile = new ImageStorageProfile()
+                StorageProfile = new ImageStorageProfile
                 {
                     OSDisk = new ImageOSDisk(SupportedOperatingSystemType.Linux, OperatingSystemStateType.Generalized)
                     {
@@ -246,9 +242,8 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a virtual machine image from a snapshot.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVirtualMachineImageFromASnapshot()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/imageExamples/Image_CreateFromASnapshot.json
@@ -273,7 +268,7 @@ namespace Azure.ResourceManager.Compute.Samples
             string imageName = "myImage";
             DiskImageData data = new DiskImageData(new AzureLocation("West US"))
             {
-                StorageProfile = new ImageStorageProfile()
+                StorageProfile = new ImageStorageProfile
                 {
                     OSDisk = new ImageOSDisk(SupportedOperatingSystemType.Linux, OperatingSystemStateType.Generalized)
                     {
@@ -292,9 +287,8 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a virtual machine image from an existing virtual machine.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVirtualMachineImageFromAnExistingVirtualMachine()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/imageExamples/Image_CreateFromAVM.json
@@ -331,9 +325,8 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a virtual machine image that includes a data disk from a blob.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVirtualMachineImageThatIncludesADataDiskFromABlob()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/imageExamples/Image_Create_DataDiskFromABlobIncluded.json
@@ -358,19 +351,16 @@ namespace Azure.ResourceManager.Compute.Samples
             string imageName = "myImage";
             DiskImageData data = new DiskImageData(new AzureLocation("West US"))
             {
-                StorageProfile = new ImageStorageProfile()
+                StorageProfile = new ImageStorageProfile
                 {
                     OSDisk = new ImageOSDisk(SupportedOperatingSystemType.Linux, OperatingSystemStateType.Generalized)
                     {
                         BlobUri = new Uri("https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd"),
                     },
-                    DataDisks =
-{
-new ImageDataDisk(1)
+                    DataDisks = {new ImageDataDisk(1)
 {
 BlobUri = new Uri("https://mystorageaccount.blob.core.windows.net/dataimages/dataimage.vhd"),
-}
-},
+}},
                     ZoneResilient = false,
                 },
             };
@@ -384,9 +374,8 @@ BlobUri = new Uri("https://mystorageaccount.blob.core.windows.net/dataimages/dat
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a virtual machine image that includes a data disk from a managed disk.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVirtualMachineImageThatIncludesADataDiskFromAManagedDisk()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/imageExamples/Image_Create_DataDiskFromAManagedDiskIncluded.json
@@ -411,19 +400,16 @@ BlobUri = new Uri("https://mystorageaccount.blob.core.windows.net/dataimages/dat
             string imageName = "myImage";
             DiskImageData data = new DiskImageData(new AzureLocation("West US"))
             {
-                StorageProfile = new ImageStorageProfile()
+                StorageProfile = new ImageStorageProfile
                 {
                     OSDisk = new ImageOSDisk(SupportedOperatingSystemType.Linux, OperatingSystemStateType.Generalized)
                     {
                         ManagedDiskId = new ResourceIdentifier("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk"),
                     },
-                    DataDisks =
-{
-new ImageDataDisk(1)
+                    DataDisks = {new ImageDataDisk(1)
 {
 ManagedDiskId = new ResourceIdentifier("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/myManagedDisk2"),
-}
-},
+}},
                     ZoneResilient = false,
                 },
             };
@@ -437,9 +423,8 @@ ManagedDiskId = new ResourceIdentifier("subscriptions/{subscriptionId}/resourceG
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a virtual machine image that includes a data disk from a snapshot.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAVirtualMachineImageThatIncludesADataDiskFromASnapshot()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/imageExamples/Image_Create_DataDiskFromASnapshotIncluded.json
@@ -464,19 +449,16 @@ ManagedDiskId = new ResourceIdentifier("subscriptions/{subscriptionId}/resourceG
             string imageName = "myImage";
             DiskImageData data = new DiskImageData(new AzureLocation("West US"))
             {
-                StorageProfile = new ImageStorageProfile()
+                StorageProfile = new ImageStorageProfile
                 {
                     OSDisk = new ImageOSDisk(SupportedOperatingSystemType.Linux, OperatingSystemStateType.Generalized)
                     {
                         SnapshotId = new ResourceIdentifier("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"),
                     },
-                    DataDisks =
-{
-new ImageDataDisk(1)
+                    DataDisks = {new ImageDataDisk(1)
 {
 SnapshotId = new ResourceIdentifier("subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot2"),
-}
-},
+}},
                     ZoneResilient = true,
                 },
             };
@@ -490,9 +472,8 @@ SnapshotId = new ResourceIdentifier("subscriptions/{subscriptionId}/resourceGrou
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get information about a virtual machine image.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetInformationAboutAVirtualMachineImage()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/imageExamples/Image_Get.json
@@ -524,81 +505,8 @@ SnapshotId = new ResourceIdentifier("subscriptions/{subscriptionId}/resourceGrou
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get information about a virtual machine image.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetInformationAboutAVirtualMachineImage()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/imageExamples/Image_Get.json
-            // this example is just showing the usage of "Images_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this DiskImageResource
-            DiskImageCollection collection = resourceGroupResource.GetDiskImages();
-
-            // invoke the operation
-            string imageName = "myImage";
-            bool result = await collection.ExistsAsync(imageName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Get information about a virtual machine image.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetInformationAboutAVirtualMachineImage()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/imageExamples/Image_Get.json
-            // this example is just showing the usage of "Images_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this DiskImageResource
-            DiskImageCollection collection = resourceGroupResource.GetDiskImages();
-
-            // invoke the operation
-            string imageName = "myImage";
-            NullableResponse<DiskImageResource> response = await collection.GetIfExistsAsync(imageName);
-            DiskImageResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                DiskImageData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // List all virtual machine images in a resource group.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAllVirtualMachineImagesInAResourceGroup()
         {
             // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/imageExamples/Image_ListByResourceGroup.json
@@ -629,7 +537,77 @@ SnapshotId = new ResourceIdentifier("subscriptions/{subscriptionId}/resourceGrou
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetInformationAboutAVirtualMachineImage()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/imageExamples/Image_Get.json
+            // this example is just showing the usage of "Images_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this DiskImageResource
+            DiskImageCollection collection = resourceGroupResource.GetDiskImages();
+
+            // invoke the operation
+            string imageName = "myImage";
+            bool result = await collection.ExistsAsync(imageName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetInformationAboutAVirtualMachineImage()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/imageExamples/Image_Get.json
+            // this example is just showing the usage of "Images_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this DiskImageResource
+            DiskImageCollection collection = resourceGroupResource.GetDiskImages();
+
+            // invoke the operation
+            string imageName = "myImage";
+            NullableResponse<DiskImageResource> response = await collection.GetIfExistsAsync(imageName);
+            DiskImageResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                DiskImageData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

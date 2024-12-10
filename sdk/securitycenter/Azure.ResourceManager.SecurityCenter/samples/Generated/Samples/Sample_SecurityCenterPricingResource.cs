@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.SecurityCenter.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.SecurityCenter.Samples
 {
     public partial class Sample_SecurityCenterPricingResource
     {
-        // Get pricings on subscription - CloudPosture plan
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPricingsOnSubscriptionCloudPosturePlan()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2023-01-01/examples/Pricings/GetPricingByNameCloudPosture_example.json
@@ -45,9 +45,8 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get pricings on subscription - Containers plan
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPricingsOnSubscriptionContainersPlan()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2023-01-01/examples/Pricings/GetPricingByNameContainers_example.json
@@ -75,9 +74,8 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get pricings on subscription - Dns plan
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPricingsOnSubscriptionDnsPlan()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2023-01-01/examples/Pricings/GetPricingByNameDns_example.json
@@ -105,9 +103,8 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get pricings on subscription - StorageAccounts plan
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPricingsOnSubscriptionStorageAccountsPlan()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2023-01-01/examples/Pricings/GetPricingByNameStorageAccounts_example.json
@@ -135,9 +132,8 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get pricings on subscription - VirtualMachines plan
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPricingsOnSubscriptionVirtualMachinesPlan()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2023-01-01/examples/Pricings/GetPricingByNameVirtualMachines_example.json
@@ -165,9 +161,8 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update pricing on subscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdatePricingOnSubscription()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2023-01-01/examples/Pricings/PutPricingByName_example.json
@@ -186,7 +181,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SecurityCenterPricingResource securityCenterPricing = client.GetSecurityCenterPricingResource(securityCenterPricingResourceId);
 
             // invoke the operation
-            SecurityCenterPricingData data = new SecurityCenterPricingData()
+            SecurityCenterPricingData data = new SecurityCenterPricingData
             {
                 PricingTier = SecurityCenterPricingTier.Standard,
             };
@@ -200,9 +195,8 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update pricing on subscription - partial success
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdatePricingOnSubscriptionPartialSuccess()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2023-01-01/examples/Pricings/PutPricingByNamePartialSuccess_example.json
@@ -221,7 +215,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SecurityCenterPricingResource securityCenterPricing = client.GetSecurityCenterPricingResource(securityCenterPricingResourceId);
 
             // invoke the operation
-            SecurityCenterPricingData data = new SecurityCenterPricingData()
+            SecurityCenterPricingData data = new SecurityCenterPricingData
             {
                 PricingTier = SecurityCenterPricingTier.Standard,
             };

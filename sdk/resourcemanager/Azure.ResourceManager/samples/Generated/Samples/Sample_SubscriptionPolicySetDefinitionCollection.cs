@@ -6,19 +6,18 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Resources.Samples
 {
     public partial class Sample_SubscriptionPolicySetDefinitionCollection
     {
-        // Create or update a policy set definition
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAPolicySetDefinition()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/createOrUpdatePolicySetDefinition.json
@@ -40,54 +39,55 @@ namespace Azure.ResourceManager.Resources.Samples
 
             // invoke the operation
             string policySetDefinitionName = "CostManagement";
-            PolicySetDefinitionData data = new PolicySetDefinitionData()
+            PolicySetDefinitionData data = new PolicySetDefinitionData
             {
                 DisplayName = "Cost Management",
                 Description = "Policies to enforce low cost storage SKUs",
-                Metadata = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+                Metadata = BinaryData.FromObjectAsJson(new
                 {
-                    ["category"] = "Cost Management"
+                    category = "Cost Management",
                 }),
                 Parameters =
 {
-["namePrefix"] = new ArmPolicyParameter()
+["namePrefix"] = new ArmPolicyParameter
 {
 ParameterType = ArmPolicyParameterType.String,
-DefaultValue = BinaryData.FromString("\"myPrefix\""),
-Metadata = new ParameterDefinitionsValueMetadata()
+DefaultValue = BinaryData.FromObjectAsJson("myPrefix"),
+Metadata = new ParameterDefinitionsValueMetadata
 {
 DisplayName = "Prefix to enforce on resource names",
 },
-},
-},
-                PolicyDefinitions =
-{
-new PolicyDefinitionReference("/subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2/providers/Microsoft.Authorization/policyDefinitions/7433c107-6db4-4ad1-b57a-a76dce0154a1")
-{
-Parameters =
-{
-["listOfAllowedSKUs"] = new ArmPolicyParameterValue()
-{
-Value = BinaryData.FromObjectAsJson(new object[] { "Standard_GRS", "Standard_LRS" }),
-},
-},
-PolicyDefinitionReferenceId = "Limit_Skus",
-},new PolicyDefinitionReference("/subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2/providers/Microsoft.Authorization/policyDefinitions/ResourceNaming")
-{
-Parameters =
-{
-["prefix"] = new ArmPolicyParameterValue()
-{
-Value = BinaryData.FromString("\"[parameters('namePrefix')]\""),
-},
-["suffix"] = new ArmPolicyParameterValue()
-{
-Value = BinaryData.FromString("\"-LC\""),
-},
-},
-PolicyDefinitionReferenceId = "Resource_Naming",
 }
 },
+                PolicyDefinitions = {new PolicyDefinitionReference("/subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2/providers/Microsoft.Authorization/policyDefinitions/7433c107-6db4-4ad1-b57a-a76dce0154a1")
+{
+Parameters =
+{
+["listOfAllowedSKUs"] = new ArmPolicyParameterValue
+{
+Value = BinaryData.FromObjectAsJson(new object[]
+{
+"Standard_GRS",
+"Standard_LRS"
+}),
+}
+},
+PolicyDefinitionReferenceId = "Limit_Skus",
+}, new PolicyDefinitionReference("/subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2/providers/Microsoft.Authorization/policyDefinitions/ResourceNaming")
+{
+Parameters =
+{
+["prefix"] = new ArmPolicyParameterValue
+{
+Value = BinaryData.FromObjectAsJson("[parameters('namePrefix')]"),
+},
+["suffix"] = new ArmPolicyParameterValue
+{
+Value = BinaryData.FromObjectAsJson("-LC"),
+}
+},
+PolicyDefinitionReferenceId = "Resource_Naming",
+}},
             };
             ArmOperation<SubscriptionPolicySetDefinitionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, policySetDefinitionName, data);
             SubscriptionPolicySetDefinitionResource result = lro.Value;
@@ -99,9 +99,8 @@ PolicyDefinitionReferenceId = "Resource_Naming",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or update a policy set definition with groups
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAPolicySetDefinitionWithGroups()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/createOrUpdatePolicySetDefinitionWithGroups.json
@@ -123,62 +122,54 @@ PolicyDefinitionReferenceId = "Resource_Naming",
 
             // invoke the operation
             string policySetDefinitionName = "CostManagement";
-            PolicySetDefinitionData data = new PolicySetDefinitionData()
+            PolicySetDefinitionData data = new PolicySetDefinitionData
             {
                 DisplayName = "Cost Management",
                 Description = "Policies to enforce low cost storage SKUs",
-                Metadata = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+                Metadata = BinaryData.FromObjectAsJson(new
                 {
-                    ["category"] = "Cost Management"
+                    category = "Cost Management",
                 }),
-                PolicyDefinitions =
-{
-new PolicyDefinitionReference("/subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2/providers/Microsoft.Authorization/policyDefinitions/7433c107-6db4-4ad1-b57a-a76dce0154a1")
+                PolicyDefinitions = {new PolicyDefinitionReference("/subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2/providers/Microsoft.Authorization/policyDefinitions/7433c107-6db4-4ad1-b57a-a76dce0154a1")
 {
 Parameters =
 {
-["listOfAllowedSKUs"] = new ArmPolicyParameterValue()
+["listOfAllowedSKUs"] = new ArmPolicyParameterValue
 {
-Value = BinaryData.FromObjectAsJson(new object[] { "Standard_GRS", "Standard_LRS" }),
-},
-},
-PolicyDefinitionReferenceId = "Limit_Skus",
-GroupNames =
+Value = BinaryData.FromObjectAsJson(new object[]
 {
-"CostSaving"
-},
-},new PolicyDefinitionReference("/subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2/providers/Microsoft.Authorization/policyDefinitions/ResourceNaming")
-{
-Parameters =
-{
-["prefix"] = new ArmPolicyParameterValue()
-{
-Value = BinaryData.FromString("\"DeptA\""),
-},
-["suffix"] = new ArmPolicyParameterValue()
-{
-Value = BinaryData.FromString("\"-LC\""),
-},
-},
-PolicyDefinitionReferenceId = "Resource_Naming",
-GroupNames =
-{
-"Organizational"
-},
+"Standard_GRS",
+"Standard_LRS"
+}),
 }
 },
-                PolicyDefinitionGroups =
+PolicyDefinitionReferenceId = "Limit_Skus",
+GroupNames = {"CostSaving"},
+}, new PolicyDefinitionReference("/subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2/providers/Microsoft.Authorization/policyDefinitions/ResourceNaming")
 {
-new PolicyDefinitionGroup("CostSaving")
+Parameters =
+{
+["prefix"] = new ArmPolicyParameterValue
+{
+Value = BinaryData.FromObjectAsJson("DeptA"),
+},
+["suffix"] = new ArmPolicyParameterValue
+{
+Value = BinaryData.FromObjectAsJson("-LC"),
+}
+},
+PolicyDefinitionReferenceId = "Resource_Naming",
+GroupNames = {"Organizational"},
+}},
+                PolicyDefinitionGroups = {new PolicyDefinitionGroup("CostSaving")
 {
 DisplayName = "Cost Management Policies",
 Description = "Policies designed to control spend within a subscription.",
-},new PolicyDefinitionGroup("Organizational")
+}, new PolicyDefinitionGroup("Organizational")
 {
 DisplayName = "Organizational Policies",
 Description = "Policies that help enforce resource organization standards within a subscription.",
-}
-},
+}},
             };
             ArmOperation<SubscriptionPolicySetDefinitionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, policySetDefinitionName, data);
             SubscriptionPolicySetDefinitionResource result = lro.Value;
@@ -190,9 +181,8 @@ Description = "Policies that help enforce resource organization standards within
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Retrieve a policy set definition
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RetrieveAPolicySetDefinition()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/getPolicySetDefinition.json
@@ -223,79 +213,8 @@ Description = "Policies that help enforce resource organization standards within
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Retrieve a policy set definition
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_RetrieveAPolicySetDefinition()
-        {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/getPolicySetDefinition.json
-            // this example is just showing the usage of "PolicySetDefinitions_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscription = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // get the collection of this SubscriptionPolicySetDefinitionResource
-            SubscriptionPolicySetDefinitionCollection collection = subscription.GetSubscriptionPolicySetDefinitions();
-
-            // invoke the operation
-            string policySetDefinitionName = "CostManagement";
-            bool result = await collection.ExistsAsync(policySetDefinitionName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Retrieve a policy set definition
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_RetrieveAPolicySetDefinition()
-        {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/getPolicySetDefinition.json
-            // this example is just showing the usage of "PolicySetDefinitions_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscription = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // get the collection of this SubscriptionPolicySetDefinitionResource
-            SubscriptionPolicySetDefinitionCollection collection = subscription.GetSubscriptionPolicySetDefinitions();
-
-            // invoke the operation
-            string policySetDefinitionName = "CostManagement";
-            NullableResponse<SubscriptionPolicySetDefinitionResource> response = await collection.GetIfExistsAsync(policySetDefinitionName);
-            SubscriptionPolicySetDefinitionResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                PolicySetDefinitionData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // List policy set definitions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListPolicySetDefinitions()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/listPolicySetDefinitions.json
@@ -325,7 +244,75 @@ Description = "Policies that help enforce resource organization standards within
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_RetrieveAPolicySetDefinition()
+        {
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/getPolicySetDefinition.json
+            // this example is just showing the usage of "PolicySetDefinitions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscription = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // get the collection of this SubscriptionPolicySetDefinitionResource
+            SubscriptionPolicySetDefinitionCollection collection = subscription.GetSubscriptionPolicySetDefinitions();
+
+            // invoke the operation
+            string policySetDefinitionName = "CostManagement";
+            bool result = await collection.ExistsAsync(policySetDefinitionName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_RetrieveAPolicySetDefinition()
+        {
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/getPolicySetDefinition.json
+            // this example is just showing the usage of "PolicySetDefinitions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscription = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // get the collection of this SubscriptionPolicySetDefinitionResource
+            SubscriptionPolicySetDefinitionCollection collection = subscription.GetSubscriptionPolicySetDefinitions();
+
+            // invoke the operation
+            string policySetDefinitionName = "CostManagement";
+            NullableResponse<SubscriptionPolicySetDefinitionResource> response = await collection.GetIfExistsAsync(policySetDefinitionName);
+            SubscriptionPolicySetDefinitionResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                PolicySetDefinitionData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

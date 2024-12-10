@@ -19,13 +19,21 @@ namespace Azure.AI.OpenAI.Assistants
 
         void IJsonModel<RequiredToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<RequiredToolCall>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RequiredToolCall)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             writer.WritePropertyName("id"u8);
@@ -45,7 +53,6 @@ namespace Azure.AI.OpenAI.Assistants
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         RequiredToolCall IJsonModel<RequiredToolCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

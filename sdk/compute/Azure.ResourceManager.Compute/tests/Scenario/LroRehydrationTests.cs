@@ -60,24 +60,7 @@ namespace Azure.ResourceManager.Compute.Tests.Scenario
             Assert.AreEqual(JsonSerializer.Serialize(originalResult.Data.Plan), JsonSerializer.Serialize(rehydratedResult.Data.Plan));
             Assert.AreEqual(originalResult.Data.Identity, rehydratedResult.Data.Identity);
             Assert.AreEqual(JsonSerializer.Serialize(originalResult.Data.Location), JsonSerializer.Serialize(rehydratedResult.Data.Location));
-            Assert.AreEqual(JsonSerializer.Serialize(originalResult.Data.UpgradePolicy), JsonSerializer.Serialize(rehydratedResult.Data.UpgradePolicy));
-            Assert.AreEqual(JsonSerializer.Serialize(originalResult.Data.AutomaticRepairsPolicy), JsonSerializer.Serialize(rehydratedResult.Data.AutomaticRepairsPolicy));
-            Assert.AreEqual(originalResult.Data.ProvisioningState, rehydratedResult.Data.ProvisioningState);
-            Assert.AreEqual(originalResult.Data.Overprovision, rehydratedResult.Data.Overprovision);
-            Assert.AreEqual(originalResult.Data.DoNotRunExtensionsOnOverprovisionedVms, rehydratedResult.Data.DoNotRunExtensionsOnOverprovisionedVms);
-            Assert.AreEqual(originalResult.Data.UniqueId, rehydratedResult.Data.UniqueId);
-            Assert.AreEqual(JsonSerializer.Serialize(originalResult.Data.SinglePlacementGroup), JsonSerializer.Serialize(rehydratedResult.Data.SinglePlacementGroup));
-            Assert.AreEqual(originalResult.Data.ZoneBalance, rehydratedResult.Data.ZoneBalance);
-            Assert.AreEqual(originalResult.Data.PlatformFaultDomainCount, rehydratedResult.Data.PlatformFaultDomainCount);
-            Assert.AreEqual(JsonSerializer.Serialize(originalResult.Data.ProximityPlacementGroup), JsonSerializer.Serialize(rehydratedResult.Data.ProximityPlacementGroup));
-            Assert.AreEqual(JsonSerializer.Serialize(originalResult.Data.HostGroup), JsonSerializer.Serialize(rehydratedResult.Data.HostGroup));
-            Assert.AreEqual(JsonSerializer.Serialize(originalResult.Data.AdditionalCapabilities), JsonSerializer.Serialize(rehydratedResult.Data.AdditionalCapabilities));
-            Assert.AreEqual(JsonSerializer.Serialize(originalResult.Data.ScaleInPolicy), JsonSerializer.Serialize(rehydratedResult.Data.ScaleInPolicy));
-            Assert.AreEqual(originalResult.Data.OrchestrationMode, rehydratedResult.Data.OrchestrationMode);
-            Assert.AreEqual(JsonSerializer.Serialize(originalResult.Data.SpotRestorePolicy), JsonSerializer.Serialize(rehydratedResult.Data.SpotRestorePolicy));
-            Assert.AreEqual(JsonSerializer.Serialize(originalResult.Data.PriorityMixPolicy), JsonSerializer.Serialize(rehydratedResult.Data.PriorityMixPolicy));
-            Assert.AreEqual(JsonSerializer.Serialize(originalResult.Data.TimeCreated), JsonSerializer.Serialize(rehydratedResult.Data.TimeCreated));
-            Assert.AreEqual(originalResult.Data.IsMaximumCapacityConstrained, rehydratedResult.Data.IsMaximumCapacityConstrained);
+            Assert.AreEqual(JsonSerializer.Serialize(originalResult.Data.Properties), JsonSerializer.Serialize(rehydratedResult.Data.Properties));
 
             var originalResponse = originalLro.GetRawResponse();
             var rehydratedResponse = resourceRehydratedLro.GetRawResponse();

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.SelfHelp.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.SelfHelp.Samples
 {
     public partial class Sample_SelfHelpSolutionCollection
     {
-        // Solution_Create
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_SolutionCreate()
         {
             // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2024-03-01-preview/examples/Solution_Create.json
@@ -28,29 +28,22 @@ namespace Azure.ResourceManager.SelfHelp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this SelfHelpSolutionResource
             string scope = "subscriptions/mySubscription/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-rp";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            SelfHelpSolutionCollection collection = client.GetSelfHelpSolutions(scopeId);
+            SelfHelpSolutionCollection collection = client.GetSelfHelpSolutions(new ResourceIdentifier(scope));
 
             // invoke the operation
             string solutionResourceName = "SolutionResourceName1";
-            SelfHelpSolutionData data = new SelfHelpSolutionData()
+            SelfHelpSolutionData data = new SelfHelpSolutionData
             {
-                TriggerCriteria =
-{
-new SolutionTriggerCriterion()
+                TriggerCriteria = {new SolutionTriggerCriterion
 {
 Name = SelfHelpName.SolutionId,
 Value = "SolutionId1",
-}
-},
+}},
                 Parameters =
 {
-["resourceUri"] = "subscriptions/mySubscription/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-rp",
+["resourceUri"] = "subscriptions/mySubscription/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-rp"
 },
             };
             ArmOperation<SelfHelpSolutionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, solutionResourceName, data);
@@ -63,9 +56,8 @@ Value = "SolutionId1",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Solution_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SolutionGet()
         {
             // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2024-03-01-preview/examples/Solution_Get.json
@@ -76,13 +68,9 @@ Value = "SolutionId1",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this SelfHelpSolutionResource
             string scope = "subscriptions/mySubscription/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-rp";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            SelfHelpSolutionCollection collection = client.GetSelfHelpSolutions(scopeId);
+            SelfHelpSolutionCollection collection = client.GetSelfHelpSolutions(new ResourceIdentifier(scope));
 
             // invoke the operation
             string solutionResourceName = "SolutionResource1";
@@ -95,9 +83,8 @@ Value = "SolutionId1",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Solution_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_SolutionGet()
         {
             // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2024-03-01-preview/examples/Solution_Get.json
@@ -108,13 +95,9 @@ Value = "SolutionId1",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this SelfHelpSolutionResource
             string scope = "subscriptions/mySubscription/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-rp";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            SelfHelpSolutionCollection collection = client.GetSelfHelpSolutions(scopeId);
+            SelfHelpSolutionCollection collection = client.GetSelfHelpSolutions(new ResourceIdentifier(scope));
 
             // invoke the operation
             string solutionResourceName = "SolutionResource1";
@@ -123,9 +106,8 @@ Value = "SolutionId1",
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Solution_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_SolutionGet()
         {
             // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2024-03-01-preview/examples/Solution_Get.json
@@ -136,13 +118,9 @@ Value = "SolutionId1",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this SelfHelpSolutionResource
             string scope = "subscriptions/mySubscription/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-rp";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            SelfHelpSolutionCollection collection = client.GetSelfHelpSolutions(scopeId);
+            SelfHelpSolutionCollection collection = client.GetSelfHelpSolutions(new ResourceIdentifier(scope));
 
             // invoke the operation
             string solutionResourceName = "SolutionResource1";
@@ -151,7 +129,7 @@ Value = "SolutionId1",
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

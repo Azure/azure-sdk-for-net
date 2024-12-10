@@ -25,7 +25,7 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
-        public const string DefaultSasVersion = "2025-01-05";
+        public const string DefaultSasVersion = "2025-05-05";
 
         /// <summary>
         /// Max download range size while requesting a transactional hash.

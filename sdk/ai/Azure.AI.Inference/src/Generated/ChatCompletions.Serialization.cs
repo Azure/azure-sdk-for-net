@@ -19,13 +19,21 @@ namespace Azure.AI.Inference
 
         void IJsonModel<ChatCompletions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ChatCompletions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ChatCompletions)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("created"u8);
@@ -38,7 +46,7 @@ namespace Azure.AI.Inference
             writer.WriteStartArray();
             foreach (var item in Choices)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteObjectValue<ChatChoice>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -56,7 +64,6 @@ namespace Azure.AI.Inference
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ChatCompletions IJsonModel<ChatCompletions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

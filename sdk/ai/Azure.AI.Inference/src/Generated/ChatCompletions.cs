@@ -118,11 +118,5 @@ namespace Azure.AI.Inference
         public string Model { get; }
         /// <summary> Usage information for tokens processed and generated as part of this completions operation. </summary>
         public CompletionsUsage Usage { get; }
-        /// <summary>
-        /// The collection of completions choices associated with this completions response.
-        /// Generally, `n` choices are generated per provided prompt with a default value of 1.
-        /// Token limits and other settings may limit the number of choices generated.
-        /// </summary>
-        public IReadOnlyList<ChatChoice> Choices { get; }
     }
 }

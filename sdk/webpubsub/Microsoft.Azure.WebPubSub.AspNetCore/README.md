@@ -61,12 +61,26 @@ public void ConfigureServices(IServiceCollection services)
 
 ### Map `WebPubSubHub` to endpoint routing
 
+The name of the hub has to match the class name e.g. `SampleHub`.
+
 ```C# Snippet:WebPubSubMapHub
 public void Configure(IApplicationBuilder app)
 {
     app.UseEndpoints(endpoint =>
     {
         endpoint.MapWebPubSubHub<SampleHub>("/eventhandler");
+    });
+}
+```
+
+Hub name can be overriden by using extension method.
+
+```C# Snippet:WebPubSubMapHubCustom
+public void Configure(IApplicationBuilder app)
+{
+    app.UseEndpoints(endpoint =>
+    {
+        endpoint.MapWebPubSubHub<SampleHub>("/eventhandler", "customHub");
     });
 }
 ```
