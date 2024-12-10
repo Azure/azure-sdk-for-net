@@ -436,12 +436,12 @@ namespace Azure.Storage.DataMovement
             try
             {
                 // Trigger job cancellation if the failed handler is enabled
-                if (JobPartStatus.State != DataTransferState.Pausing ||
+                if (JobPartStatus.State != DataTransferState.Pausing &&
                     JobPartStatus.State != DataTransferState.Stopping)
                 {
                     await TriggerCancellationAsync().ConfigureAwait(false);
-                    await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
                 }
+                await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
             }
             catch (Exception cancellationException)
             {
@@ -597,7 +597,7 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        internal async Task<bool> IsTransferJobInProgress()
+        internal async Task<bool> CheckTransferStateBeforeRunning()
         {
             // If the main transfer has been stopped, do not process this part.
             if (_dataTransfer.TransferStatus.State == DataTransferState.Pausing)

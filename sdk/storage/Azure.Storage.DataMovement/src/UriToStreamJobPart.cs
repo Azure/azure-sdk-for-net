@@ -199,7 +199,7 @@ namespace Azure.Storage.DataMovement
             try
             {
                 // Continue only if job is in progress
-                if (!await IsTransferJobInProgress().ConfigureAwait(false))
+                if (!await CheckTransferStateBeforeRunning().ConfigureAwait(false))
                 {
                     return;
                 }
@@ -295,20 +295,11 @@ namespace Azure.Storage.DataMovement
             // Download with a single GET
             else if (_initialTransferSize >= totalLength)
             {
-                StorageResourceReadStreamResult result;
-                try
-                {
-                    // To prevent requesting a range that is invalid when
-                    // we already know the length we can just make one get blob request.
-                    result = await _sourceResource.
+                // To prevent requesting a range that is invalid when
+                // we already know the length we can just make one get blob request.
+                StorageResourceReadStreamResult result = await _sourceResource.
                         ReadStreamAsync(length: totalLength, cancellationToken: _cancellationToken)
                         .ConfigureAwait(false);
-                }
-                catch (Exception ex)
-                {
-                    await InvokeFailedArgAsync(ex).ConfigureAwait(false);
-                    return;
-                }
 
                 long downloadLength = result.ContentLength.Value;
                 // This should not occur but add a check just in case

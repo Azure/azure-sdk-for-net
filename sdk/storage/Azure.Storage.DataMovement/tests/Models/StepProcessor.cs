@@ -72,9 +72,9 @@ namespace Azure.Storage.DataMovement.Tests
             return steps;
         }
 
-        public async ValueTask DisposeAsync()
+        public ValueTask DisposeAsync()
         {
-            await Task.CompletedTask;
+            return new ValueTask();
         }
     }
 }

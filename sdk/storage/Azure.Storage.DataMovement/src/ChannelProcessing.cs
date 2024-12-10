@@ -52,7 +52,7 @@ internal static class ChannelProcessing
         /// Async channel reader task. Loops for lifetime of object.
         /// </summary>
         private Task _processorTask;
-        internal TaskCompletionSource<bool> _processerTaskCompletionSource;
+        private TaskCompletionSource<bool> _processorTaskCompletionSource;
 
         /// <summary>
         /// Channel of items to process.
@@ -84,7 +84,7 @@ internal static class ChannelProcessing
             Argument.AssertNotNull(channel, nameof(channel));
             _channel = channel;
             _cancellationTokenSource = new();
-            _processerTaskCompletionSource = new TaskCompletionSource<bool>(
+            _processorTaskCompletionSource = new TaskCompletionSource<bool>(
                 false,
                 TaskCreationOptions.RunContinuationsAsynchronously);
         }
@@ -105,7 +105,7 @@ internal static class ChannelProcessing
             {
                 _cancellationTokenSource.Cancel();
             }
-            await _processerTaskCompletionSource.Task.ConfigureAwait(false);
+            await _processorTaskCompletionSource.Task.ConfigureAwait(false);
             GC.SuppressFinalize(this);
         }
     }
@@ -132,7 +132,7 @@ internal static class ChannelProcessing
                 // Since the channel has it's own dedicated CancellationTokenSource (only called at Dispose)
                 // we don't need a catch block to catch the exception since we know the cancellation either comes
                 // from successful completion or another failure that has been already invoked.
-                _processerTaskCompletionSource.TrySetResult(true);
+                _processorTaskCompletionSource.TrySetResult(true);
             }
         }
     }
@@ -178,7 +178,7 @@ internal static class ChannelProcessing
                 // Since the channel has it's own dedicated CancellationTokenSource (only called at Dispose)
                 // we don't need a catch block to catch the exception since we know the cancellation either comes
                 // from successful completion or another failure that has been already invoked.
-                _processerTaskCompletionSource.TrySetResult(true);
+                _processorTaskCompletionSource.TrySetResult(true);
             }
         }
     }

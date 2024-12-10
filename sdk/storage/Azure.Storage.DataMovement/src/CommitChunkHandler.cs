@@ -43,7 +43,7 @@ namespace Azure.Storage.DataMovement
         private readonly DataTransferOrder _transferOrder;
         private readonly StorageResourceItemProperties _sourceProperties;
 
-        internal ChunkHandlerStatus _chunkHandlerStatus;
+        internal bool _isChunkHandlerRunning;
 
         public CommitChunkHandler(
             long expectedLength,
@@ -80,14 +80,13 @@ namespace Azure.Storage.DataMovement
                 readers: 1,
                 capacity: DataMovementConstants.Channels.StageChunkCapacity);
             _stageChunkProcessor.Process = ProcessCommitRange;
-            _chunkHandlerStatus = ChunkHandlerStatus.Running;
+            _isChunkHandlerRunning = true;
         }
 
         public async ValueTask DisposeAsync()
         {
-            _chunkHandlerStatus = ChunkHandlerStatus.Disposing;
+            _isChunkHandlerRunning = false;
             await _stageChunkProcessor.DisposeAsync().ConfigureAwait(false);
-            _chunkHandlerStatus = ChunkHandlerStatus.Disposed;
         }
 
         public async ValueTask QueueChunkAsync(QueueStageChunkArgs args)
@@ -135,7 +134,7 @@ namespace Azure.Storage.DataMovement
                 // If we are disposing, we don't want to invoke the failed event handler
                 // because the error is likely due to the job part being disposed and was
                 // invoked by another InvokeFailedEventHandler call.
-                if (_chunkHandlerStatus == ChunkHandlerStatus.Running)
+                if (_isChunkHandlerRunning)
                 {
                     // This will trigger the job part to call Dispose on this object
                     _ = Task.Run(() => _invokeFailedEventHandler(ex));

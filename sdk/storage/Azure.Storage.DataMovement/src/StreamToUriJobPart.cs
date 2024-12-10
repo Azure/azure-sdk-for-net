@@ -190,7 +190,7 @@ namespace Azure.Storage.DataMovement
             try
             {
                 // Continue only if job is in progress
-                if (!await IsTransferJobInProgress().ConfigureAwait(false))
+                if (!await CheckTransferStateBeforeRunning().ConfigureAwait(false))
                 {
                     return;
                 }
