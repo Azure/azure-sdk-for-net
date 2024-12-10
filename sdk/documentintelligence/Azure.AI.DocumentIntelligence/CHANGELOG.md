@@ -5,6 +5,7 @@
 ### Features Added
 - Added methods `GetAnalyzeBatchResult`, `GetAnalyzeBatchResults`, `DeleteAnalyzeBatchResult`, and `DeleteAnalyzeResult` to `DocumentIntelligenceClient`.
 - Added class `AnalyzeBatchOperationDetails` to be used as the output of the `GetAnalyzeBatchResult` and `GetAnalyzeBatchResults` APIs.
+- Added overloads for the `AnalyzeDocument` API that take only required parameters.
 - Added property `ModifiedOn` to `DocumentModelDetails` and to `DocumentClassifierDetails`.
 - Added member `Skipped` to `DocumentIntelligenceOperationStatus` (former `OperationStatus`).
 - Exposed `JsonModelWriteCore` for model serialization procedure.
