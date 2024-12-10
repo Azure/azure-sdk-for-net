@@ -136,6 +136,7 @@ namespace Azure.Storage.DataMovement
                 if (_chunkHandlerStatus == ChunkHandlerStatus.Running)
                 {
                     // This will trigger the job part to call Dispose on this object
+                    Console.WriteLine("ProcessDownloadRange: running invokefailedeventhandler");
                     _ = Task.Run(() => _invokeFailedEventHandler(ex));
                 }
             }

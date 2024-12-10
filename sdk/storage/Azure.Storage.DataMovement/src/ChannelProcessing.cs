@@ -105,7 +105,9 @@ internal static class ChannelProcessing
             {
                 _cancellationTokenSource.Cancel();
             }
+            Console.WriteLine("Disposing Channel, attempt await completion task");
             await _processerTaskCompletionSource.Task.ConfigureAwait(false);
+            Console.WriteLine("Diposing Channel, finished waiting task");
             GC.SuppressFinalize(this);
         }
     }

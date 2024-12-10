@@ -258,6 +258,8 @@ namespace Azure.Storage.DataMovement
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"{PartNumber}: ProcessPartToChunk Invoke failure");
+                Console.WriteLine(ex.StackTrace);
                 await InvokeFailedArgAsync(ex).ConfigureAwait(false);
             }
         }
