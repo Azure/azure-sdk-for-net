@@ -2751,19 +2751,33 @@ namespace Azure.ResourceManager.Network
     public partial class LoadBalancingRuleData : Azure.ResourceManager.Network.Models.NetworkResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.LoadBalancingRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.LoadBalancingRuleData>
     {
         public LoadBalancingRuleData() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Core.ResourceIdentifier BackendAddressPoolId { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> BackendAddressPools { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public int? BackendPort { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool? DisableOutboundSnat { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool? EnableFloatingIP { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool? EnableTcpReset { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Core.ResourceIdentifier FrontendIPConfigurationId { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public int? FrontendPort { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public int? IdleTimeoutInMinutes { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Network.Models.LoadDistribution? LoadDistribution { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Core.ResourceIdentifier ProbeId { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.LoadBalancingRuleProperties Properties { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol? Protocol { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Network.LoadBalancingRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.LoadBalancingRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -9576,8 +9590,14 @@ namespace Azure.ResourceManager.Network.Models
         public static Azure.ResourceManager.Network.Models.LearnedIPPrefixesListResult LearnedIPPrefixesListResult(System.Collections.Generic.IEnumerable<string> ipPrefixes = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.LoadBalancerBackendAddress LoadBalancerBackendAddress(string name = null, Azure.Core.ResourceIdentifier virtualNetworkId = null, Azure.Core.ResourceIdentifier subnetId = null, string ipAddress = null, Azure.Core.ResourceIdentifier networkInterfaceIPConfigurationId = null, Azure.Core.ResourceIdentifier loadBalancerFrontendIPConfigurationId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.NatRulePortMapping> inboundNatRulesPortMapping = null, Azure.ResourceManager.Network.Models.LoadBalancerBackendAddressAdminState? adminState = default(Azure.ResourceManager.Network.Models.LoadBalancerBackendAddressAdminState?)) { throw null; }
         public static Azure.ResourceManager.Network.LoadBalancerData LoadBalancerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, Azure.ResourceManager.Network.Models.LoadBalancerSku sku = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.FrontendIPConfigurationData> frontendIPConfigurations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.BackendAddressPoolData> backendAddressPools = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.LoadBalancingRuleData> loadBalancingRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.ProbeData> probes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.InboundNatRuleData> inboundNatRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPool> inboundNatPools = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Network.OutboundRuleData> outboundRules = null, System.Guid? resourceGuid = default(System.Guid?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPool LoadBalancerInboundNatPool(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPoolProperties properties = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPool LoadBalancerInboundNatPool(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), Azure.Core.ResourceIdentifier frontendIPConfigurationId = null, Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol? protocol = default(Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol?), int? frontendPortRangeStart = default(int?), int? frontendPortRangeEnd = default(int?), int? backendPort = default(int?), int? idleTimeoutInMinutes = default(int?), bool? enableFloatingIP = default(bool?), bool? enableTcpReset = default(bool?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPoolProperties LoadBalancerInboundNatPoolProperties(Azure.Core.ResourceIdentifier frontendIPConfigurationId = null, Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol protocol = default(Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol), int frontendPortRangeStart = 0, int frontendPortRangeEnd = 0, int backendPort = 0, int? idleTimeoutInMinutes = default(int?), bool? enableFloatingIP = default(bool?), bool? enableTcpReset = default(bool?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), System.Collections.Generic.IDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
+        public static Azure.ResourceManager.Network.LoadBalancingRuleData LoadBalancingRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ResourceManager.Network.Models.LoadBalancingRuleProperties properties = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Network.LoadBalancingRuleData LoadBalancingRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ETag? etag = default(Azure.ETag?), Azure.Core.ResourceIdentifier frontendIPConfigurationId = null, Azure.Core.ResourceIdentifier backendAddressPoolId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> backendAddressPools = null, Azure.Core.ResourceIdentifier probeId = null, Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol? protocol = default(Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol?), Azure.ResourceManager.Network.Models.LoadDistribution? loadDistribution = default(Azure.ResourceManager.Network.Models.LoadDistribution?), int? frontendPort = default(int?), int? backendPort = default(int?), int? idleTimeoutInMinutes = default(int?), bool? enableFloatingIP = default(bool?), bool? enableTcpReset = default(bool?), bool? disableOutboundSnat = default(bool?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Network.Models.LoadBalancingRuleProperties LoadBalancingRuleProperties(Azure.Core.ResourceIdentifier frontendIPConfigurationId = null, Azure.Core.ResourceIdentifier backendAddressPoolId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> backendAddressPools = null, Azure.Core.ResourceIdentifier probeId = null, Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol protocol = default(Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol), Azure.ResourceManager.Network.Models.LoadDistribution? loadDistribution = default(Azure.ResourceManager.Network.Models.LoadDistribution?), int frontendPort = 0, int? backendPort = default(int?), int? idleTimeoutInMinutes = default(int?), bool? enableFloatingIP = default(bool?), bool? enableTcpReset = default(bool?), bool? disableOutboundSnat = default(bool?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?), System.Collections.Generic.IDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
         public static Azure.ResourceManager.Network.LocalNetworkGatewayData LocalNetworkGatewayData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IEnumerable<string> localNetworkAddressPrefixes = null, string gatewayIPAddress = null, string fqdn = null, Azure.ResourceManager.Network.Models.BgpSettings bgpSettings = null, System.Guid? resourceGuid = default(System.Guid?), Azure.ResourceManager.Network.Models.NetworkProvisioningState? provisioningState = default(Azure.ResourceManager.Network.Models.NetworkProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Network.Models.MatchedRule MatchedRule(string ruleName = null, string action = null) { throw null; }
         public static Azure.ResourceManager.Network.Models.MigrateLoadBalancerToIPBasedResult MigrateLoadBalancerToIPBasedResult(System.Collections.Generic.IEnumerable<string> migratedPools = null) { throw null; }
@@ -13683,15 +13703,25 @@ namespace Azure.ResourceManager.Network.Models
     public partial class LoadBalancerInboundNatPool : Azure.ResourceManager.Network.Models.NetworkResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPool>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPool>
     {
         public LoadBalancerInboundNatPool() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public int? BackendPort { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool? EnableFloatingIP { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool? EnableTcpReset { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Core.ResourceIdentifier FrontendIPConfigurationId { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public int? FrontendPortRangeEnd { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public int? FrontendPortRangeStart { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public int? IdleTimeoutInMinutes { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPoolProperties Properties { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol? Protocol { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPool System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPool>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -13699,6 +13729,26 @@ namespace Azure.ResourceManager.Network.Models
         Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPool System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPool>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPool>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPool>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class LoadBalancerInboundNatPoolProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPoolProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPoolProperties>
+    {
+        public LoadBalancerInboundNatPoolProperties(Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol protocol, int frontendPortRangeStart, int frontendPortRangeEnd, int backendPort) { }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
+        public int BackendPort { get { throw null; } set { } }
+        public bool? EnableFloatingIP { get { throw null; } set { } }
+        public bool? EnableTcpReset { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier FrontendIPConfigurationId { get { throw null; } set { } }
+        public int FrontendPortRangeEnd { get { throw null; } set { } }
+        public int FrontendPortRangeStart { get { throw null; } set { } }
+        public int? IdleTimeoutInMinutes { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol Protocol { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPoolProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPoolProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPoolProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPoolProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPoolProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPoolProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.LoadBalancerInboundNatPoolProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LoadBalancerOutboundRuleProtocol : System.IEquatable<Azure.ResourceManager.Network.Models.LoadBalancerOutboundRuleProtocol>
@@ -13790,6 +13840,30 @@ namespace Azure.ResourceManager.Network.Models
         Azure.ResourceManager.Network.Models.LoadBalancerVipSwapRequestFrontendIPConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.LoadBalancerVipSwapRequestFrontendIPConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.LoadBalancerVipSwapRequestFrontendIPConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.LoadBalancerVipSwapRequestFrontendIPConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class LoadBalancingRuleProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.LoadBalancingRuleProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.LoadBalancingRuleProperties>
+    {
+        public LoadBalancingRuleProperties(Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol protocol, int frontendPort) { }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
+        public Azure.Core.ResourceIdentifier BackendAddressPoolId { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> BackendAddressPools { get { throw null; } }
+        public int? BackendPort { get { throw null; } set { } }
+        public bool? DisableOutboundSnat { get { throw null; } set { } }
+        public bool? EnableFloatingIP { get { throw null; } set { } }
+        public bool? EnableTcpReset { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier FrontendIPConfigurationId { get { throw null; } set { } }
+        public int FrontendPort { get { throw null; } set { } }
+        public int? IdleTimeoutInMinutes { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.LoadDistribution? LoadDistribution { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ProbeId { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol Protocol { get { throw null; } set { } }
+        public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Network.Models.LoadBalancingRuleProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.LoadBalancingRuleProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Network.Models.LoadBalancingRuleProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Network.Models.LoadBalancingRuleProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.LoadBalancingRuleProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.LoadBalancingRuleProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Network.Models.LoadBalancingRuleProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LoadBalancingTransportProtocol : System.IEquatable<Azure.ResourceManager.Network.Models.LoadBalancingTransportProtocol>

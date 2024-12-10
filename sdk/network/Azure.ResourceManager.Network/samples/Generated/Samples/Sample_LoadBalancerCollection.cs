@@ -58,16 +58,17 @@ Name = "be-lb",
 }},
                 LoadBalancingRules = {new LoadBalancingRuleData
 {
+Properties = new LoadBalancingRuleProperties(LoadBalancingTransportProtocol.Tcp, 80)
+{
 FrontendIPConfigurationId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/frontendIPConfigurations/fe-lb"),
 BackendAddressPoolId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/backendAddressPools/be-lb"),
 ProbeId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/probes/probe-lb"),
-Protocol = LoadBalancingTransportProtocol.Tcp,
 LoadDistribution = LoadDistribution.Default,
-FrontendPort = 80,
 BackendPort = 80,
 IdleTimeoutInMinutes = 15,
 EnableFloatingIP = true,
 EnableTcpReset = false,
+},
 Name = "rulelb",
 }},
                 Probes = {new ProbeData
@@ -149,15 +150,16 @@ Name = "be-lb",
 }},
                 LoadBalancingRules = {new LoadBalancingRuleData
 {
+Properties = new LoadBalancingRuleProperties(LoadBalancingTransportProtocol.Tcp, 80)
+{
 FrontendIPConfigurationId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/frontendIPConfigurations/fe-lb"),
 BackendAddressPoolId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/backendAddressPools/be-lb"),
 ProbeId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/probes/probe-lb"),
-Protocol = LoadBalancingTransportProtocol.Tcp,
 LoadDistribution = LoadDistribution.Default,
-FrontendPort = 80,
 BackendPort = 80,
 IdleTimeoutInMinutes = 15,
 EnableFloatingIP = true,
+},
 Name = "rulelb",
 }},
                 Probes = {new ProbeData
@@ -239,15 +241,16 @@ Name = "be-lb",
 }},
                 LoadBalancingRules = {new LoadBalancingRuleData
 {
+Properties = new LoadBalancingRuleProperties(LoadBalancingTransportProtocol.Tcp, 80)
+{
 FrontendIPConfigurationId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/frontendIPConfigurations/fe-lb"),
 BackendAddressPoolId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/backendAddressPools/be-lb"),
 ProbeId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/probes/probe-lb"),
-Protocol = LoadBalancingTransportProtocol.Tcp,
 LoadDistribution = LoadDistribution.Default,
-FrontendPort = 80,
 BackendPort = 80,
 IdleTimeoutInMinutes = 15,
 EnableFloatingIP = true,
+},
 Name = "rulelb",
 }},
                 Probes = {new ProbeData
@@ -341,18 +344,19 @@ Name = "be-lb",
 }},
                 LoadBalancingRules = {new LoadBalancingRuleData
 {
+Properties = new LoadBalancingRuleProperties(LoadBalancingTransportProtocol.All, 0)
+{
 FrontendIPConfigurationId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/frontendIPConfigurations/fe-lb"),
 BackendAddressPools = {new WritableSubResource
 {
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/backendAddressPools/be-lb"),
 }},
 ProbeId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/probes/probe-lb"),
-Protocol = LoadBalancingTransportProtocol.All,
 LoadDistribution = LoadDistribution.Default,
-FrontendPort = 0,
 BackendPort = 0,
 IdleTimeoutInMinutes = 15,
 EnableFloatingIP = true,
+},
 Name = "rulelb",
 }},
                 Probes = {new ProbeData
@@ -426,6 +430,8 @@ Name = "be-lb2",
 }},
                 LoadBalancingRules = {new LoadBalancingRuleData
 {
+Properties = new LoadBalancingRuleProperties(LoadBalancingTransportProtocol.All, 0)
+{
 FrontendIPConfigurationId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/frontendIPConfigurations/fe-lb"),
 BackendAddressPools = {new WritableSubResource
 {
@@ -435,12 +441,11 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/M
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/backendAddressPools/be-lb2"),
 }},
 ProbeId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/probes/probe-lb"),
-Protocol = LoadBalancingTransportProtocol.All,
 LoadDistribution = LoadDistribution.Default,
-FrontendPort = 0,
 BackendPort = 0,
 IdleTimeoutInMinutes = 15,
 EnableFloatingIP = true,
+},
 Name = "rulelb",
 }},
                 Probes = {new ProbeData
@@ -517,15 +522,16 @@ Name = "be-lb",
 }},
                 LoadBalancingRules = {new LoadBalancingRuleData
 {
+Properties = new LoadBalancingRuleProperties(LoadBalancingTransportProtocol.Tcp, 80)
+{
 FrontendIPConfigurationId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/frontendIPConfigurations/fe-lb"),
 BackendAddressPoolId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/backendAddressPools/be-lb"),
 ProbeId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/probes/probe-lb"),
-Protocol = LoadBalancingTransportProtocol.Tcp,
 LoadDistribution = LoadDistribution.Default,
-FrontendPort = 80,
 BackendPort = 80,
 IdleTimeoutInMinutes = 15,
 EnableFloatingIP = false,
+},
 Name = "rulelb",
 }},
                 Probes = {new ProbeData
@@ -594,15 +600,16 @@ Name = "be-lb",
 }},
                 LoadBalancingRules = {new LoadBalancingRuleData
 {
+Properties = new LoadBalancingRuleProperties(LoadBalancingTransportProtocol.Tcp, 80)
+{
 FrontendIPConfigurationId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/frontendIPConfigurations/fe-lb"),
 BackendAddressPoolId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/backendAddressPools/be-lb"),
 ProbeId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/probes/probe-lb"),
-Protocol = LoadBalancingTransportProtocol.Tcp,
 LoadDistribution = LoadDistribution.Default,
-FrontendPort = 80,
 BackendPort = 80,
 IdleTimeoutInMinutes = 15,
 EnableFloatingIP = true,
+},
 Name = "rulelb",
 }},
                 Probes = {new ProbeData
@@ -685,15 +692,16 @@ Name = "be-lb",
 }},
                 LoadBalancingRules = {new LoadBalancingRuleData
 {
+Properties = new LoadBalancingRuleProperties(LoadBalancingTransportProtocol.Tcp, 80)
+{
 FrontendIPConfigurationId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/frontendIPConfigurations/fe-lb"),
 BackendAddressPoolId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/backendAddressPools/be-lb"),
 ProbeId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/probes/probe-lb"),
-Protocol = LoadBalancingTransportProtocol.Tcp,
 LoadDistribution = LoadDistribution.Default,
-FrontendPort = 80,
 BackendPort = 80,
 IdleTimeoutInMinutes = 15,
 EnableFloatingIP = true,
+},
 Name = "rulelb",
 }},
                 Probes = {new ProbeData
@@ -777,14 +785,13 @@ Name = "test",
                 InboundNatRules = { },
                 InboundNatPools = {new LoadBalancerInboundNatPool
 {
+Properties = new LoadBalancerInboundNatPoolProperties(LoadBalancingTransportProtocol.Tcp, 8080, 8085, 8888)
+{
 FrontendIPConfigurationId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/frontendIPConfigurations/test"),
-Protocol = LoadBalancingTransportProtocol.Tcp,
-FrontendPortRangeStart = 8080,
-FrontendPortRangeEnd = 8085,
-BackendPort = 8888,
 IdleTimeoutInMinutes = 10,
 EnableFloatingIP = true,
 EnableTcpReset = true,
+},
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/inboundNatPools/test"),
 Name = "test",
 }},
@@ -845,16 +852,17 @@ Name = "be-lb",
 }},
                 LoadBalancingRules = {new LoadBalancingRuleData
 {
+Properties = new LoadBalancingRuleProperties(LoadBalancingTransportProtocol.Tcp, 80)
+{
 FrontendIPConfigurationId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/frontendIPConfigurations/fe-lb"),
 BackendAddressPoolId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/backendAddressPools/be-lb"),
 ProbeId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/probes/probe-lb"),
-Protocol = LoadBalancingTransportProtocol.Tcp,
 LoadDistribution = LoadDistribution.Default,
-FrontendPort = 80,
 BackendPort = 80,
 IdleTimeoutInMinutes = 15,
 EnableFloatingIP = true,
 DisableOutboundSnat = true,
+},
 Name = "rulelb",
 }},
                 Probes = {new ProbeData
