@@ -52,7 +52,7 @@ internal static class ChannelProcessing
         /// Async channel reader task. Loops for lifetime of object.
         /// </summary>
         private Task _processorTask;
-        private TaskCompletionSource<bool> _processorTaskCompletionSource;
+        internal TaskCompletionSource<bool> _processorTaskCompletionSource;
 
         /// <summary>
         /// Channel of items to process.
