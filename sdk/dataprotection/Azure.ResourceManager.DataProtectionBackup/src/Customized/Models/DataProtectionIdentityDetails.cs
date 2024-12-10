@@ -18,6 +18,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// </summary>
         [EditorBrowsableAttribute(EditorBrowsableState.Never)]
         [ObsoleteAttribute("This property has been replaced by UserAssignedIdentityArmUriString", false)]
-        public Uri UserAssignedIdentityArmUri => string.IsNullOrEmpty(UserAssignedIdentityArmUriString) ? null : new Uri(UserAssignedIdentityArmUriString);
+        public Uri UserAssignedIdentityArmUri
+        {
+            get => string.IsNullOrEmpty(UserAssignedIdentityArmUriString) ? null : new Uri(UserAssignedIdentityArmUriString);
+            set => UserAssignedIdentityArmUriString = value?.AbsoluteUri;
+        }
     }
 }
