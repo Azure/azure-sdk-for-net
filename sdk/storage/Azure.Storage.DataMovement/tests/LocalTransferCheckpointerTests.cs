@@ -15,6 +15,7 @@ namespace Azure.Storage.DataMovement.Tests
     public class LocalTransferCheckpointerTests : DataMovementTestBase
     {
         private static DataTransferStatus SuccessfulCompletedStatus => new DataTransferStatus(DataTransferState.Completed, false, false);
+        private static DataTransferStatus PausedStatus => new DataTransferStatus(DataTransferState.Paused, false, false);
 
         public LocalTransferCheckpointerTests(bool async)
             : base(async, null)
@@ -767,7 +768,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Arrange
             string transferId = GetNewTransferId();
-            DataTransferStatus newStatus = SuccessfulCompletedStatus;
+            DataTransferStatus newStatus = PausedStatus;
 
             SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
             await AddJobToCheckpointer(transferCheckpointer, transferId);
