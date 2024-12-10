@@ -89,7 +89,17 @@ public abstract class PipelineTransport : PipelinePolicy
     /// <param name="message">The <see cref="PipelineMessage"/> containing the
     /// request that was sent and response that was received by the transport.</param>
     public void Process(PipelineMessage message)
-        => ProcessSyncOrAsync(message, async: false).EnsureCompleted();
+    {
+        try
+        {
+            ProcessSyncOrAsync(message, async: false).EnsureCompleted();
+        }
+        catch (Exception ex)
+        {
+            _pipelineTransportLogger?.LogExceptionResponse(message.Request.ClientRequestId ?? string.Empty, ex);
+            throw;
+        }
+    }
 
     /// <summary>
     /// Sends the HTTP request contained by <see cref="PipelineMessage.Request"/>
@@ -98,7 +108,17 @@ public abstract class PipelineTransport : PipelinePolicy
     /// <param name="message">The <see cref="PipelineMessage"/> containing the
     /// request that was sent and response that was received by the transport.</param>
     public async ValueTask ProcessAsync(PipelineMessage message)
-        => await ProcessSyncOrAsync(message, async: true).ConfigureAwait(false);
+    {
+        try
+        {
+            await ProcessSyncOrAsync(message, async: true).ConfigureAwait(false);
+        }
+        catch (Exception ex)
+        {
+            _pipelineTransportLogger?.LogExceptionResponse(message.Request.ClientRequestId ?? string.Empty, ex);
+            throw;
+        }
+    }
 
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, bool async)
     {
@@ -127,8 +147,6 @@ public abstract class PipelineTransport : PipelinePolicy
         }
         catch (Exception ex)
         {
-            _pipelineTransportLogger?.LogExceptionResponse(message.Request.ClientRequestId ?? string.Empty, ex);
-
             if (ex is OperationCanceledException)
             {
                 CancellationHelper.ThrowIfCancellationRequestedOrTimeout(messageToken, timeoutTokenSource.Token, ex, networkTimeout);

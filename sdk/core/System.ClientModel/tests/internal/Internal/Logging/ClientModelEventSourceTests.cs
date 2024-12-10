@@ -611,7 +611,7 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
 
         ClientPipelineOptions options = new()
         {
-            Transport = new MockPipelineTransport("Transport", [429, 200]),
+            Transport = new MockPipelineTransport("Transport", [429, 429, 200]),
             ClientLoggingOptions = new()
         };
         ClientPipeline pipeline = ClientPipeline.Create(options);
@@ -623,9 +623,18 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
 
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
-        IEnumerable<EventWrittenEventArgs> retryLogs = _listener.EventsById(LoggingEventIds.RequestRetryingEvent);
+        EventWrittenEventArgs args = _listener.SingleEventById(LoggingEventIds.RequestRetryingEvent, (i => i.GetProperty<int>("retryNumber") == 1));
+        Assert.AreEqual("RequestRetrying", args.EventName);
+        Assert.AreEqual(EventLevel.Informational, args.Level);
+        Assert.Less(args.GetProperty<double>("seconds"), 1);
 
-        Assert.AreEqual(200, message.Response!.Status);
+        args = _listener.SingleEventById(LoggingEventIds.RequestRetryingEvent, (i => i.GetProperty<int>("retryNumber") == 2));
+        Assert.AreEqual("RequestRetrying", args.EventName);
+        Assert.AreEqual(EventLevel.Informational, args.Level);
+        Assert.Less(args.GetProperty<double>("seconds"), 1);
+
+        // 2 retry logs + 3 request logs + 3 response logs
+        Assert.AreEqual(8, _listener.EventData.Count());
     }
 
     #endregion

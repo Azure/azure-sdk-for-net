@@ -101,7 +101,6 @@ public class MessageLoggingPolicy : PipelinePolicy
         var before = Stopwatch.GetTimestamp();
 
         // Any exceptions thrown are logged in the transport
-
         if (async)
         {
             await ProcessNextAsync(message, pipeline, currentIndex).ConfigureAwait(false);

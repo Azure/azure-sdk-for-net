@@ -622,7 +622,7 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
 
         ClientPipelineOptions options = new()
         {
-            Transport = new MockPipelineTransport("Transport", [429, 200]),
+            Transport = new MockPipelineTransport("Transport", [429, 429, 200]),
             ClientLoggingOptions = new()
             {
                 LoggerFactory = _factory
@@ -638,9 +638,18 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
         await pipeline.SendSyncOrAsync(message, IsAsync);
         TestLogger logger = _factory.GetLogger(RetryPolicyCategoryName);
 
-        IEnumerable<LoggerEvent> retryLogs = logger.EventsById(LoggingEventIds.RequestRetryingEvent);
+        LoggerEvent log = logger.SingleEventById(LoggingEventIds.RequestRetryingEvent, (i => i.GetValueFromArguments<int>("retryNumber") == 1));
+        Assert.AreEqual("RequestRetrying", log.EventId.Name);
+        Assert.AreEqual(LogLevel.Information, log.LogLevel);
+        Assert.Less(log.GetValueFromArguments<double>("seconds"), 1);
 
-        Assert.AreEqual(200, message.Response!.Status);
+        log = logger.SingleEventById(LoggingEventIds.RequestRetryingEvent, (i => i.GetValueFromArguments<int>("retryNumber") == 2));
+        Assert.AreEqual("RequestRetrying", log.EventId.Name);
+        Assert.AreEqual(LogLevel.Information, log.LogLevel);
+        Assert.Less(log.GetValueFromArguments<double>("seconds"), 1);
+
+        // No other logs should have been written to the retry logger
+        Assert.AreEqual(2, logger.Logs.Count());
     }
 
     #endregion
