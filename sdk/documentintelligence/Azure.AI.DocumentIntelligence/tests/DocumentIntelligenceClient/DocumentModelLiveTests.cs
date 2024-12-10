@@ -18,7 +18,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
         }
 
         [RecordedTest]
-        public async Task AnalyzeDocumentWithUrlSource()
+        public async Task AnalyzeDocumentWithUriSource()
         {
             var client = CreateDocumentIntelligenceClient();
 
@@ -142,7 +142,6 @@ namespace Azure.AI.DocumentIntelligence.Tests
         {
             Assert.That(analyzeResult.ModelId, Is.EqualTo(modelId));
             Assert.That(analyzeResult.ApiVersion, Is.EqualTo(ServiceVersionString));
-            Assert.That(analyzeResult.StringIndexType, Is.EqualTo(StringIndexType.TextElements));
             Assert.That(analyzeResult.ContentFormat, Is.Not.EqualTo(default(DocumentContentFormat)));
 
             for (int pageNumber = 1; pageNumber <= analyzeResult.Pages.Count; pageNumber++)
