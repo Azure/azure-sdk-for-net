@@ -850,5 +850,79 @@ namespace Azure.Communication.CallAutomation
                     throw new RequestFailedException(message.Response);
             }
         }
+
+        internal HttpMessage CreateInterruptAudioAndAnnounceRequest(string callConnectionId, InterruptAudioAndAnnounceRequestInternal interruptRequest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":interruptAudioAndAnnounce", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(interruptRequest);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Plays audio to participants in the call. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="interruptRequest"> play request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="interruptRequest"/> is null. </exception>
+        public async Task<Response> InterruptAudioAndAnnounceAsync(string callConnectionId, InterruptAudioAndAnnounceRequestInternal interruptRequest, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (interruptRequest == null)
+            {
+                throw new ArgumentNullException(nameof(interruptRequest));
+            }
+
+            using var message = CreateInterruptAudioAndAnnounceRequest(callConnectionId, interruptRequest);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Plays audio to participants in the call. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="interruptRequest"> play request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="interruptRequest"/> is null. </exception>
+        public Response InterruptAudioAndAnnounce(string callConnectionId, InterruptAudioAndAnnounceRequestInternal interruptRequest, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (interruptRequest == null)
+            {
+                throw new ArgumentNullException(nameof(interruptRequest));
+            }
+
+            using var message = CreateInterruptAudioAndAnnounceRequest(callConnectionId, interruptRequest);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
     }
 }

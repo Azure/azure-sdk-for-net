@@ -7,11 +7,11 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The HoldFailed. </summary>
-    public partial class HoldFailed
+    /// <summary> Play started event. </summary>
+    public partial class PlayResumed
     {
-        /// <summary> Initializes a new instance of <see cref="HoldFailed"/>. </summary>
-        internal HoldFailed()
+        /// <summary> Initializes a new instance of <see cref="PlayResumed"/>. </summary>
+        internal PlayResumed()
         {
         }
     }

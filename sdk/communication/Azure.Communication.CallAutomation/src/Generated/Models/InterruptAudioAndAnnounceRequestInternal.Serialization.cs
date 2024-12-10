@@ -10,22 +10,24 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class PlayOptionsInternal : IUtf8JsonSerializable
+    internal partial class InterruptAudioAndAnnounceRequestInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("loop"u8);
-            writer.WriteBooleanValue(Loop);
-            if (Optional.IsDefined(InterruptCallMediaOperation))
+            writer.WritePropertyName("playSources"u8);
+            writer.WriteStartArray();
+            foreach (var item in PlaySources)
             {
-                writer.WritePropertyName("interruptCallMediaOperation"u8);
-                writer.WriteBooleanValue(InterruptCallMediaOperation.Value);
+                writer.WriteObjectValue(item);
             }
-            if (Optional.IsDefined(InterruptHoldAudio))
+            writer.WriteEndArray();
+            writer.WritePropertyName("playTo"u8);
+            writer.WriteObjectValue(PlayTo);
+            if (Optional.IsDefined(OperationContext))
             {
-                writer.WritePropertyName("interruptHoldAudio"u8);
-                writer.WriteBooleanValue(InterruptHoldAudio.Value);
+                writer.WritePropertyName("operationContext"u8);
+                writer.WriteStringValue(OperationContext);
             }
             writer.WriteEndObject();
         }
