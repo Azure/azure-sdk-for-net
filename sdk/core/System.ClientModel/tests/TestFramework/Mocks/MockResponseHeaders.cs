@@ -11,9 +11,9 @@ public class MockResponseHeaders : PipelineResponseHeaders
 {
     private readonly Dictionary<string, string> _headers;
 
-    public MockResponseHeaders()
+    public MockResponseHeaders(Dictionary<string, string>? headers = default)
     {
-        _headers = new Dictionary<string, string>();
+        _headers = headers ?? new Dictionary<string, string>();
     }
 
     public void SetHeader(string name, string value)
@@ -21,7 +21,8 @@ public class MockResponseHeaders : PipelineResponseHeaders
 
     public override IEnumerator<KeyValuePair<string, string>> GetEnumerator()
     {
-        throw new NotImplementedException();
+        IEnumerator<KeyValuePair<string, string>> enumerator = _headers.GetEnumerator();
+        return enumerator;
     }
 
     public override bool TryGetValue(string name, out string? value)
