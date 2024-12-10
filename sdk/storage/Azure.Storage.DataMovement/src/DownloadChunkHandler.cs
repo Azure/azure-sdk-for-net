@@ -9,7 +9,7 @@ using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class DownloadChunkHandler : IDisposable
+    internal class DownloadChunkHandler : IAsyncDisposable
     {
         #region Delegate Definitions
         public delegate Task CopyToDestinationFileInternal(long offset, long length, Stream stream, long expectedLength, bool initial);
@@ -40,6 +40,8 @@ namespace Azure.Storage.DataMovement
 
         private long _bytesTransferred;
         private readonly long _expectedLength;
+
+        internal ChunkHandlerStatus _chunkHandlerStatus;
 
         /// <summary>
         /// The controller for downloading the chunks to each file.
@@ -89,11 +91,14 @@ namespace Azure.Storage.DataMovement
                 readers: 1,
                 capacity: DataMovementConstants.Channels.DownloadChunkCapacity);
             _downloadRangeProcessor.Process = ProcessDownloadRange;
+            _chunkHandlerStatus = ChunkHandlerStatus.Running;
         }
 
-        public void Dispose()
+        public async ValueTask DisposeAsync()
         {
-            _downloadRangeProcessor.TryComplete();
+            _chunkHandlerStatus = ChunkHandlerStatus.Disposing;
+            await _downloadRangeProcessor.DisposeAsync().ConfigureAwait(false);
+            _chunkHandlerStatus = ChunkHandlerStatus.Disposed;
         }
 
         public async ValueTask QueueChunkAsync(QueueDownloadChunkArgs args)
@@ -125,8 +130,14 @@ namespace Azure.Storage.DataMovement
             }
             catch (Exception ex)
             {
-                // This will trigger the job part to call Dispose on this object
-                await _invokeFailedEventHandler(ex).ConfigureAwait(false);
+                // If we are disposing, we don't want to invoke the failed event handler
+                // because the error is likely due to the job part being disposed and was
+                // invoked by another InvokeFailedEventHandler call.
+                if (_chunkHandlerStatus == ChunkHandlerStatus.Running)
+                {
+                    // This will trigger the job part to call Dispose on this object
+                    _ = Task.Run(() => _invokeFailedEventHandler(ex));
+                }
             }
         }
 

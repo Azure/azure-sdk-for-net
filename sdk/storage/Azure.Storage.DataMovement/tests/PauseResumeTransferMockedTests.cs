@@ -83,6 +83,7 @@ public class PauseResumeTransferMockedTests
         int numJobs,
         int numJobParts,
         int numChunks,
+        int chunksPerPart,
         List<DataTransfer> resumedTransfers,
         MemoryTransferCheckpointer checkpointer,
         StepProcessor<TransferJobInternal> jobsProcessor,
@@ -110,8 +111,18 @@ public class PauseResumeTransferMockedTests
         Assert.That(inProgressJobPartsCount, Is.EqualTo(numJobParts), "Error: all job parts should be in InProgress state after Part Processing on resume");
 
         // process chunks on resume
-        Assert.That(await chunksProcessor.StepAll(), Is.EqualTo(numChunks), "Error chunk processing on resume");
-        await Task.Delay(50);
+        int chunksStepped = await chunksProcessor.StepAll();
+        // Check if all chunks stepped through
+        if (chunksPerPart > 1)
+        {
+            // Multichunk transfer sends a completion chunk after all the other chunks stepped through.
+            await Task.Delay(50);
+            Assert.That(await chunksProcessor.StepAll() + chunksStepped, Is.EqualTo(numChunks + numJobParts));
+        }
+        else
+        {
+            Assert.That(chunksStepped, Is.EqualTo(numChunks));
+        }
         AssertAllJobsAndPartsCompleted(numJobs, numJobParts, resumedTransfers, checkpointer);
     }
 
@@ -247,7 +258,7 @@ public class PauseResumeTransferMockedTests
             MaximumTransferChunkSize = chunkSize,
         });
 
-        await AssertResumeTransfer(items, items, numChunks, resumedTransfers, checkpointer, jobsProcessor, partsProcessor, chunksProcessor);
+        await AssertResumeTransfer(items, items, numChunks, chunksPerPart, resumedTransfers, checkpointer, jobsProcessor, partsProcessor, chunksProcessor);
     }
 
     [Test]
@@ -383,7 +394,7 @@ public class PauseResumeTransferMockedTests
         // START RESUME TRANSFERS
         List<DataTransfer> resumedTransfers = await transferManager.ResumeAllTransfersAsync();
 
-        await AssertResumeTransfer(items, items, numChunks, resumedTransfers, checkpointer, jobsProcessor, partsProcessor, chunksProcessor);
+        await AssertResumeTransfer(items, items, numChunks, chunksPerPart, resumedTransfers, checkpointer, jobsProcessor, partsProcessor, chunksProcessor);
     }
 
     [Test]
@@ -536,11 +547,11 @@ public class PauseResumeTransferMockedTests
 
         if (pauseLocation == PauseLocation.PauseProcessHalfway)
         {
-            await AssertResumeTransfer(items / 2, items / 2, numChunks / 2, resumedTransfers, checkpointer, jobsProcessor, partsProcessor, chunksProcessor);
+            await AssertResumeTransfer(items / 2, items / 2, numChunks / 2, chunksPerPart / 2, resumedTransfers, checkpointer, jobsProcessor, partsProcessor, chunksProcessor);
         }
         else
         {
-            await AssertResumeTransfer(items, items, numChunks, resumedTransfers, checkpointer, jobsProcessor, partsProcessor, chunksProcessor);
+            await AssertResumeTransfer(items, items, numChunks, chunksPerPart, resumedTransfers, checkpointer, jobsProcessor, partsProcessor, chunksProcessor);
         }
     }
 
@@ -677,7 +688,7 @@ public class PauseResumeTransferMockedTests
             MaximumTransferChunkSize = chunkSize,
         });
 
-        await AssertResumeTransfer(numJobs, numJobParts, numChunks, resumedTransfers, checkpointer, jobsProcessor, partsProcessor, chunksProcessor);
+        await AssertResumeTransfer(numJobs, numJobParts, numChunks, chunksPerPart, resumedTransfers, checkpointer, jobsProcessor, partsProcessor, chunksProcessor);
     }
 
     [Test]
@@ -813,7 +824,7 @@ public class PauseResumeTransferMockedTests
         // START RESUME TRANSFERS
         List<DataTransfer> resumedTransfers = await transferManager.ResumeAllTransfersAsync();
 
-        await AssertResumeTransfer(numJobs, numJobParts, numChunks, resumedTransfers, checkpointer, jobsProcessor, partsProcessor, chunksProcessor);
+        await AssertResumeTransfer(numJobs, numJobParts, numChunks, chunksPerPart, resumedTransfers, checkpointer, jobsProcessor, partsProcessor, chunksProcessor);
     }
 
     [Test]
@@ -983,11 +994,11 @@ public class PauseResumeTransferMockedTests
             int expectedJobsCount = numJobs - expectedAlreadyCompletedJobsCount_half;
             int expectedPartsCount = Enumerable.Range(numJobs + 1 - expectedJobsCount, expectedJobsCount)
                 .Sum(i => i * 2);
-            await AssertResumeTransfer(expectedJobsCount, expectedPartsCount, expectedPartsCount, resumedTransfers, checkpointer, jobsProcessor, partsProcessor, chunksProcessor);
+            await AssertResumeTransfer(expectedJobsCount, expectedPartsCount, expectedPartsCount, chunksPerPart, resumedTransfers, checkpointer, jobsProcessor, partsProcessor, chunksProcessor);
         }
         else
         {
-            await AssertResumeTransfer(numJobs, numJobParts, numChunks, resumedTransfers, checkpointer, jobsProcessor, partsProcessor, chunksProcessor);
+            await AssertResumeTransfer(numJobs, numJobParts, numChunks, chunksPerPart, resumedTransfers, checkpointer, jobsProcessor, partsProcessor, chunksProcessor);
         }
     }
 
