@@ -7,6 +7,8 @@ using System.Net;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Azure.Communication.CallAutomation.Tests.Infrastructure;
+using Azure.Core.TestFramework;
+using System.Linq;
 
 namespace Azure.Communication.CallAutomation.Tests.CallMedias
 {
@@ -60,6 +62,21 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             Loop = false,
             OperationContext = "context"
+        };
+
+        private static readonly InterruptAudioAndAnnounceOptions _fileAnnouncementOptions = new InterruptAudioAndAnnounceOptions(new List<PlaySource> { _fileSource }, _target.FirstOrDefault())
+        {
+            OperationContext = "interrupt_context"
+        };
+
+        private static readonly InterruptAudioAndAnnounceOptions _textAnnouncementOptions = new InterruptAudioAndAnnounceOptions(new List<PlaySource> { _textSource }, _target.FirstOrDefault())
+        {
+            OperationContext = "interrupt_context"
+        };
+
+        private static readonly InterruptAudioAndAnnounceOptions _ssmlAnnouncementOptions = new InterruptAudioAndAnnounceOptions(new List<PlaySource> { _ssmlSource }, _target.FirstOrDefault())
+        {
+            OperationContext = "interrupt_context"
         };
 
         private static List<string> s_strings = new List<string>()
@@ -228,6 +245,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         private CallMedia GetCallMedia(int responseCode, object? responseContent = null)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(responseCode, responseContent);
+            return callAutomationClient.GetCallConnection("callConnectionId").GetCallMedia();
+        }
+        private CallMedia GetCallMedia(MockResponse[] responses)
+        {
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(responses);
             return callAutomationClient.GetCallConnection("callConnectionId").GetCallMedia();
         }
 
@@ -685,6 +707,57 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
+        [TestCaseSource(nameof(TestData_InterruptAudioAndAnnounceOperations))]
+        public void InterruptAudioAndAnnounce_Return202Accepted(Func<CallMedia, Response<InterruptAudioAndAnnounceResult>> operation)
+        {
+            var mockResponse = new MockResponse(202);
+            _callMedia = GetCallMedia(new MockResponse[] { mockResponse, mockResponse });
+
+            // put participant on hold
+            var playResult = _callMedia.Play(_fileSource, _target);
+            Assert.IsNotNull(playResult);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, playResult.GetRawResponse().Status);
+
+            // interrupt and announce
+            var interruptResult = operation(_callMedia);
+            Assert.IsNotNull(interruptResult);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, interruptResult.GetRawResponse().Status);
+        }
+
+        [TestCaseSource(nameof(TestData_InterruptAudioAndAnnounceAsyncOperations))]
+        public async Task InterruptAudioAndAnnounceAsync_Return202Accepted(Func<CallMedia, Task<Response<InterruptAudioAndAnnounceResult>>> operation)
+        {
+            var mockResponse = new MockResponse(202);
+            _callMedia = GetCallMedia(new MockResponse[] { mockResponse, mockResponse });
+
+            // put participant on hold
+            var playResult = _callMedia.Play(_fileSource, _target);
+            Assert.IsNotNull(playResult);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, playResult.GetRawResponse().Status);
+
+            // interrupt and announce
+            var interruptResult = await operation(_callMedia);
+            Assert.IsNotNull(interruptResult);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, interruptResult.GetRawResponse().Status);
+        }
+
+        [TestCaseSource(nameof(TestData_HoldOperationsAsync))]
+        public async Task HoldMusicAsyncOperations_Return200Ok(Func<CallMedia, Task<Response<HoldResult>>> operation)
+        {
+            _callMedia = GetCallMedia(200);
+            var result = await operation(_callMedia);
+            Assert.IsNotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.OK, result.GetRawResponse().Status);
+        }
+
+        [TestCaseSource(nameof(TestData_HoldOperations))]
+        public void HoldMusicOperations_Return200Ok(Func<CallMedia, Response<HoldResult>> operation)
+        {
+            _callMedia = GetCallMedia(200);
+            var result = operation(_callMedia);
+            Assert.IsNotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.OK, result.GetRawResponse().Status);
+        }
 
         private static IEnumerable<object?[]> TestData_PlayOperationsAsync()
         {
@@ -1083,6 +1156,43 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 {
                    callMedia => callMedia.StopMediaStreamingAsync(new StopMediaStreamingOptions(){ OperationCallbackUri = new Uri("https://localhost")})
                 }
+            };
+        }
+        private static IEnumerable<object?[]> TestData_InterruptAudioAndAnnounceOperations()
+        {
+            return new[]
+            {
+                new Func<CallMedia, Response>?[]
+                {
+                   callMedia => callMedia.InterruptAudioAndAnnounce(_fileAnnouncementOptions)
+                },
+                new Func<CallMedia, Response>?[]
+                {
+                   callMedia => callMedia.InterruptAudioAndAnnounce(_textAnnouncementOptions)
+                },
+                new Func<CallMedia, Response>?[]
+                {
+                   callMedia => callMedia.InterruptAudioAndAnnounce(_ssmlAnnouncementOptions)
+                },
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_InterruptAudioAndAnnounceAsyncOperations()
+        {
+            return new[]
+            {
+                new Func<CallMedia, Task<Response>>?[]
+                {
+                   callMedia => callMedia.InterruptAudioAndAnnounceAsync(_fileAnnouncementOptions)
+                },
+                new Func<CallMedia, Task<Response>>?[]
+                {
+                   callMedia => callMedia.InterruptAudioAndAnnounceAsync(_textAnnouncementOptions)
+                },
+                new Func<CallMedia, Task<Response>>?[]
+                {
+                   callMedia => callMedia.InterruptAudioAndAnnounceAsync(_ssmlAnnouncementOptions)
+                },
             };
         }
     }

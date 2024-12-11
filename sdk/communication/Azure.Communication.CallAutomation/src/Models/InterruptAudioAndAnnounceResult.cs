@@ -1,20 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-
-using System.Threading.Tasks;
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary>The result from playing audio.</summary>
-    public class PlayResult
+    /// <summary>The result from interrupt audio and announce.</summary>
+    public class InterruptAudioAndAnnounceResult
     {
         private CallAutomationEventProcessor _evHandler;
         private string _callConnectionId;
         private string _operationContext;
 
-        internal PlayResult()
+        internal InterruptAudioAndAnnounceResult()
         {
         }
 
@@ -42,8 +41,6 @@ namespace Azure.Communication.CallAutomation
                 && (filter.OperationContext == _operationContext || _operationContext is null)
                 && (filter.GetType() == typeof(PlayCompleted)
                 || filter.GetType() == typeof(PlayStarted)
-                || filter.GetType() == typeof(PlayPaused)
-                || filter.GetType() == typeof(PlayResumed)
                 || filter.GetType() == typeof(PlayFailed)),
                 cancellationToken);
 
@@ -67,8 +64,6 @@ namespace Azure.Communication.CallAutomation
                 && (filter.OperationContext == _operationContext || _operationContext is null)
                 && (filter.GetType() == typeof(PlayCompleted)
                 || filter.GetType() == typeof(PlayStarted)
-                || filter.GetType() == typeof(PlayPaused)
-                || filter.GetType() == typeof(PlayResumed)
                 || filter.GetType() == typeof(PlayFailed)),
                 cancellationToken).ConfigureAwait(false);
 
@@ -80,20 +75,14 @@ namespace Azure.Communication.CallAutomation
             PlayEventResult result = default;
             switch (returnedEvent)
             {
-                case PlayStarted:
-                    result = new PlayEventResult(true, null, null, (PlayStarted)returnedEvent, null, null);
-                    break;
-                case PlayPaused:
-                    result = new PlayEventResult(true, null, null, null, (PlayPaused)returnedEvent, null);
-                    break;
-                case PlayResumed:
-                    result = new PlayEventResult(true, null, null, null, null, (PlayResumed)returnedEvent);
-                    break;
                 case PlayCompleted:
                     result = new PlayEventResult(true, (PlayCompleted)returnedEvent, null, null, null, null);
                     break;
                 case PlayFailed:
                     result = new PlayEventResult(false, null, (PlayFailed)returnedEvent, null, null, null);
+                    break;
+                case PlayStarted:
+                    result = new PlayEventResult(true, null, null, (PlayStarted)returnedEvent, null, null);
                     break;
                 default:
                     throw new NotSupportedException(returnedEvent.GetType().Name);
