@@ -10,12 +10,6 @@
 - Added `LoadBalancingRuleProperties` which supports `AdditionalProperties` to send and receive private/internal properties supported by the service.
 - Added `LoadBalancerInboundNatPoolProperties` which supports `AdditionalProperties` to send and receive private/internal properties supported by the service.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.9.0 (2024-09-12)
 
 ### Features Added

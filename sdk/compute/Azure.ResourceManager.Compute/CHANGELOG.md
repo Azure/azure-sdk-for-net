@@ -9,12 +9,6 @@
 - Added `VirtualMachineScaleSetProperties` which supports `AdditionalProperties` to send and receive private/internal properties supported by the service.
 - Added `AdditionalProperties` to `VirtualMachineSizeProperties` and `VirtualMachineScaleSetUpgradePolicy` classes to support private/internal properties supported by the service.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.7.0-beta.1 (2024-10-15)
 
 ### Features Added
