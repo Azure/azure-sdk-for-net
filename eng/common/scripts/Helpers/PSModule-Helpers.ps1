@@ -62,8 +62,18 @@ function Get-ModuleRepositories([string]$moduleName) {
   return $repoUrls
 }
 
+if ($null -eq $script:InstalledModules) {
+  $script:InstalledModules = @{}
+}
+
 function moduleIsInstalled([string]$moduleName, [string]$version) {
-  $modules = (Get-Module -ListAvailable $moduleName)
+  if ($script:InstalledModules.ContainsKey("${moduleName}")) {
+    $modules = @($script:InstalledModules["${moduleName}"])
+  }
+  else {
+    $modules = (Get-Module -ListAvailable $moduleName)
+  }
+
   if ($version -as [Version]) {
     $modules = $modules.Where({ [Version]$_.Version -ge [Version]$version })
     if ($modules.Count -gt 0)
@@ -101,6 +111,8 @@ function installModule([string]$moduleName, [string]$version, $repoUrl) {
   if ($modules.Count -eq 0) {
     throw "Failed to install module $moduleName with version $version"
   }
+
+  $script:InstalledModules["${moduleName}"] = $modules
 
   # Unregister repository as it can cause overlap issues with `dotnet tool install`
   # commands using the same devops feed

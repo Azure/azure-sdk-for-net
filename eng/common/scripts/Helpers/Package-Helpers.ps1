@@ -46,7 +46,6 @@ function GetDocsTocDisplayName($pkg) {
   return $displayName
 }
 
-$script:IsYamlInstalled = $false
 <#
 .SYNOPSIS
 This function is a safe wrapper around `yq` and `ConvertFrom-Yaml` to convert YAML content to a PowerShell HashTable object
@@ -76,11 +75,7 @@ function CompatibleConvertFrom-Yaml {
     throw "Content to parse is a required input."
   }
 
-  if (-not $script:IsYamlInstalled) {
-    . (Join-Path $PSScriptRoot PSModule-Helpers.ps1)
-    Install-ModuleIfNotInstalled -WhatIf:$false "powershell-yaml" "0.4.7" | Import-Module
-    $script:IsYamlInstalled = $true
-  }
+  Install-ModuleIfNotInstalled -WhatIf:$false "powershell-yaml" "0.4.7" | Import-Module
 
   return ConvertFrom-Yaml $content
 }
