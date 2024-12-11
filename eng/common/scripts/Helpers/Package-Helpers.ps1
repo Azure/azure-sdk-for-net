@@ -76,7 +76,7 @@ function CompatibleConvertFrom-Yaml {
   }
 
   . (Join-Path $PSScriptRoot PSModule-Helpers.ps1)
-  InstallAndImport-ModuleIfNotInstalled -WhatIf:$false "powershell-yaml" "0.4.7"
+  InstallAndImport-ModuleIfNotInstalled "powershell-yaml" "0.4.7"
 
   return ConvertFrom-Yaml $content
 }
