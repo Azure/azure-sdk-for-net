@@ -121,6 +121,14 @@ function installModule([string]$moduleName, [string]$version, $repoUrl) {
   return $modules[0]
 }
 
+function InstallAndImport-ModuleIfNotInstalled([string]$module, [string]$version) {
+  if ($null -eq (moduleIsInstalled $module $version)) {
+    Install-ModuleIfNotInstalled -WhatIf:$false $module $version | Import-Module
+  } elseif (!(Get-Module -Name $module)) {
+    Import-Module $module
+  }
+}
+
 # Manual test at eng/common-tests/psmodule-helpers/Install-Module-Parallel.ps1
 # If we want to use another default repository other then PSGallery we can update the default parameters
 function Install-ModuleIfNotInstalled() {
