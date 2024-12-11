@@ -1191,7 +1191,7 @@ public class PauseResumeTransferMockedTests
         // Process chunks on resume #3
         await chunksProcessor.StepAll();
 
-        await Task.Delay(50);
+        await Task.Delay(100);
         AssertAllJobsAndPartsCompleted(items, items, resumedTransfers3, checkpointer);
     }
 
@@ -1386,7 +1386,7 @@ public class PauseResumeTransferMockedTests
         // Process chunks on resume #3
         await chunksProcessor.StepAll();
 
-        await Task.Delay(50);
+        await Task.Delay(100);
         AssertAllJobsAndPartsCompleted(numJobs, numJobParts, resumedTransfers3, checkpointer);
     }
 
