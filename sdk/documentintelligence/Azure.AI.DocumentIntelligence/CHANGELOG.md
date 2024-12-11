@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0 (2024-12-17)
 
 ### Features Added
 - Added methods `GetAnalyzeBatchResult`, `GetAnalyzeBatchResults`, `DeleteAnalyzeBatchResult`, and `DeleteAnalyzeResult` to `DocumentIntelligenceClient`.
@@ -57,8 +57,6 @@
 ### Bugs Fixed
 - Fixed a bug where calling `Operation.Id` would sometimes return an `InvalidOperationException` with message "The operation ID was not present in the service response.".
 - Calling `Operation.Id` in an operation returned from the `AnalyzeBatchDocuments` and `ClassifyDocument` APIs won't throw a `NotSupportedException` anymore.
-
-### Other Changes
 
 ## 1.0.0-beta.3 (2024-08-14)
 
