@@ -1,0 +1,14 @@
+{
+  "output-folder": ".",
+  "namespace": "Azure.ResourceManager.NeonPostgres",
+  "library-name": "Azure.ResourceManager.NeonPostgres",
+  "model-namespace": false,
+  "flavor": "azure",
+  "generate-sample-project": false,
+  "use-model-reader-writer": true,
+  "shared-source-folders": [
+    "../../TempTypeSpecFiles/node_modules/@autorest/csharp/Generator.Shared",
+    "../../TempTypeSpecFiles/node_modules/@autorest/csharp/Azure.Core.Shared"
+  ],
+  "azure-arm": true
+}
