@@ -1183,27 +1183,7 @@ public class PauseResumeTransferMockedTests
             MaximumTransferChunkSize = chunkSize,
         });
 
-        Assert.That(jobsProcessor.ItemsInQueue, Is.EqualTo(items), "Error: job processing on resume #3");
-
-        // Process jobs on resume #3
-        await jobsProcessor.StepAll();
-
-        await Task.Delay(50);
-        AssertJobProcessingSuccessful(items, resumedTransfers3, checkpointer);
-        Assert.That(partsProcessor.ItemsInQueue, Is.EqualTo(items), "Error: part processing on resume #3");
-
-        // Process parts on resume #3
-        await partsProcessor.StepAll();
-
-        await Task.Delay(50);
-        AssertPartProcessingSuccessful(items, resumedTransfers3, checkpointer);
-        Assert.That(chunksProcessor.ItemsInQueue, Is.EqualTo(numChunks), "Error: chunk processing on resume #3");
-
-        // Process chunks on resume #3
-        await chunksProcessor.StepAll();
-
-        await Task.Delay(100);
-        AssertAllJobsAndPartsCompleted(items, items, resumedTransfers3, checkpointer);
+        await AssertResumeTransfer(items, items, numChunks, chunksPerPart, resumedTransfers3, checkpointer, jobsProcessor, partsProcessor, chunksProcessor);
     }
 
     [Test]
@@ -1378,27 +1358,7 @@ public class PauseResumeTransferMockedTests
             MaximumTransferChunkSize = chunkSize,
         });
 
-        Assert.That(jobsProcessor.ItemsInQueue, Is.EqualTo(numJobs), "Error: job processing on resume #3");
-
-        // Process jobs on resume #3
-        await jobsProcessor.StepAll();
-
-        await Task.Delay(50);
-        AssertJobProcessingSuccessful(numJobs, resumedTransfers3, checkpointer);
-        Assert.That(partsProcessor.ItemsInQueue, Is.EqualTo(numJobParts), "Error: part processing on resume #3");
-
-        // Process parts on resume #3
-        await partsProcessor.StepAll();
-
-        await Task.Delay(50);
-        AssertPartProcessingSuccessful(numJobParts, resumedTransfers3, checkpointer);
-        Assert.That(chunksProcessor.ItemsInQueue, Is.EqualTo(numChunks), "Error: chunk processing on resume #3");
-
-        // Process chunks on resume #3
-        await chunksProcessor.StepAll();
-
-        await Task.Delay(100);
-        AssertAllJobsAndPartsCompleted(numJobs, numJobParts, resumedTransfers3, checkpointer);
+        await AssertResumeTransfer(numJobs, numJobParts, numChunks, chunksPerPart, resumedTransfers3, checkpointer, jobsProcessor, partsProcessor, chunksProcessor);
     }
 
     public enum PauseLocation
