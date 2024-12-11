@@ -439,6 +439,7 @@ namespace Azure.Storage.DataMovement
                 if (JobPartStatus.State != DataTransferState.Pausing &&
                     JobPartStatus.State != DataTransferState.Stopping)
                 {
+                    Console.WriteLine($"{PartNumber}: Triggering cancellation");
                     await TriggerCancellationAsync().ConfigureAwait(false);
                 }
                 await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
@@ -472,7 +473,8 @@ namespace Azure.Storage.DataMovement
             // If the failure occurred due to the file already existing or authentication,
             // and overwrite wasn't enabled, don't delete the existing file. We can remove
             // the unfinished file for other error types.
-            if (JobPartFailureType.Other == _failureType)
+            // If a Pause was called, we can remove the unfinished file.
+            if (JobPartFailureType.Other == _failureType || DataTransferState.Pausing == JobPartStatus.State)
             {
                 // If the job part is paused or ended with failures
                 // delete the destination resource because it could be unfinished or corrupted
@@ -558,12 +560,15 @@ namespace Azure.Storage.DataMovement
             if (JobPartStatus.State == DataTransferState.Pausing ||
                 JobPartStatus.State == DataTransferState.Stopping)
             {
+                Console.Write($"{PartNumber}: currentChunkCount: {_currentChunkCount}; _completedChunkCount: {_completedChunkCount}");
                 if (!_queueingTasks && _currentChunkCount == _completedChunkCount)
                 {
                     DataTransferState newState = JobPartStatus.State == DataTransferState.Pausing ?
                         DataTransferState.Paused :
                         DataTransferState.Completed;
+                    Console.WriteLine($"{PartNumber}: Disposing handler");
                     await DisposeHandlersAsync().ConfigureAwait(false);
+                    Console.WriteLine($"{PartNumber}: newState: {newState}");
                     await OnTransferStateChangedAsync(newState).ConfigureAwait(false);
                 }
             }
