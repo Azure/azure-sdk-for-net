@@ -64,7 +64,7 @@ function Get-ModuleRepositories([string]$moduleName) {
 }
 
 function moduleIsInstalled([string]$moduleName, [string]$version) {
-  if ($null -eq $global:InstalledModules) {
+  if ($null -eq $script:InstalledModules) {
     $script:InstalledModules = @{}
   }
 
