@@ -24,19 +24,16 @@ To classify a given file at a URI, use the `ClassifyDocument` method. The return
 string classifierId = "<classifierId>";
 Uri uriSource = new Uri("<uriSource>");
 
-var content = new ClassifyDocumentContent()
-{
-    UrlSource = uriSource
-};
+var options = new ClassifyDocumentOptions(classifierId, uriSource);
 
-Operation<AnalyzeResult> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, classifierId, content);
+Operation<AnalyzeResult> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, options);
 AnalyzeResult result = operation.Value;
 
 Console.WriteLine($"Input was classified by the classifier with ID '{result.ModelId}'.");
 
 foreach (AnalyzedDocument document in result.Documents)
 {
-    Console.WriteLine($"Found a document of type: {document.DocType}");
+    Console.WriteLine($"Found a document of type: {document.DocumentType}");
 }
 ```
 

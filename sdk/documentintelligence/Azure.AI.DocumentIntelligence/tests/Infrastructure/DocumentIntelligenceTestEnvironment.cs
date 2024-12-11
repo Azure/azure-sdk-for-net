@@ -62,7 +62,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             try
             {
-                await client.GetResourceInfoAsync();
+                await client.GetResourceDetailsAsync();
             }
             catch (RequestFailedException e) when (e.Status == 401)
             {

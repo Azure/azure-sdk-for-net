@@ -161,17 +161,17 @@ To create a blob `StorageResource`, use the methods `FromBlob` or `FromContainer
 
 ```C# Snippet:ResourceConstruction_Blobs
 StorageResource container = blobs.FromContainer(
-    new Uri("http://myaccount.blob.core.windows.net/container"));
+    new Uri("https://myaccount.blob.core.windows.net/container"));
 
 // Block blobs are the default if no options are specified
 StorageResource blockBlob = blobs.FromBlob(
-    new Uri("http://myaccount.blob.core.windows.net/container/sample-blob-block"),
+    new Uri("https://myaccount.blob.core.windows.net/container/sample-blob-block"),
     new BlockBlobStorageResourceOptions());
 StorageResource pageBlob = blobs.FromBlob(
-    new Uri("http://myaccount.blob.core.windows.net/container/sample-blob-page"),
+    new Uri("https://myaccount.blob.core.windows.net/container/sample-blob-page"),
     new PageBlobStorageResourceOptions());
 StorageResource appendBlob = blobs.FromBlob(
-    new Uri("http://myaccount.blob.core.windows.net/container/sample-blob-append"),
+    new Uri("https://myaccount.blob.core.windows.net/container/sample-blob-append"),
     new AppendBlobStorageResourceOptions());
 ```
 
