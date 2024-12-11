@@ -1,0 +1,2386 @@
+{
+ "$id": "1",
+ "Name": "Microsoft.AzureTerraform",
+ "ApiVersions": [
+  "2023-07-01-preview"
+ ],
+ "Enums": [
+  {
+   "$id": "2",
+   "kind": "enum",
+   "name": "CommonExportType",
+   "crossLanguageDefinitionId": "Microsoft.AzureTerraform.Type",
+   "valueType": {
+    "$id": "3",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "4",
+     "kind": "enumvalue",
+     "name": "ExportResource",
+     "value": "ExportResource",
+     "valueType": {
+      "$id": "5",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "2"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "6",
+     "kind": "enumvalue",
+     "name": "ExportResourceGroup",
+     "value": "ExportResourceGroup",
+     "valueType": {
+      "$id": "7",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "2"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "8",
+     "kind": "enumvalue",
+     "name": "ExportQuery",
+     "value": "ExportQuery",
+     "valueType": {
+      "$id": "9",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "2"
+     },
+     "decorators": []
+    }
+   ],
+   "description": "The parameter type",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Input,Json",
+   "decorators": []
+  },
+  {
+   "$id": "10",
+   "kind": "enum",
+   "name": "TargetTerraformProvider",
+   "crossLanguageDefinitionId": "Microsoft.AzureTerraform.targetProvider",
+   "valueType": {
+    "$id": "11",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "12",
+     "kind": "enumvalue",
+     "name": "AzureRM",
+     "value": "azurerm",
+     "valueType": {
+      "$id": "13",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "10"
+     },
+     "description": "https://registry.terraform.io/providers/hashicorp/azurerm/latest",
+     "decorators": []
+    },
+    {
+     "$id": "14",
+     "kind": "enumvalue",
+     "name": "AzApi",
+     "value": "azapi",
+     "valueType": {
+      "$id": "15",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "10"
+     },
+     "description": "https://registry.terraform.io/providers/Azure/azapi/latest",
+     "decorators": []
+    }
+   ],
+   "description": "The target Azure Terraform Provider",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Input,Json",
+   "decorators": []
+  },
+  {
+   "$id": "16",
+   "kind": "enum",
+   "name": "TerraformResourceProvisioningState",
+   "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceProvisioningState",
+   "valueType": {
+    "$id": "17",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "18",
+     "kind": "enumvalue",
+     "name": "Succeeded",
+     "value": "Succeeded",
+     "valueType": {
+      "$id": "19",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "16"
+     },
+     "description": "Resource has been created.",
+     "decorators": []
+    },
+    {
+     "$id": "20",
+     "kind": "enumvalue",
+     "name": "Failed",
+     "value": "Failed",
+     "valueType": {
+      "$id": "21",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "16"
+     },
+     "description": "Resource creation failed.",
+     "decorators": []
+    },
+    {
+     "$id": "22",
+     "kind": "enumvalue",
+     "name": "Canceled",
+     "value": "Canceled",
+     "valueType": {
+      "$id": "23",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "16"
+     },
+     "description": "Resource creation was canceled.",
+     "decorators": []
+    }
+   ],
+   "description": "The provisioning state of a resource type.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Output,LroPolling,LroFinalEnvelope",
+   "decorators": []
+  },
+  {
+   "$id": "24",
+   "kind": "enum",
+   "name": "Origin",
+   "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Origin",
+   "valueType": {
+    "$id": "25",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "26",
+     "kind": "enumvalue",
+     "name": "user",
+     "value": "user",
+     "valueType": {
+      "$id": "27",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "24"
+     },
+     "description": "Indicates the operation is initiated by a user.",
+     "decorators": []
+    },
+    {
+     "$id": "28",
+     "kind": "enumvalue",
+     "name": "system",
+     "value": "system",
+     "valueType": {
+      "$id": "29",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "24"
+     },
+     "description": "Indicates the operation is initiated by a system.",
+     "decorators": []
+    },
+    {
+     "$id": "30",
+     "kind": "enumvalue",
+     "name": "user,system",
+     "value": "user,system",
+     "valueType": {
+      "$id": "31",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "24"
+     },
+     "description": "Indicates the operation is initiated by a user or system.",
+     "decorators": []
+    }
+   ],
+   "description": "The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is \"user,system\"",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Output,Json",
+   "decorators": []
+  },
+  {
+   "$id": "32",
+   "kind": "enum",
+   "name": "ActionType",
+   "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ActionType",
+   "valueType": {
+    "$id": "33",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "34",
+     "kind": "enumvalue",
+     "name": "Internal",
+     "value": "Internal",
+     "valueType": {
+      "$id": "35",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "32"
+     },
+     "description": "Actions are for internal-only APIs.",
+     "decorators": []
+    }
+   ],
+   "description": "Extensible enum. Indicates the action type. \"Internal\" refers to actions that are for internal only APIs.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Output,Json",
+   "decorators": []
+  },
+  {
+   "$id": "36",
+   "kind": "enum",
+   "name": "Versions",
+   "crossLanguageDefinitionId": "Microsoft.AzureTerraform.Versions",
+   "valueType": {
+    "$id": "37",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "38",
+     "kind": "enumvalue",
+     "name": "v2023_07_01_preview",
+     "value": "2023-07-01-preview",
+     "valueType": {
+      "$id": "39",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "36"
+     },
+     "description": "The 2023-07-01-preview API version.",
+     "decorators": []
+    }
+   ],
+   "description": "The available API versions.",
+   "isFixed": true,
+   "isFlags": false,
+   "usage": "ApiVersionEnum",
+   "decorators": []
+  }
+ ],
+ "Models": [
+  {
+   "$id": "40",
+   "kind": "model",
+   "name": "CommonExportProperties",
+   "crossLanguageDefinitionId": "Microsoft.AzureTerraform.BaseExportModel",
+   "usage": "Input,Json",
+   "description": "The base export parameter",
+   "decorators": [],
+   "discriminatorProperty": {
+    "$id": "41",
+    "kind": "property",
+    "name": "type",
+    "serializedName": "type",
+    "description": "The parameter type",
+    "type": {
+     "$ref": "2"
+    },
+    "optional": false,
+    "readOnly": false,
+    "discriminator": true,
+    "flatten": false,
+    "decorators": [],
+    "crossLanguageDefinitionId": "Microsoft.AzureTerraform.BaseExportModel.type"
+   },
+   "properties": [
+    {
+     "$ref": "41"
+    },
+    {
+     "$id": "42",
+     "kind": "property",
+     "name": "targetProvider",
+     "serializedName": "targetProvider",
+     "description": "The target Azure Terraform Provider",
+     "type": {
+      "$ref": "10"
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Microsoft.AzureTerraform.BaseExportModel.targetProvider"
+    },
+    {
+     "$id": "43",
+     "kind": "property",
+     "name": "IsOutputFullPropertiesEnabled",
+     "serializedName": "fullProperties",
+     "description": "Whether to output all non-computed properties in the generated Terraform configuration? This probably needs manual modifications to make it valid",
+     "type": {
+      "$id": "44",
+      "kind": "boolean",
+      "name": "boolean",
+      "crossLanguageDefinitionId": "TypeSpec.boolean",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Microsoft.AzureTerraform.BaseExportModel.fullProperties"
+    },
+    {
+     "$id": "45",
+     "kind": "property",
+     "name": "IsMaskSensitiveEnabled",
+     "serializedName": "maskSensitive",
+     "description": "Mask sensitive attributes in the Terraform configuration",
+     "type": {
+      "$id": "46",
+      "kind": "boolean",
+      "name": "boolean",
+      "crossLanguageDefinitionId": "TypeSpec.boolean",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Microsoft.AzureTerraform.BaseExportModel.maskSensitive"
+    }
+   ],
+   "discriminatedSubtypes": {
+    "$id": "47",
+    "ExportQuery": {
+     "$id": "48",
+     "kind": "model",
+     "name": "ExportQueryTerraform",
+     "crossLanguageDefinitionId": "Microsoft.AzureTerraform.ExportQuery",
+     "usage": "Input,Json",
+     "description": "Export parameter for resources queried by ARG (Azure Resource Graph)",
+     "discriminatorValue": "ExportQuery",
+     "decorators": [],
+     "baseModel": {
+      "$ref": "40"
+     },
+     "properties": [
+      {
+       "$id": "49",
+       "kind": "property",
+       "name": "query",
+       "serializedName": "query",
+       "description": "The ARG where predicate. Note that you can combine multiple conditions in one `where` predicate, e.g. `resourceGroup =~ \"my-rg\" and type =~ \"microsoft.network/virtualnetworks\"`",
+       "type": {
+        "$id": "50",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "optional": false,
+       "readOnly": false,
+       "discriminator": false,
+       "flatten": false,
+       "decorators": [],
+       "crossLanguageDefinitionId": "Microsoft.AzureTerraform.ExportQuery.query"
+      },
+      {
+       "$id": "51",
+       "kind": "property",
+       "name": "namePattern",
+       "serializedName": "namePattern",
+       "description": "The name pattern of the Terraform resources",
+       "type": {
+        "$id": "52",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "optional": true,
+       "readOnly": false,
+       "discriminator": false,
+       "flatten": false,
+       "decorators": [],
+       "crossLanguageDefinitionId": "Microsoft.AzureTerraform.ExportQuery.namePattern"
+      },
+      {
+       "$id": "53",
+       "kind": "property",
+       "name": "IsRecursive",
+       "serializedName": "recursive",
+       "description": "Whether to recursively list child resources of the query result",
+       "type": {
+        "$id": "54",
+        "kind": "boolean",
+        "name": "boolean",
+        "crossLanguageDefinitionId": "TypeSpec.boolean",
+        "decorators": []
+       },
+       "optional": true,
+       "readOnly": false,
+       "discriminator": false,
+       "flatten": false,
+       "decorators": [],
+       "crossLanguageDefinitionId": "Microsoft.AzureTerraform.ExportQuery.recursive"
+      },
+      {
+       "$id": "55",
+       "kind": "property",
+       "name": "type",
+       "serializedName": "type",
+       "description": "The parameter type",
+       "type": {
+        "$id": "56",
+        "kind": "constant",
+        "valueType": {
+         "$id": "57",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "ExportQuery",
+        "decorators": []
+       },
+       "optional": false,
+       "readOnly": false,
+       "discriminator": true,
+       "flatten": false,
+       "decorators": [],
+       "crossLanguageDefinitionId": "Microsoft.AzureTerraform.ExportQuery.type"
+      }
+     ]
+    },
+    "ExportResource": {
+     "$id": "58",
+     "kind": "model",
+     "name": "ExportResourceTerraform",
+     "crossLanguageDefinitionId": "Microsoft.AzureTerraform.ExportResource",
+     "usage": "Input,Json",
+     "description": "Export parameter for individual resources.",
+     "discriminatorValue": "ExportResource",
+     "decorators": [],
+     "baseModel": {
+      "$ref": "40"
+     },
+     "properties": [
+      {
+       "$id": "59",
+       "kind": "property",
+       "name": "resourceIds",
+       "serializedName": "resourceIds",
+       "description": "The id of the resource to be exported",
+       "type": {
+        "$id": "60",
+        "kind": "array",
+        "name": "Array",
+        "valueType": {
+         "$id": "61",
+         "kind": "string",
+         "name": "armResourceIdentifier",
+         "crossLanguageDefinitionId": "Azure.Core.armResourceIdentifier",
+         "baseType": {
+          "$id": "62",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         },
+         "decorators": []
+        },
+        "crossLanguageDefinitionId": "TypeSpec.Array",
+        "decorators": []
+       },
+       "optional": false,
+       "readOnly": false,
+       "discriminator": false,
+       "flatten": false,
+       "decorators": [],
+       "crossLanguageDefinitionId": "Microsoft.AzureTerraform.ExportResource.resourceIds"
+      },
+      {
+       "$id": "63",
+       "kind": "property",
+       "name": "resourceName",
+       "serializedName": "resourceName",
+       "description": "The Terraform resource name. Only works when `resourceIds` contains only one item.",
+       "type": {
+        "$id": "64",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "optional": true,
+       "readOnly": false,
+       "discriminator": false,
+       "flatten": false,
+       "decorators": [],
+       "crossLanguageDefinitionId": "Microsoft.AzureTerraform.ExportResource.resourceName"
+      },
+      {
+       "$id": "65",
+       "kind": "property",
+       "name": "resourceType",
+       "serializedName": "resourceType",
+       "description": "The Terraform resource type. Only works when `resourceIds` contains only one item.",
+       "type": {
+        "$id": "66",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "optional": true,
+       "readOnly": false,
+       "discriminator": false,
+       "flatten": false,
+       "decorators": [],
+       "crossLanguageDefinitionId": "Microsoft.AzureTerraform.ExportResource.resourceType"
+      },
+      {
+       "$id": "67",
+       "kind": "property",
+       "name": "namePattern",
+       "serializedName": "namePattern",
+       "description": "The name pattern of the Terraform resources",
+       "type": {
+        "$id": "68",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "optional": true,
+       "readOnly": false,
+       "discriminator": false,
+       "flatten": false,
+       "decorators": [],
+       "crossLanguageDefinitionId": "Microsoft.AzureTerraform.ExportResource.namePattern"
+      },
+      {
+       "$id": "69",
+       "kind": "property",
+       "name": "type",
+       "serializedName": "type",
+       "description": "The parameter type",
+       "type": {
+        "$id": "70",
+        "kind": "constant",
+        "valueType": {
+         "$id": "71",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "ExportResource",
+        "decorators": []
+       },
+       "optional": false,
+       "readOnly": false,
+       "discriminator": true,
+       "flatten": false,
+       "decorators": [],
+       "crossLanguageDefinitionId": "Microsoft.AzureTerraform.ExportResource.type"
+      }
+     ]
+    },
+    "ExportResourceGroup": {
+     "$id": "72",
+     "kind": "model",
+     "name": "ExportResourceGroupTerraform",
+     "crossLanguageDefinitionId": "Microsoft.AzureTerraform.ExportResourceGroup",
+     "usage": "Input,Json",
+     "description": "Export parameter for a resource group",
+     "discriminatorValue": "ExportResourceGroup",
+     "decorators": [],
+     "baseModel": {
+      "$ref": "40"
+     },
+     "properties": [
+      {
+       "$id": "73",
+       "kind": "property",
+       "name": "resourceGroupName",
+       "serializedName": "resourceGroupName",
+       "description": "The name of the resource group to be exported",
+       "type": {
+        "$id": "74",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "optional": false,
+       "readOnly": false,
+       "discriminator": false,
+       "flatten": false,
+       "decorators": [],
+       "crossLanguageDefinitionId": "Microsoft.AzureTerraform.ExportResourceGroup.resourceGroupName"
+      },
+      {
+       "$id": "75",
+       "kind": "property",
+       "name": "namePattern",
+       "serializedName": "namePattern",
+       "description": "The name pattern of the Terraform resources",
+       "type": {
+        "$id": "76",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "optional": true,
+       "readOnly": false,
+       "discriminator": false,
+       "flatten": false,
+       "decorators": [],
+       "crossLanguageDefinitionId": "Microsoft.AzureTerraform.ExportResourceGroup.namePattern"
+      },
+      {
+       "$id": "77",
+       "kind": "property",
+       "name": "type",
+       "serializedName": "type",
+       "description": "The parameter type",
+       "type": {
+        "$id": "78",
+        "kind": "constant",
+        "valueType": {
+         "$id": "79",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "ExportResourceGroup",
+        "decorators": []
+       },
+       "optional": false,
+       "readOnly": false,
+       "discriminator": true,
+       "flatten": false,
+       "decorators": [],
+       "crossLanguageDefinitionId": "Microsoft.AzureTerraform.ExportResourceGroup.type"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "$ref": "48"
+  },
+  {
+   "$ref": "58"
+  },
+  {
+   "$ref": "72"
+  },
+  {
+   "$id": "80",
+   "kind": "model",
+   "name": "ErrorResponse",
+   "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorResponse",
+   "usage": "Error,Json,Exception",
+   "description": "Common error response for all Azure Resource Manager APIs to return error details for failed operations.",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "81",
+     "kind": "property",
+     "name": "error",
+     "serializedName": "error",
+     "description": "The error object.",
+     "type": {
+      "$id": "82",
+      "kind": "model",
+      "name": "ErrorDetail",
+      "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail",
+      "usage": "Output,Json,Exception,LroPolling,LroFinalEnvelope",
+      "description": "The error detail.",
+      "decorators": [],
+      "properties": [
+       {
+        "$id": "83",
+        "kind": "property",
+        "name": "code",
+        "serializedName": "code",
+        "description": "The error code.",
+        "type": {
+         "$id": "84",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "optional": true,
+        "readOnly": true,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.code"
+       },
+       {
+        "$id": "85",
+        "kind": "property",
+        "name": "message",
+        "serializedName": "message",
+        "description": "The error message.",
+        "type": {
+         "$id": "86",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "optional": true,
+        "readOnly": true,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.message"
+       },
+       {
+        "$id": "87",
+        "kind": "property",
+        "name": "target",
+        "serializedName": "target",
+        "description": "The error target.",
+        "type": {
+         "$id": "88",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "optional": true,
+        "readOnly": true,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.target"
+       },
+       {
+        "$id": "89",
+        "kind": "property",
+        "name": "details",
+        "serializedName": "details",
+        "description": "The error details.",
+        "type": {
+         "$id": "90",
+         "kind": "array",
+         "name": "ArrayErrorDetail",
+         "valueType": {
+          "$ref": "82"
+         },
+         "crossLanguageDefinitionId": "TypeSpec.Array",
+         "decorators": []
+        },
+        "optional": true,
+        "readOnly": true,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.details"
+       },
+       {
+        "$id": "91",
+        "kind": "property",
+        "name": "additionalInfo",
+        "serializedName": "additionalInfo",
+        "description": "The error additional info.",
+        "type": {
+         "$id": "92",
+         "kind": "array",
+         "name": "ArrayErrorAdditionalInfo",
+         "valueType": {
+          "$id": "93",
+          "kind": "model",
+          "name": "ErrorAdditionalInfo",
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorAdditionalInfo",
+          "usage": "Output,Json,Exception,LroPolling,LroFinalEnvelope",
+          "description": "The resource management error additional info.",
+          "decorators": [],
+          "properties": [
+           {
+            "$id": "94",
+            "kind": "property",
+            "name": "type",
+            "serializedName": "type",
+            "description": "The additional info type.",
+            "type": {
+             "$id": "95",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "optional": true,
+            "readOnly": true,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorAdditionalInfo.type"
+           },
+           {
+            "$id": "96",
+            "kind": "property",
+            "name": "info",
+            "serializedName": "info",
+            "description": "The additional info.",
+            "type": {
+             "$id": "97",
+             "kind": "model",
+             "name": "ErrorAdditionalInfoInfo",
+             "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorAdditionalInfo.info.anonymous",
+             "usage": "Output,Json,Exception,LroPolling,LroFinalEnvelope",
+             "decorators": [],
+             "properties": []
+            },
+            "optional": true,
+            "readOnly": true,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorAdditionalInfo.info"
+           }
+          ]
+         },
+         "crossLanguageDefinitionId": "TypeSpec.Array",
+         "decorators": []
+        },
+        "optional": true,
+        "readOnly": true,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.additionalInfo"
+       }
+      ]
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorResponse.error"
+    }
+   ]
+  },
+  {
+   "$ref": "82"
+  },
+  {
+   "$ref": "93"
+  },
+  {
+   "$ref": "97"
+  },
+  {
+   "$id": "98",
+   "kind": "model",
+   "name": "TerraformOperationStatus",
+   "crossLanguageDefinitionId": "Microsoft.AzureTerraform.TerraformOperationStatus",
+   "usage": "Output,LroFinalEnvelope",
+   "description": "The status of the LRO operation.",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "99",
+     "kind": "property",
+     "name": "properties",
+     "serializedName": "properties",
+     "description": "RP-specific properties for the operationStatus resource, only appears when operation ended with Succeeded status",
+     "type": {
+      "$id": "100",
+      "kind": "model",
+      "name": "TerraformExportResult",
+      "crossLanguageDefinitionId": "Microsoft.AzureTerraform.ExportResult",
+      "usage": "Output,LroFinalEnvelope",
+      "description": "The Terraform export result",
+      "decorators": [],
+      "properties": [
+       {
+        "$id": "101",
+        "kind": "property",
+        "name": "configuration",
+        "serializedName": "configuration",
+        "description": "The Terraform configuration content",
+        "type": {
+         "$id": "102",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "optional": true,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Microsoft.AzureTerraform.ExportResult.configuration"
+       },
+       {
+        "$id": "103",
+        "kind": "property",
+        "name": "SkippedResourceIds",
+        "serializedName": "skippedResources",
+        "description": "A list of Azure resources which are not exported to Terraform due to there is no corresponding resources in Terraform",
+        "type": {
+         "$id": "104",
+         "kind": "array",
+         "name": "Array",
+         "valueType": {
+          "$id": "105",
+          "kind": "string",
+          "name": "armResourceIdentifier",
+          "crossLanguageDefinitionId": "Azure.Core.armResourceIdentifier",
+          "baseType": {
+           "$id": "106",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          },
+          "decorators": []
+         },
+         "crossLanguageDefinitionId": "TypeSpec.Array",
+         "decorators": []
+        },
+        "optional": true,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Microsoft.AzureTerraform.ExportResult.skippedResources"
+       },
+       {
+        "$id": "107",
+        "kind": "property",
+        "name": "errors",
+        "serializedName": "errors",
+        "description": "A list of errors derived during exporting each resource",
+        "type": {
+         "$id": "108",
+         "kind": "array",
+         "name": "ArrayErrorDetail",
+         "valueType": {
+          "$ref": "82"
+         },
+         "crossLanguageDefinitionId": "TypeSpec.Array",
+         "decorators": []
+        },
+        "optional": true,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Microsoft.AzureTerraform.ExportResult.errors"
+       }
+      ]
+     },
+     "optional": true,
+     "readOnly": true,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Microsoft.AzureTerraform.TerraformOperationStatus.properties"
+    },
+    {
+     "$id": "109",
+     "kind": "property",
+     "name": "status",
+     "serializedName": "status",
+     "description": "The operation status",
+     "type": {
+      "$ref": "16"
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Microsoft.AzureTerraform.TerraformOperationStatus.status"
+    },
+    {
+     "$id": "110",
+     "kind": "property",
+     "name": "name",
+     "serializedName": "name",
+     "description": "The name of the  operationStatus resource",
+     "type": {
+      "$id": "111",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": true,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Microsoft.AzureTerraform.TerraformOperationStatus.name"
+    },
+    {
+     "$id": "112",
+     "kind": "property",
+     "name": "startTime",
+     "serializedName": "startTime",
+     "description": "Operation start time",
+     "type": {
+      "$id": "113",
+      "kind": "utcDateTime",
+      "name": "utcDateTime",
+      "encode": "rfc3339",
+      "wireType": {
+       "$id": "114",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string",
+       "decorators": []
+      },
+      "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": true,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Microsoft.AzureTerraform.TerraformOperationStatus.startTime"
+    },
+    {
+     "$id": "115",
+     "kind": "property",
+     "name": "endTime",
+     "serializedName": "endTime",
+     "description": "Operation complete time",
+     "type": {
+      "$id": "116",
+      "kind": "utcDateTime",
+      "name": "utcDateTime",
+      "encode": "rfc3339",
+      "wireType": {
+       "$id": "117",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string",
+       "decorators": []
+      },
+      "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": true,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Microsoft.AzureTerraform.TerraformOperationStatus.endTime"
+    },
+    {
+     "$id": "118",
+     "kind": "property",
+     "name": "percentComplete",
+     "serializedName": "percentComplete",
+     "description": "The progress made toward completing the operation",
+     "type": {
+      "$id": "119",
+      "kind": "float64",
+      "name": "float64",
+      "crossLanguageDefinitionId": "TypeSpec.float64",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": true,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Microsoft.AzureTerraform.TerraformOperationStatus.percentComplete"
+    },
+    {
+     "$id": "120",
+     "kind": "property",
+     "name": "error",
+     "serializedName": "error",
+     "description": "Errors that occurred if the operation ended with Canceled or Failed status",
+     "type": {
+      "$ref": "82"
+     },
+     "optional": true,
+     "readOnly": true,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Microsoft.AzureTerraform.TerraformOperationStatus.error"
+    }
+   ]
+  },
+  {
+   "$ref": "100"
+  },
+  {
+   "$id": "121",
+   "kind": "model",
+   "name": "ArmOperationStatusResourceProvisioningState",
+   "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus",
+   "usage": "LroPolling",
+   "description": "Standard Azure Resource Manager operation status response",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "122",
+     "kind": "property",
+     "name": "status",
+     "serializedName": "status",
+     "description": "The operation status",
+     "type": {
+      "$ref": "16"
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus.status"
+    },
+    {
+     "$id": "123",
+     "kind": "property",
+     "name": "name",
+     "serializedName": "name",
+     "description": "The name of the  operationStatus resource",
+     "type": {
+      "$id": "124",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": true,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus.name"
+    },
+    {
+     "$id": "125",
+     "kind": "property",
+     "name": "startTime",
+     "serializedName": "startTime",
+     "description": "Operation start time",
+     "type": {
+      "$id": "126",
+      "kind": "utcDateTime",
+      "name": "utcDateTime",
+      "encode": "rfc3339",
+      "wireType": {
+       "$id": "127",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string",
+       "decorators": []
+      },
+      "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": true,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus.startTime"
+    },
+    {
+     "$id": "128",
+     "kind": "property",
+     "name": "endTime",
+     "serializedName": "endTime",
+     "description": "Operation complete time",
+     "type": {
+      "$id": "129",
+      "kind": "utcDateTime",
+      "name": "utcDateTime",
+      "encode": "rfc3339",
+      "wireType": {
+       "$id": "130",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string",
+       "decorators": []
+      },
+      "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": true,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus.endTime"
+    },
+    {
+     "$id": "131",
+     "kind": "property",
+     "name": "percentComplete",
+     "serializedName": "percentComplete",
+     "description": "The progress made toward completing the operation",
+     "type": {
+      "$id": "132",
+      "kind": "float64",
+      "name": "float64",
+      "crossLanguageDefinitionId": "TypeSpec.float64",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": true,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus.percentComplete"
+    },
+    {
+     "$id": "133",
+     "kind": "property",
+     "name": "error",
+     "serializedName": "error",
+     "description": "Errors that occurred if the operation ended with Canceled or Failed status",
+     "type": {
+      "$ref": "82"
+     },
+     "optional": true,
+     "readOnly": true,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus.error"
+    }
+   ]
+  },
+  {
+   "$id": "134",
+   "kind": "model",
+   "name": "OperationListResult",
+   "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationListResult",
+   "usage": "Output,Json",
+   "description": "A list of REST API operations supported by an Azure Resource Provider. It contains an URL link to get the next set of results.",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "135",
+     "kind": "property",
+     "name": "value",
+     "serializedName": "value",
+     "description": "The Operation items on this page",
+     "type": {
+      "$id": "136",
+      "kind": "array",
+      "name": "ArrayOperation",
+      "valueType": {
+       "$id": "137",
+       "kind": "model",
+       "name": "Operation",
+       "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Operation",
+       "usage": "Output,Json",
+       "description": "Details of a REST API operation, returned from the Resource Provider Operations API",
+       "decorators": [],
+       "properties": [
+        {
+         "$id": "138",
+         "kind": "property",
+         "name": "name",
+         "serializedName": "name",
+         "description": "The name of the operation, as per Resource-Based Access Control (RBAC). Examples: \"Microsoft.Compute/virtualMachines/write\", \"Microsoft.Compute/virtualMachines/capture/action\"",
+         "type": {
+          "$id": "139",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         },
+         "optional": true,
+         "readOnly": true,
+         "discriminator": false,
+         "flatten": false,
+         "decorators": [],
+         "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Operation.name"
+        },
+        {
+         "$id": "140",
+         "kind": "property",
+         "name": "isDataAction",
+         "serializedName": "isDataAction",
+         "description": "Whether the operation applies to data-plane. This is \"true\" for data-plane operations and \"false\" for Azure Resource Manager/control-plane operations.",
+         "type": {
+          "$id": "141",
+          "kind": "boolean",
+          "name": "boolean",
+          "crossLanguageDefinitionId": "TypeSpec.boolean",
+          "decorators": []
+         },
+         "optional": true,
+         "readOnly": true,
+         "discriminator": false,
+         "flatten": false,
+         "decorators": [],
+         "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Operation.isDataAction"
+        },
+        {
+         "$id": "142",
+         "kind": "property",
+         "name": "display",
+         "serializedName": "display",
+         "description": "Localized display information for this particular operation.",
+         "type": {
+          "$id": "143",
+          "kind": "model",
+          "name": "OperationDisplay",
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationDisplay",
+          "usage": "Output,Json",
+          "description": "Localized display information for and operation.",
+          "decorators": [],
+          "properties": [
+           {
+            "$id": "144",
+            "kind": "property",
+            "name": "provider",
+            "serializedName": "provider",
+            "description": "The localized friendly form of the resource provider name, e.g. \"Microsoft Monitoring Insights\" or \"Microsoft Compute\".",
+            "type": {
+             "$id": "145",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "optional": true,
+            "readOnly": true,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationDisplay.provider"
+           },
+           {
+            "$id": "146",
+            "kind": "property",
+            "name": "resource",
+            "serializedName": "resource",
+            "description": "The localized friendly name of the resource type related to this operation. E.g. \"Virtual Machines\" or \"Job Schedule Collections\".",
+            "type": {
+             "$id": "147",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "optional": true,
+            "readOnly": true,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationDisplay.resource"
+           },
+           {
+            "$id": "148",
+            "kind": "property",
+            "name": "operation",
+            "serializedName": "operation",
+            "description": "The concise, localized friendly name for the operation; suitable for dropdowns. E.g. \"Create or Update Virtual Machine\", \"Restart Virtual Machine\".",
+            "type": {
+             "$id": "149",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "optional": true,
+            "readOnly": true,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationDisplay.operation"
+           },
+           {
+            "$id": "150",
+            "kind": "property",
+            "name": "description",
+            "serializedName": "description",
+            "description": "The short, localized friendly description of the operation; suitable for tool tips and detailed views.",
+            "type": {
+             "$id": "151",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "optional": true,
+            "readOnly": true,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationDisplay.description"
+           }
+          ]
+         },
+         "optional": true,
+         "readOnly": true,
+         "discriminator": false,
+         "flatten": false,
+         "decorators": [],
+         "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Operation.display"
+        },
+        {
+         "$id": "152",
+         "kind": "property",
+         "name": "origin",
+         "serializedName": "origin",
+         "description": "The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is \"user,system\"",
+         "type": {
+          "$ref": "24"
+         },
+         "optional": true,
+         "readOnly": true,
+         "discriminator": false,
+         "flatten": false,
+         "decorators": [],
+         "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Operation.origin"
+        },
+        {
+         "$id": "153",
+         "kind": "property",
+         "name": "actionType",
+         "serializedName": "actionType",
+         "description": "Extensible enum. Indicates the action type. \"Internal\" refers to actions that are for internal only APIs.",
+         "type": {
+          "$ref": "32"
+         },
+         "optional": true,
+         "readOnly": false,
+         "discriminator": false,
+         "flatten": false,
+         "decorators": [],
+         "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Operation.actionType"
+        }
+       ]
+      },
+      "crossLanguageDefinitionId": "TypeSpec.Array",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationListResult.value"
+    },
+    {
+     "$id": "154",
+     "kind": "property",
+     "name": "nextLink",
+     "serializedName": "nextLink",
+     "description": "The link to the next page of items",
+     "type": {
+      "$id": "155",
+      "kind": "url",
+      "name": "ResourceLocation",
+      "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
+      "baseType": {
+       "$id": "156",
+       "kind": "url",
+       "name": "url",
+       "crossLanguageDefinitionId": "TypeSpec.url",
+       "decorators": []
+      },
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationListResult.nextLink"
+    }
+   ]
+  },
+  {
+   "$ref": "137"
+  },
+  {
+   "$ref": "143"
+  }
+ ],
+ "Clients": [
+  {
+   "$id": "157",
+   "Name": "AzureTerraformClient",
+   "Description": "The Azure Terraform management API provides a RESTful set of web services that used to manage your Azure Terraform resources.",
+   "Operations": [],
+   "Protocol": {
+    "$id": "158"
+   },
+   "Parameters": [
+    {
+     "$id": "159",
+     "Name": "endpoint",
+     "NameInRequest": "endpoint",
+     "Description": "Service host",
+     "Type": {
+      "$id": "160",
+      "kind": "url",
+      "name": "url",
+      "crossLanguageDefinitionId": "TypeSpec.url"
+     },
+     "Location": "Uri",
+     "IsApiVersion": false,
+     "IsResourceParameter": false,
+     "IsContentType": false,
+     "IsRequired": true,
+     "IsEndpoint": true,
+     "SkipUrlEncoding": false,
+     "Explode": false,
+     "Kind": "Client",
+     "DefaultValue": {
+      "$id": "161",
+      "Type": {
+       "$id": "162",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string"
+      },
+      "Value": "https://management.azure.com"
+     }
+    }
+   ],
+   "Decorators": []
+  },
+  {
+   "$id": "163",
+   "Name": "Operations",
+   "Operations": [
+    {
+     "$id": "164",
+     "Name": "list",
+     "ResourceName": "Operations",
+     "Description": "List the operations for the provider",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "165",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "166",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "167",
+        "Type": {
+         "$id": "168",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2023-07-01-preview"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "169",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "170",
+        "kind": "constant",
+        "valueType": {
+         "$id": "171",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "172",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "134"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/providers/Microsoft.AzureTerraform/operations",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "173",
+      "ItemName": "value",
+      "NextLinkName": "nextLink"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "Azure.ResourceManager.Operations.list",
+     "Decorators": [],
+     "Examples": [
+      {
+       "$id": "174",
+       "kind": "http",
+       "name": "Get a list of operations for a resource provider",
+       "description": "Get a list of operations for a resource provider",
+       "filePath": "2023-07-01-preview/ListOperations.json",
+       "parameters": [
+        {
+         "$id": "175",
+         "parameter": {
+          "$ref": "165"
+         },
+         "value": {
+          "$id": "176",
+          "kind": "string",
+          "type": {
+           "$ref": "166"
+          },
+          "value": "2023-07-01-preview"
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "177",
+         "response": {
+          "$ref": "172"
+         },
+         "statusCode": 200,
+         "bodyValue": {
+          "$id": "178",
+          "kind": "model",
+          "type": {
+           "$ref": "134"
+          },
+          "value": {
+           "$id": "179",
+           "value": {
+            "$id": "180",
+            "kind": "array",
+            "type": {
+             "$ref": "136"
+            },
+            "value": [
+             {
+              "$id": "181",
+              "kind": "model",
+              "type": {
+               "$ref": "137"
+              },
+              "value": {
+               "$id": "182",
+               "name": {
+                "$id": "183",
+                "kind": "string",
+                "type": {
+                 "$ref": "139"
+                },
+                "value": "Microsoft.AzureTerraform/operations/read"
+               },
+               "display": {
+                "$id": "184",
+                "kind": "model",
+                "type": {
+                 "$ref": "143"
+                },
+                "value": {
+                 "$id": "185",
+                 "provider": {
+                  "$id": "186",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "145"
+                  },
+                  "value": "Microsoft AzureTerraform"
+                 },
+                 "resource": {
+                  "$id": "187",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "147"
+                  },
+                  "value": "Azure Terraform Resource Provider"
+                 },
+                 "operation": {
+                  "$id": "188",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "149"
+                  },
+                  "value": "ListOperations"
+                 },
+                 "description": {
+                  "$id": "189",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "151"
+                  },
+                  "value": "Lists all of the available RP operations."
+                 }
+                }
+               }
+              }
+             },
+             {
+              "$id": "190",
+              "kind": "model",
+              "type": {
+               "$ref": "137"
+              },
+              "value": {
+               "$id": "191",
+               "name": {
+                "$id": "192",
+                "kind": "string",
+                "type": {
+                 "$ref": "139"
+                },
+                "value": "Microsoft.AzureTerraform/exportTerraform/action"
+               },
+               "display": {
+                "$id": "193",
+                "kind": "model",
+                "type": {
+                 "$ref": "143"
+                },
+                "value": {
+                 "$id": "194",
+                 "provider": {
+                  "$id": "195",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "145"
+                  },
+                  "value": "Microsoft AzureTerraform"
+                 },
+                 "resource": {
+                  "$id": "196",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "147"
+                  },
+                  "value": "Azure Terraform Resource Provider"
+                 },
+                 "operation": {
+                  "$id": "197",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "149"
+                  },
+                  "value": "ExportTerraform"
+                 },
+                 "description": {
+                  "$id": "198",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "151"
+                  },
+                  "value": "Exports the Terraform configuration used for the specified scope."
+                 }
+                }
+               }
+              }
+             }
+            ]
+           }
+          }
+         }
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "Protocol": {
+    "$id": "199"
+   },
+   "Parent": "AzureTerraformClient",
+   "Parameters": [
+    {
+     "$id": "200",
+     "Name": "endpoint",
+     "NameInRequest": "endpoint",
+     "Description": "Service host",
+     "Type": {
+      "$id": "201",
+      "kind": "url",
+      "name": "url",
+      "crossLanguageDefinitionId": "TypeSpec.url"
+     },
+     "Location": "Uri",
+     "IsApiVersion": false,
+     "IsResourceParameter": false,
+     "IsContentType": false,
+     "IsRequired": true,
+     "IsEndpoint": true,
+     "SkipUrlEncoding": false,
+     "Explode": false,
+     "Kind": "Client",
+     "DefaultValue": {
+      "$id": "202",
+      "Type": {
+       "$id": "203",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string"
+      },
+      "Value": "https://management.azure.com"
+     }
+    }
+   ],
+   "Decorators": []
+  },
+  {
+   "$id": "204",
+   "Name": "Terraform",
+   "Operations": [
+    {
+     "$id": "205",
+     "Name": "ExportTerraform",
+     "ResourceName": "Terraform",
+     "Description": "Exports the Terraform configuration of the specified resource(s).",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "206",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "207",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "208",
+        "Type": {
+         "$id": "209",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2023-07-01-preview"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "210",
+       "Name": "subscriptionId",
+       "NameInRequest": "subscriptionId",
+       "Description": "The ID of the target subscription. The value must be an UUID.",
+       "Type": {
+        "$id": "211",
+        "kind": "string",
+        "name": "uuid",
+        "crossLanguageDefinitionId": "Azure.Core.uuid",
+        "baseType": {
+         "$id": "212",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "213",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Description": "Body parameter's content type. Known values are application/json",
+       "Type": {
+        "$id": "214",
+        "kind": "constant",
+        "valueType": {
+         "$id": "215",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "216",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "217",
+        "kind": "constant",
+        "valueType": {
+         "$id": "218",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "219",
+       "Name": "body",
+       "NameInRequest": "body",
+       "Description": "The request body",
+       "Type": {
+        "$ref": "40"
+       },
+       "Location": "Body",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "220",
+       "StatusCodes": [
+        202
+       ],
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "221",
+         "Name": "retryAfter",
+         "NameInResponse": "Retry-After",
+         "Description": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
+         "Type": {
+          "$id": "222",
+          "kind": "int32",
+          "name": "int32",
+          "crossLanguageDefinitionId": "TypeSpec.int32",
+          "decorators": []
+         }
+        },
+        {
+         "$id": "223",
+         "Name": "azureAsyncOperation",
+         "NameInResponse": "Azure-AsyncOperation",
+         "Description": "A link to the status monitor",
+         "Type": {
+          "$id": "224",
+          "kind": "url",
+          "name": "ResourceLocation",
+          "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
+          "baseType": {
+           "$id": "225",
+           "kind": "url",
+           "name": "url",
+           "crossLanguageDefinitionId": "TypeSpec.url",
+           "decorators": []
+          },
+          "decorators": []
+         }
+        },
+        {
+         "$id": "226",
+         "Name": "location",
+         "NameInResponse": "Location",
+         "Description": "The Location header contains the URL where the status of the long running operation can be checked.",
+         "Type": {
+          "$id": "227",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         }
+        },
+        {
+         "$id": "228",
+         "Name": "retryAfter",
+         "NameInResponse": "Retry-After",
+         "Description": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
+         "Type": {
+          "$id": "229",
+          "kind": "int32",
+          "name": "int32",
+          "crossLanguageDefinitionId": "TypeSpec.int32",
+          "decorators": []
+         }
+        },
+        {
+         "$id": "230",
+         "Name": "azureAsyncOperation",
+         "NameInResponse": "Azure-AsyncOperation",
+         "Description": "A link to the status monitor",
+         "Type": {
+          "$id": "231",
+          "kind": "url",
+          "name": "ResourceLocation",
+          "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
+          "baseType": {
+           "$id": "232",
+           "kind": "url",
+           "name": "url",
+           "crossLanguageDefinitionId": "TypeSpec.url",
+           "decorators": []
+          },
+          "decorators": []
+         }
+        },
+        {
+         "$id": "233",
+         "Name": "location",
+         "NameInResponse": "Location",
+         "Description": "The Location header contains the URL where the status of the long running operation can be checked.",
+         "Type": {
+          "$id": "234",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         }
+        }
+       ],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{endpoint}",
+     "Path": "/subscriptions/{subscriptionId}/providers/Microsoft.AzureTerraform/exportTerraform",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "LongRunning": {
+      "$id": "235",
+      "FinalStateVia": 0,
+      "FinalResponse": {
+       "$id": "236",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "98"
+       },
+       "BodyMediaType": "Json"
+      }
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "Microsoft.AzureTerraform.Terraform.exportTerraform",
+     "Decorators": [
+      {
+       "$id": "237",
+       "name": "Azure.Core.@useFinalStateVia",
+       "arguments": {
+        "$id": "238",
+        "finalState": "azure-async-operation"
+       }
+      }
+     ],
+     "Examples": [
+      {
+       "$id": "239",
+       "kind": "http",
+       "name": "ExportTerraform",
+       "description": "ExportTerraform",
+       "filePath": "2023-07-01-preview/ExportTerraform.json",
+       "parameters": [
+        {
+         "$id": "240",
+         "parameter": {
+          "$ref": "206"
+         },
+         "value": {
+          "$id": "241",
+          "kind": "string",
+          "type": {
+           "$ref": "207"
+          },
+          "value": "2023-07-01-preview"
+         }
+        },
+        {
+         "$id": "242",
+         "parameter": {
+          "$ref": "210"
+         },
+         "value": {
+          "$id": "243",
+          "kind": "string",
+          "type": {
+           "$ref": "211"
+          },
+          "value": "00000000-0000-0000-0000-000000000000"
+         }
+        },
+        {
+         "$id": "244",
+         "parameter": {
+          "$ref": "219"
+         },
+         "value": {
+          "$id": "245",
+          "kind": "model",
+          "type": {
+           "$ref": "72"
+          },
+          "value": {
+           "$id": "246",
+           "type": {
+            "$id": "247",
+            "kind": "string",
+            "type": {
+             "$ref": "78"
+            },
+            "value": "ExportResourceGroup"
+           },
+           "resourceGroupName": {
+            "$id": "248",
+            "kind": "string",
+            "type": {
+             "$ref": "74"
+            },
+            "value": "rg1"
+           }
+          }
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "249",
+         "response": {
+          "$ref": "220"
+         },
+         "statusCode": 202
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "Protocol": {
+    "$id": "250"
+   },
+   "Parent": "AzureTerraformClient",
+   "Parameters": [
+    {
+     "$id": "251",
+     "Name": "endpoint",
+     "NameInRequest": "endpoint",
+     "Description": "Service host",
+     "Type": {
+      "$id": "252",
+      "kind": "url",
+      "name": "url",
+      "crossLanguageDefinitionId": "TypeSpec.url"
+     },
+     "Location": "Uri",
+     "IsApiVersion": false,
+     "IsResourceParameter": false,
+     "IsContentType": false,
+     "IsRequired": true,
+     "IsEndpoint": true,
+     "SkipUrlEncoding": false,
+     "Explode": false,
+     "Kind": "Client",
+     "DefaultValue": {
+      "$id": "253",
+      "Type": {
+       "$id": "254",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string"
+      },
+      "Value": "https://management.azure.com"
+     }
+    }
+   ],
+   "Decorators": []
+  }
+ ],
+ "Auth": {
+  "$id": "255",
+  "OAuth2": {
+   "$id": "256",
+   "Scopes": [
+    "user_impersonation"
+   ]
+  }
+ }
+}
