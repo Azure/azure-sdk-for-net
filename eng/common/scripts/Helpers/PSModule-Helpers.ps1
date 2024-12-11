@@ -1,7 +1,6 @@
 $global:CurrentUserModulePath = ""
 
-function Update-PSModulePathForCI()
-{
+function Update-PSModulePathForCI() {
   # Information on PSModulePath taken from docs
   # https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_psmodulepath
 
@@ -11,7 +10,8 @@ function Update-PSModulePathForCI()
   if ($IsWindows) {
     $hostedAgentModulePath = $env:SystemDrive + "\Modules"
     $moduleSeperator = ";"
-  } else {
+  }
+  else {
     $hostedAgentModulePath = "/usr/share"
     $moduleSeperator = ":"
   }
@@ -55,29 +55,30 @@ function Get-ModuleRepositories([string]$moduleName) {
 
   $repoUrls = if ($packageFeedOverrides.Contains("${moduleName}")) {
     @($packageFeedOverrides["${moduleName}"], $DefaultPSRepositoryUrl)
-  } else {
+  }
+  else {
     @($DefaultPSRepositoryUrl)
   }
 
   return $repoUrls
 }
 
-if ($null -eq $script:InstalledModules) {
-  $script:InstalledModules = @{}
-}
-
 function moduleIsInstalled([string]$moduleName, [string]$version) {
+  if ($null -eq $global:InstalledModules) {
+    $script:InstalledModules = @{}
+  }
+
   if ($script:InstalledModules.ContainsKey("${moduleName}")) {
-    $modules = @($script:InstalledModules["${moduleName}"])
+    $modules = $script:InstalledModules["${moduleName}"]
   }
   else {
     $modules = (Get-Module -ListAvailable $moduleName)
+    $script:InstalledModules["${moduleName}"] = $modules
   }
 
   if ($version -as [Version]) {
     $modules = $modules.Where({ [Version]$_.Version -ge [Version]$version })
-    if ($modules.Count -gt 0)
-    {
+    if ($modules.Count -gt 0) {
       Write-Host "Using module $($modules[0].Name) with version $($modules[0].Version)."
       return $modules[0]
     }
@@ -87,8 +88,7 @@ function moduleIsInstalled([string]$moduleName, [string]$version) {
 
 function installModule([string]$moduleName, [string]$version, $repoUrl) {
   $repo = (Get-PSRepository).Where({ $_.SourceLocation -eq $repoUrl })
-  if ($repo.Count -eq 0)
-  {
+  if ($repo.Count -eq 0) {
     Register-PSRepository -Name $repoUrl -SourceLocation $repoUrl -InstallationPolicy Trusted | Out-Null
     $repo = (Get-PSRepository).Where({ $_.SourceLocation -eq $repoUrl })
     if ($repo.Count -eq 0) {
@@ -123,8 +123,7 @@ function installModule([string]$moduleName, [string]$version, $repoUrl) {
 
 # Manual test at eng/common-tests/psmodule-helpers/Install-Module-Parallel.ps1
 # If we want to use another default repository other then PSGallery we can update the default parameters
-function Install-ModuleIfNotInstalled()
-{
+function Install-ModuleIfNotInstalled() {
   [CmdletBinding(SupportsShouldProcess = $true)]
   param(
     [string]$moduleName,
@@ -149,12 +148,14 @@ function Install-ModuleIfNotInstalled()
     foreach ($url in $repoUrls) {
       try {
         $module = installModule -moduleName $moduleName -version $version -repoUrl $url
-      } catch {
+      }
+      catch {
         if ($url -ne $repoUrls[-1]) {
           Write-Warning "Failed to install powershell module from '$url'. Retrying with fallback repository"
           Write-Warning $_
           continue
-        } else {
+        }
+        else {
           Write-Warning "Failed to install powershell module from $url"
           throw
         }
@@ -163,7 +164,8 @@ function Install-ModuleIfNotInstalled()
     }
 
     Write-Host "Using module '$($module.Name)' with version '$($module.Version)'."
-  } finally {
+  }
+  finally {
     $mutex.ReleaseMutex()
   }
 
@@ -171,5 +173,5 @@ function Install-ModuleIfNotInstalled()
 }
 
 if ($null -ne $env:SYSTEM_TEAMPROJECTID) {
-    Update-PSModulePathForCI
+  Update-PSModulePathForCI
 }

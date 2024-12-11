@@ -75,6 +75,7 @@ function CompatibleConvertFrom-Yaml {
     throw "Content to parse is a required input."
   }
 
+  . (Join-Path $PSScriptRoot PSModule-Helpers.ps1)
   Install-ModuleIfNotInstalled -WhatIf:$false "powershell-yaml" "0.4.7" | Import-Module
 
   return ConvertFrom-Yaml $content
@@ -102,7 +103,7 @@ LoadFrom-Yaml -YmlFile path/to/file.yml
 #>
 function LoadFrom-Yaml {
   param(
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory = $true)]
     [string]$YmlFile
   )
   if (Test-Path -Path $YmlFile) {
@@ -147,19 +148,19 @@ GetValueSafelyFrom-Yaml -YamlContentAsHashtable $YmlFileContent -Keys @("extends
 #>
 function GetValueSafelyFrom-Yaml {
   param(
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory = $true)]
     $YamlContentAsHashtable,
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory = $true)]
     [string[]]$Keys
   )
   $current = $YamlContentAsHashtable
   foreach ($key in $Keys) {
-      if ($current.ContainsKey($key) -or $current[$key]) {
-        $current = $current[$key]
-      }
-      else {
-        return $null
-      }
+    if ($current.ContainsKey($key) -or $current[$key]) {
+      $current = $current[$key]
+    }
+    else {
+      return $null
+    }
   }
 
   return [object]$current
