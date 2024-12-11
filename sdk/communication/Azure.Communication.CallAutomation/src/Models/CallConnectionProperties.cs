@@ -20,7 +20,8 @@ namespace Azure.Communication.CallAutomation
             PhoneNumberIdentifier sourceCallerIdNumber,
             string sourceDisplayName,
             string dataSubscriptionId,
-            CommunicationUserIdentifier answeredBy
+            CommunicationUserIdentifier answeredBy,
+            MediaStreamingSubscription mediaStreamingSubscription
             )
         {
             CallConnectionId = callConnectionId;
@@ -33,6 +34,7 @@ namespace Azure.Communication.CallAutomation
             SourceDisplayName = sourceDisplayName;
             DataSubscriptionId = dataSubscriptionId;
             AnsweredBy = answeredBy;
+            MediaStreamingSubscription = mediaStreamingSubscription;
         }
 
         internal CallConnectionProperties(CallConnectionPropertiesInternal callConnectionPropertiesDtoInternal)
@@ -61,6 +63,12 @@ namespace Azure.Communication.CallAutomation
             {
                 SourceCallerIdNumber = new PhoneNumberIdentifier(callConnectionPropertiesDtoInternal.SourceCallerIdNumber.Value);
             }
+            MediaStreamingSubscription = callConnectionPropertiesDtoInternal.MediaStreamingSubscription != null ?
+              new MediaStreamingSubscription(
+                  callConnectionPropertiesDtoInternal.MediaStreamingSubscription.Id,
+                  callConnectionPropertiesDtoInternal.MediaStreamingSubscription.State,
+                  callConnectionPropertiesDtoInternal.MediaStreamingSubscription.SubscribedContentTypes)
+              : null;
         }
 
         /// <summary> The call connection id. </summary>
@@ -97,5 +105,10 @@ namespace Azure.Communication.CallAutomation
         /// Identity of the answering entity. Only populated when identity is provided in the request.
         /// </summary>
         public CommunicationUserIdentifier AnsweredBy { get; }
+
+        /// <summary>
+        /// Media streaming subscription details.
+        /// </summary>
+        public MediaStreamingSubscription MediaStreamingSubscription { get; }
     }
 }

@@ -66,7 +66,7 @@ namespace Azure.Communication.CallAutomation
                         transcriptionDataInternal.ResultStatus
                         );
 
-                    #endregion
+                #endregion
 
                 default:
                     throw new NotSupportedException(stringJson);

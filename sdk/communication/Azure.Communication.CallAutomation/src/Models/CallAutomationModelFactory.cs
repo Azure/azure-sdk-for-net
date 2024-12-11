@@ -195,6 +195,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="sourceDisplayName">Display name to appear on the invitee.</param>
         /// <param name="dataSubscriptionId">The subscriptionId for transcription.</param>
         /// <param name="answeredBy">Identifier that answered the call.</param>
+        /// /// <param name="mediaStreamingSubscription">The subscription details for Media Streaming.</param>
         /// <returns> A new <see cref="CallAutomation.CallConnectionProperties"/> instance for mocking. </returns>
         public static CallConnectionProperties CallConnectionProperties(
             string callConnectionId = default,
@@ -206,18 +207,20 @@ namespace Azure.Communication.CallAutomation
             PhoneNumberIdentifier sourceCallerIdNumber = default,
             string sourceDisplayName = default,
             CommunicationUserIdentifier answeredBy = default,
-            string dataSubscriptionId = default)
+            string dataSubscriptionId = default,
+            MediaStreamingSubscription mediaStreamingSubscription = default)
         {
-            return new CallConnectionProperties(callConnectionId, serverCallId, targets, callConnectionState, callbackUri, sourceIdentity, sourceCallerIdNumber, sourceDisplayName, dataSubscriptionId, answeredBy);
+            return new CallConnectionProperties(callConnectionId, serverCallId, targets, callConnectionState, callbackUri, sourceIdentity, sourceCallerIdNumber, sourceDisplayName, dataSubscriptionId, answeredBy, mediaStreamingSubscription);
         }
 
         /// <summary> Initializes a new instance of CallParticipant. </summary>
         /// <param name="identifier"> The communication identifier. </param>
         /// <param name="isMuted"> Is participant muted. </param>
+        /// <param name="isOnHold"> Is participant on hold. </param>
         /// <returns> A new <see cref="CallAutomation.CallParticipant"/> instance for mocking. </returns>
-        public static CallParticipant CallParticipant(CommunicationIdentifier identifier = default, bool isMuted = default)
+        public static CallParticipant CallParticipant(CommunicationIdentifier identifier = default, bool isMuted = default, bool isOnHold = default)
         {
-            return new CallParticipant(identifier, isMuted);
+            return new CallParticipant(identifier, isMuted, isOnHold);
         }
 
         /// <summary> Initializes a new instance of CallParticipant. </summary>
@@ -381,7 +384,7 @@ namespace Azure.Communication.CallAutomation
                 sequenceNumber,
                 participants == null
                     ? new List<CallParticipantInternal>()
-                    : participants.Select(p => new CallParticipantInternal(CommunicationIdentifierSerializer.Serialize(p.Identifier), p.IsMuted, null)).ToList()
+                    : participants.Select(p => new CallParticipantInternal(CommunicationIdentifierSerializer.Serialize(p.Identifier), p.IsMuted,p.IsOnHold)).ToList()
                 );
 
             return new ParticipantsUpdated(internalObject);
@@ -551,6 +554,18 @@ namespace Azure.Communication.CallAutomation
         public static HoldFailed HoldFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
             return new HoldFailed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+        }
+
+        /// <summary> Initializes a new instance of ConnectFailed. </summary>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        /// <returns> A new <see cref="CallAutomation.ConnectFailed"/> instance for mocking. </returns>
+        public static ConnectFailed ConnectFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
+        {
+            return new ConnectFailed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
         }
     }
 }
