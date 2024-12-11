@@ -591,6 +591,44 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Gets an object representing an <see cref="IpamPoolResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IpamPoolResource.CreateResourceIdentifier" /> to create an <see cref="IpamPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkArmClient.GetIpamPoolResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="IpamPoolResource"/> object. </returns>
+        public static IpamPoolResource GetIpamPoolResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNetworkArmClient(client).GetIpamPoolResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="StaticCidrResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StaticCidrResource.CreateResourceIdentifier" /> to create a <see cref="StaticCidrResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkArmClient.GetStaticCidrResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="StaticCidrResource"/> object. </returns>
+        public static StaticCidrResource GetStaticCidrResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNetworkArmClient(client).GetStaticCidrResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing an <see cref="IPAllocationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="IPAllocationResource.CreateResourceIdentifier" /> to create an <see cref="IPAllocationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -952,6 +990,63 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="NetworkManagerRoutingConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkManagerRoutingConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="NetworkManagerRoutingConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkArmClient.GetNetworkManagerRoutingConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NetworkManagerRoutingConfigurationResource"/> object. </returns>
+        public static NetworkManagerRoutingConfigurationResource GetNetworkManagerRoutingConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNetworkArmClient(client).GetNetworkManagerRoutingConfigurationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkManagerRoutingRulesResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkManagerRoutingRulesResource.CreateResourceIdentifier" /> to create a <see cref="NetworkManagerRoutingRulesResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkArmClient.GetNetworkManagerRoutingRulesResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NetworkManagerRoutingRulesResource"/> object. </returns>
+        public static NetworkManagerRoutingRulesResource GetNetworkManagerRoutingRulesResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNetworkArmClient(client).GetNetworkManagerRoutingRulesResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkManagerRoutingRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkManagerRoutingRuleResource.CreateResourceIdentifier" /> to create a <see cref="NetworkManagerRoutingRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkArmClient.GetNetworkManagerRoutingRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NetworkManagerRoutingRuleResource"/> object. </returns>
+        public static NetworkManagerRoutingRuleResource GetNetworkManagerRoutingRuleResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNetworkArmClient(client).GetNetworkManagerRoutingRuleResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ScopeConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ScopeConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ScopeConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -1085,63 +1180,6 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkManagerRoutingConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkManagerRoutingConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="NetworkManagerRoutingConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkArmClient.GetNetworkManagerRoutingConfigurationResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NetworkManagerRoutingConfigurationResource"/> object. </returns>
-        public static NetworkManagerRoutingConfigurationResource GetNetworkManagerRoutingConfigurationResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableNetworkArmClient(client).GetNetworkManagerRoutingConfigurationResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="NetworkManagerRoutingRulesResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkManagerRoutingRulesResource.CreateResourceIdentifier" /> to create a <see cref="NetworkManagerRoutingRulesResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkArmClient.GetNetworkManagerRoutingRulesResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NetworkManagerRoutingRulesResource"/> object. </returns>
-        public static NetworkManagerRoutingRulesResource GetNetworkManagerRoutingRulesResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableNetworkArmClient(client).GetNetworkManagerRoutingRulesResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="NetworkManagerRoutingRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkManagerRoutingRuleResource.CreateResourceIdentifier" /> to create a <see cref="NetworkManagerRoutingRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkArmClient.GetNetworkManagerRoutingRuleResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NetworkManagerRoutingRuleResource"/> object. </returns>
-        public static NetworkManagerRoutingRuleResource GetNetworkManagerRoutingRuleResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableNetworkArmClient(client).GetNetworkManagerRoutingRuleResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="NetworkProfileResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetworkProfileResource.CreateResourceIdentifier" /> to create a <see cref="NetworkProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -1215,6 +1253,63 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableNetworkArmClient(client).GetDefaultSecurityRuleResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ReachabilityAnalysisIntentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReachabilityAnalysisIntentResource.CreateResourceIdentifier" /> to create a <see cref="ReachabilityAnalysisIntentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkArmClient.GetReachabilityAnalysisIntentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ReachabilityAnalysisIntentResource"/> object. </returns>
+        public static ReachabilityAnalysisIntentResource GetReachabilityAnalysisIntentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNetworkArmClient(client).GetReachabilityAnalysisIntentResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ReachabilityAnalysisRunResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReachabilityAnalysisRunResource.CreateResourceIdentifier" /> to create a <see cref="ReachabilityAnalysisRunResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkArmClient.GetReachabilityAnalysisRunResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ReachabilityAnalysisRunResource"/> object. </returns>
+        public static ReachabilityAnalysisRunResource GetReachabilityAnalysisRunResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNetworkArmClient(client).GetReachabilityAnalysisRunResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="VerifierWorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VerifierWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="VerifierWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkArmClient.GetVerifierWorkspaceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="VerifierWorkspaceResource"/> object. </returns>
+        public static VerifierWorkspaceResource GetVerifierWorkspaceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNetworkArmClient(client).GetVerifierWorkspaceResource(id);
         }
 
         /// <summary>
@@ -2311,7 +2406,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2349,7 +2444,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2404,7 +2499,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2442,7 +2537,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2497,7 +2592,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2535,7 +2630,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2590,7 +2685,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2628,7 +2723,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2683,7 +2778,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2721,7 +2816,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2778,7 +2873,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2816,7 +2911,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2871,7 +2966,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2910,7 +3005,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2966,7 +3061,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3004,7 +3099,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3059,7 +3154,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3097,7 +3192,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3152,7 +3247,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3190,7 +3285,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3245,7 +3340,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3283,7 +3378,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3338,7 +3433,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3376,7 +3471,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3431,7 +3526,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3469,7 +3564,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3524,7 +3619,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3563,7 +3658,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3619,7 +3714,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3658,7 +3753,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3714,7 +3809,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3753,7 +3848,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3809,7 +3904,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3848,7 +3943,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3904,7 +3999,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3943,7 +4038,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3999,7 +4094,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4038,7 +4133,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4094,7 +4189,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4132,7 +4227,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4187,7 +4282,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4226,7 +4321,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4282,7 +4377,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4321,7 +4416,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4377,7 +4472,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4416,7 +4511,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4472,7 +4567,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4510,7 +4605,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4565,7 +4660,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4604,7 +4699,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4660,7 +4755,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4699,7 +4794,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4755,7 +4850,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4794,7 +4889,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4850,7 +4945,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4889,7 +4984,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4945,7 +5040,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4984,7 +5079,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5040,7 +5135,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5079,7 +5174,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5135,7 +5230,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5173,7 +5268,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5228,7 +5323,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5267,7 +5362,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5323,7 +5418,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5362,7 +5457,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5418,7 +5513,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5456,7 +5551,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5511,7 +5606,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5549,7 +5644,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5604,7 +5699,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5642,7 +5737,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5697,7 +5792,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5735,7 +5830,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5790,7 +5885,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5829,7 +5924,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5885,7 +5980,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5923,7 +6018,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5978,7 +6073,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6016,7 +6111,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6071,7 +6166,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6109,7 +6204,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6164,7 +6259,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6202,7 +6297,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6257,7 +6352,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6295,7 +6390,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6350,7 +6445,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6388,7 +6483,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6443,7 +6538,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6481,7 +6576,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6536,7 +6631,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6574,7 +6669,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6612,7 +6707,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -6645,7 +6740,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -6678,7 +6773,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -6711,7 +6806,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -6744,7 +6839,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -6777,7 +6872,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -6810,7 +6905,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -6844,7 +6939,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -6878,7 +6973,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -6911,7 +7006,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -6962,7 +7057,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6999,7 +7094,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -7053,7 +7148,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -7092,7 +7187,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -7148,7 +7243,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -7186,7 +7281,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -7241,7 +7336,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -7279,7 +7374,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -7334,7 +7429,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -7372,7 +7467,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -7427,7 +7522,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -7465,7 +7560,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -7503,7 +7598,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -7539,7 +7634,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -7575,7 +7670,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -7611,7 +7706,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -7647,7 +7742,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -7683,7 +7778,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -7719,7 +7814,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -7755,7 +7850,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -7791,7 +7886,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -7827,7 +7922,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -7863,7 +7958,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -7898,7 +7993,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -7933,7 +8028,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -7969,7 +8064,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -8005,7 +8100,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -8042,7 +8137,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -8079,7 +8174,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -8115,7 +8210,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -8151,7 +8246,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -8184,7 +8279,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -8217,7 +8312,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -8250,7 +8345,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -8283,7 +8378,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -8319,7 +8414,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -8355,7 +8450,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -8387,7 +8482,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -8419,7 +8514,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -8455,7 +8550,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -8491,7 +8586,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -8528,7 +8623,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -8565,7 +8660,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -8601,7 +8696,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -8637,7 +8732,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -8673,7 +8768,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -8709,7 +8804,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -8745,7 +8840,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -8781,7 +8876,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -8814,7 +8909,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -8847,7 +8942,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -8883,7 +8978,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -8919,7 +9014,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -8951,7 +9046,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -8983,7 +9078,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -9020,7 +9115,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -9057,7 +9152,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -9093,7 +9188,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -9129,7 +9224,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -9165,7 +9260,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -9201,7 +9296,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -9237,7 +9332,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -9273,7 +9368,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -9309,7 +9404,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -9345,7 +9440,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -9381,7 +9476,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -9417,7 +9512,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -9455,7 +9550,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -9493,7 +9588,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -9529,7 +9624,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -9565,7 +9660,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -9601,7 +9696,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -9637,7 +9732,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -9675,7 +9770,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -9713,7 +9808,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -9749,7 +9844,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -9785,7 +9880,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -9821,7 +9916,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -9857,7 +9952,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -9893,7 +9988,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -9929,7 +10024,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -9965,7 +10060,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -10001,7 +10096,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -10037,7 +10132,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -10073,7 +10168,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -10106,7 +10201,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -10139,7 +10234,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -10175,7 +10270,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -10211,7 +10306,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -10245,7 +10340,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -10279,7 +10374,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -10312,7 +10407,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -10345,7 +10440,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -10381,7 +10476,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -10417,7 +10512,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -10453,7 +10548,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -10489,7 +10584,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -10525,7 +10620,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -10561,7 +10656,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -10597,7 +10692,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -10633,7 +10728,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -10669,7 +10764,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -10705,7 +10800,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -10737,7 +10832,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -10769,7 +10864,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -10805,7 +10900,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -10841,7 +10936,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -10873,7 +10968,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -10905,7 +11000,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -10940,7 +11035,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -10975,7 +11070,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -11008,7 +11103,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -11041,7 +11136,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -11077,7 +11172,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -11113,7 +11208,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -11149,7 +11244,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -11185,7 +11280,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -11221,7 +11316,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -11257,7 +11352,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -11293,7 +11388,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -11329,7 +11424,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -11365,7 +11460,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -11401,7 +11496,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -11437,7 +11532,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -11473,7 +11568,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -11509,7 +11604,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -11545,7 +11640,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -11581,7 +11676,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -11617,7 +11712,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -11653,7 +11748,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -11689,7 +11784,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -11725,7 +11820,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -11761,7 +11856,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -11797,7 +11892,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
