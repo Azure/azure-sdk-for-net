@@ -78,6 +78,7 @@ namespace Azure.CloudMachine.Core
     public partial class FeatureCollection : System.Collections.Generic.IEnumerable<Azure.CloudMachine.Core.CloudMachineFeature>, System.Collections.IEnumerable
     {
         internal FeatureCollection() { }
+        public void Add(Azure.CloudMachine.Core.CloudMachineFeature item) { }
         public System.Collections.Generic.IEnumerable<T> FindAll<T>() where T : Azure.CloudMachine.Core.CloudMachineFeature { throw null; }
         public System.Collections.Generic.IEnumerator<Azure.CloudMachine.Core.CloudMachineFeature> GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -91,23 +92,6 @@ namespace Azure.CloudMachine.KeyVault
         public Azure.Provisioning.KeyVault.KeyVaultSku Sku { get { throw null; } set { } }
         protected internal override void EmitConnections(Azure.Core.ConnectionCollection connections, string cmId) { }
         protected override Azure.Provisioning.Primitives.ProvisionableResource EmitResources(Azure.CloudMachine.CloudMachineInfrastructure infrastructure) { throw null; }
-    }
-}
-namespace Azure.CloudMachine.OpenAI
-{
-    public enum AIModelKind
-    {
-        Chat = 0,
-        Embedding = 1,
-    }
-    public partial class OpenAIModelFeature : Azure.CloudMachine.Core.CloudMachineFeature
-    {
-        public OpenAIModelFeature(string model, string modelVersion, Azure.CloudMachine.OpenAI.AIModelKind kind = Azure.CloudMachine.OpenAI.AIModelKind.Chat) { }
-        public string Model { get { throw null; } }
-        public string ModelVersion { get { throw null; } }
-        protected internal override void EmitConnections(Azure.Core.ConnectionCollection connections, string cmId) { }
-        protected internal override void EmitFeatures(Azure.CloudMachine.Core.FeatureCollection features, string cmId) { }
-        protected override Azure.Provisioning.Primitives.ProvisionableResource EmitResources(Azure.CloudMachine.CloudMachineInfrastructure cm) { throw null; }
     }
 }
 namespace System.ClientModel.TypeSpec

@@ -6,7 +6,6 @@
 using System;
 using System.Threading;
 using Azure.Security.KeyVault.Secrets;
-using Azure.CloudMachine.OpenAI;
 using Azure.CloudMachine.KeyVault;
 using NUnit.Framework;
 using OpenAI.Chat;
