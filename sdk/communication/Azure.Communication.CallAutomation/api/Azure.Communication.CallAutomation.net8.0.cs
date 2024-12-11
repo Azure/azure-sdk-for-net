@@ -1618,6 +1618,12 @@ namespace Azure.Communication.CallAutomation
         TranscriptionData = 2,
         TranscriptionMetadata = 3,
     }
+    public static partial class StreamingDataParser
+    {
+        public static Azure.Communication.CallAutomation.StreamingData Parse(System.BinaryData json) { throw null; }
+        public static Azure.Communication.CallAutomation.StreamingData Parse(byte[] receivedBytes) { throw null; }
+        public static Azure.Communication.CallAutomation.StreamingData Parse(string stringJson) { throw null; }
+    }
     public enum TextFormat
     {
         Display = 0,
@@ -1637,11 +1643,11 @@ namespace Azure.Communication.CallAutomation
     {
         internal TranscriptionData() { }
         public double Confidence { get { throw null; } set { } }
-        public System.TimeSpan Duration { get { throw null; } set { } }
+        public ulong Duration { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.TextFormat Format { get { throw null; } set { } }
-        public System.TimeSpan Offset { get { throw null; } set { } }
+        public ulong Offset { get { throw null; } set { } }
         public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } set { } }
-        public Azure.Communication.CallAutomation.ResultStatus ResultState { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.ResultStatus ResultStatus { get { throw null; } set { } }
         public string Text { get { throw null; } set { } }
         public System.Collections.Generic.IEnumerable<Azure.Communication.CallAutomation.WordData> Words { get { throw null; } set { } }
     }
@@ -1821,11 +1827,11 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class WordData
     {
-        internal WordData() { }
+        public WordData() { }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("duration")]
-        public System.TimeSpan Duration { get { throw null; } set { } }
+        public ulong Duration { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("offset")]
-        public System.TimeSpan Offset { get { throw null; } set { } }
+        public ulong Offset { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("text")]
         public string Text { get { throw null; } set { } }
     }

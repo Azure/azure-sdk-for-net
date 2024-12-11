@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -12,20 +11,19 @@ namespace Azure.Communication.CallAutomation
     /// </summary>
     public class TranscriptionData : StreamingData
     {
-        internal TranscriptionData(string text, string format, double confidence, long offset, long duration, IEnumerable<WordDataInternal> words, string participantRawID, string resultState)
+        internal TranscriptionData(string text, string format, double confidence, ulong offset, ulong duration, IEnumerable<WordData> words, string participantRawID, string resultStatus)
         {
             Text = text;
             Format = ConvertToTextFormatEnum(format);
             Confidence = confidence;
-            Offset = TimeSpan.FromTicks(offset);
-            Duration = TimeSpan.FromTicks(duration);
-            Words = ConvertToWordData(words);
+            Offset = offset;
+            Duration = duration;
+            Words = words;
             if (participantRawID != null)
             {
                 Participant = CommunicationIdentifier.FromRawId(participantRawID);
             }
-            ResultState = ConvertToResultStatusEnum(resultState);
-            ;
+            ResultStatus = ConvertToResultStatusEnum(resultStatus);
         }
 
         /// <summary>
@@ -47,12 +45,12 @@ namespace Azure.Communication.CallAutomation
         /// The position of this payload
         /// </summary>
 
-        public TimeSpan Offset { get; set; }
+        public ulong Offset { get; set; }
 
         /// <summary>
         /// Duration in ticks. 1 tick = 100 nanoseconds.
         /// </summary>
-        public TimeSpan Duration { get; set; }
+        public ulong Duration { get; set; }
 
         /// <summary>
         /// The result for each word of the phrase
@@ -67,20 +65,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Status of the result of transcription
         /// </summary>
-        public ResultStatus ResultState { get; set; }
-
-        private static TextFormat ConvertToTextFormatEnum(string format)
-        {
-            if (TextFormat.Display.ToString().Equals(format, StringComparison.OrdinalIgnoreCase))
-                return TextFormat.Display;
-            else
-                throw new NotSupportedException(format);
-        }
-
-        private static IEnumerable<WordData> ConvertToWordData(IEnumerable<WordDataInternal> wordData)
-        {
-            return wordData.Select(w => new WordData(w.Text, w.Offset, w.Duration));
-        }
+        public ResultStatus ResultStatus { get; set; }
 
         private static ResultStatus ConvertToResultStatusEnum(string resultStatus)
         {
@@ -90,6 +75,14 @@ namespace Azure.Communication.CallAutomation
                 return ResultStatus.Final;
             else
                 throw new NotSupportedException(resultStatus);
+        }
+
+        private static TextFormat ConvertToTextFormatEnum(string format)
+        {
+            if ("Display".Equals(format, StringComparison.OrdinalIgnoreCase))
+                return TextFormat.Display;
+            else
+                throw new NotSupportedException(format);
         }
     }
 }
