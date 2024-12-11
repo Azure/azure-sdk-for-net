@@ -19,11 +19,3 @@
 ### Bugs Fixed
 
 ### Other Changes
-
-### Features Added
-
-- Added support for analyze-conversations authoring API Versions
-  - 2022-05-01
-  - 2023-04-01
-  - 2023-11-15-preview
-  - 2024-11-15-preview
