@@ -1,6 +1,6 @@
 # Azure Cognitive Search libraries for .NET
 
-Azure Cognitive Search ([formerly known as "Azure Search"](https://docs.microsoft.com/azure/search/whats-new#new-service-name))
+Azure Cognitive Search ([formerly known as "Azure Search"](https://learn.microsoft.com/azure/search/whats-new#new-service-name))
 is a search-as-a-service cloud solution that gives developers APIs and tools
 for adding a rich search experience over private, heterogeneous content in web,
 mobile, and enterprise applications. Your code or a tool invokes data ingestion

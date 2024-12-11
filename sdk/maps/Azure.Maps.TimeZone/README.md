@@ -2,7 +2,7 @@
 
 Azure Maps TimeZone is a library which contains Azure Maps TimeZone APIs.
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.TimeZone/src) | [API reference documentation](https://docs.microsoft.com/rest/api/maps/) | [REST API reference documentation](https://docs.microsoft.com/rest/api/maps/timezone) | [Product documentation](https://docs.microsoft.com/azure/azure-maps/)
+[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.TimeZones/src) | [API reference documentation](https://learn.microsoft.com/rest/api/maps/) | [REST API reference documentation](https://learn.microsoft.com/rest/api/maps/timezone) | [Product documentation](https://learn.microsoft.com/azure/azure-maps/)
 
 ## Getting started
 
@@ -11,12 +11,12 @@ Azure Maps TimeZone is a library which contains Azure Maps TimeZone APIs.
 Install the client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.Maps.TimeZone --prerelease
+dotnet add package Azure.Maps.TimeZones --prerelease
 ```
 
 ### Prerequisites
 
-> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [Azure Maps account](https://docs.microsoft.com/azure/azure-maps/quick-demo-map-app#create-an-azure-maps-account).
+> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [Azure Maps account](https://learn.microsoft.com/azure/azure-maps/quick-demo-map-app#create-an-azure-maps-account).
 
 To create a new Azure Maps account, you can use the Azure Portal, Azure PowerShell, or the Azure CLI. Here's an example using the Azure CLI:
 
@@ -34,7 +34,7 @@ There are 3  ways to authenticate the client: Shared key authentication, Microso
 * Copy `Primary Key` or `Secondary Key` under **Shared Key authentication** section
 
 ```C# Snippet:InstantiateTimeZoneClientViaSubscriptionKey
-// Create a SearchClient that will authenticate through Subscription Key (Shared key)
+// Create a MapsTimeZoneClient that will authenticate through Subscription Key (Shared key)
 AzureKeyCredential credential = new AzureKeyCredential("<My Subscription Key>");
 MapsTimeZoneClient client = new MapsTimeZoneClient(credential);
 ```
@@ -58,13 +58,12 @@ MapsTimeZoneClient client = new MapsTimeZoneClient(credential, clientId);
 
 Shared access signature (SAS) tokens are authentication tokens created using the JSON Web token (JWT) format and are cryptographically signed to prove authentication for an application to the Azure Maps REST API.
 
-Before integrating SAS token authentication, we need to install `Azure.ResourceManager` and `Azure.ResourceManager.Maps` (version `1.1.0-beta.2` or higher):
+Before integrating SAS token authentication, we need to install `Azure.ResourceManager` and `Azure.ResourceManager.Maps` (version `1.1.0` or higher):
 
 ```powershell
 dotnet add package Azure.ResourceManager
-dotnet add package Azure.ResourceManager.Maps --prerelease
+dotnet add package Azure.ResourceManager.Maps
 ```
-
 
 And then we can get SAS token via [List Sas](https://learn.microsoft.com/rest/api/maps-management/accounts/list-sas?tabs=HTTP) API and assign it to `MapsTimeZoneClient`. In the follow code sample, we fetch a specific maps account resource, and create a SAS token for 1 day expiry time when the code is executed.
 
@@ -95,7 +94,7 @@ string expiry = now.AddDays(1).ToString("O");
 MapsAccountSasContent sasContent = new MapsAccountSasContent(MapsSigningKey.PrimaryKey, principalId, maxRatePerSecond, start, expiry);
 Response<MapsAccountSasToken> sas = mapsAccount.GetSas(sasContent);
 
-// Create a TimeZoneClient that will authenticate via SAS token
+// Create a MapsTimeZoneClient that will authenticate via SAS token
 AzureSasCredential sasCredential = new AzureSasCredential(sas.Value.AccountSasToken);
 MapsTimeZoneClient client = new MapsTimeZoneClient(sasCredential);
 ```
@@ -119,14 +118,16 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-You can familiarize yourself with different APIs using our [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.TimeZone/samples). 
+You can familiarize yourself with different APIs using our [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.TimeZones/samples).
 
 ### Get TimeZone By ID
 
 ```C# Snippet:GetTimeZoneById
-TimeZoneBaseOptions options = new TimeZoneBaseOptions();
-options.Options = TimeZoneOptions.All;
-Response<TimeZoneInformation> response = client.GetTimeZoneByID("Asia/Bahrain", options);
+GetTimeZoneOptions options = new GetTimeZoneOptions()
+{
+    AdditionalTimeZoneReturnInformation = AdditionalTimeZoneReturnInformation.All
+};
+Response<TimeZoneResult> response = client.GetTimeZoneById("Asia/Bahrain", options);
 Console.WriteLine("Version: " + response.Value.Version);
 Console.WriteLine("Countires: " + response.Value.TimeZones[0].Countries);
 ```
@@ -134,57 +135,71 @@ Console.WriteLine("Countires: " + response.Value.TimeZones[0].Countries);
 ### Get TimeZone By Coordinates
 
 ```C# Snippet:GetTimeZoneByCoordinates
-TimeZoneBaseOptions options = new TimeZoneBaseOptions();
-options.Options = TimeZoneOptions.All;
+GetTimeZoneOptions options = new GetTimeZoneOptions()
+{
+    AdditionalTimeZoneReturnInformation = AdditionalTimeZoneReturnInformation.All
+};
 GeoPosition coordinates = new GeoPosition(121.5640089, 25.0338053);
-Response<TimeZoneInformation> response =  client.GetTimeZoneByCoordinates(coordinates, options);
-Console.WriteLine("Names: " + response.Value.TimeZones[0].Names);
+Response<TimeZoneResult> response = client.GetTimeZoneByCoordinates(coordinates, options);
+
+Console.WriteLine("Time zone for (latitude, longitude) = ({0}, {1}) is {2}: ",
+    coordinates.Latitude, coordinates.Longitude,
+    response.Value.TimeZones[0].Name.Generic);
 ```
 
 ### Get Windows TimeZone Ids
 
 ```C# Snippet:GetWindowsTimeZoneIds
-Response<IReadOnlyList<TimeZoneWindows>> response = client.GetWindowsTimeZoneIds();
-Console.WriteLine("Count: " + response.Value.Count);
-Console.WriteLine("WindowsId: " + response.Value[0].WindowsId);
-Console.WriteLine("Territory: " + response.Value[0].Territory);
+Response<WindowsTimeZoneData> response = client.GetWindowsTimeZoneIds();
+Console.WriteLine("Total time zones: " + response.Value.WindowsTimeZones.Count);
+foreach (WindowsTimeZone timeZone in response.Value.WindowsTimeZones)
+{
+    Console.WriteLine("IANA Id: " + timeZone.IanaIds);
+    Console.WriteLine("Windows ID: " + timeZone.WindowsId);
+    Console.WriteLine("Territory: " + timeZone.Territory);
+}
 ```
 
 ### Get Iana TimeZone Ids
 
-```C# Snippet:GetIanaTimeZoneIds
-Response<IReadOnlyList<IanaId>> response = client.GetIanaTimeZoneIds();
-Console.WriteLine("IsAlias: " + response.Value[0].IsAlias);
-Console.WriteLine("Id: " + response.Value[0].Id);
+```C# Snippet:GetTimeZoneIanaIds
+Response<IanaIdData> response = client.GetTimeZoneIanaIds();
+if (response.Value.IanaIds[0].AliasOf != null)
+{
+    Console.WriteLine("It is an alias: " + response.Value.IanaIds[0].AliasOf);
+}
+else
+{
+    Console.WriteLine("It is not an alias");
+}
+Console.WriteLine("IANA Id: " + response.Value.IanaIds[0].Id);
 ```
 
 ### Get Iana Version
 
 ```C# Snippet:GetIanaVersion
 Response<TimeZoneIanaVersionResult> response = client.GetIanaVersion();
-Console.WriteLine("Version: " + response.Value.Version);
+Console.WriteLine("IANA Version: " + response.Value.Version);
 ```
 
 ### Convert Windows TimeZone To Iana
 
 ```C# Snippet:ConvertWindowsTimeZoneToIana
-Response<IReadOnlyList<IanaId>> response = client.ConvertWindowsTimeZoneToIana("Dateline Standard Time");
-Console.WriteLine("Id: " + response.Value[0].Id);
+Response<IanaIdData> response = client.ConvertWindowsTimeZoneToIana("Dateline Standard Time");
+Console.WriteLine("IANA Id: " + response.Value.IanaIds[0].Id);
 ```
-
 
 ## Troubleshooting
 
 ### General
 
-When you interact with the Azure Maps services, errors returned by the service correspond to the same HTTP status codes returned for [REST API requests](https://docs.microsoft.com/rest/api/maps/timezone).
+When you interact with the Azure Maps services, errors returned by the service correspond to the same HTTP status codes returned for [REST API requests](https://learn.microsoft.com/rest/api/maps/timezone).
 
-For example, if you search with an invalid coordinate, a error is returned, indicating "Bad Request".400
-
+For example, if you search with an invalid coordinate, a error is returned, indicating "Bad Request".
 
 ## Next steps
 
-* For more context and additional scenarios, please see: [detailed samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.TimeZone/samples)
+* For more context and additional scenarios, please see: [detailed samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.TimeZones/samples)
 
 ## Contributing
 
@@ -196,4 +211,4 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact <opencode@microsoft.com> with any additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/maps/Azure.Maps.TimeZone/README.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/maps/Azure.Maps.TimeZones/README.png)
