@@ -1,10 +1,14 @@
 # Release History
 
-## 1.10.0-beta.1 (Unreleased)
+## 1.10.0-beta.1 (2024-12-11)
 
 ### Features Added
 
 - Exposed `JsonModelWriteCore` for model serialization procedure.
+- Please use the properties in `LoadBalancingRuleData.Properties` to set the properties of the LoadBalancingRule, instead of using those properties at the root level of `LoadBalancingRuleData` class.
+- Please use the properties in `LoadBalancerInboundNatPool.Properties` to set the properties of the LoadBalancerInboundNatPool, instead of using those properties at the root level of `LoadBalancerInboundNatPool` class.
+- Added `LoadBalancingRuleProperties` which supports `AdditionalProperties` to send and receive private/internal properties supported by the service.
+- Added `LoadBalancerInboundNatPoolProperties` which supports `AdditionalProperties` to send and receive private/internal properties supported by the service.
 
 ### Breaking Changes
 
