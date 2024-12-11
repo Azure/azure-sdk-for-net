@@ -69,7 +69,7 @@ AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuth
 #### Create a client using Azure Active Directory authentication
 
 You can also create a `AnalyzeConversationAuthoring` using Azure Active Directory (AAD) authentication. Your user or service principal must be assigned the "Cognitive Services Language Reader" role.
-Using the [DefaultAzureCredential] you can authenticate a service using Managed Identity or a service principal, authenticate as a developer working on an application, and more all without changing code.
+Using the [DefaultAzureCredential] you can authenticate a service using Managed Identity or a service principal, authenticate as a developer working on an application, and more, all without changing code.
 
 Before you can use the `DefaultAzureCredential`, or any credential type from [Azure.Identity][azure_identity], you'll first need to [install the Azure.Identity package][azure_identity_install].
 
