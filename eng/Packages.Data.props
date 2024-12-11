@@ -186,12 +186,16 @@
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.AI.OpenAI'))">
-    <PackageReference Update="OpenAI" Version="2.1.0-beta.2" />
+    <PackageReference Update="OpenAI" Version="2.1.0" />
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Developer.MicrosoftPlaywrightTesting'))">
     <PackageReference Update="Microsoft.TestPlatform.ObjectModel" Version="17.10.0" />
     <PackageReference Update="NUnit" Version="3.13.2" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Provisioning.CloudMachine'))">
+    <PackageReference Update="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.0" />
   </ItemGroup>
 
   <!--
