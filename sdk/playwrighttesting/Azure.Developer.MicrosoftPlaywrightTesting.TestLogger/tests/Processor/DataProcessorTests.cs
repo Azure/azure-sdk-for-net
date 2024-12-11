@@ -155,7 +155,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests.Processor
             var testResult = new TestResult(new TestCase("Test.Reporting", new System.Uri("file:///test.cs"), "TestNamespace.TestClass"));
 
             TestResults result = dataProcessor.GetTestCaseResultData(testResult);
-
+            string inputString = $"{testResult.TestCase.DisplayName}-{testResult.TestCase.CodeFilePath}";
             Assert.IsNotNull(result);
             Assert.IsEmpty(result.ArtifactsPath);
             Assert.AreEqual(cloudRunMetadata.WorkspaceId, result.AccountId);
@@ -164,8 +164,8 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests.Processor
             Assert.IsNotNull(result.TestCombinationId);
             Assert.IsNotNull(result.TestId);
             Assert.AreEqual(testResult.TestCase.DisplayName, result.TestTitle);
-            Assert.AreEqual("Test", result.SuiteTitle);
-            Assert.AreEqual("Test", result.SuiteId);
+            Assert.AreEqual(ReporterUtils.CalculateSha1Hash(inputString), result.SuiteTitle);
+            Assert.AreEqual(ReporterUtils.CalculateSha1Hash(inputString), result.SuiteId);
             Assert.AreEqual("TestNamespace.TestClass", result.FileName);
             Assert.AreEqual(testResult.TestCase.LineNumber, result.LineNumber);
             Assert.AreEqual(0, result.Retry);
