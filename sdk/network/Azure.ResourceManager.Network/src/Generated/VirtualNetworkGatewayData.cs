@@ -156,18 +156,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Virtual network gateway's BGP speaker settings. </summary>
         public BgpSettings BgpSettings { get; set; }
         /// <summary> The reference to the address space resource which represents the custom routes address space specified by the customer for virtual network gateway and VpnClient. </summary>
-        internal AddressSpace CustomRoutes { get; set; }
-        /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
-        public IList<string> CustomRoutesAddressPrefixes
-        {
-            get
-            {
-                if (CustomRoutes is null)
-                    CustomRoutes = new AddressSpace();
-                return CustomRoutes.AddressPrefixes;
-            }
-        }
-
+        public AddressSpace CustomRoutes { get; set; }
         /// <summary> The resource GUID property of the virtual network gateway resource. </summary>
         public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the virtual network gateway resource. </summary>

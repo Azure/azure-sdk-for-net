@@ -102,57 +102,13 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The local address space of the local virtual network that is peered. </summary>
-        internal AddressSpace LocalAddressSpace { get; set; }
-        /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
-        public IList<string> LocalAddressPrefixes
-        {
-            get
-            {
-                if (LocalAddressSpace is null)
-                    LocalAddressSpace = new AddressSpace();
-                return LocalAddressSpace.AddressPrefixes;
-            }
-        }
-
+        public AddressSpace LocalAddressSpace { get; set; }
         /// <summary> The current local address space of the local virtual network that is peered. </summary>
-        internal AddressSpace LocalVirtualNetworkAddressSpace { get; set; }
-        /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
-        public IList<string> LocalVirtualNetworkAddressPrefixes
-        {
-            get
-            {
-                if (LocalVirtualNetworkAddressSpace is null)
-                    LocalVirtualNetworkAddressSpace = new AddressSpace();
-                return LocalVirtualNetworkAddressSpace.AddressPrefixes;
-            }
-        }
-
+        public AddressSpace LocalVirtualNetworkAddressSpace { get; set; }
         /// <summary> The reference to the address space peered with the remote virtual network. </summary>
-        internal AddressSpace RemoteAddressSpace { get; set; }
-        /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
-        public IList<string> RemoteAddressPrefixes
-        {
-            get
-            {
-                if (RemoteAddressSpace is null)
-                    RemoteAddressSpace = new AddressSpace();
-                return RemoteAddressSpace.AddressPrefixes;
-            }
-        }
-
+        public AddressSpace RemoteAddressSpace { get; set; }
         /// <summary> The reference to the current address space of the remote virtual network. </summary>
-        internal AddressSpace RemoteVirtualNetworkAddressSpace { get; set; }
-        /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
-        public IList<string> RemoteVirtualNetworkAddressPrefixes
-        {
-            get
-            {
-                if (RemoteVirtualNetworkAddressSpace is null)
-                    RemoteVirtualNetworkAddressSpace = new AddressSpace();
-                return RemoteVirtualNetworkAddressSpace.AddressPrefixes;
-            }
-        }
-
+        public AddressSpace RemoteVirtualNetworkAddressSpace { get; set; }
         /// <summary> The reference to the remote virtual network's Bgp Communities. </summary>
         public VirtualNetworkBgpCommunities RemoteBgpCommunities { get; set; }
         /// <summary> The reference to the remote virtual network's encryption. </summary>
