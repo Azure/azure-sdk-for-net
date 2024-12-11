@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             string schemaRegistryName = "my-schema-registry";
             DeviceRegistrySchemaRegistryData data = new DeviceRegistrySchemaRegistryData(new AzureLocation("West Europe"))
             {
-                Properties = new DeviceRegistrySchemaRegistryProperties("sr-namespace-001", new Uri("my-blob-storage.blob.core.windows.net/my-container"))
+                Properties = new DeviceRegistrySchemaRegistryProperties("sr-namespace-001", "my-blob-storage.blob.core.windows.net/my-container")
                 {
                     DisplayName = "Schema Registry namespace 001",
                     Description = "This is a sample Schema Registry",

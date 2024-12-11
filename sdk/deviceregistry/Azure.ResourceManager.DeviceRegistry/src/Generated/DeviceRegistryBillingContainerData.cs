@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="etag"> Resource ETag. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceRegistryBillingContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingContainerProperties properties, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DeviceRegistryBillingContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingContainerProperties properties, string etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = etag;
@@ -80,6 +80,6 @@ namespace Azure.ResourceManager.DeviceRegistry
         }
 
         /// <summary> Resource ETag. </summary>
-        public ETag? ETag { get; }
+        public string ETag { get; }
     }
 }

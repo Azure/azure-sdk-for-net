@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                 Properties = new("assetEndpointProfileReference", "discoveryIdSample", 1)
                 {
                     Manufacturer = "Contoso",
-                    ManufacturerUri = new Uri("http://contoso.com")
+                    ManufacturerUri = "http://contoso.com"
                 }
             };
             var discoveredAssetCreateOrUpdateResponse = await discoveredAssetsCollection.CreateOrUpdateAsync(WaitUntil.Completed, discoveredAssetName, discoveredAssetData, CancellationToken.None);

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             if (Optional.IsDefined(ManufacturerUri))
             {
                 writer.WritePropertyName("manufacturerUri"u8);
-                writer.WriteStringValue(ManufacturerUri.AbsoluteUri);
+                writer.WriteStringValue(ManufacturerUri);
             }
             if (Optional.IsDefined(Model))
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             if (Optional.IsDefined(DocumentationUri))
             {
                 writer.WritePropertyName("documentationUri"u8);
-                writer.WriteStringValue(DocumentationUri.AbsoluteUri);
+                writer.WriteStringValue(DocumentationUri);
             }
             if (Optional.IsDefined(SerialNumber))
             {
@@ -188,12 +188,12 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             string displayName = default;
             string description = default;
             string manufacturer = default;
-            Uri manufacturerUri = default;
+            string manufacturerUri = default;
             string model = default;
             string productCode = default;
             string hardwareRevision = default;
             string softwareRevision = default;
-            Uri documentationUri = default;
+            string documentationUri = default;
             string serialNumber = default;
             IDictionary<string, BinaryData> attributes = default;
             string defaultDatasetsConfiguration = default;
@@ -231,11 +231,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 }
                 if (property.NameEquals("manufacturerUri"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    manufacturerUri = new Uri(property.Value.GetString());
+                    manufacturerUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("model"u8))
@@ -260,11 +256,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 }
                 if (property.NameEquals("documentationUri"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    documentationUri = new Uri(property.Value.GetString());
+                    documentationUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("serialNumber"u8))
