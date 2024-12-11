@@ -16,19 +16,20 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                                         "\"operationContext\": \"someOperationContext\"" +
                                         "}";
 
-        private const string AddParticipantPayload = "{\"participant\":{\"identifier\":{\"rawId\":\"participantId1\",\"kind\":\"communicationUser\",\"communicationUser\":{\"id\":\"participantId1\"}},\"isMuted\":false},\"operationContext\":\"someOperationContext\"}";
+        private const string AddParticipantPayload = "{\"participant\":{\"identifier\":{\"rawId\":\"participantId1\",\"kind\":\"communicationUser\",\"communicationUser\":{\"id\":\"participantId1\"}},\"isMuted\":false,\"isOnHold\":false},\"operationContext\":\"someOperationContext\"}";
 
         private const string GetParticipantPayload = "{" +
             "\"identifier\":{" +
             "\"rawId\":\"participantId1\",\"kind\":\"communicationUser\",\"communicationUser\":{\"id\":\"participantId1\"}" +
             "}," +
-            "\"isMuted\":false" +
+            "\"isMuted\":false," +
+            "\"isOnHold\":false" +
             "}";
 
         private const string GetParticipantsPayload = "{" +
             "\"value\":[" +
-               "{\"identifier\":{\"rawId\":\"participantId1\",\"kind\":\"communicationUser\",\"communicationUser\":{\"id\":\"participantId1\"}},\"isMuted\":false}," +
-               "{\"identifier\":{\"rawId\":\"participantId2\",\"kind\":\"phoneNumber\",\"phoneNumber\":{\"value\":\"+11234567\"}},\"isMuted\":true}" +
+               "{\"identifier\":{\"rawId\":\"participantId1\",\"kind\":\"communicationUser\",\"communicationUser\":{\"id\":\"participantId1\"}},\"isMuted\":false,\"isOnHold\":false}," +
+               "{\"identifier\":{\"rawId\":\"participantId2\",\"kind\":\"phoneNumber\",\"phoneNumber\":{\"value\":\"+11234567\"}},\"isMuted\":true ,\"isOnHold\":true}" +
                "]" +
             "}";
 
@@ -532,6 +533,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var identifier = (CommunicationUserIdentifier) result.Participant.Identifier;
             Assert.AreEqual(ParticipantUserId, identifier.Id);
             Assert.IsFalse(result.Participant.IsMuted);
+            Assert.IsFalse(result.Participant.IsOnHold);
             Assert.AreEqual(OperationContext, result.OperationContext);
         }
 
@@ -540,6 +542,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var identifier = (CommunicationUserIdentifier)participant.Identifier;
             Assert.AreEqual(ParticipantUserId, identifier.Id);
             Assert.IsFalse(participant.IsMuted);
+            Assert.IsFalse(participant.IsOnHold);
         }
 
         private void verifyGetParticipantsResult(IReadOnlyList<CallParticipant> participants)
@@ -551,6 +554,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var identifier2 = (PhoneNumberIdentifier)participants[1].Identifier;
             Assert.AreEqual(PhoneNumber, identifier2.PhoneNumber);
             Assert.IsTrue(participants[1].IsMuted);
+            Assert.IsTrue(participants[1].IsOnHold);
         }
     }
 }
