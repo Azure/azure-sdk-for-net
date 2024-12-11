@@ -16,8 +16,7 @@ $servicesProj = Resolve-Path "$PSScriptRoot/../service.proj"
 
 $debugLogging = $env:SYSTEM_DEBUG -eq "true"
 $logsFolder = $env:BUILD_ARTIFACTSTAGINGDIRECTORY
-$diagnosticArguments = if ($debugLogging -and $logsFolder)  { "/binarylogger:$logsFolder/exportapi.binlog" } else { "" }
-
+$diagnosticArguments = ($debugLogging -and $logsFolder) ? "/binarylogger:$logsFolder/exportapi.binlog" : ""
 dotnet build /t:ExportApi /p:RunApiCompat=false /p:InheritDocEnabled=false /p:GeneratePackageOnBuild=false /p:Configuration=Release /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:IncludeTests=false /p:Scope="$ServiceDirectory" /p:SDKType=$SDKType /restore $servicesProj $diagnosticArguments
 
 if ($SpellCheckPublicApiSurface) {
