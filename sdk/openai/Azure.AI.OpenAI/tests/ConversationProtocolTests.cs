@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.OpenAI.Tests;
 
+#if !AZURE_OPENAI_GA
+
 #nullable disable
 #pragma warning disable OPENAI002
 
@@ -81,3 +83,5 @@ public class ConversationProtocolTests : ConversationTestFixtureBase
     }
 #endif
 }
+
+#endif

@@ -126,7 +126,7 @@ namespace Azure.Storage.DataMovement
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
             long position = options?.Position != default ? options.Position.Value : 0;
-            if (position == 0)
+            if (options?.Initial == true)
             {
                 Create(overwrite);
             }
@@ -134,19 +134,17 @@ namespace Azure.Storage.DataMovement
             {
                 // Appends incoming stream to the local file resource
                 using (FileStream fileStream = new FileStream(
-                        _uri.LocalPath,
-                        FileMode.OpenOrCreate,
-                        FileAccess.Write))
+                    _uri.LocalPath,
+                    FileMode.Open,
+                    FileAccess.Write))
                 {
                     if (position > 0)
                     {
                         fileStream.Seek(position, SeekOrigin.Begin);
                     }
-                    await stream.CopyToAsync(
-                        fileStream,
-                        (int)streamLength,
-                        cancellationToken)
-                        .ConfigureAwait(false);
+
+                    int bufferSize = Math.Min((int)streamLength, DataMovementConstants.DefaultStreamCopyBufferSize);
+                    await stream.CopyToAsync(fileStream, bufferSize, cancellationToken).ConfigureAwait(false);
                 }
             }
         }

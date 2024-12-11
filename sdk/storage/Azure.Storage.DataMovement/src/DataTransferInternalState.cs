@@ -94,6 +94,7 @@ namespace Azure.Storage.DataMovement
                 if (DataTransferState.Completed == _status.State ||
                     DataTransferState.Paused == _status.State)
                 {
+                    DataMovementEventSource.Singleton.TransferCompleted(Id, _status);
                     // If the _completionSource has been cancelled or the exception
                     // has been set, we don't need to check if TrySetResult returns false
                     // because it's acceptable to cancel or have an error occur before then.
@@ -109,7 +110,7 @@ namespace Azure.Storage.DataMovement
         public bool SetSkippedItemsState() => _status.SetSkippedItem();
 
         internal bool CanPause()
-            => DataTransferState.InProgress == _status.State;
+            => DataTransferState.InProgress == _status.State || DataTransferState.Queued == _status.State;
 
         public async Task PauseIfRunningAsync(CancellationToken cancellationToken)
         {

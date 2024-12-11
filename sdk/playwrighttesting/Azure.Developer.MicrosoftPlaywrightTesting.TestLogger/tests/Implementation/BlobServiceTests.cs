@@ -1,12 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface;
 using Moq;
-using NUnit.Framework;
 
 namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests.Implementation
 {
@@ -31,6 +29,18 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests.Implementa
             string fileRelativePath = "test/path";
 
             await _blobService!.UploadBufferAsync(uri, buffer, fileRelativePath);
+
+            _loggerMock!.Verify(logger => logger.Error(It.IsAny<string>()), Times.Once);
+        }
+
+        [Test]
+        public void UploadBuffer_WithException_LogsError()
+        {
+            string uri = "invalid_uri";
+            string buffer = "Test buffer";
+            string fileRelativePath = "test/path";
+
+            _blobService!.UploadBuffer(uri, buffer, fileRelativePath);
 
             _loggerMock!.Verify(logger => logger.Error(It.IsAny<string>()), Times.Once);
         }

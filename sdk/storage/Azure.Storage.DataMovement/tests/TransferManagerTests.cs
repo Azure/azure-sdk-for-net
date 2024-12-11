@@ -3,7 +3,6 @@
 
 using System;
 using System.Buffers;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,6 +14,8 @@ using Azure.Core.Pipeline;
 using Azure.Storage.DataMovement.Tests.Shared;
 using Moq;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
+using NUnit.Framework.Interfaces;
 
 namespace Azure.Storage.DataMovement.Tests;
 
@@ -27,7 +28,7 @@ public class TransferManagerTests
         => (new(), new(), new());
 
     private static (StorageResource Source, StorageResource Destination, Func<IDisposable> SrcThrowScope, Func<IDisposable> DstThrowScope)
-        GetBasicSetupResources(bool isContainer, Uri srcUri, Uri dstUri)
+        GetBasicSetupResources(bool isContainer, Uri srcUri, Uri dstUri, bool includeDelete = false)
     {
         if (isContainer)
         {
@@ -43,10 +44,33 @@ public class TransferManagerTests
             Mock<StorageResourceItem> srcItem = new(MockBehavior.Strict);
             Mock<StorageResourceItem> dstItem = new(MockBehavior.Strict);
             (srcItem, dstItem).BasicSetup(srcUri, dstUri);
+            dstItem.Setup(item => item.DeleteIfExistsAsync(It.IsAny<CancellationToken>()));
             StorageResourceItemFailureWrapper srcWrapper = new(srcItem.Object);
             StorageResourceItemFailureWrapper dstWrapper = new(dstItem.Object);
             return (srcWrapper, dstWrapper, srcWrapper.ThrowScope, dstWrapper.ThrowScope);
         }
+    }
+
+    private static async Task ProcessChunksAssert(
+        StepProcessor<Func<Task>> chunksProcessor,
+        int chunksPerPart,
+        int numChunks,
+        int totalJobParts)
+    {
+        // process chunks
+        int chunksStepped = await chunksProcessor.StepAll();
+        // Check if all chunks stepped through
+        if (chunksPerPart > 1)
+        {
+            // Multichunk transfer sends a completion chunk after all the other chunks stepped through.
+            await Task.Delay(50);
+            Assert.That(await chunksProcessor.StepAll() + chunksStepped, Is.EqualTo(numChunks + totalJobParts));
+        }
+        else
+        {
+            Assert.That(chunksStepped, Is.EqualTo(numChunks));
+        }
+        Assert.That(chunksProcessor.ItemsInQueue, Is.EqualTo(0), "Failed to step through chunks queue.");
     }
 
     [Test]
@@ -70,9 +94,9 @@ public class TransferManagerTests
             partsProcessor.VerifyNoOtherCalls();
             chunksProcessor.VerifyNoOtherCalls();
         }
-        jobsProcessor.VerifyDisposal();
-        partsProcessor.VerifyDisposal();
-        chunksProcessor.VerifyDisposal();
+        jobsProcessor.VerifyAsyncDisposal();
+        partsProcessor.VerifyAsyncDisposal();
+        chunksProcessor.VerifyAsyncDisposal();
 
         jobsProcessor.VerifyNoOtherCalls();
         partsProcessor.VerifyNoOtherCalls();
@@ -89,14 +113,14 @@ public class TransferManagerTests
         int chunksPerPart = (int)Math.Ceiling((float)itemSize / chunkSize);
         // TODO: below should be only `items * chunksPerPart` but can't in some cases due to
         //       a bug in how work items are processed on multipart uploads.
-        int expectedChunksInQueue = Math.Max(chunksPerPart-1, 1) * items;
+        int expectedChunksInQueue = Math.Max(chunksPerPart - 1, 1) * items;
 
         Uri srcUri = new("file:///foo/bar");
         Uri dstUri = new("https://example.com/fizz/buzz");
 
         (var jobsProcessor, var partsProcessor, var chunksProcessor) = StepProcessors();
         JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new ClientDiagnostics(ClientOptions.Default));
-        Mock<ITransferCheckpointer> checkpointer = new();
+        MemoryTransferCheckpointer checkpointer = new();
 
         var resources = Enumerable.Range(0, items).Select(_ =>
         {
@@ -113,7 +137,7 @@ public class TransferManagerTests
             partsProcessor,
             chunksProcessor,
             jobBuilder,
-            checkpointer.Object,
+            checkpointer,
             default);
 
         List<DataTransfer> transfers = new();
@@ -137,6 +161,7 @@ public class TransferManagerTests
             srcResource.VerifyNoOtherCalls();
             dstResource.VerifyNoOtherCalls();
         }
+        Assert.That(checkpointer.Jobs.Count, Is.EqualTo(items), "Jobs not added to checkpointer.");
         Assert.That(jobsProcessor.ItemsInQueue, Is.EqualTo(items), "Error during initial Job queueing.");
 
         // process jobs
@@ -150,6 +175,14 @@ public class TransferManagerTests
             srcResource.VerifyNoOtherCalls();
             dstResource.VerifyNoOtherCalls();
         }
+        foreach (MemoryTransferCheckpointer.Job job in checkpointer.Jobs.Values)
+        {
+            Assert.That(job.Parts.Count, Is.EqualTo(1), "Items should be single-part.");
+            Assert.That(job.Parts.Values.First().Status.State, Is.EqualTo(DataTransferState.Queued), "Bad part status.");
+            Assert.That(job.Parts.Keys.First(), Is.EqualTo(0), "Parts should be zero-indexed.");
+            Assert.That(job.EnumerationComplete, "Enumeration not marked comlete.");
+            Assert.That(job.Status.State, Is.EqualTo(DataTransferState.InProgress), "Transfer state not updated.");
+        }
 
         // process parts
         Assert.That(await partsProcessor.StepAll(), Is.EqualTo(items));
@@ -162,10 +195,20 @@ public class TransferManagerTests
             srcResource.VerifyNoOtherCalls();
             dstResource.VerifyNoOtherCalls();
         }
+        foreach (MemoryTransferCheckpointer.Job job in checkpointer.Jobs.Values)
+        {
+            foreach (MemoryTransferCheckpointer.JobPart part in job.Parts.Values)
+            {
+                Assert.That(part.Status.State, Is.EqualTo(DataTransferState.InProgress), "Part state not updated.");
+            }
+        }
 
-        // process chunks
-        Assert.That(await chunksProcessor.StepAll(), Is.EqualTo(expectedChunksInQueue));
-        Assert.That(chunksProcessor.ItemsInQueue, Is.EqualTo(0));
+        await ProcessChunksAssert(
+            chunksProcessor,
+            chunksPerPart,
+            expectedChunksInQueue,
+            items);
+
         foreach ((Mock<StorageResourceItem> srcResource, Mock<StorageResourceItem> dstResource) in resources)
         {
             srcResource.VerifySourceResourceOnChunkProcess();
@@ -174,11 +217,19 @@ public class TransferManagerTests
             dstResource.VerifyNoOtherCalls();
         }
 
-        await Task.Delay(20); // TODO flaky that we need this; a random one will often fail without
+        await Task.Delay(50); // TODO flaky that we need this; a random one will often fail without
 
         foreach (DataTransfer transfer in transfers)
         {
             Assert.That(transfer.HasCompleted);
+        }
+        foreach (MemoryTransferCheckpointer.Job job in checkpointer.Jobs.Values)
+        {
+            foreach (MemoryTransferCheckpointer.JobPart part in job.Parts.Values)
+            {
+                Assert.That(part.Status.State, Is.EqualTo(DataTransferState.Completed), "Part state not updated.");
+            }
+            Assert.That(job.Status.State, Is.EqualTo(DataTransferState.Completed), "Job state not updated.");
         }
     }
 
@@ -191,40 +242,34 @@ public class TransferManagerTests
     {
         static int GetItemCountFromContainerIndex(int i) => i*i + 1;
 
-        int numJobParts = Enumerable.Range(1, numJobs).Select(GetItemCountFromContainerIndex).Sum();
+        int totalJobParts = Enumerable.Range(1, numJobs).Select(GetItemCountFromContainerIndex).Sum();
         int chunksPerPart = (int)Math.Ceiling((float)itemSize / chunkSize);
         // TODO: below should be only `items * chunksPerPart` but can't in some cases due to
         //       a bug in how work items are processed on multipart uploads.
-        int numChunks = Math.Max(chunksPerPart - 1, 1) * numJobParts;
+        int numChunks = Math.Max(chunksPerPart - 1, 1) * totalJobParts;
 
         Uri srcUri = new("file:///foo/bar");
         Uri dstUri = new("https://example.com/fizz/buzz");
 
         (var jobsProcessor, var partsProcessor, var chunksProcessor) = StepProcessors();
         JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new ClientDiagnostics(ClientOptions.Default));
-        Mock<ITransferCheckpointer> checkpointer = new();
-
-        var resources = Enumerable.Range(1, numJobs).Select(i =>
-        {
-            Mock<StorageResourceContainer> srcResource = new(MockBehavior.Strict);
-            Mock<StorageResourceContainer> dstResource = new(MockBehavior.Strict);
-            (srcResource, dstResource).BasicSetup(srcUri, dstUri, GetItemCountFromContainerIndex(i), itemSize);
-            return (Source: srcResource, Destination: dstResource);
-        }).ToList();
+        MemoryTransferCheckpointer checkpointer = new();
 
         await using TransferManager transferManager = new(
             jobsProcessor,
             partsProcessor,
             chunksProcessor,
             jobBuilder,
-            checkpointer.Object,
+            checkpointer,
             default);
 
-        List<DataTransfer> transfers = new();
+        List<(DataTransfer Transfer, int ExpectedPartCount, Mock<StorageResourceContainer> Source, Mock<StorageResourceContainer> Destination)> transfers = new();
 
-        // queue jobs
-        foreach ((Mock<StorageResourceContainer> srcResource, Mock<StorageResourceContainer> dstResource) in resources)
+        foreach (int i in Enumerable.Range(1, numJobs))
         {
+            Mock<StorageResourceContainer> srcResource = new(MockBehavior.Strict);
+            Mock<StorageResourceContainer> dstResource = new(MockBehavior.Strict);
+            (srcResource, dstResource).BasicSetup(srcUri, dstUri, GetItemCountFromContainerIndex(i), itemSize);
             DataTransfer transfer = await transferManager.StartTransferAsync(
                 srcResource.Object,
                 dstResource.Object,
@@ -233,22 +278,28 @@ public class TransferManagerTests
                     InitialTransferSize = chunkSize,
                     MaximumTransferChunkSize = chunkSize,
                 });
-            Assert.That(transfer.HasCompleted, Is.False);
-            transfers.Add(transfer);
+            transfers.Add((transfer, GetItemCountFromContainerIndex(i), srcResource, dstResource));
 
+            Assert.That(transfer.HasCompleted, Is.False);
             srcResource.VerifySourceResourceOnQueue();
             dstResource.VerifyDestinationResourceOnQueue();
             srcResource.VerifyNoOtherCalls();
             dstResource.VerifyNoOtherCalls();
         }
+        Assert.That(checkpointer.Jobs.Count, Is.EqualTo(numJobs), "Jobs not added to checkpointer.");
         Assert.That(jobsProcessor.ItemsInQueue, Is.EqualTo(numJobs), "Error during initial Job queueing.");
 
         // process jobs
-        Assert.That(await jobsProcessor.StepAll(), Is.EqualTo(numJobs));
-        Assert.That(jobsProcessor.ItemsInQueue, Is.EqualTo(0));
-        Assert.That(partsProcessor.ItemsInQueue, Is.EqualTo(numJobParts), "Error during Job => Part processing.");
-        foreach ((Mock<StorageResourceContainer> srcResource, Mock<StorageResourceContainer> dstResource) in resources)
+        Assert.That(await jobsProcessor.StepAll(), Is.EqualTo(numJobs), "Failed to step through jobs queue.");
+        Assert.That(jobsProcessor.ItemsInQueue, Is.EqualTo(0), "Failed to step through jobs queue.");
+        Assert.That(partsProcessor.ItemsInQueue, Is.EqualTo(totalJobParts), "Error during Job => Part processing.");
+        foreach ((DataTransfer transfer, int parts, Mock<StorageResourceContainer> srcResource, Mock<StorageResourceContainer> dstResource) in transfers)
         {
+            Assert.That(checkpointer.Jobs[transfer.Id].Parts.Count, Is.EqualTo(parts), "Containers should have several parts.");
+            Assert.That(checkpointer.Jobs[transfer.Id].Parts.Keys, Is.EquivalentTo(Enumerable.Range(0, checkpointer.Jobs[transfer.Id].Parts.Count).ToList()),
+                "Part nums should be sequential and zero-indexed.");
+            Assert.That(checkpointer.Jobs[transfer.Id].EnumerationComplete, "Enumeration not marked comlete.");
+            Assert.That(checkpointer.Jobs[transfer.Id].Status.State, Is.EqualTo(DataTransferState.InProgress), "Transfer state not updated.");
             srcResource.VerifySourceResourceOnJobProcess();
             dstResource.VerifyDestinationResourceOnJobProcess();
             srcResource.VerifyNoOtherCalls();
@@ -256,19 +307,26 @@ public class TransferManagerTests
         }
 
         // process parts
-        Assert.That(await partsProcessor.StepAll(), Is.EqualTo(numJobParts));
-        Assert.That(partsProcessor.ItemsInQueue, Is.EqualTo(0));
+        Assert.That(await partsProcessor.StepAll(), Is.EqualTo(totalJobParts), "Failed to step through parts queue.");
+        Assert.That(partsProcessor.ItemsInQueue, Is.EqualTo(0), "Failed to step through parts queue.");
         Assert.That(chunksProcessor.ItemsInQueue, Is.EqualTo(numChunks), "Error during Part => Chunk processing.");
-        foreach ((Mock<StorageResourceContainer> srcResource, Mock<StorageResourceContainer> dstResource) in resources)
+        foreach ((DataTransfer transfer, int parts, Mock<StorageResourceContainer> srcResource, Mock<StorageResourceContainer> dstResource) in transfers)
         {
+            foreach (MemoryTransferCheckpointer.JobPart part in checkpointer.Jobs[transfer.Id].Parts.Values)
+            {
+                Assert.That(part.Status.State, Is.EqualTo(DataTransferState.InProgress), "Part state not updated.");
+            }
             srcResource.VerifyNoOtherCalls();
             dstResource.VerifyNoOtherCalls();
         }
 
-        // process chunks
-        Assert.That(await chunksProcessor.StepAll(), Is.EqualTo(numChunks));
-        Assert.That(chunksProcessor.ItemsInQueue, Is.EqualTo(0));
-        foreach ((Mock<StorageResourceContainer> srcResource, Mock<StorageResourceContainer> dstResource) in resources)
+        await ProcessChunksAssert(
+            chunksProcessor,
+            chunksPerPart,
+            numChunks,
+            totalJobParts);
+
+        foreach ((DataTransfer transfer, int parts, Mock<StorageResourceContainer> srcResource, Mock<StorageResourceContainer> dstResource) in transfers)
         {
             srcResource.VerifyNoOtherCalls();
             dstResource.VerifyNoOtherCalls();
@@ -276,9 +334,14 @@ public class TransferManagerTests
 
         await Task.Delay(10); // TODO flaky that we need this; a random one will often fail without
 
-        foreach (DataTransfer transfer in transfers)
+        foreach ((DataTransfer transfer, int parts, Mock<StorageResourceContainer> srcResource, Mock<StorageResourceContainer> dstResource) in transfers)
         {
             Assert.That(transfer.HasCompleted);
+            foreach (MemoryTransferCheckpointer.JobPart part in checkpointer.Jobs[transfer.Id].Parts.Values)
+            {
+                Assert.That(part.Status.State, Is.EqualTo(DataTransferState.Completed), "Part state not updated.");
+            }
+            Assert.That(checkpointer.Jobs[transfer.Id].Status.State, Is.EqualTo(DataTransferState.Completed), "Job state not updated.");
         }
     }
 
@@ -286,6 +349,7 @@ public class TransferManagerTests
     [Combinatorial]
     public async Task TransferFailAtQueue(
         [Values(0, 1)] int failAt,
+        [Values(true, false)] bool throwCleanup,
         [Values(true, false)] bool isContainer)
     {
         Uri srcUri = new("file:///foo/bar");
@@ -296,12 +360,17 @@ public class TransferManagerTests
         {
             CallBase = true,
         };
-        Mock<ITransferCheckpointer> checkpointer = new();
+        Mock<MemoryTransferCheckpointer> checkpointer = new()
+        {
+            CallBase = true,
+        };
 
         (StorageResource srcResource, StorageResource dstResource, Func<IDisposable> srcThrowScope, Func<IDisposable> dstThrowScope)
             = GetBasicSetupResources(isContainer, srcUri, dstUri);
 
         Exception expectedException = new();
+        Exception cleanupException = throwCleanup ? new() : null;
+        bool expectTransferInCheckpointer = failAt == 0 && throwCleanup;
         switch (failAt)
         {
             case 0:
@@ -316,6 +385,12 @@ public class TransferManagerTests
                 ).Throws(expectedException);
                 break;
         }
+        if (throwCleanup)
+        {
+            checkpointer.Setup(c => c.TryRemoveStoredTransferAsync(
+                It.IsAny<string>(), It.IsAny<CancellationToken>())
+            ).Throws(cleanupException);
+        }
 
         await using TransferManager transferManager = new(
             jobsProcessor,
@@ -326,15 +401,21 @@ public class TransferManagerTests
             default);
 
         DataTransfer transfer = null;
-
-        Assert.That(async () => transfer = await transferManager.StartTransferAsync(
-            srcResource,
-            dstResource), Throws.Exception.EqualTo(expectedException));
+        IConstraint throwsConstraint = throwCleanup
+            ? Throws.TypeOf<AggregateException>().And.Property(nameof(AggregateException.InnerExceptions))
+                .EquivalentTo(new List<Exception>() { expectedException, cleanupException })
+            : Throws.Exception.EqualTo(expectedException);
+        Assert.That(async () => transfer = await transferManager.StartTransferAsync(srcResource, dstResource),
+            throwsConstraint);
 
         Assert.That(transfer, Is.Null);
 
-        // TODO determine if checkpointer still has the job tracked even though it failed to queue (it shouldn't)
-        //      need checkpointer API refactor for this
+        Assert.That(checkpointer.Object.Jobs.Count, Is.EqualTo(expectTransferInCheckpointer ? 1 : 0));
+        checkpointer.Verify(c => c.AddNewJobAsync(It.IsAny<string>(), It.IsAny<StorageResource>(),
+            It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()), Times.Once);
+        checkpointer.Verify(c => c.TryRemoveStoredTransferAsync(It.IsAny<string>(),
+            It.IsAny<CancellationToken>()), Times.Once);
+        checkpointer.VerifyNoOtherCalls();
     }
 
     [Test]
@@ -347,7 +428,14 @@ public class TransferManagerTests
 
         (var jobsProcessor, var partsProcessor, var chunksProcessor) = StepProcessors();
         JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new(ClientOptions.Default));
+
+        List<string> capturedTransferIds = new();
+        List<DataTransferStatus> capturedTransferStatuses = new();
         Mock<ITransferCheckpointer> checkpointer = new(MockBehavior.Loose);
+        checkpointer.Setup(c => c.AddNewJobAsync(Capture.In(capturedTransferIds),
+            It.IsAny<StorageResource>(), It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()));
+        checkpointer.Setup(c => c.SetJobStatusAsync(It.IsAny<string>(), CaptureTransferStatus(capturedTransferStatuses),
+            It.IsAny<CancellationToken>()));
 
         (StorageResource srcResource, StorageResource dstResource, Func<IDisposable> srcThrowScope, Func<IDisposable> dstThrowScope)
             = GetBasicSetupResources(isContainer, srcUri, dstUri);
@@ -360,17 +448,12 @@ public class TransferManagerTests
             checkpointer.Object,
             default);
 
-        //Exception expectedException = new();
-        //checkpointer.Setup(c => c.AddNewJobPartAsync(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<Stream>(),
-        //    It.IsAny<CancellationToken>())
-        //).Throws(expectedException);
-
         // need to listen to events to get exception that takes place in processing
         List<TransferItemFailedEventArgs> failures = new();
         DataTransferOptions options = new();
         options.ItemTransferFailed += e => { failures.Add(e); return Task.CompletedTask; };
 
-        DataTransfer transfer = await transferManager.StartTransferAsync(srcResource, dstResource);
+        DataTransfer transfer = await transferManager.StartTransferAsync(srcResource, dstResource, options);
 
         using (srcThrowScope())
         {
@@ -378,11 +461,24 @@ public class TransferManagerTests
         }
         Assert.That(jobsProcessor.ItemsInQueue, Is.Zero);
         Assert.That(partsProcessor.ItemsInQueue, Is.Zero); // because of failure
-        // TODO Failures in processing job into job part(s) should surface errors (currently doesn't)
-        //      Assert.That(transfer.TransferStatus.HasFailedItems);
-        //      Assert.That(failures, Is.Not.Empty);
-        // TODO determine checkpointer status of job parts
-        //      need checkpointer API refactor for this
+        Assert.That(transfer.TransferStatus.HasFailedItems);
+        Assert.That(failures, Is.Not.Empty);
+
+        string transferId = capturedTransferIds.First();
+        checkpointer.Verify(c => c.AddNewJobAsync(transferId, It.IsAny<StorageResource>(), It.IsAny<StorageResource>(),
+            It.IsAny<CancellationToken>()));
+        checkpointer.Verify(c => c.SetJobStatusAsync(transferId, It.IsAny<DataTransferStatus>(),
+            It.IsAny<CancellationToken>()), Times.Exactly(3));
+        if (!isContainer)
+        {
+            checkpointer.Verify(c => c.GetCurrentJobPartCountAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()), Times.Once);
+        }
+        Assert.That(capturedTransferStatuses[0].State, Is.EqualTo(DataTransferState.InProgress));
+        Assert.That(capturedTransferStatuses[1].State, Is.EqualTo(DataTransferState.Stopping));
+        Assert.That(capturedTransferStatuses[2].IsCompletedWithFailedItems);
+        checkpointer.VerifyNoOtherCalls();
+
+        // TODO checkpointer probably shouldn't be in this state.
     }
 
     [Test]
@@ -395,10 +491,17 @@ public class TransferManagerTests
 
         (var jobsProcessor, var partsProcessor, var chunksProcessor) = StepProcessors();
         JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new(ClientOptions.Default));
-        Mock<ITransferCheckpointer> checkpointer = new(MockBehavior.Loose);
+
+        Mock<MemoryTransferCheckpointer> checkpointer = new()
+        {
+            CallBase = true
+        };
+        List<DataTransferStatus> capturedTransferStatuses = new();
+        checkpointer.Setup(c => c.SetJobStatusAsync(It.IsAny<string>(), CaptureTransferStatus(capturedTransferStatuses),
+            It.IsAny<CancellationToken>()));
 
         (StorageResource srcResource, StorageResource dstResource, Func<IDisposable> srcThrowScope, Func<IDisposable> dstThrowScope)
-            = GetBasicSetupResources(isContainer, srcUri, dstUri);
+            = GetBasicSetupResources(isContainer, srcUri, dstUri, includeDelete: true);
 
         await using TransferManager transferManager = new(
             jobsProcessor,
@@ -428,8 +531,12 @@ public class TransferManagerTests
 
         Assert.That(transfer.TransferStatus.HasFailedItems);
         Assert.That(failures, Is.Not.Empty);
-        // TODO determine checkpointer status of job chunks
-        //      need checkpointer API refactor for this
+
+        Assert.That(capturedTransferStatuses.Count, Is.EqualTo(3)); // TODO should be 4
+        Assert.That(capturedTransferStatuses[0].State, Is.EqualTo(DataTransferState.InProgress));
+        Assert.That(capturedTransferStatuses[1].State, Is.EqualTo(DataTransferState.InProgress));
+        Assert.That(capturedTransferStatuses[2].State, Is.EqualTo(DataTransferState.Stopping));
+        //Assert.That(capturedTransferStatuses[3].IsCompletedWithFailedItems); // TODO this should exist
     }
 
     [Test]
@@ -463,6 +570,17 @@ public class TransferManagerTests
         });
         Assert.That(jobsProcessor.ItemsInQueue, Is.EqualTo(numJobs), "Error during initial Job queueing.");
     }
+
+    /// <summary>
+    /// DataTransferStatus is stateful across transfer. This makes it difficult to verify mocks, as verifications
+    /// are lazily performed. This captures deep copies of statuses for custom assertion.
+    /// </summary>
+    private static DataTransferStatus CaptureTransferStatus(ICollection<DataTransferStatus> statuses)
+        => Match.Create<DataTransferStatus>(status =>
+        {
+            statuses.Add(status.DeepCopy());
+            return true;
+        });
 }
 
 internal static partial class MockExtensions
@@ -497,23 +615,52 @@ internal static partial class MockExtensions
         items.Destination.SetupGet(r => r.MaxSupportedChunkSize).Returns(Constants.GB);
 
         items.Source.Setup(r => r.GetPropertiesAsync(It.IsAny<CancellationToken>()))
-            .Returns(Task.FromResult(new StorageResourceItemProperties(resourceLength: itemSize, default, default, default)));
+            .Returns((CancellationToken cancellationToken) =>
+            {
+                CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+                return Task.FromResult(new StorageResourceItemProperties(
+                    resourceLength: itemSize,
+                    default,
+                    default,
+                    default));
+            });
 
         items.Source.Setup(r => r.ReadStreamAsync(It.IsAny<long>(), It.IsAny<long?>(), It.IsAny<CancellationToken>()))
-            .Returns<long, long?, CancellationToken>((position, length, cancellation)
-                => Task.FromResult(new StorageResourceReadStreamResult(
+            .Returns<long, long?, CancellationToken>((position, length, cancellationToken) =>
+            {
+                CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+                return Task.FromResult(new StorageResourceReadStreamResult(
                     new Mock<Stream>().Object,
                     new HttpRange(position, length),
-                    new(itemSize, default, default, new()))));
+                    new(itemSize, default, default, new())));
+            });
+
+        items.Source.Setup(r => r.IsContainer).Returns(false);
+
+        items.Source.Setup(r => r.ProviderId).Returns("mock");
+
         items.Destination.Setup(r => r.CopyFromStreamAsync(
             It.IsAny<Stream>(), It.IsAny<long>(), It.IsAny<bool>(), It.IsAny<long>(),
             It.IsAny<StorageResourceWriteToOffsetOptions>(), It.IsAny<CancellationToken>()))
-            .Returns(Task.CompletedTask);
+            .Returns<Stream, long, bool, long, StorageResourceWriteToOffsetOptions, CancellationToken>((stream, length, overwrite, offset, options, cancellationToken) =>
+            {
+                CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+                return Task.CompletedTask;
+            });
+
         items.Destination.Setup(r => r.CompleteTransferAsync(
             It.IsAny<bool>(),
             It.IsAny<StorageResourceCompleteTransferOptions>(),
             It.IsAny<CancellationToken>()))
-            .Returns(Task.CompletedTask);
+            .Returns<bool, StorageResourceCompleteTransferOptions, CancellationToken>((isFinal, options, cancellationToken) =>
+            {
+                CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+                return Task.CompletedTask;
+            });
+
+        items.Destination.Setup(r => r.IsContainer).Returns(false);
+
+        items.Destination.Setup(r => r.ProviderId).Returns("mock");
     }
 
     public static void BasicSetup(
@@ -551,11 +698,25 @@ internal static partial class MockExtensions
         containers.Source.Setup(r => r.GetStorageResourcesAsync(It.IsAny<StorageResourceContainer>(), It.IsAny<CancellationToken>()))
             .Returns(SubResourcesAsAsyncEnumerable);
 
+        containers.Source.Setup(r => r.GetStorageResourceReference(It.IsAny<string>(), It.IsAny<string>()))
+            .Returns<string, string>((path, resId) => subResources
+                .Where(pair => pair.Source.Object.Uri.AbsolutePath.Contains(path))
+                .FirstOrDefault().Source?.Object
+        );
+
         containers.Destination.Setup(r => r.GetStorageResourceReference(It.IsAny<string>(), It.IsAny<string>()))
             .Returns<string, string>((path, resId) => subResources
                 .Where(pair => pair.Source.Object.Uri.AbsolutePath.Contains(path))
                 .FirstOrDefault().Destination?.Object
-            );
+        );
+
+        containers.Source.Setup(r => r.IsContainer).Returns(true);
+
+        containers.Source.Setup(r => r.ProviderId).Returns("mock");
+
+        containers.Destination.Setup(r => r.IsContainer).Returns(true);
+
+        containers.Destination.Setup(r => r.ProviderId).Returns("mock");
     }
 
     public static void VerifyTransferManagerCtorInvocations<T>(this Mock<IProcessor<T>> processor)

@@ -30,7 +30,7 @@ Supported operations:
 // Check number of custom models in the Document Intelligence resource, and the maximum number
 // of custom models that can be stored.
 
-ResourceDetails resourceDetails = await client.GetResourceInfoAsync();
+DocumentIntelligenceResourceDetails resourceDetails = await client.GetResourceDetailsAsync();
 
 Console.WriteLine($"Resource has {resourceDetails.CustomDocumentModels.Count} custom models.");
 Console.WriteLine($"It can have at most {resourceDetails.CustomDocumentModels.Limit} custom models.");

@@ -27,7 +27,7 @@ namespace Azure.AI.DocumentIntelligence
         private const string TimeValue = "time";
         private const string PhoneNumberValue = "phoneNumber";
         private const string DoubleValue = "number";
-        private const string LongValue = "integer";
+        private const string Int64Value = "integer";
         private const string SelectionMarkValue = "selectionMark";
         private const string CountryRegionValue = "countryRegion";
         private const string SignatureValue = "signature";
@@ -49,7 +49,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Floating point number, normalized to double precision floating point. </summary>
         public static DocumentFieldType Double { get; } = new DocumentFieldType(DoubleValue);
         /// <summary> Integer number, normalized to 64-bit signed integer. </summary>
-        public static DocumentFieldType Long { get; } = new DocumentFieldType(LongValue);
+        public static DocumentFieldType Int64 { get; } = new DocumentFieldType(Int64Value);
         /// <summary> Is field selected?. </summary>
         public static DocumentFieldType SelectionMark { get; } = new DocumentFieldType(SelectionMarkValue);
         /// <summary> Country/region, normalized to ISO 3166-1 alpha-3 format (ex. USA). </summary>

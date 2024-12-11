@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Resources.Samples
 {
     public partial class Sample_TenantDataBoundaryCollection
     {
-        // Opt-in to data boundary
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_OptInToDataBoundary()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2024-08-01/examples/PutDataBoundary.json
@@ -28,18 +28,16 @@ namespace Azure.ResourceManager.Resources.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this TenantDataBoundaryResource
             TenantDataBoundaryCollection collection = tenantResource.GetTenantDataBoundaries();
 
             // invoke the operation
             DataBoundaryName name = DataBoundaryName.Default;
-            DataBoundaryData data = new DataBoundaryData()
+            DataBoundaryData data = new DataBoundaryData
             {
-                Properties = new DataBoundaryProperties()
+                Properties = new DataBoundaryProperties
                 {
                     DataBoundary = DataBoundaryRegion.EU,
                 },
@@ -54,9 +52,8 @@ namespace Azure.ResourceManager.Resources.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get data boundary for tenant
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetDataBoundaryForTenant()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2024-08-01/examples/GetTenantDataBoundary.json
@@ -67,9 +64,7 @@ namespace Azure.ResourceManager.Resources.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this TenantDataBoundaryResource
             TenantDataBoundaryCollection collection = tenantResource.GetTenantDataBoundaries();
@@ -85,9 +80,8 @@ namespace Azure.ResourceManager.Resources.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get data boundary for tenant
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetDataBoundaryForTenant()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2024-08-01/examples/GetTenantDataBoundary.json
@@ -98,9 +92,7 @@ namespace Azure.ResourceManager.Resources.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this TenantDataBoundaryResource
             TenantDataBoundaryCollection collection = tenantResource.GetTenantDataBoundaries();
@@ -112,9 +104,8 @@ namespace Azure.ResourceManager.Resources.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get data boundary for tenant
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetDataBoundaryForTenant()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2024-08-01/examples/GetTenantDataBoundary.json
@@ -125,9 +116,7 @@ namespace Azure.ResourceManager.Resources.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this TenantDataBoundaryResource
             TenantDataBoundaryCollection collection = tenantResource.GetTenantDataBoundaries();
@@ -139,7 +128,7 @@ namespace Azure.ResourceManager.Resources.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.CosmosDB.Samples
 {
     public partial class Sample_CosmosDBSqlContainerThroughputSettingResource
     {
-        // CosmosDBSqlContainerThroughputGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_CosmosDBSqlContainerThroughputGet()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBSqlContainerThroughputGet.json
@@ -49,9 +49,8 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CosmosDBSqlContainerThroughputUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CosmosDBSqlContainerThroughputUpdate()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBSqlContainerThroughputUpdate.json
@@ -73,14 +72,12 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             CosmosDBSqlContainerThroughputSettingResource cosmosDBSqlContainerThroughputSetting = client.GetCosmosDBSqlContainerThroughputSettingResource(cosmosDBSqlContainerThroughputSettingResourceId);
 
             // invoke the operation
-            ThroughputSettingsUpdateData data = new ThroughputSettingsUpdateData(new AzureLocation("West US"), new ThroughputSettingsResourceInfo()
+            ThroughputSettingsUpdateData data = new ThroughputSettingsUpdateData(new AzureLocation("West US"), new ThroughputSettingsResourceInfo
             {
                 Throughput = 400,
             })
             {
-                Tags =
-{
-},
+                Tags = { },
             };
             ArmOperation<CosmosDBSqlContainerThroughputSettingResource> lro = await cosmosDBSqlContainerThroughputSetting.CreateOrUpdateAsync(WaitUntil.Completed, data);
             CosmosDBSqlContainerThroughputSettingResource result = lro.Value;
@@ -92,9 +89,8 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CosmosDBSqlContainerMigrateToAutoscale
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task MigrateSqlContainerToAutoscale_CosmosDBSqlContainerMigrateToAutoscale()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBSqlContainerMigrateToAutoscale.json
@@ -126,9 +122,8 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CosmosDBSqlContainerMigrateToManualThroughput
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task MigrateSqlContainerToManualThroughput_CosmosDBSqlContainerMigrateToManualThroughput()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBSqlContainerMigrateToManualThroughput.json
@@ -160,9 +155,8 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CosmosDBSqlContainerRetrieveThroughputDistribution
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SqlContainerRetrieveThroughputDistribution_CosmosDBSqlContainerRetrieveThroughputDistribution()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBSqlContainerRetrieveThroughputDistribution.json
@@ -184,12 +178,13 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             CosmosDBSqlContainerThroughputSettingResource cosmosDBSqlContainerThroughputSetting = client.GetCosmosDBSqlContainerThroughputSettingResource(cosmosDBSqlContainerThroughputSettingResourceId);
 
             // invoke the operation
-            RetrieveThroughputParameters retrieveThroughputParameters = new RetrieveThroughputParameters(new AzureLocation("placeholder"), new RetrieveThroughputPropertiesResource(new WritableSubResource[]
+            RetrieveThroughputParameters retrieveThroughputParameters = new RetrieveThroughputParameters(default, new RetrieveThroughputPropertiesResource(new WritableSubResource[]
             {
-new WritableSubResource()
+new WritableSubResource
 {
 Id = new ResourceIdentifier("0"),
-},new WritableSubResource()
+},
+new WritableSubResource
 {
 Id = new ResourceIdentifier("1"),
 }
@@ -200,9 +195,8 @@ Id = new ResourceIdentifier("1"),
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // CosmosDBSqlContainerRedistributeThroughput
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task SqlContainerRedistributeThroughput_CosmosDBSqlContainerRedistributeThroughput()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBSqlContainerRedistributeThroughput.json
@@ -224,12 +218,13 @@ Id = new ResourceIdentifier("1"),
             CosmosDBSqlContainerThroughputSettingResource cosmosDBSqlContainerThroughputSetting = client.GetCosmosDBSqlContainerThroughputSettingResource(cosmosDBSqlContainerThroughputSettingResourceId);
 
             // invoke the operation
-            RedistributeThroughputParameters redistributeThroughputParameters = new RedistributeThroughputParameters(new AzureLocation("placeholder"), new RedistributeThroughputPropertiesResource(ThroughputPolicyType.Custom, new PhysicalPartitionThroughputInfoResource[]
+            RedistributeThroughputParameters redistributeThroughputParameters = new RedistributeThroughputParameters(default, new RedistributeThroughputPropertiesResource(ThroughputPolicyType.Custom, new PhysicalPartitionThroughputInfoResource[]
             {
 new PhysicalPartitionThroughputInfoResource("0")
 {
 Throughput = 5000,
-},new PhysicalPartitionThroughputInfoResource("1")
+},
+new PhysicalPartitionThroughputInfoResource("1")
 {
 Throughput = 5000,
 }
@@ -238,7 +233,8 @@ Throughput = 5000,
 new PhysicalPartitionThroughputInfoResource("2")
 {
 Throughput = 5000,
-},new PhysicalPartitionThroughputInfoResource("3")
+},
+new PhysicalPartitionThroughputInfoResource("3")
             }));
             ArmOperation<PhysicalPartitionThroughputInfoResult> lro = await cosmosDBSqlContainerThroughputSetting.SqlContainerRedistributeThroughputAsync(WaitUntil.Completed, redistributeThroughputParameters);
             PhysicalPartitionThroughputInfoResult result = lro.Value;

@@ -213,7 +213,7 @@ function GetMatrixConfigFromFile([String] $config) {
 }
 
 function GetMatrixConfigFromYaml([String] $yamlConfig) {
-    Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
+    Install-ModuleIfNotInstalled "powershell-yaml" "0.4.7" | Import-Module
     # ConvertTo then from json is to make sure the nested values are in PSCustomObject
     [MatrixConfig]$config = ConvertFrom-Yaml $yamlConfig -Ordered | ConvertTo-Json -Depth 100 | ConvertFrom-Json
     return GetMatrixConfig $config
@@ -490,7 +490,7 @@ function CloneOrderedDictionary([System.Collections.Specialized.OrderedDictionar
 function SerializePipelineMatrix([Array]$matrix) {
     $pipelineMatrix = [Ordered]@{}
     foreach ($entry in $matrix) {
-        if ($pipelineMatrix.Contains($entry.Name)) {
+        if ($pipelineMatrix.Contains($entry.name)) {
             Write-Warning "Found duplicate configurations for job `"$($entry.name)`". Multiple values may have been replaced with the same value."
             continue
         }

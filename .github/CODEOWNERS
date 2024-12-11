@@ -90,7 +90,7 @@
 # ServiceOwners:                                                   @Azure/aks-pm
 
 # ServiceLabel: %Alerts Management
-# ServiceOwners:                                                   @liadtal @yairgil
+# ServiceOwners:                                                   @yairgil
 
 # ServiceLabel: %ARM
 # ServiceOwners:                                                   @armleads-azure
@@ -544,10 +544,10 @@
 # ServiceOwners:                                                   @aim-for-better @idear1203 @deshriva
 
 # PRLabel: %Health Deidentification
-/sdk/healthdataaiservices/                                         @GrahamMThomas
+/sdk/healthdataaiservices/                                         @alexathomases
 
 # ServiceLabel: %Health Deidentification
-# ServiceOwners:                                                   @GrahamMThomas
+# ServiceOwners:                                                   @alexathomases
 
 # ServiceLabel: %HPC Cache
 # ServiceOwners:                                                   @romahamu @omzevall
@@ -654,25 +654,25 @@
 # ServiceOwners:                                                   @omziv @anatse @raronen @ischrei @danhadari @azmonapplicationinsights
 
 # PRLabel: %Monitor - Distro
-/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/               @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra
+/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/               @rajkumar-rangaraj @TimothyMothra
 
 # PRLabel: %Monitor - Distro
-/sdk/monitor/Azure.Monitor.OpenTelemetry.sln                       @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra
+/sdk/monitor/Azure.Monitor.OpenTelemetry.sln                       @rajkumar-rangaraj @TimothyMothra
 
 # ServiceLabel: %Monitor - Distro
-# ServiceOwners:                                                   @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra
+# ServiceOwners:                                                   @rajkumar-rangaraj @TimothyMothra
 
 # PRLabel: %Monitor - Exporter
-/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/                 @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra
+/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/                 @rajkumar-rangaraj @TimothyMothra
 
 # ServiceLabel: %Monitor - Exporter
-# ServiceOwners:                                                   @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra
+# ServiceOwners:                                                   @rajkumar-rangaraj @TimothyMothra
 
 # PRLabel: %Monitor - LiveMetrics
-/sdk/monitor/Azure.Monitor.OpenTelemetry.LiveMetrics/              @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @xiang17
+/sdk/monitor/Azure.Monitor.OpenTelemetry.LiveMetrics/              @rajkumar-rangaraj @TimothyMothra @xiang17
 
 # ServiceLabel: %Monitor - LiveMetrics
-# ServiceOwners:                                                   @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @xiang17
+# ServiceOwners:                                                   @rajkumar-rangaraj @TimothyMothra @xiang17
 
 # ServiceLabel: %MySQL
 # ServiceOwners:                                                   @ajlam @ambhatna @kummanish
@@ -997,35 +997,23 @@
 # ServiceLabel: %DevOps - Infrastructure
 # ServiceOwners:                                                   @oolaoluwa
 
-# PRLabel: %Informatica Data Management
-/sdk/informaticadatamanagement/Azure.ResourceManager.*/            @almasak
-
-# ServiceLabel: %Informatica Data Management %Mgmt
-# ServiceOwners:                                                   @almasak
-
 # PRLabel: %Large Instance
 /sdk/azurelargeinstance/Azure.ResourceManager.*/                   @8Gitbrix @archerzz @ArcturusZhang @ArthurMa1978
 
 # ServiceLabel: %Large Instance %Mgmt
 # ServiceOwners:                                                   @8Gitbrix
 
-# PRLabel: %Network - CDN
-/sdk/cdn/Azure.ResourceManager.*/                                  @ptnan7
+# PRLabel: %Neon Postgres
+/sdk/neonpostgres/Azure.ResourceManager.*/                         @archerzz @ArcturusZhang @ArthurMa1978
 
-# ServiceLabel: %Network - CDN %Mgmt
-# ServiceOwners:                                                   @ptnan7
+# PRLabel: %Network - CDN
+/sdk/cdn/Azure.ResourceManager.*/                                  @archerzz @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Network - Front Door
-/sdk/frontdoor/Azure.ResourceManager.*/                            @ptnan7
-
-# ServiceLabel: %Network - Front Door %Mgmt
-# ServiceOwners:                                                   @ptnan7
+/sdk/frontdoor/Azure.ResourceManager.*/                            @archerzz @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Network - Mobile
-/sdk/mobilenetwork/Azure.ResourceManager.*/                        @ArthurMa1978
-
-# ServiceLabel: %Network - Mobile %Mgmt
-# ServiceOwners:                                                   @ArthurMa1978
+/sdk/mobilenetwork/Azure.ResourceManager.*/                        @archerzz @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Network - DNS Private Resolver
 /sdk/dnsresolver/Azure.ResourceManager.*/                          @jamesvoongms @jotrivet
@@ -1050,12 +1038,6 @@
 
 # ServiceLabel: %Operator Nexus - Network Cloud %Mgmt
 # ServiceOwners:                                                   @Azure/azure-sdk-write-networkcloud
-
-# PRLabel: %Oracle
-/sdk/oracle/Azure.ResourceManager.*/                               @v-jamcheung @v-rvilathurs @v-eelhomsi
-
-# ServiceLabel: %Oracle %Mgmt
-# ServiceOwners:                                                   @v-jamcheung @v-rvilathurs @v-eelhomsi
 
 # PRLabel: %Quota
 /sdk/quota/Azure.ResourceManager.*/                                @tejasm-microsoft
@@ -1085,10 +1067,10 @@
 # ServiceOwners:                                                   @sahilarora92 @dhruvil009 @rahuls-microsoft
 
 # PRLabel: %HybridConnectivity
-/sdk/hybridconnectivity/Azure.ResourceManager.*/                   @alexmahonic
+/sdk/hybridconnectivity/Azure.ResourceManager.*/                   @alexmahonic @PriyankaHariharan @apmehrotra
 
 # ServiceLabel: %%HybridConnectivity %Mgmt
-# ServiceOwners:                                                   @alexmahonic
+# ServiceOwners:                                                   @alexmahonic @PriyankaHariharan @apmehrotra
 
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp
