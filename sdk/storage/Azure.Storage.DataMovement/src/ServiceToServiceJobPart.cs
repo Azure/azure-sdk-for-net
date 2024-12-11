@@ -275,7 +275,7 @@ namespace Azure.Storage.DataMovement
                     options: options,
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
 
-                ReportBytesWritten(completeLength);
+                await ReportBytesWrittenAsync(completeLength).ConfigureAwait(false);
                 await OnTransferStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
             }
             catch (RequestFailedException exception)
@@ -316,7 +316,7 @@ namespace Azure.Storage.DataMovement
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
 
                 // Report first chunk written to progress tracker
-                ReportBytesWritten(blockSize);
+                await ReportBytesWrittenAsync(blockSize).ConfigureAwait(false);
 
                 if (blockSize == length)
                 {
@@ -346,7 +346,7 @@ namespace Azure.Storage.DataMovement
             {
                 QueuePutBlockTask = jobPart.QueueStageBlockRequest,
                 QueueCommitBlockTask = jobPart.QueueCompleteTransferAsync,
-                ReportProgressInBytes = jobPart.ReportBytesWritten,
+                ReportProgressInBytes = jobPart.ReportBytesWrittenAsync,
                 InvokeFailedHandler = jobPart.InvokeFailedArgAsync,
             };
         }
