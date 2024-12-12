@@ -688,11 +688,9 @@ namespace Azure.Storage.DataMovement
                 {
                     await OnJobStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
                 }
-                return;
             }
-
             // If there are no more pending job parts, complete the job
-            if (_pendingJobParts == 0)
+            else if (_pendingJobParts == 0)
             {
                 if (_jobPartPaused)
                 {

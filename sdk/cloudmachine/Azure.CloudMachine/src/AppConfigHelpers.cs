@@ -33,7 +33,12 @@ internal static class AppConfigHelpers
         }
 
         using FileStream json = new FileStream(appsettings, FileMode.Open, FileAccess.Read, FileShare.Read);
-        using JsonDocument jd = JsonDocument.Parse(json);
+        JsonDocumentOptions jsonDocumentOptions = new()
+        {
+            AllowTrailingCommas = true,
+            CommentHandling = JsonCommentHandling.Skip,
+        };
+        using JsonDocument jd = JsonDocument.Parse(json, jsonDocumentOptions);
         JsonElement je = jd.RootElement;
         // attempt to read CM configuration from existing configuration file
         if (je.TryGetProperty("CloudMachine"u8, out JsonElement cm))
