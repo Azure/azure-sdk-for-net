@@ -439,10 +439,8 @@ namespace Azure.Storage.DataMovement
                 if (JobPartStatus.State != DataTransferState.Pausing &&
                     JobPartStatus.State != DataTransferState.Stopping)
                 {
-                    Console.WriteLine($"{PartNumber}: Triggering cancellation");
                     await TriggerCancellationAsync().ConfigureAwait(false);
                 }
-                await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
             }
             catch (Exception cancellationException)
             {
@@ -454,6 +452,31 @@ namespace Azure.Storage.DataMovement
                         _sourceResource,
                         _destinationResource,
                         cancellationException,
+                        false,
+                        _cancellationToken),
+                    nameof(JobPartInternal),
+                    nameof(TransferFailedEventHandler),
+                    ClientDiagnostics)
+                    .ConfigureAwait(false);
+            }
+
+            // Whether or not we were able to trigger the cancellation and successfully clean up
+            // we should always call CheckAndUpdateCancellationStateAsync to correctly make
+            // sure the job part is in the correct state.
+            try
+            {
+                await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
+            }
+            catch (Exception checkUpdateException)
+            {
+                // If an exception is thrown while trying to clean up,
+                // raise the failed event and prevent the transfer from hanging
+                await TransferFailedEventHandler.RaiseAsync(
+                    new TransferItemFailedEventArgs(
+                        _dataTransfer.Id,
+                        _sourceResource,
+                        _destinationResource,
+                        checkUpdateException,
                         false,
                         _cancellationToken),
                     nameof(JobPartInternal),
@@ -479,7 +502,19 @@ namespace Azure.Storage.DataMovement
                 // If the job part is paused or ended with failures
                 // delete the destination resource because it could be unfinished or corrupted
                 // If we resume we would have to start from the beginning anyways.
-                await _destinationResource.DeleteIfExistsAsync(_cancellationToken).ConfigureAwait(false);
+                try
+                {
+                    // We can't pass the cancellation token
+                    // here due to the fact that the job's cancellation token has already been called.
+                    // We are cleaning up / deleting optimistically, which means that if
+                    // the clean / delete attempt fails, then we continue on. The failure may be due
+                    // to the overall reason why the job was cancelled in the first place.
+                    await _destinationResource.DeleteIfExistsAsync().ConfigureAwait(false);
+                }
+                finally
+                {
+                    // We are cleaning up / deleting optimistically, move on if it fails.
+                }
             }
         }
 
@@ -560,15 +595,12 @@ namespace Azure.Storage.DataMovement
             if (JobPartStatus.State == DataTransferState.Pausing ||
                 JobPartStatus.State == DataTransferState.Stopping)
             {
-                Console.Write($"{PartNumber}: currentChunkCount: {_currentChunkCount}; _completedChunkCount: {_completedChunkCount}");
                 if (!_queueingTasks && _currentChunkCount == _completedChunkCount)
                 {
                     DataTransferState newState = JobPartStatus.State == DataTransferState.Pausing ?
                         DataTransferState.Paused :
                         DataTransferState.Completed;
-                    Console.WriteLine($"{PartNumber}: Disposing handler");
                     await DisposeHandlersAsync().ConfigureAwait(false);
-                    Console.WriteLine($"{PartNumber}: newState: {newState}");
                     await OnTransferStateChangedAsync(newState).ConfigureAwait(false);
                 }
             }

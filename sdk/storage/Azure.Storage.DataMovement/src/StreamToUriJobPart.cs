@@ -545,7 +545,6 @@ namespace Azure.Storage.DataMovement
         {
             if (_commitBlockHandler != default)
             {
-                Console.WriteLine($"{PartNumber}: Disposing CommitBlockHandler");
                 await _commitBlockHandler.DisposeAsync().ConfigureAwait(false);
                 _commitBlockHandler = null;
             }
