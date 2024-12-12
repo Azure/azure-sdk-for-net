@@ -73,5 +73,5 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [source_root]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/extensions/Microsoft.Azure.WebJobs.Extensions.Clients/
 [nuget]: https://www.nuget.org/
 [package]: https://www.nuget.org/packages/Microsoft.Extensions.Azure/
-[azure_function_settings]: https://docs.microsoft.com/azure/azure-functions/functions-how-to-use-azure-function-app-settings
-[aspnet_core_env_vars]: https://docs.microsoft.com/aspnet/core/fundamentals/configuration/?view=aspnetcore-3.1#environment-variables
+[azure_function_settings]: https://learn.microsoft.com/azure/azure-functions/functions-how-to-use-azure-function-app-settings
+[aspnet_core_env_vars]: https://learn.microsoft.com/aspnet/core/fundamentals/configuration/?view=aspnetcore-3.1#environment-variables

@@ -10,21 +10,42 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.CloudMachine.OpenAI;
 
+/// <summary>
+/// CloudMachine feature for OpenAI models.
+/// </summary>
 public class OpenAIModelFeature : CloudMachineFeature
 {
+    /// <summary>
+    /// Create a new OpenAI model feature.
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="modelVersion"></param>
+    /// <param name="kind"></param>
     public OpenAIModelFeature(string model, string modelVersion, AIModelKind kind = AIModelKind.Chat) {
         Kind = kind;
         Model = model;
         ModelVersion = modelVersion;
     }
 
+    /// <summary>
+    /// The model name.
+    /// </summary>
     public string Model { get; }
+
+    /// <summary>
+    /// The model version.
+    /// </summary>
     public string ModelVersion { get; }
     private AIModelKind Kind { get; }
 
     internal OpenAIFeature Account { get; set; } = default!;
 
-    protected internal override void EmitFeatures(FeatureCollection features, string cmId)
+    /// <summary>
+    /// Emit the feature.
+    /// </summary>
+    /// <param name="features"></param>
+    /// <param name="cmId"></param>
+    protected override void EmitFeatures(FeatureCollection features, string cmId)
     {
         // TODO: is it OK that we return the first one?
         OpenAIFeature? openAI = features.FindAll<OpenAIFeature>().FirstOrDefault();
@@ -37,9 +58,15 @@ public class OpenAIModelFeature : CloudMachineFeature
         features.Add(this);
     }
 
-    protected internal override void EmitConnections(ConnectionCollection connections, string cmId)
+    /// <summary>
+    /// Emit the connections.
+    /// </summary>
+    /// <param name="connections"></param>
+    /// <param name="cmId"></param>
+    /// <exception cref="NotImplementedException"></exception>
+    protected override void EmitConnections(ConnectionCollection connections, string cmId)
     {
-        Account.EmitConnections(connections, cmId);
+        Account.EmitConnectionsInternal(connections, cmId);
         // add connections
         switch (Kind)
         {
@@ -54,6 +81,13 @@ public class OpenAIModelFeature : CloudMachineFeature
         }
     }
 
+    /// <summary>
+    /// Emit the resources.
+    /// </summary>
+    /// <param name="cm"></param>
+    /// <returns></returns>
+    /// <exception cref="InvalidOperationException"></exception>
+    /// <exception cref="NotImplementedException"></exception>
     protected override ProvisionableResource EmitResources(CloudMachineInfrastructure cm)
     {
         if (Account == null) throw new InvalidOperationException("Account must be set before emitting");
@@ -116,8 +150,17 @@ public class OpenAIModelFeature : CloudMachineFeature
     }
 }
 
+/// <summary>
+/// The kind of OpenAI model.
+/// </summary>
 public enum AIModelKind
 {
+    /// <summary>
+    /// Chat model.
+    /// </summary>
     Chat,
+    /// <summary>
+    /// Embedding model.
+    /// </summary>
     Embedding,
 }
