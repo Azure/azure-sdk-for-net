@@ -184,7 +184,7 @@ namespace Azure.AI.DocumentIntelligence
             string apiVersion = default;
             string modelId = default;
             StringIndexType stringIndexType = default;
-            ContentFormat? contentFormat = default;
+            DocumentContentFormat? contentFormat = default;
             string content = default;
             IReadOnlyList<DocumentPage> pages = default;
             IReadOnlyList<DocumentParagraph> paragraphs = default;
@@ -221,7 +221,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    contentFormat = new ContentFormat(property.Value.GetString());
+                    contentFormat = new DocumentContentFormat(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("content"u8))

@@ -28,46 +28,46 @@ We will be writing an application that collects the expenses a company is making
 
 string officeSuppliesModelId = "<officeSuppliesModelId>";
 Uri officeSuppliesUri = new Uri("<officeSuppliesUri>");
-var officeSuppliesContent = new BuildDocumentModelContent(officeSuppliesModelId, DocumentBuildMode.Template)
+var officeSuppliesSource = new BlobContentSource(officeSuppliesUri);
+var officeSuppliesOptions = new BuildDocumentModelOptions(officeSuppliesModelId, DocumentBuildMode.Template, officeSuppliesSource)
 {
-    AzureBlobSource = new AzureBlobContentSource(officeSuppliesUri),
     Description = "Purchase order - Office supplies"
 };
 
-Operation<DocumentModelDetails> officeSuppliesOperation = await client.BuildDocumentModelAsync(WaitUntil.Completed, officeSuppliesContent);
+Operation<DocumentModelDetails> officeSuppliesOperation = await client.BuildDocumentModelAsync(WaitUntil.Completed, officeSuppliesOptions);
 DocumentModelDetails officeSuppliesModel = officeSuppliesOperation.Value;
 
 string officeEquipmentModelId = "<officeEquipmentModelId>";
 Uri officeEquipmentUri = new Uri("<officeEquipmentUri>");
-var officeEquipmentContent = new BuildDocumentModelContent(officeEquipmentModelId, DocumentBuildMode.Template)
+var officeEquipmentSource = new BlobContentSource(officeEquipmentUri);
+var officeEquipmentOptions = new BuildDocumentModelOptions(officeEquipmentModelId, DocumentBuildMode.Template, officeEquipmentSource)
 {
-    AzureBlobSource = new AzureBlobContentSource(officeEquipmentUri),
     Description = "Purchase order - Office Equipment"
 };
 
-Operation<DocumentModelDetails> officeEquipmentOperation = await client.BuildDocumentModelAsync(WaitUntil.Completed, officeEquipmentContent);
+Operation<DocumentModelDetails> officeEquipmentOperation = await client.BuildDocumentModelAsync(WaitUntil.Completed, officeEquipmentOptions);
 DocumentModelDetails officeEquipmentModel = officeEquipmentOperation.Value;
 
 string furnitureModelId = "<furnitureModelId>";
 Uri furnitureUri = new Uri("<purchaseOrderFurnitureUri>");
-var furnitureContent = new BuildDocumentModelContent(furnitureModelId, DocumentBuildMode.Template)
+var furnitureSource = new BlobContentSource(furnitureUri);
+var furnitureOptions = new BuildDocumentModelOptions(furnitureModelId, DocumentBuildMode.Template, furnitureSource)
 {
-    AzureBlobSource = new AzureBlobContentSource(furnitureUri),
     Description = "Purchase order - Furniture"
 };
 
-Operation<DocumentModelDetails> furnitureOperation = await client.BuildDocumentModelAsync(WaitUntil.Completed, furnitureContent);
+Operation<DocumentModelDetails> furnitureOperation = await client.BuildDocumentModelAsync(WaitUntil.Completed, furnitureOptions);
 DocumentModelDetails furnitureModel = furnitureOperation.Value;
 
 string cleaningSuppliesModelId = "<cleaningSuppliesModelId>";
 Uri cleaningSuppliesUri = new Uri("<cleaningSuppliesUri>");
-var cleaningSuppliesContent = new BuildDocumentModelContent(cleaningSuppliesModelId, DocumentBuildMode.Template)
+var cleaningSuppliesSource = new BlobContentSource(cleaningSuppliesUri);
+var cleaningSuppliesOptions = new BuildDocumentModelOptions(cleaningSuppliesModelId, DocumentBuildMode.Template, cleaningSuppliesSource)
 {
-    AzureBlobSource = new AzureBlobContentSource(cleaningSuppliesUri),
     Description = "Purchase order - Cleaning Supplies"
 };
 
-Operation<DocumentModelDetails> cleaningSuppliesOperation = await client.BuildDocumentModelAsync(WaitUntil.Completed, cleaningSuppliesContent);
+Operation<DocumentModelDetails> cleaningSuppliesOperation = await client.BuildDocumentModelAsync(WaitUntil.Completed, cleaningSuppliesOptions);
 DocumentModelDetails cleaningSuppliesModel = cleaningSuppliesOperation.Value;
 ```
 
@@ -87,12 +87,12 @@ var docTypes = new Dictionary<string, DocumentTypeDetails>()
     { "furniture", new DocumentTypeDetails() { ModelId = furnitureModelId } },
     { "cleaningSupplies", new DocumentTypeDetails() { ModelId = cleaningSuppliesModelId } }
 };
-var purchaseOrderContent = new ComposeDocumentModelContent(purchaseOrderModelId, classifierId, docTypes)
+var purchaseOrderOptions = new ComposeModelOptions(purchaseOrderModelId, classifierId, docTypes)
 {
     Description = "Composed Purchase order"
 };
 
-Operation<DocumentModelDetails> purchaseOrderOperation = await client.ComposeModelAsync(WaitUntil.Completed, purchaseOrderContent);
+Operation<DocumentModelDetails> purchaseOrderOperation = await client.ComposeModelAsync(WaitUntil.Completed, purchaseOrderOptions);
 DocumentModelDetails purchaseOrderModel = purchaseOrderOperation.Value;
 
 Console.WriteLine($"Model ID: {purchaseOrderModel.ModelId}");

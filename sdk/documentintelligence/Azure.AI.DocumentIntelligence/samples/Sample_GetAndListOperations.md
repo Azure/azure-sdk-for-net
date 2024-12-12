@@ -31,9 +31,9 @@ Note that operation information only persists for 24 hours.
 ```C# Snippet:DocumentIntelligenceSampleGetAndListOperations
 // Get an operation by ID.
 string operationId = "<operationId>";
-OperationDetails operationDetails = await client.GetOperationAsync(operationId);
+DocumentIntelligenceOperationDetails operationDetails = await client.GetOperationAsync(operationId);
 
-if (operationDetails.Status == OperationStatus.Succeeded)
+if (operationDetails.Status == DocumentIntelligenceOperationStatus.Succeeded)
 {
     Console.WriteLine($"Operation with ID '{operationDetails.OperationId}' has succeeded.");
 
@@ -57,7 +57,7 @@ if (operationDetails.Status == OperationStatus.Succeeded)
             break;
     }
 }
-else if (operationDetails.Status == OperationStatus.Failed)
+else if (operationDetails.Status == DocumentIntelligenceOperationStatus.Failed)
 {
     Console.WriteLine($"Operation with ID '{operationDetails.OperationId}' has failed.");
     Console.WriteLine($"Error code: {operationDetails.Error.Code}");
@@ -71,7 +71,7 @@ else
 // List up to 10 operations that have been executed in the last 24 hours.
 int count = 0;
 
-await foreach (OperationDetails operationItem in client.GetOperationsAsync())
+await foreach (DocumentIntelligenceOperationDetails operationItem in client.GetOperationsAsync())
 {
     Console.WriteLine($"Operation details:");
     Console.WriteLine($"  Operation ID: {operationItem.OperationId}");

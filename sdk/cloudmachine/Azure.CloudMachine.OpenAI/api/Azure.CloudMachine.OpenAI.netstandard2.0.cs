@@ -1,9 +1,15 @@
 namespace Azure.CloudMachine.OpenAI
 {
+    public enum AIModelKind
+    {
+        Chat = 0,
+        Embedding = 1,
+    }
     public static partial class AzureOpenAIExtensions
     {
         public static void Add(this System.Collections.Generic.List<OpenAI.Chat.ChatMessage> messages, OpenAI.Chat.ChatCompletion completion) { }
         public static void Add(this System.Collections.Generic.List<OpenAI.Chat.ChatMessage> messages, System.Collections.Generic.IEnumerable<Azure.CloudMachine.OpenAI.VectorbaseEntry> entries) { }
+        public static void Add(this System.Collections.Generic.List<OpenAI.Chat.ChatMessage> messages, System.Collections.Generic.IEnumerable<OpenAI.Chat.ToolChatMessage> toolCallResults) { }
         public static string AsText(this OpenAI.Chat.ChatCompletion completion) { throw null; }
         public static string AsText(this OpenAI.Chat.ChatMessageContent content) { throw null; }
         public static string AsText(this System.ClientModel.ClientResult<OpenAI.Chat.ChatCompletion> completionResult) { throw null; }
@@ -24,16 +30,25 @@ namespace Azure.CloudMachine.OpenAI
     }
     public partial class EmbeddingsVectorbase
     {
-        public EmbeddingsVectorbase(OpenAI.Embeddings.EmbeddingClient client, Azure.CloudMachine.OpenAI.VectorbaseStore store = null, int factChunkSize = 1000) { }
+        public EmbeddingsVectorbase(OpenAI.Embeddings.EmbeddingClient client, Azure.CloudMachine.OpenAI.VectorbaseStore? store = null, int factChunkSize = 1000) { }
         public void Add(System.BinaryData data) { }
         public void Add(string text) { }
-        public System.Collections.Generic.IEnumerable<Azure.CloudMachine.OpenAI.VectorbaseEntry> Find(string text, Azure.CloudMachine.OpenAI.FindOptions options = null) { throw null; }
+        public System.Collections.Generic.IEnumerable<Azure.CloudMachine.OpenAI.VectorbaseEntry> Find(string text, Azure.CloudMachine.OpenAI.FindOptions? options = null) { throw null; }
     }
     public partial class FindOptions
     {
         public FindOptions() { }
         public int MaxEntries { get { throw null; } set { } }
         public float Threshold { get { throw null; } set { } }
+    }
+    public partial class OpenAIModelFeature : Azure.CloudMachine.Core.CloudMachineFeature
+    {
+        public OpenAIModelFeature(string model, string modelVersion, Azure.CloudMachine.OpenAI.AIModelKind kind = Azure.CloudMachine.OpenAI.AIModelKind.Chat) { }
+        public string Model { get { throw null; } }
+        public string ModelVersion { get { throw null; } }
+        protected override void EmitConnections(Azure.Core.ConnectionCollection connections, string cmId) { }
+        protected override void EmitFeatures(Azure.CloudMachine.Core.FeatureCollection features, string cmId) { }
+        protected override Azure.Provisioning.Primitives.ProvisionableResource EmitResources(Azure.CloudMachine.CloudMachineInfrastructure cm) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VectorbaseEntry
