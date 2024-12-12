@@ -10,6 +10,8 @@
 
 ### Bugs Fixed
 
+- Fixed an issue that the `AzureFirewallIPGroups` can't handle number type `ChangeNumber`.
+
 ### Other Changes
 
 ## 1.9.0 (2024-09-12)
