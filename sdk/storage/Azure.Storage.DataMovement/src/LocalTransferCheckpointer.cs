@@ -327,15 +327,15 @@ namespace Azure.Storage.DataMovement
                 throw Errors.MissingTransferIdCheckpointer(transferId);
             }
 
-            // if complete, get rid of all checkpointing info
-            if (status.State == DataTransferState.Completed)
+            // if completed successfully, get rid of all checkpointing info
+            if (status.HasCompletedSuccessfully)
             {
                 await TryRemoveStoredTransferAsync(transferId, cancellationToken).ConfigureAwait(false);
                 return;
             }
 
-            // if paused, remove the memory cache but still write state to the plan file for later resume
-            if (status.State == DataTransferState.Paused)
+            // if paused or other completion state, remove the memory cache but still write state to the plan file for later resume
+            if (status.State == DataTransferState.Completed || status.State == DataTransferState.Paused)
             {
                 _transferStates.Remove(transferId);
             }
