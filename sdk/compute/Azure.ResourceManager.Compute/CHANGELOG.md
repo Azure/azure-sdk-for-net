@@ -1,5 +1,19 @@
 # Release History
 
+## 1.7.0 (2024-12-29)
+
+### Features Added
+
+- Added new classes named `GalleryInVmAccessControlProfileCollection`, `ValidationsProfile`, `ExecutedValidation`, `AdditionalReplicaSet`, `GallerySoftDeleted`, `GallerySoftDeletedResourceList`, and `PlatformAttribute`.
+- Added a new property named `BlockDeletionBeforeEndOfLife` to `GalleryImageVersionSafertyProfile` class.
+- Added a new property named `StartsAtVersion` to `GalleryImageFeature` class.
+- Added a new property named `AllowUpdateImage` to `GalleryImageData` class.
+- Added new properties named `ValidationsProfile` and `Restore` to `GalleryImageVersionData` class.
+- Added a new property named `SecurityUefiSettings` to `GalleryList` class.
+- Added a new property named `ScriptBehaviorAfterReboot` to `UserARtifactSettings` class.
+- Added a new property named `AdditionalReplicaSets` to `TargetRegion` class.
+- Added a new property named `Identity` to `GalleryData` class.
+
 ## 1.7.0-beta.2 (2024-12-11)
 
 ### Features Added
