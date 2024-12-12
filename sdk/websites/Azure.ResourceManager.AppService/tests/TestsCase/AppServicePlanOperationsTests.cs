@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         [RecordedTest]
         public async Task ExistingGetWebApps()
         {
-            AppServicePlanResource plan = Client.GetAppServicePlanResource(new ResourceIdentifier("/subscriptions/4d042dc6-fe17-4698-a23f-ec6a8d1e98f4/resourceGroups/deleteme1205/providers/Microsoft.Web/serverFarms/HybirdConnectionTest"));
+            AppServicePlanResource plan = Client.GetAppServicePlanResource(new ResourceIdentifier("/subscriptions/4d042dc6-fe17-4698-a23f-ec6a8d1e98f4/resourceGroups/v-zihewang1211/providers/Microsoft.Web/serverFarms/hybirdtest"));
             var relays = plan.GetHybridConnectionRelaysAsync();
             int num = 0;
             await foreach (var relayOverview in relays)
@@ -85,6 +85,10 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
                 Console.WriteLine(relayOverview.Name);
                 var relay = await plan.GetAppServicePlanHybridConnectionNamespaceRelayAsync(relayOverview.ServiceBusNamespace, relayOverview.Name);
                 var listOfAppServicesWhichAreUsingHybridConnection = relay.Value.GetWebAppsByHybridConnectionAsync();
+                await foreach (var webApp in listOfAppServicesWhichAreUsingHybridConnection)
+                {
+                    Console.WriteLine(webApp.Name);
+                }
             }
         }
     }
