@@ -6,7 +6,7 @@ This sample demonstrates how to publish Event Grid schema events to an Event Gri
 
 To begin, create an Event Grid domain that accepts events of the Event Grid schema. An *event domain* is a management tool for large numbers of Event Grid topics related to the same application. You can think of it as a meta-topic that can have thousands of individual topics.
 
-See the this [step-by-step tutorial](https://docs.microsoft.com/azure/event-grid/custom-event-quickstart-portal#create-a-custom-topic) for instructions on creating custom topics using Azure Portal; however, instead of searching for "Event Grid Topics", search for "Event Grid Domains". When you create an event domain, you're given a publishing endpoint and access key similar to if you had created a topic in Event Grid.
+See the this [step-by-step tutorial](https://learn.microsoft.com/azure/event-grid/custom-event-quickstart-portal#create-a-custom-topic) for instructions on creating custom topics using Azure Portal; however, instead of searching for "Event Grid Topics", search for "Event Grid Domains". When you create an event domain, you're given a publishing endpoint and access key similar to if you had created a topic in Event Grid.
 
 ## Create and Authenticate `EventGridPublisherClient`
 

@@ -937,9 +937,11 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 await sourceBlob.DownloadToAsync(downloadPath);
 
                 // Create transfer manager
-                TransferManager transferManager = new TransferManager(new TransferManagerOptions());
                 BlobsStorageResourceProvider blobs = new();
                 LocalFilesStorageResourceProvider files = new();
+                TransferManagerOptions options = new TransferManagerOptions();
+                options.ResumeProviders = new List<StorageResourceProvider>() { files, blobs };
+                TransferManager transferManager = new TransferManager(options);
 
                 // Create source and destination resource
                 StorageResource sourceResource = blobs.FromClient(sourceBlob);

@@ -23,7 +23,7 @@ public class EmbeddingsVectorbase
     /// <param name="client"></param>
     /// <param name="store"></param>
     /// <param name="factChunkSize"></param>
-    public EmbeddingsVectorbase(EmbeddingClient client, VectorbaseStore store = default, int factChunkSize = 1000)
+    public EmbeddingsVectorbase(EmbeddingClient client, VectorbaseStore? store = default, int factChunkSize = 1000)
     {
         _client = client;
         _store = store ?? new MemoryVectorbaseStore();
@@ -59,7 +59,7 @@ public class EmbeddingsVectorbase
     /// <param name="text"></param>
     /// <param name="options"></param>
     /// <returns></returns>
-    public IEnumerable<VectorbaseEntry> Find(string text, FindOptions options = default)
+    public IEnumerable<VectorbaseEntry> Find(string text, FindOptions? options = default)
     {
         options ??= new FindOptions();
         if (_todo.Count > 0)
