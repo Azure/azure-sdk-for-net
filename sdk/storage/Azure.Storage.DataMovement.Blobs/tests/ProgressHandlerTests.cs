@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Storage.DataMovement.Tests;
 using BaseBlobs::Azure.Storage.Blobs;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
@@ -298,7 +299,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 waitTime: 30);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35558")]
+        [LiveOnly]
         [Test]
         [TestCase(0)]
         [TestCase(150)]
