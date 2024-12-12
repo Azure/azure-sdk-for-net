@@ -282,6 +282,7 @@ rename-mapping:
   SkuProfile : ComputeSkuProfile
   SkuProfileVMSize : ComputeSkuProfileVMSize
   AllocationStrategy : ComputeAllocationStrategy
+  GallerySoftDeletedResource : GallerySoftDeleted
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced

@@ -14,11 +14,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class GallerySoftDeletedResource : IUtf8JsonSerializable, IJsonModel<GallerySoftDeletedResource>
+    public partial class GallerySoftDeleted : IUtf8JsonSerializable, IJsonModel<GallerySoftDeleted>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GallerySoftDeletedResource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GallerySoftDeleted>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<GallerySoftDeletedResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GallerySoftDeleted>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GallerySoftDeletedResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GallerySoftDeleted>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GallerySoftDeletedResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GallerySoftDeleted)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteEndObject();
         }
 
-        GallerySoftDeletedResource IJsonModel<GallerySoftDeletedResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        GallerySoftDeleted IJsonModel<GallerySoftDeleted>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GallerySoftDeletedResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GallerySoftDeleted>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GallerySoftDeletedResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GallerySoftDeleted)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGallerySoftDeletedResource(document.RootElement, options);
+            return DeserializeGallerySoftDeleted(document.RootElement, options);
         }
 
-        internal static GallerySoftDeletedResource DeserializeGallerySoftDeletedResource(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static GallerySoftDeleted DeserializeGallerySoftDeleted(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new GallerySoftDeletedResource(
+            return new GallerySoftDeleted(
                 id,
                 name,
                 type,
@@ -186,35 +186,35 @@ namespace Azure.ResourceManager.Compute.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<GallerySoftDeletedResource>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<GallerySoftDeleted>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GallerySoftDeletedResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GallerySoftDeleted>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GallerySoftDeletedResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GallerySoftDeleted)} does not support writing '{options.Format}' format.");
             }
         }
 
-        GallerySoftDeletedResource IPersistableModel<GallerySoftDeletedResource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        GallerySoftDeleted IPersistableModel<GallerySoftDeleted>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GallerySoftDeletedResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GallerySoftDeleted>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeGallerySoftDeletedResource(document.RootElement, options);
+                        return DeserializeGallerySoftDeleted(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GallerySoftDeletedResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GallerySoftDeleted)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<GallerySoftDeletedResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GallerySoftDeleted>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

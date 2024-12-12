@@ -3704,7 +3704,7 @@ namespace Azure.ResourceManager.Compute.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.GallerySoftDeletedResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GallerySoftDeleted"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3714,12 +3714,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="resourceArmId"> arm id of the soft-deleted resource. </param>
         /// <param name="softDeletedArtifactType"> artifact type of the soft-deleted resource. </param>
         /// <param name="softDeletedTime"> The timestamp for when the resource is soft-deleted. In dateTime offset format. </param>
-        /// <returns> A new <see cref="Models.GallerySoftDeletedResource"/> instance for mocking. </returns>
-        public static GallerySoftDeletedResource GallerySoftDeletedResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ResourceIdentifier resourceArmId = null, SoftDeletedArtifactType? softDeletedArtifactType = null, string softDeletedTime = null)
+        /// <returns> A new <see cref="Models.GallerySoftDeleted"/> instance for mocking. </returns>
+        public static GallerySoftDeleted GallerySoftDeleted(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ResourceIdentifier resourceArmId = null, SoftDeletedArtifactType? softDeletedArtifactType = null, string softDeletedTime = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new GallerySoftDeletedResource(
+            return new GallerySoftDeleted(
                 id,
                 name,
                 resourceType,

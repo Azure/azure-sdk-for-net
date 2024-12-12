@@ -588,15 +588,15 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="artifactType"/> or <paramref name="artifactName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="artifactType"/> or <paramref name="artifactName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="GallerySoftDeletedResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GallerySoftDeletedResource> GetSoftDeletedResourcesByArtifactNameAsync(string artifactType, string artifactName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="GallerySoftDeleted"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<GallerySoftDeleted> GetSoftDeletedResourcesByArtifactNameAsync(string artifactType, string artifactName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(artifactType, nameof(artifactType));
             Argument.AssertNotNullOrEmpty(artifactName, nameof(artifactName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _softDeletedResourceRestClient.CreateListByArtifactNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, artifactType, artifactName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _softDeletedResourceRestClient.CreateListByArtifactNameNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, artifactType, artifactName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => GallerySoftDeletedResource.DeserializeGallerySoftDeletedResource(e), _softDeletedResourceClientDiagnostics, Pipeline, "GalleryResource.GetSoftDeletedResourcesByArtifactName", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => GallerySoftDeleted.DeserializeGallerySoftDeleted(e), _softDeletedResourceClientDiagnostics, Pipeline, "GalleryResource.GetSoftDeletedResourcesByArtifactName", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -621,15 +621,15 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="artifactType"/> or <paramref name="artifactName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="artifactType"/> or <paramref name="artifactName"/> is null. </exception>
-        /// <returns> A collection of <see cref="GallerySoftDeletedResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GallerySoftDeletedResource> GetSoftDeletedResourcesByArtifactName(string artifactType, string artifactName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="GallerySoftDeleted"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<GallerySoftDeleted> GetSoftDeletedResourcesByArtifactName(string artifactType, string artifactName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(artifactType, nameof(artifactType));
             Argument.AssertNotNullOrEmpty(artifactName, nameof(artifactName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _softDeletedResourceRestClient.CreateListByArtifactNameRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, artifactType, artifactName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _softDeletedResourceRestClient.CreateListByArtifactNameNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, artifactType, artifactName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => GallerySoftDeletedResource.DeserializeGallerySoftDeletedResource(e), _softDeletedResourceClientDiagnostics, Pipeline, "GalleryResource.GetSoftDeletedResourcesByArtifactName", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => GallerySoftDeleted.DeserializeGallerySoftDeleted(e), _softDeletedResourceClientDiagnostics, Pipeline, "GalleryResource.GetSoftDeletedResourcesByArtifactName", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
