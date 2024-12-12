@@ -5,11 +5,12 @@ using System.ClientModel.Primitives;
 using System.ClientModel.Tests.TestFramework;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
+using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using ClientModel.Tests;
 using ClientModel.Tests.Mocks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 using SyncAsyncTestBase = ClientModel.Tests.SyncAsyncTestBase;
@@ -18,122 +19,617 @@ namespace System.ClientModel.Tests.Pipeline;
 
 public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync)
 {
+    private const int RequestEvent = 1;
+    private const int RequestContentEvent = 2;
+    private const int ResponseEvent = 5;
+    private const int ResponseContentEvent = 6;
+    private const int ErrorResponseEvent = 8;
+    private const int ErrorResponseContentEvent = 9;
+    private const int ResponseContentBlockEvent = 11;
+    private const int ErrorResponseContentBlockEvent = 12;
+    private const int ResponseContentTextEvent = 13;
+    private const int ErrorResponseContentTextEvent = 14;
+    private const int ResponseContentTextBlockEvent = 15;
+    private const int ErrorResponseContentTextBlockEvent = 16;
+    private const int RequestContentTextEvent = 17;
     private const string LoggingPolicyCategoryName = "System.ClientModel.Primitives.MessageLoggingPolicy";
     private const string PipelineTransportCategoryName = "System.ClientModel.Primitives.PipelineTransport";
     private const string RetryPolicyCategoryName = "System.ClientModel.Primitives.ClientRetryPolicy";
     private const string SystemClientModelEventSourceName = "System-ClientModel";
+    private readonly MockResponseHeaders _defaultHeaders = new(new Dictionary<string, string>()
+    {
+        { "Custom-Response-Header", "custom-response-header-value" },
+        { "Date", "4/29/2024" },
+        { "ETag", "version1" }
+    });
+    private readonly MockResponseHeaders _defaultTextHeaders = new(new Dictionary<string, string>()
+    {
+        { "Custom-Response-Header", "custom-response-header-value" },
+        { "Content-Type", "text/plain" },
+        { "Date", "4/29/2024" },
+        { "ETag", "version1" }
+    });
 
     [Test]
-    public async Task SendingRequestLogsToILoggerAndNotEventSourceWhenILoggerIsProvided()
+    public async Task OptionsCanBeUpdatedUntilFrozenByPipeline()
     {
-        using TestClientEventListener listener = new();
         using TestLoggingFactory factory = new(LogLevel.Debug);
-
-        var headers = new MockResponseHeaders(new Dictionary<string, string> { { "Custom-Response-Header", "Value" } });
-        var response = new MockPipelineResponse(200, mockHeaders: headers);
-        response.SetContent("World.");
-
         ClientLoggingOptions loggingOptions = new()
         {
             LoggerFactory = factory
         };
 
+        MessageLoggingPolicy loggingPolicy = new(loggingOptions);
+
         ClientPipelineOptions options = new()
         {
-            Transport = new MockPipelineTransport("Transport", i => response, true, factory, false),
-            ClientLoggingOptions = loggingOptions,
+            MessageLoggingPolicy = loggingPolicy,
+            Transport = new MockPipelineTransport("Transport", [200])
         };
 
-        ClientPipeline pipeline = ClientPipeline.Create(options);
+        loggingOptions.EnableMessageContentLogging = true;
 
+        ClientPipeline pipeline = ClientPipeline.Create(options);
         PipelineMessage message = pipeline.CreateMessage();
         message.Request.Method = "GET";
         message.Request.Uri = new Uri("http://example.com");
-        message.Request.Content = BinaryContent.Create(new BinaryData("Hello"));
+        message.Request.Content = BinaryContent.Create(new BinaryData([1,2,3]));
 
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
         TestLogger logger = factory.GetLogger(LoggingPolicyCategoryName);
-
-        GetSingleEventFromILogger(1, "Request", LogLevel.Information, logger); // RequestEvent
-        GetSingleEventFromILogger(5, "Response", LogLevel.Information, logger); // ResponseEvent
-
-        CollectionAssert.IsEmpty(listener.EventData); // Nothing should log to Event Source
+        logger.GetAndValidateSingleEvent(RequestContentEvent, "RequestContent", LogLevel.Debug);
     }
 
+    [TestCase(true, true)]
+    [TestCase(false, true)]
+    [TestCase(true, false)]
+    [TestCase(false, false)]
     [Test]
-    public async Task SendingRequestLogsToILoggerAndNotEventSourceWhenILoggerIsProvidedAndLogLevelIsWarning()
+    public async Task ContentIsNotLoggedByDefaultToEventSource(bool isError, bool asText)
     {
-        using TestClientEventListener listener = new(); // Verbose listener
-        using TestLoggingFactory factory = new(LogLevel.Warning); // Warnings only
+        TestClientEventListener listener = new();
+        ClientLoggingOptions loggingOptions = new();
 
-        var headers = new MockResponseHeaders(new Dictionary<string, string> { { "Custom-Response-Header", "Value" } });
-        var response = new MockPipelineResponse(200, mockHeaders: headers);
-        response.SetContent("World.");
+        await SendSimpleRequestResponseSyncOrAsync(isError, loggingOptions, asText, IsAsync);
 
+        listener.AssertNoContentLogged();
+    }
+
+    [TestCase(true, true)]
+    [TestCase(false, true)]
+    [TestCase(true, false)]
+    [TestCase(false, false)]
+    [Test]
+    public async Task ContentIsNotLoggedByDefaultToILogger(bool isError, bool asText)
+    {
+        TestLoggingFactory factory = new(LogLevel.Debug);
         ClientLoggingOptions loggingOptions = new()
         {
             LoggerFactory = factory
         };
 
+        await SendSimpleRequestResponseSyncOrAsync(isError, loggingOptions, asText, IsAsync);
+
+        TestLogger logger = factory.GetLogger(LoggingPolicyCategoryName);
+        logger.AssertNoContentLogged();
+    }
+
+    [TestCase(true, true)]
+    [TestCase(false, true)]
+    [TestCase(true, false)]
+    [TestCase(false, false)]
+    [Test]
+    public async Task ContentIsNotLoggedWhenDisabledToEventSource(bool isError, bool asText)
+    {
+        TestClientEventListener listener = new();
+
+        ClientLoggingOptions loggingOptions = new()
+        {
+            EnableMessageContentLogging = false
+        };
+
+        await SendSimpleRequestResponseSyncOrAsync(isError, loggingOptions, asText, IsAsync);
+
+        listener.AssertNoContentLogged();
+    }
+
+    [TestCase(true, true)]
+    [TestCase(false, true)]
+    [TestCase(true, false)]
+    [TestCase(false, false)]
+    [Test]
+    public async Task ContentIsNotLoggedWhenDisabledToILogger(bool isError, bool asText)
+    {
+        TestLoggingFactory factory = new(LogLevel.Debug);
+
+        ClientLoggingOptions loggingOptions = new()
+        {
+            EnableMessageContentLogging = false,
+            LoggerFactory = factory
+        };
+
+        await SendSimpleRequestResponseSyncOrAsync(isError, loggingOptions, asText, IsAsync);
+
+        TestLogger logger = factory.GetLogger(LoggingPolicyCategoryName);
+        logger.AssertNoContentLogged();
+    }
+
+    [TestCase(true, true)]
+    [TestCase(false, true)]
+    [TestCase(true, false)]
+    [TestCase(false, false)]
+    [Test]
+    public async Task ContentIsNotLoggedInBlocksWhenDisabledToEventSource(bool isError, bool asText)
+    {
+        TestClientEventListener listener = new();
+
+        ClientLoggingOptions loggingOptions = new()
+        {
+            EnableMessageContentLogging = false
+        };
+
+        MockPipelineResponse response = new(isError ? 500 : 200, mockHeaders: asText ? _defaultTextHeaders : _defaultHeaders)
+        {
+            ContentStream = new NonSeekableMemoryStream(Encoding.UTF8.GetBytes("Hello world"))
+        };
+
         ClientPipelineOptions options = new()
         {
-            Transport = new MockPipelineTransport("Transport", i => response, true, factory, false),
+            Transport = new MockPipelineTransport("Transport", i => response),
             ClientLoggingOptions = loggingOptions,
+            RetryPolicy = new ObservablePolicy("RetryPolicy")
         };
 
         ClientPipeline pipeline = ClientPipeline.Create(options);
-
         PipelineMessage message = pipeline.CreateMessage();
         message.Request.Method = "GET";
         message.Request.Uri = new Uri("http://example.com");
-        message.Request.Content = BinaryContent.Create(new BinaryData("Hello "));
+        message.Request.Content = BinaryContent.Create(new BinaryData(Encoding.UTF8.GetBytes("Hello world")));
 
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
-        CollectionAssert.IsEmpty(listener.EventData);
-        CollectionAssert.IsEmpty(factory.GetLogger(RetryPolicyCategoryName).Logs);
-        CollectionAssert.IsEmpty(factory.GetLogger(PipelineTransportCategoryName).Logs);
-        CollectionAssert.IsEmpty(factory.GetLogger(LoggingPolicyCategoryName).Logs);
+        listener.AssertNoContentLogged();
+    }
+
+    [TestCase(true, true)]
+    [TestCase(false, true)]
+    [TestCase(true, false)]
+    [TestCase(false, false)]
+    [Test]
+    public async Task ContentIsNotLoggedInBlocksWhenDisabledToILogger(bool isError, bool asText)
+    {
+        TestLoggingFactory factory = new(LogLevel.Debug);
+
+        ClientLoggingOptions loggingOptions = new()
+        {
+            EnableMessageContentLogging = false,
+            LoggerFactory = factory
+        };
+
+        MockPipelineResponse response = new(isError ? 500 : 200, mockHeaders: asText ? _defaultTextHeaders : _defaultHeaders)
+        {
+            ContentStream = new NonSeekableMemoryStream(Encoding.UTF8.GetBytes("Hello world"))
+        };
+
+        ClientPipelineOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Transport", i => response),
+            ClientLoggingOptions = loggingOptions,
+            RetryPolicy = new ObservablePolicy("RetryPolicy")
+        };
+
+        ClientPipeline pipeline = ClientPipeline.Create(options);
+        PipelineMessage message = pipeline.CreateMessage();
+        message.Request.Method = "GET";
+        message.Request.Uri = new Uri("http://example.com");
+        message.Request.Content = BinaryContent.Create(new BinaryData(Encoding.UTF8.GetBytes("Hello world")));
+
+        await pipeline.SendSyncOrAsync(message, IsAsync);
+
+        TestLogger logger = factory.GetLogger(LoggingPolicyCategoryName);
+        logger.AssertNoContentLogged();
+    }
+
+    [TestCase(true, true)]
+    [TestCase(false, true)]
+    [TestCase(true, false)]
+    [TestCase(false, false)]
+    [Test]
+    public async Task ContentIsNotLoggedWhenEventSourceIsDisabled(bool isError, bool asText)
+    {
+        TestEventListenerWarning listener = new();
+
+        ClientLoggingOptions loggingOptions = new()
+        {
+            EnableMessageContentLogging = true
+        };
+
+        await SendSimpleRequestResponseSyncOrAsync(isError, loggingOptions, asText, IsAsync);
+
+        listener.AssertNoContentLogged();
+    }
+
+    [TestCase(true)]
+    [TestCase(false)]
+    [Test]
+    public async Task ContentEventIsNotWrittenWhenThereIsNoContentToEventSource(bool isError)
+    {
+        TestClientEventListener listener = new();
+
+        ClientLoggingOptions loggingOptions = new()
+        {
+            EnableMessageContentLogging = true
+        };
+
+        MockPipelineResponse response = new(isError ? 500 : 200);
+
+        ClientPipelineOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Transport", i => response),
+            ClientLoggingOptions = loggingOptions,
+            RetryPolicy = new ObservablePolicy("RetryPolicy")
+        };
+
+        ClientPipeline pipeline = ClientPipeline.Create(options);
+        PipelineMessage message = pipeline.CreateMessage();
+        message.Request.Method = "GET";
+        message.Request.Uri = new Uri("http://example.com");
+
+        await pipeline.SendSyncOrAsync(message, IsAsync);
+
+        listener.AssertNoContentLogged();
+    }
+
+    [TestCase(true)]
+    [TestCase(false)]
+    [Test]
+    public async Task ContentEventIsNotWrittenWhenThereIsNoContentToILogger(bool isError)
+    {
+        TestLoggingFactory factory = new(LogLevel.Debug);
+
+        ClientLoggingOptions loggingOptions = new()
+        {
+            EnableMessageContentLogging = true,
+            LoggerFactory = factory
+        };
+
+        MockPipelineResponse response = new(isError ? 500 : 200);
+
+        ClientPipelineOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Transport", i => response),
+            ClientLoggingOptions = loggingOptions,
+            RetryPolicy = new ObservablePolicy("RetryPolicy")
+        };
+
+        ClientPipeline pipeline = ClientPipeline.Create(options);
+        PipelineMessage message = pipeline.CreateMessage();
+        message.Request.Method = "GET";
+        message.Request.Uri = new Uri("http://example.com");
+
+        await pipeline.SendSyncOrAsync(message, IsAsync);
+
+        TestLogger logger = factory.GetLogger(LoggingPolicyCategoryName);
+        logger.AssertNoContentLogged();
+    }
+
+    [Test]
+    public async Task RequestContentLogsAreLimitedInLengthToEventSource()
+    {
+        TestClientEventListener listener = new();
+
+        var response = new MockPipelineResponse(500);
+        byte[] requestContent = [1, 2, 3, 4, 5, 6, 7, 8];
+        byte[] requestContentLimited = [1, 2, 3, 4, 5];
+
+        ClientLoggingOptions loggingOptions = new()
+        {
+            EnableMessageContentLogging = true,
+            MessageContentSizeLimit = 5
+        };
+
+        ClientPipelineOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Transport", i => response),
+            ClientLoggingOptions = loggingOptions,
+            RetryPolicy = new ObservablePolicy("RetryPolicy")
+        };
+
+        ClientPipeline pipeline = ClientPipeline.Create(options);
+        PipelineMessage message = pipeline.CreateMessage();
+        message.Request.Method = "GET";
+        message.Request.Uri = new Uri("http://example.com");
+        message.Request.Content = BinaryContent.Create(new BinaryData(requestContent));
+
+        await pipeline.SendSyncOrAsync(message, IsAsync);
+
+        EventWrittenEventArgs logEvent = listener.GetAndValidateSingleEvent(RequestContentEvent, "RequestContent", EventLevel.Verbose, SystemClientModelEventSourceName); // RequestContentEvent
+        Assert.AreEqual(requestContentLimited, logEvent.GetProperty<byte[]>("content"));
+        CollectionAssert.IsEmpty(listener.EventsById(RequestContentTextEvent));
+    }
+
+    [Test]
+    public async Task RequestContentLogsAreLimitedInLengthToILogger()
+    {
+        TestLoggingFactory factory = new(LogLevel.Debug);
+
+        var response = new MockPipelineResponse(500);
+        byte[] requestContent = [1, 2, 3, 4, 5, 6, 7, 8];
+        byte[] requestContentLimited = [1, 2, 3, 4, 5];
+
+        ClientLoggingOptions loggingOptions = new()
+        {
+            EnableMessageContentLogging = true,
+            MessageContentSizeLimit = 5,
+            LoggerFactory = factory
+        };
+
+        ClientPipelineOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Transport", i => response),
+            ClientLoggingOptions = loggingOptions,
+            RetryPolicy = new ObservablePolicy("RetryPolicy")
+        };
+
+        ClientPipeline pipeline = ClientPipeline.Create(options);
+        PipelineMessage message = pipeline.CreateMessage();
+        message.Request.Method = "GET";
+        message.Request.Uri = new Uri("http://example.com");
+        message.Request.Content = BinaryContent.Create(new BinaryData(requestContent));
+
+        await pipeline.SendSyncOrAsync(message, IsAsync);
+
+        TestLogger logger = factory!.GetLogger(LoggingPolicyCategoryName);
+        LoggerEvent logEvent = logger.GetAndValidateSingleEvent(RequestContentEvent, "RequestContent", LogLevel.Debug);
+        Assert.AreEqual(requestContentLimited, logEvent.GetValueFromArguments<byte[]>("content"));
+        CollectionAssert.IsEmpty(logger.EventsById(RequestContentTextEvent));
+    }
+
+    [Test]
+    public async Task RequestContentTextLogsAreLimitedInLengthToEventSource()
+    {
+        TestClientEventListener listener = new();
+
+        ClientLoggingOptions loggingOptions = new()
+        {
+            EnableMessageContentLogging = true,
+            MessageContentSizeLimit = 5
+        };
+
+        MockPipelineResponse response = new(500, mockHeaders: _defaultTextHeaders);
+
+        ClientPipelineOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Transport", i => response),
+            ClientLoggingOptions = loggingOptions,
+            RetryPolicy = new ObservablePolicy("RetryPolicy")
+        };
+
+        ClientPipeline pipeline = ClientPipeline.Create(options);
+        PipelineMessage message = pipeline.CreateMessage();
+        message.Request.Method = "GET";
+        message.Request.Uri = new Uri("http://example.com");
+        message.Request.Content = BinaryContent.Create(new BinaryData("Hello world"));
+
+        await pipeline.SendSyncOrAsync(message, IsAsync);
+
+        EventWrittenEventArgs requestEvent = listener!.GetAndValidateSingleEvent(RequestContentTextEvent, "RequestContentText", EventLevel.Verbose, SystemClientModelEventSourceName);
+        Assert.AreEqual("Hello", requestEvent.GetProperty<string>("content"));
+
+        CollectionAssert.IsEmpty(listener!.EventsById(RequestContentEvent));
+    }
+
+    [Test]
+    public async Task RequestContentTextLogsAreLimitedInLengthToILogger()
+    {
+        TestLoggingFactory factory = new(LogLevel.Debug);
+
+        ClientLoggingOptions loggingOptions = new()
+        {
+            EnableMessageContentLogging = true,
+            MessageContentSizeLimit = 5,
+            LoggerFactory = factory
+        };
+
+        MockPipelineResponse response = new(500, mockHeaders: _defaultTextHeaders);
+
+        ClientPipelineOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Transport", i => response),
+            ClientLoggingOptions = loggingOptions,
+            RetryPolicy = new ObservablePolicy("RetryPolicy")
+        };
+
+        ClientPipeline pipeline = ClientPipeline.Create(options);
+        PipelineMessage message = pipeline.CreateMessage();
+        message.Request.Method = "GET";
+        message.Request.Uri = new Uri("http://example.com");
+        message.Request.Content = BinaryContent.Create(new BinaryData("Hello world"));
+
+        await pipeline.SendSyncOrAsync(message, IsAsync);
+
+        TestLogger logger = factory.GetLogger(LoggingPolicyCategoryName);
+        LoggerEvent logEvent = logger.GetAndValidateSingleEvent(RequestContentTextEvent, "RequestContentText", LogLevel.Debug);
+        Assert.AreEqual("Hello", logEvent.GetValueFromArguments<byte[]>("content"));
+        CollectionAssert.IsEmpty(logger.EventsById(RequestContentEvent)); // RequestContentEvent
+    }
+
+    [Test]
+    public async Task SeekableTextResponsesAreLimitedInLengthToEventSource()
+    {
+        TestClientEventListener listener = new();
+
+        ClientLoggingOptions loggingOptions = new()
+        {
+            MessageContentSizeLimit = 5
+        };
+
+        MockPipelineResponse response = new(200, mockHeaders: _defaultTextHeaders);
+        await SendRequestWithStreamingResponseSyncOrAsync(response, true, new ClientLoggingOptions());
+
+        EventWrittenEventArgs contentEvent = listener.GetAndValidateSingleEvent(ResponseContentTextBlockEvent, "ResponseContentTextBlock", EventLevel.Verbose, SystemClientModelEventSourceName);
+        Assert.AreEqual("Hello", contentEvent.GetProperty<string>("content"));
+    }
+
+    [Test]
+    public async Task SeekableTextResponsesAreLimitedInLengthToILogger()
+    {
+        TestLoggingFactory factory = new(LogLevel.Debug);
+        ClientLoggingOptions loggingOptions = new()
+        {
+            MessageContentSizeLimit = 5,
+            LoggerFactory = factory
+        };
+
+        MockPipelineResponse response = new(200, mockHeaders: _defaultTextHeaders);
+        await SendRequestWithStreamingResponseSyncOrAsync(response, true, loggingOptions);
+
+        TestLogger logger = factory.GetLogger(LoggingPolicyCategoryName);
+        LoggerEvent contentEvent = logger.GetAndValidateSingleEvent(13, "ResponseContentText", LogLevel.Debug);
+        Assert.AreEqual("Hello", contentEvent.GetValueFromArguments<string>("content"));
+    }
+
+    [Test]
+    public async Task NonSeekableResponsesAreLimitedInLengthEventSource()
+    {
+        TestClientEventListener listener = new();
+        ClientLoggingOptions loggingOptions = new()
+        {
+            MessageContentSizeLimit = 5
+        };
+        MockPipelineResponse response = new(200, mockHeaders: _defaultHeaders);
+
+        await SendRequestWithStreamingResponseSyncOrAsync(response, false, loggingOptions);
+
+        EventWrittenEventArgs responseEvent = listener.GetAndValidateSingleEvent(15, "ResponseContentTextBlock", EventLevel.Verbose, SystemClientModelEventSourceName);
+        Assert.AreEqual("Hello", responseEvent.GetProperty<string>("content"));
+    }
+
+    [Test]
+    public async Task NonSeekableResponsesAreLimitedInLengthILogger()
+    {
+        TestLoggingFactory factory = new(LogLevel.Debug);
+        ClientLoggingOptions loggingOptions = new()
+        {
+            MessageContentSizeLimit = 5,
+            LoggerFactory = factory
+        };
+        MockPipelineResponse response = new(200, mockHeaders: _defaultTextHeaders);
+
+        await SendRequestWithStreamingResponseSyncOrAsync(response, false, loggingOptions);
+
+        TestLogger logger = factory.GetLogger(LoggingPolicyCategoryName);
+        LoggerEvent responseEvent = logger.GetAndValidateSingleEvent(15, "ResponseContentTextBlock", LogLevel.Debug);
+        Assert.AreEqual("Hello", responseEvent.GetValueFromArguments<string>("content"));
     }
 
     #region Helpers
-
-    // In order to test listeners with different event levels, each case has to has its own listener.
-    // This is because the constructor does not necessarily finish before the callbacks are called, meaning that any runtime
-    // configurations to event listener classes aren't reliably applied.
-    // see: https://learn.microsoft.com/dotnet/api/system.diagnostics.tracing.eventlistener#remarks
 
     private class TestEventListenerWarning : TestClientEventListener
     {
         protected override void OnEventSourceCreated(EventSource eventSource)
         {
-            if (eventSource.Name == "ClientModel.Tests.TestLoggingEventSource")
+            if (eventSource.Name == "System-ClientModel")
             {
+                Console.WriteLine("Warning");
                 EnableEvents(eventSource, EventLevel.Warning);
             }
         }
     }
 
-    private static LoggerEvent GetSingleEventFromILogger(int id, string expectedEventName, LogLevel expectedLogLevel, TestLogger logger)
+    private async Task SendRequestWithStreamingResponseSyncOrAsync(MockPipelineResponse response,
+                                                                   bool isSeekable,
+                                                                   ClientLoggingOptions loggingOptions)
     {
-        LoggerEvent log = logger.SingleEventById(id);
-        Assert.AreEqual(expectedEventName, log.EventId.Name);
-        Assert.AreEqual(expectedLogLevel, log.LogLevel);
-        Guid.Parse(log.GetValueFromArguments<string>("requestId")); // Request id should be a guid
+        byte[] responseContent = Encoding.UTF8.GetBytes("Hello world");
+        if (isSeekable)
+        {
+            response.ContentStream = new MemoryStream(responseContent);
+        }
+        else
+        {
+            response.ContentStream = new NonSeekableMemoryStream(responseContent);
+        }
 
-        return log;
+        ClientPipelineOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Transport", i => response),
+            ClientLoggingOptions = loggingOptions,
+            RetryPolicy = new ObservablePolicy("RetryPolicy")
+        };
+
+        ClientPipeline pipeline = ClientPipeline.Create(options);
+
+        PipelineMessage message = pipeline.CreateMessage();
+        message.Request.Method = "GET";
+        message.Request.Uri = new Uri("http://example.com");
+
+        // These tests are essentially testing whether the logging policy works
+        // correctly when responses are buffered (memory stream) and unbuffered
+        // (non-seekable). In order to validate the intent of the test, we set
+        // message.BufferResponse accordingly here.
+        message.BufferResponse = isSeekable;
+
+        await pipeline.SendSyncOrAsync(message, IsAsync);
+
+        var buffer = new byte[11];
+
+        if (IsAsync)
+        {
+#if NET462
+            Assert.AreEqual(6, await response.ContentStream.ReadAsync(buffer, 5, 6));
+            Assert.AreEqual(5, await response.ContentStream.ReadAsync(buffer, 6, 5));
+            Assert.AreEqual(0, await response.ContentStream.ReadAsync(buffer, 0, 5));
+#else
+            Assert.AreEqual(6, await response.ContentStream.ReadAsync(buffer.AsMemory(5, 6)));
+            Assert.AreEqual(5, await response.ContentStream.ReadAsync(buffer.AsMemory(6, 5)));
+            Assert.AreEqual(0, await response.ContentStream.ReadAsync(buffer.AsMemory(0, 5)));
+#endif
+        }
+        else
+        {
+            Assert.AreEqual(6, response.ContentStream.Read(buffer, 5, 6));
+            Assert.AreEqual(5, response.ContentStream.Read(buffer, 6, 5));
+            Assert.AreEqual(0, response.ContentStream.Read(buffer, 0, 5));
+        }
     }
 
-    private static EventWrittenEventArgs GetSingleEventFromEventSource(int id, string expectedEventName, EventLevel expectedLogLevel, TestClientEventListener listener)
+    private async Task SendSimpleRequestResponseSyncOrAsync(bool isError, ClientLoggingOptions loggingOptions, bool contentAsText, bool isAsync)
     {
-        EventWrittenEventArgs e = listener.SingleEventById(id);
-        Assert.AreEqual(expectedEventName, e.EventName);
-        Assert.AreEqual(expectedLogLevel, e.Level);
-        Assert.AreEqual(SystemClientModelEventSourceName, e.EventSource.Name);
-        Guid.Parse(e.GetProperty<string>("requestId")); // Request id should be a guid
+        MockPipelineResponse response = new(isError ? 500 : 200);
+        response.SetContent([1, 2, 3]);
 
-        return e;
+        loggingOptions.AllowedHeaderNames.Add("Custom-Header");
+        loggingOptions.AllowedHeaderNames.Add("Custom-Response-Header");
+
+        ClientPipelineOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Transport", i => response),
+            ClientLoggingOptions = loggingOptions,
+            RetryPolicy = new ObservablePolicy("RetryPolicy")
+        };
+
+        ClientPipeline pipeline = ClientPipeline.Create(options);
+        PipelineMessage message = pipeline.CreateMessage();
+        message.Request.Method = "GET";
+        message.Request.Uri = new Uri("http://example.com");
+        message.Request.Headers.Add("Custom-Header", "custom-header-value");
+        message.Request.Headers.Add("Date", "08/16/2024");
+
+        if (contentAsText)
+        {
+            response.SetContent("ResponseAsText");
+            message.Request.Content = BinaryContent.Create(new BinaryData("RequestAsText"));
+            message.Request.Headers.Add("Content-Type", "text/plain");
+        }
+        else
+        {
+            response.SetContent([1, 2, 3]);
+            message.Request.Content = BinaryContent.Create(new BinaryData(Encoding.UTF8.GetBytes("Hello world")));
+        }
+
+        await pipeline.SendSyncOrAsync(message, IsAsync);
     }
 
     #endregion

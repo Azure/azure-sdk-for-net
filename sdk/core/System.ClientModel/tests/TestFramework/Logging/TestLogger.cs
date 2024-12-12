@@ -7,6 +7,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Logging;
+using NUnit.Framework;
 
 namespace ClientModel.Tests;
 
@@ -45,13 +46,43 @@ public class TestLogger : ILogger
         }
     }
 
-    public LoggerEvent SingleEventById(int id, Func<LoggerEvent, bool>? filter = default)
+    public LoggerEvent GetAndValidateSingleEvent(int eventId, string expectedEventName, LogLevel expectedEventLevel)
     {
-        return EventsById(id).Single(filter ?? (_ => true));
+        LoggerEvent log = SingleEventById(eventId);
+        Assert.AreEqual(expectedEventName, log.EventId.Name);
+        Assert.AreEqual(expectedEventLevel, log.LogLevel);
+        Guid.Parse(log.GetValueFromArguments<string>("requestId")); // Request id should be a guid
+        return log;
     }
 
-    public IEnumerable<LoggerEvent> EventsById(int id)
+    public LoggerEvent SingleEventById(int eventId, Func<LoggerEvent, bool>? filter = default)
     {
-        return _logs.Where(e => e.EventId.Id == id);
+        return EventsById(eventId).Single(filter ?? (_ => true));
+    }
+
+    public void ValidateNumberOfEventsById(int eventId, int expectedNumEvents)
+    {
+        Assert.AreEqual(expectedNumEvents, EventsById(eventId).Count());
+    }
+
+    public IEnumerable<LoggerEvent> EventsById(int eventId)
+    {
+        return _logs.Where(e => e.EventId.Id == eventId);
+    }
+
+    public void AssertNoContentLogged()
+    {
+        CollectionAssert.IsEmpty(EventsById(2)); // RequestContentEvent
+        CollectionAssert.IsEmpty(EventsById(17)); // RequestContentTextEvent
+
+        CollectionAssert.IsEmpty(EventsById(6)); // ResponseContentEvent
+        CollectionAssert.IsEmpty(EventsById(13)); // ResponseContentTextEvent
+        CollectionAssert.IsEmpty(EventsById(11)); // ResponseContentBlockEvent
+        CollectionAssert.IsEmpty(EventsById(15)); // ResponseContentTextBlockEvent
+
+        CollectionAssert.IsEmpty(EventsById(9)); // ErrorResponseContentEvent
+        CollectionAssert.IsEmpty(EventsById(14)); // ErrorResponseContentTextEvent
+        CollectionAssert.IsEmpty(EventsById(12)); // ErrorResponseContentBlockEvent
+        CollectionAssert.IsEmpty(EventsById(16)); // ErrorResponseContentTextBlockEvent
     }
 }

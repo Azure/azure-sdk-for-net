@@ -72,9 +72,6 @@ public class MessageLoggingPolicy : PipelinePolicy
 
         _messageLogger.LogRequest(requestId, request, _clientAssembly);
 
-        byte[]? bytes = null;
-        Encoding? requestTextEncoding = null;
-
         if (_enableMessageContentLogging && request.Content != null && _messageLogger.IsEnabled(LogLevel.Information, EventLevel.Informational))
         {
             // Convert binary content to bytes
@@ -87,8 +84,9 @@ public class MessageLoggingPolicy : PipelinePolicy
             {
                 request.Content.WriteTo(memoryStream, message.CancellationToken);
             }
-            bytes = memoryStream.ToArray();
+            byte[] bytes = memoryStream.ToArray();
 
+            Encoding? requestTextEncoding = null;
             // Try to extract a text encoding from the headers
             if (request.Headers.TryGetValue("Content-Type", out var contentType) && contentType != null)
             {

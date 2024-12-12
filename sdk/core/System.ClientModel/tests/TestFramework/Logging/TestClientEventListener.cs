@@ -8,6 +8,8 @@ using System.Diagnostics.Tracing;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace ClientModel.Tests
 {
@@ -33,6 +35,7 @@ namespace ClientModel.Tests
             // see: https://learn.microsoft.com/dotnet/api/system.diagnostics.tracing.eventlistener#remarks
             if (eventSource.Name == "System-ClientModel")
             {
+                Console.WriteLine("Verbose");
                 EnableEvents(eventSource, EventLevel.Verbose);
             }
         }
@@ -53,14 +56,45 @@ namespace ClientModel.Tests
             }
         }
 
+        public EventWrittenEventArgs GetAndValidateSingleEvent(int eventId, string expectedEventName, EventLevel expectedEventLevel, string expectedEventSourceName)
+        {
+            EventWrittenEventArgs args = SingleEventById(eventId);
+            Assert.AreEqual(expectedEventName, args.EventName);
+            Assert.AreEqual(expectedEventLevel, args.Level);
+            Guid.Parse(args.GetProperty<string>("requestId")); // Request id should be a guid
+            Assert.AreEqual(expectedEventSourceName, args.EventSource.Name);
+            return args;
+        }
+
         public EventWrittenEventArgs SingleEventById(int id, Func<EventWrittenEventArgs, bool>? filter = default)
         {
             return EventsById(id).Single(filter ?? (_ => true));
         }
 
+        public void ValidateNumberOfEventsById(int eventId, int expectedNumEvents)
+        {
+            Assert.AreEqual(expectedNumEvents, EventsById(eventId).Count());
+        }
+
         public IEnumerable<EventWrittenEventArgs> EventsById(int id)
         {
             return _events.Where(e => e.EventId == id);
+        }
+
+        public void AssertNoContentLogged()
+        {
+            CollectionAssert.IsEmpty(EventsById(2)); // RequestContentEvent
+            CollectionAssert.IsEmpty(EventsById(17)); // RequestContentTextEvent
+
+            CollectionAssert.IsEmpty(EventsById(6)); // ResponseContentEvent
+            CollectionAssert.IsEmpty(EventsById(13)); // ResponseContentTextEvent
+            CollectionAssert.IsEmpty(EventsById(11)); // ResponseContentBlockEvent
+            CollectionAssert.IsEmpty(EventsById(15)); // ResponseContentTextBlockEvent
+
+            CollectionAssert.IsEmpty(EventsById(9)); // ErrorResponseContentEvent
+            CollectionAssert.IsEmpty(EventsById(14)); // ErrorResponseContentTextEvent
+            CollectionAssert.IsEmpty(EventsById(12)); // ErrorResponseContentBlockEvent
+            CollectionAssert.IsEmpty(EventsById(16)); // ErrorResponseContentTextBlockEvent
         }
 
         public override void Dispose()
