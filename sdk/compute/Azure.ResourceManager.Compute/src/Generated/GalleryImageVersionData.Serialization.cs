@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("securityProfile"u8);
                 writer.WriteObjectValue(SecurityProfile, options);
             }
-            if (Optional.IsDefined(Restore))
+            if (Optional.IsDefined(EnableRestore))
             {
                 writer.WritePropertyName("restore"u8);
-                writer.WriteBooleanValue(Restore.Value);
+                writer.WriteBooleanValue(EnableRestore.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ValidationsProfile))
             {

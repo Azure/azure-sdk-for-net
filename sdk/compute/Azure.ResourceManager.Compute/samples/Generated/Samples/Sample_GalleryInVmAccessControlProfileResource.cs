@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Compute.Samples
             // invoke the operation
             GalleryInVmAccessControlProfilePatch patch = new GalleryInVmAccessControlProfilePatch
             {
-                Properties = new GalleryInVmAccessControlProfileProperties(SupportedOperatingSystemType.Linux, EndpointType.WireServer),
+                Properties = new GalleryInVmAccessControlProfileProperties(SupportedOperatingSystemType.Linux, ComputeGalleryEndpointType.WireServer),
             };
             ArmOperation<GalleryInVmAccessControlProfileResource> lro = await galleryInVmAccessControlProfile.UpdateAsync(WaitUntil.Completed, patch);
             GalleryInVmAccessControlProfileResource result = lro.Value;

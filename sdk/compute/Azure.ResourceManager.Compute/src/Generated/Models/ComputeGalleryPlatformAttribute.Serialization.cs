@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class PlatformAttribute : IUtf8JsonSerializable, IJsonModel<PlatformAttribute>
+    public partial class ComputeGalleryPlatformAttribute : IUtf8JsonSerializable, IJsonModel<ComputeGalleryPlatformAttribute>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PlatformAttribute>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeGalleryPlatformAttribute>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<PlatformAttribute>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeGalleryPlatformAttribute>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PlatformAttribute>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeGalleryPlatformAttribute>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlatformAttribute)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeGalleryPlatformAttribute)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && Optional.IsDefined(Name))
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.Compute.Models
             }
         }
 
-        PlatformAttribute IJsonModel<PlatformAttribute>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ComputeGalleryPlatformAttribute IJsonModel<ComputeGalleryPlatformAttribute>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PlatformAttribute>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeGalleryPlatformAttribute>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlatformAttribute)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeGalleryPlatformAttribute)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePlatformAttribute(document.RootElement, options);
+            return DeserializeComputeGalleryPlatformAttribute(document.RootElement, options);
         }
 
-        internal static PlatformAttribute DeserializePlatformAttribute(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ComputeGalleryPlatformAttribute DeserializeComputeGalleryPlatformAttribute(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -103,38 +103,38 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PlatformAttribute(name, value, serializedAdditionalRawData);
+            return new ComputeGalleryPlatformAttribute(name, value, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<PlatformAttribute>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ComputeGalleryPlatformAttribute>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PlatformAttribute>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeGalleryPlatformAttribute>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PlatformAttribute)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeGalleryPlatformAttribute)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PlatformAttribute IPersistableModel<PlatformAttribute>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ComputeGalleryPlatformAttribute IPersistableModel<ComputeGalleryPlatformAttribute>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PlatformAttribute>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeGalleryPlatformAttribute>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializePlatformAttribute(document.RootElement, options);
+                        return DeserializeComputeGalleryPlatformAttribute(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PlatformAttribute)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeGalleryPlatformAttribute)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PlatformAttribute>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeGalleryPlatformAttribute>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string description = default;
             SupportedOperatingSystemType osType = default;
-            EndpointType applicableHostEndpoint = default;
+            ComputeGalleryEndpointType applicableHostEndpoint = default;
             GalleryProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("applicableHostEndpoint"u8))
                 {
-                    applicableHostEndpoint = property.Value.GetString().ToEndpointType();
+                    applicableHostEndpoint = property.Value.GetString().ToComputeGalleryEndpointType();
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

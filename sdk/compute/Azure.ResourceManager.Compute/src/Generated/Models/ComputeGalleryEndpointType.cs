@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> This property allows you to specify the Endpoint type for which this profile is defining the access control for. Possible values are: 'WireServer' or 'IMDS'. </summary>
-    public enum EndpointType
+    public enum ComputeGalleryEndpointType
     {
         /// <summary> WireServer. </summary>
         WireServer,

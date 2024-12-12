@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string validationETag = default;
             IReadOnlyList<ExecutedValidation> executedValidations = default;
-            IReadOnlyList<PlatformAttribute> platformAttributes = default;
+            IReadOnlyList<ComputeGalleryPlatformAttribute> platformAttributes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,10 +128,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<PlatformAttribute> array = new List<PlatformAttribute>();
+                    List<ComputeGalleryPlatformAttribute> array = new List<ComputeGalleryPlatformAttribute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PlatformAttribute.DeserializePlatformAttribute(item, options));
+                        array.Add(ComputeGalleryPlatformAttribute.DeserializeComputeGalleryPlatformAttribute(item, options));
                     }
                     platformAttributes = array;
                     continue;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ValidationsProfile(validationETag, executedValidations ?? new ChangeTrackingList<ExecutedValidation>(), platformAttributes ?? new ChangeTrackingList<PlatformAttribute>(), serializedAdditionalRawData);
+            return new ValidationsProfile(validationETag, executedValidations ?? new ChangeTrackingList<ExecutedValidation>(), platformAttributes ?? new ChangeTrackingList<ComputeGalleryPlatformAttribute>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ValidationsProfile>.Write(ModelReaderWriterOptions options)

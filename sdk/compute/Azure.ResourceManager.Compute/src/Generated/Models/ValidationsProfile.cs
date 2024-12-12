@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal ValidationsProfile()
         {
             ExecutedValidations = new ChangeTrackingList<ExecutedValidation>();
-            PlatformAttributes = new ChangeTrackingList<PlatformAttribute>();
+            PlatformAttributes = new ChangeTrackingList<ComputeGalleryPlatformAttribute>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ValidationsProfile"/>. </summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="executedValidations"></param>
         /// <param name="platformAttributes"> This specifies the pub, offer, sku and version of the image version metadata. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ValidationsProfile(string validationETag, IReadOnlyList<ExecutedValidation> executedValidations, IReadOnlyList<PlatformAttribute> platformAttributes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ValidationsProfile(string validationETag, IReadOnlyList<ExecutedValidation> executedValidations, IReadOnlyList<ComputeGalleryPlatformAttribute> platformAttributes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ValidationETag = validationETag;
             ExecutedValidations = executedValidations;
@@ -70,6 +70,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Gets the executed validations. </summary>
         public IReadOnlyList<ExecutedValidation> ExecutedValidations { get; }
         /// <summary> This specifies the pub, offer, sku and version of the image version metadata. </summary>
-        public IReadOnlyList<PlatformAttribute> PlatformAttributes { get; }
+        public IReadOnlyList<ComputeGalleryPlatformAttribute> PlatformAttributes { get; }
     }
 }

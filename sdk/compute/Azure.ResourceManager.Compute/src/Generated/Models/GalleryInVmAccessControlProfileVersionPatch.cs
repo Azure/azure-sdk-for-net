@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="rules"> This is the Access Control Rules specification for an inVMAccessControlProfile version. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryInVmAccessControlProfileVersionPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<TargetRegion> targetLocations, bool? excludeFromLatest, DateTimeOffset? publishedOn, GalleryProvisioningState? provisioningState, ReplicationStatus replicationStatus, AccessControlRulesMode? mode, EndpointAccess? defaultAccess, AccessControlRules rules, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal GalleryInVmAccessControlProfileVersionPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<TargetRegion> targetLocations, bool? excludeFromLatest, DateTimeOffset? publishedOn, GalleryProvisioningState? provisioningState, ReplicationStatus replicationStatus, AccessControlRulesMode? mode, ComputeGalleryEndpointAccess? defaultAccess, AccessControlRules rules, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             TargetLocations = targetLocations;
             ExcludeFromLatest = excludeFromLatest;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> This property allows you to specify whether the access control rules are in Audit mode, in Enforce mode or Disabled. Possible values are: 'Audit', 'Enforce' or 'Disabled'. </summary>
         public AccessControlRulesMode? Mode { get; set; }
         /// <summary> This property allows you to specify if the requests will be allowed to access the host endpoints. Possible values are: 'Allow', 'Deny'. </summary>
-        public EndpointAccess? DefaultAccess { get; set; }
+        public ComputeGalleryEndpointAccess? DefaultAccess { get; set; }
         /// <summary> This is the Access Control Rules specification for an inVMAccessControlProfile version. </summary>
         public AccessControlRules Rules { get; set; }
         /// <summary> Resource tags. </summary>

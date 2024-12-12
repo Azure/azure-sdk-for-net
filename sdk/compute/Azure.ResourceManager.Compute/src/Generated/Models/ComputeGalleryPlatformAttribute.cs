@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> This is the platform attribute of the image version. </summary>
-    public partial class PlatformAttribute
+    public partial class ComputeGalleryPlatformAttribute
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.Compute.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PlatformAttribute"/>. </summary>
-        internal PlatformAttribute()
+        /// <summary> Initializes a new instance of <see cref="ComputeGalleryPlatformAttribute"/>. </summary>
+        internal ComputeGalleryPlatformAttribute()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PlatformAttribute"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeGalleryPlatformAttribute"/>. </summary>
         /// <param name="name"> This property specifies the name of the platformAttribute. It is read-only. </param>
         /// <param name="value"> This property specifies the value of the corresponding name property. It is read-only. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PlatformAttribute(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ComputeGalleryPlatformAttribute(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Value = value;

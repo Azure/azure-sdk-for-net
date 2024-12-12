@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute.Models
             GalleryProvisioningState? provisioningState = default;
             ReplicationStatus replicationStatus = default;
             AccessControlRulesMode? mode = default;
-            EndpointAccess? defaultAccess = default;
+            ComputeGalleryEndpointAccess? defaultAccess = default;
             AccessControlRules rules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            defaultAccess = new EndpointAccess(property0.Value.GetString());
+                            defaultAccess = new ComputeGalleryEndpointAccess(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("rules"u8))

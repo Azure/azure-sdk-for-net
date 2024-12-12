@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="version"> This property specifies the valid version of the validation. </param>
         /// <param name="executionOn"> This property specifies the starting timestamp. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExecutedValidation(string executedValidationType, ValidationStatus? status, string version, DateTimeOffset? executionOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExecutedValidation(string executedValidationType, ComputeGalleryValidationStatus? status, string version, DateTimeOffset? executionOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExecutedValidationType = executedValidationType;
             Status = status;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> This property specifies the type of image version validation. </summary>
         public string ExecutedValidationType { get; }
         /// <summary> This property specifies the status of the validationProfile of the image version. </summary>
-        public ValidationStatus? Status { get; }
+        public ComputeGalleryValidationStatus? Status { get; }
         /// <summary> This property specifies the valid version of the validation. </summary>
         public string Version { get; }
         /// <summary> This property specifies the starting timestamp. </summary>

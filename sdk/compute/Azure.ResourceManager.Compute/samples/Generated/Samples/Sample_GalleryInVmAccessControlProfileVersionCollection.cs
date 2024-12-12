@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Samples
                 TargetLocations = { new TargetRegion("West US"), new TargetRegion("South Central US") },
                 ExcludeFromLatest = false,
                 Mode = AccessControlRulesMode.Audit,
-                DefaultAccess = EndpointAccess.Allow,
+                DefaultAccess = ComputeGalleryEndpointAccess.Allow,
                 Rules = new AccessControlRules
                 {
                     Privileges = {new AccessControlRulesPrivilege("GoalState", "/machine")

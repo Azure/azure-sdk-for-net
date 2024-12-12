@@ -283,6 +283,13 @@ rename-mapping:
   SkuProfileVMSize : ComputeSkuProfileVMSize
   AllocationStrategy : ComputeAllocationStrategy
   GallerySoftDeletedResource : GallerySoftDeleted
+  GalleryImageVersion.properties.restore: EnableRestore
+  EndpointAccess: ComputeGalleryEndpointAccess
+  EndpointTypes: ComputeGalleryEndpointTypes
+  GalleryImageVersionUpdate.restore : EnableRestore
+  GallerySoftDeletedResource.properties.softDeletedTime: -|date-time
+  PlatformAttribute: ComputeGalleryPlatformAttribute
+  ValidationStatus: ComputeGalleryValidationStatus
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced

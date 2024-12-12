@@ -62,13 +62,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="location"> The location. </param>
         /// <param name="resourceArmId"> arm id of the soft-deleted resource. </param>
         /// <param name="softDeletedArtifactType"> artifact type of the soft-deleted resource. </param>
-        /// <param name="softDeletedTime"> The timestamp for when the resource is soft-deleted. In dateTime offset format. </param>
+        /// <param name="softDeletedOn"> The timestamp for when the resource is soft-deleted. In dateTime offset format. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GallerySoftDeleted(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier resourceArmId, SoftDeletedArtifactType? softDeletedArtifactType, string softDeletedTime, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal GallerySoftDeleted(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier resourceArmId, SoftDeletedArtifactType? softDeletedArtifactType, DateTimeOffset? softDeletedOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ResourceArmId = resourceArmId;
             SoftDeletedArtifactType = softDeletedArtifactType;
-            SoftDeletedTime = softDeletedTime;
+            SoftDeletedOn = softDeletedOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -82,6 +82,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> artifact type of the soft-deleted resource. </summary>
         public SoftDeletedArtifactType? SoftDeletedArtifactType { get; set; }
         /// <summary> The timestamp for when the resource is soft-deleted. In dateTime offset format. </summary>
-        public string SoftDeletedTime { get; set; }
+        public DateTimeOffset? SoftDeletedOn { get; set; }
     }
 }

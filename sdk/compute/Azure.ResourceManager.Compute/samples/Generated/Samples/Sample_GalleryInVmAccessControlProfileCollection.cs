@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute.Samples
             string inVmAccessControlProfileName = "myInVMAccessControlProfileName";
             GalleryInVmAccessControlProfileData data = new GalleryInVmAccessControlProfileData(new AzureLocation("West US"))
             {
-                Properties = new GalleryInVmAccessControlProfileProperties(SupportedOperatingSystemType.Linux, EndpointType.WireServer),
+                Properties = new GalleryInVmAccessControlProfileProperties(SupportedOperatingSystemType.Linux, ComputeGalleryEndpointType.WireServer),
             };
             ArmOperation<GalleryInVmAccessControlProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, inVmAccessControlProfileName, data);
             GalleryInVmAccessControlProfileResource result = lro.Value;

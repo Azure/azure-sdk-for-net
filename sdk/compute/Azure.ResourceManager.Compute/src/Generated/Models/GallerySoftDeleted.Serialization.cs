@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("softDeletedArtifactType"u8);
                 writer.WriteStringValue(SoftDeletedArtifactType.Value.ToString());
             }
-            if (Optional.IsDefined(SoftDeletedTime))
+            if (Optional.IsDefined(SoftDeletedOn))
             {
                 writer.WritePropertyName("softDeletedTime"u8);
-                writer.WriteStringValue(SoftDeletedTime);
+                writer.WriteStringValue(SoftDeletedOn.Value, "O");
             }
             writer.WriteEndObject();
         }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute.Models
             SystemData systemData = default;
             ResourceIdentifier resourceArmId = default;
             SoftDeletedArtifactType? softDeletedArtifactType = default;
-            string softDeletedTime = default;
+            DateTimeOffset? softDeletedTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,7 +161,11 @@ namespace Azure.ResourceManager.Compute.Models
                         }
                         if (property0.NameEquals("softDeletedTime"u8))
                         {
-                            softDeletedTime = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            softDeletedTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                     }

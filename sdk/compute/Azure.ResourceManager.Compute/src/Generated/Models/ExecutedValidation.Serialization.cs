@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             string type = default;
-            ValidationStatus? status = default;
+            ComputeGalleryValidationStatus? status = default;
             string version = default;
             DateTimeOffset? executionTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    status = new ValidationStatus(property.Value.GetString());
+                    status = new ComputeGalleryValidationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("version"u8))
