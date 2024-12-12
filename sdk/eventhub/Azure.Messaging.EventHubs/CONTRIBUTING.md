@@ -33,11 +33,11 @@ Tests in the Event Hubs client library are split into two categories:
 
 - **Azure Subscription:**  To use Azure services, including Azure Event Hubs, you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free/dotnet/) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://azure.microsoft.com/account).
 
-- **.NET SDK:** The Azure Event Hubs requires the [.NET SDK](https://dotnet.microsoft.com/download/dotnet/7.0) 7.0.100. (or a higher version in the 7.0.x band) with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `11.0`.  Visual Studio users will need to use Visual Studio 2022 or later.  Visual Studio 2022, including the free Community edition, can be downloaded [here](https://visualstudio.microsoft.com). 
+- **.NET SDK:** The Azure Event Hubs requires the [.NET SDK](https://dotnet.microsoft.com/download/dotnet/7.0) 7.0.100. (or a higher version in the 7.0.x band) with a [language version](https://learn.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `11.0`.  Visual Studio users will need to use Visual Studio 2022 or later.  Visual Studio 2022, including the free Community edition, can be downloaded [here](https://visualstudio.microsoft.com). 
 
 - **PowerShell:** To use the Azure SDK automation for development tools and setting up your testing environment, PowerShell Core version 7.0 or greater is needed.  This version is available cross-platform and can be installed from the [PowerShell Core repository](https://github.com/PowerShell/PowerShell/blob/master/README.md).
 
-- **Azure PowerShell Module:** For PowerShell to interact with Azure, the [Azure Az module](https://docs.microsoft.com/powershell/azure/install-az-ps) is needed.  
+- **Azure PowerShell Module:** For PowerShell to interact with Azure, the [Azure Az module](https://learn.microsoft.com/powershell/azure/install-az-ps) is needed.  
 
 ### Creating Azure resources for tests
 
@@ -92,7 +92,7 @@ The full set of options for `New-TestResources.ps1` can be found in the [New-Tes
 
 #### Configuring the environment
 
-When the `New-TestResources.ps1` script completes, it will output a set of environment variables needed by the tests when executing.  On the Windows platform, the script will also emit an environment file read by the tests so that environment variables do not need to be explicitly set.  The environment file is encrypted using the .NET [Data Protection API (DAPI)](https://docs.microsoft.com/dotnet/standard/security/how-to-use-data-protection) and can be read only by the user account that executed the script.
+When the `New-TestResources.ps1` script completes, it will output a set of environment variables needed by the tests when executing.  On the Windows platform, the script will also emit an environment file read by the tests so that environment variables do not need to be explicitly set.  The environment file is encrypted using the .NET [Data Protection API (DAPI)](https://learn.microsoft.com/dotnet/standard/security/how-to-use-data-protection) and can be read only by the user account that executed the script.
 
 For non-Windows platforms, these environment variables will need to be available prior to running the tests.  For more information on setting environment variables, please see [Azure SDK Live Test Resource Management](https://github.com/Azure/azure-sdk-tools/blob/main/eng/common/TestResources/README.md#on-the-desktop).
 
@@ -125,7 +125,7 @@ The Event Hubs Live tests read information from the following environment variab
  - `AZURE_AUTHORITY_HOST`  
   The URL of the Azure Authority to use for authenticating resource management operations.  For the Azure public cloud, this should be: https://login.microsoftonline.com/.  
   
-    When testing in other cloud instances, the appropriate host will be needed.  See [National Clouds](https://docs.microsoft.com/azure/active-directory/develop/authentication-national-cloud) for more information.
+    When testing in other cloud instances, the appropriate host will be needed.  See [National Clouds](https://learn.microsoft.com/azure/active-directory/develop/authentication-national-cloud) for more information.
  
 - `SERVICE_MANAGEMENT_URL` _**(optional)**_  
   The URL of the endpoint responsible for service management operations in Azure.  The default for this is appropriate for use with the Azure public cloud; when testing in other cloud instances, specifying this value may be needed.

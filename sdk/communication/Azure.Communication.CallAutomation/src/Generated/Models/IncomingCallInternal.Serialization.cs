@@ -19,8 +19,8 @@ namespace Azure.Communication.CallAutomation
             }
             CommunicationIdentifierModel to = default;
             CommunicationIdentifierModel @from = default;
-            string serverCallId = default;
             string callerDisplayName = default;
+            string serverCallId = default;
             CustomCallingContextInternal customContext = default;
             string incomingCallContext = default;
             CommunicationIdentifierModel onBehalfOfCallee = default;
@@ -45,14 +45,14 @@ namespace Azure.Communication.CallAutomation
                     @from = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("serverCallId"u8))
-                {
-                    serverCallId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("callerDisplayName"u8))
                 {
                     callerDisplayName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("serverCallId"u8))
+                {
+                    serverCallId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("customContext"u8))
@@ -87,8 +87,8 @@ namespace Azure.Communication.CallAutomation
             return new IncomingCallInternal(
                 to,
                 @from,
-                serverCallId,
                 callerDisplayName,
+                serverCallId,
                 customContext,
                 incomingCallContext,
                 onBehalfOfCallee,

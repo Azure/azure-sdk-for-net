@@ -28,6 +28,16 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("startMediaStreaming"u8);
                 writer.WriteBooleanValue(StartMediaStreaming.Value);
             }
+            if (Optional.IsDefined(EnableBidirectional))
+            {
+                writer.WritePropertyName("enableBidirectional"u8);
+                writer.WriteBooleanValue(EnableBidirectional.Value);
+            }
+            if (Optional.IsDefined(AudioFormat))
+            {
+                writer.WritePropertyName("audioFormat"u8);
+                writer.WriteStringValue(AudioFormat.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 

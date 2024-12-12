@@ -9,13 +9,14 @@ namespace Azure.Communication.CallAutomation
     public class MediaStreamingOptions
     {
         /// <summary> Initializes a new instance of MediaStreamingOptions. </summary>
-        public MediaStreamingOptions(Uri transportUri, MediaStreamingTransport transportType,
-            MediaStreamingContent contentType, MediaStreamingAudioChannel audioChannelType)
+        public MediaStreamingOptions(Uri transportUri,
+            MediaStreamingContent contentType, MediaStreamingAudioChannel audioChannelType, MediaStreamingTransport transportType = default, bool? startMediaStreaming = null)
         {
             TransportUri = transportUri;
             MediaStreamingTransport = transportType;
             MediaStreamingContent = contentType;
             MediaStreamingAudioChannel = audioChannelType;
+            StartMediaStreaming = startMediaStreaming;
         }
 
         /// <summary> Transport URL for media streaming. </summary>
@@ -26,5 +27,11 @@ namespace Azure.Communication.CallAutomation
         public MediaStreamingContent MediaStreamingContent { get; }
         /// <summary> Audio channel type to stream, eg. unmixed audio, mixed audio. </summary>
         public MediaStreamingAudioChannel MediaStreamingAudioChannel { get; }
+        /// <summary> Determines if the media streaming should be started immediately after call is answered or not. </summary>
+        public bool? StartMediaStreaming { get; set; }
+        /// <summary> A value indicating whether bidirectional streaming is enabled. </summary>
+        public bool? EnableBidirectional { get; set; }
+        /// <summary> Specifies the audio format used for encoding, including sample rate and channel type. </summary>
+        public AudioFormat? AudioFormat { get; set; }
     }
 }
