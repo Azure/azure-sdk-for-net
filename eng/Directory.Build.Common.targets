@@ -105,6 +105,9 @@
     <PackageReference Remove="System.Threading.Channels" />
     <PackageReference Remove="System.Text.Encodings.Web" />
     <PackageReference Remove="System.Text.Json" />
+    <PackageReference Remove="Microsoft.Bcl.AsyncInterfaces" />
+    <PackageReference Remove="System.Diagnostics.DiagnosticSource" />
+    <PackageReference Remove="System.Numerics.Vectors" />
   </ItemGroup>
 
   <!-- Add Package Icon to DataPlane Packages -->
