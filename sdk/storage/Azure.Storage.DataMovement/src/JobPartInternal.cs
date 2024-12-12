@@ -511,7 +511,7 @@ namespace Azure.Storage.DataMovement
                     // to the overall reason why the job was cancelled in the first place.
                     await _destinationResource.DeleteIfExistsAsync().ConfigureAwait(false);
                 }
-                finally
+                catch
                 {
                     // We are cleaning up / deleting optimistically, move on if it fails.
                 }
