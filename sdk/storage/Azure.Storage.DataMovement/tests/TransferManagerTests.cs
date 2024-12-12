@@ -532,11 +532,11 @@ public class TransferManagerTests
         Assert.That(transfer.TransferStatus.HasFailedItems);
         Assert.That(failures, Is.Not.Empty);
 
-        Assert.That(capturedTransferStatuses.Count, Is.EqualTo(3)); // TODO should be 4
+        Assert.That(capturedTransferStatuses.Count, Is.EqualTo(4));
         Assert.That(capturedTransferStatuses[0].State, Is.EqualTo(DataTransferState.InProgress));
         Assert.That(capturedTransferStatuses[1].State, Is.EqualTo(DataTransferState.InProgress));
         Assert.That(capturedTransferStatuses[2].State, Is.EqualTo(DataTransferState.Stopping));
-        //Assert.That(capturedTransferStatuses[3].IsCompletedWithFailedItems); // TODO this should exist
+        Assert.That(capturedTransferStatuses[3].IsCompletedWithFailedItems);
     }
 
     [Test]
