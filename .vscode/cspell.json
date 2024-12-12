@@ -1618,6 +1618,12 @@
         "AOAI",
         "Rerank"
       ]
+    },
+    {
+      "filename": "**/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/api/*.cs",
+      "words": [
+        "prebuilts"
+      ]
     }
   ],
   "allowCompoundWords": true
