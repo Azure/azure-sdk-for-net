@@ -202,6 +202,7 @@ namespace Azure.Core
             private readonly byte[] _itemPropertyName;
             private readonly byte[] _nextLinkPropertyName;
             private readonly int? _defaultPageSize;
+            private readonly int? _maxPageSize;
             private readonly CancellationToken _cancellationToken;
             private readonly ErrorOptions? _errorOptions;
 
@@ -233,7 +234,36 @@ namespace Azure.Core
                 _cancellationToken = cancellationToken ?? default;
                 _errorOptions = errorOptions ?? ErrorOptions.Default;
             }
-
+            public PageableImplementation(
+                Response? initialResponse,
+                Func<int?, HttpMessage>? createFirstPageRequest,
+                Func<int?, string, HttpMessage>? createNextPageRequest,
+                Func<JsonElement, T> valueFactory,
+                HttpPipeline pipeline,
+                ClientDiagnostics clientDiagnostics,
+                string scopeName,
+                string? itemPropertyName,
+                string? nextLinkPropertyName,
+                int? defaultPageSize,
+                int? maxPageSize,
+                CancellationToken? cancellationToken,
+                ErrorOptions? errorOptions)
+            {
+                _initialResponse = initialResponse;
+                _createFirstPageRequest = createFirstPageRequest;
+                _createNextPageRequest = createNextPageRequest;
+                _valueFactory = typeof(T) == typeof(BinaryData) ? null : valueFactory;
+                _responseParser = null;
+                _pipeline = pipeline;
+                _clientDiagnostics = clientDiagnostics;
+                _scopeName = scopeName;
+                _itemPropertyName = itemPropertyName != null ? Encoding.UTF8.GetBytes(itemPropertyName) : DefaultItemPropertyName;
+                _nextLinkPropertyName = nextLinkPropertyName != null ? Encoding.UTF8.GetBytes(nextLinkPropertyName) : DefaultNextLinkPropertyName;
+                _defaultPageSize = defaultPageSize;
+                _maxPageSize = maxPageSize;
+                _cancellationToken = cancellationToken ?? default;
+                _errorOptions = errorOptions ?? ErrorOptions.Default;
+            }
             public PageableImplementation(Func<int?, HttpMessage>? createFirstPageRequest, Func<int?, string, HttpMessage>? createNextPageRequest, Func<Response, (List<T>? Values, string? NextLink)> responseParser, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, string scopeName, int? defaultPageSize, RequestContext? requestContext)
             {
                 _createFirstPageRequest = createFirstPageRequest;
