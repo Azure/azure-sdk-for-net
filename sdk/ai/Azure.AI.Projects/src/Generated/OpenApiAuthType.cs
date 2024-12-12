@@ -10,7 +10,12 @@ using System.ComponentModel;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> Type of chunking strategy. </summary>
+    /// <summary>
+    ///   Authentication type for OpenApi endpoint. Allowed types are:
+    ///   - Anonymous (no authentication required)
+    ///   - Connection (requires connection_id to endpoint, as setup in AI Foundry)
+    ///   - Managed_Identity (requires audience for identity based auth)
+    /// </summary>
     internal readonly partial struct OpenApiAuthType : IEquatable<OpenApiAuthType>
     {
         private readonly string _value;
