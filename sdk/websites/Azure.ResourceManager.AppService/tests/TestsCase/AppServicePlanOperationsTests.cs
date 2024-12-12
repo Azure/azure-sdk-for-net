@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -60,14 +61,24 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         public async Task GetWebApps()
         {
             var planName = Recording.GenerateAssetName("testDisk-");
+            var siteName = Recording.GenerateAssetName("testSite");
             var plan1 = await CreateAppServicePlanAsync(planName);
             AppServicePlanResource plan2 = await plan1.GetAsync();
+            var resourcegroupName = plan2.Data.ResourceGroup;
+            var resourcegroup = Client.GetResourceGroupResource(new ResourceIdentifier($"/subscriptions/{DefaultSubscription.Data.SubscriptionId}/resourceGroups/{resourcegroupName}"));
+            var siteCollection = resourcegroup.GetWebSites();
+            var siteInput = new WebSiteData(AzureLocation.EastUS2)
+            {
+                AppServicePlanId = plan2.Id,
+            };
+            var lro = await siteCollection.CreateOrUpdateAsync(WaitUntil.Completed, siteName, siteInput);
+            var site = lro.Value;
             var relays = plan2.GetHybridConnectionRelaysAsync();
             await foreach (var relayOverview in relays)
             {
                 var relay = await plan2.GetAppServicePlanHybridConnectionNamespaceRelayAsync(relayOverview.ServiceBusNamespace,
                 relayOverview.Name);
-                var listOfAppServicesWhichAreUsingHybridConnection = relay.Value.GetWebAppsByHybridConnectionAsync();
+                var listOfAppServicesWhichAreUsingHybridConnection = relay.Value.GetAllWebAppsByHybridConnectionAsync();
             }
         }
 
@@ -84,7 +95,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
                 Console.WriteLine(relayOverview.ServiceBusNamespace);
                 Console.WriteLine(relayOverview.Name);
                 var relay = await plan.GetAppServicePlanHybridConnectionNamespaceRelayAsync(relayOverview.ServiceBusNamespace, relayOverview.Name);
-                var listOfAppServicesWhichAreUsingHybridConnection = relay.Value.GetWebAppsByHybridConnectionAsync();
+                var listOfAppServicesWhichAreUsingHybridConnection = relay.Value.GetAllWebAppsByHybridConnectionAsync();
                 await foreach (var webApp in listOfAppServicesWhichAreUsingHybridConnection)
                 {
                     Console.WriteLine(webApp.Name);

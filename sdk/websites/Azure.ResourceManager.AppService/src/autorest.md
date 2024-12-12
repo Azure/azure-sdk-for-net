@@ -107,7 +107,7 @@ override-operation-name:
   StaticSites_UpdateStaticSiteUser: UpdateUser
   CheckNameAvailability: CheckAppServiceNameAvailability
   AppServicePlans_ListHybridConnections: GetHybridConnectionRelays
-  AppServicePlans_ListWebAppsByHybridConnection: GetAllWebAppByHybridConnection
+  AppServicePlans_ListWebAppsByHybridConnection: GetAllWebAppsByHybridConnection
   StaticSites_CreateOrUpdateStaticSiteBuildAppSettings: CreateOrUpdateAppSettings
   StaticSites_CreateOrUpdateStaticSiteBuildFunctionAppSettings: CreateOrUpdateFunctionAppSettings
   StaticSites_ListStaticSiteBuildFunctions: GetFunctions
