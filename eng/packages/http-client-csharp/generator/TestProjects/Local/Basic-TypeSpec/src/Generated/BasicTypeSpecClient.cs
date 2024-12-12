@@ -26,7 +26,7 @@ namespace BasicTypeSpec
         private readonly AzureKeyCredential _keyCredential;
         /// <summary> A credential used to authenticate to the service. </summary>
         private readonly TokenCredential _tokenCredential;
-        private const string[] AuthorizationScopes = new string[] { "https://theservice.azure.com/.default" };
+        private static readonly string[] AuthorizationScopes = new string[] { "https://theservice.azure.com/.default" };
 
         /// <summary> Initializes a new instance of BasicTypeSpecClient for mocking. </summary>
         protected BasicTypeSpecClient()
