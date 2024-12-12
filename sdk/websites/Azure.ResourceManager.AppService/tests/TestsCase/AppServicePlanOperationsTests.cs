@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
     public class AppServicePlanOperationsTests : AppServiceTestBase
     {
         public AppServicePlanOperationsTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
         private async Task<AppServicePlanResource> CreateAppServicePlanAsync(string appServicePlanName)
         {
             var container = (await CreateResourceGroupAsync()).GetAppServicePlans();
-            var input = ResourceDataHelper.GetBasicAppServicePlanData(AzureLocation.EastUS2);
+            var input = ResourceDataHelper.GetBasicAppServicePlanData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, appServicePlanName, input);
             return lro.Value;
         }
