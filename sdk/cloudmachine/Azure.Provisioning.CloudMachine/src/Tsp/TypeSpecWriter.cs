@@ -240,8 +240,7 @@ public static class TypeSpecWriter
         if (type == typeof(double))
             return "float64";
 
-        // TODO:
-        // return "safeint" if long is attributed with [SafeInt]
+        // TODO: return "safeint" if long is attributed with [SafeInt]
         // arrays
 
         if (type.IsClass)

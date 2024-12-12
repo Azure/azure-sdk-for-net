@@ -90,7 +90,7 @@
 # ServiceOwners:                                                   @Azure/aks-pm
 
 # ServiceLabel: %Alerts Management
-# ServiceOwners:                                                   @liadtal @yairgil
+# ServiceOwners:                                                   @yairgil
 
 # ServiceLabel: %ARM
 # ServiceOwners:                                                   @armleads-azure
@@ -1038,12 +1038,6 @@
 
 # ServiceLabel: %Operator Nexus - Network Cloud %Mgmt
 # ServiceOwners:                                                   @Azure/azure-sdk-write-networkcloud
-
-# PRLabel: %Oracle
-/sdk/oracle/Azure.ResourceManager.*/                               @v-jamcheung @v-rvilathurs @v-eelhomsi
-
-# ServiceLabel: %Oracle %Mgmt
-# ServiceOwners:                                                   @v-jamcheung @v-rvilathurs @v-eelhomsi
 
 # PRLabel: %Quota
 /sdk/quota/Azure.ResourceManager.*/                                @tejasm-microsoft

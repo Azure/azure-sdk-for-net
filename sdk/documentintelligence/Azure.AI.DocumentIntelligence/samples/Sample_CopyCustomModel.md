@@ -45,8 +45,8 @@ var targetClient = new DocumentIntelligenceAdministrationClient(new Uri(targetEn
 Before starting, we need to get a `CopyAuthorization` from the target resource that will give us permission to execute the copy.
 ```C# Snippet:DocumentIntelligenceSampleGetCopyAuthorization
 string targetModelId = "<targetModelId>";
-var authorizeCopyContent = new AuthorizeCopyContent(targetModelId);
-CopyAuthorization copyAuthorization = await targetClient.AuthorizeModelCopyAsync(authorizeCopyContent);
+var authorizeCopyOptions = new AuthorizeModelCopyOptions(targetModelId);
+ModelCopyAuthorization copyAuthorization = await targetClient.AuthorizeModelCopyAsync(authorizeCopyOptions);
 ```
 
 ### Execute the copy

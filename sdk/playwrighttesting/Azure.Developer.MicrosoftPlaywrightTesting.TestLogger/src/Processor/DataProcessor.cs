@@ -107,7 +107,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
             testCaseResultData.TestTitle = testResultSource.TestCase.DisplayName;
             var className = FetchTestClassName(testResultSource.TestCase.FullyQualifiedName);
             testCaseResultData.SuiteTitle = className;
-            testCaseResultData.SuiteId = className;
+            testCaseResultData.SuiteId = ReporterUtils.CalculateSha1Hash(className);
             testCaseResultData.FileName = FetchFileName(testResultSource.TestCase.Source);
             testCaseResultData.LineNumber = testResultSource.TestCase.LineNumber;
             testCaseResultData.Retry = 0; // TODO Retry and PreviousRetries

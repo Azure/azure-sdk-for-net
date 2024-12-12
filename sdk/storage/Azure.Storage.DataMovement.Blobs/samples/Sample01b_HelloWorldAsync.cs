@@ -58,17 +58,17 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     // Construct simple blob resources for data movement
                     #region Snippet:ResourceConstruction_Blobs
                     StorageResource container = blobs.FromContainer(
-                        new Uri("http://myaccount.blob.core.windows.net/container"));
+                        new Uri("https://myaccount.blob.core.windows.net/container"));
 
                     // Block blobs are the default if no options are specified
                     StorageResource blockBlob = blobs.FromBlob(
-                        new Uri("http://myaccount.blob.core.windows.net/container/sample-blob-block"),
+                        new Uri("https://myaccount.blob.core.windows.net/container/sample-blob-block"),
                         new BlockBlobStorageResourceOptions());
                     StorageResource pageBlob = blobs.FromBlob(
-                        new Uri("http://myaccount.blob.core.windows.net/container/sample-blob-page"),
+                        new Uri("https://myaccount.blob.core.windows.net/container/sample-blob-page"),
                         new PageBlobStorageResourceOptions());
                     StorageResource appendBlob = blobs.FromBlob(
-                        new Uri("http://myaccount.blob.core.windows.net/container/sample-blob-append"),
+                        new Uri("https://myaccount.blob.core.windows.net/container/sample-blob-append"),
                         new AppendBlobStorageResourceOptions());
                     #endregion
                 }
@@ -866,8 +866,8 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 // Get a temporary path on disk where we can download the file
                 //@@ string downloadPath = "hello.jpg";
 
-                // Download the public blob at https://aka.ms/bloburl
-                BlockBlobClient sourceBlob = new BlockBlobClient(new Uri("https://aka.ms/bloburl"));
+                // Download the public MacBeth copy at https://www.gutenberg.org/cache/epub/1533/pg1533.txt
+                BlockBlobClient sourceBlob = new BlockBlobClient(new Uri("https://www.gutenberg.org/cache/epub/1533/pg1533.txt"));
                 await sourceBlob.DownloadToAsync(downloadPath);
 
                 // Create a token credential that can use our Azure Active
@@ -932,14 +932,16 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 // Get a temporary path on disk where we can download the file
                 //@@ string downloadPath = "hello.jpg";
 
-                // Download the public blob at https://aka.ms/bloburl
-                BlockBlobClient sourceBlob = new BlockBlobClient(new Uri("https://aka.ms/bloburl"));
+                // Download the public MacBeth copy at https://www.gutenberg.org/cache/epub/1533/pg1533.txt
+                BlockBlobClient sourceBlob = new BlockBlobClient(new Uri("https://www.gutenberg.org/cache/epub/1533/pg1533.txt"));
                 await sourceBlob.DownloadToAsync(downloadPath);
 
                 // Create transfer manager
-                TransferManager transferManager = new TransferManager(new TransferManagerOptions());
                 BlobsStorageResourceProvider blobs = new();
                 LocalFilesStorageResourceProvider files = new();
+                TransferManagerOptions options = new TransferManagerOptions();
+                options.ResumeProviders = new List<StorageResourceProvider>() { files, blobs };
+                TransferManager transferManager = new TransferManager(options);
 
                 // Create source and destination resource
                 StorageResource sourceResource = blobs.FromClient(sourceBlob);

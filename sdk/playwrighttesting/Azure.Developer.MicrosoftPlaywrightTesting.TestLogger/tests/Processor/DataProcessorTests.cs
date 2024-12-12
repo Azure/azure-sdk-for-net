@@ -165,7 +165,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests.Processor
             Assert.IsNotNull(result.TestId);
             Assert.AreEqual(testResult.TestCase.DisplayName, result.TestTitle);
             Assert.AreEqual("Test", result.SuiteTitle);
-            Assert.AreEqual("Test", result.SuiteId);
+            Assert.AreEqual(ReporterUtils.CalculateSha1Hash("Test"), result.SuiteId);
             Assert.AreEqual("TestNamespace.TestClass", result.FileName);
             Assert.AreEqual(testResult.TestCase.LineNumber, result.LineNumber);
             Assert.AreEqual(0, result.Retry);

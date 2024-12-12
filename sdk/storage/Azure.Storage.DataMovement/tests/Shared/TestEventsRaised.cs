@@ -32,19 +32,18 @@ namespace Azure.Storage.DataMovement.Tests
         private static readonly DataTransferStatus SkippedCompletedStatus = new DataTransferStatusInternal(DataTransferState.Completed, false, true);
         private static readonly DataTransferStatus FailedCompletedStatus = new DataTransferStatusInternal(DataTransferState.Completed, true, false);
 
-        public List<TransferItemFailedEventArgs> FailedEvents { get; internal set; }
-        private object _failedEventsLock = new();
         public List<TransferStatusEventArgs> StatusEvents { get; internal set; }
-        public List<TransferItemSkippedEventArgs> SkippedEvents { get; internal set; }
+        public ConcurrentBag<TransferItemFailedEventArgs> FailedEvents { get; internal set; }
+        public ConcurrentBag<TransferItemSkippedEventArgs> SkippedEvents { get; internal set; }
         public ConcurrentBag<TransferItemCompletedEventArgs> SingleCompletedEvents { get; internal set; }
 
         private List<DataTransferOptions> _options;
 
         private TestEventsRaised()
         {
-            FailedEvents = new List<TransferItemFailedEventArgs>();
             StatusEvents = new List<TransferStatusEventArgs>();
-            SkippedEvents = new List<TransferItemSkippedEventArgs>();
+            FailedEvents = new ConcurrentBag<TransferItemFailedEventArgs>();
+            SkippedEvents = new ConcurrentBag<TransferItemSkippedEventArgs>();
             SingleCompletedEvents = new ConcurrentBag<TransferItemCompletedEventArgs>();
         }
 
@@ -85,10 +84,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         private Task AppendFailedArg(TransferItemFailedEventArgs args)
         {
-            lock (_failedEventsLock)
-            {
-                FailedEvents.Add(args);
-            }
+            FailedEvents.Add(args);
             return Task.CompletedTask;
         }
 
