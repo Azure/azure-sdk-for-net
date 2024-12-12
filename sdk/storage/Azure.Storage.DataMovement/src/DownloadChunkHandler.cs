@@ -13,7 +13,7 @@ namespace Azure.Storage.DataMovement
     {
         #region Delegate Definitions
         public delegate Task CopyToDestinationFileInternal(long offset, long length, Stream stream, long expectedLength, bool initial);
-        public delegate void ReportProgressInBytes(long bytesWritten);
+        public delegate ValueTask ReportProgressInBytes(long bytesWritten);
         public delegate Task QueueCompleteFileDownloadInternal();
         public delegate Task InvokeFailedEventHandlerInternal(Exception ex);
         #endregion Delegate Definitions
@@ -119,7 +119,8 @@ namespace Azure.Storage.DataMovement
                         _expectedLength,
                         initial: _bytesTransferred == 0).ConfigureAwait(false);
                 }
-                UpdateBytesAndRange(args.Length);
+                _bytesTransferred += args.Length;
+                await _reportProgressInBytes(args.Length).ConfigureAwait(false);
 
                 // Check if we finished downloading the blob
                 if (_bytesTransferred == _expectedLength)
@@ -138,12 +139,6 @@ namespace Azure.Storage.DataMovement
                     _ = Task.Run(() => _invokeFailedEventHandler(ex));
                 }
             }
-        }
-
-        private void UpdateBytesAndRange(long bytesDownloaded)
-        {
-            _bytesTransferred += bytesDownloaded;
-            _reportProgressInBytes(bytesDownloaded);
         }
     }
 }

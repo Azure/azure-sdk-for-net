@@ -284,11 +284,11 @@ namespace Azure.Storage.DataMovement
                 // Progress tracking, do before invoking the event below
                 if (transferState == DataTransferState.InProgress)
                 {
-                    _progressTracker.IncrementInProgressFiles();
+                    await _progressTracker.IncrementInProgressFilesAsync(_cancellationToken).ConfigureAwait(false);
                 }
                 else if (JobPartStatus.HasCompletedSuccessfully)
                 {
-                    _progressTracker.IncrementCompletedFiles();
+                    await _progressTracker.IncrementCompletedFilesAsync(_cancellationToken).ConfigureAwait(false);
                     await InvokeSingleCompletedArgAsync().ConfigureAwait(false);
                 }
 
@@ -309,13 +309,9 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        /// <summary>
-        /// To change all transfer statues at the same time
-        /// </summary>
-        /// <param name="bytesTransferred"></param>
-        internal void ReportBytesWritten(long bytesTransferred)
+        protected async ValueTask ReportBytesWrittenAsync(long bytesTransferred)
         {
-            _progressTracker.IncrementBytesTransferred(bytesTransferred);
+            await _progressTracker.IncrementBytesTransferred(bytesTransferred, _cancellationToken).ConfigureAwait(false);
         }
 
         public async virtual Task InvokeSingleCompletedArgAsync()
@@ -356,7 +352,7 @@ namespace Azure.Storage.DataMovement
                     ClientDiagnostics)
                     .ConfigureAwait(false);
             }
-            _progressTracker.IncrementSkippedFiles();
+            await _progressTracker.IncrementSkippedFilesAsync(_cancellationToken).ConfigureAwait(false);
 
             // Update the JobPartStatus. If was already updated (e.g. there was a failed item before)
             // then don't raise the PartTransferStatusEventHandler
@@ -413,7 +409,7 @@ namespace Azure.Storage.DataMovement
                         ClientDiagnostics)
                         .ConfigureAwait(false);
                 }
-                _progressTracker.IncrementFailedFiles();
+                await _progressTracker.IncrementFailedFilesAsync(_cancellationToken).ConfigureAwait(false);
 
                 // Update the JobPartStatus. If was already updated (e.g. there was a failed item before)
                 // then don't raise the PartTransferStatusEventHandler
