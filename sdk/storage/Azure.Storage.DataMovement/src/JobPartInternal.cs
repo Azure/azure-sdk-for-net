@@ -441,7 +441,6 @@ namespace Azure.Storage.DataMovement
                 {
                     await TriggerCancellationAsync().ConfigureAwait(false);
                 }
-                await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
             }
             catch (Exception cancellationException)
             {
@@ -453,6 +452,31 @@ namespace Azure.Storage.DataMovement
                         _sourceResource,
                         _destinationResource,
                         cancellationException,
+                        false,
+                        _cancellationToken),
+                    nameof(JobPartInternal),
+                    nameof(TransferFailedEventHandler),
+                    ClientDiagnostics)
+                    .ConfigureAwait(false);
+            }
+
+            // Whether or not we were able to trigger the cancellation and successfully clean up
+            // we should always call CheckAndUpdateCancellationStateAsync to correctly make
+            // sure the job part is in the correct state.
+            try
+            {
+                await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
+            }
+            catch (Exception checkUpdateException)
+            {
+                // If an exception is thrown while trying to clean up,
+                // raise the failed event and prevent the transfer from hanging
+                await TransferFailedEventHandler.RaiseAsync(
+                    new TransferItemFailedEventArgs(
+                        _dataTransfer.Id,
+                        _sourceResource,
+                        _destinationResource,
+                        checkUpdateException,
                         false,
                         _cancellationToken),
                     nameof(JobPartInternal),
@@ -472,12 +496,25 @@ namespace Azure.Storage.DataMovement
             // If the failure occurred due to the file already existing or authentication,
             // and overwrite wasn't enabled, don't delete the existing file. We can remove
             // the unfinished file for other error types.
-            if (JobPartFailureType.Other == _failureType)
+            // If a Pause was called, we can remove the unfinished file.
+            if (JobPartFailureType.Other == _failureType || DataTransferState.Pausing == JobPartStatus.State)
             {
                 // If the job part is paused or ended with failures
                 // delete the destination resource because it could be unfinished or corrupted
                 // If we resume we would have to start from the beginning anyways.
-                await _destinationResource.DeleteIfExistsAsync(_cancellationToken).ConfigureAwait(false);
+                try
+                {
+                    // We can't pass the cancellation token
+                    // here due to the fact that the job's cancellation token has already been called.
+                    // We are cleaning up / deleting optimistically, which means that if
+                    // the clean / delete attempt fails, then we continue on. The failure may be due
+                    // to the overall reason why the job was cancelled in the first place.
+                    await _destinationResource.DeleteIfExistsAsync().ConfigureAwait(false);
+                }
+                catch
+                {
+                    // We are cleaning up / deleting optimistically, move on if it fails.
+                }
             }
         }
 
