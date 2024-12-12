@@ -12,7 +12,7 @@ using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class TransferJobInternal : IDisposable
+    internal class TransferJobInternal : IAsyncDisposable
     {
         internal delegate Task<JobPartInternal> CreateJobPartSingleAsync(
             TransferJobInternal job,
@@ -261,17 +261,14 @@ namespace Azure.Storage.DataMovement
             _progressTracker = new TransferProgressTracker(transferOptions?.ProgressHandlerOptions);
         }
 
-        public void Dispose()
-        {
-            DisposeHandlers();
-        }
-
-        public void DisposeHandlers()
+        public async ValueTask DisposeAsync()
         {
             if (JobPartStatusEvents != default)
             {
                 JobPartStatusEvents -= JobPartStatusEventAsync;
             }
+            // This will block until all pending progress reports have gone out
+            await _progressTracker.DisposeAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -609,7 +606,7 @@ namespace Azure.Storage.DataMovement
                 if (state == DataTransferState.Completed ||
                     state == DataTransferState.Paused)
                 {
-                    DisposeHandlers();
+                    await DisposeAsync().ConfigureAwait(false);
                 }
 
                 await OnJobPartStatusChangedAsync().ConfigureAwait(false);
