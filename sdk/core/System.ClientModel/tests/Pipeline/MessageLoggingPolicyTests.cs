@@ -88,7 +88,7 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
     [Test]
     public async Task ContentIsNotLoggedByDefaultToEventSource(bool isError, bool asText)
     {
-        TestClientEventListener listener = new();
+        using TestClientEventListener listener = new();
         ClientLoggingOptions loggingOptions = new();
 
         await SendSimpleRequestResponseSyncOrAsync(isError, loggingOptions, asText, IsAsync);
@@ -103,7 +103,7 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
     [Test]
     public async Task ContentIsNotLoggedByDefaultToILogger(bool isError, bool asText)
     {
-        TestLoggingFactory factory = new(LogLevel.Debug);
+        using TestLoggingFactory factory = new(LogLevel.Debug);
         ClientLoggingOptions loggingOptions = new()
         {
             LoggerFactory = factory
@@ -122,7 +122,7 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
     [Test]
     public async Task ContentIsNotLoggedWhenDisabledToEventSource(bool isError, bool asText)
     {
-        TestClientEventListener listener = new();
+        using TestClientEventListener listener = new();
 
         ClientLoggingOptions loggingOptions = new()
         {
@@ -141,7 +141,7 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
     [Test]
     public async Task ContentIsNotLoggedWhenDisabledToILogger(bool isError, bool asText)
     {
-        TestLoggingFactory factory = new(LogLevel.Debug);
+        using TestLoggingFactory factory = new(LogLevel.Debug);
 
         ClientLoggingOptions loggingOptions = new()
         {
@@ -162,7 +162,7 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
     [Test]
     public async Task ContentIsNotLoggedInBlocksWhenDisabledToEventSource(bool isError, bool asText)
     {
-        TestClientEventListener listener = new();
+        using TestClientEventListener listener = new();
 
         ClientLoggingOptions loggingOptions = new()
         {
@@ -199,7 +199,7 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
     [Test]
     public async Task ContentIsNotLoggedInBlocksWhenDisabledToILogger(bool isError, bool asText)
     {
-        TestLoggingFactory factory = new(LogLevel.Debug);
+        using TestLoggingFactory factory = new(LogLevel.Debug);
 
         ClientLoggingOptions loggingOptions = new()
         {
@@ -238,7 +238,7 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
     [Test]
     public async Task ContentIsNotLoggedWhenEventSourceIsDisabled(bool isError, bool asText)
     {
-        TestEventListenerWarning listener = new();
+        using TestEventListenerWarning listener = new();
 
         ClientLoggingOptions loggingOptions = new()
         {
@@ -255,7 +255,7 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
     [Test]
     public async Task ContentEventIsNotWrittenWhenThereIsNoContentToEventSource(bool isError)
     {
-        TestClientEventListener listener = new();
+        using TestClientEventListener listener = new();
 
         ClientLoggingOptions loggingOptions = new()
         {
@@ -286,7 +286,7 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
     [Test]
     public async Task ContentEventIsNotWrittenWhenThereIsNoContentToILogger(bool isError)
     {
-        TestLoggingFactory factory = new(LogLevel.Debug);
+        using TestLoggingFactory factory = new(LogLevel.Debug);
 
         ClientLoggingOptions loggingOptions = new()
         {
@@ -317,7 +317,7 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
     [Test]
     public async Task RequestContentLogsAreLimitedInLengthToEventSource()
     {
-        TestClientEventListener listener = new();
+        using TestClientEventListener listener = new();
 
         var response = new MockPipelineResponse(500);
         byte[] requestContent = [1, 2, 3, 4, 5, 6, 7, 8];
@@ -352,7 +352,7 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
     [Test]
     public async Task RequestContentLogsAreLimitedInLengthToILogger()
     {
-        TestLoggingFactory factory = new(LogLevel.Debug);
+        using TestLoggingFactory factory = new(LogLevel.Debug);
 
         var response = new MockPipelineResponse(500);
         byte[] requestContent = [1, 2, 3, 4, 5, 6, 7, 8];
@@ -389,7 +389,7 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
     [Test]
     public async Task RequestContentTextLogsAreLimitedInLengthToEventSource()
     {
-        TestClientEventListener listener = new();
+        using TestClientEventListener listener = new();
 
         ClientLoggingOptions loggingOptions = new()
         {
@@ -423,7 +423,7 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
     [Test]
     public async Task RequestContentTextLogsAreLimitedInLengthToILogger()
     {
-        TestLoggingFactory factory = new(LogLevel.Debug);
+        using TestLoggingFactory factory = new(LogLevel.Debug);
 
         ClientLoggingOptions loggingOptions = new()
         {
@@ -458,15 +458,16 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
     [Test]
     public async Task SeekableTextResponsesAreLimitedInLengthToEventSource()
     {
-        TestClientEventListener listener = new();
+        using TestClientEventListener listener = new();
 
         ClientLoggingOptions loggingOptions = new()
         {
-            MessageContentSizeLimit = 5
+            MessageContentSizeLimit = 5,
+            EnableMessageContentLogging = true
         };
 
         MockPipelineResponse response = new(200, mockHeaders: _defaultTextHeaders);
-        await SendRequestWithStreamingResponseSyncOrAsync(response, true, new ClientLoggingOptions());
+        await SendRequestWithStreamingResponseSyncOrAsync(response, true, loggingOptions);
 
         EventWrittenEventArgs contentEvent = listener.GetAndValidateSingleEvent(ResponseContentTextBlockEvent, "ResponseContentTextBlock", EventLevel.Verbose, SystemClientModelEventSourceName);
         Assert.AreEqual("Hello", contentEvent.GetProperty<string>("content"));
@@ -475,10 +476,11 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
     [Test]
     public async Task SeekableTextResponsesAreLimitedInLengthToILogger()
     {
-        TestLoggingFactory factory = new(LogLevel.Debug);
+        using TestLoggingFactory factory = new(LogLevel.Debug);
         ClientLoggingOptions loggingOptions = new()
         {
             MessageContentSizeLimit = 5,
+            EnableMessageContentLogging = true,
             LoggerFactory = factory
         };
 
@@ -493,10 +495,11 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
     [Test]
     public async Task NonSeekableResponsesAreLimitedInLengthEventSource()
     {
-        TestClientEventListener listener = new();
+        using TestClientEventListener listener = new();
         ClientLoggingOptions loggingOptions = new()
         {
-            MessageContentSizeLimit = 5
+            MessageContentSizeLimit = 5,
+            EnableMessageContentLogging = true
         };
         MockPipelineResponse response = new(200, mockHeaders: _defaultHeaders);
 
@@ -509,10 +512,11 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
     [Test]
     public async Task NonSeekableResponsesAreLimitedInLengthILogger()
     {
-        TestLoggingFactory factory = new(LogLevel.Debug);
+        using TestLoggingFactory factory = new(LogLevel.Debug);
         ClientLoggingOptions loggingOptions = new()
         {
             MessageContentSizeLimit = 5,
+            EnableMessageContentLogging = true,
             LoggerFactory = factory
         };
         MockPipelineResponse response = new(200, mockHeaders: _defaultTextHeaders);
