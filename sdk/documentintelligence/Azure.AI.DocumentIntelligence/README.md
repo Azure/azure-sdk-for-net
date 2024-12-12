@@ -524,7 +524,7 @@ For example, if you submit a receipt image with an invalid `Uri`, a `400` error 
 
 ```C# Snippet:DocumentIntelligenceBadRequest
 var uriSource = new Uri("http://invalid.uri");
-var options = new AnalyzeDocumentOptions("prebuild-receipt", uriSource);
+var options = new AnalyzeDocumentOptions("prebuilt-receipt", uriSource);
 
 try
 {
