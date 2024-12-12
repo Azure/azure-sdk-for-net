@@ -4,7 +4,7 @@
 
 ### Bugs Fixed
 
-- Fixed a bug where the API call was failing due to the character limit in the test suite ID.
+- Fixed a bug where upload results were incomplete for large size classname suites.
 
 ## 1.0.0-beta.3 (2024-11-18)
 
