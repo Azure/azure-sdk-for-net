@@ -313,7 +313,8 @@ try {
     # Make sure the provisioner OID is set so we can pass it through to the deployment.
     if (!$ProvisionerApplicationId -and !$ProvisionerApplicationOid) {
         if ($context.Account.Type -eq 'User') {
-            $user = Get-AzADUser -UserPrincipalName $context.Account.Id
+            # Use -Mail as the lookup works in both corp and TME tenants
+            $user = Get-AzADUser -Mail $context.Account
             $ProvisionerApplicationOid = $user.Id
         } elseif ($context.Account.Type -eq 'ServicePrincipal') {
             $sp = Get-AzADServicePrincipal -ApplicationId $context.Account.Id
@@ -383,7 +384,8 @@ try {
             Write-Warning "The specified TestApplicationId '$TestApplicationId' will be ignored when -ServicePrincipalAutth is not set."
         }
 
-        $userAccount = (Get-AzADUser -UserPrincipalName (Get-AzContext).Account)
+        # Use -Mail as the lookup works in both corp and TME tenants
+        $userAccount = (Get-AzADUser -Mail (Get-AzContext).Account)
         $TestApplicationOid = $userAccount.Id
         $TestApplicationId = $testApplicationOid
         $userAccountName = $userAccount.UserPrincipalName
