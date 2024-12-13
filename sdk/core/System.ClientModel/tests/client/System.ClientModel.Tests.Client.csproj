@@ -47,7 +47,13 @@
     <None Update="TestData\ModelX\ModelXWireFormat.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="TestData\ResourceProviderData\ResourceProviderData-Collapsed-With-x.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="TestData\ResourceProviderData\ResourceProviderData-TwoSpaces.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\ResourceProviderData\ResourceProviderData-Collapsed-MissingId.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="TestData\ResourceProviderData\ResourceProviderData-Collapsed.json">

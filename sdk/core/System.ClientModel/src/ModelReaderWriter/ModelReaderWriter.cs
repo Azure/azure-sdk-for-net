@@ -4,13 +4,14 @@
 using System.ClientModel.Internal;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 
 namespace System.ClientModel.Primitives;
 
 /// <summary>
 /// Provides functionality to read and write <see cref="IPersistableModel{T}"/> and <see cref="IJsonModel{T}"/>.
 /// </summary>
-public static class ModelReaderWriter
+public static partial class ModelReaderWriter
 {
     /// <summary>
     /// Converts the value of a model into a <see cref="BinaryData"/>.
@@ -40,7 +41,7 @@ public static class ModelReaderWriter
         }
         else
         {
-            return model.Write(options);
+            return options.ResolveProxy(model).Write(options);
         }
     }
 
@@ -62,7 +63,8 @@ public static class ModelReaderWriter
 
         options ??= ModelReaderWriterOptions.Json;
 
-        var iModel = model as IPersistableModel<object>;
+        IPersistableModel<object>? iModel = model as IPersistableModel<object>;
+
         if (iModel is null)
         {
             throw new InvalidOperationException($"{model.GetType().Name} does not implement {nameof(IPersistableModel<object>)}");
@@ -77,7 +79,7 @@ public static class ModelReaderWriter
         }
         else
         {
-            return iModel.Write(options);
+            return options.ResolveProxy(iModel).Write(options);
         }
     }
 
@@ -101,7 +103,18 @@ public static class ModelReaderWriter
 
         options ??= ModelReaderWriterOptions.Json;
 
-        return GetInstance<T>().Create(data, options);
+        var model = GetInstance<T>();
+        if (ShouldWriteAsJson(model, options, out IJsonModel<T>? jsonModel))
+        {
+            Utf8JsonReader reader = new Utf8JsonReader(data);
+            IJsonModel<T> readerToUse = options.TryGetProxy(out IJsonModel<T>? jsonModelProxy) ? jsonModelProxy : jsonModel;
+            return readerToUse.Create(ref reader, options);
+        }
+        else
+        {
+            IPersistableModel<T> readerToUse = options.TryGetProxy(out IPersistableModel<T>? proxy) ? proxy : model;
+            return readerToUse.Create(data, options);
+        }
     }
 
     /// <summary>
@@ -130,17 +143,32 @@ public static class ModelReaderWriter
 
         options ??= ModelReaderWriterOptions.Json;
 
-        return GetInstance(returnType).Create(data, options);
+        var model = GetInstance(returnType);
+        object? obj;
+        if (ShouldWriteAsJson(model, options, out IJsonModel<object>? jsonModel))
+        {
+            Utf8JsonReader reader = new Utf8JsonReader(data);
+            IJsonModel<object> readerToUse = options.TryGetProxy(returnType, out IJsonModel<object>? jsonModelProxy) ? jsonModelProxy : jsonModel;
+            obj = readerToUse.Create(ref reader, options);
+        }
+        else
+        {
+            IPersistableModel<object> readerToUse = options.TryGetProxy(returnType, out IPersistableModel<object>? proxy) ? proxy : model;
+            obj = readerToUse.Create(data, options);
+        }
+        return obj;
     }
 
     private static IPersistableModel<object> GetInstance([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType)
     {
-        var model = GetObjectInstance(returnType) as IPersistableModel<object>;
-        if (model is null)
+        var model = GetObjectInstance(returnType);
+        IPersistableModel<object>? iModel = model as IPersistableModel<object>;
+
+        if (iModel is null)
         {
             throw new InvalidOperationException($"{returnType.Name} does not implement {nameof(IPersistableModel<object>)}");
         }
-        return model;
+        return iModel;
     }
 
     private static IPersistableModel<T> GetInstance<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>()
@@ -195,7 +223,10 @@ public static class ModelReaderWriter
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static bool IsJsonFormatRequested<T>(IPersistableModel<T> model, ModelReaderWriterOptions options)
-        => options.Format == "J" || (options.Format == "W" && model.GetFormatFromOptions(options) == "J");
+    {
+        var format = options.TryGetProxy(out IPersistableModel<T>? proxy) ? proxy.GetFormatFromOptions(options) : model.GetFormatFromOptions(options);
+        return options.Format == "J" || (options.Format == "W" && format == "J");
+    }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static bool IsJsonFormatRequested(IPersistableModel<object> model, ModelReaderWriterOptions options)

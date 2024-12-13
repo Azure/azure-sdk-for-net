@@ -22,7 +22,7 @@ public class JsonModelConverter : JsonConverter<IJsonModel<object>>
     /// <summary>
     /// Gets the <see cref="ModelReaderWriterOptions"/> used to read and write models.
     /// </summary>
-    private ModelReaderWriterOptions _options { get; }
+    private ModelReaderWriterOptions _options;
 
     /// <summary>
     /// Initializes a new instance of <see cref="JsonModelConverter"/> with a default options of <see cref="ModelReaderWriterOptions.Json"/>.
@@ -50,12 +50,19 @@ public class JsonModelConverter : JsonConverter<IJsonModel<object>>
     public override IJsonModel<object> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
-        var iJsonModel = ModelReaderWriter.GetObjectInstance(typeToConvert) as IJsonModel<object>;
-        if (iJsonModel is null)
+        if (_options.TryGetProxy(typeToConvert, out IJsonModel<object>? proxy))
         {
-            throw new InvalidOperationException($"Either {typeToConvert.Name} or the PersistableModelProxyAttribute defined needs to implement IJsonModel.");
+            return (IJsonModel<object>)proxy.Create(ref reader, _options);
         }
-        return (IJsonModel<object>)iJsonModel.Create(ref reader, _options);
+        else
+        {
+            var iJsonModel = ModelReaderWriter.GetObjectInstance(typeToConvert) as IJsonModel<object>;
+            if (iJsonModel is null)
+            {
+                throw new InvalidOperationException($"Either {typeToConvert.Name} or the PersistableModelProxyAttribute defined needs to implement IJsonModel.");
+            }
+            return (IJsonModel<object>)iJsonModel.Create(ref reader, _options);
+        }
     }
 
     /// <inheritdoc/>
@@ -63,6 +70,6 @@ public class JsonModelConverter : JsonConverter<IJsonModel<object>>
     public override void Write(Utf8JsonWriter writer, IJsonModel<object> value, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
-        value.Write(writer, _options);
+        _options.ResolveProxy(value).Write(writer, _options);
     }
 }

@@ -103,7 +103,8 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         public static explicit operator ModelAsStruct(ClientResult result)
         {
-            if (result is null) throw new ArgumentNullException(nameof(result));
+            if (result is null)
+                throw new ArgumentNullException(nameof(result));
 
             using JsonDocument doc = JsonDocument.Parse(result.GetRawResponse().Content);
             return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, ModelReaderWriterHelper.WireOptions);
