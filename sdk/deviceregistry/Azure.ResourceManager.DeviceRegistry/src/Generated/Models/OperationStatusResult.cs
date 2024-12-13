@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
     /// <summary> The current status of an async operation. </summary>
-    internal partial class OperationStatusResult
+    public partial class OperationStatusResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
