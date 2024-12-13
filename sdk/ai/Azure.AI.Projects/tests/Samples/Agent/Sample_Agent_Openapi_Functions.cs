@@ -18,7 +18,7 @@ namespace Azure.AI.Projects.Tests;
 
 public partial class Sample_Agent_Azure_Functions : SamplesBase<AIProjectsTestEnvironment>
 {
-    private static string getFile([CallerFilePath] string pth = "")
+    private static string GetFile([CallerFilePath] string pth = "")
     {
         var dirName = Path.GetDirectoryName(pth) ?? "";
         return Path.Combine(dirName, "weather_openapi.json");
@@ -30,7 +30,7 @@ public partial class Sample_Agent_Azure_Functions : SamplesBase<AIProjectsTestEn
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
         var storageQueueUri = TestEnvironment.STORAGE_QUEUE_URI;
         AgentsClient client = new(connectionString, new DefaultAzureCredential());
-        var file_path = getFile();
+        var file_path = GetFile();
 
         #region Snippet:OpenAPIDefineFunctionTools
         OpenApiAnonymousAuthDetails oaiAuth = new();
