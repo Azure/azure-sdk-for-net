@@ -4,6 +4,10 @@
 
 ### Features Added
 
+* Added objects to inform Agents about Azure Functions.
+* Added `OpenApiTool` for Agents, which creates and executes a REST function defined by an OpenAPI spec.
+* Add `parallel_tool_calls` parameter to allow parallel tool execution for Agents.
+
 ### Breaking Changes
 
 ### Bugs Fixed
