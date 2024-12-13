@@ -18,7 +18,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
         [Test]
         public void CreateAuthoringClientForSpecificApiVersion()
         {
-            #region Snippet:CreateAuthoringClientForSpecificApiVersion
+            #region Snippet:CreateTextAuthoringClientForSpecificApiVersion
             Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
             AzureKeyCredential credential = new("your apikey");
 #if !SNIPPET
