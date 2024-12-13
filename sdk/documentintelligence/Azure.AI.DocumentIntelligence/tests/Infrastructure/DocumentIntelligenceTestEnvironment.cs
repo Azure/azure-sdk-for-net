@@ -6,7 +6,6 @@ using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 
 namespace Azure.AI.DocumentIntelligence.Tests
 {
@@ -33,6 +32,10 @@ namespace Azure.AI.DocumentIntelligence.Tests
         public string BlobContainerSasUrl => GetRecordedVariable("SINGLEPAGE_BLOB_CONTAINER_SAS_URL", options => options.IsSecret(SanitizedSasUrl));
 
         public string ClassifierTrainingSasUrl => GetRecordedVariable("CLASSIFIER_BLOB_CONTAINER_SAS_URL", options => options.IsSecret(SanitizedSasUrl));
+
+        public string BatchSourceBlobSasUrl => GetRecordedVariable("BATCH_SOURCE_BLOB_CONTAINER_SAS_URL", options => options.IsSecret(SanitizedSasUrl));
+
+        public string BatchResultBlobSasUrl => GetRecordedVariable("BATCH_RESULT_BLOB_CONTAINER_SAS_URL", options => options.IsSecret(SanitizedSasUrl));
 
         public static string CreatePath(string filename)
         {
