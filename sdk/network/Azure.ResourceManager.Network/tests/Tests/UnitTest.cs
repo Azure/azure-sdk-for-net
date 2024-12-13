@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Network.Tests
         [Test]
         public void DeserializeChangeNumber()
         {
-            var sr = new StreamReader("TestData\\ServiceTags.json");
+            var sr = new StreamReader(Path.Combine("TestData", "ServiceTags.json"));
             var jsonContent = JsonDocument.Parse(sr.BaseStream);
             var data = AzureFirewallIPGroups.DeserializeAzureFirewallIPGroups(jsonContent.RootElement);
             Assert.NotNull(data.ChangeNumber);
