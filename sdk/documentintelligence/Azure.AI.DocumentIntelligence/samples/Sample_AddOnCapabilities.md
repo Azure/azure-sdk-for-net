@@ -210,7 +210,7 @@ To extract barcodes from a given file at a URI with the add-on barcodes capabili
 ```C# Snippet:DocumentIntelligenceSampleBarcodeExtraction
 Uri uriSource = new Uri("<uriSource>");
 
-var options = new AnalyzeDocumentOptions("prebuild-layout", uriSource)
+var options = new AnalyzeDocumentOptions("prebuilt-layout", uriSource)
 {
     Features = { DocumentAnalysisFeature.Barcodes }
 };

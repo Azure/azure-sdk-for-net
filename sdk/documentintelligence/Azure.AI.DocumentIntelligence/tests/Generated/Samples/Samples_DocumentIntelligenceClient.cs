@@ -134,7 +134,8 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-            Operation<AnalyzeResult> operation = client.AnalyzeDocument(WaitUntil.Completed, "prebuilt-layout");
+            AnalyzeDocumentOptions analyzeRequest = new AnalyzeDocumentOptions();
+            Operation<AnalyzeResult> operation = client.AnalyzeDocument(WaitUntil.Completed, "prebuilt-layout", analyzeRequest);
             AnalyzeResult responseData = operation.Value;
         }
 
@@ -146,7 +147,8 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-            Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout");
+            AnalyzeDocumentOptions analyzeRequest = new AnalyzeDocumentOptions();
+            Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", analyzeRequest);
             AnalyzeResult responseData = operation.Value;
         }
 
@@ -208,7 +210,8 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-            Operation<AnalyzeResult> operation = client.AnalyzeDocument(WaitUntil.Completed, "customModel");
+            AnalyzeDocumentOptions analyzeRequest = new AnalyzeDocumentOptions();
+            Operation<AnalyzeResult> operation = client.AnalyzeDocument(WaitUntil.Completed, "customModel", analyzeRequest);
             AnalyzeResult responseData = operation.Value;
         }
 
@@ -220,7 +223,8 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-            Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "customModel");
+            AnalyzeDocumentOptions analyzeRequest = new AnalyzeDocumentOptions();
+            Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "customModel", analyzeRequest);
             AnalyzeResult responseData = operation.Value;
         }
 
@@ -288,7 +292,12 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-            Operation<AnalyzeBatchResult> operation = client.AnalyzeBatchDocuments(WaitUntil.Completed, "customModel");
+            AnalyzeBatchDocumentsOptions analyzeBatchRequest = new AnalyzeBatchDocumentsOptions(new Uri("https://myStorageAccount.blob.core.windows.net/myOutputContainer?mySasToken"))
+            {
+                ResultPrefix = "trainingDocsResult/",
+                OverwriteExisting = true,
+            };
+            Operation<AnalyzeBatchResult> operation = client.AnalyzeBatchDocuments(WaitUntil.Completed, "customModel", analyzeBatchRequest);
             AnalyzeBatchResult responseData = operation.Value;
         }
 
@@ -300,7 +309,12 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-            Operation<AnalyzeBatchResult> operation = await client.AnalyzeBatchDocumentsAsync(WaitUntil.Completed, "customModel");
+            AnalyzeBatchDocumentsOptions analyzeBatchRequest = new AnalyzeBatchDocumentsOptions(new Uri("https://myStorageAccount.blob.core.windows.net/myOutputContainer?mySasToken"))
+            {
+                ResultPrefix = "trainingDocsResult/",
+                OverwriteExisting = true,
+            };
+            Operation<AnalyzeBatchResult> operation = await client.AnalyzeBatchDocumentsAsync(WaitUntil.Completed, "customModel", analyzeBatchRequest);
             AnalyzeBatchResult responseData = operation.Value;
         }
 
