@@ -11,7 +11,7 @@ using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class UriToStreamJobPart : JobPartInternal, IDisposable
+    internal class UriToStreamJobPart : JobPartInternal, IAsyncDisposable
     {
         public delegate Task CommitBlockTaskInternal(CancellationToken cancellationToken);
         public CommitBlockTaskInternal CommitBlockTask { get; internal set; }
@@ -115,9 +115,9 @@ namespace Azure.Storage.DataMovement
         {
         }
 
-        public void Dispose()
+        public async ValueTask DisposeAsync()
         {
-            DisposeHandlers();
+            await DisposeHandlersAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -198,6 +198,11 @@ namespace Azure.Storage.DataMovement
             // does not require a length to be created.
             try
             {
+                // Continue only if job is in progress
+                if (!await CheckTransferStateBeforeRunning().ConfigureAwait(false))
+                {
+                    return;
+                }
                 await OnTransferStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
                 if (!_sourceResource.Length.HasValue)
                 {
@@ -258,7 +263,7 @@ namespace Azure.Storage.DataMovement
                     initial: true).ConfigureAwait(false);
                 if (successfulInitialCopy)
                 {
-                    ReportBytesWritten(initialLength.Value);
+                    await ReportBytesWrittenAsync(initialLength.Value).ConfigureAwait(false);
                     if (totalLength == initialLength)
                     {
                         // Complete download since it was done in one go
@@ -311,7 +316,7 @@ namespace Azure.Storage.DataMovement
                     initial: true).ConfigureAwait(false);
                 if (successfulCopy)
                 {
-                    ReportBytesWritten(downloadLength);
+                    await ReportBytesWrittenAsync(downloadLength).ConfigureAwait(false);
                     // Queue the work to end the download
                     await QueueCompleteFileDownload().ConfigureAwait(false);
                 }
@@ -336,23 +341,29 @@ namespace Azure.Storage.DataMovement
             // Fill the queue with tasks to download each of the remaining
             // ranges in the file
             _queueingTasks = true;
-            foreach (HttpRange httpRange in GetRanges(initialLength, totalLength, _transferChunkSize))
+            try
             {
-                if (_cancellationToken.IsCancellationRequested)
+                int chunkCount = 0;
+                foreach (HttpRange httpRange in GetRanges(initialLength, totalLength, _transferChunkSize))
                 {
-                    break;
+                    CancellationHelper.ThrowIfCancellationRequested(_cancellationToken);
+
+                    // Add the next Task (which will start the download but
+                    // return before it's completed downloading)
+                    await QueueChunkToChannelAsync(
+                        async () =>
+                        await DownloadStreamingInternal(range: httpRange).ConfigureAwait(false))
+                        .ConfigureAwait(false);
+                    chunkCount++;
                 }
-
-                // Add the next Task (which will start the download but
-                // return before it's completed downloading)
-                await QueueChunkToChannelAsync(
-                    async () =>
-                    await DownloadStreamingInternal(range: httpRange).ConfigureAwait(false))
-                    .ConfigureAwait(false);
+                _queueingTasks = false;
+                await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
             }
-
-            _queueingTasks = false;
-            await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
+            catch (Exception ex)
+            {
+                _queueingTasks = false;
+                await InvokeFailedArgAsync(ex).ConfigureAwait(false);
+            }
         }
 
         internal async Task CompleteFileDownload()
@@ -367,7 +378,7 @@ namespace Azure.Storage.DataMovement
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
 
                 // Dispose the handlers
-                DisposeHandlers();
+                await DisposeHandlersAsync().ConfigureAwait(false);
 
                 // Update the transfer status
                 await OnTransferStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
@@ -459,7 +470,7 @@ namespace Azure.Storage.DataMovement
             return new DownloadChunkHandler.Behaviors()
             {
                 CopyToDestinationFile = jobPart.CopyToStreamInternal,
-                ReportProgressInBytes = jobPart.ReportBytesWritten,
+                ReportProgressInBytes = jobPart.ReportBytesWrittenAsync,
                 InvokeFailedHandler = jobPart.InvokeFailedArgAsync,
                 QueueCompleteFileDownload = jobPart.QueueCompleteFileDownload
             };
@@ -481,21 +492,19 @@ namespace Azure.Storage.DataMovement
 
         public override async Task InvokeSkippedArgAsync()
         {
-            DisposeHandlers();
             await base.InvokeSkippedArgAsync().ConfigureAwait(false);
         }
 
         public override async Task InvokeFailedArgAsync(Exception ex)
         {
-            DisposeHandlers();
             await base.InvokeFailedArgAsync(ex).ConfigureAwait(false);
         }
 
-        internal void DisposeHandlers()
+        public override async Task DisposeHandlersAsync()
         {
             if (_downloadChunkHandler != default)
             {
-                _downloadChunkHandler.Dispose();
+                await _downloadChunkHandler.DisposeAsync().ConfigureAwait(false);
                 _downloadChunkHandler = null;
             }
         }

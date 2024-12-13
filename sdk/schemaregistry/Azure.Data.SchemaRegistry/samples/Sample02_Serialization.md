@@ -168,13 +168,13 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 <!-- LINKS -->
 [nuget]: https://www.nuget.org/
-[event_hubs_namespace]: https://docs.microsoft.com/azure/event-hubs/event-hubs-about
-[object_serializer]: https://docs.microsoft.com/dotnet/api/azure.core.serialization.objectserializer?view=azure-dotnet
-[json_serializer]: https://docs.microsoft.com/dotnet/api/azure.core.serialization.jsonobjectserializer?view=azure-dotnet
-[newtonsoft_serializer]: https://docs.microsoft.com/dotnet/api/azure.core.serialization.newtonsoftjsonobjectserializer?view=azure-dotnet
+[event_hubs_namespace]: https://learn.microsoft.com/azure/event-hubs/event-hubs-about
+[object_serializer]: https://learn.microsoft.com/dotnet/api/azure.core.serialization.objectserializer?view=azure-dotnet
+[json_serializer]: https://learn.microsoft.com/dotnet/api/azure.core.serialization.jsonobjectserializer?view=azure-dotnet
+[newtonsoft_serializer]: https://learn.microsoft.com/dotnet/api/azure.core.serialization.newtonsoftjsonobjectserializer?view=azure-dotnet
 [cla]: https://cla.microsoft.com
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [email_opencode]: mailto:opencode@microsoft.com
 [azure_schema_registry]: https://aka.ms/schemaregistry
-[request_failed_exception]: https://docs.microsoft.com/dotnet/api/azure.requestfailedexception?view=azure-dotnet
+[request_failed_exception]: https://learn.microsoft.com/dotnet/api/azure.requestfailedexception?view=azure-dotnet

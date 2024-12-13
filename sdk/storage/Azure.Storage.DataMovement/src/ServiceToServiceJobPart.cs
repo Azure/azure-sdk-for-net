@@ -7,11 +7,12 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class ServiceToServiceJobPart : JobPartInternal, IDisposable
+    internal class ServiceToServiceJobPart : JobPartInternal, IAsyncDisposable
     {
         public delegate Task CommitBlockTaskInternal(CancellationToken cancellationToken);
         public CommitBlockTaskInternal CommitBlockTask { get; internal set; }
@@ -114,9 +115,9 @@ namespace Azure.Storage.DataMovement
         {
         }
 
-        public void Dispose()
+        public async ValueTask DisposeAsync()
         {
-            DisposeHandlers();
+            await DisposeHandlersAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -186,6 +187,11 @@ namespace Azure.Storage.DataMovement
         {
             try
             {
+                // Continue only if job is in progress
+                if (!await CheckTransferStateBeforeRunning().ConfigureAwait(false))
+                {
+                    return;
+                }
                 await OnTransferStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
 
                 long? fileLength = default;
@@ -269,7 +275,7 @@ namespace Azure.Storage.DataMovement
                     options: options,
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
 
-                ReportBytesWritten(completeLength);
+                await ReportBytesWrittenAsync(completeLength).ConfigureAwait(false);
                 await OnTransferStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
             }
             catch (RequestFailedException exception)
@@ -310,7 +316,7 @@ namespace Azure.Storage.DataMovement
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
 
                 // Report first chunk written to progress tracker
-                ReportBytesWritten(blockSize);
+                await ReportBytesWrittenAsync(blockSize).ConfigureAwait(false);
 
                 if (blockSize == length)
                 {
@@ -339,12 +345,15 @@ namespace Azure.Storage.DataMovement
             return new CommitChunkHandler.Behaviors
             {
                 QueuePutBlockTask = jobPart.QueueStageBlockRequest,
-                QueueCommitBlockTask = jobPart.CompleteTransferAsync,
-                ReportProgressInBytes = jobPart.ReportBytesWritten,
+                QueueCommitBlockTask = jobPart.QueueCompleteTransferAsync,
+                ReportProgressInBytes = jobPart.ReportBytesWrittenAsync,
                 InvokeFailedHandler = jobPart.InvokeFailedArgAsync,
             };
         }
         #endregion
+
+        internal Task QueueCompleteTransferAsync(StorageResourceItemProperties sourceProperties) =>
+            QueueChunkToChannelAsync(() => CompleteTransferAsync(sourceProperties));
 
         internal async Task CompleteTransferAsync(StorageResourceItemProperties sourceProperties)
         {
@@ -357,7 +366,7 @@ namespace Azure.Storage.DataMovement
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
 
                 // Dispose the handlers
-                DisposeHandlers();
+                await DisposeHandlersAsync().ConfigureAwait(false);
 
                 // Set completion status to completed
                 await OnTransferStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
@@ -374,24 +383,29 @@ namespace Azure.Storage.DataMovement
             StorageResourceItemProperties sourceProperties)
         {
             _queueingTasks = true;
-            // Partition the stream into individual blocks
-            foreach ((long Offset, long Length) block in ranges)
+            try
             {
-                if (_cancellationToken.IsCancellationRequested)
+                // Partition the stream into individual blocks
+                foreach ((long Offset, long Length) block in ranges)
                 {
-                    break;
+                    CancellationHelper.ThrowIfCancellationRequested(_cancellationToken);
+
+                    // Queue partitioned block task
+                    await QueueStageBlockRequest(
+                        block.Offset,
+                        block.Length,
+                        expectedLength,
+                        sourceProperties).ConfigureAwait(false);
                 }
 
-                // Queue partitioned block task
-                await QueueStageBlockRequest(
-                    block.Offset,
-                    block.Length,
-                    expectedLength,
-                    sourceProperties).ConfigureAwait(false);
+                _queueingTasks = false;
+                await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
             }
-
-            _queueingTasks = false;
-            await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
+            catch (Exception ex)
+            {
+                _queueingTasks = false;
+                await InvokeFailedArgAsync(ex).ConfigureAwait(false);
+            }
         }
 
         private Task QueueStageBlockRequest(
@@ -457,21 +471,19 @@ namespace Azure.Storage.DataMovement
 
         public override async Task InvokeSkippedArgAsync()
         {
-            DisposeHandlers();
             await base.InvokeSkippedArgAsync().ConfigureAwait(false);
         }
 
         public override async Task InvokeFailedArgAsync(Exception ex)
         {
-            DisposeHandlers();
             await base.InvokeFailedArgAsync(ex).ConfigureAwait(false);
         }
 
-        internal void DisposeHandlers()
+        public override async Task DisposeHandlersAsync()
         {
             if (_commitBlockHandler != default)
             {
-                _commitBlockHandler.Dispose();
+                await _commitBlockHandler.DisposeAsync().ConfigureAwait(false);
                 _commitBlockHandler = null;
             }
         }
