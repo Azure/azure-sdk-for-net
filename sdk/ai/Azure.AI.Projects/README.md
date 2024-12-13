@@ -4,6 +4,12 @@ Use the AI Projects client library to:
 * **Develop Agents using the Azure AI Agent Service**, leveraging an extensive ecosystem of models, tools, and capabilities from OpenAI, Microsoft, and other LLM providers. The Azure AI Agent Service enables the building of Agents for a wide range of generative AI use cases. The package is currently in preview.
 * **Enumerate connections** in your Azure AI Studio project and get connection properties. For example, get the inference endpoint URL and credentials associated with your Azure OpenAI connection.
 
+[Product documentation][product_doc]
+| [Samples][samples]
+| [API reference documentation][api_ref_docs]
+| [Package (NuGet)][nuget]
+| [SDK source code][source_code]
+
 ## Table of contents
 
 - [Getting started](#getting-started)
@@ -508,6 +514,10 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 <!-- LINKS -->
 [RequestFailedException]: https://learn.microsoft.com/dotnet/api/azure.requestfailedexception?view=azure-dotnet
 [samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/ai/Azure.AI.Projects/tests/Samples
+[api_ref_docs]: https://learn.microsoft.com/dotnet/api/azure.ai.projects?view=azure-dotnet-preview
+[nuget]: https://www.nuget.org/packages/Azure.AI.Projects
+[source_code]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/ai/Azure.AI.Projects
+[product_doc]: https://learn.microsoft.com/azure/ai-studio/
 [azure_identity]: https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet
 [azure_identity_dac]: https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet
 [aiprojects_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md
