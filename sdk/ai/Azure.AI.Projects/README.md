@@ -21,6 +21,8 @@ Use the AI Projects client library to:
     - [File search](#file-search)
     - [Function call](#function-call)
     - [Azure function call](#azure-function-call)
+    - [Azure Function Call](#create-agent-with-azure-function-call)
+    - [OpenAPI](#create-agent-with-openapi)
 - [Troubleshooting](#troubleshooting)
 - [Next steps](#next-steps)
 - [Contributing](#contributing)
@@ -349,6 +351,7 @@ while (runResponse.Value.Status == RunStatus.Queued
 ```
 
 #### Azure function call
+
 We also can use Azure Function from inside the agent. In the example below we are calling function "foo", which responds "Bar". In this example we create `AzureFunctionToolDefinition` object, with the function name, description, input and output queues, followed by function parameters.  
 ```C# Snippet:AzureFunctionsDefineFunctionTools
 AzureFunctionToolDefinition azureFnTool = new(
@@ -424,6 +427,48 @@ while (runResponse.Value.Status == RunStatus.Queued
     || runResponse.Value.Status == RunStatus.RequiresAction);
 ```
 
+#### Create Agent With OpenAPI
+
+OpenAPI specifications describe REST operations against a specific endpoint. Agents SDK can read an OpenAPI spec, create a function from it, and call that function against the REST endpoint without additional client-side execution.
+
+Here is an example creating an OpenAPI tool (using anonymous authentication):
+```C# Snippet:OpenAPIDefineFunctionTools
+OpenApiAnonymousAuthDetails oaiAuth = new();
+OpenApiToolDefinition openapiTool = new(
+    name: "get_weather",
+    description: "Retrieve weather information for a location",
+    spec: BinaryData.FromBytes(File.ReadAllBytes(file_path)),
+    auth: oaiAuth
+);
+
+Response<Agent> agentResponse = await client.CreateAgentAsync(
+    model: "gpt-4",
+    name: "azure-function-agent-foo",
+    instructions: "You are a helpful assistant.",
+    tools: new List<ToolDefinition> { openapiTool }
+    );
+Agent agent = agentResponse.Value;
+```
+
+In this example we are using the `weather_openapi.json` file and agent will request the wttr.in website for the weather in a location fron the prompt.
+```C# Snippet:OpenAPIHandlePollingWithRequiredAction
+Response<ThreadMessage> messageResponse = await client.CreateMessageAsync(
+    thread.Id,
+    MessageRole.User,
+    "What's the weather in Seattle?");
+ThreadMessage message = messageResponse.Value;
+
+Response<ThreadRun> runResponse = await client.CreateRunAsync(thread, agent);
+
+do
+{
+    await Task.Delay(TimeSpan.FromMilliseconds(500));
+    runResponse = await client.GetRunAsync(thread.Id, runResponse.Value.Id);
+}
+while (runResponse.Value.Status == RunStatus.Queued
+    || runResponse.Value.Status == RunStatus.InProgress
+    || runResponse.Value.Status == RunStatus.RequiresAction);
+```
 
 ## Troubleshooting
 
