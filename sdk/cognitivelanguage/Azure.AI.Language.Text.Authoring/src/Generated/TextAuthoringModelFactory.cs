@@ -107,6 +107,92 @@ namespace Azure.AI.Language.Text.Authoring
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.ProjectDeletionJobState"/>. </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="createdDateTime"> The creation date time of the job. </param>
+        /// <param name="lastUpdatedDateTime"> The last date time the job was updated. </param>
+        /// <param name="expirationDateTime"> The expiration date time of the job. </param>
+        /// <param name="status"> The job status. </param>
+        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
+        /// <param name="errors"> The errors encountered while executing the job. </param>
+        /// <returns> A new <see cref="Models.ProjectDeletionJobState"/> instance for mocking. </returns>
+        public static ProjectDeletionJobState ProjectDeletionJobState(string jobId = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, DateTimeOffset? expirationDateTime = null, JobStatus status = default, IEnumerable<TextAnalysisAuthoringWarning> warnings = null, IEnumerable<TextAnalysisAuthoringError> errors = null)
+        {
+            warnings ??= new List<TextAnalysisAuthoringWarning>();
+            errors ??= new List<TextAnalysisAuthoringError>();
+
+            return new ProjectDeletionJobState(
+                jobId,
+                createdDateTime,
+                lastUpdatedDateTime,
+                expirationDateTime,
+                status,
+                warnings?.ToList(),
+                errors?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.TextAnalysisAuthoringWarning"/>. </summary>
+        /// <param name="code"> The warning code. </param>
+        /// <param name="message"> The warning message. </param>
+        /// <returns> A new <see cref="Models.TextAnalysisAuthoringWarning"/> instance for mocking. </returns>
+        public static TextAnalysisAuthoringWarning TextAnalysisAuthoringWarning(string code = null, string message = null)
+        {
+            return new TextAnalysisAuthoringWarning(code, message, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CopyProjectJobState"/>. </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="createdDateTime"> The creation date time of the job. </param>
+        /// <param name="lastUpdatedDateTime"> The last date time the job was updated. </param>
+        /// <param name="expirationDateTime"> The expiration date time of the job. </param>
+        /// <param name="status"> The job status. </param>
+        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
+        /// <param name="errors"> The errors encountered while executing the job. </param>
+        /// <returns> A new <see cref="Models.CopyProjectJobState"/> instance for mocking. </returns>
+        public static CopyProjectJobState CopyProjectJobState(string jobId = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, DateTimeOffset? expirationDateTime = null, JobStatus status = default, IEnumerable<TextAnalysisAuthoringWarning> warnings = null, IEnumerable<TextAnalysisAuthoringError> errors = null)
+        {
+            warnings ??= new List<TextAnalysisAuthoringWarning>();
+            errors ??= new List<TextAnalysisAuthoringError>();
+
+            return new CopyProjectJobState(
+                jobId,
+                createdDateTime,
+                lastUpdatedDateTime,
+                expirationDateTime,
+                status,
+                warnings?.ToList(),
+                errors?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ExportProjectJobState"/>. </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="createdDateTime"> The creation date time of the job. </param>
+        /// <param name="lastUpdatedDateTime"> The last date time the job was updated. </param>
+        /// <param name="expirationDateTime"> The expiration date time of the job. </param>
+        /// <param name="status"> The job status. </param>
+        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
+        /// <param name="errors"> The errors encountered while executing the job. </param>
+        /// <param name="resultUrl"> The URL to use in order to download the exported project. </param>
+        /// <returns> A new <see cref="Models.ExportProjectJobState"/> instance for mocking. </returns>
+        public static ExportProjectJobState ExportProjectJobState(string jobId = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, DateTimeOffset? expirationDateTime = null, JobStatus status = default, IEnumerable<TextAnalysisAuthoringWarning> warnings = null, IEnumerable<TextAnalysisAuthoringError> errors = null, string resultUrl = null)
+        {
+            warnings ??= new List<TextAnalysisAuthoringWarning>();
+            errors ??= new List<TextAnalysisAuthoringError>();
+
+            return new ExportProjectJobState(
+                jobId,
+                createdDateTime,
+                lastUpdatedDateTime,
+                expirationDateTime,
+                status,
+                warnings?.ToList(),
+                errors?.ToList(),
+                resultUrl,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.ExportedProject"/>. </summary>
         /// <param name="projectFileVersion"> The version of the exported file. </param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. </param>
@@ -131,6 +217,31 @@ namespace Azure.AI.Language.Text.Authoring
         public static ExportedCustomAbstractiveSummarizationDocument ExportedCustomAbstractiveSummarizationDocument(string summaryLocation = null, string location = null, string language = null, string dataset = null)
         {
             return new ExportedCustomAbstractiveSummarizationDocument(summaryLocation, location, language, dataset, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ImportProjectJobState"/>. </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="createdDateTime"> The creation date time of the job. </param>
+        /// <param name="lastUpdatedDateTime"> The last date time the job was updated. </param>
+        /// <param name="expirationDateTime"> The expiration date time of the job. </param>
+        /// <param name="status"> The job status. </param>
+        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
+        /// <param name="errors"> The errors encountered while executing the job. </param>
+        /// <returns> A new <see cref="Models.ImportProjectJobState"/> instance for mocking. </returns>
+        public static ImportProjectJobState ImportProjectJobState(string jobId = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, DateTimeOffset? expirationDateTime = null, JobStatus status = default, IEnumerable<TextAnalysisAuthoringWarning> warnings = null, IEnumerable<TextAnalysisAuthoringError> errors = null)
+        {
+            warnings ??= new List<TextAnalysisAuthoringWarning>();
+            errors ??= new List<TextAnalysisAuthoringError>();
+
+            return new ImportProjectJobState(
+                jobId,
+                createdDateTime,
+                lastUpdatedDateTime,
+                expirationDateTime,
+                status,
+                warnings?.ToList(),
+                errors?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TrainingJobDetails"/>. </summary>
@@ -210,40 +321,6 @@ namespace Azure.AI.Language.Text.Authoring
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TextAnalysisAuthoringWarning"/>. </summary>
-        /// <param name="code"> The warning code. </param>
-        /// <param name="message"> The warning message. </param>
-        /// <returns> A new <see cref="Models.TextAnalysisAuthoringWarning"/> instance for mocking. </returns>
-        public static TextAnalysisAuthoringWarning TextAnalysisAuthoringWarning(string code = null, string message = null)
-        {
-            return new TextAnalysisAuthoringWarning(code, message, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CopyProjectJobState"/>. </summary>
-        /// <param name="jobId"> The job ID. </param>
-        /// <param name="createdDateTime"> The creation date time of the job. </param>
-        /// <param name="lastUpdatedDateTime"> The last date time the job was updated. </param>
-        /// <param name="expirationDateTime"> The expiration date time of the job. </param>
-        /// <param name="status"> The job status. </param>
-        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
-        /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Models.CopyProjectJobState"/> instance for mocking. </returns>
-        public static CopyProjectJobState CopyProjectJobState(string jobId = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, DateTimeOffset? expirationDateTime = null, JobStatus status = default, IEnumerable<TextAnalysisAuthoringWarning> warnings = null, IEnumerable<TextAnalysisAuthoringError> errors = null)
-        {
-            warnings ??= new List<TextAnalysisAuthoringWarning>();
-            errors ??= new List<TextAnalysisAuthoringError>();
-
-            return new CopyProjectJobState(
-                jobId,
-                createdDateTime,
-                lastUpdatedDateTime,
-                expirationDateTime,
-                status,
-                warnings?.ToList(),
-                errors?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.ProjectDeployment"/>. </summary>
         /// <param name="deploymentName"> Represents deployment name. </param>
         /// <param name="modelId"> Represents deployment modelId. </param>
@@ -288,31 +365,6 @@ namespace Azure.AI.Language.Text.Authoring
             return new CreateDeploymentDetails(trainedModelLabel, assignedResourceIds?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DeploymentDeleteFromResourcesJobState"/>. </summary>
-        /// <param name="jobId"> The job ID. </param>
-        /// <param name="createdDateTime"> The creation date time of the job. </param>
-        /// <param name="lastUpdatedDateTime"> The last date time the job was updated. </param>
-        /// <param name="expirationDateTime"> The expiration date time of the job. </param>
-        /// <param name="status"> The job status. </param>
-        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
-        /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Models.DeploymentDeleteFromResourcesJobState"/> instance for mocking. </returns>
-        public static DeploymentDeleteFromResourcesJobState DeploymentDeleteFromResourcesJobState(string jobId = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, DateTimeOffset? expirationDateTime = null, JobStatus status = default, IEnumerable<TextAnalysisAuthoringWarning> warnings = null, IEnumerable<TextAnalysisAuthoringError> errors = null)
-        {
-            warnings ??= new List<TextAnalysisAuthoringWarning>();
-            errors ??= new List<TextAnalysisAuthoringError>();
-
-            return new DeploymentDeleteFromResourcesJobState(
-                jobId,
-                createdDateTime,
-                lastUpdatedDateTime,
-                expirationDateTime,
-                status,
-                warnings?.ToList(),
-                errors?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.DeploymentJobState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdDateTime"> The creation date time of the job. </param>
@@ -328,6 +380,31 @@ namespace Azure.AI.Language.Text.Authoring
             errors ??= new List<TextAnalysisAuthoringError>();
 
             return new DeploymentJobState(
+                jobId,
+                createdDateTime,
+                lastUpdatedDateTime,
+                expirationDateTime,
+                status,
+                warnings?.ToList(),
+                errors?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeploymentDeleteFromResourcesJobState"/>. </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="createdDateTime"> The creation date time of the job. </param>
+        /// <param name="lastUpdatedDateTime"> The last date time the job was updated. </param>
+        /// <param name="expirationDateTime"> The expiration date time of the job. </param>
+        /// <param name="status"> The job status. </param>
+        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
+        /// <param name="errors"> The errors encountered while executing the job. </param>
+        /// <returns> A new <see cref="Models.DeploymentDeleteFromResourcesJobState"/> instance for mocking. </returns>
+        public static DeploymentDeleteFromResourcesJobState DeploymentDeleteFromResourcesJobState(string jobId = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, DateTimeOffset? expirationDateTime = null, JobStatus status = default, IEnumerable<TextAnalysisAuthoringWarning> warnings = null, IEnumerable<TextAnalysisAuthoringError> errors = null)
+        {
+            warnings ??= new List<TextAnalysisAuthoringWarning>();
+            errors ??= new List<TextAnalysisAuthoringError>();
+
+            return new DeploymentDeleteFromResourcesJobState(
                 jobId,
                 createdDateTime,
                 lastUpdatedDateTime,
@@ -360,33 +437,6 @@ namespace Azure.AI.Language.Text.Authoring
                 status,
                 warnings?.ToList(),
                 errors?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ExportProjectJobState"/>. </summary>
-        /// <param name="jobId"> The job ID. </param>
-        /// <param name="createdDateTime"> The creation date time of the job. </param>
-        /// <param name="lastUpdatedDateTime"> The last date time the job was updated. </param>
-        /// <param name="expirationDateTime"> The expiration date time of the job. </param>
-        /// <param name="status"> The job status. </param>
-        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
-        /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <param name="resultUrl"> The URL to use in order to download the exported project. </param>
-        /// <returns> A new <see cref="Models.ExportProjectJobState"/> instance for mocking. </returns>
-        public static ExportProjectJobState ExportProjectJobState(string jobId = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, DateTimeOffset? expirationDateTime = null, JobStatus status = default, IEnumerable<TextAnalysisAuthoringWarning> warnings = null, IEnumerable<TextAnalysisAuthoringError> errors = null, string resultUrl = null)
-        {
-            warnings ??= new List<TextAnalysisAuthoringWarning>();
-            errors ??= new List<TextAnalysisAuthoringError>();
-
-            return new ExportProjectJobState(
-                jobId,
-                createdDateTime,
-                lastUpdatedDateTime,
-                expirationDateTime,
-                status,
-                warnings?.ToList(),
-                errors?.ToList(),
-                resultUrl,
                 serializedAdditionalRawData: null);
         }
 
@@ -454,31 +504,6 @@ namespace Azure.AI.Language.Text.Authoring
             return new ModelFile(name, contentUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ImportProjectJobState"/>. </summary>
-        /// <param name="jobId"> The job ID. </param>
-        /// <param name="createdDateTime"> The creation date time of the job. </param>
-        /// <param name="lastUpdatedDateTime"> The last date time the job was updated. </param>
-        /// <param name="expirationDateTime"> The expiration date time of the job. </param>
-        /// <param name="status"> The job status. </param>
-        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
-        /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Models.ImportProjectJobState"/> instance for mocking. </returns>
-        public static ImportProjectJobState ImportProjectJobState(string jobId = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, DateTimeOffset? expirationDateTime = null, JobStatus status = default, IEnumerable<TextAnalysisAuthoringWarning> warnings = null, IEnumerable<TextAnalysisAuthoringError> errors = null)
-        {
-            warnings ??= new List<TextAnalysisAuthoringWarning>();
-            errors ??= new List<TextAnalysisAuthoringError>();
-
-            return new ImportProjectJobState(
-                jobId,
-                createdDateTime,
-                lastUpdatedDateTime,
-                expirationDateTime,
-                status,
-                warnings?.ToList(),
-                errors?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.ProjectTrainedModel"/>. </summary>
         /// <param name="label"> The trained model label. </param>
         /// <param name="modelId"> The model ID. </param>
@@ -536,6 +561,31 @@ namespace Azure.AI.Language.Text.Authoring
                 warnings?.ToList(),
                 errors?.ToList(),
                 result,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.LoadSnapshotJobState"/>. </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="createdDateTime"> The creation date time of the job. </param>
+        /// <param name="lastUpdatedDateTime"> The last date time the job was updated. </param>
+        /// <param name="expirationDateTime"> The expiration date time of the job. </param>
+        /// <param name="status"> The job status. </param>
+        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
+        /// <param name="errors"> The errors encountered while executing the job. </param>
+        /// <returns> A new <see cref="Models.LoadSnapshotJobState"/> instance for mocking. </returns>
+        public static LoadSnapshotJobState LoadSnapshotJobState(string jobId = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, DateTimeOffset? expirationDateTime = null, JobStatus status = default, IEnumerable<TextAnalysisAuthoringWarning> warnings = null, IEnumerable<TextAnalysisAuthoringError> errors = null)
+        {
+            warnings ??= new List<TextAnalysisAuthoringWarning>();
+            errors ??= new List<TextAnalysisAuthoringError>();
+
+            return new LoadSnapshotJobState(
+                jobId,
+                createdDateTime,
+                lastUpdatedDateTime,
+                expirationDateTime,
+                status,
+                warnings?.ToList(),
+                errors?.ToList(),
                 serializedAdditionalRawData: null);
         }
 
@@ -981,31 +1031,6 @@ namespace Azure.AI.Language.Text.Authoring
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.LoadSnapshotJobState"/>. </summary>
-        /// <param name="jobId"> The job ID. </param>
-        /// <param name="createdDateTime"> The creation date time of the job. </param>
-        /// <param name="lastUpdatedDateTime"> The last date time the job was updated. </param>
-        /// <param name="expirationDateTime"> The expiration date time of the job. </param>
-        /// <param name="status"> The job status. </param>
-        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
-        /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Models.LoadSnapshotJobState"/> instance for mocking. </returns>
-        public static LoadSnapshotJobState LoadSnapshotJobState(string jobId = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, DateTimeOffset? expirationDateTime = null, JobStatus status = default, IEnumerable<TextAnalysisAuthoringWarning> warnings = null, IEnumerable<TextAnalysisAuthoringError> errors = null)
-        {
-            warnings ??= new List<TextAnalysisAuthoringWarning>();
-            errors ??= new List<TextAnalysisAuthoringError>();
-
-            return new LoadSnapshotJobState(
-                jobId,
-                createdDateTime,
-                lastUpdatedDateTime,
-                expirationDateTime,
-                status,
-                warnings?.ToList(),
-                errors?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.AssignedDeploymentResource"/>. </summary>
         /// <param name="azureResourceId"> The resource ID. </param>
         /// <param name="region"> The resource region. </param>
@@ -1055,31 +1080,6 @@ namespace Azure.AI.Language.Text.Authoring
             errors ??= new List<TextAnalysisAuthoringError>();
 
             return new UnassignDeploymentResourcesJobState(
-                jobId,
-                createdDateTime,
-                lastUpdatedDateTime,
-                expirationDateTime,
-                status,
-                warnings?.ToList(),
-                errors?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ProjectDeletionJobState"/>. </summary>
-        /// <param name="jobId"> The job ID. </param>
-        /// <param name="createdDateTime"> The creation date time of the job. </param>
-        /// <param name="lastUpdatedDateTime"> The last date time the job was updated. </param>
-        /// <param name="expirationDateTime"> The expiration date time of the job. </param>
-        /// <param name="status"> The job status. </param>
-        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
-        /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Models.ProjectDeletionJobState"/> instance for mocking. </returns>
-        public static ProjectDeletionJobState ProjectDeletionJobState(string jobId = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, DateTimeOffset? expirationDateTime = null, JobStatus status = default, IEnumerable<TextAnalysisAuthoringWarning> warnings = null, IEnumerable<TextAnalysisAuthoringError> errors = null)
-        {
-            warnings ??= new List<TextAnalysisAuthoringWarning>();
-            errors ??= new List<TextAnalysisAuthoringError>();
-
-            return new ProjectDeletionJobState(
                 jobId,
                 createdDateTime,
                 lastUpdatedDateTime,
