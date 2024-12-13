@@ -25,34 +25,33 @@ public class ClientLoggingOptions
     private ChangeTrackingStringList? _allowedHeaderNames;
     private ChangeTrackingStringList? _allowedQueryParameters;
 
-    private static HashSet<string> DefaultAllowedHeaderNames { get; } = [
-            "traceparent",
-            "Accept",
-            "Cache-Control",
-            "Connection",
-            "Content-Length",
-            "Content-Type",
-            "Date",
-            "ETag",
-            "Expires",
-            "If-Match",
-            "If-Modified-Since",
-            "If-None-Match",
-            "If-Unmodified-Since",
-            "Last-Modified",
-            "Pragma",
-            "Request-Id",
-            "Retry-After",
-            "Server",
-            "Transfer-Encoding",
-            "User-Agent",
-            "WWW-Authenticate" ];
-    private static HashSet<string> DefaultAllowedQueryParameters { get; } = ["api-version"];
-    private static PipelineMessageSanitizer DefaultSanitizer { get; } = new(DefaultAllowedQueryParameters, DefaultAllowedHeaderNames);
+    private static readonly HashSet<string> s_defaultAllowedHeaderNames = ["traceparent",
+                                                                          "Accept",
+                                                                          "Cache-Control",
+                                                                          "Connection",
+                                                                          "Content-Length",
+                                                                          "Content-Type",
+                                                                          "Date",
+                                                                          "ETag",
+                                                                          "Expires",
+                                                                          "If-Match",
+                                                                          "If-Modified-Since",
+                                                                          "If-None-Match",
+                                                                          "If-Unmodified-Since",
+                                                                          "Last-Modified",
+                                                                          "Pragma",
+                                                                          "Request-Id",
+                                                                          "Retry-After",
+                                                                          "Server",
+                                                                          "Transfer-Encoding",
+                                                                          "User-Agent",
+                                                                          "WWW-Authenticate" ];
+    private static readonly HashSet<string> s_defaultAllowedQueryParameters = ["api-version"];
+    private static readonly PipelineMessageSanitizer s_defaultSanitizer = new(s_defaultAllowedQueryParameters, s_defaultAllowedHeaderNames);
 
     internal const bool DefaultEnableLogging = true;
     internal const bool DefaultEnableMessageContentLogging = false;
-    internal const int DefaultMessageContentSizeLimit = 4 * 1024;
+    internal const int DefaultMessageContentSizeLimitBytes = 4 * 1024;
     internal const double RequestTooLongSeconds = 3.0; // sec
 
     /// <summary>
@@ -84,7 +83,7 @@ public class ClientLoggingOptions
         set
         {
             AssertNotFrozen();
-            
+
             _enableLogging = value;
         }
     }
@@ -148,7 +147,7 @@ public class ClientLoggingOptions
             {
                 if (_allowedHeaderNames is null)
                 {
-                    var changeList = new ChangeTrackingStringList(DefaultAllowedHeaderNames);
+                    var changeList = new ChangeTrackingStringList(s_defaultAllowedHeaderNames);
                     changeList.StartTracking();
                     _allowedHeaderNames = changeList;
                 }
@@ -161,7 +160,7 @@ public class ClientLoggingOptions
                     // If this instance is frozen still allow read-only access to the defaults by
                     // creating a copy of the default allowed headers and freezing it. This
                     // avoids copying the default array and allocating the change tracking list unless necessary.
-                    _allowedHeaderNames = new ChangeTrackingStringList(DefaultAllowedHeaderNames);
+                    _allowedHeaderNames = new ChangeTrackingStringList(s_defaultAllowedHeaderNames);
                     _allowedHeaderNames.Freeze();
                 }
                 return _allowedHeaderNames;
@@ -182,7 +181,7 @@ public class ClientLoggingOptions
             {
                 if (_allowedQueryParameters is null)
                 {
-                    var changeList = new ChangeTrackingStringList(DefaultAllowedQueryParameters);
+                    var changeList = new ChangeTrackingStringList(s_defaultAllowedQueryParameters);
                     changeList.StartTracking();
                     _allowedQueryParameters = changeList;
                 }
@@ -195,7 +194,7 @@ public class ClientLoggingOptions
                     // If this instance is frozen still allow read-only access to the defaults by
                     // creating a copy of the default allowed query parameters and freezing it. This
                     // avoids copying the default array and allocating the change tracking list unless necessary.
-                    _allowedQueryParameters = new ChangeTrackingStringList(DefaultAllowedQueryParameters);
+                    _allowedQueryParameters = new ChangeTrackingStringList(s_defaultAllowedQueryParameters);
                     _allowedQueryParameters.Freeze();
                 }
                 return _allowedQueryParameters;
@@ -257,10 +256,10 @@ public class ClientLoggingOptions
         Console.WriteLine($"Allowed header names:{_allowedHeaderNames}");
         if (HeaderListIsDefault && QueryParameterListIsDefault)
         {
-            return DefaultSanitizer;
+            return s_defaultSanitizer;
         }
-        HashSet<string> headers = _allowedHeaderNames == null ? DefaultAllowedHeaderNames : new HashSet<string>(_allowedHeaderNames, StringComparer.InvariantCultureIgnoreCase);
-        HashSet<string> queryParams = _allowedQueryParameters == null ? DefaultAllowedQueryParameters : new HashSet<string>(_allowedQueryParameters, StringComparer.InvariantCultureIgnoreCase);
+        HashSet<string> headers = _allowedHeaderNames == null ? s_defaultAllowedHeaderNames : new HashSet<string>(_allowedHeaderNames, StringComparer.InvariantCultureIgnoreCase);
+        HashSet<string> queryParams = _allowedQueryParameters == null ? s_defaultAllowedQueryParameters : new HashSet<string>(_allowedQueryParameters, StringComparer.InvariantCultureIgnoreCase);
 
         _sanitizer ??= new PipelineMessageSanitizer(queryParams, headers);
 

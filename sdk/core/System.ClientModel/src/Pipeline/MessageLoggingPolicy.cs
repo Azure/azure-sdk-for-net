@@ -53,7 +53,12 @@ public class MessageLoggingPolicy : PipelinePolicy
     {
         _messageLogger ??= new PipelineMessageLogger(_loggingOptions.GetPipelineMessageSanitizer(), _loggingOptions.LoggerFactory);
 
-        if (!_messageLogger.IsEnabled(LogLevel.Warning, EventLevel.Warning)) // Warning is the highest level logged
+        // EventLevel.Warning / LogLevel.Warning is the highest level logged by this policy.
+        // PipelineMessageLogger.IsEnabled checks to see: if an ILogger was provided - ensure it is enabled for at least LogLevel.Warning OR if
+        // an ILogger was not provided, see if an EventListener exists that is actively listening for at least EventLevel.Warning.
+        // If nothing is listening for logs then this policy immediately passes control to the next policy in the pipeline and returns when control
+        // is passed back. This avoids any performance hit from logging when no one is listening/collecting logs.
+        if (!_messageLogger.IsEnabled(LogLevel.Warning, EventLevel.Warning))
         {
             if (async)
             {
