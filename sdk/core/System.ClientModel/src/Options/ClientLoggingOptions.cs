@@ -84,6 +84,7 @@ public class ClientLoggingOptions
         set
         {
             AssertNotFrozen();
+            
             _enableLogging = value;
         }
     }
