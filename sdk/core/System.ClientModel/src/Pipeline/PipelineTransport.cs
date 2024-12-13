@@ -145,13 +145,9 @@ public abstract class PipelineTransport : PipelinePolicy
                 ProcessCore(message);
             }
         }
-        catch (Exception ex)
+        catch (OperationCanceledException ex)
         {
-            if (ex is OperationCanceledException)
-            {
-                CancellationHelper.ThrowIfCancellationRequestedOrTimeout(messageToken, timeoutTokenSource.Token, ex, networkTimeout);
-            }
-
+            CancellationHelper.ThrowIfCancellationRequestedOrTimeout(messageToken, timeoutTokenSource.Token, ex, networkTimeout);
             throw;
         }
         finally

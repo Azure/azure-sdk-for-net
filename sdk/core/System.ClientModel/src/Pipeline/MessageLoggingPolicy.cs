@@ -30,7 +30,7 @@ public class MessageLoggingPolicy : PipelinePolicy
     private readonly string _clientAssembly = typeof(MessageLoggingPolicy).Assembly.GetName().Name!;
 
     private bool _enableMessageContentLogging => _loggingOptions.EnableMessageContentLogging ?? ClientLoggingOptions.DefaultEnableMessageContentLogging;
-    private int _maxLength => _loggingOptions.MessageContentSizeLimit ?? ClientLoggingOptions.DefaultMessageContentSizeLimit;
+    private int _maxLength => _loggingOptions.MessageContentSizeLimit ?? ClientLoggingOptions.DefaultMessageContentSizeLimitBytes;
 
     /// <summary>
     /// Creates a new instance of the <see cref="MessageLoggingPolicy"/> class.
