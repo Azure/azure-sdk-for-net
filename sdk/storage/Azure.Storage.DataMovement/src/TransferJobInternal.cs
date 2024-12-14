@@ -12,7 +12,7 @@ using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class TransferJobInternal : IDisposable
+    internal class TransferJobInternal : IAsyncDisposable
     {
         internal delegate Task<JobPartInternal> CreateJobPartSingleAsync(
             TransferJobInternal job,
@@ -261,17 +261,14 @@ namespace Azure.Storage.DataMovement
             _progressTracker = new TransferProgressTracker(transferOptions?.ProgressHandlerOptions);
         }
 
-        public void Dispose()
-        {
-            DisposeHandlers();
-        }
-
-        public void DisposeHandlers()
+        public async ValueTask DisposeAsync()
         {
             if (JobPartStatusEvents != default)
             {
                 JobPartStatusEvents -= JobPartStatusEventAsync;
             }
+            // This will block until all pending progress reports have gone out
+            await _progressTracker.DisposeAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -609,7 +606,7 @@ namespace Azure.Storage.DataMovement
                 if (state == DataTransferState.Completed ||
                     state == DataTransferState.Paused)
                 {
-                    DisposeHandlers();
+                    await DisposeAsync().ConfigureAwait(false);
                 }
 
                 await OnJobPartStatusChangedAsync().ConfigureAwait(false);
@@ -688,11 +685,9 @@ namespace Azure.Storage.DataMovement
                 {
                     await OnJobStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
                 }
-                return;
             }
-
             // If there are no more pending job parts, complete the job
-            if (_pendingJobParts == 0)
+            else if (_pendingJobParts == 0)
             {
                 if (_jobPartPaused)
                 {
@@ -722,9 +717,9 @@ namespace Azure.Storage.DataMovement
             return new HashSet<Uri>(_jobParts.Select(x => x._sourceResource.Uri));
         }
 
-        internal void IncrementJobParts()
+        internal async ValueTask IncrementJobParts()
         {
-            _progressTracker.IncrementQueuedFiles();
+            await _progressTracker.IncrementQueuedFilesAsync(_cancellationToken).ConfigureAwait(false);
         }
     }
 }

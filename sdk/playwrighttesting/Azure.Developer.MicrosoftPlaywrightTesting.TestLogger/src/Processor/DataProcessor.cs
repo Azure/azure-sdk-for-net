@@ -67,7 +67,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                     TestType = "WebTest",
                     TestSdkLanguage = "CSHARP",
                     TestFramework = new TestFramework() { Name = "PLAYWRIGHT", RunnerName = "NUNIT", Version = "3.1" }, // TODO fetch runner name MSTest/Nunit
-                    ReporterPackageVersion = "1.0.0-beta.3",
+                    ReporterPackageVersion = "1.0.0-beta.4",
                     Shards = new Shard() { Total = 1 }
                 }
             };
@@ -107,7 +107,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
             testCaseResultData.TestTitle = testResultSource.TestCase.DisplayName;
             var className = FetchTestClassName(testResultSource.TestCase.FullyQualifiedName);
             testCaseResultData.SuiteTitle = className;
-            testCaseResultData.SuiteId = className;
+            testCaseResultData.SuiteId = ReporterUtils.CalculateSha1Hash(className);
             testCaseResultData.FileName = FetchFileName(testResultSource.TestCase.Source);
             testCaseResultData.LineNumber = testResultSource.TestCase.LineNumber;
             testCaseResultData.Retry = 0; // TODO Retry and PreviousRetries

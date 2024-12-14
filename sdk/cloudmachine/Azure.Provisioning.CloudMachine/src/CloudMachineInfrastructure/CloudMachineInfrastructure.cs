@@ -122,7 +122,7 @@ public class CloudMachineInfrastructure
 
         context ??= new ProvisioningBuildOptions();
         // This must occur after the features have been emitted.
-        context.InfrastructureResolvers.Add(new RoleResolver(Features.RoleAnnotations, [Identity], [PrincipalIdParameter]));
+        context.InfrastructureResolvers.Add(new RoleResolver(Id, Features.RoleAnnotations, [Identity], [PrincipalIdParameter]));
         return _infrastructure.Build(context);
     }
 
@@ -159,7 +159,6 @@ public static class CloudMachineInfrastructureConfiguration
     /// <returns></returns>
     public static IHostApplicationBuilder AddCloudMachine(this IHostApplicationBuilder builder, CloudMachineInfrastructure cm)
     {
-        builder.Configuration.AddCloudMachineConfiguration(cm);
         builder.Services.AddSingleton(new CloudMachineClient(cm.Connections));
         return builder;
     }

@@ -116,7 +116,8 @@ namespace Azure.Storage.DataMovement.Tests
         private Mock<CommitChunkHandler.ReportProgressInBytes> GetReportProgressInBytesTask()
         {
             var mock = new Mock<CommitChunkHandler.ReportProgressInBytes>(MockBehavior.Strict);
-            mock.Setup(del => del(It.IsNotNull<long>()));
+            mock.Setup(del => del(It.IsNotNull<long>()))
+                .Returns(new ValueTask());
             return mock;
         }
 
@@ -489,7 +490,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        public void Dispose()
+        public async Task DisposeAsync()
         {
             // Arrange - Create CommitChunkHandler then Dispose it so the event handler is disposed
             MockCommitChunkBehaviors mockCommitChunkBehaviors = GetCommitChunkBehaviors();
@@ -511,7 +512,7 @@ namespace Azure.Storage.DataMovement.Tests
                 CancellationToken.None);
 
             // Act
-            commitBlockHandler.Dispose();
+            await commitBlockHandler.DisposeAsync();
 
             Assert.ThrowsAsync<ChannelClosedException>(async () =>
                 await commitBlockHandler.QueueChunkAsync(default));
