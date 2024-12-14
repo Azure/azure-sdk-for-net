@@ -397,7 +397,7 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
             MessageContentSizeLimit = 5
         };
 
-        MockPipelineResponse response = new(500, mockHeaders: _defaultTextHeaders);
+        MockPipelineResponse response = new(200, mockHeaders: _defaultTextHeaders);
 
         ClientPipelineOptions options = new()
         {
@@ -411,6 +411,7 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
         message.Request.Method = "GET";
         message.Request.Uri = new Uri("http://example.com");
         message.Request.Content = BinaryContent.Create(new BinaryData("Hello world"));
+        message.Request.Headers.Add("Content-Type", "text/plain");
 
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
@@ -446,12 +447,13 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
         message.Request.Method = "GET";
         message.Request.Uri = new Uri("http://example.com");
         message.Request.Content = BinaryContent.Create(new BinaryData("Hello world"));
+        message.Request.Headers.Add("Content-Type", "text/plain");
 
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
         TestLogger logger = factory.GetLogger(LoggingPolicyCategoryName);
         LoggerEvent logEvent = logger.GetAndValidateSingleEvent(RequestContentTextEvent, "RequestContentText", LogLevel.Debug);
-        Assert.AreEqual("Hello", logEvent.GetValueFromArguments<byte[]>("content"));
+        Assert.AreEqual("Hello", logEvent.GetValueFromArguments<string>("content"));
         CollectionAssert.IsEmpty(logger.EventsById(RequestContentEvent)); // RequestContentEvent
     }
 
@@ -469,7 +471,7 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
         MockPipelineResponse response = new(200, mockHeaders: _defaultTextHeaders);
         await SendRequestWithStreamingResponseSyncOrAsync(response, true, loggingOptions);
 
-        EventWrittenEventArgs contentEvent = listener.GetAndValidateSingleEvent(ResponseContentTextBlockEvent, "ResponseContentTextBlock", EventLevel.Verbose, SystemClientModelEventSourceName);
+        EventWrittenEventArgs contentEvent = listener.GetAndValidateSingleEvent(ResponseContentTextEvent, "ResponseContentText", EventLevel.Verbose, SystemClientModelEventSourceName);
         Assert.AreEqual("Hello", contentEvent.GetProperty<string>("content"));
     }
 

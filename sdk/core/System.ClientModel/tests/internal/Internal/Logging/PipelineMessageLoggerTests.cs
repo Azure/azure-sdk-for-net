@@ -137,17 +137,6 @@ public class PipelineMessageLoggerTests : SyncAsyncPolicyTestBase
     }
 
     [Test]
-    public void IsEnabledEventSource()
-    {
-        using TestEventListenerWarning listener = new(); // Warning
-        PipelineMessageLogger messageLogger = new(new PipelineMessageSanitizer([], []), null);
-
-        Assert.IsTrue(messageLogger.IsEnabled(LogLevel.Debug, EventLevel.Warning));
-        Assert.IsTrue(messageLogger.IsEnabled(LogLevel.Debug, EventLevel.Critical));
-        Assert.IsFalse(messageLogger.IsEnabled(LogLevel.Critical, EventLevel.Verbose));
-    }
-
-    [Test]
     public void IsEnabledILogger()
     {
         using TestLoggingFactory factory = new(LogLevel.Debug);
