@@ -1,5 +1,219 @@
 namespace Azure.ResourceManager.ContainerRegistry
 {
+    public partial class ArchiveCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ContainerRegistry.ArchiveResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.ArchiveResource>, System.Collections.IEnumerable
+    {
+        protected ArchiveCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.ArchiveResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string archiveName, Azure.ResourceManager.ContainerRegistry.ArchiveData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.ArchiveResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string archiveName, Azure.ResourceManager.ContainerRegistry.ArchiveData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string archiveName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string archiveName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ArchiveResource> Get(string archiveName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ContainerRegistry.ArchiveResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ContainerRegistry.ArchiveResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ArchiveResource>> GetAsync(string archiveName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ContainerRegistry.ArchiveResource> GetIfExists(string archiveName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ContainerRegistry.ArchiveResource>> GetIfExistsAsync(string archiveName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ContainerRegistry.ArchiveResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ContainerRegistry.ArchiveResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.ContainerRegistry.ArchiveResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.ArchiveResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class ArchiveData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.ArchiveData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ArchiveData>
+    {
+        public ArchiveData() { }
+        public Azure.ResourceManager.ContainerRegistry.Models.ArchivePackageSourceProperties PackageSource { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState? ProvisioningState { get { throw null; } }
+        public string PublishedVersion { get { throw null; } set { } }
+        public string RepositoryEndpoint { get { throw null; } }
+        public string RepositoryEndpointPrefix { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.ArchiveData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.ArchiveData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.ArchiveData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.ArchiveData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ArchiveData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ArchiveData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ArchiveData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ArchiveResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.ArchiveData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ArchiveData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ArchiveResource() { }
+        public virtual Azure.ResourceManager.ContainerRegistry.ArchiveData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string registryName, string packageType, string archiveName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ArchiveResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ArchiveVersionResource> GetArchiveVersion(string archiveVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ArchiveVersionResource>> GetArchiveVersionAsync(string archiveVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ContainerRegistry.ArchiveVersionCollection GetArchiveVersions() { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ArchiveResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ContainerRegistry.ArchiveData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.ArchiveData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.ArchiveData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.ArchiveData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ArchiveData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ArchiveData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ArchiveData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ArchiveResource> Update(Azure.ResourceManager.ContainerRegistry.Models.ArchivePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ArchiveResource>> UpdateAsync(Azure.ResourceManager.ContainerRegistry.Models.ArchivePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ArchiveVersionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ContainerRegistry.ArchiveVersionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.ArchiveVersionResource>, System.Collections.IEnumerable
+    {
+        protected ArchiveVersionCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.ArchiveVersionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string archiveVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.ArchiveVersionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string archiveVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string archiveVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string archiveVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ArchiveVersionResource> Get(string archiveVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ContainerRegistry.ArchiveVersionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ContainerRegistry.ArchiveVersionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ArchiveVersionResource>> GetAsync(string archiveVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ContainerRegistry.ArchiveVersionResource> GetIfExists(string archiveVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ContainerRegistry.ArchiveVersionResource>> GetIfExistsAsync(string archiveVersionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ContainerRegistry.ArchiveVersionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ContainerRegistry.ArchiveVersionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.ContainerRegistry.ArchiveVersionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.ArchiveVersionResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class ArchiveVersionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.ArchiveVersionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ArchiveVersionData>
+    {
+        public ArchiveVersionData() { }
+        public string ArchiveVersionErrorMessage { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState? ProvisioningState { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.ArchiveVersionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.ArchiveVersionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.ArchiveVersionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.ArchiveVersionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ArchiveVersionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ArchiveVersionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ArchiveVersionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ArchiveVersionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.ArchiveVersionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ArchiveVersionData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ArchiveVersionResource() { }
+        public virtual Azure.ResourceManager.ContainerRegistry.ArchiveVersionData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string registryName, string packageType, string archiveName, string archiveVersionName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ArchiveVersionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ArchiveVersionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ContainerRegistry.ArchiveVersionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.ArchiveVersionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.ArchiveVersionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.ArchiveVersionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ArchiveVersionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ArchiveVersionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ArchiveVersionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.ArchiveVersionResource> Update(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.ArchiveVersionResource>> UpdateAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class CacheRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ContainerRegistry.CacheRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.CacheRuleResource>, System.Collections.IEnumerable
+    {
+        protected CacheRuleCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.CacheRuleResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string cacheRuleName, Azure.ResourceManager.ContainerRegistry.CacheRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.CacheRuleResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string cacheRuleName, Azure.ResourceManager.ContainerRegistry.CacheRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string cacheRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string cacheRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.CacheRuleResource> Get(string cacheRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ContainerRegistry.CacheRuleResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ContainerRegistry.CacheRuleResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.CacheRuleResource>> GetAsync(string cacheRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ContainerRegistry.CacheRuleResource> GetIfExists(string cacheRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ContainerRegistry.CacheRuleResource>> GetIfExistsAsync(string cacheRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ContainerRegistry.CacheRuleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ContainerRegistry.CacheRuleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.ContainerRegistry.CacheRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.CacheRuleResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class CacheRuleData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.CacheRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.CacheRuleData>
+    {
+        public CacheRuleData() { }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public Azure.Core.ResourceIdentifier CredentialSetResourceId { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState? ProvisioningState { get { throw null; } }
+        public string SourceRepository { get { throw null; } set { } }
+        public string TargetRepository { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.CacheRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.CacheRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.CacheRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.CacheRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.CacheRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.CacheRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.CacheRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CacheRuleResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.CacheRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.CacheRuleData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected CacheRuleResource() { }
+        public virtual Azure.ResourceManager.ContainerRegistry.CacheRuleData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string registryName, string cacheRuleName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.CacheRuleResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.CacheRuleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ContainerRegistry.CacheRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.CacheRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.CacheRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.CacheRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.CacheRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.CacheRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.CacheRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.CacheRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ContainerRegistry.Models.CacheRulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.CacheRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ContainerRegistry.Models.CacheRulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ConnectedRegistryCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ContainerRegistry.ConnectedRegistryResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.ConnectedRegistryResource>, System.Collections.IEnumerable
+    {
+        protected ConnectedRegistryCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.ConnectedRegistryResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string connectedRegistryName, Azure.ResourceManager.ContainerRegistry.ConnectedRegistryData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.ConnectedRegistryResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string connectedRegistryName, Azure.ResourceManager.ContainerRegistry.ConnectedRegistryData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string connectedRegistryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string connectedRegistryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ConnectedRegistryResource> Get(string connectedRegistryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ContainerRegistry.ConnectedRegistryResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ContainerRegistry.ConnectedRegistryResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ConnectedRegistryResource>> GetAsync(string connectedRegistryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ContainerRegistry.ConnectedRegistryResource> GetIfExists(string connectedRegistryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ContainerRegistry.ConnectedRegistryResource>> GetIfExistsAsync(string connectedRegistryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ContainerRegistry.ConnectedRegistryResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ContainerRegistry.ConnectedRegistryResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.ContainerRegistry.ConnectedRegistryResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.ConnectedRegistryResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class ConnectedRegistryData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.ConnectedRegistryData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ConnectedRegistryData>
+    {
+        public ConnectedRegistryData() { }
+        public Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryActivationStatus? ActivationStatus { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> ClientTokenIds { get { throw null; } }
+        public Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryConnectionState? ConnectionState { get { throw null; } }
+        public Azure.ResourceManager.ContainerRegistry.Models.GarbageCollectionProperties GarbageCollection { get { throw null; } set { } }
+        public System.DateTimeOffset? LastActivityOn { get { throw null; } }
+        public Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogging Logging { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLoginServer LoginServer { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryMode? Mode { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> NotificationsList { get { throw null; } }
+        public Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryParent Parent { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryStatusDetail> StatusDetails { get { throw null; } }
+        public string Version { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.ConnectedRegistryData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.ConnectedRegistryData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.ConnectedRegistryData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.ConnectedRegistryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ConnectedRegistryData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ConnectedRegistryData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ConnectedRegistryData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ConnectedRegistryResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.ConnectedRegistryData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ConnectedRegistryData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ConnectedRegistryResource() { }
+        public virtual Azure.ResourceManager.ContainerRegistry.ConnectedRegistryData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string registryName, string connectedRegistryName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Deactivate(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeactivateAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ConnectedRegistryResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ConnectedRegistryResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ContainerRegistry.ConnectedRegistryData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.ConnectedRegistryData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.ConnectedRegistryData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.ConnectedRegistryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ConnectedRegistryData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ConnectedRegistryData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ConnectedRegistryData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.ConnectedRegistryResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.ConnectedRegistryResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class ContainerRegistryAgentPoolCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ContainerRegistry.ContainerRegistryAgentPoolResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.ContainerRegistryAgentPoolResource>, System.Collections.IEnumerable
     {
         protected ContainerRegistryAgentPoolCollection() { }
@@ -79,13 +293,16 @@ namespace Azure.ResourceManager.ContainerRegistry
     public partial class ContainerRegistryData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.ContainerRegistryData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ContainerRegistryData>
     {
         public ContainerRegistryData(Azure.Core.AzureLocation location, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySku sku) { }
+        public Azure.ResourceManager.ContainerRegistry.Models.AutoGeneratedDomainNameLabelScope? AutoGeneratedDomainNameLabelScope { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> DataEndpointHostNames { get { throw null; } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryEncryption Encryption { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public bool? IsAdminUserEnabled { get { throw null; } set { } }
+        public bool? IsAnonymousPullEnabled { get { throw null; } set { } }
         public bool? IsDataEndpointEnabled { get { throw null; } set { } }
         public string LoginServer { get { throw null; } }
+        public Azure.ResourceManager.ContainerRegistry.Models.MetadataSearch? MetadataSearch { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNetworkRuleBypassOption? NetworkRuleBypassOptions { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNetworkRuleSet NetworkRuleSet { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPolicies Policies { get { throw null; } set { } }
@@ -106,12 +323,17 @@ namespace Azure.ResourceManager.ContainerRegistry
     {
         public static Azure.Response<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNameAvailableResult> CheckContainerRegistryNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNameAvailableResult>> CheckContainerRegistryNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.ArchiveResource GetArchiveResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.ArchiveVersionResource GetArchiveVersionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.CacheRuleResource GetCacheRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.ConnectedRegistryResource GetConnectedRegistryResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.ContainerRegistryCollection GetContainerRegistries(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.ContainerRegistry.ContainerRegistryResource> GetContainerRegistries(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.ContainerRegistry.ContainerRegistryResource> GetContainerRegistriesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryResource> GetContainerRegistry(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string registryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.ContainerRegistryAgentPoolResource GetContainerRegistryAgentPoolResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryResource>> GetContainerRegistryAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string registryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunResource GetContainerRegistryPipelineRunResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.ContainerRegistryPrivateEndpointConnectionResource GetContainerRegistryPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.ContainerRegistryPrivateLinkResource GetContainerRegistryPrivateLinkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.ContainerRegistryReplicationResource GetContainerRegistryReplicationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -121,7 +343,60 @@ namespace Azure.ResourceManager.ContainerRegistry
         public static Azure.ResourceManager.ContainerRegistry.ContainerRegistryTaskRunResource GetContainerRegistryTaskRunResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.ContainerRegistryTokenResource GetContainerRegistryTokenResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.ContainerRegistryWebhookResource GetContainerRegistryWebhookResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.CredentialSetResource GetCredentialSetResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.ExportPipelineResource GetExportPipelineResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.ImportPipelineResource GetImportPipelineResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.ScopeMapResource GetScopeMapResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class ContainerRegistryPipelineRunCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunResource>, System.Collections.IEnumerable
+    {
+        protected ContainerRegistryPipelineRunCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string pipelineRunName, Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string pipelineRunName, Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string pipelineRunName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string pipelineRunName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunResource> Get(string pipelineRunName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunResource>> GetAsync(string pipelineRunName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunResource> GetIfExists(string pipelineRunName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunResource>> GetIfExistsAsync(string pipelineRunName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class ContainerRegistryPipelineRunData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunData>
+    {
+        public ContainerRegistryPipelineRunData() { }
+        public string ForceUpdateTag { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.ContainerRegistry.Models.PipelineRunContent Request { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Models.PipelineRunResult Response { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ContainerRegistryPipelineRunResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ContainerRegistryPipelineRunResource() { }
+        public virtual Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string registryName, string pipelineRunName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ContainerRegistryPrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPrivateEndpointConnectionResource>, System.Collections.IEnumerable
     {
@@ -285,12 +560,24 @@ namespace Azure.ResourceManager.ContainerRegistry
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryGenerateCredentialsResult> GenerateCredentials(Azure.WaitUntil waitUntil, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryGenerateCredentialsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryGenerateCredentialsResult>> GenerateCredentialsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryGenerateCredentialsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ArchiveResource> GetArchive(string packageType, string archiveName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ArchiveResource>> GetArchiveAsync(string packageType, string archiveName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ContainerRegistry.ArchiveCollection GetArchives(string packageType) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.Models.SourceUploadDefinition> GetBuildSourceUploadUrl(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.Models.SourceUploadDefinition>> GetBuildSourceUploadUrlAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.CacheRuleResource> GetCacheRule(string cacheRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.CacheRuleResource>> GetCacheRuleAsync(string cacheRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ContainerRegistry.CacheRuleCollection GetCacheRules() { throw null; }
+        public virtual Azure.ResourceManager.ContainerRegistry.ConnectedRegistryCollection GetConnectedRegistries() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ConnectedRegistryResource> GetConnectedRegistry(string connectedRegistryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ConnectedRegistryResource>> GetConnectedRegistryAsync(string connectedRegistryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryAgentPoolResource> GetContainerRegistryAgentPool(string agentPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryAgentPoolResource>> GetContainerRegistryAgentPoolAsync(string agentPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ContainerRegistry.ContainerRegistryAgentPoolCollection GetContainerRegistryAgentPools() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunResource> GetContainerRegistryPipelineRun(string pipelineRunName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunResource>> GetContainerRegistryPipelineRunAsync(string pipelineRunName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunCollection GetContainerRegistryPipelineRuns() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPrivateEndpointConnectionResource> GetContainerRegistryPrivateEndpointConnection(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPrivateEndpointConnectionResource>> GetContainerRegistryPrivateEndpointConnectionAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ContainerRegistry.ContainerRegistryPrivateEndpointConnectionCollection GetContainerRegistryPrivateEndpointConnections() { throw null; }
@@ -317,6 +604,15 @@ namespace Azure.ResourceManager.ContainerRegistry
         public virtual Azure.ResourceManager.ContainerRegistry.ContainerRegistryWebhookCollection GetContainerRegistryWebhooks() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryListCredentialsResult> GetCredentials(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryListCredentialsResult>> GetCredentialsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.CredentialSetResource> GetCredentialSet(string credentialSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.CredentialSetResource>> GetCredentialSetAsync(string credentialSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ContainerRegistry.CredentialSetCollection GetCredentialSets() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ExportPipelineResource> GetExportPipeline(string exportPipelineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ExportPipelineResource>> GetExportPipelineAsync(string exportPipelineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ContainerRegistry.ExportPipelineCollection GetExportPipelines() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ImportPipelineResource> GetImportPipeline(string importPipelineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ImportPipelineResource>> GetImportPipelineAsync(string importPipelineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ContainerRegistry.ImportPipelineCollection GetImportPipelines() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ScopeMapResource> GetScopeMap(string scopeMapName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ScopeMapResource>> GetScopeMapAsync(string scopeMapName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ContainerRegistry.ScopeMapCollection GetScopeMaps() { throw null; }
@@ -642,6 +938,160 @@ namespace Azure.ResourceManager.ContainerRegistry
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.ContainerRegistryWebhookResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryWebhookPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.ContainerRegistryWebhookResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryWebhookPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class CredentialSetCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ContainerRegistry.CredentialSetResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.CredentialSetResource>, System.Collections.IEnumerable
+    {
+        protected CredentialSetCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.CredentialSetResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string credentialSetName, Azure.ResourceManager.ContainerRegistry.CredentialSetData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.CredentialSetResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string credentialSetName, Azure.ResourceManager.ContainerRegistry.CredentialSetData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string credentialSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string credentialSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.CredentialSetResource> Get(string credentialSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ContainerRegistry.CredentialSetResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ContainerRegistry.CredentialSetResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.CredentialSetResource>> GetAsync(string credentialSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ContainerRegistry.CredentialSetResource> GetIfExists(string credentialSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ContainerRegistry.CredentialSetResource>> GetIfExistsAsync(string credentialSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ContainerRegistry.CredentialSetResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ContainerRegistry.CredentialSetResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.ContainerRegistry.CredentialSetResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.CredentialSetResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class CredentialSetData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.CredentialSetData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.CredentialSetData>
+    {
+        public CredentialSetData() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ContainerRegistry.Models.AuthCredential> AuthCredentials { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public string LoginServer { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState? ProvisioningState { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.CredentialSetData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.CredentialSetData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.CredentialSetData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.CredentialSetData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.CredentialSetData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.CredentialSetData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.CredentialSetData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CredentialSetResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.CredentialSetData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.CredentialSetData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected CredentialSetResource() { }
+        public virtual Azure.ResourceManager.ContainerRegistry.CredentialSetData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string registryName, string credentialSetName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.CredentialSetResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.CredentialSetResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ContainerRegistry.CredentialSetData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.CredentialSetData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.CredentialSetData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.CredentialSetData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.CredentialSetData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.CredentialSetData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.CredentialSetData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.CredentialSetResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ContainerRegistry.Models.CredentialSetPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.CredentialSetResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ContainerRegistry.Models.CredentialSetPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ExportPipelineCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ContainerRegistry.ExportPipelineResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.ExportPipelineResource>, System.Collections.IEnumerable
+    {
+        protected ExportPipelineCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.ExportPipelineResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string exportPipelineName, Azure.ResourceManager.ContainerRegistry.ExportPipelineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.ExportPipelineResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string exportPipelineName, Azure.ResourceManager.ContainerRegistry.ExportPipelineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string exportPipelineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string exportPipelineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ExportPipelineResource> Get(string exportPipelineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ContainerRegistry.ExportPipelineResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ContainerRegistry.ExportPipelineResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ExportPipelineResource>> GetAsync(string exportPipelineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ContainerRegistry.ExportPipelineResource> GetIfExists(string exportPipelineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ContainerRegistry.ExportPipelineResource>> GetIfExistsAsync(string exportPipelineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ContainerRegistry.ExportPipelineResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ContainerRegistry.ExportPipelineResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.ContainerRegistry.ExportPipelineResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.ExportPipelineResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class ExportPipelineData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.ExportPipelineData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ExportPipelineData>
+    {
+        public ExportPipelineData() { }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ContainerRegistry.Models.PipelineOption> Options { get { throw null; } }
+        public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.ContainerRegistry.Models.ExportPipelineTargetProperties Target { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.ExportPipelineData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.ExportPipelineData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.ExportPipelineData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.ExportPipelineData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ExportPipelineData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ExportPipelineData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ExportPipelineData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ExportPipelineResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.ExportPipelineData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ExportPipelineData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ExportPipelineResource() { }
+        public virtual Azure.ResourceManager.ContainerRegistry.ExportPipelineData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string registryName, string exportPipelineName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ExportPipelineResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ExportPipelineResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ContainerRegistry.ExportPipelineData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.ExportPipelineData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.ExportPipelineData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.ExportPipelineData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ExportPipelineData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ExportPipelineData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ExportPipelineData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.ExportPipelineResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ContainerRegistry.ExportPipelineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.ExportPipelineResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ContainerRegistry.ExportPipelineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ImportPipelineCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ContainerRegistry.ImportPipelineResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.ImportPipelineResource>, System.Collections.IEnumerable
+    {
+        protected ImportPipelineCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.ImportPipelineResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string importPipelineName, Azure.ResourceManager.ContainerRegistry.ImportPipelineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.ImportPipelineResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string importPipelineName, Azure.ResourceManager.ContainerRegistry.ImportPipelineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string importPipelineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string importPipelineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ImportPipelineResource> Get(string importPipelineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ContainerRegistry.ImportPipelineResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ContainerRegistry.ImportPipelineResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ImportPipelineResource>> GetAsync(string importPipelineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ContainerRegistry.ImportPipelineResource> GetIfExists(string importPipelineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ContainerRegistry.ImportPipelineResource>> GetIfExistsAsync(string importPipelineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ContainerRegistry.ImportPipelineResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ContainerRegistry.ImportPipelineResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.ContainerRegistry.ImportPipelineResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.ImportPipelineResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class ImportPipelineData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.ImportPipelineData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ImportPipelineData>
+    {
+        public ImportPipelineData() { }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ContainerRegistry.Models.PipelineOption> Options { get { throw null; } }
+        public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.ContainerRegistry.Models.ImportPipelineSourceProperties Source { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTriggerStatus? SourceTriggerStatus { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.ImportPipelineData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.ImportPipelineData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.ImportPipelineData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.ImportPipelineData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ImportPipelineData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ImportPipelineData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ImportPipelineData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ImportPipelineResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.ImportPipelineData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ImportPipelineData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ImportPipelineResource() { }
+        public virtual Azure.ResourceManager.ContainerRegistry.ImportPipelineData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string registryName, string importPipelineName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ImportPipelineResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ImportPipelineResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ContainerRegistry.ImportPipelineData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.ImportPipelineData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.ImportPipelineData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.ImportPipelineData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ImportPipelineData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ImportPipelineData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ImportPipelineData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.ImportPipelineResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ContainerRegistry.ImportPipelineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.ImportPipelineResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ContainerRegistry.ImportPipelineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class ScopeMapCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ContainerRegistry.ScopeMapResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.ScopeMapResource>, System.Collections.IEnumerable
     {
         protected ScopeMapCollection() { }
@@ -699,7 +1149,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
     public partial class MockableContainerRegistryArmClient : Azure.ResourceManager.ArmResource
     {
         protected MockableContainerRegistryArmClient() { }
+        public virtual Azure.ResourceManager.ContainerRegistry.ArchiveResource GetArchiveResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ContainerRegistry.ArchiveVersionResource GetArchiveVersionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ContainerRegistry.CacheRuleResource GetCacheRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ContainerRegistry.ConnectedRegistryResource GetConnectedRegistryResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ContainerRegistry.ContainerRegistryAgentPoolResource GetContainerRegistryAgentPoolResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunResource GetContainerRegistryPipelineRunResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ContainerRegistry.ContainerRegistryPrivateEndpointConnectionResource GetContainerRegistryPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ContainerRegistry.ContainerRegistryPrivateLinkResource GetContainerRegistryPrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ContainerRegistry.ContainerRegistryReplicationResource GetContainerRegistryReplicationResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -709,6 +1164,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         public virtual Azure.ResourceManager.ContainerRegistry.ContainerRegistryTaskRunResource GetContainerRegistryTaskRunResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ContainerRegistry.ContainerRegistryTokenResource GetContainerRegistryTokenResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ContainerRegistry.ContainerRegistryWebhookResource GetContainerRegistryWebhookResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ContainerRegistry.CredentialSetResource GetCredentialSetResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ContainerRegistry.ExportPipelineResource GetExportPipelineResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ContainerRegistry.ImportPipelineResource GetImportPipelineResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ContainerRegistry.ScopeMapResource GetScopeMapResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class MockableContainerRegistryResourceGroupResource : Azure.ResourceManager.ArmResource
@@ -747,13 +1205,46 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.ActionsRequiredForPrivateLinkServiceConsumer left, Azure.ResourceManager.ContainerRegistry.Models.ActionsRequiredForPrivateLinkServiceConsumer right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ArchivePackageSourceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ArchivePackageSourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ArchivePackageSourceProperties>
+    {
+        public ArchivePackageSourceProperties() { }
+        public Azure.ResourceManager.ContainerRegistry.Models.PackageSourceType? PackageSourceType { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.ArchivePackageSourceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ArchivePackageSourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ArchivePackageSourceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.ArchivePackageSourceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ArchivePackageSourceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ArchivePackageSourceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ArchivePackageSourceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ArchivePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ArchivePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ArchivePatch>
+    {
+        public ArchivePatch() { }
+        public string PublishedVersion { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.ArchivePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ArchivePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ArchivePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.ArchivePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ArchivePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ArchivePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ArchivePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public static partial class ArmContainerRegistryModelFactory
     {
+        public static Azure.ResourceManager.ContainerRegistry.ArchiveData ArchiveData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ContainerRegistry.Models.ArchivePackageSourceProperties packageSource = null, string publishedVersion = null, string repositoryEndpointPrefix = null, string repositoryEndpoint = null, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.ArchiveVersionData ArchiveVersionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState?), string archiveVersionErrorMessage = null) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Models.AuthCredential AuthCredential(Azure.ResourceManager.ContainerRegistry.Models.CredentialName? name = default(Azure.ResourceManager.ContainerRegistry.Models.CredentialName?), string usernameSecretIdentifier = null, string passwordSecretIdentifier = null, Azure.ResourceManager.ContainerRegistry.Models.CredentialHealth credentialHealth = null) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.CacheRuleData CacheRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier credentialSetResourceId = null, string sourceRepository = null, string targetRepository = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.ConnectedRegistryData ConnectedRegistryData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState?), Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryMode? mode = default(Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryMode?), string version = null, Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryConnectionState? connectionState = default(Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryConnectionState?), System.DateTimeOffset? lastActivityOn = default(System.DateTimeOffset?), Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryActivationStatus? activationStatus = default(Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryActivationStatus?), Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryParent parent = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> clientTokenIds = null, Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLoginServer loginServer = null, Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogging logging = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryStatusDetail> statusDetails = null, System.Collections.Generic.IEnumerable<string> notificationsList = null, Azure.ResourceManager.ContainerRegistry.Models.GarbageCollectionProperties garbageCollection = null) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLoginServer ConnectedRegistryLoginServer(string host = null, Azure.ResourceManager.ContainerRegistry.Models.TlsProperties tls = null) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryStatusDetail ConnectedRegistryStatusDetail(string statusDetailType = null, string code = null, string description = null, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), string correlationId = null) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistrySyncProperties ConnectedRegistrySyncProperties(Azure.Core.ResourceIdentifier tokenId = null, string schedule = null, System.TimeSpan? syncWindow = default(System.TimeSpan?), System.TimeSpan messageTtl = default(System.TimeSpan), System.DateTimeOffset? lastSyncOn = default(System.DateTimeOffset?), string gatewayEndpoint = null) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.ContainerRegistryAgentPoolData ContainerRegistryAgentPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), int? count = default(int?), string tier = null, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryOS? os = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryOS?), Azure.Core.ResourceIdentifier virtualNetworkSubnetResourceId = null, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryAgentPoolQueueStatus ContainerRegistryAgentPoolQueueStatus(int? count = default(int?)) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageDependency ContainerRegistryBaseImageDependency(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageDependencyType? dependencyType = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageDependencyType?), string registry = null, string repository = null, string tag = null, string digest = null) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageTriggerUpdateContent ContainerRegistryBaseImageTriggerUpdateContent(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageTriggerType? baseImageTriggerType = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageTriggerType?), string updateTriggerEndpoint = null, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryUpdateTriggerPayloadType? updateTriggerPayloadType = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryUpdateTriggerPayloadType?), Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTriggerStatus? status = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTriggerStatus?), string name = null) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.ContainerRegistryData ContainerRegistryData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySku sku = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string loginServer = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState?), Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryResourceStatus status = null, bool? isAdminUserEnabled = default(bool?), Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNetworkRuleSet networkRuleSet = null, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPolicies policies = null, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryEncryption encryption = null, bool? isDataEndpointEnabled = default(bool?), System.Collections.Generic.IEnumerable<string> dataEndpointHostNames = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPublicNetworkAccess?), Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNetworkRuleBypassOption?), Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryZoneRedundancy? zoneRedundancy = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryZoneRedundancy?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.ContainerRegistry.ContainerRegistryData ContainerRegistryData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySku sku, Azure.ResourceManager.Models.ManagedServiceIdentity identity, string loginServer, System.DateTimeOffset? createdOn, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState? provisioningState, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryResourceStatus status, bool? isAdminUserEnabled, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNetworkRuleSet networkRuleSet, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPolicies policies, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryEncryption encryption, bool? isDataEndpointEnabled, System.Collections.Generic.IEnumerable<string> dataEndpointHostNames, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPrivateEndpointConnectionData> privateEndpointConnections, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryZoneRedundancy? zoneRedundancy) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.ContainerRegistryData ContainerRegistryData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySku sku = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string loginServer = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState?), Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryResourceStatus status = null, bool? isAdminUserEnabled = default(bool?), Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNetworkRuleSet networkRuleSet = null, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPolicies policies = null, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryEncryption encryption = null, bool? isDataEndpointEnabled = default(bool?), System.Collections.Generic.IEnumerable<string> dataEndpointHostNames = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.ContainerRegistryPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPublicNetworkAccess?), Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNetworkRuleBypassOption?), Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryZoneRedundancy? zoneRedundancy = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryZoneRedundancy?), bool? isAnonymousPullEnabled = default(bool?), Azure.ResourceManager.ContainerRegistry.Models.MetadataSearch? metadataSearch = default(Azure.ResourceManager.ContainerRegistry.Models.MetadataSearch?), Azure.ResourceManager.ContainerRegistry.Models.AutoGeneratedDomainNameLabelScope? autoGeneratedDomainNameLabelScope = default(Azure.ResourceManager.ContainerRegistry.Models.AutoGeneratedDomainNameLabelScope?)) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryDockerBuildStep ContainerRegistryDockerBuildStep(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageDependency> baseImageDependencies = null, string contextPath = null, string contextAccessToken = null, System.Collections.Generic.IEnumerable<string> imageNames = null, bool? isPushEnabled = default(bool?), bool? noCache = default(bool?), string dockerFilePath = null, string target = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunArgument> arguments = null) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryEncodedTaskStep ContainerRegistryEncodedTaskStep(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageDependency> baseImageDependencies = null, string contextPath = null, string contextAccessToken = null, string encodedTaskContent = null, string encodedValuesContent = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskOverridableValue> values = null) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryFileTaskStep ContainerRegistryFileTaskStep(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageDependency> baseImageDependencies = null, string contextPath = null, string contextAccessToken = null, string taskFilePath = null, string valuesFilePath = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskOverridableValue> values = null) { throw null; }
@@ -763,9 +1254,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryImportSourceCredentials ContainerRegistryImportSourceCredentials(string username = null, string password = null) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryKeyVaultProperties ContainerRegistryKeyVaultProperties(string keyIdentifier = null, string versionedKeyIdentifier = null, string identity = null, bool? isKeyRotationEnabled = default(bool?), System.DateTimeOffset? lastKeyRotationTimestamp = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryListCredentialsResult ContainerRegistryListCredentialsResult(string username = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPassword> passwords = null) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNameAvailabilityContent ContainerRegistryNameAvailabilityContent(string name = null, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryResourceType resourceType = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryResourceType)) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNameAvailableResult ContainerRegistryNameAvailableResult(bool? isNameAvailable = default(bool?), string reason = null, string message = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNameAvailabilityContent ContainerRegistryNameAvailabilityContent(string name, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryResourceType resourceType) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNameAvailabilityContent ContainerRegistryNameAvailabilityContent(string name = null, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryResourceType resourceType = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryResourceType), string resourceGroupName = null, Azure.ResourceManager.ContainerRegistry.Models.AutoGeneratedDomainNameLabelScope? autoGeneratedDomainNameLabelScope = default(Azure.ResourceManager.ContainerRegistry.Models.AutoGeneratedDomainNameLabelScope?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNameAvailableResult ContainerRegistryNameAvailableResult(bool? isNameAvailable, string reason, string message) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNameAvailableResult ContainerRegistryNameAvailableResult(string availableLoginServerName = null, bool? isNameAvailable = default(bool?), string reason = null, string message = null) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPassword ContainerRegistryPassword(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPasswordName? name = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPasswordName?), string value = null) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.ContainerRegistryPipelineRunData ContainerRegistryPipelineRunData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState?), Azure.ResourceManager.ContainerRegistry.Models.PipelineRunContent request = null, Azure.ResourceManager.ContainerRegistry.Models.PipelineRunResult response = null, string forceUpdateTag = null) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.ContainerRegistryPrivateEndpointConnectionData ContainerRegistryPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPrivateLinkServiceConnectionState connectionState = null, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.ContainerRegistryPrivateLinkResourceData ContainerRegistryPrivateLinkResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.ContainerRegistryReplicationData ContainerRegistryReplicationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState?), Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryResourceStatus status = null, bool? isRegionEndpointEnabled = default(bool?), Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryZoneRedundancy? zoneRedundancy = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryZoneRedundancy?)) { throw null; }
@@ -774,6 +1270,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.ContainerRegistryRunData ContainerRegistryRunData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string runId = null, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunStatus? status = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunStatus?), System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunType? runType = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunType?), string agentPoolName = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? finishOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryImageDescriptor> outputImages = null, string task = null, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryImageUpdateTrigger imageUpdateTrigger = null, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySourceTriggerDescriptor sourceTrigger = null, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTimerTriggerDescriptor timerTrigger = null, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPlatformProperties platform = null, int? agentCpu = default(int?), string sourceRegistryAuth = null, System.Collections.Generic.IEnumerable<string> customRegistries = null, string runErrorMessage = null, string updateTriggerToken = null, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryImageDescriptor logArtifact = null, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState?), bool? isArchiveEnabled = default(bool?)) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunGetLogResult ContainerRegistryRunGetLogResult(string logLink = null, string logArtifactLink = null) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySku ContainerRegistrySku(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySkuName name = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySkuName), Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySkuTier? tier = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySkuTier?)) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySoftDeletePolicy ContainerRegistrySoftDeletePolicy(int? retentionDays = default(int?), System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPolicyStatus? status = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPolicyStatus?)) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySourceTriggerUpdateContent ContainerRegistrySourceTriggerUpdateContent(Azure.ResourceManager.ContainerRegistry.Models.SourceCodeRepoUpdateContent sourceRepository = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySourceTriggerEvent> sourceTriggerEvents = null, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTriggerStatus? status = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTriggerStatus?), string name = null) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.ContainerRegistryTaskData ContainerRegistryTaskData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskStatus? status = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskStatus?), Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPlatformProperties platform = null, int? agentCpu = default(int?), string agentPoolName = null, int? timeoutInSeconds = default(int?), Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskStepProperties step = null, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTriggerProperties trigger = null, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCredentials credentials = null, string logTemplate = null, bool? isSystemTask = default(bool?)) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.ContainerRegistryTaskRunData ContainerRegistryTaskRunData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState?), Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunContent runRequest = null, Azure.ResourceManager.ContainerRegistry.ContainerRegistryRunData runResult = null, string forceUpdateTag = null) { throw null; }
@@ -793,8 +1290,271 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryWebhookEventResponseMessage ContainerRegistryWebhookEventResponseMessage(string content = null, System.Collections.Generic.IReadOnlyDictionary<string, string> headers = null, string reasonPhrase = null, string statusCode = null, string version = null) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryWebhookEventSource ContainerRegistryWebhookEventSource(string addr = null, string instanceId = null) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryWebhookEventTarget ContainerRegistryWebhookEventTarget(string mediaType = null, long? size = default(long?), string digest = null, long? length = default(long?), string repository = null, System.Uri uri = null, string tag = null, string name = null, string version = null) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Models.CredentialHealth CredentialHealth(Azure.ResourceManager.ContainerRegistry.Models.CredentialHealthStatus? status = default(Azure.ResourceManager.ContainerRegistry.Models.CredentialHealthStatus?), string errorCode = null, string errorMessage = null) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.CredentialSetData CredentialSetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string loginServer = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Models.AuthCredential> authCredentials = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.ExportPipelineData ExportPipelineData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.ContainerRegistry.Models.ExportPipelineTargetProperties target = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Models.PipelineOption> options = null, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.ImportPipelineData ImportPipelineData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.ContainerRegistry.Models.ImportPipelineSourceProperties source = null, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTriggerStatus? sourceTriggerStatus = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTriggerStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.Models.PipelineOption> options = null, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Models.PipelineRunResult PipelineRunResult(string status = null, System.Collections.Generic.IEnumerable<string> importedArtifacts = null, string progressPercentage = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? finishOn = default(System.DateTimeOffset?), Azure.ResourceManager.ContainerRegistry.Models.ImportPipelineSourceProperties source = null, Azure.ResourceManager.ContainerRegistry.Models.ExportPipelineTargetProperties target = null, string catalogDigest = null, System.DateTimeOffset? sourceTriggerTimestamp = default(System.DateTimeOffset?), string pipelineRunErrorMessage = null) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.ScopeMapData ScopeMapData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, string scopeMapType = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState?), System.Collections.Generic.IEnumerable<string> actions = null) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.Models.SourceUploadDefinition SourceUploadDefinition(System.Uri uploadUri = null, string relativePath = null) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Models.TlsCertificateProperties TlsCertificateProperties(Azure.ResourceManager.ContainerRegistry.Models.TlsCertificateLocationType? locationType = default(Azure.ResourceManager.ContainerRegistry.Models.TlsCertificateLocationType?), string certificateLocation = null) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Models.TlsProperties TlsProperties(Azure.ResourceManager.ContainerRegistry.Models.TlsStatus? status = default(Azure.ResourceManager.ContainerRegistry.Models.TlsStatus?), Azure.ResourceManager.ContainerRegistry.Models.TlsCertificateProperties certificate = null) { throw null; }
+    }
+    public partial class AuthCredential : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.AuthCredential>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.AuthCredential>
+    {
+        public AuthCredential() { }
+        public Azure.ResourceManager.ContainerRegistry.Models.CredentialHealth CredentialHealth { get { throw null; } }
+        public Azure.ResourceManager.ContainerRegistry.Models.CredentialName? Name { get { throw null; } set { } }
+        public string PasswordSecretIdentifier { get { throw null; } set { } }
+        public string UsernameSecretIdentifier { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.AuthCredential System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.AuthCredential>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.AuthCredential>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.AuthCredential System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.AuthCredential>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.AuthCredential>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.AuthCredential>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AutoGeneratedDomainNameLabelScope : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.AutoGeneratedDomainNameLabelScope>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AutoGeneratedDomainNameLabelScope(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Models.AutoGeneratedDomainNameLabelScope NoReuse { get { throw null; } }
+        public static Azure.ResourceManager.ContainerRegistry.Models.AutoGeneratedDomainNameLabelScope ResourceGroupReuse { get { throw null; } }
+        public static Azure.ResourceManager.ContainerRegistry.Models.AutoGeneratedDomainNameLabelScope SubscriptionReuse { get { throw null; } }
+        public static Azure.ResourceManager.ContainerRegistry.Models.AutoGeneratedDomainNameLabelScope TenantReuse { get { throw null; } }
+        public static Azure.ResourceManager.ContainerRegistry.Models.AutoGeneratedDomainNameLabelScope Unsecure { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.AutoGeneratedDomainNameLabelScope other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.AutoGeneratedDomainNameLabelScope left, Azure.ResourceManager.ContainerRegistry.Models.AutoGeneratedDomainNameLabelScope right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.AutoGeneratedDomainNameLabelScope (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.AutoGeneratedDomainNameLabelScope left, Azure.ResourceManager.ContainerRegistry.Models.AutoGeneratedDomainNameLabelScope right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AzureADAuthenticationAsArmPolicyStatus : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.AzureADAuthenticationAsArmPolicyStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AzureADAuthenticationAsArmPolicyStatus(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Models.AzureADAuthenticationAsArmPolicyStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.ContainerRegistry.Models.AzureADAuthenticationAsArmPolicyStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.AzureADAuthenticationAsArmPolicyStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.AzureADAuthenticationAsArmPolicyStatus left, Azure.ResourceManager.ContainerRegistry.Models.AzureADAuthenticationAsArmPolicyStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.AzureADAuthenticationAsArmPolicyStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.AzureADAuthenticationAsArmPolicyStatus left, Azure.ResourceManager.ContainerRegistry.Models.AzureADAuthenticationAsArmPolicyStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class CacheRulePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.CacheRulePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.CacheRulePatch>
+    {
+        public CacheRulePatch() { }
+        public Azure.Core.ResourceIdentifier CredentialSetResourceId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.CacheRulePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.CacheRulePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.CacheRulePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.CacheRulePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.CacheRulePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.CacheRulePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.CacheRulePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ConnectedRegistryActivationStatus : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryActivationStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ConnectedRegistryActivationStatus(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryActivationStatus Active { get { throw null; } }
+        public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryActivationStatus Inactive { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryActivationStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryActivationStatus left, Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryActivationStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryActivationStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryActivationStatus left, Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryActivationStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ConnectedRegistryAuditLogStatus : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryAuditLogStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ConnectedRegistryAuditLogStatus(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryAuditLogStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryAuditLogStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryAuditLogStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryAuditLogStatus left, Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryAuditLogStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryAuditLogStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryAuditLogStatus left, Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryAuditLogStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ConnectedRegistryConnectionState : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryConnectionState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ConnectedRegistryConnectionState(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryConnectionState Offline { get { throw null; } }
+        public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryConnectionState Online { get { throw null; } }
+        public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryConnectionState Syncing { get { throw null; } }
+        public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryConnectionState Unhealthy { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryConnectionState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryConnectionState left, Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryConnectionState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryConnectionState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryConnectionState left, Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryConnectionState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ConnectedRegistryLogging : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogging>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogging>
+    {
+        public ConnectedRegistryLogging() { }
+        public Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryAuditLogStatus? AuditLogStatus { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogLevel? LogLevel { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogging System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogging>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogging>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogging System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogging>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogging>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogging>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ConnectedRegistryLoginServer : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLoginServer>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLoginServer>
+    {
+        public ConnectedRegistryLoginServer() { }
+        public string Host { get { throw null; } }
+        public Azure.ResourceManager.ContainerRegistry.Models.TlsProperties Tls { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLoginServer System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLoginServer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLoginServer>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLoginServer System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLoginServer>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLoginServer>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLoginServer>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ConnectedRegistryLogLevel : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogLevel>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ConnectedRegistryLogLevel(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogLevel Debug { get { throw null; } }
+        public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogLevel Error { get { throw null; } }
+        public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogLevel Information { get { throw null; } }
+        public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogLevel None { get { throw null; } }
+        public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogLevel Warning { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogLevel other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogLevel left, Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogLevel right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogLevel (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogLevel left, Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogLevel right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ConnectedRegistryMode : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ConnectedRegistryMode(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryMode Mirror { get { throw null; } }
+        public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryMode ReadOnly { get { throw null; } }
+        public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryMode ReadWrite { get { throw null; } }
+        public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryMode Registry { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryMode left, Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryMode left, Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ConnectedRegistryParent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryParent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryParent>
+    {
+        public ConnectedRegistryParent(Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistrySyncProperties syncProperties) { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistrySyncProperties SyncProperties { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryParent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryParent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryParent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryParent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryParent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryParent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryParent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ConnectedRegistryPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryPatch>
+    {
+        public ConnectedRegistryPatch() { }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> ClientTokenIds { get { throw null; } }
+        public Azure.ResourceManager.ContainerRegistry.Models.GarbageCollectionProperties GarbageCollection { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryLogging Logging { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> NotificationsList { get { throw null; } }
+        public Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistrySyncUpdateProperties SyncProperties { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ConnectedRegistryStatusDetail : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryStatusDetail>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryStatusDetail>
+    {
+        internal ConnectedRegistryStatusDetail() { }
+        public string Code { get { throw null; } }
+        public string CorrelationId { get { throw null; } }
+        public string Description { get { throw null; } }
+        public string StatusDetailType { get { throw null; } }
+        public System.DateTimeOffset? Timestamp { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryStatusDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryStatusDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryStatusDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryStatusDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryStatusDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryStatusDetail>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryStatusDetail>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ConnectedRegistrySyncProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistrySyncProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistrySyncProperties>
+    {
+        public ConnectedRegistrySyncProperties(Azure.Core.ResourceIdentifier tokenId, System.TimeSpan messageTtl) { }
+        public string GatewayEndpoint { get { throw null; } }
+        public System.DateTimeOffset? LastSyncOn { get { throw null; } }
+        public System.TimeSpan MessageTtl { get { throw null; } set { } }
+        public string Schedule { get { throw null; } set { } }
+        public System.TimeSpan? SyncWindow { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier TokenId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistrySyncProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistrySyncProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistrySyncProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistrySyncProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistrySyncProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistrySyncProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistrySyncProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ConnectedRegistrySyncUpdateProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistrySyncUpdateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistrySyncUpdateProperties>
+    {
+        public ConnectedRegistrySyncUpdateProperties() { }
+        public System.TimeSpan? MessageTtl { get { throw null; } set { } }
+        public string Schedule { get { throw null; } set { } }
+        public System.TimeSpan? SyncWindow { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistrySyncUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistrySyncUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistrySyncUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistrySyncUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistrySyncUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistrySyncUpdateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistrySyncUpdateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ContainerRegistryAgentPoolPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryAgentPoolPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryAgentPoolPatch>
     {
@@ -1303,7 +2063,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     public partial class ContainerRegistryNameAvailabilityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNameAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNameAvailabilityContent>
     {
         public ContainerRegistryNameAvailabilityContent(string name) { }
+        public Azure.ResourceManager.ContainerRegistry.Models.AutoGeneratedDomainNameLabelScope? AutoGeneratedDomainNameLabelScope { get { throw null; } set { } }
         public string Name { get { throw null; } }
+        public string ResourceGroupName { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryResourceType ResourceType { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1315,6 +2077,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     public partial class ContainerRegistryNameAvailableResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNameAvailableResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNameAvailableResult>
     {
         internal ContainerRegistryNameAvailableResult() { }
+        public string AvailableLoginServerName { get { throw null; } }
         public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
         public string Reason { get { throw null; } }
@@ -1451,7 +2214,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryEncryption Encryption { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public bool? IsAdminUserEnabled { get { throw null; } set { } }
+        public bool? IsAnonymousPullEnabled { get { throw null; } set { } }
         public bool? IsDataEndpointEnabled { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Models.MetadataSearch? MetadataSearch { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNetworkRuleBypassOption? NetworkRuleBypassOptions { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNetworkRuleSet NetworkRuleSet { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPolicies Policies { get { throw null; } set { } }
@@ -1494,9 +2259,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     public partial class ContainerRegistryPolicies : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPolicies>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPolicies>
     {
         public ContainerRegistryPolicies() { }
+        public Azure.ResourceManager.ContainerRegistry.Models.AzureADAuthenticationAsArmPolicyStatus? AzureADAuthenticationAsArmStatus { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryExportPolicyStatus? ExportStatus { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPolicyStatus? QuarantineStatus { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRetentionPolicy RetentionPolicy { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySoftDeletePolicy SoftDeletePolicy { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTrustPolicy TrustPolicy { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPolicies System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPolicies>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1825,6 +2592,19 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySkuTier (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySkuTier left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySkuTier right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ContainerRegistrySoftDeletePolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySoftDeletePolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySoftDeletePolicy>
+    {
+        public ContainerRegistrySoftDeletePolicy() { }
+        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
+        public int? RetentionDays { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPolicyStatus? Status { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySoftDeletePolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySoftDeletePolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySoftDeletePolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySoftDeletePolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySoftDeletePolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySoftDeletePolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySoftDeletePolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ContainerRegistrySourceTrigger : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySourceTrigger>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySourceTrigger>
     {
@@ -2479,6 +3259,66 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryZoneRedundancy left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryZoneRedundancy right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class CredentialHealth : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.CredentialHealth>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.CredentialHealth>
+    {
+        internal CredentialHealth() { }
+        public string ErrorCode { get { throw null; } }
+        public string ErrorMessage { get { throw null; } }
+        public Azure.ResourceManager.ContainerRegistry.Models.CredentialHealthStatus? Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.CredentialHealth System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.CredentialHealth>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.CredentialHealth>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.CredentialHealth System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.CredentialHealth>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.CredentialHealth>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.CredentialHealth>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CredentialHealthStatus : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.CredentialHealthStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CredentialHealthStatus(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Models.CredentialHealthStatus Healthy { get { throw null; } }
+        public static Azure.ResourceManager.ContainerRegistry.Models.CredentialHealthStatus Unhealthy { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.CredentialHealthStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.CredentialHealthStatus left, Azure.ResourceManager.ContainerRegistry.Models.CredentialHealthStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.CredentialHealthStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.CredentialHealthStatus left, Azure.ResourceManager.ContainerRegistry.Models.CredentialHealthStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CredentialName : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.CredentialName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CredentialName(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Models.CredentialName Credential1 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.CredentialName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.CredentialName left, Azure.ResourceManager.ContainerRegistry.Models.CredentialName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.CredentialName (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.CredentialName left, Azure.ResourceManager.ContainerRegistry.Models.CredentialName right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class CredentialSetPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.CredentialSetPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.CredentialSetPatch>
+    {
+        public CredentialSetPatch() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ContainerRegistry.Models.AuthCredential> AuthCredentials { get { throw null; } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.CredentialSetPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.CredentialSetPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.CredentialSetPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.CredentialSetPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.CredentialSetPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.CredentialSetPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.CredentialSetPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class CustomRegistryCredentials : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.CustomRegistryCredentials>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.CustomRegistryCredentials>
     {
         public CustomRegistryCredentials() { }
@@ -2491,6 +3331,209 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         Azure.ResourceManager.ContainerRegistry.Models.CustomRegistryCredentials System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.CustomRegistryCredentials>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.CustomRegistryCredentials>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.CustomRegistryCredentials>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ExportPipelineTargetProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ExportPipelineTargetProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ExportPipelineTargetProperties>
+    {
+        public ExportPipelineTargetProperties(System.Uri keyVaultUri) { }
+        public System.Uri KeyVaultUri { get { throw null; } set { } }
+        public string PipelineTargetType { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.ExportPipelineTargetProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ExportPipelineTargetProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ExportPipelineTargetProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.ExportPipelineTargetProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ExportPipelineTargetProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ExportPipelineTargetProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ExportPipelineTargetProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class GarbageCollectionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.GarbageCollectionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.GarbageCollectionProperties>
+    {
+        public GarbageCollectionProperties() { }
+        public bool? Enabled { get { throw null; } set { } }
+        public string Schedule { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.GarbageCollectionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.GarbageCollectionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.GarbageCollectionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.GarbageCollectionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.GarbageCollectionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.GarbageCollectionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.GarbageCollectionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ImportPipelineSourceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ImportPipelineSourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ImportPipelineSourceProperties>
+    {
+        public ImportPipelineSourceProperties(System.Uri keyVaultUri) { }
+        public System.Uri KeyVaultUri { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Models.PipelineSourceType? PipelineSourceType { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.ImportPipelineSourceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ImportPipelineSourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ImportPipelineSourceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.ImportPipelineSourceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ImportPipelineSourceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ImportPipelineSourceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ImportPipelineSourceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MetadataSearch : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.MetadataSearch>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MetadataSearch(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Models.MetadataSearch Disabled { get { throw null; } }
+        public static Azure.ResourceManager.ContainerRegistry.Models.MetadataSearch Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.MetadataSearch other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.MetadataSearch left, Azure.ResourceManager.ContainerRegistry.Models.MetadataSearch right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.MetadataSearch (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.MetadataSearch left, Azure.ResourceManager.ContainerRegistry.Models.MetadataSearch right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PackageSourceType : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.PackageSourceType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PackageSourceType(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Models.PackageSourceType Remote { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.PackageSourceType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.PackageSourceType left, Azure.ResourceManager.ContainerRegistry.Models.PackageSourceType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.PackageSourceType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.PackageSourceType left, Azure.ResourceManager.ContainerRegistry.Models.PackageSourceType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PipelineOption : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.PipelineOption>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PipelineOption(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Models.PipelineOption ContinueOnErrors { get { throw null; } }
+        public static Azure.ResourceManager.ContainerRegistry.Models.PipelineOption DeleteSourceBlobOnSuccess { get { throw null; } }
+        public static Azure.ResourceManager.ContainerRegistry.Models.PipelineOption OverwriteBlobs { get { throw null; } }
+        public static Azure.ResourceManager.ContainerRegistry.Models.PipelineOption OverwriteTags { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.PipelineOption other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.PipelineOption left, Azure.ResourceManager.ContainerRegistry.Models.PipelineOption right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.PipelineOption (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.PipelineOption left, Azure.ResourceManager.ContainerRegistry.Models.PipelineOption right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class PipelineRunContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.PipelineRunContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.PipelineRunContent>
+    {
+        public PipelineRunContent() { }
+        public System.Collections.Generic.IList<string> Artifacts { get { throw null; } }
+        public string CatalogDigest { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PipelineResourceId { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Models.PipelineRunSourceProperties Source { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Models.PipelineRunTargetProperties Target { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.PipelineRunContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.PipelineRunContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.PipelineRunContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.PipelineRunContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.PipelineRunContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.PipelineRunContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.PipelineRunContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class PipelineRunResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.PipelineRunResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.PipelineRunResult>
+    {
+        internal PipelineRunResult() { }
+        public string CatalogDigest { get { throw null; } }
+        public System.DateTimeOffset? FinishOn { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> ImportedArtifacts { get { throw null; } }
+        public string PipelineRunErrorMessage { get { throw null; } }
+        public string ProgressPercentage { get { throw null; } }
+        public Azure.ResourceManager.ContainerRegistry.Models.ImportPipelineSourceProperties Source { get { throw null; } }
+        public System.DateTimeOffset? SourceTriggerTimestamp { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
+        public string Status { get { throw null; } }
+        public Azure.ResourceManager.ContainerRegistry.Models.ExportPipelineTargetProperties Target { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.PipelineRunResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.PipelineRunResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.PipelineRunResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.PipelineRunResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.PipelineRunResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.PipelineRunResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.PipelineRunResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class PipelineRunSourceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.PipelineRunSourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.PipelineRunSourceProperties>
+    {
+        public PipelineRunSourceProperties() { }
+        public string Name { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Models.PipelineRunSourceType? SourceType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.PipelineRunSourceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.PipelineRunSourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.PipelineRunSourceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.PipelineRunSourceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.PipelineRunSourceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.PipelineRunSourceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.PipelineRunSourceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PipelineRunSourceType : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.PipelineRunSourceType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PipelineRunSourceType(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Models.PipelineRunSourceType AzureStorageBlob { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.PipelineRunSourceType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.PipelineRunSourceType left, Azure.ResourceManager.ContainerRegistry.Models.PipelineRunSourceType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.PipelineRunSourceType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.PipelineRunSourceType left, Azure.ResourceManager.ContainerRegistry.Models.PipelineRunSourceType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class PipelineRunTargetProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.PipelineRunTargetProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.PipelineRunTargetProperties>
+    {
+        public PipelineRunTargetProperties() { }
+        public string Name { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Models.PipelineRunTargetType? TargetType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.PipelineRunTargetProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.PipelineRunTargetProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.PipelineRunTargetProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.PipelineRunTargetProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.PipelineRunTargetProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.PipelineRunTargetProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.PipelineRunTargetProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PipelineRunTargetType : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.PipelineRunTargetType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PipelineRunTargetType(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Models.PipelineRunTargetType AzureStorageBlob { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.PipelineRunTargetType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.PipelineRunTargetType left, Azure.ResourceManager.ContainerRegistry.Models.PipelineRunTargetType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.PipelineRunTargetType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.PipelineRunTargetType left, Azure.ResourceManager.ContainerRegistry.Models.PipelineRunTargetType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PipelineSourceType : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.PipelineSourceType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PipelineSourceType(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Models.PipelineSourceType AzureStorageBlobContainer { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.PipelineSourceType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.PipelineSourceType left, Azure.ResourceManager.ContainerRegistry.Models.PipelineSourceType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.PipelineSourceType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.PipelineSourceType left, Azure.ResourceManager.ContainerRegistry.Models.PipelineSourceType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ScopeMapPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ScopeMapPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ScopeMapPatch>
     {
@@ -2627,5 +3670,64 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         Azure.ResourceManager.ContainerRegistry.Models.SourceUploadDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.SourceUploadDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.SourceUploadDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.SourceUploadDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TlsCertificateLocationType : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.TlsCertificateLocationType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TlsCertificateLocationType(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Models.TlsCertificateLocationType LocalDirectory { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.TlsCertificateLocationType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.TlsCertificateLocationType left, Azure.ResourceManager.ContainerRegistry.Models.TlsCertificateLocationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.TlsCertificateLocationType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.TlsCertificateLocationType left, Azure.ResourceManager.ContainerRegistry.Models.TlsCertificateLocationType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class TlsCertificateProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.TlsCertificateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.TlsCertificateProperties>
+    {
+        internal TlsCertificateProperties() { }
+        public string CertificateLocation { get { throw null; } }
+        public Azure.ResourceManager.ContainerRegistry.Models.TlsCertificateLocationType? LocationType { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.TlsCertificateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.TlsCertificateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.TlsCertificateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.TlsCertificateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.TlsCertificateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.TlsCertificateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.TlsCertificateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class TlsProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.TlsProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.TlsProperties>
+    {
+        internal TlsProperties() { }
+        public Azure.ResourceManager.ContainerRegistry.Models.TlsCertificateProperties Certificate { get { throw null; } }
+        public Azure.ResourceManager.ContainerRegistry.Models.TlsStatus? Status { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.TlsProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.TlsProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.TlsProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerRegistry.Models.TlsProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.TlsProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.TlsProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.TlsProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TlsStatus : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.TlsStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TlsStatus(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Models.TlsStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.ContainerRegistry.Models.TlsStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.TlsStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.TlsStatus left, Azure.ResourceManager.ContainerRegistry.Models.TlsStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.TlsStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.TlsStatus left, Azure.ResourceManager.ContainerRegistry.Models.TlsStatus right) { throw null; }
+        public override string ToString() { throw null; }
     }
 }

@@ -99,6 +99,356 @@ namespace Azure.ResourceManager.ContainerRegistry
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of ArchiveResources in the ContainerRegistry. </summary>
+        /// <param name="packageType"> The type of the package resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="packageType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="packageType"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> An object representing collection of ArchiveResources and their operations over a ArchiveResource. </returns>
+        public virtual ArchiveCollection GetArchives(string packageType)
+        {
+            return new ArchiveCollection(Client, Id, packageType);
+        }
+
+        /// <summary>
+        /// Gets the properties of the archive.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Archives_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ArchiveResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="packageType"> The type of the package resource. </param>
+        /// <param name="archiveName"> The name of the archive resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="packageType"/> or <paramref name="archiveName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="packageType"/> or <paramref name="archiveName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ArchiveResource>> GetArchiveAsync(string packageType, string archiveName, CancellationToken cancellationToken = default)
+        {
+            return await GetArchives(packageType).GetAsync(archiveName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the properties of the archive.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/packages/{packageType}/archives/{archiveName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Archives_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ArchiveResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="packageType"> The type of the package resource. </param>
+        /// <param name="archiveName"> The name of the archive resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="packageType"/> or <paramref name="archiveName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="packageType"/> or <paramref name="archiveName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ArchiveResource> GetArchive(string packageType, string archiveName, CancellationToken cancellationToken = default)
+        {
+            return GetArchives(packageType).Get(archiveName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of CacheRuleResources in the ContainerRegistry. </summary>
+        /// <returns> An object representing collection of CacheRuleResources and their operations over a CacheRuleResource. </returns>
+        public virtual CacheRuleCollection GetCacheRules()
+        {
+            return GetCachedClient(client => new CacheRuleCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the properties of the specified cache rule resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/cacheRules/{cacheRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CacheRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CacheRuleResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cacheRuleName"> The name of the cache rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cacheRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cacheRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CacheRuleResource>> GetCacheRuleAsync(string cacheRuleName, CancellationToken cancellationToken = default)
+        {
+            return await GetCacheRules().GetAsync(cacheRuleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the properties of the specified cache rule resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/cacheRules/{cacheRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CacheRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CacheRuleResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cacheRuleName"> The name of the cache rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cacheRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cacheRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CacheRuleResource> GetCacheRule(string cacheRuleName, CancellationToken cancellationToken = default)
+        {
+            return GetCacheRules().Get(cacheRuleName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ConnectedRegistryResources in the ContainerRegistry. </summary>
+        /// <returns> An object representing collection of ConnectedRegistryResources and their operations over a ConnectedRegistryResource. </returns>
+        public virtual ConnectedRegistryCollection GetConnectedRegistries()
+        {
+            return GetCachedClient(client => new ConnectedRegistryCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the properties of the connected registry.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/connectedRegistries/{connectedRegistryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConnectedRegistries_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectedRegistryResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="connectedRegistryName"> The name of the connected registry. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectedRegistryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectedRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ConnectedRegistryResource>> GetConnectedRegistryAsync(string connectedRegistryName, CancellationToken cancellationToken = default)
+        {
+            return await GetConnectedRegistries().GetAsync(connectedRegistryName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the properties of the connected registry.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/connectedRegistries/{connectedRegistryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConnectedRegistries_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectedRegistryResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="connectedRegistryName"> The name of the connected registry. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectedRegistryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectedRegistryName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ConnectedRegistryResource> GetConnectedRegistry(string connectedRegistryName, CancellationToken cancellationToken = default)
+        {
+            return GetConnectedRegistries().Get(connectedRegistryName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of CredentialSetResources in the ContainerRegistry. </summary>
+        /// <returns> An object representing collection of CredentialSetResources and their operations over a CredentialSetResource. </returns>
+        public virtual CredentialSetCollection GetCredentialSets()
+        {
+            return GetCachedClient(client => new CredentialSetCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the properties of the specified credential set resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/credentialSets/{credentialSetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CredentialSets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CredentialSetResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="credentialSetName"> The name of the credential set. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="credentialSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="credentialSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CredentialSetResource>> GetCredentialSetAsync(string credentialSetName, CancellationToken cancellationToken = default)
+        {
+            return await GetCredentialSets().GetAsync(credentialSetName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the properties of the specified credential set resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/credentialSets/{credentialSetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CredentialSets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CredentialSetResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="credentialSetName"> The name of the credential set. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="credentialSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="credentialSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CredentialSetResource> GetCredentialSet(string credentialSetName, CancellationToken cancellationToken = default)
+        {
+            return GetCredentialSets().Get(credentialSetName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ExportPipelineResources in the ContainerRegistry. </summary>
+        /// <returns> An object representing collection of ExportPipelineResources and their operations over a ExportPipelineResource. </returns>
+        public virtual ExportPipelineCollection GetExportPipelines()
+        {
+            return GetCachedClient(client => new ExportPipelineCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the properties of the export pipeline.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/exportPipelines/{exportPipelineName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExportPipelines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExportPipelineResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="exportPipelineName"> The name of the export pipeline. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="exportPipelineName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="exportPipelineName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ExportPipelineResource>> GetExportPipelineAsync(string exportPipelineName, CancellationToken cancellationToken = default)
+        {
+            return await GetExportPipelines().GetAsync(exportPipelineName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the properties of the export pipeline.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/exportPipelines/{exportPipelineName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExportPipelines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExportPipelineResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="exportPipelineName"> The name of the export pipeline. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="exportPipelineName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="exportPipelineName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ExportPipelineResource> GetExportPipeline(string exportPipelineName, CancellationToken cancellationToken = default)
+        {
+            return GetExportPipelines().Get(exportPipelineName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of ContainerRegistryPrivateLinkResources in the ContainerRegistry. </summary>
         /// <returns> An object representing collection of ContainerRegistryPrivateLinkResources and their operations over a ContainerRegistryPrivateLinkResource. </returns>
         public virtual ContainerRegistryPrivateLinkResourceCollection GetContainerRegistryPrivateLinkResources()
@@ -119,7 +469,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -150,7 +500,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -166,6 +516,144 @@ namespace Azure.ResourceManager.ContainerRegistry
         public virtual Response<ContainerRegistryPrivateLinkResource> GetContainerRegistryPrivateLinkResource(string groupName, CancellationToken cancellationToken = default)
         {
             return GetContainerRegistryPrivateLinkResources().Get(groupName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ImportPipelineResources in the ContainerRegistry. </summary>
+        /// <returns> An object representing collection of ImportPipelineResources and their operations over a ImportPipelineResource. </returns>
+        public virtual ImportPipelineCollection GetImportPipelines()
+        {
+            return GetCachedClient(client => new ImportPipelineCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the properties of the import pipeline.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/importPipelines/{importPipelineName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ImportPipelines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ImportPipelineResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="importPipelineName"> The name of the import pipeline. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="importPipelineName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="importPipelineName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ImportPipelineResource>> GetImportPipelineAsync(string importPipelineName, CancellationToken cancellationToken = default)
+        {
+            return await GetImportPipelines().GetAsync(importPipelineName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the properties of the import pipeline.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/importPipelines/{importPipelineName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ImportPipelines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ImportPipelineResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="importPipelineName"> The name of the import pipeline. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="importPipelineName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="importPipelineName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ImportPipelineResource> GetImportPipeline(string importPipelineName, CancellationToken cancellationToken = default)
+        {
+            return GetImportPipelines().Get(importPipelineName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ContainerRegistryPipelineRunResources in the ContainerRegistry. </summary>
+        /// <returns> An object representing collection of ContainerRegistryPipelineRunResources and their operations over a ContainerRegistryPipelineRunResource. </returns>
+        public virtual ContainerRegistryPipelineRunCollection GetContainerRegistryPipelineRuns()
+        {
+            return GetCachedClient(client => new ContainerRegistryPipelineRunCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the detailed information for a given pipeline run.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/pipelineRuns/{pipelineRunName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PipelineRuns_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryPipelineRunResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="pipelineRunName"> The name of the pipeline run. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipelineRunName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="pipelineRunName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ContainerRegistryPipelineRunResource>> GetContainerRegistryPipelineRunAsync(string pipelineRunName, CancellationToken cancellationToken = default)
+        {
+            return await GetContainerRegistryPipelineRuns().GetAsync(pipelineRunName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the detailed information for a given pipeline run.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/pipelineRuns/{pipelineRunName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PipelineRuns_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryPipelineRunResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="pipelineRunName"> The name of the pipeline run. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipelineRunName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="pipelineRunName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ContainerRegistryPipelineRunResource> GetContainerRegistryPipelineRun(string pipelineRunName, CancellationToken cancellationToken = default)
+        {
+            return GetContainerRegistryPipelineRuns().Get(pipelineRunName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ContainerRegistryPrivateEndpointConnectionResources in the ContainerRegistry. </summary>
@@ -188,7 +676,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -219,7 +707,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -257,7 +745,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -288,7 +776,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -326,7 +814,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -357,7 +845,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -395,7 +883,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -426,7 +914,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -464,7 +952,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -495,7 +983,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -802,7 +1290,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -842,7 +1330,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -882,7 +1370,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -924,7 +1412,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -966,7 +1454,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1012,7 +1500,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1058,7 +1546,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1104,7 +1592,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1150,7 +1638,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1179,7 +1667,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1208,7 +1696,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1246,7 +1734,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1284,7 +1772,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1326,7 +1814,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1368,7 +1856,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1414,7 +1902,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1612,7 +2100,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1674,7 +2162,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1736,7 +2224,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1793,7 +2281,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1850,7 +2338,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1910,7 +2398,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

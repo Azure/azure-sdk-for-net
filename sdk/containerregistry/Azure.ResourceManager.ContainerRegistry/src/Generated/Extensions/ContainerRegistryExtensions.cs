@@ -34,6 +34,120 @@ namespace Azure.ResourceManager.ContainerRegistry
         }
 
         /// <summary>
+        /// Gets an object representing an <see cref="ArchiveResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ArchiveResource.CreateResourceIdentifier" /> to create an <see cref="ArchiveResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableContainerRegistryArmClient.GetArchiveResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ArchiveResource"/> object. </returns>
+        public static ArchiveResource GetArchiveResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableContainerRegistryArmClient(client).GetArchiveResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ArchiveVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ArchiveVersionResource.CreateResourceIdentifier" /> to create an <see cref="ArchiveVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableContainerRegistryArmClient.GetArchiveVersionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ArchiveVersionResource"/> object. </returns>
+        public static ArchiveVersionResource GetArchiveVersionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableContainerRegistryArmClient(client).GetArchiveVersionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="CacheRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CacheRuleResource.CreateResourceIdentifier" /> to create a <see cref="CacheRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableContainerRegistryArmClient.GetCacheRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CacheRuleResource"/> object. </returns>
+        public static CacheRuleResource GetCacheRuleResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableContainerRegistryArmClient(client).GetCacheRuleResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ConnectedRegistryResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ConnectedRegistryResource.CreateResourceIdentifier" /> to create a <see cref="ConnectedRegistryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableContainerRegistryArmClient.GetConnectedRegistryResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ConnectedRegistryResource"/> object. </returns>
+        public static ConnectedRegistryResource GetConnectedRegistryResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableContainerRegistryArmClient(client).GetConnectedRegistryResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="CredentialSetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CredentialSetResource.CreateResourceIdentifier" /> to create a <see cref="CredentialSetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableContainerRegistryArmClient.GetCredentialSetResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CredentialSetResource"/> object. </returns>
+        public static CredentialSetResource GetCredentialSetResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableContainerRegistryArmClient(client).GetCredentialSetResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ExportPipelineResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExportPipelineResource.CreateResourceIdentifier" /> to create an <see cref="ExportPipelineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableContainerRegistryArmClient.GetExportPipelineResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ExportPipelineResource"/> object. </returns>
+        public static ExportPipelineResource GetExportPipelineResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableContainerRegistryArmClient(client).GetExportPipelineResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ContainerRegistryResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ContainerRegistryResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -69,6 +183,44 @@ namespace Azure.ResourceManager.ContainerRegistry
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableContainerRegistryArmClient(client).GetContainerRegistryPrivateLinkResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ImportPipelineResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ImportPipelineResource.CreateResourceIdentifier" /> to create an <see cref="ImportPipelineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableContainerRegistryArmClient.GetImportPipelineResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ImportPipelineResource"/> object. </returns>
+        public static ImportPipelineResource GetImportPipelineResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableContainerRegistryArmClient(client).GetImportPipelineResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ContainerRegistryPipelineRunResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerRegistryPipelineRunResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryPipelineRunResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableContainerRegistryArmClient.GetContainerRegistryPipelineRunResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ContainerRegistryPipelineRunResource"/> object. </returns>
+        public static ContainerRegistryPipelineRunResource GetContainerRegistryPipelineRunResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableContainerRegistryArmClient(client).GetContainerRegistryPipelineRunResource(id);
         }
 
         /// <summary>
@@ -272,7 +424,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -310,7 +462,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -348,7 +500,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -384,7 +536,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -420,7 +572,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -456,7 +608,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-12-01</description>
+        /// <description>2024-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

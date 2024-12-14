@@ -8,8 +8,8 @@ csharp: true
 library-name: ContainerRegistry
 namespace: Azure.ResourceManager.ContainerRegistry
 # default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/8a28143c7271d4496296ed47f70c3cb5a9981e57/specification/containerregistry/resource-manager/readme.md
-tag: package-2022-12
+require: https://github.com/Azure/azure-rest-api-specs/blob/0a27976a58c16279e827bda36004d1b74b3d922a/specification/containerregistry/resource-manager/readme.md
+tag: package-2024-11-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -18,6 +18,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
