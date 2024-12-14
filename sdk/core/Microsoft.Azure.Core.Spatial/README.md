@@ -95,6 +95,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [azure_search_documents_readme]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/README.md
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
-[JsonSerializerOptions]: https://docs.microsoft.com/dotnet/api/system.text.json.jsonserializeroptions
+[JsonSerializerOptions]: https://learn.microsoft.com/dotnet/api/system.text.json.jsonserializeroptions
 [microsoft_spatial_package]: https://www.nuget.org/packages/Microsoft.Spatial/
 [NuGet]: https://www.nuget.org

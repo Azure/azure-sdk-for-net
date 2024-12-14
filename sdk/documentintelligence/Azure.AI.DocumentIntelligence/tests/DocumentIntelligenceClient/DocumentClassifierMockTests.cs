@@ -28,15 +28,16 @@ namespace Azure.AI.DocumentIntelligence.Tests
         {
             var mockResponse = new MockResponse(202);
             var mockTransport = new MockTransport(new[] { mockResponse });
-            var options = new DocumentIntelligenceClientOptions() { Transport = mockTransport };
-            var client = CreateInstrumentedClient(options);
+            var clientOptions = new DocumentIntelligenceClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(clientOptions);
 
-            var content = new ClassifyDocumentContent()
+            var uriSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.ContosoReceipt);
+            var options = new ClassifyDocumentOptions("classifierId", uriSource)
             {
-                UrlSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.ContosoReceipt)
+                Split = split
             };
 
-            await client.ClassifyDocumentAsync(WaitUntil.Started, "classifierId", content, split: split);
+            await client.ClassifyDocumentAsync(WaitUntil.Started, options);
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
 

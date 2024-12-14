@@ -66,7 +66,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
 
             if (checkpoint is BlobCheckpointStoreInternal.BlobStorageCheckpoint blobCheckpoint && blobCheckpoint is not null)
             {
-                _lastReadCheckpoint[partitionId] = new CheckpointInfo(blobCheckpoint.Offset ?? -1, blobCheckpoint.SequenceNumber ?? -1,
+                _lastReadCheckpoint[partitionId] = new CheckpointInfo(blobCheckpoint.Offset, blobCheckpoint.SequenceNumber ?? -1,
                     blobCheckpoint.LastModified);
             }
 

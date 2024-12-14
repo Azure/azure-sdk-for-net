@@ -35,26 +35,26 @@ After building, a `DocumentClassifierDetails` instance is returned indicating th
 
 string classifierId = "<classifierId>";
 Uri blobContainerUri = new Uri("<blobContainerUri>");
-var sourceA = new AzureBlobContentSource(blobContainerUri) { Prefix = "IRS-1040-A/train" };
-var sourceB = new AzureBlobContentSource(blobContainerUri) { Prefix = "IRS-1040-B/train" };
-var docTypeA = new ClassifierDocumentTypeDetails() { AzureBlobSource = sourceA };
-var docTypeB = new ClassifierDocumentTypeDetails() { AzureBlobSource = sourceB };
+var sourceA = new BlobContentSource(blobContainerUri) { Prefix = "IRS-1040-A/train" };
+var sourceB = new BlobContentSource(blobContainerUri) { Prefix = "IRS-1040-B/train" };
+var docTypeA = new ClassifierDocumentTypeDetails(sourceA);
+var docTypeB = new ClassifierDocumentTypeDetails(sourceB);
 var docTypes = new Dictionary<string, ClassifierDocumentTypeDetails>()
 {
     { "IRS-1040-A", docTypeA },
     { "IRS-1040-B", docTypeB }
 };
 
-var content = new BuildDocumentClassifierContent(classifierId, docTypes);
+var options = new BuildClassifierOptions(classifierId, docTypes);
 
-Operation<DocumentClassifierDetails> operation = await client.BuildClassifierAsync(WaitUntil.Completed, content);
+Operation<DocumentClassifierDetails> operation = await client.BuildClassifierAsync(WaitUntil.Completed, options);
 DocumentClassifierDetails classifier = operation.Value;
 
 Console.WriteLine($"Classifier ID: {classifier.ClassifierId}");
 Console.WriteLine($"Created on: {classifier.CreatedOn}");
 
 Console.WriteLine("Document types the classifier can recognize:");
-foreach (KeyValuePair<string, ClassifierDocumentTypeDetails> docType in classifier.DocTypes)
+foreach (KeyValuePair<string, ClassifierDocumentTypeDetails> docType in classifier.DocumentTypes)
 {
     Console.WriteLine($"  {docType.Key}");
 }

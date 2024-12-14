@@ -56,8 +56,9 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                StartCallRecordingRequestInternal request = new(CallLocatorSerializer.Serialize(options.CallLocator))
+                StartCallRecordingRequestInternal request = new()
                 {
+                    CallLocator = CallLocatorSerializer.Serialize(options.CallLocator),
                     RecordingStateCallbackUri = options.RecordingStateCallbackUri?.AbsoluteUri,
                     RecordingChannelType = options.RecordingChannel,
                     RecordingContentType = options.RecordingContent,
@@ -118,8 +119,9 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                StartCallRecordingRequestInternal request = new(CallLocatorSerializer.Serialize(options.CallLocator))
+                StartCallRecordingRequestInternal request = new()
                 {
+                    CallLocator = CallLocatorSerializer.Serialize(options.CallLocator),
                     RecordingStateCallbackUri = options.RecordingStateCallbackUri?.AbsoluteUri,
                     RecordingChannelType = options.RecordingChannel,
                     RecordingContentType = options.RecordingContent,

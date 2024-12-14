@@ -22,7 +22,7 @@ While the standard approach works well under normal circumstances, it can be tro
 
 ## Why this is needed
 
-Some of our enterprise customers with environments using unconventional proxy configurations or with certain configurations of an Express Route circuit are unable to connect from their on-premises network to the Event Hubs service.  The [Event Hubs Private Link](https://docs.microsoft.com/azure/event-hubs/private-link-service) feature will unblock the Express Route scenario.  However, Private Link is a premium feature with cost considerations and which carries a set of [limitations](https://docs.microsoft.com/azure/private-link/private-link-service-overview#limitations).  It is also not certain that the Private Link feature will resolve all blocking issues, such as those related to local proxying.
+Some of our enterprise customers with environments using unconventional proxy configurations or with certain configurations of an Express Route circuit are unable to connect from their on-premises network to the Event Hubs service.  The [Event Hubs Private Link](https://learn.microsoft.com/azure/event-hubs/private-link-service) feature will unblock the Express Route scenario.  However, Private Link is a premium feature with cost considerations and which carries a set of [limitations](https://learn.microsoft.com/azure/private-link/private-link-service-overview#limitations).  It is also not certain that the Private Link feature will resolve all blocking issues, such as those related to local proxying.
 
 ## High level scenarios
 
