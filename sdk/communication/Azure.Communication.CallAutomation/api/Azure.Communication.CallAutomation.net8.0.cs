@@ -131,7 +131,6 @@ namespace Azure.Communication.CallAutomation
         public CallAutomationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Communication.CallAutomation.CallAutomationClientOptions options = null) { }
         public CallAutomationClient(System.Uri pmaEndpoint, string connectionString, Azure.Communication.CallAutomation.CallAutomationClientOptions options = null) { }
         public CallAutomationClient(System.Uri pmaEndpoint, System.Uri acsEndpoint, Azure.Core.TokenCredential credential, Azure.Communication.CallAutomation.CallAutomationClientOptions options = null) { }
-        public Azure.Communication.MicrosoftTeamsAppIdentifier OPSSource { get { throw null; } }
         public Azure.Communication.CommunicationUserIdentifier Source { get { throw null; } }
         public virtual Azure.Response<Azure.Communication.CallAutomation.AnswerCallResult> AnswerCall(Azure.Communication.CallAutomation.AnswerCallOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.CallAutomation.AnswerCallResult> AnswerCall(string incomingCallContext, System.Uri callbackUri, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -162,7 +161,6 @@ namespace Azure.Communication.CallAutomation
     public partial class CallAutomationClientOptions : Azure.Core.ClientOptions
     {
         public CallAutomationClientOptions(Azure.Communication.CallAutomation.CallAutomationClientOptions.ServiceVersion version = Azure.Communication.CallAutomation.CallAutomationClientOptions.ServiceVersion.V2024_09_01_Preview) { }
-        public Azure.Communication.MicrosoftTeamsAppIdentifier OPSSource { get { throw null; } set { } }
         public Azure.Communication.CommunicationUserIdentifier Source { get { throw null; } set { } }
         public enum ServiceVersion
         {
@@ -709,6 +707,7 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.CallInvite CallInvite { get { throw null; } }
         public Azure.Communication.CallAutomation.MediaStreamingOptions MediaStreamingOptions { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
+        public Azure.Communication.MicrosoftTeamsAppIdentifier TeamsAppSource { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.TranscriptionOptions TranscriptionOptions { get { throw null; } set { } }
     }
     public partial class CreateCallResult
@@ -730,6 +729,7 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.PhoneNumberIdentifier SourceCallerIdNumber { get { throw null; } set { } }
         public string SourceDisplayName { get { throw null; } set { } }
         public System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> Targets { get { throw null; } }
+        public Azure.Communication.MicrosoftTeamsAppIdentifier TeamsAppSource { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.TranscriptionOptions TranscriptionOptions { get { throw null; } set { } }
     }
     public partial class CustomCallingContext
