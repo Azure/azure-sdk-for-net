@@ -17,7 +17,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-  lenient-model-deduplication: true
+
 use-model-reader-writer: true
 
 rename-mapping:
