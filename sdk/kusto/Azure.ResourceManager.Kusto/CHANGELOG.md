@@ -1,5 +1,18 @@
 # Release History
 
+## 1.6.0 (2025-01-10)
+
+### Features Added
+
+- Introduced callout policy functionality.
+- Introduced a new cluster principal role called `AllDatabasesMonitor`.
+- Introduced the ability to specify a baseImageName for SandboxCustomImages. Now, either languageVersion or baseImageName is required.
+- Added clusterLevel and principalsPermissionAction to script properties.
+
+### Other Changes
+
+- Upgraded to Azure API version 2024-04-13.
+
 ## 1.6.0-beta.1 (Unreleased)
 
 ### Features Added
