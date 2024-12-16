@@ -232,6 +232,7 @@ rename-mapping:
   SkuDescriptionList: kustoSkuDescriptionList
   OutboundAccess: KustoCalloutPolicyOutboundAccess
   ZoneStatus: KustoClusterZoneStatus
+  ScriptLevel: KustoScriptLevel
 
 
 format-by-name-rules:

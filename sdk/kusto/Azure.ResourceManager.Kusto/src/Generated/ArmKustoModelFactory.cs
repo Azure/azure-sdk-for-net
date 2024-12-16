@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="scriptLevel"> Differentiates between the type of script commands included - Database or Cluster. The default is Database. </param>
         /// <param name="principalPermissionsAction"> Indicates if the permissions for the script caller are kept following completion of the script. </param>
         /// <returns> A new <see cref="Kusto.KustoScriptData"/> instance for mocking. </returns>
-        public static KustoScriptData KustoScriptData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Uri scriptUri = null, string scriptUriSasToken = null, string scriptContent = null, string forceUpdateTag = null, bool? shouldContinueOnErrors = null, KustoProvisioningState? provisioningState = null, ScriptLevel? scriptLevel = null, PrincipalPermissionsAction? principalPermissionsAction = null)
+        public static KustoScriptData KustoScriptData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Uri scriptUri = null, string scriptUriSasToken = null, string scriptContent = null, string forceUpdateTag = null, bool? shouldContinueOnErrors = null, KustoProvisioningState? provisioningState = null, KustoScriptLevel? scriptLevel = null, PrincipalPermissionsAction? principalPermissionsAction = null)
         {
             return new KustoScriptData(
                 id,

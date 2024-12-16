@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Kusto.Samples
                 ScriptUriSasToken = "?sv=2019-02-02&st=2019-04-29T22%3A18%3A26Z&se=2019-04-30T02%3A23%3A26Z&sr=b&sp=rw&sip=168.1.5.60-168.1.5.70&spr=https&sig=********************************",
                 ForceUpdateTag = "2bcf3c21-ffd1-4444-b9dd-e52e00ee53fe",
                 ShouldContinueOnErrors = true,
-                ScriptLevel = ScriptLevel.Database,
+                ScriptLevel = KustoScriptLevel.Database,
                 PrincipalPermissionsAction = PrincipalPermissionsAction.RemovePermissionOnScriptCompletion,
             };
             ArmOperation<KustoScriptResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, scriptName, data);

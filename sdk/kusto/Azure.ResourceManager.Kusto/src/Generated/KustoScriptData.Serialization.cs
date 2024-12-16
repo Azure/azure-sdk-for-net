@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Kusto
             string forceUpdateTag = default;
             bool? continueOnErrors = default;
             KustoProvisioningState? provisioningState = default;
-            ScriptLevel? scriptLevel = default;
+            KustoScriptLevel? scriptLevel = default;
             PrincipalPermissionsAction? principalPermissionsAction = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Kusto
                             {
                                 continue;
                             }
-                            scriptLevel = new ScriptLevel(property0.Value.GetString());
+                            scriptLevel = new KustoScriptLevel(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("principalPermissionsAction"u8))
