@@ -7,7 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
+[assembly: SuppressMessage("Naming", "AZC0031:Model name 'PrincipalDefinition' ends with 'Definition'. Suggest to rename it to an appropriate name.", Justification = "...")]
 namespace Azure.ResourceManager.IoTOperations.Models
 {
     /// <summary> PrincipalDefinition properties of Rule. </summary>

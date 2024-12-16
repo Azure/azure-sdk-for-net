@@ -7,7 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
+[assembly: SuppressMessage("Naming", "AZC0033:Model name 'DataflowOperation' ends with 'Operation'. Suggest to rename it to 'DataflowData' or 'DataflowInfo', if an appropriate name could not be found.", Justification = "...")]
 namespace Azure.ResourceManager.IoTOperations.Models
 {
     /// <summary> Dataflow Operation properties. NOTE - One only method is allowed to be used for one entry. </summary>

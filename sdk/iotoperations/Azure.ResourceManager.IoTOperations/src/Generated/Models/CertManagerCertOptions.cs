@@ -7,7 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
+[assembly: SuppressMessage("Naming", "AZC0030:Model name 'CertManagerCertOptions' ends with 'Options'. Suggest to rename it to 'CertManagerCertConfig' or any other appropriate name.", Justification = "...")]
 namespace Azure.ResourceManager.IoTOperations.Models
 {
     /// <summary> Cert Manager Cert properties. </summary>
