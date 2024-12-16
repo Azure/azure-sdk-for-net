@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            IReadOnlyList<FollowerDatabaseDefinitionGet> value = default;
+            IReadOnlyList<KustoFollowerDatabaseDefinitionGet> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.Kusto.Models
                     {
                         continue;
                     }
-                    List<FollowerDatabaseDefinitionGet> array = new List<FollowerDatabaseDefinitionGet>();
+                    List<KustoFollowerDatabaseDefinitionGet> array = new List<KustoFollowerDatabaseDefinitionGet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FollowerDatabaseDefinitionGet.DeserializeFollowerDatabaseDefinitionGet(item, options));
+                        array.Add(KustoFollowerDatabaseDefinitionGet.DeserializeKustoFollowerDatabaseDefinitionGet(item, options));
                     }
                     value = array;
                     continue;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FollowerDatabaseListResultGet(value ?? new ChangeTrackingList<FollowerDatabaseDefinitionGet>(), nextLink, serializedAdditionalRawData);
+            return new FollowerDatabaseListResultGet(value ?? new ChangeTrackingList<KustoFollowerDatabaseDefinitionGet>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FollowerDatabaseListResultGet>.Write(ModelReaderWriterOptions options)

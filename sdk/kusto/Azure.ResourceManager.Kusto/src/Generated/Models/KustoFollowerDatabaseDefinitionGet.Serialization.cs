@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class FollowerDatabaseDefinitionGet : IUtf8JsonSerializable, IJsonModel<FollowerDatabaseDefinitionGet>
+    public partial class KustoFollowerDatabaseDefinitionGet : IUtf8JsonSerializable, IJsonModel<KustoFollowerDatabaseDefinitionGet>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FollowerDatabaseDefinitionGet>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoFollowerDatabaseDefinitionGet>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<FollowerDatabaseDefinitionGet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<KustoFollowerDatabaseDefinitionGet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FollowerDatabaseDefinitionGet>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KustoFollowerDatabaseDefinitionGet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FollowerDatabaseDefinitionGet)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoFollowerDatabaseDefinitionGet)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("properties"u8);
@@ -79,19 +79,19 @@ namespace Azure.ResourceManager.Kusto.Models
             }
         }
 
-        FollowerDatabaseDefinitionGet IJsonModel<FollowerDatabaseDefinitionGet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        KustoFollowerDatabaseDefinitionGet IJsonModel<KustoFollowerDatabaseDefinitionGet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FollowerDatabaseDefinitionGet>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KustoFollowerDatabaseDefinitionGet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FollowerDatabaseDefinitionGet)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoFollowerDatabaseDefinitionGet)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFollowerDatabaseDefinitionGet(document.RootElement, options);
+            return DeserializeKustoFollowerDatabaseDefinitionGet(document.RootElement, options);
         }
 
-        internal static FollowerDatabaseDefinitionGet DeserializeFollowerDatabaseDefinitionGet(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static KustoFollowerDatabaseDefinitionGet DeserializeKustoFollowerDatabaseDefinitionGet(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            string clusterResourceId = default;
+            ResourceIdentifier clusterResourceId = default;
             string attachedDatabaseConfigurationName = default;
             string databaseName = default;
             KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = default;
@@ -119,7 +119,11 @@ namespace Azure.ResourceManager.Kusto.Models
                     {
                         if (property0.NameEquals("clusterResourceId"u8))
                         {
-                            clusterResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            clusterResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("attachedDatabaseConfigurationName"u8))
@@ -159,7 +163,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FollowerDatabaseDefinitionGet(
+            return new KustoFollowerDatabaseDefinitionGet(
                 clusterResourceId,
                 attachedDatabaseConfigurationName,
                 databaseName,
@@ -168,35 +172,35 @@ namespace Azure.ResourceManager.Kusto.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<FollowerDatabaseDefinitionGet>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<KustoFollowerDatabaseDefinitionGet>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FollowerDatabaseDefinitionGet>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KustoFollowerDatabaseDefinitionGet>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FollowerDatabaseDefinitionGet)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoFollowerDatabaseDefinitionGet)} does not support writing '{options.Format}' format.");
             }
         }
 
-        FollowerDatabaseDefinitionGet IPersistableModel<FollowerDatabaseDefinitionGet>.Create(BinaryData data, ModelReaderWriterOptions options)
+        KustoFollowerDatabaseDefinitionGet IPersistableModel<KustoFollowerDatabaseDefinitionGet>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FollowerDatabaseDefinitionGet>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KustoFollowerDatabaseDefinitionGet>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeFollowerDatabaseDefinitionGet(document.RootElement, options);
+                        return DeserializeKustoFollowerDatabaseDefinitionGet(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FollowerDatabaseDefinitionGet)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoFollowerDatabaseDefinitionGet)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<FollowerDatabaseDefinitionGet>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<KustoFollowerDatabaseDefinitionGet>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

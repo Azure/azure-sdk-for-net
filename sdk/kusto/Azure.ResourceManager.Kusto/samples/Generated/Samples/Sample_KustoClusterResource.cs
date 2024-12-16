@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Kusto.Samples
             KustoClusterResource kustoCluster = client.GetKustoClusterResource(kustoClusterResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (FollowerDatabaseDefinitionGet item in kustoCluster.GetFollowerDatabasesGetAsync())
+            await foreach (KustoFollowerDatabaseDefinitionGet item in kustoCluster.GetFollowerDatabasesGetAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

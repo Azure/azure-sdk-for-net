@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
     /// <summary> A class representing follower database object. </summary>
-    public partial class FollowerDatabaseDefinitionGet
+    public partial class KustoFollowerDatabaseDefinitionGet
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,19 +46,19 @@ namespace Azure.ResourceManager.Kusto.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="FollowerDatabaseDefinitionGet"/>. </summary>
-        internal FollowerDatabaseDefinitionGet()
+        /// <summary> Initializes a new instance of <see cref="KustoFollowerDatabaseDefinitionGet"/>. </summary>
+        internal KustoFollowerDatabaseDefinitionGet()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FollowerDatabaseDefinitionGet"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoFollowerDatabaseDefinitionGet"/>. </summary>
         /// <param name="clusterResourceId"> Resource id of the cluster that follows a database owned by this cluster. </param>
         /// <param name="attachedDatabaseConfigurationName"> Resource name of the attached database configuration in the follower cluster. </param>
         /// <param name="databaseName"> The database name owned by this cluster that was followed. * in case following all databases. </param>
         /// <param name="tableLevelSharingProperties"> Table level sharing specifications. </param>
         /// <param name="databaseShareOrigin"> The origin of the following setup. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FollowerDatabaseDefinitionGet(string clusterResourceId, string attachedDatabaseConfigurationName, string databaseName, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties, KustoDatabaseShareOrigin? databaseShareOrigin, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal KustoFollowerDatabaseDefinitionGet(ResourceIdentifier clusterResourceId, string attachedDatabaseConfigurationName, string databaseName, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties, KustoDatabaseShareOrigin? databaseShareOrigin, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClusterResourceId = clusterResourceId;
             AttachedDatabaseConfigurationName = attachedDatabaseConfigurationName;
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> Resource id of the cluster that follows a database owned by this cluster. </summary>
-        public string ClusterResourceId { get; }
+        public ResourceIdentifier ClusterResourceId { get; }
         /// <summary> Resource name of the attached database configuration in the follower cluster. </summary>
         public string AttachedDatabaseConfigurationName { get; }
         /// <summary> The database name owned by this cluster that was followed. * in case following all databases. </summary>
