@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.Quota.Tests
     {
         protected ArmClient Client { get; private set; }
 
-        protected QuotaManagementTestBase(bool isAsync, RecordedTestMode mode)
-        : base(isAsync, mode)
+        protected QuotaManagementTestBase(bool isAsync, ResourceType resourceType, string apiVersion, RecordedTestMode mode)
+        : base(isAsync, resourceType, apiVersion, mode)
         {
         }
 
@@ -30,19 +30,8 @@ namespace Azure.ResourceManager.Quota.Tests
         [SetUp]
         public void CreateCommonClient()
         {
-          string ppeEndpointBaseUri = "https://centraluseuap.management.azure.com";
-
-          string defaultSubscriptionId = "65a85478-2333-4bbd-981b-1a818c944faf";
-
-        var options = new ArmClientOptions();
-            options.Environment = new ArmEnvironment(new Uri(ppeEndpointBaseUri), "https://management.azure.com/");
-            //var rType = Resources.ResourceProviderResource.Get("Microsoft.Quota");
-            options.SetApiVersion(new ResourceType("Microsoft.Quota/groupQuotas"), "2024-10-15-preview");
-            //Client = GetArmClient();
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-
-            Client = new ArmClient(cred, defaultSubscriptionId, options);
+            var options = new ArmClientOptions();
+            Client = GetArmClient(options);
         }
 
         protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
