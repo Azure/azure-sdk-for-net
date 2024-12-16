@@ -307,16 +307,16 @@ namespace Azure.ResourceManager.Kusto.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.KustoFollowerDatabaseDefinitionGet"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KustoFollowerDatabase"/>. </summary>
         /// <param name="clusterResourceId"> Resource id of the cluster that follows a database owned by this cluster. </param>
         /// <param name="attachedDatabaseConfigurationName"> Resource name of the attached database configuration in the follower cluster. </param>
         /// <param name="databaseName"> The database name owned by this cluster that was followed. * in case following all databases. </param>
         /// <param name="tableLevelSharingProperties"> Table level sharing specifications. </param>
         /// <param name="databaseShareOrigin"> The origin of the following setup. </param>
-        /// <returns> A new <see cref="Models.KustoFollowerDatabaseDefinitionGet"/> instance for mocking. </returns>
-        public static KustoFollowerDatabaseDefinitionGet KustoFollowerDatabaseDefinitionGet(ResourceIdentifier clusterResourceId = null, string attachedDatabaseConfigurationName = null, string databaseName = null, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = null, KustoDatabaseShareOrigin? databaseShareOrigin = null)
+        /// <returns> A new <see cref="Models.KustoFollowerDatabase"/> instance for mocking. </returns>
+        public static KustoFollowerDatabase KustoFollowerDatabase(ResourceIdentifier clusterResourceId = null, string attachedDatabaseConfigurationName = null, string databaseName = null, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = null, KustoDatabaseShareOrigin? databaseShareOrigin = null)
         {
-            return new KustoFollowerDatabaseDefinitionGet(
+            return new KustoFollowerDatabase(
                 clusterResourceId,
                 attachedDatabaseConfigurationName,
                 databaseName,

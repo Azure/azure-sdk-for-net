@@ -233,7 +233,7 @@ rename-mapping:
   OutboundAccess: KustoCalloutPolicyOutboundAccess
   ZoneStatus: KustoClusterZoneStatus
   ScriptLevel: KustoScriptLevel
-  FollowerDatabaseDefinitionGet: KustoFollowerDatabaseDefinitionGet
+  FollowerDatabaseDefinitionGet: KustoFollowerDatabase
   FollowerDatabaseDefinitionGet.properties.clusterResourceId: -|arm-id
 
 

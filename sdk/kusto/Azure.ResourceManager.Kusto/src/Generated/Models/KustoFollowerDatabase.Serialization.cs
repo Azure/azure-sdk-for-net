@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class KustoFollowerDatabaseDefinitionGet : IUtf8JsonSerializable, IJsonModel<KustoFollowerDatabaseDefinitionGet>
+    public partial class KustoFollowerDatabase : IUtf8JsonSerializable, IJsonModel<KustoFollowerDatabase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoFollowerDatabaseDefinitionGet>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoFollowerDatabase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<KustoFollowerDatabaseDefinitionGet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<KustoFollowerDatabase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoFollowerDatabaseDefinitionGet>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KustoFollowerDatabase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoFollowerDatabaseDefinitionGet)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoFollowerDatabase)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("properties"u8);
@@ -79,19 +79,19 @@ namespace Azure.ResourceManager.Kusto.Models
             }
         }
 
-        KustoFollowerDatabaseDefinitionGet IJsonModel<KustoFollowerDatabaseDefinitionGet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        KustoFollowerDatabase IJsonModel<KustoFollowerDatabase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoFollowerDatabaseDefinitionGet>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KustoFollowerDatabase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoFollowerDatabaseDefinitionGet)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoFollowerDatabase)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeKustoFollowerDatabaseDefinitionGet(document.RootElement, options);
+            return DeserializeKustoFollowerDatabase(document.RootElement, options);
         }
 
-        internal static KustoFollowerDatabaseDefinitionGet DeserializeKustoFollowerDatabaseDefinitionGet(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static KustoFollowerDatabase DeserializeKustoFollowerDatabase(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new KustoFollowerDatabaseDefinitionGet(
+            return new KustoFollowerDatabase(
                 clusterResourceId,
                 attachedDatabaseConfigurationName,
                 databaseName,
@@ -172,35 +172,35 @@ namespace Azure.ResourceManager.Kusto.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<KustoFollowerDatabaseDefinitionGet>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<KustoFollowerDatabase>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoFollowerDatabaseDefinitionGet>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KustoFollowerDatabase>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KustoFollowerDatabaseDefinitionGet)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoFollowerDatabase)} does not support writing '{options.Format}' format.");
             }
         }
 
-        KustoFollowerDatabaseDefinitionGet IPersistableModel<KustoFollowerDatabaseDefinitionGet>.Create(BinaryData data, ModelReaderWriterOptions options)
+        KustoFollowerDatabase IPersistableModel<KustoFollowerDatabase>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KustoFollowerDatabaseDefinitionGet>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KustoFollowerDatabase>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeKustoFollowerDatabaseDefinitionGet(document.RootElement, options);
+                        return DeserializeKustoFollowerDatabase(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KustoFollowerDatabaseDefinitionGet)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoFollowerDatabase)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<KustoFollowerDatabaseDefinitionGet>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<KustoFollowerDatabase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

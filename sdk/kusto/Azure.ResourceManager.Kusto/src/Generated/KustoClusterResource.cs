@@ -1139,11 +1139,11 @@ namespace Azure.ResourceManager.Kusto
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KustoFollowerDatabaseDefinitionGet"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<KustoFollowerDatabaseDefinitionGet> GetFollowerDatabasesGetAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="KustoFollowerDatabase"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<KustoFollowerDatabase> GetFollowerDatabasesGetAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoClusterClustersRestClient.CreateListFollowerDatabasesGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => KustoFollowerDatabaseDefinitionGet.DeserializeKustoFollowerDatabaseDefinitionGet(e), _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetFollowerDatabasesGet", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => KustoFollowerDatabase.DeserializeKustoFollowerDatabase(e), _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetFollowerDatabasesGet", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1168,11 +1168,11 @@ namespace Azure.ResourceManager.Kusto
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KustoFollowerDatabaseDefinitionGet"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<KustoFollowerDatabaseDefinitionGet> GetFollowerDatabasesGet(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="KustoFollowerDatabase"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<KustoFollowerDatabase> GetFollowerDatabasesGet(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoClusterClustersRestClient.CreateListFollowerDatabasesGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => KustoFollowerDatabaseDefinitionGet.DeserializeKustoFollowerDatabaseDefinitionGet(e), _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetFollowerDatabasesGet", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => KustoFollowerDatabase.DeserializeKustoFollowerDatabase(e), _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetFollowerDatabasesGet", "value", null, cancellationToken);
         }
 
         /// <summary>
