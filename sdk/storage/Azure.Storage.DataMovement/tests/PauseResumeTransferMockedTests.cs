@@ -102,11 +102,12 @@ public class PauseResumeTransferMockedTests
         MemoryTransferCheckpointer checkpointer,
         StepProcessor<TransferJobInternal> jobsProcessor,
         StepProcessor<JobPartInternal> partsProcessor,
-        StepProcessor<Func<Task>> chunksProcessor)
+        StepProcessor<Func<Task>> chunksProcessor,
+        DataTransferState initialJobState = DataTransferState.Paused)
     {
         await Task.Delay(50);
-        int pausedJobsCount = GetJobsStateCount(resumedTransfers, checkpointer)[DataTransferState.Paused];
-        Assert.That(pausedJobsCount, Is.EqualTo(numJobs));
+        int initialJobStateCount = GetJobsStateCount(resumedTransfers, checkpointer)[initialJobState];
+        Assert.That(initialJobStateCount, Is.EqualTo(numJobs));
 
         // process jobs on resume
         Assert.That(await jobsProcessor.StepAll(), Is.EqualTo(numJobs), "Error job processing on resume");
@@ -134,6 +135,37 @@ public class PauseResumeTransferMockedTests
             Assert.That(chunksStepped, Is.EqualTo(numChunks));
         }
         AssertAllJobsAndPartsCompleted(numJobs, numJobParts, resumedTransfers, checkpointer);
+    }
+
+    private (TransferManager TransferManager, StepProcessor<TransferJobInternal> JobProcessor, StepProcessor<JobPartInternal> PartProcessor, StepProcessor<Func<Task>> ChunkProcessor) SimulateDisaster(
+        MemoryTransferCheckpointer checkpointer,
+        ref StepProcessor<TransferJobInternal> jobsProcessor,
+        ref StepProcessor<JobPartInternal> partsProcessor,
+        ref StepProcessor<Func<Task>> chunksProcessor)
+    {
+        // Remove everything from memory
+        jobsProcessor = null;
+        partsProcessor = null;
+        chunksProcessor = null;
+
+        // Force garbage collection
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
+        GC.Collect();
+
+        // Re-create everything
+        (var jobsProcessor2, var partsProcessor2, var chunksProcessor2) = StepProcessors();
+        JobBuilder jobBuilder2 = new(ArrayPool<byte>.Shared, default, new ClientDiagnostics(ClientOptions.Default));
+        List<StorageResourceProvider> resumeProviders2 = new() { new MockStorageResourceProvider(checkpointer) };
+        TransferManager transferManager2 = new(
+            jobsProcessor2,
+            partsProcessor2,
+            chunksProcessor2,
+            jobBuilder2,
+            checkpointer,
+            resumeProviders2);
+
+        return (transferManager2, jobsProcessor2, partsProcessor2, chunksProcessor2);
     }
 
     [Test]
@@ -1359,6 +1391,303 @@ public class PauseResumeTransferMockedTests
         });
 
         await AssertResumeTransfer(numJobs, numJobParts, numChunks, chunksPerPart, resumedTransfers3, checkpointer, jobsProcessor, partsProcessor, chunksProcessor);
+    }
+
+    [Test]
+    [Combinatorial]
+    public async Task MultipleDisasterResumes_ItemTransfer(
+        [Values(2, 6)] int items,
+        [Values(333, 500, 1024)] int itemSize,
+        [Values(333, 1024)] int chunkSize)
+    {
+        int chunksPerPart = (int)Math.Ceiling((float)itemSize / chunkSize);
+        // TODO: below should be only `items * chunksPerPart` but can't in some cases due to
+        //       a bug in how work items are processed on multipart uploads.
+        int numChunks = Math.Max(chunksPerPart - 1, 1) * items;
+
+        Uri srcUri = new("file:///foo/bar");
+        Uri dstUri = new("https://example.com/fizz/buzz");
+
+        (var jobsProcessor0, var partsProcessor0, var chunksProcessor0) = StepProcessors();
+        JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new ClientDiagnostics(ClientOptions.Default));
+        MemoryTransferCheckpointer checkpointer = new();
+
+        var resources = Enumerable.Range(0, items).Select(_ =>
+        {
+            Mock<StorageResourceItem> srcResource = new(MockBehavior.Strict);
+            Mock<StorageResourceItem> dstResource = new(MockBehavior.Strict);
+
+            (srcResource, dstResource).BasicSetup(srcUri, dstUri, itemSize);
+
+            return (Source: srcResource, Destination: dstResource);
+        }).ToList();
+
+        List<StorageResourceProvider> resumeProviders = new() { new MockStorageResourceProvider(checkpointer) };
+
+        await using TransferManager transferManager0 = new(
+            jobsProcessor0,
+            partsProcessor0,
+            chunksProcessor0,
+            jobBuilder,
+            checkpointer,
+            resumeProviders);
+
+        List<DataTransfer> transfers = new();
+
+        // queue jobs
+        foreach ((Mock<StorageResourceItem> srcResource, Mock<StorageResourceItem> dstResource) in resources)
+        {
+            DataTransfer transfer = await transferManager0.StartTransferAsync(
+                srcResource.Object,
+                dstResource.Object,
+                new()
+                {
+                    InitialTransferSize = chunkSize,
+                    MaximumTransferChunkSize = chunkSize,
+                });
+            transfers.Add(transfer);
+
+            // Assert that job plan file is created properly
+            Assert.That(checkpointer.Jobs.ContainsKey(transfer.Id), Is.True, "Error during Job plan file creation.");
+            Assert.That(checkpointer.Jobs[transfer.Id].Status.State, Is.EqualTo(DataTransferState.Queued), "Error during Job plan file creation.");
+            Assert.That(checkpointer.Jobs[transfer.Id].Parts.Count, Is.EqualTo(0), "Job Part files should not exist before job processing");
+        }
+        Assert.That(checkpointer.Jobs.Count, Is.EqualTo(transfers.Count), "Error during Job plan file creation.");
+        Assert.That(jobsProcessor0.ItemsInQueue, Is.EqualTo(items), "Error during initial Job queueing.");
+
+        // Simulate Disaster #1
+        await ((IAsyncDisposable)transferManager0).DisposeAsync();
+        (TransferManager transferManager1,
+            StepProcessor<TransferJobInternal> jobsProcessor1,
+            StepProcessor<JobPartInternal> partsProcessor1,
+            StepProcessor<Func<Task>> chunksProcessor1) = SimulateDisaster(
+                checkpointer,
+                ref jobsProcessor0,
+                ref partsProcessor0,
+                ref chunksProcessor0);
+
+        // Resume transfer after Disaster #1
+        List<DataTransfer> resumedTransfers1 = await transferManager1.ResumeAllTransfersAsync(new()
+        {
+            InitialTransferSize = chunkSize,
+            MaximumTransferChunkSize = chunkSize,
+        });
+
+        await Task.Delay(50);
+        int queuedJobsCount = GetJobsStateCount(resumedTransfers1, checkpointer)[DataTransferState.Queued];
+        Assert.That(queuedJobsCount, Is.EqualTo(items));
+
+        // process jobs on resume #1
+        Assert.That(await jobsProcessor1.StepAll(), Is.EqualTo(items), "Error during job processing");
+
+        await Task.Delay(50);
+        AssertJobProcessingSuccessful(items, resumedTransfers1, checkpointer);
+
+        // Simulate Disaster #2
+        await ((IAsyncDisposable)transferManager1).DisposeAsync();
+        (TransferManager transferManager2,
+            StepProcessor<TransferJobInternal> jobsProcessor2,
+            StepProcessor<JobPartInternal> partsProcessor2,
+            StepProcessor<Func<Task>> chunksProcessor2) = SimulateDisaster(
+                checkpointer,
+                ref jobsProcessor1,
+                ref partsProcessor1,
+                ref chunksProcessor1);
+
+        // Resume transfer after Disaster #2
+        List<DataTransfer> resumedTransfers2 = await transferManager2.ResumeAllTransfersAsync();
+
+        await Task.Delay(50);
+        int inProgressJobsCount = GetJobsStateCount(resumedTransfers2, checkpointer)[DataTransferState.InProgress];
+        Assert.That(inProgressJobsCount, Is.EqualTo(items));
+
+        // process jobs on resume #2
+        Assert.That(await jobsProcessor2.StepAll(), Is.EqualTo(items), "Error during job processing");
+
+        await Task.Delay(50);
+        AssertJobProcessingSuccessful(items, resumedTransfers2, checkpointer);
+
+        // process job parts on resume #2
+        Assert.That(await partsProcessor2.StepAll(), Is.EqualTo(items), "Error job during part processing");
+
+        await Task.Delay(50);
+        AssertPartProcessingSuccessful(items, resumedTransfers2, checkpointer);
+
+        // Simulate Disaster #3
+        await ((IAsyncDisposable)transferManager2).DisposeAsync();
+        (TransferManager transferManager3,
+            StepProcessor<TransferJobInternal> jobsProcessor3,
+            StepProcessor<JobPartInternal> partsProcessor3,
+            StepProcessor<Func<Task>> chunksProcessor3) = SimulateDisaster(
+                checkpointer,
+                ref jobsProcessor2,
+                ref partsProcessor2,
+                ref chunksProcessor2);
+
+        // Resume transfer after Disaster #3
+        List<DataTransfer> resumedTransfers3 = await transferManager3.ResumeAllTransfersAsync();
+
+        // Finish the resume transfer #3
+        await AssertResumeTransfer(
+            items,
+            items,
+            numChunks,
+            chunksPerPart,
+            resumedTransfers3,
+            checkpointer,
+            jobsProcessor3,
+            partsProcessor3,
+            chunksProcessor3,
+            DataTransferState.InProgress);
+    }
+
+    [Test]
+    [Combinatorial]
+    public async Task MultipleDisasterResumes_ContainerTransfer(
+        [Values(2, 6)] int numJobs,
+        [Values(333, 500, 1024)] int itemSize,
+        [Values(333, 1024)] int chunkSize)
+    {
+        static int GetItemCountFromContainerIndex(int i) => i * 2;
+
+        int numJobParts = Enumerable.Range(1, numJobs).Select(GetItemCountFromContainerIndex).Sum();
+        int chunksPerPart = (int)Math.Ceiling((float)itemSize / chunkSize);
+        // TODO: below should be only `items * chunksPerPart` but can't in some cases due to
+        //       a bug in how work items are processed on multipart uploads.
+        int numChunks = Math.Max(chunksPerPart - 1, 1) * numJobParts;
+
+        Uri srcUri = new("file:///foo/bar");
+        Uri dstUri = new("https://example.com/fizz/buzz");
+
+        (var jobsProcessor0, var partsProcessor0, var chunksProcessor0) = StepProcessors();
+        JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new ClientDiagnostics(ClientOptions.Default));
+        MemoryTransferCheckpointer checkpointer = new();
+
+        var resources = Enumerable.Range(1, numJobs).Select(i =>
+        {
+            Mock<StorageResourceContainer> srcResource = new(MockBehavior.Strict);
+            Mock<StorageResourceContainer> dstResource = new(MockBehavior.Strict);
+            (srcResource, dstResource).BasicSetup(srcUri, dstUri, GetItemCountFromContainerIndex(i), itemSize);
+            return (Source: srcResource, Destination: dstResource);
+        }).ToList();
+
+        List<StorageResourceProvider> resumeProviders = new() { new MockStorageResourceProvider(checkpointer) };
+
+        await using TransferManager transferManager0 = new(
+            jobsProcessor0,
+            partsProcessor0,
+            chunksProcessor0,
+            jobBuilder,
+            checkpointer,
+            resumeProviders);
+
+        List<DataTransfer> transfers = new();
+
+        // queue jobs
+        foreach ((Mock<StorageResourceContainer> srcResource, Mock<StorageResourceContainer> dstResource) in resources)
+        {
+            DataTransfer transfer = await transferManager0.StartTransferAsync(
+                srcResource.Object,
+                dstResource.Object,
+                new()
+                {
+                    InitialTransferSize = chunkSize,
+                    MaximumTransferChunkSize = chunkSize,
+                });
+            transfers.Add(transfer);
+
+            // Assert that job plan file is created properly
+            Assert.That(checkpointer.Jobs.ContainsKey(transfer.Id), Is.True, "Error during Job plan file creation.");
+            Assert.That(checkpointer.Jobs[transfer.Id].Status.State, Is.EqualTo(DataTransferState.Queued), "Error during Job plan file creation.");
+            Assert.That(checkpointer.Jobs[transfer.Id].Parts.Count, Is.EqualTo(0), "Job Part files should not exist before job processing");
+        }
+        Assert.That(checkpointer.Jobs.Count, Is.EqualTo(transfers.Count), "Error during Job plan file creation.");
+        Assert.That(jobsProcessor0.ItemsInQueue, Is.EqualTo(numJobs), "Error during initial Job queueing.");
+
+        // Simulate Disaster #1
+        await ((IAsyncDisposable)transferManager0).DisposeAsync();
+        (TransferManager transferManager1,
+            StepProcessor<TransferJobInternal> jobsProcessor1,
+            StepProcessor<JobPartInternal> partsProcessor1,
+            StepProcessor<Func<Task>> chunksProcessor1) = SimulateDisaster(
+                checkpointer,
+                ref jobsProcessor0,
+                ref partsProcessor0,
+                ref chunksProcessor0);
+
+        // Resume transfer after Disaster #1
+        List<DataTransfer> resumedTransfers1 = await transferManager1.ResumeAllTransfersAsync(new()
+        {
+            InitialTransferSize = chunkSize,
+            MaximumTransferChunkSize = chunkSize,
+        });
+
+        await Task.Delay(50);
+        int queuedJobsCount = GetJobsStateCount(resumedTransfers1, checkpointer)[DataTransferState.Queued];
+        Assert.That(queuedJobsCount, Is.EqualTo(numJobs));
+
+        // process jobs on resume #1
+        Assert.That(await jobsProcessor1.StepAll(), Is.EqualTo(numJobs), "Error during job processing");
+
+        await Task.Delay(50);
+        AssertJobProcessingSuccessful(numJobs, resumedTransfers1, checkpointer);
+
+        // Simulate Disaster #2
+        await ((IAsyncDisposable)transferManager1).DisposeAsync();
+        (TransferManager transferManager2,
+            StepProcessor<TransferJobInternal> jobsProcessor2,
+            StepProcessor<JobPartInternal> partsProcessor2,
+            StepProcessor<Func<Task>> chunksProcessor2) = SimulateDisaster(
+                checkpointer,
+                ref jobsProcessor1,
+                ref partsProcessor1,
+                ref chunksProcessor1);
+
+        // Resume transfer after Disaster #2
+        List<DataTransfer> resumedTransfers2 = await transferManager2.ResumeAllTransfersAsync();
+
+        await Task.Delay(50);
+        int inProgressJobsCount = GetJobsStateCount(resumedTransfers2, checkpointer)[DataTransferState.InProgress];
+        Assert.That(inProgressJobsCount, Is.EqualTo(numJobs));
+
+        // process jobs on resume #2
+        Assert.That(await jobsProcessor2.StepAll(), Is.EqualTo(numJobs), "Error during job processing");
+
+        await Task.Delay(50);
+        AssertJobProcessingSuccessful(numJobs, resumedTransfers2, checkpointer);
+
+        // process job parts on resume #2
+        Assert.That(await partsProcessor2.StepAll(), Is.EqualTo(numJobParts), "Error job during part processing");
+
+        await Task.Delay(50);
+        AssertPartProcessingSuccessful(numJobParts, resumedTransfers2, checkpointer);
+
+        // Simulate Disaster #3
+        await ((IAsyncDisposable)transferManager2).DisposeAsync();
+        (TransferManager transferManager3,
+            StepProcessor<TransferJobInternal> jobsProcessor3,
+            StepProcessor<JobPartInternal> partsProcessor3,
+            StepProcessor<Func<Task>> chunksProcessor3) = SimulateDisaster(
+                checkpointer,
+                ref jobsProcessor2,
+                ref partsProcessor2,
+                ref chunksProcessor2);
+
+        // Resume transfer after Disaster #3
+        List<DataTransfer> resumedTransfers3 = await transferManager3.ResumeAllTransfersAsync();
+
+        // Finish the resume transfer #3
+        await AssertResumeTransfer(
+            numJobs,
+            numJobParts,
+            numChunks,
+            chunksPerPart,
+            resumedTransfers3,
+            checkpointer,
+            jobsProcessor3,
+            partsProcessor3,
+            chunksProcessor3,
+            DataTransferState.InProgress);
     }
 
     public enum PauseLocation
