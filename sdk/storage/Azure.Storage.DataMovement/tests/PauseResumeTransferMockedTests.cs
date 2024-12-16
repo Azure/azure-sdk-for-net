@@ -139,11 +139,13 @@ public class PauseResumeTransferMockedTests
 
     private (TransferManager TransferManager, StepProcessor<TransferJobInternal> JobProcessor, StepProcessor<JobPartInternal> PartProcessor, StepProcessor<Func<Task>> ChunkProcessor) SimulateDisaster(
         MemoryTransferCheckpointer checkpointer,
+        ref TransferManager transferManager,
         ref StepProcessor<TransferJobInternal> jobsProcessor,
         ref StepProcessor<JobPartInternal> partsProcessor,
         ref StepProcessor<Func<Task>> chunksProcessor)
     {
-        // Remove everything from memory
+        // Remove references from memory
+        transferManager = null;
         jobsProcessor = null;
         partsProcessor = null;
         chunksProcessor = null;
@@ -1424,7 +1426,7 @@ public class PauseResumeTransferMockedTests
 
         List<StorageResourceProvider> resumeProviders = new() { new MockStorageResourceProvider(checkpointer) };
 
-        await using TransferManager transferManager0 = new(
+        TransferManager transferManager0 = new(
             jobsProcessor0,
             partsProcessor0,
             chunksProcessor0,
@@ -1462,6 +1464,7 @@ public class PauseResumeTransferMockedTests
             StepProcessor<JobPartInternal> partsProcessor1,
             StepProcessor<Func<Task>> chunksProcessor1) = SimulateDisaster(
                 checkpointer,
+                ref transferManager0,
                 ref jobsProcessor0,
                 ref partsProcessor0,
                 ref chunksProcessor0);
@@ -1490,6 +1493,7 @@ public class PauseResumeTransferMockedTests
             StepProcessor<JobPartInternal> partsProcessor2,
             StepProcessor<Func<Task>> chunksProcessor2) = SimulateDisaster(
                 checkpointer,
+                 ref transferManager1,
                 ref jobsProcessor1,
                 ref partsProcessor1,
                 ref chunksProcessor1);
@@ -1520,6 +1524,7 @@ public class PauseResumeTransferMockedTests
             StepProcessor<JobPartInternal> partsProcessor3,
             StepProcessor<Func<Task>> chunksProcessor3) = SimulateDisaster(
                 checkpointer,
+                ref transferManager2,
                 ref jobsProcessor2,
                 ref partsProcessor2,
                 ref chunksProcessor2);
@@ -1573,7 +1578,7 @@ public class PauseResumeTransferMockedTests
 
         List<StorageResourceProvider> resumeProviders = new() { new MockStorageResourceProvider(checkpointer) };
 
-        await using TransferManager transferManager0 = new(
+        TransferManager transferManager0 = new(
             jobsProcessor0,
             partsProcessor0,
             chunksProcessor0,
@@ -1611,6 +1616,7 @@ public class PauseResumeTransferMockedTests
             StepProcessor<JobPartInternal> partsProcessor1,
             StepProcessor<Func<Task>> chunksProcessor1) = SimulateDisaster(
                 checkpointer,
+                ref transferManager0,
                 ref jobsProcessor0,
                 ref partsProcessor0,
                 ref chunksProcessor0);
@@ -1639,6 +1645,7 @@ public class PauseResumeTransferMockedTests
             StepProcessor<JobPartInternal> partsProcessor2,
             StepProcessor<Func<Task>> chunksProcessor2) = SimulateDisaster(
                 checkpointer,
+                ref transferManager1,
                 ref jobsProcessor1,
                 ref partsProcessor1,
                 ref chunksProcessor1);
@@ -1669,6 +1676,7 @@ public class PauseResumeTransferMockedTests
             StepProcessor<JobPartInternal> partsProcessor3,
             StepProcessor<Func<Task>> chunksProcessor3) = SimulateDisaster(
                 checkpointer,
+                ref transferManager2,
                 ref jobsProcessor2,
                 ref partsProcessor2,
                 ref chunksProcessor2);
