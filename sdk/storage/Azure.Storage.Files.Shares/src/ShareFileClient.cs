@@ -15,6 +15,7 @@ using Azure.Storage.Shared;
 using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Azure.Storage.Common;
+using System.Net.Http.Headers;
 
 #pragma warning disable SA1402  // File may only contain a single type
 
@@ -129,7 +130,7 @@ namespace Azure.Storage.Files.Shares
         /// </summary>
         public virtual bool CanGenerateSasUri => ClientConfiguration.SharedKeyCredential != null;
 
-        //const string fileType = "file";
+        //const string filetype = "file";
 
         //// FileMaxUploadRangeBytes indicates the maximum number of bytes that can be sent in a call to UploadRange.
         //public const Int64 FileMaxUploadRangeBytes = 4 * Constants.MB; // 4MB
@@ -578,6 +579,7 @@ namespace Azure.Storage.Files.Shares
                 smbProperties: options?.SmbProperties,
                 filePermission: options?.FilePermission?.Permission,
                 filePermissionFormat: options?.FilePermission?.PermissionFormat,
+                posixProperties: options?.PosixProperties,
                 conditions,
                 async: false,
                 cancellationToken)
@@ -628,6 +630,7 @@ namespace Azure.Storage.Files.Shares
                 smbProperties: options?.SmbProperties,
                 filePermission: options?.FilePermission?.Permission,
                 filePermissionFormat: options?.FilePermission?.PermissionFormat,
+                posixProperties: options?.PosixProperties,
                 conditions,
                 async: true,
                 cancellationToken)
@@ -693,6 +696,7 @@ namespace Azure.Storage.Files.Shares
                 smbProperties,
                 filePermission,
                 filePermissionFormat: default,
+                posixProperties: default,
                 conditions,
                 async: false,
                 cancellationToken)
@@ -753,6 +757,7 @@ namespace Azure.Storage.Files.Shares
                 smbProperties,
                 filePermission,
                 filePermissionFormat: default,
+                posixProperties: default,
                 conditions: default,
                 async: false,
                 cancellationToken)
@@ -818,6 +823,7 @@ namespace Azure.Storage.Files.Shares
                 smbProperties,
                 filePermission,
                 filePermissionFormat: default,
+                posixProperties: default,
                 conditions,
                 async: true,
                 cancellationToken)
@@ -878,6 +884,7 @@ namespace Azure.Storage.Files.Shares
                 smbProperties,
                 filePermission,
                 filePermissionFormat: default,
+                posixProperties: default,
                 conditions: default,
                 async: true,
                 cancellationToken)
@@ -912,6 +919,9 @@ namespace Azure.Storage.Files.Shares
         /// <param name="filePermissionFormat">
         /// Optional file permission format.
         /// </param>
+        /// <param name="posixProperties">
+        /// Optional NFS properties.
+        /// </param>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
@@ -941,6 +951,7 @@ namespace Azure.Storage.Files.Shares
             FileSmbProperties smbProperties,
             string filePermission,
             FilePermissionFormat? filePermissionFormat,
+            FilePosixProperties posixProperties,
             ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken,
@@ -965,21 +976,20 @@ namespace Azure.Storage.Files.Shares
 
                     ShareExtensions.AssertValidFilePermissionAndKey(filePermission, smbProps.FilePermissionKey);
 
-                    if (filePermission == null && smbProps.FilePermissionKey == null)
-                    {
-                        filePermission = Constants.File.FilePermissionInherit;
-                    }
-
                     ResponseWithHeaders<FileCreateHeaders> response;
 
                     if (async)
                     {
                         response = await FileRestClient.CreateAsync(
                             fileContentLength: maxSize,
-                            fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.FileAttributesNone,
-                            fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
-                            fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
+                            fileAttributes: smbProps.FileAttributes.ToAttributesString(),
+                            fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString(),
+                            fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString(),
                             fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
+                            owner: posixProperties?.Owner,
+                            group: posixProperties?.Group,
+                            fileMode: posixProperties?.FileMode.ToOctalFileMode(),
+                            nfsFileType: posixProperties?.FileType,
                             metadata: metadata,
                             filePermission: filePermission,
                             filePermissionFormat: filePermissionFormat,
@@ -993,10 +1003,14 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = FileRestClient.Create(
                             fileContentLength: maxSize,
-                            fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.FileAttributesNone,
-                            fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
-                            fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
+                            fileAttributes: smbProps.FileAttributes.ToAttributesString(),
+                            fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString(),
+                            fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString(),
                             fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
+                            owner: posixProperties?.Owner,
+                            group: posixProperties?.Group,
+                            fileMode: posixProperties?.FileMode.ToOctalFileMode(),
+                            nfsFileType: posixProperties?.FileType,
                             metadata: metadata,
                             filePermission: filePermission,
                             filePermissionFormat: filePermissionFormat,
@@ -1308,6 +1322,9 @@ namespace Azure.Storage.Files.Shares
                 setArchiveAttribute: options?.Archive,
                 conditions: options?.Conditions,
                 copyableFileSmbProperties: options?.SmbPropertiesToCopy,
+                posixProperties: options?.PosixProperties,
+                modeCopyMode: options?.ModeCopyMode,
+                ownerCopyMode: options?.OwnerCopyMode,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
@@ -1385,6 +1402,9 @@ namespace Azure.Storage.Files.Shares
                 setArchiveAttribute,
                 conditions,
                 copyableFileSmbProperties: default,
+                posixProperties: default,
+                modeCopyMode: default,
+                ownerCopyMode: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -1432,6 +1452,9 @@ namespace Azure.Storage.Files.Shares
                 setArchiveAttribute: default,
                 conditions: default,
                 copyableFileSmbProperties: default,
+                posixProperties: default,
+                modeCopyMode: default,
+                ownerCopyMode: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -1476,6 +1499,9 @@ namespace Azure.Storage.Files.Shares
                 setArchiveAttribute: options?.Archive,
                 conditions: options?.Conditions,
                 copyableFileSmbProperties: options?.SmbPropertiesToCopy,
+                posixProperties: options?.PosixProperties,
+                modeCopyMode: options?.ModeCopyMode,
+                ownerCopyMode: options?.OwnerCopyMode,
                 async: true,
                 cancellationToken: cancellationToken).
                 ConfigureAwait(false);
@@ -1553,6 +1579,9 @@ namespace Azure.Storage.Files.Shares
                 setArchiveAttribute,
                 conditions,
                 copyableFileSmbProperties: default,
+                posixProperties: default,
+                modeCopyMode: default,
+                ownerCopyMode: default,
                 async: true,
                 cancellationToken).
                 ConfigureAwait(false);
@@ -1600,6 +1629,9 @@ namespace Azure.Storage.Files.Shares
                 setArchiveAttribute: default,
                 conditions: default,
                 copyableFileSmbProperties: default,
+                posixProperties: default,
+                modeCopyMode: default,
+                ownerCopyMode: default,
                 async: true,
                 cancellationToken).
                 ConfigureAwait(false);
@@ -1647,6 +1679,17 @@ namespace Azure.Storage.Files.Shares
         /// <param name="copyableFileSmbProperties">
         /// SMB properties to copy from the source file.
         /// </param>
+        /// <param name="posixProperties">
+        /// NFS files only.  NFS properties to set on the destination file.
+        /// </param>
+        /// <param name="modeCopyMode">
+        /// Optional, only applicable to NFS Files.
+        /// If not populated, the desination file will have the default File Mode.
+        /// </param>
+        /// <param name="ownerCopyMode">
+        /// Optional, only applicable to NFS Files.
+        /// If not populated, the desination file will have the default Owner and Group.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1673,6 +1716,9 @@ namespace Azure.Storage.Files.Shares
             bool? setArchiveAttribute,
             ShareFileRequestConditions conditions,
             CopyableFileSmbProperties? copyableFileSmbProperties,
+            FilePosixProperties posixProperties,
+            ModeCopyMode? modeCopyMode,
+            OwnerCopyMode? ownerCopyMode,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1723,7 +1769,7 @@ namespace Azure.Storage.Files.Shares
                     }
                     else
                     {
-                        fileAttributes = smbProperties?.FileAttributes?.ToAttributesString();
+                        fileAttributes = smbProperties?.FileAttributes.ToAttributesString();
                     }
 
                     string fileCreatedOn = null;
@@ -1780,6 +1826,11 @@ namespace Azure.Storage.Files.Shares
                             filePermission: filePermission,
                             filePermissionFormat: filePermissionFormat,
                             filePermissionKey: smbProperties?.FilePermissionKey,
+                            owner: posixProperties?.Owner,
+                            group: posixProperties?.Group,
+                            fileMode: posixProperties?.FileMode?.ToOctalFileMode(),
+                            fileModeCopyMode: modeCopyMode,
+                            fileOwnerCopyMode: ownerCopyMode,
                             copyFileSmbInfo: copyFileSmbInfo,
                             shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken)
@@ -1793,6 +1844,11 @@ namespace Azure.Storage.Files.Shares
                             filePermission: filePermission,
                             filePermissionFormat: filePermissionFormat,
                             filePermissionKey: smbProperties?.FilePermissionKey,
+                            owner: posixProperties?.Owner,
+                            group: posixProperties?.Group,
+                            fileMode: posixProperties?.FileMode?.ToOctalFileMode(),
+                            fileModeCopyMode: modeCopyMode,
+                            fileOwnerCopyMode: ownerCopyMode,
                             copyFileSmbInfo: copyFileSmbInfo,
                             shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken);
@@ -3395,6 +3451,7 @@ namespace Azure.Storage.Files.Shares
                 options?.SmbProperties,
                 options?.FilePermission?.Permission,
                 options?.FilePermission?.PermissionFormat,
+                options?.PosixProperties,
                 conditions,
                 async: false,
                 cancellationToken)
@@ -3437,6 +3494,7 @@ namespace Azure.Storage.Files.Shares
                 options?.SmbProperties,
                 options?.FilePermission?.Permission,
                 options?.FilePermission?.PermissionFormat,
+                options?.PosixProperties,
                 conditions,
                 async: true,
                 cancellationToken)
@@ -3497,6 +3555,7 @@ namespace Azure.Storage.Files.Shares
                 smbProperties,
                 filePermission,
                 filePermissionFormat: default,
+                posixProperties: default,
                 conditions,
                 async: false,
                 cancellationToken)
@@ -3553,6 +3612,7 @@ namespace Azure.Storage.Files.Shares
                 smbProperties,
                 filePermission,
                 filePermissionFormat: default,
+                posixProperties: default,
                 conditions: default,
                 async: false,
                 cancellationToken)
@@ -3613,6 +3673,7 @@ namespace Azure.Storage.Files.Shares
                 smbProperties,
                 filePermission,
                 filePermissionFormat: default,
+                posixProperties: default,
                 conditions,
                 async: true,
                 cancellationToken)
@@ -3668,6 +3729,7 @@ namespace Azure.Storage.Files.Shares
                 smbProperties,
                 filePermission,
                 filePermissionFormat: default,
+                posixProperties: default,
                 conditions: default,
                 async: true,
                 cancellationToken)
@@ -3699,6 +3761,9 @@ namespace Azure.Storage.Files.Shares
         /// <param name="filePermissionFormat">
         /// Optional file permission format.
         /// </param>
+        /// <param name="posixProperties">
+        /// Optional NFS properties.
+        /// </param>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
@@ -3724,6 +3789,7 @@ namespace Azure.Storage.Files.Shares
             FileSmbProperties smbProperties,
             string filePermission,
             FilePermissionFormat? filePermissionFormat,
+            FilePosixProperties posixProperties,
             ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken)
@@ -3745,24 +3811,23 @@ namespace Azure.Storage.Files.Shares
                     FileSmbProperties smbProps = smbProperties ?? new FileSmbProperties();
 
                     ShareExtensions.AssertValidFilePermissionAndKey(filePermission, smbProps.FilePermissionKey);
-                    if (filePermission == null && smbProps.FilePermissionKey == null)
-                    {
-                        filePermission = Constants.File.Preserve;
-                    }
 
                     ResponseWithHeaders<FileSetHttpHeadersHeaders> response;
 
                     if (async)
                     {
                         response = await FileRestClient.SetHttpHeadersAsync(
-                            fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.Preserve,
-                            fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.Preserve,
-                            fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.Preserve,
+                            fileAttributes: smbProps.FileAttributes.ToAttributesString(),
+                            fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString(),
+                            fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString(),
                             fileContentLength: newSize,
                             filePermission: filePermission,
                             filePermissionFormat: filePermissionFormat,
                             filePermissionKey: smbProps.FilePermissionKey,
                             fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
+                            owner: posixProperties?.Owner,
+                            group: posixProperties?.Group,
+                            fileMode: posixProperties?.FileMode.ToOctalFileMode(),
                             fileHttpHeaders: httpHeaders.ToFileHttpHeaders(),
                             shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken)
@@ -3771,14 +3836,17 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = FileRestClient.SetHttpHeaders(
-                            fileAttributes: smbProps.FileAttributes?.ToAttributesString() ?? Constants.File.Preserve,
-                            fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.Preserve,
-                            fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.Preserve,
+                            fileAttributes: smbProps.FileAttributes.ToAttributesString(),
+                            fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString(),
+                            fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString(),
                             fileContentLength: newSize,
                             filePermission: filePermission,
                             filePermissionFormat: filePermissionFormat,
                             filePermissionKey: smbProps.FilePermissionKey,
                             fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
+                            owner: posixProperties?.Owner,
+                            group: posixProperties?.Group,
+                            fileMode: posixProperties?.FileMode.ToOctalFileMode(),
                             fileHttpHeaders: httpHeaders.ToFileHttpHeaders(),
                             shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken);
@@ -6595,7 +6663,7 @@ namespace Azure.Storage.Files.Shares
 
                     CopyFileSmbInfo copyFileSmbInfo = new CopyFileSmbInfo
                     {
-                        FileAttributes = options?.SmbProperties?.FileAttributes?.ToAttributesString(),
+                        FileAttributes = options?.SmbProperties?.FileAttributes.ToAttributesString(),
                         FileCreationTime = options?.SmbProperties?.FileCreatedOn.ToFileDateTimeString(),
                         FileChangeTime = options?.SmbProperties?.FileChangedOn.ToFileDateTimeString(),
                         FileLastWriteTime = options?.SmbProperties?.FileLastWrittenOn.ToFileDateTimeString(),
@@ -6659,6 +6727,426 @@ namespace Azure.Storage.Files.Shares
             }
         }
         #endregion Rename
+
+        #region GetSymbolicLink
+        /// <summary>
+        /// Reads the value of the symbolic link.
+        /// Only applicable if this <see cref="ShareFileClient"/> is pointed at an NFS symbolic link.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FileSymbolicLinkInfo}"/> describing the symbolic link.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        /// https://github.com/Azure/azure-sdk-for-net/issues/46907
+        internal virtual Response<ShareFileSymbolicLinkInfo> GetSymbolicLink(
+            CancellationToken cancellationToken = default) =>
+            GetSymbolicLinkInternal(
+                async: false,
+                cancellationToken: cancellationToken)
+            .EnsureCompleted();
+
+        /// <summary>
+        /// Reads the value of the symbolic link.
+        /// Only applicable if this <see cref="ShareFileClient"/> is pointed at an NFS symbolic link.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FileSymbolicLinkInfo}"/> describing the symbolic link.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        /// https://github.com/Azure/azure-sdk-for-net/issues/46907
+        internal virtual async Task<Response<ShareFileSymbolicLinkInfo>> GetSymbolicLinkAsync(
+            CancellationToken cancellationToken = default) =>
+            await GetSymbolicLinkInternal(
+                async: true,
+                cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
+
+        /// <summary>
+        /// Reads the value of the symbolic link.
+        /// Only applicable if this <see cref="ShareFileClient"/> is pointed at an NFS symbolic link.
+        /// </summary>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FileSymbolicLinkInfo}"/> describing the symbolic link.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<ShareFileSymbolicLinkInfo>> GetSymbolicLinkInternal(
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(nameof(ShareFileClient), message: string.Empty);
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(GetSymbolicLink)}");
+
+                ResponseWithHeaders<FileGetSymbolicLinkHeaders> response;
+
+                try
+                {
+                    scope.Start();
+
+                    if (async)
+                    {
+                        response = await FileRestClient.GetSymbolicLinkAsync(
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = FileRestClient.GetSymbolicLink(
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToFileSymbolicLinkInfo(),
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
+                }
+            }
+        }
+        #endregion
+
+        #region CreateSymbolicLink
+        /// <summary>
+        /// NFS only.  Creates a symoblic link to the file specified by path.
+        /// </summary>
+        /// <param name="linkText">
+        /// The absolution or relative path to the file to be linked to.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        /// https://github.com/Azure/azure-sdk-for-net/issues/46907
+        internal virtual Response<ShareFileInfo> CreateSymbolicLink(
+            string linkText,
+            ShareFileCreateSymbolicLinkOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            CreateSymbolicLinkInternal(
+                linkText: linkText,
+                options: options,
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// NFS only.  Creates a symoblic link to the file specified by path.
+        /// </summary>
+        /// <param name="linkText">
+        /// The absolution or relative path to the file to be linked to.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        /// https://github.com/Azure/azure-sdk-for-net/issues/46907
+        internal virtual async Task<Response<ShareFileInfo>> CreateSymbolicLinkAsync(
+            string linkText,
+            ShareFileCreateSymbolicLinkOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            await CreateSymbolicLinkInternal(
+                linkText: linkText,
+                options: options,
+                async: true,
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// NFS only.  Creates a symoblic link to the file specified by path.
+        /// </summary>
+        /// <param name="linkText">
+        /// The absolution or relative path to the file to be linked to.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<ShareFileInfo>> CreateSymbolicLinkInternal(
+            string linkText,
+            ShareFileCreateSymbolicLinkOptions options,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(ShareFileClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(CreateSymbolicLink)}");
+
+                ResponseWithHeaders<FileCreateSymbolicLinkHeaders> response;
+
+                try
+                {
+                    scope.Start();
+
+                    if (async)
+                    {
+                        response = await FileRestClient.CreateSymbolicLinkAsync(
+                            linkText: linkText,
+                            metadata: options?.Metadata,
+                            fileCreationTime: options?.FileCreatedOn.ToFileDateTimeString(),
+                            fileLastWriteTime: options?.FileLastWrittenOn.ToFileDateTimeString(),
+                            owner: options?.Owner,
+                            group: options?.Group,
+                            shareFileRequestConditions: options?.Conditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = FileRestClient.CreateSymbolicLink(
+                            linkText: linkText,
+                            metadata: options?.Metadata,
+                            fileCreationTime: options?.FileCreatedOn.ToFileDateTimeString(),
+                            fileLastWriteTime: options?.FileLastWrittenOn.ToFileDateTimeString(),
+                            owner: options?.Owner,
+                            group: options?.Group,
+                            shareFileRequestConditions: options?.Conditions,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToShareFileInfo(),
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
+                }
+            }
+        }
+        #endregion
+
+        #region CreateHardLink
+        /// <summary>
+        /// NFS only.  Creates a hard link to the file file specified by path.
+        /// </summary>
+        /// <param name="targetFile">
+        /// Path of the file to create the hard link to, not including the share.
+        /// For example: "targetDirectory/targetSubDirectory/.../targetFile"
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the hard link.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the
+        /// state of the hard link.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<ShareFileInfo> CreateHardLink(
+            string targetFile,
+            ShareFileRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+            => CreateHardLinkInternal(
+                targetFile: targetFile,
+                conditions: conditions,
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// NFS only.  Creates a hard link to the file file specified by path.
+        /// </summary>
+        /// <param name="targetFile">
+        /// Path of the file to create the hard link to, not including the share.
+        /// For example: "targetDirectory/targetSubDirectory/.../targetFile"
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the hard link.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the
+        /// state of the hard link.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public async virtual Task<Response<ShareFileInfo>> CreateHardLinkAsync(
+            string targetFile,
+            ShareFileRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+            => await CreateHardLinkInternal(
+                targetFile: targetFile,
+                conditions: conditions,
+                async: true,
+                cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
+
+        /// <summary>
+        /// NFS only.  Creates a hard link to the file file specified by path.
+        /// </summary>
+        /// <param name="targetFile">
+        /// Path of the file to create the hard link to, not including the share.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
+        /// on creating the hard link.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the
+        /// state of the hard link.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<ShareFileInfo>> CreateHardLinkInternal(
+            string targetFile,
+            ShareFileRequestConditions conditions,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(ShareFileClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(targetFile)}: {targetFile}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareFileClient)}.{nameof(CreateHardLink)}");
+
+                try
+                {
+                    scope.Start();
+
+                    ResponseWithHeaders<FileCreateHardLinkHeaders> response;
+
+                    if (async)
+                    {
+                        response = await FileRestClient.CreateHardLinkAsync(
+                            targetFile: targetFile,
+                            shareFileRequestConditions: conditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = FileRestClient.CreateHardLink(
+                            targetFile: targetFile,
+                            shareFileRequestConditions: conditions,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToShareFileInfo(),
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareFileClient));
+                    scope.Dispose();
+                }
+            }
+        }
+        #endregion
 
         #region OpenWrite
         /// <summary>
@@ -6790,6 +7278,7 @@ namespace Azure.Storage.Files.Shares
                         smbProperties: default,
                         filePermission: default,
                         filePermissionFormat: default,
+                        posixProperties: default,
                         conditions: options?.OpenConditions,
                         async: async,
                         cancellationToken: cancellationToken)
@@ -6820,6 +7309,7 @@ namespace Azure.Storage.Files.Shares
                             smbProperties: default,
                             filePermission: default,
                             filePermissionFormat: default,
+                            posixProperties: default,
                             conditions: options?.OpenConditions,
                             async: async,
                             cancellationToken: cancellationToken)

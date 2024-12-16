@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Quota.Samples
 {
     public partial class Sample_GroupQuotaLimitListCollection
     {
-        // GroupQuotaLimits_Get_Request_ForCompute
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GroupQuotaLimitsGetRequestForCompute()
         {
             // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-10-15-preview/examples/GroupQuotaLimits/ListGroupQuotaLimits-Compute.json
@@ -49,10 +49,9 @@ namespace Azure.ResourceManager.Quota.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GroupQuotaLimits_Get_Request_ForCompute
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GroupQuotaLimitsGetRequestForCompute()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_GroupQuotaLimitsListRequestForCompute()
         {
             // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-10-15-preview/examples/GroupQuotaLimits/ListGroupQuotaLimits-Compute.json
             // this example is just showing the usage of "GroupQuotaLimits_List" operation, for the dependent resources, they will have to be created separately.
@@ -77,13 +76,12 @@ namespace Azure.ResourceManager.Quota.Samples
             AzureLocation location = new AzureLocation("westus");
             bool result = await collection.ExistsAsync(resourceProviderName, location);
 
-            Console.WriteLine($"Succeeded: {result}");
+            Console.WriteLine("Succeeded");
         }
 
-        // GroupQuotaLimits_Get_Request_ForCompute
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GroupQuotaLimitsGetRequestForCompute()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GroupQuotaLimitsGetRequestForCompute()
         {
             // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-10-15-preview/examples/GroupQuotaLimits/ListGroupQuotaLimits-Compute.json
             // this example is just showing the usage of "GroupQuotaLimits_List" operation, for the dependent resources, they will have to be created separately.

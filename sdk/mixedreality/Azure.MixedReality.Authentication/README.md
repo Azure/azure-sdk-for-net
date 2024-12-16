@@ -6,7 +6,7 @@ token from the STS that can be used to access Mixed Reality services.
 
 [Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/mixedreality/Azure.MixedReality.Authentication/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.MixedReality.Authentication)
 
-![Mixed Reality service authentication diagram](https://docs.microsoft.com/azure/spatial-anchors/concepts/media/spatial-anchors-authentication-overview.png)
+![Mixed Reality service authentication diagram](https://learn.microsoft.com/azure/spatial-anchors/concepts/media/spatial-anchors-authentication-overview.png)
 
 - [Azure Mixed Reality Authentication client library for .NET](#azure-mixed-reality-authentication-client-library-for-net)
   - [Getting started](#getting-started)
@@ -50,8 +50,8 @@ Add a package reference:
 
 - You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/).
 - You must have an account with an [Azure Mixed Reality service](https://azure.microsoft.com/topic/mixed-reality/):
-  - [Azure Remote Rendering](https://docs.microsoft.com/azure/remote-rendering/)
-  - [Azure Spatial Anchors](https://docs.microsoft.com/azure/spatial-anchors/)
+  - [Azure Remote Rendering](https://learn.microsoft.com/azure/remote-rendering/)
+  - [Azure Spatial Anchors](https://learn.microsoft.com/azure/spatial-anchors/)
 - Familiarity with the authentication and credential concepts from [Azure.Identity](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md).
 
 ### Authenticate the client
@@ -69,7 +69,7 @@ Mixed Reality services support a few different forms of authentication:
     method for production applications because it allows you to avoid embedding the credentials for access to a Mixed
     Reality service in your client application.
 
-See [here](https://docs.microsoft.com/azure/spatial-anchors/concepts/authentication) for detailed instructions and information.
+See [here](https://learn.microsoft.com/azure/spatial-anchors/concepts/authentication) for detailed instructions and information.
 
 #### Authentication examples
 

@@ -11,14 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Monitor.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Monitor.Samples
 {
     public partial class Sample_ActivityLogAlertCollection
     {
-        // Create or update an Activity Log Alert rule
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAnActivityLogAlertRule()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2020-10-01/examples/ActivityLogAlertRule_CreateOrUpdate.json
@@ -43,37 +43,26 @@ namespace Azure.ResourceManager.Monitor.Samples
             string activityLogAlertName = "SampleActivityLogAlertRule";
             ActivityLogAlertData data = new ActivityLogAlertData(new AzureLocation("Global"))
             {
-                Scopes =
-{
-"/subscriptions/187f412d-1758-44d9-b052-169e2564721d"
-},
-                ConditionAllOf =
-{
-new ActivityLogAlertAnyOfOrLeafCondition()
+                Scopes = { "/subscriptions/187f412d-1758-44d9-b052-169e2564721d" },
+                ConditionAllOf = {new ActivityLogAlertAnyOfOrLeafCondition
 {
 Field = "category",
 EqualsValue = "Administrative",
-},new ActivityLogAlertAnyOfOrLeafCondition()
+}, new ActivityLogAlertAnyOfOrLeafCondition
 {
 Field = "level",
 EqualsValue = "Error",
-}
-},
-                ActionsActionGroups =
-{
-new ActivityLogAlertActionGroup(new ResourceIdentifier("/subscriptions/187f412d-1758-44d9-b052-169e2564721d/resourceGroups/MyResourceGroup/providers/Microsoft.Insights/actionGroups/SampleActionGroup"))
+}},
+                ActionsActionGroups = {new ActivityLogAlertActionGroup(new ResourceIdentifier("/subscriptions/187f412d-1758-44d9-b052-169e2564721d/resourceGroups/MyResourceGroup/providers/Microsoft.Insights/actionGroups/SampleActionGroup"))
 {
 WebhookProperties =
 {
-["sampleWebhookProperty"] = "SamplePropertyValue",
+["sampleWebhookProperty"] = "SamplePropertyValue"
 },
-}
-},
+}},
                 IsEnabled = true,
                 Description = "Description of sample Activity Log Alert rule.",
-                Tags =
-{
-},
+                Tags = { },
             };
             ArmOperation<ActivityLogAlertResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, activityLogAlertName, data);
             ActivityLogAlertResource result = lro.Value;
@@ -85,9 +74,8 @@ WebhookProperties =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or update an Activity Log Alert rule with 'anyOf' condition
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAnActivityLogAlertRuleWithAnyOfCondition()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2020-10-01/examples/ActivityLogAlertRule_CreateOrUpdateRuleWithAnyOfCondition.json
@@ -112,47 +100,33 @@ WebhookProperties =
             string activityLogAlertName = "SampleActivityLogAlertRuleWithAnyOfCondition";
             ActivityLogAlertData data = new ActivityLogAlertData(new AzureLocation("Global"))
             {
-                Scopes =
-{
-"subscriptions/187f412d-1758-44d9-b052-169e2564721d"
-},
-                ConditionAllOf =
-{
-new ActivityLogAlertAnyOfOrLeafCondition()
+                Scopes = { "subscriptions/187f412d-1758-44d9-b052-169e2564721d" },
+                ConditionAllOf = {new ActivityLogAlertAnyOfOrLeafCondition
 {
 Field = "category",
 EqualsValue = "ServiceHealth",
-},new ActivityLogAlertAnyOfOrLeafCondition()
+}, new ActivityLogAlertAnyOfOrLeafCondition
 {
-AnyOf =
-{
-new AlertRuleLeafCondition()
+AnyOf = {new AlertRuleLeafCondition
 {
 Field = "properties.incidentType",
 EqualsValue = "Incident",
-},new AlertRuleLeafCondition()
+}, new AlertRuleLeafCondition
 {
 Field = "properties.incidentType",
 EqualsValue = "Maintenance",
-}
-},
-}
-},
-                ActionsActionGroups =
-{
-new ActivityLogAlertActionGroup(new ResourceIdentifier("/subscriptions/187f412d-1758-44d9-b052-169e2564721d/resourceGroups/MyResourceGroup/providers/Microsoft.Insights/actionGroups/SampleActionGroup"))
+}},
+}},
+                ActionsActionGroups = {new ActivityLogAlertActionGroup(new ResourceIdentifier("/subscriptions/187f412d-1758-44d9-b052-169e2564721d/resourceGroups/MyResourceGroup/providers/Microsoft.Insights/actionGroups/SampleActionGroup"))
 {
 WebhookProperties =
 {
-["sampleWebhookProperty"] = "SamplePropertyValue",
+["sampleWebhookProperty"] = "SamplePropertyValue"
 },
-}
-},
+}},
                 IsEnabled = true,
                 Description = "Description of sample Activity Log Alert rule with 'anyOf' condition.",
-                Tags =
-{
-},
+                Tags = { },
             };
             ArmOperation<ActivityLogAlertResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, activityLogAlertName, data);
             ActivityLogAlertResource result = lro.Value;
@@ -164,9 +138,8 @@ WebhookProperties =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or update an Activity Log Alert rule with 'containsAny'
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAnActivityLogAlertRuleWithContainsAny()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2020-10-01/examples/ActivityLogAlertRule_CreateOrUpdateRuleWithContainsAny.json
@@ -191,40 +164,26 @@ WebhookProperties =
             string activityLogAlertName = "SampleActivityLogAlertRuleWithContainsAny";
             ActivityLogAlertData data = new ActivityLogAlertData(new AzureLocation("Global"))
             {
-                Scopes =
-{
-"subscriptions/187f412d-1758-44d9-b052-169e2564721d"
-},
-                ConditionAllOf =
-{
-new ActivityLogAlertAnyOfOrLeafCondition()
+                Scopes = { "subscriptions/187f412d-1758-44d9-b052-169e2564721d" },
+                ConditionAllOf = {new ActivityLogAlertAnyOfOrLeafCondition
 {
 Field = "category",
 EqualsValue = "ServiceHealth",
-},new ActivityLogAlertAnyOfOrLeafCondition()
+}, new ActivityLogAlertAnyOfOrLeafCondition
 {
 Field = "properties.impactedServices[*].ImpactedRegions[*].RegionName",
-ContainsAny =
-{
-"North Europe","West Europe"
-},
-}
-},
-                ActionsActionGroups =
-{
-new ActivityLogAlertActionGroup(new ResourceIdentifier("/subscriptions/187f412d-1758-44d9-b052-169e2564721d/resourceGroups/MyResourceGroup/providers/Microsoft.Insights/actionGroups/SampleActionGroup"))
+ContainsAny = {"North Europe", "West Europe"},
+}},
+                ActionsActionGroups = {new ActivityLogAlertActionGroup(new ResourceIdentifier("/subscriptions/187f412d-1758-44d9-b052-169e2564721d/resourceGroups/MyResourceGroup/providers/Microsoft.Insights/actionGroups/SampleActionGroup"))
 {
 WebhookProperties =
 {
-["sampleWebhookProperty"] = "SamplePropertyValue",
+["sampleWebhookProperty"] = "SamplePropertyValue"
 },
-}
-},
+}},
                 IsEnabled = true,
                 Description = "Description of sample Activity Log Alert rule with 'containsAny'.",
-                Tags =
-{
-},
+                Tags = { },
             };
             ArmOperation<ActivityLogAlertResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, activityLogAlertName, data);
             ActivityLogAlertResource result = lro.Value;
@@ -236,9 +195,8 @@ WebhookProperties =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get an Activity Log Alert rule
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAnActivityLogAlertRule()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2020-10-01/examples/ActivityLogAlertRule_Get.json
@@ -270,81 +228,8 @@ WebhookProperties =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get an Activity Log Alert rule
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetAnActivityLogAlertRule()
-        {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2020-10-01/examples/ActivityLogAlertRule_Get.json
-            // this example is just showing the usage of "ActivityLogAlerts_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "187f412d-1758-44d9-b052-169e2564721d";
-            string resourceGroupName = "MyResourceGroup";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this ActivityLogAlertResource
-            ActivityLogAlertCollection collection = resourceGroupResource.GetActivityLogAlerts();
-
-            // invoke the operation
-            string activityLogAlertName = "SampleActivityLogAlertRule";
-            bool result = await collection.ExistsAsync(activityLogAlertName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Get an Activity Log Alert rule
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetAnActivityLogAlertRule()
-        {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2020-10-01/examples/ActivityLogAlertRule_Get.json
-            // this example is just showing the usage of "ActivityLogAlerts_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "187f412d-1758-44d9-b052-169e2564721d";
-            string resourceGroupName = "MyResourceGroup";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this ActivityLogAlertResource
-            ActivityLogAlertCollection collection = resourceGroupResource.GetActivityLogAlerts();
-
-            // invoke the operation
-            string activityLogAlertName = "SampleActivityLogAlertRule";
-            NullableResponse<ActivityLogAlertResource> response = await collection.GetIfExistsAsync(activityLogAlertName);
-            ActivityLogAlertResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ActivityLogAlertData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // List activity log alerts
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListActivityLogAlerts()
         {
             // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2020-10-01/examples/ActivityLogAlertRule_ListByResourceGroupName.json
@@ -375,7 +260,77 @@ WebhookProperties =
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetAnActivityLogAlertRule()
+        {
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2020-10-01/examples/ActivityLogAlertRule_Get.json
+            // this example is just showing the usage of "ActivityLogAlerts_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "187f412d-1758-44d9-b052-169e2564721d";
+            string resourceGroupName = "MyResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this ActivityLogAlertResource
+            ActivityLogAlertCollection collection = resourceGroupResource.GetActivityLogAlerts();
+
+            // invoke the operation
+            string activityLogAlertName = "SampleActivityLogAlertRule";
+            bool result = await collection.ExistsAsync(activityLogAlertName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetAnActivityLogAlertRule()
+        {
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2020-10-01/examples/ActivityLogAlertRule_Get.json
+            // this example is just showing the usage of "ActivityLogAlerts_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "187f412d-1758-44d9-b052-169e2564721d";
+            string resourceGroupName = "MyResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this ActivityLogAlertResource
+            ActivityLogAlertCollection collection = resourceGroupResource.GetActivityLogAlerts();
+
+            // invoke the operation
+            string activityLogAlertName = "SampleActivityLogAlertRule";
+            NullableResponse<ActivityLogAlertResource> response = await collection.GetIfExistsAsync(activityLogAlertName);
+            ActivityLogAlertResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ActivityLogAlertData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

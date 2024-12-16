@@ -20,7 +20,7 @@ namespace Azure.Storage.DataMovement
         Task AddNewJobPartAsync(
             string transferId,
             int partNumber,
-            Stream headerStream,
+            JobPartPlanHeader header,
             CancellationToken cancellationToken = default);
 
         Task<bool> IsEnumerationCompleteAsync(

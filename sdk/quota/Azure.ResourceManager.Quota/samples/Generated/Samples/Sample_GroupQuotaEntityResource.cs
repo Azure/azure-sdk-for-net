@@ -10,65 +10,18 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Quota.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Quota.Samples
 {
     public partial class Sample_GroupQuotaEntityResource
     {
-        // GroupQuotas_Patch_Request_ForCompute
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_GroupQuotasPatchRequestForCompute()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GroupQuotasGetRequestForCompute()
         {
             // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-10-15-preview/examples/GroupQuotas/PatchGroupQuotas.json
             // this example is just showing the usage of "GroupQuotas_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this GroupQuotaEntityResource created on azure
-            // for more information of creating GroupQuotaEntityResource, please refer to the document of GroupQuotaEntityResource
-            string managementGroupId = "E7EC67B3-7657-4966-BFFC-41EFD36BAA09";
-            string groupQuotaName = "groupquota1";
-            ResourceIdentifier groupQuotaEntityResourceId = GroupQuotaEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
-            GroupQuotaEntityResource groupQuotaEntity = client.GetGroupQuotaEntityResource(groupQuotaEntityResourceId);
-
-            // invoke the operation
-            GroupQuotaEntityPatch patch = new GroupQuotaEntityPatch()
-            {
-                Properties = new GroupQuotasEntityBasePatch()
-                {
-                    DisplayName = "UpdatedGroupQuota1",
-                    AdditionalAttributes = new GroupQuotaAdditionalAttributesPatch()
-                    {
-                        GroupId = new GroupQuotaGroupingId()
-                        {
-                            GroupingIdType = GroupQuotaGroupingIdType.ServiceTreeId,
-                            Value = "UpdatedServiceTreeIdHere",
-                        },
-                        Environment = GroupQuotaEnvironmentType.Production,
-                    },
-                },
-            };
-            ArmOperation<GroupQuotaEntityResource> lro = await groupQuotaEntity.UpdateAsync(WaitUntil.Completed, patch);
-            GroupQuotaEntityResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            GroupQuotaEntityData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // GroupQuotas_Get_Request_ForCompute
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GroupQuotasGetRequestForCompute()
-        {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-10-15-preview/examples/GroupQuotas/GetGroupQuotas.json
-            // this example is just showing the usage of "GroupQuotas_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -92,10 +45,34 @@ namespace Azure.ResourceManager.Quota.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GroupQuotas_Delete_Request_ForCompute
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_GroupQuotasDeleteRequestForCompute()
+        {
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-10-15-preview/examples/GroupQuotas/GetGroupQuotas.json
+            // this example is just showing the usage of "GroupQuotas_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this GroupQuotaEntityResource created on azure
+            // for more information of creating GroupQuotaEntityResource, please refer to the document of GroupQuotaEntityResource
+            string managementGroupId = "E7EC67B3-7657-4966-BFFC-41EFD36BAA09";
+            string groupQuotaName = "groupquota1";
+            ResourceIdentifier groupQuotaEntityResourceId = GroupQuotaEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
+            GroupQuotaEntityResource groupQuotaEntity = client.GetGroupQuotaEntityResource(groupQuotaEntityResourceId);
+
+            // invoke the operation
+            await groupQuotaEntity.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_GroupQuotasPatchRequestForCompute()
         {
             // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-10-15-preview/examples/GroupQuotas/DeleteGroupQuotas.json
             // this example is just showing the usage of "GroupQuotas_Delete" operation, for the dependent resources, they will have to be created separately.
@@ -113,9 +90,30 @@ namespace Azure.ResourceManager.Quota.Samples
             GroupQuotaEntityResource groupQuotaEntity = client.GetGroupQuotaEntityResource(groupQuotaEntityResourceId);
 
             // invoke the operation
-            await groupQuotaEntity.DeleteAsync(WaitUntil.Completed);
+            GroupQuotaEntityPatch patch = new GroupQuotaEntityPatch
+            {
+                Properties = new GroupQuotasEntityBasePatch
+                {
+                    DisplayName = "UpdatedGroupQuota1",
+                    AdditionalAttributes = new GroupQuotaAdditionalAttributesPatch
+                    {
+                        GroupId = new GroupQuotaGroupingId
+                        {
+                            GroupingIdType = GroupQuotaGroupingIdType.ServiceTreeId,
+                            Value = "UpdatedServiceTreeIdHere",
+                        },
+                        Environment = GroupQuotaEnvironmentType.Production,
+                    },
+                },
+            };
+            ArmOperation<GroupQuotaEntityResource> lro = await groupQuotaEntity.UpdateAsync(WaitUntil.Completed, patch);
+            GroupQuotaEntityResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            GroupQuotaEntityData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         // GroupQuotaLimitsRequest_List
@@ -150,12 +148,11 @@ namespace Azure.ResourceManager.Quota.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // GroupQuotasUsages_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetGroupQuotaUsages_GroupQuotasUsagesList()
         {
             // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-10-15-preview/examples/GroupQuotaUsages/GetGroupQuotaUsages.json
@@ -181,7 +178,7 @@ namespace Azure.ResourceManager.Quota.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Text;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface;
 using Azure.Storage.Blobs;
@@ -35,6 +34,23 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation
                 _logger.Error($"Failed to upload buffer: {ex}");
             }
         }
+
+        public void UploadBuffer(string uri, string buffer, string fileRelativePath)
+        {
+            try
+            {
+                string cloudFilePath = GetCloudFilePath(uri, fileRelativePath);
+                BlobClient blobClient = new(new Uri(cloudFilePath));
+                byte[] bufferBytes = Encoding.UTF8.GetBytes(buffer);
+                blobClient.Upload(new BinaryData(bufferBytes), overwrite: true);
+                _logger.Info($"Uploaded buffer to {fileRelativePath}");
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"Failed to upload buffer: {ex}");
+            }
+        }
+
         public void UploadBlobFile(string uri, string fileRelativePath, string filePath)
         {
             string cloudFilePath = GetCloudFilePath(uri, fileRelativePath);

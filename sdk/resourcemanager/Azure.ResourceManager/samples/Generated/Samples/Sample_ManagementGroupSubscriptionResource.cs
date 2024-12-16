@@ -9,18 +9,18 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ManagementGroups.Samples
 {
     public partial class Sample_ManagementGroupSubscriptionResource
     {
-        // AddSubscriptionToManagementGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_AddSubscriptionToManagementGroup()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetSubscriptionFromManagementGroup()
         {
-            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/examples/AddManagementGroupSubscription.json
-            // this example is just showing the usage of "ManagementGroupSubscriptions_Create" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/examples/GetSubscriptionFromManagementGroup.json
+            // this example is just showing the usage of "ManagementGroupSubscriptions_GetSubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -36,8 +36,7 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
 
             // invoke the operation
             string cacheControl = "no-cache";
-            ArmOperation<ManagementGroupSubscriptionResource> lro = await managementGroupSubscription.UpdateAsync(WaitUntil.Completed, cacheControl: cacheControl);
-            ManagementGroupSubscriptionResource result = lro.Value;
+            ManagementGroupSubscriptionResource result = await managementGroupSubscription.GetAsync(cacheControl: cacheControl);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -46,9 +45,8 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // DeleteSubscriptionFromManagementGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteSubscriptionFromManagementGroup()
         {
             // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/examples/RemoveManagementGroupSubscription.json
@@ -70,16 +68,15 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
             string cacheControl = "no-cache";
             await managementGroupSubscription.DeleteAsync(WaitUntil.Completed, cacheControl: cacheControl);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // GetSubscriptionFromManagementGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetSubscriptionFromManagementGroup()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_AddSubscriptionToManagementGroup()
         {
-            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/examples/GetSubscriptionFromManagementGroup.json
-            // this example is just showing the usage of "ManagementGroupSubscriptions_GetSubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/examples/AddManagementGroupSubscription.json
+            // this example is just showing the usage of "ManagementGroupSubscriptions_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -95,7 +92,8 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
 
             // invoke the operation
             string cacheControl = "no-cache";
-            ManagementGroupSubscriptionResource result = await managementGroupSubscription.GetAsync(cacheControl: cacheControl);
+            ArmOperation<ManagementGroupSubscriptionResource> lro = await managementGroupSubscription.UpdateAsync(WaitUntil.Completed, cacheControl: cacheControl);
+            ManagementGroupSubscriptionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

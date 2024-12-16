@@ -10,15 +10,15 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Quota.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Quota.Samples
 {
     public partial class Sample_GroupQuotaEnforcementResource
     {
-        // GroupQuotaLocationSettings_Patch
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_GroupQuotaLocationSettingsPatch()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GroupQuotasEnforcementGet()
         {
             // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-10-15-preview/examples/GroupQuotasEnforcement/PatchGroupQuotaEnforcement.json
             // this example is just showing the usage of "GroupQuotaLocationSettings_Update" operation, for the dependent resources, they will have to be created separately.
@@ -38,15 +38,7 @@ namespace Azure.ResourceManager.Quota.Samples
             GroupQuotaEnforcementResource groupQuotaEnforcement = client.GetGroupQuotaEnforcementResource(groupQuotaEnforcementResourceId);
 
             // invoke the operation
-            GroupQuotaEnforcementData data = new GroupQuotaEnforcementData()
-            {
-                Properties = new GroupQuotaEnforcementProperties()
-                {
-                    EnforcementEnabled = GroupQuotaEnforcementState.Enabled,
-                },
-            };
-            ArmOperation<GroupQuotaEnforcementResource> lro = await groupQuotaEnforcement.UpdateAsync(WaitUntil.Completed, data);
-            GroupQuotaEnforcementResource result = lro.Value;
+            GroupQuotaEnforcementResource result = await groupQuotaEnforcement.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -55,10 +47,9 @@ namespace Azure.ResourceManager.Quota.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GroupQuotasEnforcement_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GroupQuotasEnforcementGet()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_GroupQuotaLocationSettingsPatch()
         {
             // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-10-15-preview/examples/GroupQuotasEnforcement/GetGroupQuotaEnforcement.json
             // this example is just showing the usage of "GroupQuotaLocationSettings_Get" operation, for the dependent resources, they will have to be created separately.
@@ -78,7 +69,15 @@ namespace Azure.ResourceManager.Quota.Samples
             GroupQuotaEnforcementResource groupQuotaEnforcement = client.GetGroupQuotaEnforcementResource(groupQuotaEnforcementResourceId);
 
             // invoke the operation
-            GroupQuotaEnforcementResource result = await groupQuotaEnforcement.GetAsync();
+            GroupQuotaEnforcementData data = new GroupQuotaEnforcementData
+            {
+                Properties = new GroupQuotaEnforcementProperties
+                {
+                    EnforcementEnabled = GroupQuotaEnforcementState.Enabled,
+                },
+            };
+            ArmOperation<GroupQuotaEnforcementResource> lro = await groupQuotaEnforcement.UpdateAsync(WaitUntil.Completed, data);
+            GroupQuotaEnforcementResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

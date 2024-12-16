@@ -11,100 +11,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.CosmosDB.Samples
 {
     public partial class Sample_MongoDBCollectionThroughputSettingResource
     {
-        // CosmosDBMongoDBCollectionRetrieveThroughputDistribution
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task MongoDBContainerRetrieveThroughputDistribution_CosmosDBMongoDBCollectionRetrieveThroughputDistribution()
-        {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBMongoDBCollectionRetrieveThroughputDistribution.json
-            // this example is just showing the usage of "MongoDBResources_MongoDBContainerRetrieveThroughputDistribution" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MongoDBCollectionThroughputSettingResource created on azure
-            // for more information of creating MongoDBCollectionThroughputSettingResource, please refer to the document of MongoDBCollectionThroughputSettingResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string accountName = "ddb1";
-            string databaseName = "databaseName";
-            string collectionName = "collectionName";
-            ResourceIdentifier mongoDBCollectionThroughputSettingResourceId = MongoDBCollectionThroughputSettingResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, databaseName, collectionName);
-            MongoDBCollectionThroughputSettingResource mongoDBCollectionThroughputSetting = client.GetMongoDBCollectionThroughputSettingResource(mongoDBCollectionThroughputSettingResourceId);
-
-            // invoke the operation
-            RetrieveThroughputParameters retrieveThroughputParameters = new RetrieveThroughputParameters(new AzureLocation("placeholder"), new RetrieveThroughputPropertiesResource(new WritableSubResource[]
-            {
-new WritableSubResource()
-{
-Id = new ResourceIdentifier("0"),
-},new WritableSubResource()
-{
-Id = new ResourceIdentifier("1"),
-}
-            }));
-            ArmOperation<PhysicalPartitionThroughputInfoResult> lro = await mongoDBCollectionThroughputSetting.MongoDBContainerRetrieveThroughputDistributionAsync(WaitUntil.Completed, retrieveThroughputParameters);
-            PhysicalPartitionThroughputInfoResult result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // CosmosDBMongoDBCollectionRedistributeThroughput
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task MongoDBContainerRedistributeThroughput_CosmosDBMongoDBCollectionRedistributeThroughput()
-        {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBMongoDBCollectionRedistributeThroughput.json
-            // this example is just showing the usage of "MongoDBResources_MongoDBContainerRedistributeThroughput" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MongoDBCollectionThroughputSettingResource created on azure
-            // for more information of creating MongoDBCollectionThroughputSettingResource, please refer to the document of MongoDBCollectionThroughputSettingResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string accountName = "ddb1";
-            string databaseName = "databaseName";
-            string collectionName = "collectionName";
-            ResourceIdentifier mongoDBCollectionThroughputSettingResourceId = MongoDBCollectionThroughputSettingResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, databaseName, collectionName);
-            MongoDBCollectionThroughputSettingResource mongoDBCollectionThroughputSetting = client.GetMongoDBCollectionThroughputSettingResource(mongoDBCollectionThroughputSettingResourceId);
-
-            // invoke the operation
-            RedistributeThroughputParameters redistributeThroughputParameters = new RedistributeThroughputParameters(new AzureLocation("placeholder"), new RedistributeThroughputPropertiesResource(ThroughputPolicyType.Custom, new PhysicalPartitionThroughputInfoResource[]
-            {
-new PhysicalPartitionThroughputInfoResource("0")
-{
-Throughput = 5000,
-},new PhysicalPartitionThroughputInfoResource("1")
-{
-Throughput = 5000,
-}
-            }, new PhysicalPartitionThroughputInfoResource[]
-            {
-new PhysicalPartitionThroughputInfoResource("2")
-{
-Throughput = 5000,
-},new PhysicalPartitionThroughputInfoResource("3")
-            }));
-            ArmOperation<PhysicalPartitionThroughputInfoResult> lro = await mongoDBCollectionThroughputSetting.MongoDBContainerRedistributeThroughputAsync(WaitUntil.Completed, redistributeThroughputParameters);
-            PhysicalPartitionThroughputInfoResult result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // CosmosDBMongoDBCollectionThroughputGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_CosmosDBMongoDBCollectionThroughputGet()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBMongoDBCollectionThroughputGet.json
@@ -135,9 +49,8 @@ Throughput = 5000,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CosmosDBMongoDBCollectionThroughputUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CosmosDBMongoDBCollectionThroughputUpdate()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBMongoDBCollectionThroughputUpdate.json
@@ -159,14 +72,12 @@ Throughput = 5000,
             MongoDBCollectionThroughputSettingResource mongoDBCollectionThroughputSetting = client.GetMongoDBCollectionThroughputSettingResource(mongoDBCollectionThroughputSettingResourceId);
 
             // invoke the operation
-            ThroughputSettingsUpdateData data = new ThroughputSettingsUpdateData(new AzureLocation("West US"), new ThroughputSettingsResourceInfo()
+            ThroughputSettingsUpdateData data = new ThroughputSettingsUpdateData(new AzureLocation("West US"), new ThroughputSettingsResourceInfo
             {
                 Throughput = 400,
             })
             {
-                Tags =
-{
-},
+                Tags = { },
             };
             ArmOperation<MongoDBCollectionThroughputSettingResource> lro = await mongoDBCollectionThroughputSetting.CreateOrUpdateAsync(WaitUntil.Completed, data);
             MongoDBCollectionThroughputSettingResource result = lro.Value;
@@ -178,9 +89,95 @@ Throughput = 5000,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CosmosDBMongoDBCollectionMigrateToAutoscale
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task MongoDBContainerRetrieveThroughputDistribution_CosmosDBMongoDBCollectionRetrieveThroughputDistribution()
+        {
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBMongoDBCollectionRetrieveThroughputDistribution.json
+            // this example is just showing the usage of "MongoDBResources_MongoDBContainerRetrieveThroughputDistribution" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MongoDBCollectionThroughputSettingResource created on azure
+            // for more information of creating MongoDBCollectionThroughputSettingResource, please refer to the document of MongoDBCollectionThroughputSettingResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string accountName = "ddb1";
+            string databaseName = "databaseName";
+            string collectionName = "collectionName";
+            ResourceIdentifier mongoDBCollectionThroughputSettingResourceId = MongoDBCollectionThroughputSettingResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, databaseName, collectionName);
+            MongoDBCollectionThroughputSettingResource mongoDBCollectionThroughputSetting = client.GetMongoDBCollectionThroughputSettingResource(mongoDBCollectionThroughputSettingResourceId);
+
+            // invoke the operation
+            RetrieveThroughputParameters retrieveThroughputParameters = new RetrieveThroughputParameters(default, new RetrieveThroughputPropertiesResource(new WritableSubResource[]
+            {
+new WritableSubResource
+{
+Id = new ResourceIdentifier("0"),
+},
+new WritableSubResource
+{
+Id = new ResourceIdentifier("1"),
+}
+            }));
+            ArmOperation<PhysicalPartitionThroughputInfoResult> lro = await mongoDBCollectionThroughputSetting.MongoDBContainerRetrieveThroughputDistributionAsync(WaitUntil.Completed, retrieveThroughputParameters);
+            PhysicalPartitionThroughputInfoResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task MongoDBContainerRedistributeThroughput_CosmosDBMongoDBCollectionRedistributeThroughput()
+        {
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBMongoDBCollectionRedistributeThroughput.json
+            // this example is just showing the usage of "MongoDBResources_MongoDBContainerRedistributeThroughput" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MongoDBCollectionThroughputSettingResource created on azure
+            // for more information of creating MongoDBCollectionThroughputSettingResource, please refer to the document of MongoDBCollectionThroughputSettingResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string accountName = "ddb1";
+            string databaseName = "databaseName";
+            string collectionName = "collectionName";
+            ResourceIdentifier mongoDBCollectionThroughputSettingResourceId = MongoDBCollectionThroughputSettingResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, databaseName, collectionName);
+            MongoDBCollectionThroughputSettingResource mongoDBCollectionThroughputSetting = client.GetMongoDBCollectionThroughputSettingResource(mongoDBCollectionThroughputSettingResourceId);
+
+            // invoke the operation
+            RedistributeThroughputParameters redistributeThroughputParameters = new RedistributeThroughputParameters(default, new RedistributeThroughputPropertiesResource(ThroughputPolicyType.Custom, new PhysicalPartitionThroughputInfoResource[]
+            {
+new PhysicalPartitionThroughputInfoResource("0")
+{
+Throughput = 5000,
+},
+new PhysicalPartitionThroughputInfoResource("1")
+{
+Throughput = 5000,
+}
+            }, new PhysicalPartitionThroughputInfoResource[]
+            {
+new PhysicalPartitionThroughputInfoResource("2")
+{
+Throughput = 5000,
+},
+new PhysicalPartitionThroughputInfoResource("3")
+            }));
+            ArmOperation<PhysicalPartitionThroughputInfoResult> lro = await mongoDBCollectionThroughputSetting.MongoDBContainerRedistributeThroughputAsync(WaitUntil.Completed, redistributeThroughputParameters);
+            PhysicalPartitionThroughputInfoResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task MigrateMongoDBCollectionToAutoscale_CosmosDBMongoDBCollectionMigrateToAutoscale()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBMongoDBCollectionMigrateToAutoscale.json
@@ -212,9 +209,8 @@ Throughput = 5000,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CosmosDBMongoDBCollectionMigrateToManualThroughput
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task MigrateMongoDBCollectionToManualThroughput_CosmosDBMongoDBCollectionMigrateToManualThroughput()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBMongoDBCollectionMigrateToManualThroughput.json

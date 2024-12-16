@@ -1,14 +1,27 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.0.0-beta.4 (2024-12-13)
 
 ### Bugs Fixed
 
+- Fixed a bug where upload results were incomplete for large size classname suites.
+
+## 1.0.0-beta.3 (2024-11-18)
+
+### Features Added
+
+- Added a runName field which allows customers to customize the display name when using the reporting feature.
+- Added stacktrace into error list.
+
+### Bugs Fixed
+
+- Fixed a bug where the upload buffer and upload file methods were not awaited, which sometimes resulted in 404 errors in the web application.
+- Fixed a bug where the authentication error occurred when the scalable scenario was disabled in Playwright testing.
+- Fixed a bug where the GetConnectOptionsAsync method did not use the runsetting defaults in Playwright testing.
+
 ### Other Changes
+
+- Populated NumberOfTestWorkers from runsettings.
 
 ## 1.0.0-beta.2 (2024-11-05)
  

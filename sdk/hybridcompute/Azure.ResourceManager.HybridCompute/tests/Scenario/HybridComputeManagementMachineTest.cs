@@ -64,6 +64,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
             Assert.AreEqual("Succeeded", resourceData.Status.ToString());
         }
 
+        // have to have a valid private link scope before running this function
         [TestCase]
         [RecordedTest]
         public async Task CanUpdateMachine()

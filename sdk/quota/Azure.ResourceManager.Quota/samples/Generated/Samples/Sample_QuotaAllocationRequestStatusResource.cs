@@ -14,9 +14,8 @@ namespace Azure.ResourceManager.Quota.Samples
 {
     public partial class Sample_QuotaAllocationRequestStatusResource
     {
-        // SubscriptionQuotaAllocationRequests_Get_Request_ForCompute
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SubscriptionQuotaAllocationRequestsGetRequestForCompute()
         {
             // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-10-15-preview/examples/SubscriptionQuotaAllocationRequests/SubscriptionQuotaAllocationRequests_Get-Compute.json

@@ -4,6 +4,7 @@
 using System;
 using System.ComponentModel;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Azure.CloudMachine;
 
@@ -14,7 +15,7 @@ public class StorageFile
 {
     private readonly Response _response;
 
-    private StorageServices _storage;
+    private readonly StorageServices _storage;
 
     /// <summary>
     /// The path of the file in the storage account.
@@ -22,7 +23,7 @@ public class StorageFile
     public string Path { get; internal set; }
 
     /// <summary>
-    /// The requestId for the storage operation that triggered this event
+    /// The requestId for the storage operation that triggered this event.
     /// </summary>
     public string RequestId { get; internal set; }
 
@@ -43,7 +44,14 @@ public class StorageFile
     /// </summary>
     /// <returns></returns>
     public BinaryData Download()
-        => _storage.DownloadBlob(Path);
+        => _storage.Download(Path);
+
+    /// <summary>
+    /// Downloads the file from the storage account.
+    /// </summary>
+    /// <returns></returns>
+    public async Task<BinaryData> DownloadAsync()
+        => await _storage.DownloadAsync(Path).ConfigureAwait(false);
 
     // public async Task<BinaryData> DownloadAsync()
     //     => await _storage.DownloadBlobAsync(Path).ConfigureAwait(false);
@@ -52,10 +60,14 @@ public class StorageFile
     /// Deletes the file from the storage account.
     /// </summary>
     public void Delete()
-        => _storage.DeleteBlob(Path);
+        => _storage.Delete(Path);
 
-    // public async Task DeleteAsync()
-    //     => await _storage.DeleteBlobAsync(Path).ConfigureAwait(false);
+    /// <summary>
+    /// Deletes the file from the storage account.
+    /// </summary>
+    /// <returns></returns>
+    public async Task DeleteAsync()
+        => await _storage.DeleteAsync(Path).ConfigureAwait(false);
 
     // public Uri ShareFolder(AccessPermissions permissions, TimeSpan expiresAfter)
     //     => _storage.ShareFolder(Path, permissions, expiresAfter);

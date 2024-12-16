@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ManagementGroups;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Quota.Samples
 {
@@ -115,7 +116,7 @@ namespace Azure.ResourceManager.Quota.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
