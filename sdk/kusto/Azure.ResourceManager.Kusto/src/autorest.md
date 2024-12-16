@@ -230,6 +230,7 @@ rename-mapping:
   ResourceSkuCapabilities: KustoResourceSkuCapabilities
   ResourceSkuZoneDetails: KustoResourceSkuZoneDetails
   SkuDescriptionList: kustoSkuDescriptionList
+  OutboundAccess: KustoCalloutPolicyOutboundAccess
 
 
 format-by-name-rules:

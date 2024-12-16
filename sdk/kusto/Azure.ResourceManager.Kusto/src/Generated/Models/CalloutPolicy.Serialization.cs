@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
             string calloutUriRegex = default;
             CalloutType? calloutType = default;
-            OutboundAccess? outboundAccess = default;
+            KustoCalloutPolicyOutboundAccess? outboundAccess = default;
             string calloutId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     {
                         continue;
                     }
-                    outboundAccess = new OutboundAccess(property.Value.GetString());
+                    outboundAccess = new KustoCalloutPolicyOutboundAccess(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("calloutId"u8))

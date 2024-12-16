@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Kusto.Samples
 {
 CalloutUriRegex = "*",
 CalloutType = CalloutType.Kusto,
-OutboundAccess = OutboundAccess.Allow,
+OutboundAccess = KustoCalloutPolicyOutboundAccess.Allow,
 }},
             };
             await kustoCluster.AddCalloutPoliciesAsync(WaitUntil.Completed, calloutPolicies);

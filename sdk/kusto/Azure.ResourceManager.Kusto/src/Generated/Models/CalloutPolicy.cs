@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="outboundAccess"> Indicates whether outbound access is permitted for the specified URI pattern. </param>
         /// <param name="calloutId"> Unique identifier for the callout configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CalloutPolicy(string calloutUriRegex, CalloutType? calloutType, OutboundAccess? outboundAccess, string calloutId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CalloutPolicy(string calloutUriRegex, CalloutType? calloutType, KustoCalloutPolicyOutboundAccess? outboundAccess, string calloutId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CalloutUriRegex = calloutUriRegex;
             CalloutType = calloutType;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Type of the callout service, specifying the kind of external resource or service being accessed. </summary>
         public CalloutType? CalloutType { get; set; }
         /// <summary> Indicates whether outbound access is permitted for the specified URI pattern. </summary>
-        public OutboundAccess? OutboundAccess { get; set; }
+        public KustoCalloutPolicyOutboundAccess? OutboundAccess { get; set; }
         /// <summary> Unique identifier for the callout configuration. </summary>
         public string CalloutId { get; }
     }

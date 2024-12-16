@@ -765,7 +765,7 @@ namespace Azure.ResourceManager.Kusto.Models
     }
     public static partial class ArmKustoModelFactory
     {
-        public static Azure.ResourceManager.Kusto.Models.CalloutPolicy CalloutPolicy(string calloutUriRegex = null, Azure.ResourceManager.Kusto.Models.CalloutType? calloutType = default(Azure.ResourceManager.Kusto.Models.CalloutType?), Azure.ResourceManager.Kusto.Models.OutboundAccess? outboundAccess = default(Azure.ResourceManager.Kusto.Models.OutboundAccess?), string calloutId = null) { throw null; }
+        public static Azure.ResourceManager.Kusto.Models.CalloutPolicy CalloutPolicy(string calloutUriRegex = null, Azure.ResourceManager.Kusto.Models.CalloutType? calloutType = default(Azure.ResourceManager.Kusto.Models.CalloutType?), Azure.ResourceManager.Kusto.Models.KustoCalloutPolicyOutboundAccess? outboundAccess = default(Azure.ResourceManager.Kusto.Models.KustoCalloutPolicyOutboundAccess?), string calloutId = null) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.DatabaseInviteFollowerContent DatabaseInviteFollowerContent(string inviteeEmail = null, Azure.ResourceManager.Kusto.Models.KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = null) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.DatabaseInviteFollowerResult DatabaseInviteFollowerResult(string generatedInvitation = null) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.DataConnectionValidationResult DataConnectionValidationResult(string errorMessage = null) { throw null; }
@@ -874,7 +874,7 @@ namespace Azure.ResourceManager.Kusto.Models
         public string CalloutId { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.CalloutType? CalloutType { get { throw null; } set { } }
         public string CalloutUriRegex { get { throw null; } set { } }
-        public Azure.ResourceManager.Kusto.Models.OutboundAccess? OutboundAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.Kusto.Models.KustoCalloutPolicyOutboundAccess? OutboundAccess { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Kusto.Models.CalloutPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.CalloutPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.CalloutPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1091,6 +1091,24 @@ namespace Azure.ResourceManager.Kusto.Models
         Azure.ResourceManager.Kusto.Models.KustoAvailableSkuDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoAvailableSkuDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoAvailableSkuDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoAvailableSkuDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct KustoCalloutPolicyOutboundAccess : System.IEquatable<Azure.ResourceManager.Kusto.Models.KustoCalloutPolicyOutboundAccess>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public KustoCalloutPolicyOutboundAccess(string value) { throw null; }
+        public static Azure.ResourceManager.Kusto.Models.KustoCalloutPolicyOutboundAccess Allow { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoCalloutPolicyOutboundAccess Deny { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Kusto.Models.KustoCalloutPolicyOutboundAccess other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoCalloutPolicyOutboundAccess left, Azure.ResourceManager.Kusto.Models.KustoCalloutPolicyOutboundAccess right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoCalloutPolicyOutboundAccess (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoCalloutPolicyOutboundAccess left, Azure.ResourceManager.Kusto.Models.KustoCalloutPolicyOutboundAccess right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class KustoCapacity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.KustoCapacity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.KustoCapacity>
     {
@@ -2297,24 +2315,6 @@ namespace Azure.ResourceManager.Kusto.Models
         Azure.ResourceManager.Kusto.Models.OptimizedAutoscale System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.OptimizedAutoscale>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.OptimizedAutoscale>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.OptimizedAutoscale>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct OutboundAccess : System.IEquatable<Azure.ResourceManager.Kusto.Models.OutboundAccess>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public OutboundAccess(string value) { throw null; }
-        public static Azure.ResourceManager.Kusto.Models.OutboundAccess Allow { get { throw null; } }
-        public static Azure.ResourceManager.Kusto.Models.OutboundAccess Deny { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Kusto.Models.OutboundAccess other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Kusto.Models.OutboundAccess left, Azure.ResourceManager.Kusto.Models.OutboundAccess right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Kusto.Models.OutboundAccess (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Kusto.Models.OutboundAccess left, Azure.ResourceManager.Kusto.Models.OutboundAccess right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class OutboundNetworkDependenciesEndpoint : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Kusto.Models.OutboundNetworkDependenciesEndpoint>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Kusto.Models.OutboundNetworkDependenciesEndpoint>
     {
