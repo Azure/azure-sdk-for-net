@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
             {
                 return null;
             }
-            QuotaProperties properties = default;
+            PlaywrightTestingQuotaProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
                     {
                         continue;
                     }
-                    properties = QuotaProperties.DeserializeQuotaProperties(property.Value, options);
+                    properties = PlaywrightTestingQuotaProperties.DeserializePlaywrightTestingQuotaProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

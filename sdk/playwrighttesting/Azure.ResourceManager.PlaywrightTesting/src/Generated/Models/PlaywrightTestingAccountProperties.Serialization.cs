@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PlaywrightTesting.Models
 {
-    public partial class AccountProperties : IUtf8JsonSerializable, IJsonModel<AccountProperties>
+    public partial class PlaywrightTestingAccountProperties : IUtf8JsonSerializable, IJsonModel<PlaywrightTestingAccountProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccountProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PlaywrightTestingAccountProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AccountProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PlaywrightTestingAccountProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccountProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PlaywrightTestingAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccountProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PlaywrightTestingAccountProperties)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && Optional.IsDefined(DashboardUri))
@@ -81,19 +81,19 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
             }
         }
 
-        AccountProperties IJsonModel<AccountProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PlaywrightTestingAccountProperties IJsonModel<PlaywrightTestingAccountProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccountProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PlaywrightTestingAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccountProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PlaywrightTestingAccountProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAccountProperties(document.RootElement, options);
+            return DeserializePlaywrightTestingAccountProperties(document.RootElement, options);
         }
 
-        internal static AccountProperties DeserializeAccountProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PlaywrightTestingAccountProperties DeserializePlaywrightTestingAccountProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -102,10 +102,10 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                 return null;
             }
             Uri dashboardUri = default;
-            EnablementStatus? regionalAffinity = default;
-            EnablementStatus? scalableExecution = default;
-            EnablementStatus? reporting = default;
-            EnablementStatus? localAuth = default;
+            PlaywrightTestingEnablementStatus? regionalAffinity = default;
+            PlaywrightTestingEnablementStatus? scalableExecution = default;
+            PlaywrightTestingEnablementStatus? reporting = default;
+            PlaywrightTestingEnablementStatus? localAuth = default;
             PlaywrightTestingProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                     {
                         continue;
                     }
-                    regionalAffinity = new EnablementStatus(property.Value.GetString());
+                    regionalAffinity = new PlaywrightTestingEnablementStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("scalableExecution"u8))
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                     {
                         continue;
                     }
-                    scalableExecution = new EnablementStatus(property.Value.GetString());
+                    scalableExecution = new PlaywrightTestingEnablementStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("reporting"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                     {
                         continue;
                     }
-                    reporting = new EnablementStatus(property.Value.GetString());
+                    reporting = new PlaywrightTestingEnablementStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("localAuth"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                     {
                         continue;
                     }
-                    localAuth = new EnablementStatus(property.Value.GetString());
+                    localAuth = new PlaywrightTestingEnablementStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AccountProperties(
+            return new PlaywrightTestingAccountProperties(
                 dashboardUri,
                 regionalAffinity,
                 scalableExecution,
@@ -181,35 +181,35 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AccountProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PlaywrightTestingAccountProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccountProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PlaywrightTestingAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AccountProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlaywrightTestingAccountProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AccountProperties IPersistableModel<AccountProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PlaywrightTestingAccountProperties IPersistableModel<PlaywrightTestingAccountProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccountProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PlaywrightTestingAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAccountProperties(document.RootElement, options);
+                        return DeserializePlaywrightTestingAccountProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AccountProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlaywrightTestingAccountProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AccountProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PlaywrightTestingAccountProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

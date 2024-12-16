@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                 throw new FormatException($"The model {nameof(PlaywrightTestingNameAvailabilityResult)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(NameAvailable))
+            if (Optional.IsDefined(IsNameAvailable))
             {
                 writer.WritePropertyName("nameAvailable"u8);
-                writer.WriteBooleanValue(NameAvailable.Value);
+                writer.WriteBooleanValue(IsNameAvailable.Value);
             }
             if (Optional.IsDefined(Reason))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                 return null;
             }
             bool? nameAvailable = default;
-            CheckNameAvailabilityReason? reason = default;
+            PlaywrightTestingNameUnavailableReason? reason = default;
             string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                     {
                         continue;
                     }
-                    reason = new CheckNameAvailabilityReason(property.Value.GetString());
+                    reason = new PlaywrightTestingNameUnavailableReason(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("message"u8))

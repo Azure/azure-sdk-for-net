@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
             {
                 return null;
             }
-            AccountProperties properties = default;
+            PlaywrightTestingAccountProperties properties = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
                     {
                         continue;
                     }
-                    properties = AccountProperties.DeserializeAccountProperties(property.Value, options);
+                    properties = PlaywrightTestingAccountProperties.DeserializePlaywrightTestingAccountProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

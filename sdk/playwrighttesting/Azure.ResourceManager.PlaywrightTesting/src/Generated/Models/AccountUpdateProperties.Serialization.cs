@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
             {
                 return null;
             }
-            EnablementStatus? regionalAffinity = default;
-            EnablementStatus? scalableExecution = default;
-            EnablementStatus? reporting = default;
-            EnablementStatus? localAuth = default;
+            PlaywrightTestingEnablementStatus? regionalAffinity = default;
+            PlaywrightTestingEnablementStatus? scalableExecution = default;
+            PlaywrightTestingEnablementStatus? reporting = default;
+            PlaywrightTestingEnablementStatus? localAuth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                     {
                         continue;
                     }
-                    regionalAffinity = new EnablementStatus(property.Value.GetString());
+                    regionalAffinity = new PlaywrightTestingEnablementStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("scalableExecution"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                     {
                         continue;
                     }
-                    scalableExecution = new EnablementStatus(property.Value.GetString());
+                    scalableExecution = new PlaywrightTestingEnablementStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("reporting"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                     {
                         continue;
                     }
-                    reporting = new EnablementStatus(property.Value.GetString());
+                    reporting = new PlaywrightTestingEnablementStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("localAuth"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                     {
                         continue;
                     }
-                    localAuth = new EnablementStatus(property.Value.GetString());
+                    localAuth = new PlaywrightTestingEnablementStatus(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

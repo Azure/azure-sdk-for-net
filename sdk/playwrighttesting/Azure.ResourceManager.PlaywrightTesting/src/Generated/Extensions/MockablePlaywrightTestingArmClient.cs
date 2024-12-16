@@ -59,15 +59,15 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AccountQuotumResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AccountQuotumResource.CreateResourceIdentifier" /> to create an <see cref="AccountQuotumResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="PlaywrightTestingAccountQuotaResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PlaywrightTestingAccountQuotaResource.CreateResourceIdentifier" /> to create a <see cref="PlaywrightTestingAccountQuotaResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AccountQuotumResource"/> object. </returns>
-        public virtual AccountQuotumResource GetAccountQuotumResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PlaywrightTestingAccountQuotaResource"/> object. </returns>
+        public virtual PlaywrightTestingAccountQuotaResource GetPlaywrightTestingAccountQuotaResource(ResourceIdentifier id)
         {
-            AccountQuotumResource.ValidateResourceId(id);
-            return new AccountQuotumResource(Client, id);
+            PlaywrightTestingAccountQuotaResource.ValidateResourceId(id);
+            return new PlaywrightTestingAccountQuotaResource(Client, id);
         }
     }
 }

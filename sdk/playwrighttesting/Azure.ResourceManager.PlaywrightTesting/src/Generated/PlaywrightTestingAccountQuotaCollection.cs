@@ -19,28 +19,28 @@ using Azure.ResourceManager.PlaywrightTesting.Models;
 namespace Azure.ResourceManager.PlaywrightTesting
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AccountQuotumResource"/> and their operations.
-    /// Each <see cref="AccountQuotumResource"/> in the collection will belong to the same instance of <see cref="PlaywrightTestingAccountResource"/>.
-    /// To get an <see cref="AccountQuotumCollection"/> instance call the GetAccountQuota method from an instance of <see cref="PlaywrightTestingAccountResource"/>.
+    /// A class representing a collection of <see cref="PlaywrightTestingAccountQuotaResource"/> and their operations.
+    /// Each <see cref="PlaywrightTestingAccountQuotaResource"/> in the collection will belong to the same instance of <see cref="PlaywrightTestingAccountResource"/>.
+    /// To get a <see cref="PlaywrightTestingAccountQuotaCollection"/> instance call the GetPlaywrightTestingAccountQuotas method from an instance of <see cref="PlaywrightTestingAccountResource"/>.
     /// </summary>
-    public partial class AccountQuotumCollection : ArmCollection, IEnumerable<AccountQuotumResource>, IAsyncEnumerable<AccountQuotumResource>
+    public partial class PlaywrightTestingAccountQuotaCollection : ArmCollection, IEnumerable<PlaywrightTestingAccountQuotaResource>, IAsyncEnumerable<PlaywrightTestingAccountQuotaResource>
     {
-        private readonly ClientDiagnostics _accountQuotumAccountQuotasClientDiagnostics;
-        private readonly AccountQuotasRestOperations _accountQuotumAccountQuotasRestClient;
+        private readonly ClientDiagnostics _playwrightTestingAccountQuotaAccountQuotasClientDiagnostics;
+        private readonly AccountQuotasRestOperations _playwrightTestingAccountQuotaAccountQuotasRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="AccountQuotumCollection"/> class for mocking. </summary>
-        protected AccountQuotumCollection()
+        /// <summary> Initializes a new instance of the <see cref="PlaywrightTestingAccountQuotaCollection"/> class for mocking. </summary>
+        protected PlaywrightTestingAccountQuotaCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AccountQuotumCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PlaywrightTestingAccountQuotaCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal AccountQuotumCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PlaywrightTestingAccountQuotaCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _accountQuotumAccountQuotasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PlaywrightTesting", AccountQuotumResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(AccountQuotumResource.ResourceType, out string accountQuotumAccountQuotasApiVersion);
-            _accountQuotumAccountQuotasRestClient = new AccountQuotasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, accountQuotumAccountQuotasApiVersion);
+            _playwrightTestingAccountQuotaAccountQuotasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PlaywrightTesting", PlaywrightTestingAccountQuotaResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(PlaywrightTestingAccountQuotaResource.ResourceType, out string playwrightTestingAccountQuotaAccountQuotasApiVersion);
+            _playwrightTestingAccountQuotaAccountQuotasRestClient = new AccountQuotasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, playwrightTestingAccountQuotaAccountQuotasApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AccountQuotas_Get</description>
+        /// <description>AccountQuota_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -69,22 +69,22 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccountQuotumResource"/></description>
+        /// <description><see cref="PlaywrightTestingAccountQuotaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="quotaName"> The Playwright service account quota name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AccountQuotumResource>> GetAsync(PlaywrightTestingQuotaName quotaName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlaywrightTestingAccountQuotaResource>> GetAsync(PlaywrightTestingQuotaName quotaName, CancellationToken cancellationToken = default)
         {
-            using var scope = _accountQuotumAccountQuotasClientDiagnostics.CreateScope("AccountQuotumCollection.Get");
+            using var scope = _playwrightTestingAccountQuotaAccountQuotasClientDiagnostics.CreateScope("PlaywrightTestingAccountQuotaCollection.Get");
             scope.Start();
             try
             {
-                var response = await _accountQuotumAccountQuotasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaName, cancellationToken).ConfigureAwait(false);
+                var response = await _playwrightTestingAccountQuotaAccountQuotasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AccountQuotumResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PlaywrightTestingAccountQuotaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AccountQuotas_Get</description>
+        /// <description>AccountQuota_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -110,22 +110,22 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccountQuotumResource"/></description>
+        /// <description><see cref="PlaywrightTestingAccountQuotaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="quotaName"> The Playwright service account quota name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AccountQuotumResource> Get(PlaywrightTestingQuotaName quotaName, CancellationToken cancellationToken = default)
+        public virtual Response<PlaywrightTestingAccountQuotaResource> Get(PlaywrightTestingQuotaName quotaName, CancellationToken cancellationToken = default)
         {
-            using var scope = _accountQuotumAccountQuotasClientDiagnostics.CreateScope("AccountQuotumCollection.Get");
+            using var scope = _playwrightTestingAccountQuotaAccountQuotasClientDiagnostics.CreateScope("PlaywrightTestingAccountQuotaCollection.Get");
             scope.Start();
             try
             {
-                var response = _accountQuotumAccountQuotasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaName, cancellationToken);
+                var response = _playwrightTestingAccountQuotaAccountQuotasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AccountQuotumResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PlaywrightTestingAccountQuotaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AccountQuotas_ListByAccount</description>
+        /// <description>AccountQuota_ListByAccount</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -151,17 +151,17 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccountQuotumResource"/></description>
+        /// <description><see cref="PlaywrightTestingAccountQuotaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AccountQuotumResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AccountQuotumResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PlaywrightTestingAccountQuotaResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PlaywrightTestingAccountQuotaResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _accountQuotumAccountQuotasRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _accountQuotumAccountQuotasRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AccountQuotumResource(Client, AccountQuotumData.DeserializeAccountQuotumData(e)), _accountQuotumAccountQuotasClientDiagnostics, Pipeline, "AccountQuotumCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _playwrightTestingAccountQuotaAccountQuotasRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _playwrightTestingAccountQuotaAccountQuotasRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PlaywrightTestingAccountQuotaResource(Client, PlaywrightTestingAccountQuotaData.DeserializePlaywrightTestingAccountQuotaData(e)), _playwrightTestingAccountQuotaAccountQuotasClientDiagnostics, Pipeline, "PlaywrightTestingAccountQuotaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AccountQuotas_ListByAccount</description>
+        /// <description>AccountQuota_ListByAccount</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -181,17 +181,17 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccountQuotumResource"/></description>
+        /// <description><see cref="PlaywrightTestingAccountQuotaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AccountQuotumResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AccountQuotumResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PlaywrightTestingAccountQuotaResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PlaywrightTestingAccountQuotaResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _accountQuotumAccountQuotasRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _accountQuotumAccountQuotasRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AccountQuotumResource(Client, AccountQuotumData.DeserializeAccountQuotumData(e)), _accountQuotumAccountQuotasClientDiagnostics, Pipeline, "AccountQuotumCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _playwrightTestingAccountQuotaAccountQuotasRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _playwrightTestingAccountQuotaAccountQuotasRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PlaywrightTestingAccountQuotaResource(Client, PlaywrightTestingAccountQuotaData.DeserializePlaywrightTestingAccountQuotaData(e)), _playwrightTestingAccountQuotaAccountQuotasClientDiagnostics, Pipeline, "PlaywrightTestingAccountQuotaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AccountQuotas_Get</description>
+        /// <description>AccountQuota_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccountQuotumResource"/></description>
+        /// <description><see cref="PlaywrightTestingAccountQuotaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,11 +219,11 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(PlaywrightTestingQuotaName quotaName, CancellationToken cancellationToken = default)
         {
-            using var scope = _accountQuotumAccountQuotasClientDiagnostics.CreateScope("AccountQuotumCollection.Exists");
+            using var scope = _playwrightTestingAccountQuotaAccountQuotasClientDiagnostics.CreateScope("PlaywrightTestingAccountQuotaCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _accountQuotumAccountQuotasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _playwrightTestingAccountQuotaAccountQuotasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AccountQuotas_Get</description>
+        /// <description>AccountQuota_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccountQuotumResource"/></description>
+        /// <description><see cref="PlaywrightTestingAccountQuotaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -258,11 +258,11 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(PlaywrightTestingQuotaName quotaName, CancellationToken cancellationToken = default)
         {
-            using var scope = _accountQuotumAccountQuotasClientDiagnostics.CreateScope("AccountQuotumCollection.Exists");
+            using var scope = _playwrightTestingAccountQuotaAccountQuotasClientDiagnostics.CreateScope("PlaywrightTestingAccountQuotaCollection.Exists");
             scope.Start();
             try
             {
-                var response = _accountQuotumAccountQuotasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaName, cancellationToken: cancellationToken);
+                var response = _playwrightTestingAccountQuotaAccountQuotasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AccountQuotas_Get</description>
+        /// <description>AccountQuota_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -289,22 +289,22 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccountQuotumResource"/></description>
+        /// <description><see cref="PlaywrightTestingAccountQuotaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="quotaName"> The Playwright service account quota name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<NullableResponse<AccountQuotumResource>> GetIfExistsAsync(PlaywrightTestingQuotaName quotaName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<PlaywrightTestingAccountQuotaResource>> GetIfExistsAsync(PlaywrightTestingQuotaName quotaName, CancellationToken cancellationToken = default)
         {
-            using var scope = _accountQuotumAccountQuotasClientDiagnostics.CreateScope("AccountQuotumCollection.GetIfExists");
+            using var scope = _playwrightTestingAccountQuotaAccountQuotasClientDiagnostics.CreateScope("PlaywrightTestingAccountQuotaCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _accountQuotumAccountQuotasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _playwrightTestingAccountQuotaAccountQuotasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<AccountQuotumResource>(response.GetRawResponse());
-                return Response.FromValue(new AccountQuotumResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<PlaywrightTestingAccountQuotaResource>(response.GetRawResponse());
+                return Response.FromValue(new PlaywrightTestingAccountQuotaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AccountQuotas_Get</description>
+        /// <description>AccountQuota_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -330,22 +330,22 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccountQuotumResource"/></description>
+        /// <description><see cref="PlaywrightTestingAccountQuotaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="quotaName"> The Playwright service account quota name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NullableResponse<AccountQuotumResource> GetIfExists(PlaywrightTestingQuotaName quotaName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<PlaywrightTestingAccountQuotaResource> GetIfExists(PlaywrightTestingQuotaName quotaName, CancellationToken cancellationToken = default)
         {
-            using var scope = _accountQuotumAccountQuotasClientDiagnostics.CreateScope("AccountQuotumCollection.GetIfExists");
+            using var scope = _playwrightTestingAccountQuotaAccountQuotasClientDiagnostics.CreateScope("PlaywrightTestingAccountQuotaCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _accountQuotumAccountQuotasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaName, cancellationToken: cancellationToken);
+                var response = _playwrightTestingAccountQuotaAccountQuotasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<AccountQuotumResource>(response.GetRawResponse());
-                return Response.FromValue(new AccountQuotumResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<PlaywrightTestingAccountQuotaResource>(response.GetRawResponse());
+                return Response.FromValue(new PlaywrightTestingAccountQuotaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
             }
         }
 
-        IEnumerator<AccountQuotumResource> IEnumerable<AccountQuotumResource>.GetEnumerator()
+        IEnumerator<PlaywrightTestingAccountQuotaResource> IEnumerable<PlaywrightTestingAccountQuotaResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<AccountQuotumResource> IAsyncEnumerable<AccountQuotumResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<PlaywrightTestingAccountQuotaResource> IAsyncEnumerable<PlaywrightTestingAccountQuotaResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
