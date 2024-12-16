@@ -17,7 +17,7 @@ namespace Azure.Provisioning.Storage;
 /// <summary>
 /// StorageQueue.
 /// </summary>
-public partial class StorageQueue : Resource
+public partial class StorageQueue : ProvisionableResource
 {
     /// <summary>
     /// A queue name must be unique within a storage account and must be
@@ -26,60 +26,88 @@ public partial class StorageQueue : Resource
     /// an alphanumeric character and it cannot have two consecutive dash(-)
     /// characters.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// A name-value pair that represents queue metadata.
     /// </summary>
-    public BicepDictionary<string> Metadata { get => _metadata; set => _metadata.Assign(value); }
-    private readonly BicepDictionary<string> _metadata;
+    public BicepDictionary<string> Metadata 
+    {
+        get { Initialize(); return _metadata!; }
+        set { Initialize(); _metadata!.Assign(value); }
+    }
+    private BicepDictionary<string>? _metadata;
 
     /// <summary>
     /// Integer indicating an approximate number of messages in the queue. This
     /// number is not lower than the actual number of messages in the queue,
     /// but could be higher.
     /// </summary>
-    public BicepValue<int> ApproximateMessageCount { get => _approximateMessageCount; }
-    private readonly BicepValue<int> _approximateMessageCount;
+    public BicepValue<int> ApproximateMessageCount 
+    {
+        get { Initialize(); return _approximateMessageCount!; }
+    }
+    private BicepValue<int>? _approximateMessageCount;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent QueueService.
     /// </summary>
-    public QueueService? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<QueueService> _parent;
+    public QueueService? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<QueueService>? _parent;
 
     /// <summary>
     /// Creates a new StorageQueue.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the StorageQueue resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the StorageQueue.</param>
-    public StorageQueue(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Storage/storageAccounts/queueServices/queues", resourceVersion ?? "2024-01-01")
+    public StorageQueue(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/queueServices/queues", resourceVersion ?? "2024-01-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _metadata = BicepDictionary<string>.DefineProperty(this, "Metadata", ["properties", "metadata"]);
-        _approximateMessageCount = BicepValue<int>.DefineProperty(this, "ApproximateMessageCount", ["properties", "approximateMessageCount"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<QueueService>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of StorageQueue.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _metadata = DefineDictionaryProperty<string>("Metadata", ["properties", "metadata"]);
+        _approximateMessageCount = DefineProperty<int>("ApproximateMessageCount", ["properties", "approximateMessageCount"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<QueueService>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -201,7 +229,7 @@ public partial class StorageQueue : Resource
     /// <summary>
     /// Creates a reference to an existing StorageQueue.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the StorageQueue resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
@@ -209,8 +237,8 @@ public partial class StorageQueue : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the StorageQueue.</param>
     /// <returns>The existing StorageQueue resource.</returns>
-    public static StorageQueue FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static StorageQueue FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this StorageQueue resource.

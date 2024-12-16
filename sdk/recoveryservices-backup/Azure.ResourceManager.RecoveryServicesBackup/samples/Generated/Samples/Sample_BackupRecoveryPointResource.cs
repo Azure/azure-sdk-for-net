@@ -11,51 +11,14 @@ using System.Xml;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.RecoveryServicesBackup.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
 {
     public partial class Sample_BackupRecoveryPointResource
     {
-        // Trigger RP Move Operation
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task MoveRecoveryPoint_TriggerRPMoveOperation()
-        {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/TriggerRecoveryPointMove_Post.json
-            // this example is just showing the usage of "MoveRecoveryPoint" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BackupRecoveryPointResource created on azure
-            // for more information of creating BackupRecoveryPointResource, please refer to the document of BackupRecoveryPointResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "netsdktestrg";
-            string vaultName = "testVault";
-            string fabricName = "Azure";
-            string containerName = "IaasVMContainer;iaasvmcontainerv2;netsdktestrg;netvmtestv2vm1";
-            string protectedItemName = "VM;iaasvmcontainerv2;netsdktestrg;netvmtestv2vm1";
-            string recoveryPointId = "348916168024334";
-            ResourceIdentifier backupRecoveryPointResourceId = BackupRecoveryPointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName, fabricName, containerName, protectedItemName, recoveryPointId);
-            BackupRecoveryPointResource backupRecoveryPoint = client.GetBackupRecoveryPointResource(backupRecoveryPointResourceId);
-
-            // invoke the operation
-            MoveRPAcrossTiersContent content = new MoveRPAcrossTiersContent()
-            {
-                ObjectType = "MoveRPAcrossTiersRequest",
-                SourceTierType = RecoveryPointTierType.HardenedRP,
-                TargetTierType = RecoveryPointTierType.ArchivedRP,
-            };
-            await backupRecoveryPoint.MoveRecoveryPointAsync(WaitUntil.Completed, content);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Get Azure Vm Recovery Point Details
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAzureVmRecoveryPointDetails()
         {
             // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureIaasVm/RecoveryPoints_Get.json
@@ -88,9 +51,44 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Restore Disks with IaasVMRestoreRequest
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task MoveRecoveryPoint_TriggerRPMoveOperation()
+        {
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/TriggerRecoveryPointMove_Post.json
+            // this example is just showing the usage of "MoveRecoveryPoint" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BackupRecoveryPointResource created on azure
+            // for more information of creating BackupRecoveryPointResource, please refer to the document of BackupRecoveryPointResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "netsdktestrg";
+            string vaultName = "testVault";
+            string fabricName = "Azure";
+            string containerName = "IaasVMContainer;iaasvmcontainerv2;netsdktestrg;netvmtestv2vm1";
+            string protectedItemName = "VM;iaasvmcontainerv2;netsdktestrg;netvmtestv2vm1";
+            string recoveryPointId = "348916168024334";
+            ResourceIdentifier backupRecoveryPointResourceId = BackupRecoveryPointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName, fabricName, containerName, protectedItemName, recoveryPointId);
+            BackupRecoveryPointResource backupRecoveryPoint = client.GetBackupRecoveryPointResource(backupRecoveryPointResourceId);
+
+            // invoke the operation
+            MoveRPAcrossTiersContent content = new MoveRPAcrossTiersContent
+            {
+                ObjectType = "MoveRPAcrossTiersRequest",
+                SourceTierType = RecoveryPointTierType.HardenedRP,
+                TargetTierType = RecoveryPointTierType.ArchivedRP,
+            };
+            await backupRecoveryPoint.MoveRecoveryPointAsync(WaitUntil.Completed, content);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task TriggerRestore_RestoreDisksWithIaasVMRestoreRequest()
         {
             // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureIaasVm/TriggerRestore_RestoreDisks_IaasVMRestoreRequest.json
@@ -114,9 +112,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             BackupRecoveryPointResource backupRecoveryPoint = client.GetBackupRecoveryPointResource(backupRecoveryPointResourceId);
 
             // invoke the operation
-            TriggerRestoreContent content = new TriggerRestoreContent(new AzureLocation("placeholder"))
+            TriggerRestoreContent content = new TriggerRestoreContent(default)
             {
-                Properties = new IaasVmRestoreContent()
+                Properties = new IaasVmRestoreContent
                 {
                     RecoveryPointId = "348916168024334",
                     RecoveryType = FileShareRecoveryType.RestoreDisks,
@@ -125,16 +123,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
                     Region = new AzureLocation("southeastasia"),
                     DoesCreateNewCloudService = true,
                     OriginalStorageAccountOption = false,
-                    EncryptionDetails = new VmEncryptionDetails()
+                    EncryptionDetails = new VmEncryptionDetails
                     {
                         IsEncryptionEnabled = false,
                     },
-                    IdentityInfo = new BackupIdentityInfo()
+                    IdentityInfo = new BackupIdentityInfo
                     {
                         IsSystemAssignedIdentity = false,
                         ManagedIdentityResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/asmaskarRG1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/asmaskartestmsi"),
                     },
-                    TargetDiskNetworkAccessSettings = new BackupTargetDiskNetworkAccessSettings()
+                    TargetDiskNetworkAccessSettings = new BackupTargetDiskNetworkAccessSettings
                     {
                         TargetDiskNetworkAccessOption = BackupTargetDiskNetworkAccessOption.EnablePrivateAccessForAllDisks,
                         TargetDiskAccessId = new ResourceIdentifier("/subscriptions/e7a191f5-713c-4bdb-b5e4-cf3dd90230ef/resourceGroups/arpja/providers/Microsoft.Compute/diskAccesses/arpja-diskaccess-ccy"),
@@ -143,12 +141,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             };
             await backupRecoveryPoint.TriggerRestoreAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Restore Disks with IaasVMRestoreRequest with IdentityBasedRestoreDetails
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task TriggerRestore_RestoreDisksWithIaasVMRestoreRequestWithIdentityBasedRestoreDetails()
         {
             // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureIaasVm/TriggerRestore_RestoreDisks_IaasVMRestoreRequest_IdentityBasedRestoreDetails.json
@@ -172,9 +169,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             BackupRecoveryPointResource backupRecoveryPoint = client.GetBackupRecoveryPointResource(backupRecoveryPointResourceId);
 
             // invoke the operation
-            TriggerRestoreContent content = new TriggerRestoreContent(new AzureLocation("placeholder"))
+            TriggerRestoreContent content = new TriggerRestoreContent(default)
             {
-                Properties = new IaasVmRestoreContent()
+                Properties = new IaasVmRestoreContent
                 {
                     RecoveryPointId = "348916168024334",
                     RecoveryType = FileShareRecoveryType.RestoreDisks,
@@ -182,16 +179,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
                     Region = new AzureLocation("southeastasia"),
                     DoesCreateNewCloudService = true,
                     OriginalStorageAccountOption = false,
-                    EncryptionDetails = new VmEncryptionDetails()
+                    EncryptionDetails = new VmEncryptionDetails
                     {
                         IsEncryptionEnabled = false,
                     },
-                    IdentityInfo = new BackupIdentityInfo()
+                    IdentityInfo = new BackupIdentityInfo
                     {
                         IsSystemAssignedIdentity = false,
                         ManagedIdentityResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/asmaskarRG1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/asmaskartestmsi"),
                     },
-                    IdentityBasedRestoreDetails = new IdentityBasedRestoreDetails()
+                    IdentityBasedRestoreDetails = new IdentityBasedRestoreDetails
                     {
                         TargetStorageAccountId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testingRg/providers/Microsoft.Storage/storageAccounts/testAccount"),
                     },
@@ -199,12 +196,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             };
             await backupRecoveryPoint.TriggerRestoreAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Restore Disks with IaasVMRestoreWithRehydrationRequest
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task TriggerRestore_RestoreDisksWithIaasVMRestoreWithRehydrationRequest()
         {
             // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureIaasVm/TriggerRestore_RestoreDisks_IaasVMRestoreWithRehydrationRequest.json
@@ -228,11 +224,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             BackupRecoveryPointResource backupRecoveryPoint = client.GetBackupRecoveryPointResource(backupRecoveryPointResourceId);
 
             // invoke the operation
-            TriggerRestoreContent content = new TriggerRestoreContent(new AzureLocation("placeholder"))
+            TriggerRestoreContent content = new TriggerRestoreContent(default)
             {
-                Properties = new IaasVmRestoreWithRehydrationContent()
+                Properties = new IaasVmRestoreWithRehydrationContent
                 {
-                    RecoveryPointRehydrationInfo = new RecoveryPointRehydrationInfo()
+                    RecoveryPointRehydrationInfo = new RecoveryPointRehydrationInfo
                     {
                         RehydrationRetentionDuration = XmlConvert.ToTimeSpan("P7D"),
                         RehydrationPriority = RehydrationPriority.Standard,
@@ -244,7 +240,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
                     Region = new AzureLocation("southeastasia"),
                     DoesCreateNewCloudService = true,
                     OriginalStorageAccountOption = false,
-                    EncryptionDetails = new VmEncryptionDetails()
+                    EncryptionDetails = new VmEncryptionDetails
                     {
                         IsEncryptionEnabled = false,
                     },
@@ -252,12 +248,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             };
             await backupRecoveryPoint.TriggerRestoreAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Restore to New Azure IaasVm with IaasVMRestoreRequest
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task TriggerRestore_RestoreToNewAzureIaasVmWithIaasVMRestoreRequest()
         {
             // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureIaasVm/TriggerRestore_ALR_IaasVMRestoreRequest.json
@@ -281,9 +276,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             BackupRecoveryPointResource backupRecoveryPoint = client.GetBackupRecoveryPointResource(backupRecoveryPointResourceId);
 
             // invoke the operation
-            TriggerRestoreContent content = new TriggerRestoreContent(new AzureLocation("placeholder"))
+            TriggerRestoreContent content = new TriggerRestoreContent(default)
             {
-                Properties = new IaasVmRestoreContent()
+                Properties = new IaasVmRestoreContent
                 {
                     RecoveryPointId = "348916168024334",
                     RecoveryType = FileShareRecoveryType.AlternateLocation,
@@ -296,11 +291,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
                     Region = new AzureLocation("southeastasia"),
                     DoesCreateNewCloudService = false,
                     OriginalStorageAccountOption = false,
-                    EncryptionDetails = new VmEncryptionDetails()
+                    EncryptionDetails = new VmEncryptionDetails
                     {
                         IsEncryptionEnabled = false,
                     },
-                    IdentityInfo = new BackupIdentityInfo()
+                    IdentityInfo = new BackupIdentityInfo
                     {
                         IsSystemAssignedIdentity = true,
                     },
@@ -308,12 +303,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             };
             await backupRecoveryPoint.TriggerRestoreAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Restore to New Azure IaasVm with IaasVMRestoreRequest with identityBasedRestoreDetails
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task TriggerRestore_RestoreToNewAzureIaasVmWithIaasVMRestoreRequestWithIdentityBasedRestoreDetails()
         {
             // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureIaasVm/TriggerRestore_ALR_IaasVMRestoreRequest_IdentityBasedRestoreDetails.json
@@ -337,9 +331,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             BackupRecoveryPointResource backupRecoveryPoint = client.GetBackupRecoveryPointResource(backupRecoveryPointResourceId);
 
             // invoke the operation
-            TriggerRestoreContent content = new TriggerRestoreContent(new AzureLocation("placeholder"))
+            TriggerRestoreContent content = new TriggerRestoreContent(default)
             {
-                Properties = new IaasVmRestoreContent()
+                Properties = new IaasVmRestoreContent
                 {
                     RecoveryPointId = "348916168024334",
                     RecoveryType = FileShareRecoveryType.AlternateLocation,
@@ -351,15 +345,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
                     Region = new AzureLocation("southeastasia"),
                     DoesCreateNewCloudService = false,
                     OriginalStorageAccountOption = false,
-                    EncryptionDetails = new VmEncryptionDetails()
+                    EncryptionDetails = new VmEncryptionDetails
                     {
                         IsEncryptionEnabled = false,
                     },
-                    IdentityInfo = new BackupIdentityInfo()
+                    IdentityInfo = new BackupIdentityInfo
                     {
                         IsSystemAssignedIdentity = true,
                     },
-                    IdentityBasedRestoreDetails = new IdentityBasedRestoreDetails()
+                    IdentityBasedRestoreDetails = new IdentityBasedRestoreDetails
                     {
                         TargetStorageAccountId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.Storage/storageAccounts/testingAccount"),
                     },
@@ -367,12 +361,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             };
             await backupRecoveryPoint.TriggerRestoreAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Restore to New Azure IaasVm with IaasVMRestoreWithRehydrationRequest
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task TriggerRestore_RestoreToNewAzureIaasVmWithIaasVMRestoreWithRehydrationRequest()
         {
             // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureIaasVm/TriggerRestore_ALR_IaasVMRestoreWithRehydrationRequest.json
@@ -396,11 +389,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             BackupRecoveryPointResource backupRecoveryPoint = client.GetBackupRecoveryPointResource(backupRecoveryPointResourceId);
 
             // invoke the operation
-            TriggerRestoreContent content = new TriggerRestoreContent(new AzureLocation("placeholder"))
+            TriggerRestoreContent content = new TriggerRestoreContent(default)
             {
-                Properties = new IaasVmRestoreWithRehydrationContent()
+                Properties = new IaasVmRestoreWithRehydrationContent
                 {
-                    RecoveryPointRehydrationInfo = new RecoveryPointRehydrationInfo()
+                    RecoveryPointRehydrationInfo = new RecoveryPointRehydrationInfo
                     {
                         RehydrationRetentionDuration = XmlConvert.ToTimeSpan("P7D"),
                         RehydrationPriority = RehydrationPriority.High,
@@ -416,7 +409,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
                     Region = new AzureLocation("southeastasia"),
                     DoesCreateNewCloudService = false,
                     OriginalStorageAccountOption = false,
-                    EncryptionDetails = new VmEncryptionDetails()
+                    EncryptionDetails = new VmEncryptionDetails
                     {
                         IsEncryptionEnabled = false,
                     },
@@ -424,12 +417,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             };
             await backupRecoveryPoint.TriggerRestoreAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Provision Instant Item Level Recovery for Azure Vm
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ProvisionItemLevelRecoveryConnection_ProvisionInstantItemLevelRecoveryForAzureVm()
         {
             // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureIaasVm/Provision_Ilr.json
@@ -453,9 +445,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             BackupRecoveryPointResource backupRecoveryPoint = client.GetBackupRecoveryPointResource(backupRecoveryPointResourceId);
 
             // invoke the operation
-            ProvisionIlrConnectionContent content = new ProvisionIlrConnectionContent(new AzureLocation("placeholder"))
+            ProvisionIlrConnectionContent content = new ProvisionIlrConnectionContent(default)
             {
-                Properties = new IaasVmIlrRegistrationContent()
+                Properties = new IaasVmIlrRegistrationContent
                 {
                     RecoveryPointId = "38823086363464",
                     VirtualMachineId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/pysdktestrg/providers/Microsoft.Compute/virtualMachines/pysdktestv2vm1"),
@@ -465,12 +457,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             };
             await backupRecoveryPoint.ProvisionItemLevelRecoveryConnectionAsync(content);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Revoke Instant Item Level Recovery for Azure Vm
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RevokeItemLevelRecoveryConnection_RevokeInstantItemLevelRecoveryForAzureVm()
         {
             // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureIaasVm/Revoke_Ilr.json
@@ -496,7 +487,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             // invoke the operation
             await backupRecoveryPoint.RevokeItemLevelRecoveryConnectionAsync();
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

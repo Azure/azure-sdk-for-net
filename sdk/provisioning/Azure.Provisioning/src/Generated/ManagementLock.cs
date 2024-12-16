@@ -16,13 +16,17 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// ManagementLock.
 /// </summary>
-public partial class ManagementLock : Resource
+public partial class ManagementLock : ProvisionableResource
 {
     /// <summary>
     /// The name of lock.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The level of the lock. Possible values are: NotSpecified, CanNotDelete,
@@ -30,54 +34,79 @@ public partial class ManagementLock : Resource
     /// modify the resources, but not delete. ReadOnly means authorized users
     /// can only read from a resource, but they can&apos;t modify or delete it.
     /// </summary>
-    public BicepValue<ManagementLockLevel> Level { get => _level; set => _level.Assign(value); }
-    private readonly BicepValue<ManagementLockLevel> _level;
+    public BicepValue<ManagementLockLevel> Level 
+    {
+        get { Initialize(); return _level!; }
+        set { Initialize(); _level!.Assign(value); }
+    }
+    private BicepValue<ManagementLockLevel>? _level;
 
     /// <summary>
     /// Notes about the lock. Maximum of 512 characters.
     /// </summary>
-    public BicepValue<string> Notes { get => _notes; set => _notes.Assign(value); }
-    private readonly BicepValue<string> _notes;
+    public BicepValue<string> Notes 
+    {
+        get { Initialize(); return _notes!; }
+        set { Initialize(); _notes!.Assign(value); }
+    }
+    private BicepValue<string>? _notes;
 
     /// <summary>
     /// The owners of the lock.
     /// </summary>
-    public BicepList<ManagementLockOwner> Owners { get => _owners; set => _owners.Assign(value); }
-    private readonly BicepList<ManagementLockOwner> _owners;
+    public BicepList<ManagementLockOwner> Owners 
+    {
+        get { Initialize(); return _owners!; }
+        set { Initialize(); _owners!.Assign(value); }
+    }
+    private BicepList<ManagementLockOwner>? _owners;
 
     /// <summary>
     /// Fully qualified resource ID for the resource. Ex -
     /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Azure Resource Manager metadata containing createdBy and modifiedBy
     /// information.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new ManagementLock.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ManagementLock resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ManagementLock.</param>
-    public ManagementLock(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Authorization/locks", resourceVersion ?? "2020-05-01")
+    public ManagementLock(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Authorization/locks", resourceVersion ?? "2020-05-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _level = BicepValue<ManagementLockLevel>.DefineProperty(this, "Level", ["properties", "level"], isRequired: true);
-        _notes = BicepValue<string>.DefineProperty(this, "Notes", ["properties", "notes"]);
-        _owners = BicepList<ManagementLockOwner>.DefineProperty(this, "Owners", ["properties", "owners"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of ManagementLock.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _level = DefineProperty<ManagementLockLevel>("Level", ["properties", "level"], isRequired: true);
+        _notes = DefineProperty<string>("Notes", ["properties", "notes"]);
+        _owners = DefineListProperty<ManagementLockOwner>("Owners", ["properties", "owners"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>
@@ -114,7 +143,7 @@ public partial class ManagementLock : Resource
     /// <summary>
     /// Creates a reference to an existing ManagementLock.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ManagementLock resource.  This can
     /// be used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
@@ -122,8 +151,8 @@ public partial class ManagementLock : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ManagementLock.</param>
     /// <returns>The existing ManagementLock resource.</returns>
-    public static ManagementLock FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ManagementLock FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
     /// Get the requirements for naming this ManagementLock resource.

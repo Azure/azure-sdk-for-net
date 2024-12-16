@@ -5,4 +5,3 @@ extends:
   parameters:
     ServiceDirectory: modelsrepository
     Location: westus2
-    Clouds: Preview

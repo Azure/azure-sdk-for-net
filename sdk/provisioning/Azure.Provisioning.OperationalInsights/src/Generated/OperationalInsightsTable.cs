@@ -16,85 +16,128 @@ namespace Azure.Provisioning.OperationalInsights;
 /// <summary>
 /// OperationalInsightsTable.
 /// </summary>
-public partial class OperationalInsightsTable : Resource
+public partial class OperationalInsightsTable : ProvisionableResource
 {
     /// <summary>
     /// The name of the table.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Instruct the system how to handle and charge the logs ingested to this
     /// table.
     /// </summary>
-    public BicepValue<OperationalInsightsTablePlan> Plan { get => _plan; set => _plan.Assign(value); }
-    private readonly BicepValue<OperationalInsightsTablePlan> _plan;
+    public BicepValue<OperationalInsightsTablePlan> Plan 
+    {
+        get { Initialize(); return _plan!; }
+        set { Initialize(); _plan!.Assign(value); }
+    }
+    private BicepValue<OperationalInsightsTablePlan>? _plan;
 
     /// <summary>
     /// Parameters of the restore operation that initiated this table.
     /// </summary>
-    public BicepValue<OperationalInsightsTableRestoredLogs> RestoredLogs { get => _restoredLogs; set => _restoredLogs.Assign(value); }
-    private readonly BicepValue<OperationalInsightsTableRestoredLogs> _restoredLogs;
+    public OperationalInsightsTableRestoredLogs RestoredLogs 
+    {
+        get { Initialize(); return _restoredLogs!; }
+        set { Initialize(); AssignOrReplace(ref _restoredLogs, value); }
+    }
+    private OperationalInsightsTableRestoredLogs? _restoredLogs;
 
     /// <summary>
     /// The table retention in days, between 4 and 730. Setting this property
     /// to -1 will default to the workspace retention.
     /// </summary>
-    public BicepValue<int> RetentionInDays { get => _retentionInDays; set => _retentionInDays.Assign(value); }
-    private readonly BicepValue<int> _retentionInDays;
+    public BicepValue<int> RetentionInDays 
+    {
+        get { Initialize(); return _retentionInDays!; }
+        set { Initialize(); _retentionInDays!.Assign(value); }
+    }
+    private BicepValue<int>? _retentionInDays;
 
     /// <summary>
     /// Table schema.
     /// </summary>
-    public BicepValue<OperationalInsightsSchema> Schema { get => _schema; set => _schema.Assign(value); }
-    private readonly BicepValue<OperationalInsightsSchema> _schema;
+    public OperationalInsightsSchema Schema 
+    {
+        get { Initialize(); return _schema!; }
+        set { Initialize(); AssignOrReplace(ref _schema, value); }
+    }
+    private OperationalInsightsSchema? _schema;
 
     /// <summary>
     /// Parameters of the search job that initiated this table.
     /// </summary>
-    public BicepValue<OperationalInsightsTableSearchResults> SearchResults { get => _searchResults; set => _searchResults.Assign(value); }
-    private readonly BicepValue<OperationalInsightsTableSearchResults> _searchResults;
+    public OperationalInsightsTableSearchResults SearchResults 
+    {
+        get { Initialize(); return _searchResults!; }
+        set { Initialize(); AssignOrReplace(ref _searchResults, value); }
+    }
+    private OperationalInsightsTableSearchResults? _searchResults;
 
     /// <summary>
     /// The table total retention in days, between 4 and 2556. Setting this
     /// property to -1 will default to table retention.
     /// </summary>
-    public BicepValue<int> TotalRetentionInDays { get => _totalRetentionInDays; set => _totalRetentionInDays.Assign(value); }
-    private readonly BicepValue<int> _totalRetentionInDays;
+    public BicepValue<int> TotalRetentionInDays 
+    {
+        get { Initialize(); return _totalRetentionInDays!; }
+        set { Initialize(); _totalRetentionInDays!.Assign(value); }
+    }
+    private BicepValue<int>? _totalRetentionInDays;
 
     /// <summary>
     /// The table data archive retention in days. Calculated as
     /// (totalRetentionInDays-retentionInDays).
     /// </summary>
-    public BicepValue<int> ArchiveRetentionInDays { get => _archiveRetentionInDays; }
-    private readonly BicepValue<int> _archiveRetentionInDays;
+    public BicepValue<int> ArchiveRetentionInDays 
+    {
+        get { Initialize(); return _archiveRetentionInDays!; }
+    }
+    private BicepValue<int>? _archiveRetentionInDays;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// True - Value originates from workspace retention in days, False -
     /// Customer specific.
     /// </summary>
-    public BicepValue<bool> IsRetentionInDaysAsDefault { get => _isRetentionInDaysAsDefault; }
-    private readonly BicepValue<bool> _isRetentionInDaysAsDefault;
+    public BicepValue<bool> IsRetentionInDaysAsDefault 
+    {
+        get { Initialize(); return _isRetentionInDaysAsDefault!; }
+    }
+    private BicepValue<bool>? _isRetentionInDaysAsDefault;
 
     /// <summary>
     /// True - Value originates from retention in days, False - Customer
     /// specific.
     /// </summary>
-    public BicepValue<bool> IsTotalRetentionInDaysAsDefault { get => _isTotalRetentionInDaysAsDefault; }
-    private readonly BicepValue<bool> _isTotalRetentionInDaysAsDefault;
+    public BicepValue<bool> IsTotalRetentionInDaysAsDefault 
+    {
+        get { Initialize(); return _isTotalRetentionInDaysAsDefault!; }
+    }
+    private BicepValue<bool>? _isTotalRetentionInDaysAsDefault;
 
     /// <summary>
     /// The timestamp that table plan was last modified (UTC).
     /// </summary>
-    public BicepValue<string> LastPlanModifiedDate { get => _lastPlanModifiedDate; }
-    private readonly BicepValue<string> _lastPlanModifiedDate;
+    public BicepValue<string> LastPlanModifiedDate 
+    {
+        get { Initialize(); return _lastPlanModifiedDate!; }
+    }
+    private BicepValue<string>? _lastPlanModifiedDate;
 
     /// <summary>
     /// Table&apos;s current provisioning state. If set to
@@ -102,56 +145,76 @@ public partial class OperationalInsightsTable : Resource
     /// operation, forbidding any update to the table until the ongoing
     /// operation is concluded.
     /// </summary>
-    public BicepValue<OperationalInsightsTableProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<OperationalInsightsTableProvisioningState> _provisioningState;
+    public BicepValue<OperationalInsightsTableProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<OperationalInsightsTableProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Search job execution statistics.
     /// </summary>
-    public BicepValue<OperationalInsightsTableResultStatistics> ResultStatistics { get => _resultStatistics; }
-    private readonly BicepValue<OperationalInsightsTableResultStatistics> _resultStatistics;
+    public OperationalInsightsTableResultStatistics ResultStatistics 
+    {
+        get { Initialize(); return _resultStatistics!; }
+    }
+    private OperationalInsightsTableResultStatistics? _resultStatistics;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent OperationalInsightsWorkspace.
     /// </summary>
-    public OperationalInsightsWorkspace? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<OperationalInsightsWorkspace> _parent;
+    public OperationalInsightsWorkspace? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<OperationalInsightsWorkspace>? _parent;
 
     /// <summary>
     /// Creates a new OperationalInsightsTable.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the OperationalInsightsTable resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the OperationalInsightsTable.</param>
-    public OperationalInsightsTable(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.OperationalInsights/workspaces/tables", resourceVersion ?? "2023-09-01")
+    public OperationalInsightsTable(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.OperationalInsights/workspaces/tables", resourceVersion ?? "2023-09-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _plan = BicepValue<OperationalInsightsTablePlan>.DefineProperty(this, "Plan", ["properties", "plan"]);
-        _restoredLogs = BicepValue<OperationalInsightsTableRestoredLogs>.DefineProperty(this, "RestoredLogs", ["properties", "restoredLogs"]);
-        _retentionInDays = BicepValue<int>.DefineProperty(this, "RetentionInDays", ["properties", "retentionInDays"]);
-        _schema = BicepValue<OperationalInsightsSchema>.DefineProperty(this, "Schema", ["properties", "schema"]);
-        _searchResults = BicepValue<OperationalInsightsTableSearchResults>.DefineProperty(this, "SearchResults", ["properties", "searchResults"]);
-        _totalRetentionInDays = BicepValue<int>.DefineProperty(this, "TotalRetentionInDays", ["properties", "totalRetentionInDays"]);
-        _archiveRetentionInDays = BicepValue<int>.DefineProperty(this, "ArchiveRetentionInDays", ["properties", "archiveRetentionInDays"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _isRetentionInDaysAsDefault = BicepValue<bool>.DefineProperty(this, "IsRetentionInDaysAsDefault", ["properties", "retentionInDaysAsDefault"], isOutput: true);
-        _isTotalRetentionInDaysAsDefault = BicepValue<bool>.DefineProperty(this, "IsTotalRetentionInDaysAsDefault", ["properties", "totalRetentionInDaysAsDefault"], isOutput: true);
-        _lastPlanModifiedDate = BicepValue<string>.DefineProperty(this, "LastPlanModifiedDate", ["properties", "lastPlanModifiedDate"], isOutput: true);
-        _provisioningState = BicepValue<OperationalInsightsTableProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _resultStatistics = BicepValue<OperationalInsightsTableResultStatistics>.DefineProperty(this, "ResultStatistics", ["properties", "resultStatistics"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<OperationalInsightsWorkspace>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of OperationalInsightsTable.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _plan = DefineProperty<OperationalInsightsTablePlan>("Plan", ["properties", "plan"]);
+        _restoredLogs = DefineModelProperty<OperationalInsightsTableRestoredLogs>("RestoredLogs", ["properties", "restoredLogs"]);
+        _retentionInDays = DefineProperty<int>("RetentionInDays", ["properties", "retentionInDays"]);
+        _schema = DefineModelProperty<OperationalInsightsSchema>("Schema", ["properties", "schema"]);
+        _searchResults = DefineModelProperty<OperationalInsightsTableSearchResults>("SearchResults", ["properties", "searchResults"]);
+        _totalRetentionInDays = DefineProperty<int>("TotalRetentionInDays", ["properties", "totalRetentionInDays"]);
+        _archiveRetentionInDays = DefineProperty<int>("ArchiveRetentionInDays", ["properties", "archiveRetentionInDays"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _isRetentionInDaysAsDefault = DefineProperty<bool>("IsRetentionInDaysAsDefault", ["properties", "retentionInDaysAsDefault"], isOutput: true);
+        _isTotalRetentionInDaysAsDefault = DefineProperty<bool>("IsTotalRetentionInDaysAsDefault", ["properties", "totalRetentionInDaysAsDefault"], isOutput: true);
+        _lastPlanModifiedDate = DefineProperty<string>("LastPlanModifiedDate", ["properties", "lastPlanModifiedDate"], isOutput: true);
+        _provisioningState = DefineProperty<OperationalInsightsTableProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _resultStatistics = DefineModelProperty<OperationalInsightsTableResultStatistics>("ResultStatistics", ["properties", "resultStatistics"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<OperationalInsightsWorkspace>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -178,7 +241,7 @@ public partial class OperationalInsightsTable : Resource
     /// <summary>
     /// Creates a reference to an existing OperationalInsightsTable.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the OperationalInsightsTable resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
@@ -186,6 +249,6 @@ public partial class OperationalInsightsTable : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the OperationalInsightsTable.</param>
     /// <returns>The existing OperationalInsightsTable resource.</returns>
-    public static OperationalInsightsTable FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static OperationalInsightsTable FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

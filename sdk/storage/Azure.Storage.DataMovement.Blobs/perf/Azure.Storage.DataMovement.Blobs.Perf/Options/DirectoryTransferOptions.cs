@@ -20,6 +20,9 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
         [Option("chunk-size", HelpText = "The chunk/block size to use during transfers (in bytes)")]
         public long? ChunkSize { get; set; }
 
+        [Option("concurrency", HelpText = "The max concurrency to use during each transfer.")]
+        public int? Concurrency { get; set; }
+
         [Option("disable-checkpointer", HelpText = "Set to disable checkpointing.")]
         public bool DisableCheckpointer { get; set; }
 

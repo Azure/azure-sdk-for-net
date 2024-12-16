@@ -16,15 +16,15 @@ internal enum AccessLevel
 
 internal partial class CIConfig
 {
-    [JsonPropertyName("ciProviderName")] public string CiProviderName { get; set; } = "";
+    [JsonPropertyName("ciProviderName")] public string? CiProviderName { get; set; } = "";
 
-    [JsonPropertyName("branch")] public string Branch { get; set; } = "";
+    [JsonPropertyName("branch")] public string? Branch { get; set; }
 
-    [JsonPropertyName("author")] public string Author { get; set; } = "";
+    [JsonPropertyName("author")] public string? Author { get; set; }
 
-    [JsonPropertyName("commitId")] public string CommitId { get; set; } = "";
+    [JsonPropertyName("commitId")] public string? CommitId { get; set; }
 
-    [JsonPropertyName("revisionUrl")] public string RevisionUrl { get; set; } = "";
+    [JsonPropertyName("revisionUrl")] public string? RevisionUrl { get; set; }
 }
 
 internal partial class ClientConfig
@@ -81,7 +81,7 @@ internal partial class Shard
     public int Total { get; set; }
 
     [JsonPropertyName("current")]
-    public int Current { get; set; }
+    public int? Current { get; set; }
 }
 
 internal partial class TestFramework
@@ -102,6 +102,8 @@ internal partial class TestResults
     [JsonPropertyName("testCombinationId")] public string TestCombinationId { get; set; } = "";
 
     [JsonPropertyName("runId")] public string RunId { get; set; } = "";
+
+    [JsonPropertyName("shardId")] public string ShardId { get; set; } = "";
 
     [JsonPropertyName("accountId")] public string AccountId { get; set; } = "";
 
@@ -167,7 +169,7 @@ internal partial class TestResultsUri
     public AccessLevel? AccessLevel { get; set; }
 }
 
-internal partial class TestRunDtoV2
+internal partial class TestRunDto
 {
     [JsonPropertyName("testRunId")]
     public string TestRunId { get; set; } = "";
@@ -199,9 +201,9 @@ internal partial class TestRunDtoV2
     [JsonPropertyName("testResultsUri")]
     public TestResultsUri? TestResultsUri { get; set; }
 
-    [JsonPropertyName("cloudRunEnabled")] public string CloudRunEnabled { get; set; } = "";
+    [JsonPropertyName("cloudRunEnabled")] public bool? CloudRunEnabled { get; set; }
 
-    [JsonPropertyName("cloudReportingEnabled")] public string CloudReportingEnabled { get; set; } = "";
+    [JsonPropertyName("cloudReportingEnabled")] public bool? CloudReportingEnabled { get; set; }
 }
 
 internal partial class TestRunResultsSummary
@@ -227,22 +229,18 @@ internal partial class TestRunResultsSummary
 
 internal partial class TestRunShardDto
 {
-    [JsonPropertyName("uploadCompleted")] public string UploadCompleted { get; set; } = "";
+    [JsonPropertyName("shardId")] public string ShardId { get; set; } = "";
+    [JsonPropertyName("uploadCompleted")] public bool UploadCompleted { get; set; } = false;
 
     [JsonPropertyName("summary")]
     public TestRunShardSummary? Summary { get; set; }
 
-    [JsonPropertyName("testRunConfig")]
-    public ClientConfig? TestRunConfig { get; set; }
-
-    [JsonPropertyName("resultsSummary")]
-    public TestRunResultsSummary? ResultsSummary { get; set; }
+    [JsonPropertyName("workers")] public int? Workers { get; set; }
 }
 
 internal partial class TestRunShardSummary
 {
     [JsonPropertyName("status")] public string Status { get; set; } = "";
-
     [JsonPropertyName("startTime")] public string StartTime { get; set; } = "";
 
     [JsonPropertyName("endTime")] public string EndTime { get; set; } = "";
@@ -260,13 +258,7 @@ internal partial class TestRunSummary
 {
     [JsonPropertyName("status")] public string Status { get; set; } = "";
 
-    [JsonPropertyName("startTime")] public string StartTime { get; set; } = "";
-
-    [JsonPropertyName("endTime")] public string EndTime { get; set; } = "";
-
     [JsonPropertyName("billableTime")] public long BillableTime { get; set; }
-
-    [JsonPropertyName("totalTime")] public long TotalTime { get; set; }
 
     [JsonPropertyName("numBrowserSessions")] public long NumBrowserSessions { get; set; }
 
@@ -278,12 +270,6 @@ internal partial class TestRunSummary
 
     [JsonPropertyName("tags")]
     public ICollection<string> Tags { get; set; } = new List<string>();
-
-    [JsonPropertyName("errorMessages")]
-    public ICollection<string> ErrorMessages { get; set; } = new List<string>();
-
-    [JsonPropertyName("uploadMetadata")]
-    public UploadMetadata? UploadMetadata { get; set; }
 }
 
 internal partial class UploadMetadata
@@ -307,7 +293,7 @@ internal partial class WebTestConfig
 
     [JsonPropertyName("projectName")] public string ProjectName { get; set; } = "";
 
-    [JsonPropertyName("browserName")] public string BrowserName { get; set; } = "";
+    [JsonPropertyName("browserType")] public string BrowserName { get; set; } = "";
 
     [JsonPropertyName("os")] public string Os { get; set; } = "";
 }

@@ -21,13 +21,21 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         void IJsonModel<EventSubscriptionDestination>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<EventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EventSubscriptionDestination)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -45,7 +53,6 @@ namespace Azure.ResourceManager.EventGrid.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         EventSubscriptionDestination IJsonModel<EventSubscriptionDestination>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

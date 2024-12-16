@@ -5,19 +5,21 @@
 To set up a federated identity credential (FIC) in Azure Pipelines, you can set up the Azure Resource Manager service connection as an [automatic recommended approach](https://learn.microsoft.com/azure/devops/pipelines/library/connect-to-azure?view=azure-devops#create-an-azure-resource-manager-service-connection-that-uses-workload-identity-federation).
 You can also create it manually either using a [user-assigned managed identity to accept the ADO-issued token as a FIC](https://learn.microsoft.com/azure/devops/pipelines/release/configure-workload-identity?view=azure-devops#set-a-workload-identity-service-connection-to-use-managed-identity-authentication) or using an [App Registration to accept the Azure DevOps-issued token as a FIC](https://learn.microsoft.com/azure/devops/pipelines/release/configure-workload-identity?view=azure-devops#set-a-workload-identity-service-connection-to-use-service-principal-authentication).
 
-Make sure you use one of the [recommended Azure Pipelines tasks](https://learn.microsoft.com/azure/devops/pipelines/release/troubleshoot-workload-identity?view=azure-devops#review-pipeline-tasks) so that FIC is available in Azure Pipelines.
+Make sure you use one of the [recommended Azure Pipelines tasks][az_pipelines_tasks] so that FIC is available in Azure Pipelines.
 
 To use `AzurePipelinesCredential`, configure the following values in the constructor:
 
 1. `clientId`: Client ID from your user-assigned managed identity OR Application (client) ID from your app registration.
 2. `tenantId`: Tenant ID from your user-assigned managed identity OR Directory (tenant) ID from your app registration.
-3. `serviceConnectionId`: The service connection ID is the **GUID representing your service connection**. The value is obtained by looking at the browser's address bar when you navigate to a service connection in the Azure Pipelines. It's the `resourceId` value, as found in the URL's query string.
-   ![resourceId value, as found in the query string of the Azure Resource Manager service connection created in Azure Pipelines](exampleServiceConnectionUrl.png)
-4. `systemAccessToken`: [See how to configure the predefined system variable System.AccessToken for the Azure Pipelines task](https://learn.microsoft.com/azure/devops/pipelines/build/variables?view=azure-devops&tabs=yaml#systemaccesstoken). This is the value you'll pass to the credential's constructor.
+3. `serviceConnectionId`: The service connection ID is the **GUID representing your service connection**. Once you navigate to an Azure Pipelines service connection details page, the value is obtained in one of the following ways:
+    1. Copy the **ID:** value that appears below the service connection name.
+    1. Copy the `resourceId` value from the querystring of the page's URL.
+   ![Places to locate the Azure Resource Manager service connection ID](../images/AzPipelinesServiceConnectionId.png)
+1. `systemAccessToken`: [See how to configure the predefined system variable System.AccessToken for the Azure Pipelines task](https://learn.microsoft.com/azure/devops/pipelines/build/variables?view=azure-devops&tabs=yaml#systemaccesstoken). This is the value you'll pass to the credential's constructor.
 
 ## Example of using an Azure Pipelines task
 
-The following task YAML is an example of configuring the [AzureCLI@2](https://learn.microsoft.com/azure/devops/pipelines/tasks/reference/azure-cli-v2?view=azure-pipelines) task for using service connections federated identity with @azure/identity. See the list of [recommended Azure Pipelines tasks](https://learn.microsoft.com/azure/devops/pipelines/release/troubleshoot-workload-identity?view=azure-devops#review-pipeline-tasks).
+The following task YAML is an example of configuring the [AzureCLI@2](https://learn.microsoft.com/azure/devops/pipelines/tasks/reference/azure-cli-v2?view=azure-pipelines) task for using service connections federated identity with the Azure Identity library. See the list of [recommended Azure Pipelines tasks][az_pipelines_tasks].
 
 ```yml
 trigger:
@@ -62,7 +64,6 @@ var client = new SecretClient(new Uri("https://keyvault-name.vault.azure.net/"),
 
 ***Note:*** This credential is **not** included in the `DefaultAzureCredential` chain.
 
-
 # OnBehalfOfCredential with Managed Identity FIC Example
 
 This example demonstrates the use of the `OnBehalfOfCredential` to authenticate the Key Vault `SecretClient` using a managed identity as the client assertion. More information about the On Behalf Of Flow can be found [here](https://learn.microsoft.com/entra/identity-platform/v2-oauth2-on-behalf-of-flow).
@@ -93,3 +94,6 @@ var credential = new OnBehalfOfCredential(tenantId, clientId, getManagedIdentity
 // Use the credential to authenticate with the Key Vault client.
 var client = new SecretClient(new Uri("https://keyvault-name.vault.azure.net/"), credential);
 ```
+
+<!-- LINKS -->
+[az_pipelines_tasks]: https://aka.ms/azdo-rm-workload-identity-tasks

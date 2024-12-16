@@ -20,13 +20,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         void IJsonModel<ExtendedGremlinGraphResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ExtendedGremlinGraphResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExtendedGremlinGraphResourceInfo)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(Rid))
             {
                 writer.WritePropertyName("_rid"u8);
@@ -42,64 +51,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("_etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(GraphName);
-            if (Optional.IsDefined(IndexingPolicy))
-            {
-                writer.WritePropertyName("indexingPolicy"u8);
-                writer.WriteObjectValue(IndexingPolicy, options);
-            }
-            if (Optional.IsDefined(PartitionKey))
-            {
-                writer.WritePropertyName("partitionKey"u8);
-                writer.WriteObjectValue(PartitionKey, options);
-            }
-            if (Optional.IsDefined(DefaultTtl))
-            {
-                writer.WritePropertyName("defaultTtl"u8);
-                writer.WriteNumberValue(DefaultTtl.Value);
-            }
-            if (Optional.IsDefined(UniqueKeyPolicy))
-            {
-                writer.WritePropertyName("uniqueKeyPolicy"u8);
-                writer.WriteObjectValue(UniqueKeyPolicy, options);
-            }
-            if (Optional.IsDefined(ConflictResolutionPolicy))
-            {
-                writer.WritePropertyName("conflictResolutionPolicy"u8);
-                writer.WriteObjectValue(ConflictResolutionPolicy, options);
-            }
-            if (Optional.IsDefined(AnalyticalStorageTtl))
-            {
-                writer.WritePropertyName("analyticalStorageTtl"u8);
-                writer.WriteNumberValue(AnalyticalStorageTtl.Value);
-            }
-            if (Optional.IsDefined(RestoreParameters))
-            {
-                writer.WritePropertyName("restoreParameters"u8);
-                writer.WriteObjectValue(RestoreParameters, options);
-            }
-            if (Optional.IsDefined(CreateMode))
-            {
-                writer.WritePropertyName("createMode"u8);
-                writer.WriteStringValue(CreateMode.Value.ToString());
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         ExtendedGremlinGraphResourceInfo IJsonModel<ExtendedGremlinGraphResourceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

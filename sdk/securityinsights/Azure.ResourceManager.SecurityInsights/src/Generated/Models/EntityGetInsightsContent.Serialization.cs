@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         void IJsonModel<EntityGetInsightsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<EntityGetInsightsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EntityGetInsightsContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartOn, "O");
             writer.WritePropertyName("endTime"u8);
@@ -60,7 +68,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         EntityGetInsightsContent IJsonModel<EntityGetInsightsContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

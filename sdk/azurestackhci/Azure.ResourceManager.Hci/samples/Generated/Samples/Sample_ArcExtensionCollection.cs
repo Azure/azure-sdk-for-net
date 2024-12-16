@@ -6,22 +6,21 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Hci.Samples
 {
     public partial class Sample_ArcExtensionCollection
     {
-        // List Extensions under ArcSetting resource
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ListExtensionsUnderArcSettingResource()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateArcExtension()
         {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/ListExtensionsByArcSetting.json
-            // this example is just showing the usage of "Extensions_ListByArcSetting" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/PutExtension.json
+            // this example is just showing the usage of "Extensions_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -40,22 +39,35 @@ namespace Azure.ResourceManager.Hci.Samples
             // get the collection of this ArcExtensionResource
             ArcExtensionCollection collection = arcSetting.GetArcExtensions();
 
-            // invoke the operation and iterate over the result
-            await foreach (ArcExtensionResource item in collection.GetAllAsync())
+            // invoke the operation
+            string extensionName = "MicrosoftMonitoringAgent";
+            ArcExtensionData data = new ArcExtensionData
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ArcExtensionData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                Publisher = "Microsoft.Compute",
+                ArcExtensionType = "MicrosoftMonitoringAgent",
+                TypeHandlerVersion = "1.10",
+                Settings = BinaryData.FromObjectAsJson(new
+                {
+                    workspaceId = "xx",
+                }),
+                ProtectedSettings = BinaryData.FromObjectAsJson(new
+                {
+                    workspaceKey = "xx",
+                }),
+                EnableAutomaticUpgrade = false,
+            };
+            ArmOperation<ArcExtensionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, extensionName, data);
+            ArcExtensionResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ArcExtensionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get ArcSettings Extension
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetArcSettingsExtension()
         {
             // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/GetExtension.json
@@ -89,9 +101,45 @@ namespace Azure.ResourceManager.Hci.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get ArcSettings Extension
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListExtensionsUnderArcSettingResource()
+        {
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/ListExtensionsByArcSetting.json
+            // this example is just showing the usage of "Extensions_ListByArcSetting" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ArcSettingResource created on azure
+            // for more information of creating ArcSettingResource, please refer to the document of ArcSettingResource
+            string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
+            string resourceGroupName = "test-rg";
+            string clusterName = "myCluster";
+            string arcSettingName = "default";
+            ResourceIdentifier arcSettingResourceId = ArcSettingResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, arcSettingName);
+            ArcSettingResource arcSetting = client.GetArcSettingResource(arcSettingResourceId);
+
+            // get the collection of this ArcExtensionResource
+            ArcExtensionCollection collection = arcSetting.GetArcExtensions();
+
+            // invoke the operation and iterate over the result
+            await foreach (ArcExtensionResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ArcExtensionData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetArcSettingsExtension()
         {
             // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/GetExtension.json
@@ -121,9 +169,8 @@ namespace Azure.ResourceManager.Hci.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get ArcSettings Extension
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetArcSettingsExtension()
         {
             // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/GetExtension.json
@@ -153,7 +200,7 @@ namespace Azure.ResourceManager.Hci.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -163,58 +210,6 @@ namespace Azure.ResourceManager.Hci.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        // Create Arc Extension
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateArcExtension()
-        {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/PutExtension.json
-            // this example is just showing the usage of "Extensions_Create" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArcSettingResource created on azure
-            // for more information of creating ArcSettingResource, please refer to the document of ArcSettingResource
-            string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
-            string resourceGroupName = "test-rg";
-            string clusterName = "myCluster";
-            string arcSettingName = "default";
-            ResourceIdentifier arcSettingResourceId = ArcSettingResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, arcSettingName);
-            ArcSettingResource arcSetting = client.GetArcSettingResource(arcSettingResourceId);
-
-            // get the collection of this ArcExtensionResource
-            ArcExtensionCollection collection = arcSetting.GetArcExtensions();
-
-            // invoke the operation
-            string extensionName = "MicrosoftMonitoringAgent";
-            ArcExtensionData data = new ArcExtensionData()
-            {
-                Publisher = "Microsoft.Compute",
-                ArcExtensionType = "MicrosoftMonitoringAgent",
-                TypeHandlerVersion = "1.10",
-                Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
-                {
-                    ["workspaceId"] = "xx"
-                }),
-                ProtectedSettings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
-                {
-                    ["workspaceKey"] = "xx"
-                }),
-                EnableAutomaticUpgrade = false,
-            };
-            ArmOperation<ArcExtensionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, extensionName, data);
-            ArcExtensionResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ArcExtensionData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

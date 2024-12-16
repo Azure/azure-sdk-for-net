@@ -11,6 +11,7 @@ using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 using Azure.ResourceManager.ManagedServiceIdentities;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
 {
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
 
         protected async Task<ServiceFabricManagedClusterResource> CreateServiceFabricManagedCluster(ResourceGroupResource resourceGroup, string clusterName)
         {
-            string dnsName = Recording.GenerateAssetName("sfmcnetsdk");
+            string dnsName = Recording.GenerateAssetName("netsdk");
             var data = new ServiceFabricManagedClusterData(DefaultLocation)
             {
                 Sku = new ServiceFabricManagedClustersSku("Standard"),
@@ -89,6 +90,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
                     }
                 }
             };
+            data.Tags.Add(new KeyValuePair<string, string>("SFRP.EnableDiagnosticMI", "true"));
             var clusterLro = await resourceGroup.GetServiceFabricManagedClusters().CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
             return clusterLro.Value;
         }
@@ -105,7 +107,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
                 IsPrimary = isPrimaryNode,
                 VmImageOffer = "WindowsServer",
                 VmImagePublisher = "MicrosoftWindowsServer",
-                VmImageSku = "2019-Datacenter",
+                VmImageSku = "2022-Datacenter",
                 VmImageVersion = "latest",
                 VmInstanceCount = 6,
                 VmSize = "Standard_D2_v2"

@@ -9,5 +9,5 @@ namespace Azure.Provisioning.ServiceBus;
 public partial class MigrationConfiguration
 {
     private partial BicepValue<string> GetNameDefaultValue() =>
-        new StringLiteral("$default");
+        new StringLiteralExpression("$default");
 }

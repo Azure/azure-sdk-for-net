@@ -68,13 +68,13 @@ namespace SignalRServiceExtension.Tests.Utils
             var context = new DefaultHttpContext();
             context.Request.ContentType = contentType;
             context.Request.Method = "Post";
-            context.Request.Headers.Add(Constants.AsrsHubNameHeader, hub);
-            context.Request.Headers.Add(Constants.AsrsCategory, category);
-            context.Request.Headers.Add(Constants.AsrsEvent, @event);
-            context.Request.Headers.Add(Constants.AsrsConnectionIdHeader, connectionId);
+            context.Request.Headers.Append(Constants.AsrsHubNameHeader, hub);
+            context.Request.Headers.Append(Constants.AsrsCategory, category);
+            context.Request.Headers.Append(Constants.AsrsEvent, @event);
+            context.Request.Headers.Append(Constants.AsrsConnectionIdHeader, connectionId);
             if (signatures != null)
             {
-                context.Request.Headers.Add(Constants.AsrsSignature, string.Join(",", signatures));
+                context.Request.Headers.Append(Constants.AsrsSignature, string.Join(",", signatures));
             }
             context.Request.Body = content == null ? Stream.Null : new MemoryStream(content);
 

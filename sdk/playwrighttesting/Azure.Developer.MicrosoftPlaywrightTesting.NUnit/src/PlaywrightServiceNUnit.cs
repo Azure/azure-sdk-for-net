@@ -5,8 +5,9 @@ using Azure.Core;
 using NUnit.Framework;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
-using System.Threading;
+using System;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger;
+using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface;
 
 namespace Azure.Developer.MicrosoftPlaywrightTesting.NUnit;
 
@@ -16,12 +17,13 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.NUnit;
 [SetUpFixture]
 public class PlaywrightServiceNUnit : PlaywrightService
 {
+    private static NUnitFrameworkLogger nunitFrameworkLogger { get; } = new();
     /// <summary>
     /// Initializes a new instance of the <see cref="PlaywrightServiceNUnit"/> class.
     /// </summary>
     /// <param name="credential">The azure token credential to use for authentication.</param>
     public PlaywrightServiceNUnit(TokenCredential? credential = null)
-        : base(playwrightServiceOptions, credential: credential)
+        : base(playwrightServiceOptions, credential: credential, frameworkLogger: nunitFrameworkLogger)
     {
     }
 
@@ -41,12 +43,15 @@ public class PlaywrightServiceNUnit : PlaywrightService
     /// <summary>
     /// Setup the resources utilized by Playwright service.
     /// </summary>
-    /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns></returns>
     [OneTimeSetUp]
-    public async Task SetupAsync(CancellationToken cancellationToken = default)
+    public async Task SetupAsync()
     {
-        await InitializeAsync(cancellationToken).ConfigureAwait(false);
+        if (!UseCloudHostedBrowsers)
+            return;
+        nunitFrameworkLogger.Info("\nRunning tests using Microsoft Playwright Testing service.\n");
+
+        await InitializeAsync().ConfigureAwait(false);
     }
 
     /// <summary>
@@ -64,11 +69,11 @@ public class PlaywrightServiceNUnit : PlaywrightService
         {
             return null;
         }
-        else if (os!.Equals("Windows", System.StringComparison.OrdinalIgnoreCase))
+        else if (os!.Equals("Windows", StringComparison.OrdinalIgnoreCase))
         {
             return OSPlatform.Windows;
         }
-        else if (os.Equals("Linux", System.StringComparison.OrdinalIgnoreCase))
+        else if (os.Equals("Linux", StringComparison.OrdinalIgnoreCase))
         {
             return OSPlatform.Linux;
         }

@@ -11,17 +11,17 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.HybridCompute.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.HybridCompute.Samples
 {
     public partial class Sample_ResourceGroupResourceExtensions
     {
-        // SettingsUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task UpdateTargetResourceSetting_SettingsUpdate()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task UpdateSetting_SettingsUpdate()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-05-20-preview/examples/settings/SettingsUpdate.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-07-31-preview/examples/settings/SettingsUpdate.json
             // this example is just showing the usage of "Settings_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             string baseResourceType = "machines";
             string baseResourceName = "testMachine";
             string settingsResourceName = "default";
-            HybridComputeTargetResourceSettings hybridComputeTargetResourceSettings = new HybridComputeTargetResourceSettings()
+            ArcSettings arcSettings = new ArcSettings
             {
                 GatewayResourceId = new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/hybridRG/providers/Microsoft.HybridCompute/gateways/newGateway"),
             };
-            HybridComputeTargetResourceSettings result = await resourceGroupResource.UpdateTargetResourceSettingAsync(baseProvider, baseResourceType, baseResourceName, settingsResourceName, hybridComputeTargetResourceSettings);
+            ArcSettings result = await resourceGroupResource.UpdateSettingAsync(baseProvider, baseResourceType, baseResourceName, settingsResourceName, arcSettings);
 
             Console.WriteLine($"Succeeded: {result}");
         }

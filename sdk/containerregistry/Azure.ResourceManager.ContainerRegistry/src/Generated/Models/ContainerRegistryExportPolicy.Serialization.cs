@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         void IJsonModel<ContainerRegistryExportPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryExportPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerRegistryExportPolicy)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -47,7 +55,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ContainerRegistryExportPolicy IJsonModel<ContainerRegistryExportPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

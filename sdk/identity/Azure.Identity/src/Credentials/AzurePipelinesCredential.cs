@@ -12,7 +12,9 @@ using Microsoft.Identity.Client;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Credential which authenticates using an Azure Pipelines service connection.
+    /// Credential which authenticates using an Azure Pipelines service connection. For usage instructions, see
+    /// <see href="https://aka.ms/azsdk/net/identity/azurepipelinescredential/usage">Authenticating in Azure
+    /// Pipelines with service connections</see>.
     /// </summary>
     public class AzurePipelinesCredential : TokenCredential
     {
@@ -40,7 +42,7 @@ namespace Azure.Identity
         /// <param name="serviceConnectionId">The service connection Id for the service connection associated with the pipeline.</param>
         /// <param name="systemAccessToken">The pipeline's <see href="https://learn.microsoft.com/azure/devops/pipelines/build/variables?view=azure-devops%26tabs=yaml#systemaccesstoken">System.AccessToken</see> value.</param>
         /// <param name="options">An instance of <see cref="AzurePipelinesCredentialOptions"/>.</param>
-        /// <exception cref="ArgumentNullException">When <paramref name="systemAccessToken"/> is null.</exception>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="tenantId"/>, <paramref name="clientId"/>, <paramref name="serviceConnectionId"/>, or <paramref name="systemAccessToken"/> is null.</exception>
         public AzurePipelinesCredential(string tenantId, string clientId, string serviceConnectionId, string systemAccessToken, AzurePipelinesCredentialOptions options = default)
         {
             Argument.AssertNotNull(systemAccessToken, nameof(systemAccessToken));

@@ -15,71 +15,104 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// EventGridNamespaceClientGroup.
 /// </summary>
-public partial class EventGridNamespaceClientGroup : Resource
+public partial class EventGridNamespaceClientGroup : ProvisionableResource
 {
     /// <summary>
     /// The client group name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Description for the Client Group resource.
     /// </summary>
-    public BicepValue<string> Description { get => _description; set => _description.Assign(value); }
-    private readonly BicepValue<string> _description;
+    public BicepValue<string> Description 
+    {
+        get { Initialize(); return _description!; }
+        set { Initialize(); _description!.Assign(value); }
+    }
+    private BicepValue<string>? _description;
 
     /// <summary>
     /// The grouping query for the clients.             Example :
     /// attributes.keyName IN [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;].
     /// </summary>
-    public BicepValue<string> Query { get => _query; set => _query.Assign(value); }
-    private readonly BicepValue<string> _query;
+    public BicepValue<string> Query 
+    {
+        get { Initialize(); return _query!; }
+        set { Initialize(); _query!.Assign(value); }
+    }
+    private BicepValue<string>? _query;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Provisioning state of the ClientGroup resource.
     /// </summary>
-    public BicepValue<ClientGroupProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<ClientGroupProvisioningState> _provisioningState;
+    public BicepValue<ClientGroupProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<ClientGroupProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent EventGridNamespace.
     /// </summary>
-    public EventGridNamespace? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<EventGridNamespace> _parent;
+    public EventGridNamespace? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<EventGridNamespace>? _parent;
 
     /// <summary>
     /// Creates a new EventGridNamespaceClientGroup.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the EventGridNamespaceClientGroup
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the EventGridNamespaceClientGroup.</param>
-    public EventGridNamespaceClientGroup(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.EventGrid/namespaces/clientGroups", resourceVersion ?? "2024-06-01-preview")
+    public EventGridNamespaceClientGroup(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.EventGrid/namespaces/clientGroups", resourceVersion)
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _description = BicepValue<string>.DefineProperty(this, "Description", ["properties", "description"]);
-        _query = BicepValue<string>.DefineProperty(this, "Query", ["properties", "query"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _provisioningState = BicepValue<ClientGroupProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<EventGridNamespace>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of
+    /// EventGridNamespaceClientGroup.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _description = DefineProperty<string>("Description", ["properties", "description"]);
+        _query = DefineProperty<string>("Query", ["properties", "query"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningState = DefineProperty<ClientGroupProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<EventGridNamespace>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -87,16 +120,11 @@ public partial class EventGridNamespaceClientGroup : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-06-01-preview.
-        /// </summary>
-        public static readonly string V2024_06_01_preview = "2024-06-01-preview";
     }
-
     /// <summary>
     /// Creates a reference to an existing EventGridNamespaceClientGroup.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the EventGridNamespaceClientGroup
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -104,6 +132,6 @@ public partial class EventGridNamespaceClientGroup : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the EventGridNamespaceClientGroup.</param>
     /// <returns>The existing EventGridNamespaceClientGroup resource.</returns>
-    public static EventGridNamespaceClientGroup FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static EventGridNamespaceClientGroup FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

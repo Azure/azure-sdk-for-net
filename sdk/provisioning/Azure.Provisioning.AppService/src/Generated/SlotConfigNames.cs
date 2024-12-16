@@ -16,77 +16,113 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// SlotConfigNames.
 /// </summary>
-public partial class SlotConfigNames : Resource
+public partial class SlotConfigNames : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// List of application settings names.
     /// </summary>
-    public BicepList<string> AppSettingNames { get => _appSettingNames; set => _appSettingNames.Assign(value); }
-    private readonly BicepList<string> _appSettingNames;
+    public BicepList<string> AppSettingNames 
+    {
+        get { Initialize(); return _appSettingNames!; }
+        set { Initialize(); _appSettingNames!.Assign(value); }
+    }
+    private BicepList<string>? _appSettingNames;
 
     /// <summary>
     /// List of external Azure storage account identifiers.
     /// </summary>
-    public BicepList<string> AzureStorageConfigNames { get => _azureStorageConfigNames; set => _azureStorageConfigNames.Assign(value); }
-    private readonly BicepList<string> _azureStorageConfigNames;
+    public BicepList<string> AzureStorageConfigNames 
+    {
+        get { Initialize(); return _azureStorageConfigNames!; }
+        set { Initialize(); _azureStorageConfigNames!.Assign(value); }
+    }
+    private BicepList<string>? _azureStorageConfigNames;
 
     /// <summary>
     /// List of connection string names.
     /// </summary>
-    public BicepList<string> ConnectionStringNames { get => _connectionStringNames; set => _connectionStringNames.Assign(value); }
-    private readonly BicepList<string> _connectionStringNames;
+    public BicepList<string> ConnectionStringNames 
+    {
+        get { Initialize(); return _connectionStringNames!; }
+        set { Initialize(); _connectionStringNames!.Assign(value); }
+    }
+    private BicepList<string>? _connectionStringNames;
 
     /// <summary>
     /// Kind of resource.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Gets or sets a reference to the parent WebSite.
     /// </summary>
-    public WebSite? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<WebSite> _parent;
+    public WebSite? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<WebSite>? _parent;
 
     /// <summary>
     /// Creates a new SlotConfigNames.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SlotConfigNames resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
     /// and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the SlotConfigNames.</param>
-    public SlotConfigNames(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Web/sites/config", resourceVersion ?? "2024-04-01")
+    public SlotConfigNames(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/sites/config", resourceVersion ?? "2024-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true);
-        _appSettingNames = BicepList<string>.DefineProperty(this, "AppSettingNames", ["properties", "appSettingNames"]);
-        _azureStorageConfigNames = BicepList<string>.DefineProperty(this, "AzureStorageConfigNames", ["properties", "azureStorageConfigNames"]);
-        _connectionStringNames = BicepList<string>.DefineProperty(this, "ConnectionStringNames", ["properties", "connectionStringNames"]);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _parent = ResourceReference<WebSite>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of SlotConfigNames.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _appSettingNames = DefineListProperty<string>("AppSettingNames", ["properties", "appSettingNames"]);
+        _azureStorageConfigNames = DefineListProperty<string>("AzureStorageConfigNames", ["properties", "azureStorageConfigNames"]);
+        _connectionStringNames = DefineListProperty<string>("ConnectionStringNames", ["properties", "connectionStringNames"]);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _parent = DefineResource<WebSite>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -253,7 +289,7 @@ public partial class SlotConfigNames : Resource
     /// <summary>
     /// Creates a reference to an existing SlotConfigNames.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the SlotConfigNames resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
@@ -261,6 +297,6 @@ public partial class SlotConfigNames : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the SlotConfigNames.</param>
     /// <returns>The existing SlotConfigNames resource.</returns>
-    public static SlotConfigNames FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static SlotConfigNames FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

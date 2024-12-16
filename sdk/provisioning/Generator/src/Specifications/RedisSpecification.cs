@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Provisioning.Generator.Model;
+using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Redis;
 using Azure.ResourceManager.Redis.Models;
 
@@ -20,6 +21,7 @@ public class RedisSpecification() :
         CustomizeModel<RedisResource>(m => m.Name = "RedisResource");
         CustomizeProperty<RedisAccessKeys>("PrimaryKey", p => p.IsSecure = true);
         CustomizeProperty<RedisAccessKeys>("SecondaryKey", p => p.IsSecure = true);
+        CustomizePropertyIsoDuration<RedisPatchScheduleSetting>("MaintenanceWindow");
 
         // Naming requirements
         AddNameRequirements<RedisResource>(min: 1, max: 63, lower: true, upper: true, digits: true, hyphen: true);

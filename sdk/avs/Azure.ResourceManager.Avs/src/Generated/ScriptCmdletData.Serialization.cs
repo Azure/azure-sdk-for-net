@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.Avs
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
@@ -48,6 +53,11 @@ namespace Azure.ResourceManager.Avs
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");
+            }
+            if (options.Format != "W" && Optional.IsDefined(Audience))
+            {
+                writer.WritePropertyName("audience"u8);
+                writer.WriteStringValue(Audience.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Parameters))
             {
@@ -86,8 +96,10 @@ namespace Azure.ResourceManager.Avs
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            ScriptCmdletProvisioningState? provisioningState = default;
             string description = default;
             TimeSpan? timeout = default;
+            ScriptCmdletAudience? audience = default;
             IReadOnlyList<ScriptParameter> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -126,6 +138,15 @@ namespace Azure.ResourceManager.Avs
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new ScriptCmdletProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
@@ -138,6 +159,15 @@ namespace Azure.ResourceManager.Avs
                                 continue;
                             }
                             timeout = property0.Value.GetTimeSpan("P");
+                            continue;
+                        }
+                        if (property0.NameEquals("audience"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            audience = new ScriptCmdletAudience(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("parameters"u8))
@@ -168,8 +198,10 @@ namespace Azure.ResourceManager.Avs
                 name,
                 type,
                 systemData,
+                provisioningState,
                 description,
                 timeout,
+                audience,
                 parameters ?? new ChangeTrackingList<ScriptParameter>(),
                 serializedAdditionalRawData);
         }

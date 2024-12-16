@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Synapse.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Synapse.Samples
 {
     public partial class Sample_SynapseSqlPoolBlobAuditingPolicyResource
     {
-        // Get blob auditing policy of a SQL Analytics pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetBlobAuditingPolicyOfASQLAnalyticsPool()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/GetSqlPoolBlobAuditing.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.Synapse.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or update a database's blob auditing policy with all parameters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateADatabaseSBlobAuditingPolicyWithAllParameters()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/CreateOrUpdateSqlPoolBlobAuditingWithAllParameters.json
@@ -70,16 +69,13 @@ namespace Azure.ResourceManager.Synapse.Samples
             SynapseSqlPoolBlobAuditingPolicyResource synapseSqlPoolBlobAuditingPolicy = client.GetSynapseSqlPoolBlobAuditingPolicyResource(synapseSqlPoolBlobAuditingPolicyResourceId);
 
             // invoke the operation
-            SynapseSqlPoolBlobAuditingPolicyData data = new SynapseSqlPoolBlobAuditingPolicyData()
+            SynapseSqlPoolBlobAuditingPolicyData data = new SynapseSqlPoolBlobAuditingPolicyData
             {
                 State = SynapseBlobAuditingPolicyState.Enabled,
                 StorageEndpoint = "https://mystorage.blob.core.windows.net",
                 StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
                 RetentionDays = 6,
-                AuditActionsAndGroups =
-{
-"DATABASE_LOGOUT_GROUP","DATABASE_ROLE_MEMBER_CHANGE_GROUP","UPDATE on database::TestDatabaseName by public"
-},
+                AuditActionsAndGroups = { "DATABASE_LOGOUT_GROUP", "DATABASE_ROLE_MEMBER_CHANGE_GROUP", "UPDATE on database::TestDatabaseName by public" },
                 StorageAccountSubscriptionId = Guid.Parse("00000000-1234-0000-5678-000000000000"),
                 IsStorageSecondaryKeyInUse = false,
                 IsAzureMonitorTargetEnabled = true,
@@ -94,9 +90,8 @@ namespace Azure.ResourceManager.Synapse.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create or update a database's blob auditing policy with minimal parameters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateADatabaseSBlobAuditingPolicyWithMinimalParameters()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/CreateOrUpdateSqlPoolBlobAuditingWithMinParameters.json
@@ -117,7 +112,7 @@ namespace Azure.ResourceManager.Synapse.Samples
             SynapseSqlPoolBlobAuditingPolicyResource synapseSqlPoolBlobAuditingPolicy = client.GetSynapseSqlPoolBlobAuditingPolicyResource(synapseSqlPoolBlobAuditingPolicyResourceId);
 
             // invoke the operation
-            SynapseSqlPoolBlobAuditingPolicyData data = new SynapseSqlPoolBlobAuditingPolicyData()
+            SynapseSqlPoolBlobAuditingPolicyData data = new SynapseSqlPoolBlobAuditingPolicyData
             {
                 State = SynapseBlobAuditingPolicyState.Enabled,
                 StorageEndpoint = "https://mystorage.blob.core.windows.net",

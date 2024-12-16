@@ -31,7 +31,9 @@ public class ProvisioningDeploymentOptions
             {
                 // TODO: Hook into IConfig story for constructing ArmClient too
                 ArmClientOptions options = new();
+#if EXPERIMENTAL_PROVISIONING
                 ConfigureClientOptionsCallback?.Invoke(options);
+#endif
                 _armClient = new ArmClient(DefaultArmCredential, DefaultSubscriptionId, options);
             }
             return _armClient;
@@ -133,6 +135,7 @@ public class ProvisioningDeploymentOptions
     }
     private TokenCredential? _defaultClientCredential;
 
+#if EXPERIMENTAL_PROVISIONING
     /// <summary>
     /// Optional callback used to configure any <see cref="ClientOptions"/>
     /// instance used for creating <see cref="ArmClient"/> or
@@ -142,6 +145,7 @@ public class ProvisioningDeploymentOptions
     /// Azure client.
     /// </summary>
     public Action<ClientOptions>? ConfigureClientOptionsCallback { get; set; }
+#endif
 
     // TODO: Default CancellationToken to link to all async operations?
 }

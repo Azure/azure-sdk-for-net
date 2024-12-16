@@ -6,6 +6,7 @@ using System.Text.Json;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Storage;
 using Azure.Provisioning.Tests;
+using Microsoft.Identity.Client.Extensions.Msal;
 using NUnit.Framework;
 
 namespace Azure.Provisioning.Deployment.Tests;
@@ -19,7 +20,14 @@ internal class ExtensionTests(bool async)
         if (SkipTools) { return; }
 
         Infrastructure infra = new();
-        StorageAccount resource = StorageResources.CreateAccount("storage");
+        StorageAccount resource =
+            new("storage", StorageAccount.ResourceVersions.V2023_01_01)
+            {
+                Kind = StorageKind.StorageV2,
+                Sku = new StorageSku { Name = StorageSkuName.StandardLrs },
+                IsHnsEnabled = true,
+                AllowBlobPublicAccess = false
+            };
         infra.Add(resource);
 
         // Lint
@@ -74,7 +82,14 @@ internal class ExtensionTests(bool async)
         if (SkipTools) { return; }
 
         Infrastructure infra = new();
-        StorageAccount resource = StorageResources.CreateAccount("storage");
+        StorageAccount resource =
+            new("storage", StorageAccount.ResourceVersions.V2023_01_01)
+            {
+                Kind = StorageKind.StorageV2,
+                Sku = new StorageSku { Name = StorageSkuName.StandardLrs },
+                IsHnsEnabled = true,
+                AllowBlobPublicAccess = false
+            };
         infra.Add(resource);
 
         ProvisioningPlan plan = infra.Build();

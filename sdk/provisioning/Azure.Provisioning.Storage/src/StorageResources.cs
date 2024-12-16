@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#if EXPERIMENTAL_PROVISIONING
+
 using System;
 using Azure.Core;
 using Azure.Provisioning.Storage;
@@ -54,3 +56,5 @@ public class StorageResources
             } :
         throw new ArgumentOutOfRangeException(nameof(infrastructureVersion), $"Expected a value between 1 and 2 inclusive, not {infrastructureVersion}.");
 }
+
+#endif

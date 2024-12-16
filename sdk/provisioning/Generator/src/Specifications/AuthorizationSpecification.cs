@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Provisioning.Generator.Model;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Authorization;
 using Azure.ResourceManager.Authorization.Models;
 using Azure.ResourceManager.Resources;
@@ -26,6 +27,9 @@ public class AuthorizationSpecification : Specification
         CustomizeProperty<AuthorizationRoleDefinitionResource>("Name", p => p.GenerateDefaultValue = true);
         CustomizeProperty<RoleAssignmentResource>("Name", p => p.GenerateDefaultValue = true);
         CustomizeProperty<RoleAssignmentResource>("Scope", p => { p.IsReadOnly = false; p.Path = ["scope"]; });
+        CustomizePropertyIsoDuration<RoleManagementPolicyExpirationRule>("MaximumDuration");
+        CustomizePropertyIsoDuration<RoleAssignmentScheduleRequestResource>("Duration");
+        CustomizePropertyIsoDuration<RoleEligibilityScheduleRequestResource>("Duration");
 
         // Naming requirements
         // RoleAssignmentResource and AuthorizationRoleDefinitionResource must be GUIDs - handled in code

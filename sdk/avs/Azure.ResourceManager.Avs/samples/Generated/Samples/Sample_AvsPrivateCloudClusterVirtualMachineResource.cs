@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Avs.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Avs.Samples
 {
     public partial class Sample_AvsPrivateCloudClusterVirtualMachineResource
     {
-        // GetVirtualMachine
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetVirtualMachine()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_VirtualMachinesGet()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/VirtualMachines_Get.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/VirtualMachines_Get.json
             // this example is just showing the usage of "VirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -48,12 +48,11 @@ namespace Azure.ResourceManager.Avs.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // VirtualMachine_RestrictMovement
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task RestrictMovement_VirtualMachineRestrictMovement()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task RestrictMovement_VirtualMachinesRestrictMovement()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/VirtualMachines_RestrictMovement.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/VirtualMachines_RestrictMovement.json
             // this example is just showing the usage of "VirtualMachines_RestrictMovement" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -72,13 +71,13 @@ namespace Azure.ResourceManager.Avs.Samples
             AvsPrivateCloudClusterVirtualMachineResource avsPrivateCloudClusterVirtualMachine = client.GetAvsPrivateCloudClusterVirtualMachineResource(avsPrivateCloudClusterVirtualMachineResourceId);
 
             // invoke the operation
-            AvsPrivateCloudClusterVirtualMachineRestrictMovement restrictMovement = new AvsPrivateCloudClusterVirtualMachineRestrictMovement()
+            AvsPrivateCloudClusterVirtualMachineRestrictMovement restrictMovement = new AvsPrivateCloudClusterVirtualMachineRestrictMovement
             {
                 RestrictMovement = VirtualMachineRestrictMovementState.Enabled,
             };
             await avsPrivateCloudClusterVirtualMachine.RestrictMovementAsync(WaitUntil.Completed, restrictMovement);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }

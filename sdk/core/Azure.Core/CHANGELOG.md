@@ -8,7 +8,17 @@
 
 ### Bugs Fixed
 
+- Fixed an issue where `BearerTokenAuthenticationPolicy` throws `ArgumentOutOfRangeException` if the `ExpiresOn` property of the token is the default value. ([#47040](https://github.com/Azure/azure-sdk-for-net/pull/47040))
+
 ### Other Changes
+
+- Use `BinaryData.Empty` for `PipelineResponse.Content` when HTTP message has no content.
+
+## 1.44.1 (2024-10-09)
+
+### Other Changes
+
+- Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix ([#46134](https://github.com/Azure/azure-sdk-for-net/pull/46508)).
 
 ## 1.44.0 (2024-10-03)
 

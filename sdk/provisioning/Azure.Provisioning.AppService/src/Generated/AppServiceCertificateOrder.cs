@@ -16,207 +16,303 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// AppServiceCertificateOrder.
 /// </summary>
-public partial class AppServiceCertificateOrder : Resource
+public partial class AppServiceCertificateOrder : ProvisionableResource
 {
     /// <summary>
     /// Name of the certificate order.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// State of the Key Vault secret.
     /// </summary>
-    public BicepDictionary<AppServiceCertificateProperties> Certificates { get => _certificates; set => _certificates.Assign(value); }
-    private readonly BicepDictionary<AppServiceCertificateProperties> _certificates;
+    public BicepDictionary<AppServiceCertificateProperties> Certificates 
+    {
+        get { Initialize(); return _certificates!; }
+        set { Initialize(); _certificates!.Assign(value); }
+    }
+    private BicepDictionary<AppServiceCertificateProperties>? _certificates;
 
     /// <summary>
     /// Last CSR that was created for this order.
     /// </summary>
-    public BicepValue<string> Csr { get => _csr; set => _csr.Assign(value); }
-    private readonly BicepValue<string> _csr;
+    public BicepValue<string> Csr 
+    {
+        get { Initialize(); return _csr!; }
+        set { Initialize(); _csr!.Assign(value); }
+    }
+    private BicepValue<string>? _csr;
 
     /// <summary>
     /// Certificate distinguished name.
     /// </summary>
-    public BicepValue<string> DistinguishedName { get => _distinguishedName; set => _distinguishedName.Assign(value); }
-    private readonly BicepValue<string> _distinguishedName;
+    public BicepValue<string> DistinguishedName 
+    {
+        get { Initialize(); return _distinguishedName!; }
+        set { Initialize(); _distinguishedName!.Assign(value); }
+    }
+    private BicepValue<string>? _distinguishedName;
 
     /// <summary>
     /// &lt;code&gt;true&lt;/code&gt; if the certificate should be
     /// automatically renewed when it expires; otherwise,
     /// &lt;code&gt;false&lt;/code&gt;.
     /// </summary>
-    public BicepValue<bool> IsAutoRenew { get => _isAutoRenew; set => _isAutoRenew.Assign(value); }
-    private readonly BicepValue<bool> _isAutoRenew;
+    public BicepValue<bool> IsAutoRenew 
+    {
+        get { Initialize(); return _isAutoRenew!; }
+        set { Initialize(); _isAutoRenew!.Assign(value); }
+    }
+    private BicepValue<bool>? _isAutoRenew;
 
     /// <summary>
     /// Certificate key size.
     /// </summary>
-    public BicepValue<int> KeySize { get => _keySize; set => _keySize.Assign(value); }
-    private readonly BicepValue<int> _keySize;
+    public BicepValue<int> KeySize 
+    {
+        get { Initialize(); return _keySize!; }
+        set { Initialize(); _keySize!.Assign(value); }
+    }
+    private BicepValue<int>? _keySize;
 
     /// <summary>
     /// Kind of resource.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// Certificate product type.
     /// </summary>
-    public BicepValue<CertificateProductType> ProductType { get => _productType; set => _productType.Assign(value); }
-    private readonly BicepValue<CertificateProductType> _productType;
+    public BicepValue<CertificateProductType> ProductType 
+    {
+        get { Initialize(); return _productType!; }
+        set { Initialize(); _productType!.Assign(value); }
+    }
+    private BicepValue<CertificateProductType>? _productType;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Duration in years (must be 1).
     /// </summary>
-    public BicepValue<int> ValidityInYears { get => _validityInYears; set => _validityInYears.Assign(value); }
-    private readonly BicepValue<int> _validityInYears;
+    public BicepValue<int> ValidityInYears 
+    {
+        get { Initialize(); return _validityInYears!; }
+        set { Initialize(); _validityInYears!.Assign(value); }
+    }
+    private BicepValue<int>? _validityInYears;
 
     /// <summary>
     /// Reasons why App Service Certificate is not renewable at the current
     /// moment.
     /// </summary>
-    public BicepList<AppServiceCertificateNotRenewableReason> AppServiceCertificateNotRenewableReasons { get => _appServiceCertificateNotRenewableReasons; }
-    private readonly BicepList<AppServiceCertificateNotRenewableReason> _appServiceCertificateNotRenewableReasons;
+    public BicepList<AppServiceCertificateNotRenewableReason> AppServiceCertificateNotRenewableReasons 
+    {
+        get { Initialize(); return _appServiceCertificateNotRenewableReasons!; }
+    }
+    private BicepList<AppServiceCertificateNotRenewableReason>? _appServiceCertificateNotRenewableReasons;
 
     /// <summary>
     /// Contact info.
     /// </summary>
-    public BicepValue<CertificateOrderContact> Contact { get => _contact; }
-    private readonly BicepValue<CertificateOrderContact> _contact;
+    public CertificateOrderContact Contact 
+    {
+        get { Initialize(); return _contact!; }
+    }
+    private CertificateOrderContact? _contact;
 
     /// <summary>
     /// Domain verification token.
     /// </summary>
-    public BicepValue<string> DomainVerificationToken { get => _domainVerificationToken; }
-    private readonly BicepValue<string> _domainVerificationToken;
+    public BicepValue<string> DomainVerificationToken 
+    {
+        get { Initialize(); return _domainVerificationToken!; }
+    }
+    private BicepValue<string>? _domainVerificationToken;
 
     /// <summary>
     /// Certificate expiration time.
     /// </summary>
-    public BicepValue<DateTimeOffset> ExpireOn { get => _expireOn; }
-    private readonly BicepValue<DateTimeOffset> _expireOn;
+    public BicepValue<DateTimeOffset> ExpireOn 
+    {
+        get { Initialize(); return _expireOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _expireOn;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Intermediate certificate.
     /// </summary>
-    public BicepValue<AppServiceCertificateDetails> Intermediate { get => _intermediate; }
-    private readonly BicepValue<AppServiceCertificateDetails> _intermediate;
+    public AppServiceCertificateDetails Intermediate 
+    {
+        get { Initialize(); return _intermediate!; }
+    }
+    private AppServiceCertificateDetails? _intermediate;
 
     /// <summary>
     /// &lt;code&gt;true&lt;/code&gt; if private key is external; otherwise,
     /// &lt;code&gt;false&lt;/code&gt;.
     /// </summary>
-    public BicepValue<bool> IsPrivateKeyExternal { get => _isPrivateKeyExternal; }
-    private readonly BicepValue<bool> _isPrivateKeyExternal;
+    public BicepValue<bool> IsPrivateKeyExternal 
+    {
+        get { Initialize(); return _isPrivateKeyExternal!; }
+    }
+    private BicepValue<bool>? _isPrivateKeyExternal;
 
     /// <summary>
     /// Certificate last issuance time.
     /// </summary>
-    public BicepValue<DateTimeOffset> LastCertificateIssuedOn { get => _lastCertificateIssuedOn; }
-    private readonly BicepValue<DateTimeOffset> _lastCertificateIssuedOn;
+    public BicepValue<DateTimeOffset> LastCertificateIssuedOn 
+    {
+        get { Initialize(); return _lastCertificateIssuedOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _lastCertificateIssuedOn;
 
     /// <summary>
     /// Time stamp when the certificate would be auto renewed next.
     /// </summary>
-    public BicepValue<DateTimeOffset> NextAutoRenewTimeStamp { get => _nextAutoRenewTimeStamp; }
-    private readonly BicepValue<DateTimeOffset> _nextAutoRenewTimeStamp;
+    public BicepValue<DateTimeOffset> NextAutoRenewTimeStamp 
+    {
+        get { Initialize(); return _nextAutoRenewTimeStamp!; }
+    }
+    private BicepValue<DateTimeOffset>? _nextAutoRenewTimeStamp;
 
     /// <summary>
     /// Status of certificate order.
     /// </summary>
-    public BicepValue<ProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<ProvisioningState> _provisioningState;
+    public BicepValue<ProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<ProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Root certificate.
     /// </summary>
-    public BicepValue<AppServiceCertificateDetails> Root { get => _root; }
-    private readonly BicepValue<AppServiceCertificateDetails> _root;
+    public AppServiceCertificateDetails Root 
+    {
+        get { Initialize(); return _root!; }
+    }
+    private AppServiceCertificateDetails? _root;
 
     /// <summary>
     /// Current serial number of the certificate.
     /// </summary>
-    public BicepValue<string> SerialNumber { get => _serialNumber; }
-    private readonly BicepValue<string> _serialNumber;
+    public BicepValue<string> SerialNumber 
+    {
+        get { Initialize(); return _serialNumber!; }
+    }
+    private BicepValue<string>? _serialNumber;
 
     /// <summary>
     /// Signed certificate.
     /// </summary>
-    public BicepValue<AppServiceCertificateDetails> SignedCertificate { get => _signedCertificate; }
-    private readonly BicepValue<AppServiceCertificateDetails> _signedCertificate;
+    public AppServiceCertificateDetails SignedCertificate 
+    {
+        get { Initialize(); return _signedCertificate!; }
+    }
+    private AppServiceCertificateDetails? _signedCertificate;
 
     /// <summary>
     /// Current order status.
     /// </summary>
-    public BicepValue<CertificateOrderStatus> Status { get => _status; }
-    private readonly BicepValue<CertificateOrderStatus> _status;
+    public BicepValue<CertificateOrderStatus> Status 
+    {
+        get { Initialize(); return _status!; }
+    }
+    private BicepValue<CertificateOrderStatus>? _status;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new AppServiceCertificateOrder.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the AppServiceCertificateOrder
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the AppServiceCertificateOrder.</param>
-    public AppServiceCertificateOrder(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.CertificateRegistration/certificateOrders", resourceVersion ?? "2024-04-01")
+    public AppServiceCertificateOrder(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.CertificateRegistration/certificateOrders", resourceVersion ?? "2024-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _certificates = BicepDictionary<AppServiceCertificateProperties>.DefineProperty(this, "Certificates", ["properties", "certificates"]);
-        _csr = BicepValue<string>.DefineProperty(this, "Csr", ["properties", "csr"]);
-        _distinguishedName = BicepValue<string>.DefineProperty(this, "DistinguishedName", ["properties", "distinguishedName"]);
-        _isAutoRenew = BicepValue<bool>.DefineProperty(this, "IsAutoRenew", ["properties", "autoRenew"]);
-        _keySize = BicepValue<int>.DefineProperty(this, "KeySize", ["properties", "keySize"]);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
-        _productType = BicepValue<CertificateProductType>.DefineProperty(this, "ProductType", ["properties", "productType"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _validityInYears = BicepValue<int>.DefineProperty(this, "ValidityInYears", ["properties", "validityInYears"]);
-        _appServiceCertificateNotRenewableReasons = BicepList<AppServiceCertificateNotRenewableReason>.DefineProperty(this, "AppServiceCertificateNotRenewableReasons", ["properties", "appServiceCertificateNotRenewableReasons"], isOutput: true);
-        _contact = BicepValue<CertificateOrderContact>.DefineProperty(this, "Contact", ["properties", "contact"], isOutput: true);
-        _domainVerificationToken = BicepValue<string>.DefineProperty(this, "DomainVerificationToken", ["properties", "domainVerificationToken"], isOutput: true);
-        _expireOn = BicepValue<DateTimeOffset>.DefineProperty(this, "ExpireOn", ["properties", "expirationTime"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _intermediate = BicepValue<AppServiceCertificateDetails>.DefineProperty(this, "Intermediate", ["properties", "intermediate"], isOutput: true);
-        _isPrivateKeyExternal = BicepValue<bool>.DefineProperty(this, "IsPrivateKeyExternal", ["properties", "isPrivateKeyExternal"], isOutput: true);
-        _lastCertificateIssuedOn = BicepValue<DateTimeOffset>.DefineProperty(this, "LastCertificateIssuedOn", ["properties", "lastCertificateIssuanceTime"], isOutput: true);
-        _nextAutoRenewTimeStamp = BicepValue<DateTimeOffset>.DefineProperty(this, "NextAutoRenewTimeStamp", ["properties", "nextAutoRenewalTimeStamp"], isOutput: true);
-        _provisioningState = BicepValue<ProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _root = BicepValue<AppServiceCertificateDetails>.DefineProperty(this, "Root", ["properties", "root"], isOutput: true);
-        _serialNumber = BicepValue<string>.DefineProperty(this, "SerialNumber", ["properties", "serialNumber"], isOutput: true);
-        _signedCertificate = BicepValue<AppServiceCertificateDetails>.DefineProperty(this, "SignedCertificate", ["properties", "signedCertificate"], isOutput: true);
-        _status = BicepValue<CertificateOrderStatus>.DefineProperty(this, "Status", ["properties", "status"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of AppServiceCertificateOrder.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _certificates = DefineDictionaryProperty<AppServiceCertificateProperties>("Certificates", ["properties", "certificates"]);
+        _csr = DefineProperty<string>("Csr", ["properties", "csr"]);
+        _distinguishedName = DefineProperty<string>("DistinguishedName", ["properties", "distinguishedName"]);
+        _isAutoRenew = DefineProperty<bool>("IsAutoRenew", ["properties", "autoRenew"]);
+        _keySize = DefineProperty<int>("KeySize", ["properties", "keySize"]);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
+        _productType = DefineProperty<CertificateProductType>("ProductType", ["properties", "productType"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _validityInYears = DefineProperty<int>("ValidityInYears", ["properties", "validityInYears"]);
+        _appServiceCertificateNotRenewableReasons = DefineListProperty<AppServiceCertificateNotRenewableReason>("AppServiceCertificateNotRenewableReasons", ["properties", "appServiceCertificateNotRenewableReasons"], isOutput: true);
+        _contact = DefineModelProperty<CertificateOrderContact>("Contact", ["properties", "contact"], isOutput: true);
+        _domainVerificationToken = DefineProperty<string>("DomainVerificationToken", ["properties", "domainVerificationToken"], isOutput: true);
+        _expireOn = DefineProperty<DateTimeOffset>("ExpireOn", ["properties", "expirationTime"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _intermediate = DefineModelProperty<AppServiceCertificateDetails>("Intermediate", ["properties", "intermediate"], isOutput: true);
+        _isPrivateKeyExternal = DefineProperty<bool>("IsPrivateKeyExternal", ["properties", "isPrivateKeyExternal"], isOutput: true);
+        _lastCertificateIssuedOn = DefineProperty<DateTimeOffset>("LastCertificateIssuedOn", ["properties", "lastCertificateIssuanceTime"], isOutput: true);
+        _nextAutoRenewTimeStamp = DefineProperty<DateTimeOffset>("NextAutoRenewTimeStamp", ["properties", "nextAutoRenewalTimeStamp"], isOutput: true);
+        _provisioningState = DefineProperty<ProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _root = DefineModelProperty<AppServiceCertificateDetails>("Root", ["properties", "root"], isOutput: true);
+        _serialNumber = DefineProperty<string>("SerialNumber", ["properties", "serialNumber"], isOutput: true);
+        _signedCertificate = DefineModelProperty<AppServiceCertificateDetails>("SignedCertificate", ["properties", "signedCertificate"], isOutput: true);
+        _status = DefineProperty<CertificateOrderStatus>("Status", ["properties", "status"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>
@@ -308,7 +404,7 @@ public partial class AppServiceCertificateOrder : Resource
     /// <summary>
     /// Creates a reference to an existing AppServiceCertificateOrder.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the AppServiceCertificateOrder
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -316,6 +412,6 @@ public partial class AppServiceCertificateOrder : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the AppServiceCertificateOrder.</param>
     /// <returns>The existing AppServiceCertificateOrder resource.</returns>
-    public static AppServiceCertificateOrder FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static AppServiceCertificateOrder FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

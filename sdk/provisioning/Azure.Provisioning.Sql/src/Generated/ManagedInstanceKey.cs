@@ -15,94 +15,135 @@ namespace Azure.Provisioning.Sql;
 /// <summary>
 /// ManagedInstanceKey.
 /// </summary>
-public partial class ManagedInstanceKey : Resource
+public partial class ManagedInstanceKey : ProvisionableResource
 {
     /// <summary>
     /// The name of the managed instance key to be operated on (updated or
     /// created).
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// The key type like &apos;ServiceManaged&apos;, &apos;AzureKeyVault&apos;.
     /// </summary>
-    public BicepValue<SqlServerKeyType> ServerKeyType { get => _serverKeyType; set => _serverKeyType.Assign(value); }
-    private readonly BicepValue<SqlServerKeyType> _serverKeyType;
+    public BicepValue<SqlServerKeyType> ServerKeyType 
+    {
+        get { Initialize(); return _serverKeyType!; }
+        set { Initialize(); _serverKeyType!.Assign(value); }
+    }
+    private BicepValue<SqlServerKeyType>? _serverKeyType;
 
     /// <summary>
     /// The URI of the key. If the ServerKeyType is AzureKeyVault, then the URI
     /// is required.
     /// </summary>
-    public BicepValue<Uri> Uri { get => _uri; set => _uri.Assign(value); }
-    private readonly BicepValue<Uri> _uri;
+    public BicepValue<Uri> Uri 
+    {
+        get { Initialize(); return _uri!; }
+        set { Initialize(); _uri!.Assign(value); }
+    }
+    private BicepValue<Uri>? _uri;
 
     /// <summary>
     /// The key creation date.
     /// </summary>
-    public BicepValue<DateTimeOffset> CreatedOn { get => _createdOn; }
-    private readonly BicepValue<DateTimeOffset> _createdOn;
+    public BicepValue<DateTimeOffset> CreatedOn 
+    {
+        get { Initialize(); return _createdOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _createdOn;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Key auto rotation opt-in flag. Either true or false.
     /// </summary>
-    public BicepValue<bool> IsAutoRotationEnabled { get => _isAutoRotationEnabled; }
-    private readonly BicepValue<bool> _isAutoRotationEnabled;
+    public BicepValue<bool> IsAutoRotationEnabled 
+    {
+        get { Initialize(); return _isAutoRotationEnabled!; }
+    }
+    private BicepValue<bool>? _isAutoRotationEnabled;
 
     /// <summary>
     /// Kind of encryption protector. This is metadata used for the Azure
     /// portal experience.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Thumbprint of the key.
     /// </summary>
-    public BicepValue<string> Thumbprint { get => _thumbprint; }
-    private readonly BicepValue<string> _thumbprint;
+    public BicepValue<string> Thumbprint 
+    {
+        get { Initialize(); return _thumbprint!; }
+    }
+    private BicepValue<string>? _thumbprint;
 
     /// <summary>
     /// Gets or sets a reference to the parent ManagedInstance.
     /// </summary>
-    public ManagedInstance? Parent { get => _parent!.Value; set => _parent!.Value = value; }
-    private readonly ResourceReference<ManagedInstance> _parent;
+    public ManagedInstance? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<ManagedInstance>? _parent;
 
     /// <summary>
     /// Creates a new ManagedInstanceKey.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ManagedInstanceKey resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
     /// and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstanceKey.</param>
-    public ManagedInstanceKey(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Sql/managedInstances/keys", resourceVersion ?? "2021-11-01")
+    public ManagedInstanceKey(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Sql/managedInstances/keys", resourceVersion ?? "2021-11-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _serverKeyType = BicepValue<SqlServerKeyType>.DefineProperty(this, "ServerKeyType", ["properties", "serverKeyType"]);
-        _uri = BicepValue<Uri>.DefineProperty(this, "Uri", ["properties", "uri"]);
-        _createdOn = BicepValue<DateTimeOffset>.DefineProperty(this, "CreatedOn", ["properties", "creationDate"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _isAutoRotationEnabled = BicepValue<bool>.DefineProperty(this, "IsAutoRotationEnabled", ["properties", "autoRotationEnabled"], isOutput: true);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _thumbprint = BicepValue<string>.DefineProperty(this, "Thumbprint", ["properties", "thumbprint"], isOutput: true);
-        _parent = ResourceReference<ManagedInstance>.DefineResource(this, "Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of ManagedInstanceKey.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _serverKeyType = DefineProperty<SqlServerKeyType>("ServerKeyType", ["properties", "serverKeyType"]);
+        _uri = DefineProperty<Uri>("Uri", ["properties", "uri"]);
+        _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "creationDate"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _isAutoRotationEnabled = DefineProperty<bool>("IsAutoRotationEnabled", ["properties", "autoRotationEnabled"], isOutput: true);
+        _kind = DefineProperty<string>("Kind", ["kind"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _thumbprint = DefineProperty<string>("Thumbprint", ["properties", "thumbprint"], isOutput: true);
+        _parent = DefineResource<ManagedInstance>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
@@ -110,11 +151,6 @@ public partial class ManagedInstanceKey : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-05-01-preview.
-        /// </summary>
-        public static readonly string V2024_05_01_preview = "2024-05-01-preview";
-
         /// <summary>
         /// 2021-11-01.
         /// </summary>
@@ -124,7 +160,7 @@ public partial class ManagedInstanceKey : Resource
     /// <summary>
     /// Creates a reference to an existing ManagedInstanceKey.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the ManagedInstanceKey resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
@@ -132,6 +168,6 @@ public partial class ManagedInstanceKey : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstanceKey.</param>
     /// <returns>The existing ManagedInstanceKey resource.</returns>
-    public static ManagedInstanceKey FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static ManagedInstanceKey FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

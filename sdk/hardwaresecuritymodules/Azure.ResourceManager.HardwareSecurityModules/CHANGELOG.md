@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.5 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,11 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.4 (2024-10-31)
+
+### Breaking Changes
+- Removed FipsApprovedMode Property from CloudHsmClusterProperties. 
 
 ## 1.0.0-beta.3 (2024-09-09)
 

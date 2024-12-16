@@ -15,112 +15,164 @@ namespace Azure.Provisioning.Resources;
 /// <summary>
 /// JitRequest.
 /// </summary>
-public partial class JitRequest : Resource
+public partial class JitRequest : ProvisionableResource
 {
     /// <summary>
     /// The name of the JIT request.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// The parent application id.
     /// </summary>
-    public BicepValue<string> ApplicationResourceId { get => _applicationResourceId; set => _applicationResourceId.Assign(value); }
-    private readonly BicepValue<string> _applicationResourceId;
+    public BicepValue<string> ApplicationResourceId 
+    {
+        get { Initialize(); return _applicationResourceId!; }
+        set { Initialize(); _applicationResourceId!.Assign(value); }
+    }
+    private BicepValue<string>? _applicationResourceId;
 
     /// <summary>
     /// The JIT authorization policies.
     /// </summary>
-    public BicepList<JitAuthorizationPolicies> JitAuthorizationPolicies { get => _jitAuthorizationPolicies; set => _jitAuthorizationPolicies.Assign(value); }
-    private readonly BicepList<JitAuthorizationPolicies> _jitAuthorizationPolicies;
+    public BicepList<JitAuthorizationPolicies> JitAuthorizationPolicies 
+    {
+        get { Initialize(); return _jitAuthorizationPolicies!; }
+        set { Initialize(); _jitAuthorizationPolicies!.Assign(value); }
+    }
+    private BicepList<JitAuthorizationPolicies>? _jitAuthorizationPolicies;
 
     /// <summary>
     /// The JIT request properties.
     /// </summary>
-    public BicepValue<JitSchedulingPolicy> JitSchedulingPolicy { get => _jitSchedulingPolicy; set => _jitSchedulingPolicy.Assign(value); }
-    private readonly BicepValue<JitSchedulingPolicy> _jitSchedulingPolicy;
+    public JitSchedulingPolicy JitSchedulingPolicy 
+    {
+        get { Initialize(); return _jitSchedulingPolicy!; }
+        set { Initialize(); AssignOrReplace(ref _jitSchedulingPolicy, value); }
+    }
+    private JitSchedulingPolicy? _jitSchedulingPolicy;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// The client entity that created the JIT request.
     /// </summary>
-    public BicepValue<ArmApplicationDetails> CreatedBy { get => _createdBy; }
-    private readonly BicepValue<ArmApplicationDetails> _createdBy;
+    public ArmApplicationDetails CreatedBy 
+    {
+        get { Initialize(); return _createdBy!; }
+    }
+    private ArmApplicationDetails? _createdBy;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// The JIT request state.
     /// </summary>
-    public BicepValue<JitRequestState> JitRequestState { get => _jitRequestState; }
-    private readonly BicepValue<JitRequestState> _jitRequestState;
+    public BicepValue<JitRequestState> JitRequestState 
+    {
+        get { Initialize(); return _jitRequestState!; }
+    }
+    private BicepValue<JitRequestState>? _jitRequestState;
 
     /// <summary>
     /// The JIT request provisioning state.
     /// </summary>
-    public BicepValue<ResourcesProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<ResourcesProvisioningState> _provisioningState;
+    public BicepValue<ResourcesProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<ResourcesProvisioningState>? _provisioningState;
 
     /// <summary>
     /// The publisher tenant id.
     /// </summary>
-    public BicepValue<Guid> PublisherTenantId { get => _publisherTenantId; }
-    private readonly BicepValue<Guid> _publisherTenantId;
+    public BicepValue<Guid> PublisherTenantId 
+    {
+        get { Initialize(); return _publisherTenantId!; }
+    }
+    private BicepValue<Guid>? _publisherTenantId;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// The client entity that last updated the JIT request.
     /// </summary>
-    public BicepValue<ArmApplicationDetails> UpdatedBy { get => _updatedBy; }
-    private readonly BicepValue<ArmApplicationDetails> _updatedBy;
+    public ArmApplicationDetails UpdatedBy 
+    {
+        get { Initialize(); return _updatedBy!; }
+    }
+    private ArmApplicationDetails? _updatedBy;
 
     /// <summary>
     /// Creates a new JitRequest.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the JitRequest resource.  This can be
     /// used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the JitRequest.</param>
-    public JitRequest(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Solutions/jitRequests", resourceVersion ?? "2021-07-01")
+    public JitRequest(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Solutions/jitRequests", resourceVersion ?? "2021-07-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _applicationResourceId = BicepValue<string>.DefineProperty(this, "ApplicationResourceId", ["properties", "applicationResourceId"]);
-        _jitAuthorizationPolicies = BicepList<JitAuthorizationPolicies>.DefineProperty(this, "JitAuthorizationPolicies", ["properties", "jitAuthorizationPolicies"]);
-        _jitSchedulingPolicy = BicepValue<JitSchedulingPolicy>.DefineProperty(this, "JitSchedulingPolicy", ["properties", "jitSchedulingPolicy"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _createdBy = BicepValue<ArmApplicationDetails>.DefineProperty(this, "CreatedBy", ["properties", "createdBy"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _jitRequestState = BicepValue<JitRequestState>.DefineProperty(this, "JitRequestState", ["properties", "jitRequestState"], isOutput: true);
-        _provisioningState = BicepValue<ResourcesProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _publisherTenantId = BicepValue<Guid>.DefineProperty(this, "PublisherTenantId", ["properties", "publisherTenantId"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _updatedBy = BicepValue<ArmApplicationDetails>.DefineProperty(this, "UpdatedBy", ["properties", "updatedBy"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of JitRequest.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _applicationResourceId = DefineProperty<string>("ApplicationResourceId", ["properties", "applicationResourceId"]);
+        _jitAuthorizationPolicies = DefineListProperty<JitAuthorizationPolicies>("JitAuthorizationPolicies", ["properties", "jitAuthorizationPolicies"]);
+        _jitSchedulingPolicy = DefineModelProperty<JitSchedulingPolicy>("JitSchedulingPolicy", ["properties", "jitSchedulingPolicy"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _createdBy = DefineModelProperty<ArmApplicationDetails>("CreatedBy", ["properties", "createdBy"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _jitRequestState = DefineProperty<JitRequestState>("JitRequestState", ["properties", "jitRequestState"], isOutput: true);
+        _provisioningState = DefineProperty<ResourcesProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _publisherTenantId = DefineProperty<Guid>("PublisherTenantId", ["properties", "publisherTenantId"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _updatedBy = DefineModelProperty<ArmApplicationDetails>("UpdatedBy", ["properties", "updatedBy"], isOutput: true);
     }
 
     /// <summary>
@@ -142,7 +194,7 @@ public partial class JitRequest : Resource
     /// <summary>
     /// Creates a reference to an existing JitRequest.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the JitRequest resource.  This can be
     /// used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
@@ -150,6 +202,6 @@ public partial class JitRequest : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the JitRequest.</param>
     /// <returns>The existing JitRequest resource.</returns>
-    public static JitRequest FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static JitRequest FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

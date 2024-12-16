@@ -18,5 +18,15 @@
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
 	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Remove="**\TestData\**\*.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="**\TestData\**\*.cs">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
 	
 </Project>

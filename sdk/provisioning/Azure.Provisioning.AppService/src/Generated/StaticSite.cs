@@ -18,210 +18,311 @@ namespace Azure.Provisioning.AppService;
 /// <summary>
 /// StaticSite.
 /// </summary>
-public partial class StaticSite : Resource
+public partial class StaticSite : ProvisionableResource
 {
     /// <summary>
     /// Name of the static site to create or update.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// &lt;code&gt;false&lt;/code&gt; if config file is locked for this static
     /// web app; otherwise, &lt;code&gt;true&lt;/code&gt;.
     /// </summary>
-    public BicepValue<bool> AllowConfigFileUpdates { get => _allowConfigFileUpdates; set => _allowConfigFileUpdates.Assign(value); }
-    private readonly BicepValue<bool> _allowConfigFileUpdates;
+    public BicepValue<bool> AllowConfigFileUpdates 
+    {
+        get { Initialize(); return _allowConfigFileUpdates!; }
+        set { Initialize(); _allowConfigFileUpdates!.Assign(value); }
+    }
+    private BicepValue<bool>? _allowConfigFileUpdates;
 
     /// <summary>
     /// The target branch in the repository.
     /// </summary>
-    public BicepValue<string> Branch { get => _branch; set => _branch.Assign(value); }
-    private readonly BicepValue<string> _branch;
+    public BicepValue<string> Branch 
+    {
+        get { Initialize(); return _branch!; }
+        set { Initialize(); _branch!.Assign(value); }
+    }
+    private BicepValue<string>? _branch;
 
     /// <summary>
     /// Build properties to configure on the repository.
     /// </summary>
-    public BicepValue<StaticSiteBuildProperties> BuildProperties { get => _buildProperties; set => _buildProperties.Assign(value); }
-    private readonly BicepValue<StaticSiteBuildProperties> _buildProperties;
+    public StaticSiteBuildProperties BuildProperties 
+    {
+        get { Initialize(); return _buildProperties!; }
+        set { Initialize(); AssignOrReplace(ref _buildProperties, value); }
+    }
+    private StaticSiteBuildProperties? _buildProperties;
 
     /// <summary>
     /// State indicating the status of the enterprise grade CDN serving traffic
     /// to the static web app.
     /// </summary>
-    public BicepValue<EnterpriseGradeCdnStatus> EnterpriseGradeCdnStatus { get => _enterpriseGradeCdnStatus; set => _enterpriseGradeCdnStatus.Assign(value); }
-    private readonly BicepValue<EnterpriseGradeCdnStatus> _enterpriseGradeCdnStatus;
+    public BicepValue<EnterpriseGradeCdnStatus> EnterpriseGradeCdnStatus 
+    {
+        get { Initialize(); return _enterpriseGradeCdnStatus!; }
+        set { Initialize(); _enterpriseGradeCdnStatus!.Assign(value); }
+    }
+    private BicepValue<EnterpriseGradeCdnStatus>? _enterpriseGradeCdnStatus;
 
     /// <summary>
     /// Managed service identity.
     /// </summary>
-    public BicepValue<ManagedServiceIdentity> Identity { get => _identity; set => _identity.Assign(value); }
-    private readonly BicepValue<ManagedServiceIdentity> _identity;
+    public ManagedServiceIdentity Identity 
+    {
+        get { Initialize(); return _identity!; }
+        set { Initialize(); AssignOrReplace(ref _identity, value); }
+    }
+    private ManagedServiceIdentity? _identity;
 
     /// <summary>
     /// Kind of resource.
     /// </summary>
-    public BicepValue<string> Kind { get => _kind; set => _kind.Assign(value); }
-    private readonly BicepValue<string> _kind;
+    public BicepValue<string> Kind 
+    {
+        get { Initialize(); return _kind!; }
+        set { Initialize(); _kind!.Assign(value); }
+    }
+    private BicepValue<string>? _kind;
 
     /// <summary>
     /// The provider that submitted the last deployment to the primary
     /// environment of the static site.
     /// </summary>
-    public BicepValue<string> Provider { get => _provider; set => _provider.Assign(value); }
-    private readonly BicepValue<string> _provider;
+    public BicepValue<string> Provider 
+    {
+        get { Initialize(); return _provider!; }
+        set { Initialize(); _provider!.Assign(value); }
+    }
+    private BicepValue<string>? _provider;
 
     /// <summary>
     /// State indicating whether public traffic are allowed or not for a static
     /// web app. Allowed Values: &apos;Enabled&apos;, &apos;Disabled&apos; or
     /// an empty string.
     /// </summary>
-    public BicepValue<string> PublicNetworkAccess { get => _publicNetworkAccess; set => _publicNetworkAccess.Assign(value); }
-    private readonly BicepValue<string> _publicNetworkAccess;
+    public BicepValue<string> PublicNetworkAccess 
+    {
+        get { Initialize(); return _publicNetworkAccess!; }
+        set { Initialize(); _publicNetworkAccess!.Assign(value); }
+    }
+    private BicepValue<string>? _publicNetworkAccess;
 
     /// <summary>
     /// A user&apos;s github repository token. This is used to setup the Github
     /// Actions workflow file and API secrets.
     /// </summary>
-    public BicepValue<string> RepositoryToken { get => _repositoryToken; set => _repositoryToken.Assign(value); }
-    private readonly BicepValue<string> _repositoryToken;
+    public BicepValue<string> RepositoryToken 
+    {
+        get { Initialize(); return _repositoryToken!; }
+        set { Initialize(); _repositoryToken!.Assign(value); }
+    }
+    private BicepValue<string>? _repositoryToken;
 
     /// <summary>
     /// URL for the repository of the static site.
     /// </summary>
-    public BicepValue<Uri> RepositoryUri { get => _repositoryUri; set => _repositoryUri.Assign(value); }
-    private readonly BicepValue<Uri> _repositoryUri;
+    public BicepValue<Uri> RepositoryUri 
+    {
+        get { Initialize(); return _repositoryUri!; }
+        set { Initialize(); _repositoryUri!.Assign(value); }
+    }
+    private BicepValue<Uri>? _repositoryUri;
 
     /// <summary>
     /// Description of a SKU for a scalable resource.
     /// </summary>
-    public BicepValue<AppServiceSkuDescription> Sku { get => _sku; set => _sku.Assign(value); }
-    private readonly BicepValue<AppServiceSkuDescription> _sku;
+    public AppServiceSkuDescription Sku 
+    {
+        get { Initialize(); return _sku!; }
+        set { Initialize(); AssignOrReplace(ref _sku, value); }
+    }
+    private AppServiceSkuDescription? _sku;
 
     /// <summary>
     /// State indicating whether staging environments are allowed or not
     /// allowed for a static web app.
     /// </summary>
-    public BicepValue<StagingEnvironmentPolicy> StagingEnvironmentPolicy { get => _stagingEnvironmentPolicy; set => _stagingEnvironmentPolicy.Assign(value); }
-    private readonly BicepValue<StagingEnvironmentPolicy> _stagingEnvironmentPolicy;
+    public BicepValue<StagingEnvironmentPolicy> StagingEnvironmentPolicy 
+    {
+        get { Initialize(); return _stagingEnvironmentPolicy!; }
+        set { Initialize(); _stagingEnvironmentPolicy!.Assign(value); }
+    }
+    private BicepValue<StagingEnvironmentPolicy>? _stagingEnvironmentPolicy;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Template options for generating a new repository.
     /// </summary>
-    public BicepValue<StaticSiteTemplate> TemplateProperties { get => _templateProperties; set => _templateProperties.Assign(value); }
-    private readonly BicepValue<StaticSiteTemplate> _templateProperties;
+    public StaticSiteTemplate TemplateProperties 
+    {
+        get { Initialize(); return _templateProperties!; }
+        set { Initialize(); AssignOrReplace(ref _templateProperties, value); }
+    }
+    private StaticSiteTemplate? _templateProperties;
 
     /// <summary>
     /// The content distribution endpoint for the static site.
     /// </summary>
-    public BicepValue<string> ContentDistributionEndpoint { get => _contentDistributionEndpoint; }
-    private readonly BicepValue<string> _contentDistributionEndpoint;
+    public BicepValue<string> ContentDistributionEndpoint 
+    {
+        get { Initialize(); return _contentDistributionEndpoint!; }
+    }
+    private BicepValue<string>? _contentDistributionEndpoint;
 
     /// <summary>
     /// The custom domains associated with this static site.
     /// </summary>
-    public BicepList<string> CustomDomains { get => _customDomains; }
-    private readonly BicepList<string> _customDomains;
+    public BicepList<string> CustomDomains 
+    {
+        get { Initialize(); return _customDomains!; }
+    }
+    private BicepList<string>? _customDomains;
 
     /// <summary>
     /// Database connections for the static site.
     /// </summary>
-    public BicepList<StaticSiteDatabaseConnectionOverview> DatabaseConnections { get => _databaseConnections; }
-    private readonly BicepList<StaticSiteDatabaseConnectionOverview> _databaseConnections;
+    public BicepList<StaticSiteDatabaseConnectionOverview> DatabaseConnections 
+    {
+        get { Initialize(); return _databaseConnections!; }
+    }
+    private BicepList<StaticSiteDatabaseConnectionOverview>? _databaseConnections;
 
     /// <summary>
     /// The default autogenerated hostname for the static site.
     /// </summary>
-    public BicepValue<string> DefaultHostname { get => _defaultHostname; }
-    private readonly BicepValue<string> _defaultHostname;
+    public BicepValue<string> DefaultHostname 
+    {
+        get { Initialize(); return _defaultHostname!; }
+    }
+    private BicepValue<string>? _defaultHostname;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Identity to use for Key Vault Reference authentication.
     /// </summary>
-    public BicepValue<string> KeyVaultReferenceIdentity { get => _keyVaultReferenceIdentity; }
-    private readonly BicepValue<string> _keyVaultReferenceIdentity;
+    public BicepValue<string> KeyVaultReferenceIdentity 
+    {
+        get { Initialize(); return _keyVaultReferenceIdentity!; }
+    }
+    private BicepValue<string>? _keyVaultReferenceIdentity;
 
     /// <summary>
     /// Backends linked to the static side.
     /// </summary>
-    public BicepList<StaticSiteLinkedBackendInfo> LinkedBackends { get => _linkedBackends; }
-    private readonly BicepList<StaticSiteLinkedBackendInfo> _linkedBackends;
+    public BicepList<StaticSiteLinkedBackendInfo> LinkedBackends 
+    {
+        get { Initialize(); return _linkedBackends!; }
+    }
+    private BicepList<StaticSiteLinkedBackendInfo>? _linkedBackends;
 
     /// <summary>
     /// Private endpoint connections.
     /// </summary>
-    public BicepList<ResponseMessageEnvelopeRemotePrivateEndpointConnection> PrivateEndpointConnections { get => _privateEndpointConnections; }
-    private readonly BicepList<ResponseMessageEnvelopeRemotePrivateEndpointConnection> _privateEndpointConnections;
+    public BicepList<ResponseMessageEnvelopeRemotePrivateEndpointConnection> PrivateEndpointConnections 
+    {
+        get { Initialize(); return _privateEndpointConnections!; }
+    }
+    private BicepList<ResponseMessageEnvelopeRemotePrivateEndpointConnection>? _privateEndpointConnections;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// User provided function apps registered with the static site.
     /// </summary>
-    public BicepList<StaticSiteUserProvidedFunctionAppData> UserProvidedFunctionApps { get => _userProvidedFunctionApps; }
-    private readonly BicepList<StaticSiteUserProvidedFunctionAppData> _userProvidedFunctionApps;
+    public BicepList<StaticSiteUserProvidedFunctionAppData> UserProvidedFunctionApps 
+    {
+        get { Initialize(); return _userProvidedFunctionApps!; }
+    }
+    private BicepList<StaticSiteUserProvidedFunctionAppData>? _userProvidedFunctionApps;
 
     /// <summary>
     /// Creates a new StaticSite.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the StaticSite resource.  This can be
     /// used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
     /// underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the StaticSite.</param>
-    public StaticSite(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Web/staticSites", resourceVersion ?? "2024-04-01")
+    public StaticSite(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Web/staticSites", resourceVersion ?? "2024-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _allowConfigFileUpdates = BicepValue<bool>.DefineProperty(this, "AllowConfigFileUpdates", ["properties", "allowConfigFileUpdates"]);
-        _branch = BicepValue<string>.DefineProperty(this, "Branch", ["properties", "branch"]);
-        _buildProperties = BicepValue<StaticSiteBuildProperties>.DefineProperty(this, "BuildProperties", ["properties", "buildProperties"]);
-        _enterpriseGradeCdnStatus = BicepValue<EnterpriseGradeCdnStatus>.DefineProperty(this, "EnterpriseGradeCdnStatus", ["properties", "enterpriseGradeCdnStatus"]);
-        _identity = BicepValue<ManagedServiceIdentity>.DefineProperty(this, "Identity", ["identity"]);
-        _kind = BicepValue<string>.DefineProperty(this, "Kind", ["kind"]);
-        _provider = BicepValue<string>.DefineProperty(this, "Provider", ["properties", "provider"]);
-        _publicNetworkAccess = BicepValue<string>.DefineProperty(this, "PublicNetworkAccess", ["properties", "publicNetworkAccess"]);
-        _repositoryToken = BicepValue<string>.DefineProperty(this, "RepositoryToken", ["properties", "repositoryToken"]);
-        _repositoryUri = BicepValue<Uri>.DefineProperty(this, "RepositoryUri", ["properties", "repositoryUrl"]);
-        _sku = BicepValue<AppServiceSkuDescription>.DefineProperty(this, "Sku", ["sku"]);
-        _stagingEnvironmentPolicy = BicepValue<StagingEnvironmentPolicy>.DefineProperty(this, "StagingEnvironmentPolicy", ["properties", "stagingEnvironmentPolicy"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _templateProperties = BicepValue<StaticSiteTemplate>.DefineProperty(this, "TemplateProperties", ["properties", "templateProperties"]);
-        _contentDistributionEndpoint = BicepValue<string>.DefineProperty(this, "ContentDistributionEndpoint", ["properties", "contentDistributionEndpoint"], isOutput: true);
-        _customDomains = BicepList<string>.DefineProperty(this, "CustomDomains", ["properties", "customDomains"], isOutput: true);
-        _databaseConnections = BicepList<StaticSiteDatabaseConnectionOverview>.DefineProperty(this, "DatabaseConnections", ["properties", "databaseConnections"], isOutput: true);
-        _defaultHostname = BicepValue<string>.DefineProperty(this, "DefaultHostname", ["properties", "defaultHostname"], isOutput: true);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _keyVaultReferenceIdentity = BicepValue<string>.DefineProperty(this, "KeyVaultReferenceIdentity", ["properties", "keyVaultReferenceIdentity"], isOutput: true);
-        _linkedBackends = BicepList<StaticSiteLinkedBackendInfo>.DefineProperty(this, "LinkedBackends", ["properties", "linkedBackends"], isOutput: true);
-        _privateEndpointConnections = BicepList<ResponseMessageEnvelopeRemotePrivateEndpointConnection>.DefineProperty(this, "PrivateEndpointConnections", ["properties", "privateEndpointConnections"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
-        _userProvidedFunctionApps = BicepList<StaticSiteUserProvidedFunctionAppData>.DefineProperty(this, "UserProvidedFunctionApps", ["properties", "userProvidedFunctionApps"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of StaticSite.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _allowConfigFileUpdates = DefineProperty<bool>("AllowConfigFileUpdates", ["properties", "allowConfigFileUpdates"]);
+        _branch = DefineProperty<string>("Branch", ["properties", "branch"]);
+        _buildProperties = DefineModelProperty<StaticSiteBuildProperties>("BuildProperties", ["properties", "buildProperties"]);
+        _enterpriseGradeCdnStatus = DefineProperty<EnterpriseGradeCdnStatus>("EnterpriseGradeCdnStatus", ["properties", "enterpriseGradeCdnStatus"]);
+        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
+        _kind = DefineProperty<string>("Kind", ["kind"]);
+        _provider = DefineProperty<string>("Provider", ["properties", "provider"]);
+        _publicNetworkAccess = DefineProperty<string>("PublicNetworkAccess", ["properties", "publicNetworkAccess"]);
+        _repositoryToken = DefineProperty<string>("RepositoryToken", ["properties", "repositoryToken"]);
+        _repositoryUri = DefineProperty<Uri>("RepositoryUri", ["properties", "repositoryUrl"]);
+        _sku = DefineModelProperty<AppServiceSkuDescription>("Sku", ["sku"]);
+        _stagingEnvironmentPolicy = DefineProperty<StagingEnvironmentPolicy>("StagingEnvironmentPolicy", ["properties", "stagingEnvironmentPolicy"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _templateProperties = DefineModelProperty<StaticSiteTemplate>("TemplateProperties", ["properties", "templateProperties"]);
+        _contentDistributionEndpoint = DefineProperty<string>("ContentDistributionEndpoint", ["properties", "contentDistributionEndpoint"], isOutput: true);
+        _customDomains = DefineListProperty<string>("CustomDomains", ["properties", "customDomains"], isOutput: true);
+        _databaseConnections = DefineListProperty<StaticSiteDatabaseConnectionOverview>("DatabaseConnections", ["properties", "databaseConnections"], isOutput: true);
+        _defaultHostname = DefineProperty<string>("DefaultHostname", ["properties", "defaultHostname"], isOutput: true);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _keyVaultReferenceIdentity = DefineProperty<string>("KeyVaultReferenceIdentity", ["properties", "keyVaultReferenceIdentity"], isOutput: true);
+        _linkedBackends = DefineListProperty<StaticSiteLinkedBackendInfo>("LinkedBackends", ["properties", "linkedBackends"], isOutput: true);
+        _privateEndpointConnections = DefineListProperty<ResponseMessageEnvelopeRemotePrivateEndpointConnection>("PrivateEndpointConnections", ["properties", "privateEndpointConnections"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _userProvidedFunctionApps = DefineListProperty<StaticSiteUserProvidedFunctionAppData>("UserProvidedFunctionApps", ["properties", "userProvidedFunctionApps"], isOutput: true);
     }
 
     /// <summary>
@@ -303,7 +404,7 @@ public partial class StaticSite : Resource
     /// <summary>
     /// Creates a reference to an existing StaticSite.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the StaticSite resource.  This can be
     /// used to refer to the resource in expressions, but is not the Azure
     /// name of the resource.  This value can contain letters, numbers, and
@@ -311,6 +412,6 @@ public partial class StaticSite : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the StaticSite.</param>
     /// <returns>The existing StaticSite resource.</returns>
-    public static StaticSite FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static StaticSite FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

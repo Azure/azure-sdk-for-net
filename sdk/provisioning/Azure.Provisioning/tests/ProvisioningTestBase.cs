@@ -52,7 +52,7 @@ public class Trycep(ProvisioningTestBase test) : IAsyncDisposable
 {
     public AzureLocation ResourceLocation { get; set; } = AzureLocation.WestUS2;
     public ProvisioningTestBase Test { get; set; } = test;
-    public ProvisioningContext Context { get; set; } =
+    public ProvisioningBuildOptions BuildOptions { get; set; } =
         new()
         {
             // TODO: Add back when we reenable test recording
@@ -81,29 +81,25 @@ public class Trycep(ProvisioningTestBase test) : IAsyncDisposable
     public ProvisioningDeployment? Deployment { get; set; }
     public CancellationToken Cancellation { get; set; }
 
-    public Trycep Define(ProvisioningConstruct resource)
+    public Trycep Define(ProvisionableConstruct resource)
     {
-        Infra = resource.ParentInfrastructure;
-        if (Infra is null)
-        {
-            Infra = new Infrastructure();
-            Infra.Add(resource);
-        }
-        Plan = Infra.Build(Context);
+        Infra = new Infrastructure();
+        Infra.Add(resource);
+        Plan = Infra.Build(BuildOptions);
         return this;
     }
 
     public Trycep Define(Func<Trycep, Infrastructure> action)
     {
         Infra = action(this);
-        Plan = Infra.Build(Context);
+        Plan = Infra.Build(BuildOptions);
         return this;
     }
 
-    public Trycep Define(Func<Trycep, ProvisioningContext, Infrastructure> action)
+    public Trycep Define(Func<Trycep, ProvisioningBuildOptions, Infrastructure> action)
     {
-        Infra = action(this, Context);
-        Plan = Infra.Build(Context);
+        Infra = action(this, BuildOptions);
+        Plan = Infra.Build(BuildOptions);
         return this;
     }
 
@@ -230,7 +226,7 @@ public class Trycep(ProvisioningTestBase test) : IAsyncDisposable
             await client.GetDefaultSubscriptionAsync(Cancellation).ConfigureAwait(false);
 
         // Generate a random name
-        name ??= "rg-test-can-delete-" + Context.Random.NewGuid().ToString("N");
+        name ??= "rg-test-can-delete-" + BuildOptions.Random.NewGuid().ToString("N");
 
         // Create a resource group to deploy into
         ResourceGroupCollection rgs = ArmSubscription.GetResourceGroups();

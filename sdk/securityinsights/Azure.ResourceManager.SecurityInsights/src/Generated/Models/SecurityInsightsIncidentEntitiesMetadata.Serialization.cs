@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         void IJsonModel<SecurityInsightsIncidentEntitiesMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIncidentEntitiesMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SecurityInsightsIncidentEntitiesMetadata)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("entityKind"u8);
             writer.WriteStringValue(EntityKind.ToString());
             writer.WritePropertyName("count"u8);
@@ -46,7 +54,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SecurityInsightsIncidentEntitiesMetadata IJsonModel<SecurityInsightsIncidentEntitiesMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

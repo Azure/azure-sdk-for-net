@@ -1,10 +1,8 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
-
-- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
@@ -12,11 +10,23 @@
 
 ### Other Changes
 
+## 1.4.0 (2024-11-19)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-05' to 'package-2024-10'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/399cbac2de1bc0acbed4c9a0a864a9c84da3692e/specification/cognitiveservices/resource-manager/readme.md.
+
+## 1.3.4 (2024-10-23)
+
+### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
 ## 1.3.3 (2024-05-07)
 
 ### Features Added
 
-- Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+- Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
 
 ### Bugs Fixed
 
@@ -26,14 +36,14 @@
 
 ### Features Added
 
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Added experimental Bicep serialization.
 
 ## 1.3.1 (2023-11-27)
 
 ### Features Added
 
-- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Other Changes
 
@@ -51,7 +61,7 @@
 
 ### Features Added
 
-- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Enabled the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 
 ### Bugs Fixed
 

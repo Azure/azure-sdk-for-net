@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         void IJsonModel<NfsAccessRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<NfsAccessRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NfsAccessRule)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("scope"u8);
             writer.WriteStringValue(Scope.ToString());
             if (Optional.IsDefined(Filter))
@@ -75,7 +83,6 @@ namespace Azure.ResourceManager.StorageCache.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         NfsAccessRule IJsonModel<NfsAccessRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -12,14 +12,14 @@ using Azure.Identity;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.MySql.FlexibleServers.Models;
 using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
 {
     public partial class Sample_MySqlFlexibleServerCollection
     {
-        // Create a new server
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateANewServer()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/stable/2023-12-30/examples/ServerCreate.json
@@ -50,26 +50,26 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
                 Version = MySqlFlexibleServerVersion.Ver5_7,
                 AvailabilityZone = "1",
                 CreateMode = MySqlFlexibleServerCreateMode.Default,
-                Storage = new MySqlFlexibleServerStorage()
+                Storage = new MySqlFlexibleServerStorage
                 {
                     StorageSizeInGB = 100,
                     Iops = 600,
                     AutoGrow = MySqlFlexibleServerEnableStatusEnum.Disabled,
                 },
-                Backup = new MySqlFlexibleServerBackupProperties()
+                Backup = new MySqlFlexibleServerBackupProperties
                 {
                     BackupRetentionDays = 7,
                     BackupIntervalHours = 24,
                     GeoRedundantBackup = MySqlFlexibleServerEnableStatusEnum.Disabled,
                 },
-                HighAvailability = new MySqlFlexibleServerHighAvailability()
+                HighAvailability = new MySqlFlexibleServerHighAvailability
                 {
                     Mode = MySqlFlexibleServerHighAvailabilityMode.ZoneRedundant,
                     StandbyAvailabilityZone = "3",
                 },
                 Tags =
 {
-["num"] = "1",
+["num"] = "1"
 },
             };
             ArmOperation<MySqlFlexibleServerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serverName, data);
@@ -82,9 +82,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a replica server
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAReplicaServer()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/stable/2023-12-30/examples/ServerCreateReplica.json
@@ -122,9 +121,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a server as a point in time restore
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAServerAsAPointInTimeRestore()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/stable/2023-12-30/examples/ServerCreateWithPointInTimeRestore.json
@@ -155,7 +153,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
                 RestorePointInTime = DateTimeOffset.Parse("2021-06-24T00:00:37.467Z"),
                 Tags =
 {
-["num"] = "1",
+["num"] = "1"
 },
             };
             ArmOperation<MySqlFlexibleServerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serverName, data);
@@ -168,9 +166,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create a server with byok
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAServerWithByok()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/stable/2023-12-30/examples/ServerCreateWithBYOK.json
@@ -199,7 +196,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
                 {
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/testrg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-identity")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/testrg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-identity")] = new UserAssignedIdentity()
 },
                 },
                 Sku = new MySqlFlexibleServerSku("Standard_D2ds_v4", MySqlFlexibleServerSkuTier.GeneralPurpose),
@@ -208,7 +205,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
                 Version = MySqlFlexibleServerVersion.Ver5_7,
                 AvailabilityZone = "1",
                 CreateMode = MySqlFlexibleServerCreateMode.Default,
-                DataEncryption = new MySqlFlexibleServerDataEncryption()
+                DataEncryption = new MySqlFlexibleServerDataEncryption
                 {
                     PrimaryUserAssignedIdentityId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/testrg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-identity"),
                     PrimaryKeyUri = new Uri("https://test.vault.azure.net/keys/key/c8a92236622244c0a4fdb892666f671a"),
@@ -216,26 +213,26 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
                     GeoBackupKeyUri = new Uri("https://test-geo.vault.azure.net/keys/key/c8a92236622244c0a4fdb892666f671a"),
                     EncryptionType = MySqlFlexibleServerDataEncryptionType.AzureKeyVault,
                 },
-                Storage = new MySqlFlexibleServerStorage()
+                Storage = new MySqlFlexibleServerStorage
                 {
                     StorageSizeInGB = 100,
                     Iops = 600,
                     AutoGrow = MySqlFlexibleServerEnableStatusEnum.Disabled,
                 },
-                Backup = new MySqlFlexibleServerBackupProperties()
+                Backup = new MySqlFlexibleServerBackupProperties
                 {
                     BackupRetentionDays = 7,
                     BackupIntervalHours = 24,
                     GeoRedundantBackup = MySqlFlexibleServerEnableStatusEnum.Disabled,
                 },
-                HighAvailability = new MySqlFlexibleServerHighAvailability()
+                HighAvailability = new MySqlFlexibleServerHighAvailability
                 {
                     Mode = MySqlFlexibleServerHighAvailabilityMode.ZoneRedundant,
                     StandbyAvailabilityZone = "3",
                 },
                 Tags =
 {
-["num"] = "1",
+["num"] = "1"
 },
             };
             ArmOperation<MySqlFlexibleServerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serverName, data);
@@ -248,9 +245,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a server
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAServer()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/stable/2023-12-30/examples/ServerGet.json
@@ -282,81 +278,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a server
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetAServer()
-        {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/stable/2023-12-30/examples/ServerGet.json
-            // this example is just showing the usage of "Servers_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "testrg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this MySqlFlexibleServerResource
-            MySqlFlexibleServerCollection collection = resourceGroupResource.GetMySqlFlexibleServers();
-
-            // invoke the operation
-            string serverName = "mysqltestserver";
-            bool result = await collection.ExistsAsync(serverName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Get a server
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetAServer()
-        {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/stable/2023-12-30/examples/ServerGet.json
-            // this example is just showing the usage of "Servers_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "testrg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this MySqlFlexibleServerResource
-            MySqlFlexibleServerCollection collection = resourceGroupResource.GetMySqlFlexibleServers();
-
-            // invoke the operation
-            string serverName = "mysqltestserver";
-            NullableResponse<MySqlFlexibleServerResource> response = await collection.GetIfExistsAsync(serverName);
-            MySqlFlexibleServerResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                MySqlFlexibleServerData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // Get a server with vnet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAServerWithVnet()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/stable/2023-12-30/examples/ServerGetWithVnet.json
@@ -388,81 +311,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get a server with vnet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetAServerWithVnet()
-        {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/stable/2023-12-30/examples/ServerGetWithVnet.json
-            // this example is just showing the usage of "Servers_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "testrg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this MySqlFlexibleServerResource
-            MySqlFlexibleServerCollection collection = resourceGroupResource.GetMySqlFlexibleServers();
-
-            // invoke the operation
-            string serverName = "mysqltestserver";
-            bool result = await collection.ExistsAsync(serverName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Get a server with vnet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetAServerWithVnet()
-        {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/stable/2023-12-30/examples/ServerGetWithVnet.json
-            // this example is just showing the usage of "Servers_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "testrg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this MySqlFlexibleServerResource
-            MySqlFlexibleServerCollection collection = resourceGroupResource.GetMySqlFlexibleServers();
-
-            // invoke the operation
-            string serverName = "mysqltestserver";
-            NullableResponse<MySqlFlexibleServerResource> response = await collection.GetIfExistsAsync(serverName);
-            MySqlFlexibleServerResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                MySqlFlexibleServerData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // List servers in a resource group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListServersInAResourceGroup()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/stable/2023-12-30/examples/ServersListByResourceGroup.json
@@ -493,12 +343,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List replicas for a server
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetReplicas_ListReplicasForAServer()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/stable/2023-12-30/examples/ReplicasListByServer.json
@@ -530,7 +379,147 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetAServer()
+        {
+            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/stable/2023-12-30/examples/ServerGet.json
+            // this example is just showing the usage of "Servers_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "testrg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this MySqlFlexibleServerResource
+            MySqlFlexibleServerCollection collection = resourceGroupResource.GetMySqlFlexibleServers();
+
+            // invoke the operation
+            string serverName = "mysqltestserver";
+            bool result = await collection.ExistsAsync(serverName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetAServerWithVnet()
+        {
+            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/stable/2023-12-30/examples/ServerGetWithVnet.json
+            // this example is just showing the usage of "Servers_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "testrg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this MySqlFlexibleServerResource
+            MySqlFlexibleServerCollection collection = resourceGroupResource.GetMySqlFlexibleServers();
+
+            // invoke the operation
+            string serverName = "mysqltestserver";
+            bool result = await collection.ExistsAsync(serverName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetAServer()
+        {
+            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/stable/2023-12-30/examples/ServerGet.json
+            // this example is just showing the usage of "Servers_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "testrg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this MySqlFlexibleServerResource
+            MySqlFlexibleServerCollection collection = resourceGroupResource.GetMySqlFlexibleServers();
+
+            // invoke the operation
+            string serverName = "mysqltestserver";
+            NullableResponse<MySqlFlexibleServerResource> response = await collection.GetIfExistsAsync(serverName);
+            MySqlFlexibleServerResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                MySqlFlexibleServerData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetAServerWithVnet()
+        {
+            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/stable/2023-12-30/examples/ServerGetWithVnet.json
+            // this example is just showing the usage of "Servers_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "testrg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this MySqlFlexibleServerResource
+            MySqlFlexibleServerCollection collection = resourceGroupResource.GetMySqlFlexibleServers();
+
+            // invoke the operation
+            string serverName = "mysqltestserver";
+            NullableResponse<MySqlFlexibleServerResource> response = await collection.GetIfExistsAsync(serverName);
+            MySqlFlexibleServerResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                MySqlFlexibleServerData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

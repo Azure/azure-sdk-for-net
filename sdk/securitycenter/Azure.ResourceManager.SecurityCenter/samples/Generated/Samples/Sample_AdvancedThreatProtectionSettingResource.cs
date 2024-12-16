@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.SecurityCenter.Samples
 {
     public partial class Sample_AdvancedThreatProtectionSettingResource
     {
-        // Gets the Advanced Threat Protection settings for the specified resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsTheAdvancedThreatProtectionSettingsForTheSpecifiedResource()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2019-01-01/examples/AdvancedThreatProtection/GetAdvancedThreatProtectionSettings_example.json
@@ -43,9 +43,8 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Creates or updates the Advanced Threat Protection settings on a specified resource.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesOrUpdatesTheAdvancedThreatProtectionSettingsOnASpecifiedResource()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2019-01-01/examples/AdvancedThreatProtection/PutAdvancedThreatProtectionSettings_example.json
@@ -63,7 +62,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             AdvancedThreatProtectionSettingResource advancedThreatProtectionSetting = client.GetAdvancedThreatProtectionSettingResource(advancedThreatProtectionSettingResourceId);
 
             // invoke the operation
-            AdvancedThreatProtectionSettingData data = new AdvancedThreatProtectionSettingData()
+            AdvancedThreatProtectionSettingData data = new AdvancedThreatProtectionSettingData
             {
                 IsEnabled = true,
             };

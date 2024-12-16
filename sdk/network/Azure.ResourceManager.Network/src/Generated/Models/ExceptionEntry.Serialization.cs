@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.Network.Models
 
         void IJsonModel<ExceptionEntry>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<ExceptionEntry>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExceptionEntry)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("matchVariable"u8);
             writer.WriteStringValue(MatchVariable.ToString());
             if (Optional.IsCollectionDefined(Values))
@@ -75,7 +83,6 @@ namespace Azure.ResourceManager.Network.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ExceptionEntry IJsonModel<ExceptionEntry>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

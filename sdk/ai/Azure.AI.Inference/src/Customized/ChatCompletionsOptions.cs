@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.Inference
@@ -31,6 +32,16 @@ namespace Azure.AI.Inference
 
         /// <summary> A value indicating whether chat completions should be streamed for this request. </summary>
         internal bool? InternalShouldStreamResponse { get; set; }
+
+        /// <summary>
+        /// The collection of context messages associated with this chat completions request.
+        /// Typical usage begins with a chat message for the System role that provides instructions for
+        /// the behavior of the assistant, followed by alternating messages between the User and
+        /// Assistant roles.
+        /// Please note <see cref="ChatRequestMessage"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ChatRequestAssistantMessage"/>, <see cref="ChatRequestSystemMessage"/>, <see cref="ChatRequestToolMessage"/> and <see cref="ChatRequestUserMessage"/>.
+        /// </summary>
+        public IList<ChatRequestMessage> Messages { get; set; }
 
         /// <summary> Initializes a new instance of <see cref="ChatCompletionsOptions"/>. </summary>
         public ChatCompletionsOptions()

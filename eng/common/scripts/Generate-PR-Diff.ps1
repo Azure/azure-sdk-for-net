@@ -28,9 +28,9 @@ function Get-ChangedServices
     [string[]] $ChangedFiles
   )
 
-  $changedServices = $ChangedFiles | Foreach-Object { if ($_ -match "sdk/([^/]+)") { $matches[1] } } | Sort-Object -Unique
+  [string[]] $changedServices = $ChangedFiles | Foreach-Object { if ($_ -match "sdk/([^/]+)") { $matches[1] } } | Sort-Object -Unique
 
-  return $changedServices
+  return , $changedServices
 }
 
 if (!(Test-Path $ArtifactPath))
@@ -41,8 +41,13 @@ if (!(Test-Path $ArtifactPath))
 $ArtifactPath = Resolve-Path $ArtifactPath
 $ArtifactName = Join-Path $ArtifactPath "diff.json"
 
+$changedFiles = @()
+$changedServices = @()
+
 $changedFiles = Get-ChangedFiles -DiffPath $TargetPath
-$changedServices = Get-ChangedServices -ChangedFiles $changedFiles
+if ($changedFiles) {
+  $changedServices = Get-ChangedServices -ChangedFiles $changedFiles
+}
 
 $result = [PSCustomObject]@{
   "ChangedFiles"    = $changedFiles

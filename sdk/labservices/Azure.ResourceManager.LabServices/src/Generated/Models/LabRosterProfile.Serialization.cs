@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.LabServices.Models
 
         void IJsonModel<LabRosterProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<LabRosterProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LabRosterProfile)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(ActiveDirectoryGroupId))
             {
                 writer.WritePropertyName("activeDirectoryGroupId"u8);
@@ -66,7 +74,6 @@ namespace Azure.ResourceManager.LabServices.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         LabRosterProfile IJsonModel<LabRosterProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

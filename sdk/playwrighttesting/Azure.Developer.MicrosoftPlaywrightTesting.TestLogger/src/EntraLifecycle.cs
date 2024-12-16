@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface;
 using Azure.Identity;
 using Microsoft.IdentityModel.JsonWebTokens;
 
@@ -16,15 +17,17 @@ internal class EntraLifecycle
     internal long? _entraIdAccessTokenExpiry;
     private readonly TokenCredential _tokenCredential;
     private readonly JsonWebTokenHandler _jsonWebTokenHandler;
+    private readonly IFrameworkLogger? _frameworkLogger;
 
-    public EntraLifecycle(TokenCredential? tokenCredential = null, JsonWebTokenHandler? jsonWebTokenHandler = null)
+    public EntraLifecycle(TokenCredential? tokenCredential = null, JsonWebTokenHandler? jsonWebTokenHandler = null, IFrameworkLogger? frameworkLogger = null)
     {
+        _frameworkLogger = frameworkLogger;
         _tokenCredential = tokenCredential ?? new DefaultAzureCredential();
         _jsonWebTokenHandler = jsonWebTokenHandler ?? new JsonWebTokenHandler();
         SetEntraIdAccessTokenFromEnvironment();
     }
 
-    internal async Task<bool> FetchEntraIdAccessTokenAsync(CancellationToken cancellationToken = default)
+    internal async Task FetchEntraIdAccessTokenAsync(CancellationToken cancellationToken = default)
     {
         try
         {
@@ -33,12 +36,12 @@ internal class EntraLifecycle
             _entraIdAccessToken = accessToken.Token;
             _entraIdAccessTokenExpiry = accessToken.ExpiresOn.ToUnixTimeSeconds();
             Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, _entraIdAccessToken);
-            return true;
+            return;
         }
         catch (Exception ex)
         {
-            Console.Error.WriteLine(ex);
-            return false;
+            _frameworkLogger?.Error(ex.ToString());
+            throw new Exception(Constants.s_no_auth_error);
         }
     }
 

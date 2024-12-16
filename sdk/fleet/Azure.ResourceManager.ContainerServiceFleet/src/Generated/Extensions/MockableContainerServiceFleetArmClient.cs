@@ -47,6 +47,18 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing an <see cref="AutoUpgradeProfileResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutoUpgradeProfileResource.CreateResourceIdentifier" /> to create an <see cref="AutoUpgradeProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AutoUpgradeProfileResource"/> object. </returns>
+        public virtual AutoUpgradeProfileResource GetAutoUpgradeProfileResource(ResourceIdentifier id)
+        {
+            AutoUpgradeProfileResource.ValidateResourceId(id);
+            return new AutoUpgradeProfileResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ContainerServiceFleetMemberResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ContainerServiceFleetMemberResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServiceFleetMemberResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>

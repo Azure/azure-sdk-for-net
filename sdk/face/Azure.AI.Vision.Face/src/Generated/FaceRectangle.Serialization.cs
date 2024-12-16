@@ -19,13 +19,21 @@ namespace Azure.AI.Vision.Face
 
         void IJsonModel<FaceRectangle>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<FaceRectangle>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FaceRectangle)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("top"u8);
             writer.WriteNumberValue(Top);
             writer.WritePropertyName("left"u8);
@@ -49,7 +57,6 @@ namespace Azure.AI.Vision.Face
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         FaceRectangle IJsonModel<FaceRectangle>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

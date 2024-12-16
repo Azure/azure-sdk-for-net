@@ -75,8 +75,8 @@ namespace Azure.Storage.DataMovement
         ///
         /// This should only be triggered when a failed item has been seen.
         /// </summary>
-        /// <returns>True if <see cref="HasFailedItems"/> was updated. False otherwise.</returns>
-        internal bool TrySetFailedItem()
+        /// <returns>True if this was the first time <see cref="HasFailedItems"/> was updated. False otherwise.</returns>
+        internal bool SetFailedItem()
         {
             return Interlocked.Exchange(ref _hasFailedItemValue, 1) != 1;
         }
@@ -86,8 +86,8 @@ namespace Azure.Storage.DataMovement
         ///
         /// This should only be triggered when a skipped item has been seen.
         /// </summary>
-        /// /// <returns>True if <see cref="HasSkippedItems"/> was updated. False otherwise.</returns>
-        internal bool TrySetSkippedItem()
+        /// /// <returns>True if this was the first time <see cref="HasSkippedItems"/> was updated. False otherwise.</returns>
+        internal bool SetSkippedItem()
         {
             return Interlocked.Exchange(ref _hasSkippedItemValue, 1) != 1;
         }
@@ -98,8 +98,8 @@ namespace Azure.Storage.DataMovement
         ///
         /// This should only be triggered when the state updates.
         /// </summary>
-        /// <returns>True if <see cref="State"/> was updated. False otherwise.</returns>
-        internal bool TrySetTransferStateChange(DataTransferState state)
+        /// <returns>True if <see cref="State"/> was changed from its original state. False otherwise.</returns>
+        internal bool SetTransferStateChange(DataTransferState state)
         {
             return Interlocked.Exchange(ref _stateValue, (int)state) != (int)state;
         }

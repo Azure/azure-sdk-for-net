@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.IotHub.Models
 
         void IJsonModel<CloudToDeviceFeedbackQueueProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<CloudToDeviceFeedbackQueueProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CloudToDeviceFeedbackQueueProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(LockDurationAsIso8601))
             {
                 writer.WritePropertyName("lockDurationAsIso8601"u8);
@@ -56,7 +64,6 @@ namespace Azure.ResourceManager.IotHub.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CloudToDeviceFeedbackQueueProperties IJsonModel<CloudToDeviceFeedbackQueueProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

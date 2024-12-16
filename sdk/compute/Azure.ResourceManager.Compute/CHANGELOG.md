@@ -1,14 +1,25 @@
 # Release History
 
-## 1.7.0-beta.1 (Unreleased)
+## 1.7.0-beta.2 (Unreleased)
 
 ### Features Added
+
+- Please use the properties in `VirtualMachineScaleSetData.Properties` to set the properties of the VMSS, instead of using those properties at the root level of `VirtualMachineScaleSetData` class.
+- Please use the properties in `VirtualMachineScaleSetPatch.Properties` to set the properties of the VMSS, instead of using those properties at the root level of `VirtualMachineScaleSetPatch` class.
+- Added `VirtualMachineScaleSetProperties` which supports `AdditionalProperties` to send and receive private/internal properties supported by the service.
+- Added `AdditionalProperties` to `VirtualMachineSizeProperties` and `VirtualMachineScaleSetUpgradePolicy` classes to support private/internal properties supported by the service.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.7.0-beta.1 (2024-10-15)
+
+### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ## 1.6.0 (2024-08-26)
 

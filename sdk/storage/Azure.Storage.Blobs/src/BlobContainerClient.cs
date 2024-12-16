@@ -144,7 +144,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobContainerClient"/>
-        /// class.
+        /// class with Connection string and Blob Container name.
         /// </summary>
         /// <param name="connectionString">
         /// A connection string includes the authentication information
@@ -165,7 +165,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobContainerClient"/>
-        /// class.
+        /// class with Connection string, Blob Container name, and <see cref="BlobClientOptions"/>.
         /// </summary>
         /// <param name="connectionString">
         /// A connection string includes the authentication information
@@ -215,7 +215,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobContainerClient"/>
-        /// class.
+        /// class with Blob Container URI and <see cref="BlobClientOptions"/>.
         /// </summary>
         /// <param name="blobContainerUri">
         /// A <see cref="Uri"/> referencing the blob container that includes the
@@ -255,7 +255,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobContainerClient"/>
-        /// class.
+        /// class with Blob Container URI, <see cref="StorageSharedKeyCredential"/>, and <see cref="BlobClientOptions"/>.
         /// </summary>
         /// <param name="blobContainerUri">
         /// A <see cref="Uri"/> referencing the blob container that includes the
@@ -297,7 +297,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobContainerClient"/>
-        /// class.
+        /// class with Blob Container URI, <see cref="AzureSasCredential"/>, and <see cref="BlobClientOptions"/>.
         /// </summary>
         /// <param name="blobContainerUri">
         /// A <see cref="Uri"/> referencing the blob container that includes the
@@ -342,7 +342,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobContainerClient"/>
-        /// class.
+        /// class with Blob Container URI, <see cref="TokenCredential"/>, and <see cref="BlobClientOptions"/>.
         /// </summary>
         /// <param name="blobContainerUri">
         /// A <see cref="Uri"/> referencing the blob container that includes the
@@ -387,7 +387,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobContainerClient"/>
-        /// class.
+        /// class with Blob Container URI, <see cref="BlobClientConfiguration"/>, and <see cref="ClientSideEncryptionOptions"/>.
         /// </summary>
         /// <param name="containerUri">
         /// A <see cref="Uri"/> referencing the blob container that includes the
@@ -417,7 +417,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobContainerClient"/>
-        /// class.
+        /// class with Blob Container URI, <see cref="BlobClientOptions"/>, and <see cref="HttpPipeline"/>.
         /// </summary>
         /// <param name="containerUri">
         /// A <see cref="Uri"/> referencing the block blob that includes the

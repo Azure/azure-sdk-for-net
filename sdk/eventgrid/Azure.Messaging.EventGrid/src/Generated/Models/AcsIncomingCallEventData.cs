@@ -22,8 +22,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="callerDisplayName"> Display name of caller. </param>
         /// <param name="customContext"> Custom Context of Incoming Call. </param>
         /// <param name="incomingCallContext"> Signed incoming call context. </param>
+        /// <param name="onBehalfOfCallee"> The communication identifier of the user on behalf of whom the call is made. </param>
         /// <param name="correlationId"> CorrelationId (CallId). </param>
-        internal AcsIncomingCallEventData(CommunicationIdentifierModel toCommunicationIdentifier, CommunicationIdentifierModel fromCommunicationIdentifier, string serverCallId, string callerDisplayName, AcsIncomingCallCustomContext customContext, string incomingCallContext, string correlationId)
+        internal AcsIncomingCallEventData(CommunicationIdentifierModel toCommunicationIdentifier, CommunicationIdentifierModel fromCommunicationIdentifier, string serverCallId, string callerDisplayName, AcsIncomingCallCustomContext customContext, string incomingCallContext, CommunicationIdentifierModel onBehalfOfCallee, string correlationId)
         {
             ToCommunicationIdentifier = toCommunicationIdentifier;
             FromCommunicationIdentifier = fromCommunicationIdentifier;
@@ -31,6 +32,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             CallerDisplayName = callerDisplayName;
             CustomContext = customContext;
             IncomingCallContext = incomingCallContext;
+            OnBehalfOfCallee = onBehalfOfCallee;
             CorrelationId = correlationId;
         }
 
@@ -46,6 +48,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public AcsIncomingCallCustomContext CustomContext { get; }
         /// <summary> Signed incoming call context. </summary>
         public string IncomingCallContext { get; }
+        /// <summary> The communication identifier of the user on behalf of whom the call is made. </summary>
+        public CommunicationIdentifierModel OnBehalfOfCallee { get; }
         /// <summary> CorrelationId (CallId). </summary>
         public string CorrelationId { get; }
     }

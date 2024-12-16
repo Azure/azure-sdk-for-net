@@ -12,120 +12,14 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.SqlVirtualMachine.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Samples
 {
     public partial class Sample_SqlVmCollection
     {
-        // Gets a SQL virtual machine.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetsASQLVirtualMachine()
-        {
-            // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/GetSqlVirtualMachine.json
-            // this example is just showing the usage of "SqlVirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "testrg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this SqlVmResource
-            SqlVmCollection collection = resourceGroupResource.GetSqlVms();
-
-            // invoke the operation
-            string sqlVmName = "testvm";
-            SqlVmResource result = await collection.GetAsync(sqlVmName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            SqlVmData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Gets a SQL virtual machine.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetsASQLVirtualMachine()
-        {
-            // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/GetSqlVirtualMachine.json
-            // this example is just showing the usage of "SqlVirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "testrg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this SqlVmResource
-            SqlVmCollection collection = resourceGroupResource.GetSqlVms();
-
-            // invoke the operation
-            string sqlVmName = "testvm";
-            bool result = await collection.ExistsAsync(sqlVmName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Gets a SQL virtual machine.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetsASQLVirtualMachine()
-        {
-            // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/GetSqlVirtualMachine.json
-            // this example is just showing the usage of "SqlVirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "testrg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this SqlVmResource
-            SqlVmCollection collection = resourceGroupResource.GetSqlVms();
-
-            // invoke the operation
-            string sqlVmName = "testvm";
-            NullableResponse<SqlVmResource> response = await collection.GetIfExistsAsync(sqlVmName);
-            SqlVmResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                SqlVmData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // Creates or updates a SQL virtual machine and joins it to a SQL virtual machine group.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesOrUpdatesASQLVirtualMachineAndJoinsItToASQLVirtualMachineGroup()
         {
             // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/CreateOrUpdateVirtualMachineWithVMGroup.json
@@ -152,7 +46,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Samples
             {
                 VirtualMachineResourceId = new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.Compute/virtualMachines/testvm2"),
                 SqlVmGroupResourceId = new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/testvmgroup"),
-                WindowsServerFailoverClusterDomainCredentials = new WindowsServerFailoverClusterDomainCredentials()
+                WindowsServerFailoverClusterDomainCredentials = new WindowsServerFailoverClusterDomainCredentials
                 {
                     ClusterBootstrapAccountPassword = "<Password>",
                     ClusterOperatorAccountPassword = "<Password>",
@@ -170,9 +64,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Creates or updates a SQL virtual machine for Automated Back up Settings with Weekly and Days of the week to run the back up.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesOrUpdatesASQLVirtualMachineForAutomatedBackUpSettingsWithWeeklyAndDaysOfTheWeekToRunTheBackUp()
         {
             // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/CreateOrUpdateSqlVirtualMachineAutomatedBackupWeekly.json
@@ -201,14 +94,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Samples
                 SqlServerLicenseType = SqlServerLicenseType.Payg,
                 SqlManagement = SqlManagementMode.Full,
                 SqlImageSku = SqlImageSku.Enterprise,
-                AutoPatchingSettings = new SqlVmAutoPatchingSettings()
+                AutoPatchingSettings = new SqlVmAutoPatchingSettings
                 {
                     IsEnabled = true,
                     DayOfWeek = SqlVmAutoPatchingDayOfWeek.Sunday,
                     MaintenanceWindowStartingHour = 2,
                     MaintenanceWindowDurationInMinutes = 60,
                 },
-                AutoBackupSettings = new SqlVmAutoBackupSettings()
+                AutoBackupSettings = new SqlVmAutoBackupSettings
                 {
                     IsEnabled = true,
                     IsEncryptionEnabled = true,
@@ -220,21 +113,18 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Samples
                     AreSystemDbsIncludedInBackup = true,
                     BackupScheduleType = SqVmBackupScheduleType.Manual,
                     FullBackupFrequency = SqlVmFullBackupFrequency.Weekly,
-                    DaysOfWeek =
-{
-SqlVmAutoBackupDayOfWeek.Monday,SqlVmAutoBackupDayOfWeek.Friday
-},
+                    DaysOfWeek = { SqlVmAutoBackupDayOfWeek.Monday, SqlVmAutoBackupDayOfWeek.Friday },
                     FullBackupStartHour = 6,
                     FullBackupWindowHours = 11,
                     LogBackupFrequency = 10,
                 },
-                KeyVaultCredentialSettings = new SqlVmKeyVaultCredentialSettings()
+                KeyVaultCredentialSettings = new SqlVmKeyVaultCredentialSettings
                 {
                     IsEnabled = false,
                 },
-                ServerConfigurationsManagementSettings = new SqlServerConfigurationsManagementSettings()
+                ServerConfigurationsManagementSettings = new SqlServerConfigurationsManagementSettings
                 {
-                    SqlConnectivityUpdateSettings = new SqlConnectivityUpdateSettings()
+                    SqlConnectivityUpdateSettings = new SqlConnectivityUpdateSettings
                     {
                         ConnectivityType = SqlServerConnectivityType.Private,
                         Port = 1433,
@@ -242,7 +132,7 @@ SqlVmAutoBackupDayOfWeek.Monday,SqlVmAutoBackupDayOfWeek.Friday
                         SqlAuthUpdatePassword = "<password>",
                     },
                     SqlWorkloadType = SqlWorkloadType.Oltp,
-                    SqlStorageUpdateSettings = new SqlStorageUpdateSettings()
+                    SqlStorageUpdateSettings = new SqlStorageUpdateSettings
                     {
                         DiskCount = 1,
                         StartingDeviceId = 2,
@@ -261,9 +151,8 @@ SqlVmAutoBackupDayOfWeek.Monday,SqlVmAutoBackupDayOfWeek.Friday
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Creates or updates a SQL virtual machine for Storage Configuration Settings to EXTEND Data, Log or TempDB storage pool.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesOrUpdatesASQLVirtualMachineForStorageConfigurationSettingsToEXTENDDataLogOrTempDBStoragePool()
         {
             // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/CreateOrUpdateSqlVirtualMachineStorageConfigurationEXTEND.json
@@ -289,14 +178,11 @@ SqlVmAutoBackupDayOfWeek.Monday,SqlVmAutoBackupDayOfWeek.Friday
             SqlVmData data = new SqlVmData(new AzureLocation("northeurope"))
             {
                 VirtualMachineResourceId = new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.Compute/virtualMachines/testvm"),
-                StorageConfigurationSettings = new SqlVmStorageConfigurationSettings()
+                StorageConfigurationSettings = new SqlVmStorageConfigurationSettings
                 {
-                    SqlDataSettings = new SqlStorageSettings()
+                    SqlDataSettings = new SqlStorageSettings
                     {
-                        Luns =
-{
-2
-},
+                        Luns = { 2 },
                     },
                     DiskConfigurationType = SqlVmDiskConfigurationType.Extend,
                 },
@@ -311,9 +197,8 @@ SqlVmAutoBackupDayOfWeek.Monday,SqlVmAutoBackupDayOfWeek.Friday
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Creates or updates a SQL virtual machine for Storage Configuration Settings to NEW Data, Log and TempDB storage pool.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesOrUpdatesASQLVirtualMachineForStorageConfigurationSettingsToNEWDataLogAndTempDBStoragePool()
         {
             // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/CreateOrUpdateSqlVirtualMachineStorageConfigurationNEW.json
@@ -339,25 +224,19 @@ SqlVmAutoBackupDayOfWeek.Monday,SqlVmAutoBackupDayOfWeek.Friday
             SqlVmData data = new SqlVmData(new AzureLocation("northeurope"))
             {
                 VirtualMachineResourceId = new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.Compute/virtualMachines/testvm"),
-                StorageConfigurationSettings = new SqlVmStorageConfigurationSettings()
+                StorageConfigurationSettings = new SqlVmStorageConfigurationSettings
                 {
-                    SqlDataSettings = new SqlStorageSettings()
+                    SqlDataSettings = new SqlStorageSettings
                     {
-                        Luns =
-{
-0
-},
+                        Luns = { 0 },
                         DefaultFilePath = "F:\\folderpath\\",
                     },
-                    SqlLogSettings = new SqlStorageSettings()
+                    SqlLogSettings = new SqlStorageSettings
                     {
-                        Luns =
-{
-1
-},
+                        Luns = { 1 },
                         DefaultFilePath = "G:\\folderpath\\",
                     },
-                    SqlTempDBSettings = new SqlTempDBSettings()
+                    SqlTempDBSettings = new SqlTempDBSettings
                     {
                         DataFileSize = 256,
                         DataGrowth = 512,
@@ -381,9 +260,8 @@ SqlVmAutoBackupDayOfWeek.Monday,SqlVmAutoBackupDayOfWeek.Friday
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Creates or updates a SQL virtual machine with max parameters.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesOrUpdatesASQLVirtualMachineWithMaxParameters()
         {
             // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/CreateOrUpdateSqlVirtualMachineMAX.json
@@ -412,14 +290,14 @@ SqlVmAutoBackupDayOfWeek.Monday,SqlVmAutoBackupDayOfWeek.Friday
                 SqlServerLicenseType = SqlServerLicenseType.Payg,
                 SqlManagement = SqlManagementMode.Full,
                 SqlImageSku = SqlImageSku.Enterprise,
-                AutoPatchingSettings = new SqlVmAutoPatchingSettings()
+                AutoPatchingSettings = new SqlVmAutoPatchingSettings
                 {
                     IsEnabled = true,
                     DayOfWeek = SqlVmAutoPatchingDayOfWeek.Sunday,
                     MaintenanceWindowStartingHour = 2,
                     MaintenanceWindowDurationInMinutes = 60,
                 },
-                AutoBackupSettings = new SqlVmAutoBackupSettings()
+                AutoBackupSettings = new SqlVmAutoBackupSettings
                 {
                     IsEnabled = true,
                     IsEncryptionEnabled = true,
@@ -435,13 +313,13 @@ SqlVmAutoBackupDayOfWeek.Monday,SqlVmAutoBackupDayOfWeek.Friday
                     FullBackupWindowHours = 11,
                     LogBackupFrequency = 10,
                 },
-                KeyVaultCredentialSettings = new SqlVmKeyVaultCredentialSettings()
+                KeyVaultCredentialSettings = new SqlVmKeyVaultCredentialSettings
                 {
                     IsEnabled = false,
                 },
-                ServerConfigurationsManagementSettings = new SqlServerConfigurationsManagementSettings()
+                ServerConfigurationsManagementSettings = new SqlServerConfigurationsManagementSettings
                 {
-                    SqlConnectivityUpdateSettings = new SqlConnectivityUpdateSettings()
+                    SqlConnectivityUpdateSettings = new SqlConnectivityUpdateSettings
                     {
                         ConnectivityType = SqlServerConnectivityType.Private,
                         Port = 1433,
@@ -449,14 +327,14 @@ SqlVmAutoBackupDayOfWeek.Monday,SqlVmAutoBackupDayOfWeek.Friday
                         SqlAuthUpdatePassword = "<password>",
                     },
                     SqlWorkloadType = SqlWorkloadType.Oltp,
-                    SqlStorageUpdateSettings = new SqlStorageUpdateSettings()
+                    SqlStorageUpdateSettings = new SqlStorageUpdateSettings
                     {
                         DiskCount = 1,
                         StartingDeviceId = 2,
                         DiskConfigurationType = SqlVmDiskConfigurationType.New,
                     },
                     IsRServicesEnabled = false,
-                    SqlInstanceSettings = new SqlInstanceSettings()
+                    SqlInstanceSettings = new SqlInstanceSettings
                     {
                         Collation = "SQL_Latin1_General_CP1_CI_AS",
                         MaxDop = 8,
@@ -467,15 +345,15 @@ SqlVmAutoBackupDayOfWeek.Monday,SqlVmAutoBackupDayOfWeek.Friday
                         IsIfiEnabled = true,
                     },
                 },
-                AssessmentSettings = new SqlVmAssessmentSettings()
+                AssessmentSettings = new SqlVmAssessmentSettings
                 {
                     IsEnabled = true,
                     RunImmediately = true,
-                    Schedule = new SqlVmAssessmentSchedule()
+                    Schedule = new SqlVmAssessmentSchedule
                     {
                         IsEnabled = true,
                         WeeklyInterval = 1,
-                        MonthlyOccurrence = null,
+                        MonthlyOccurrence = default,
                         DayOfWeek = SqlVmAssessmentDayOfWeek.Sunday,
                         StartTime = "23:17",
                     },
@@ -491,9 +369,8 @@ SqlVmAutoBackupDayOfWeek.Monday,SqlVmAutoBackupDayOfWeek.Friday
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Creates or updates a SQL virtual machine with min parameters.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatesOrUpdatesASQLVirtualMachineWithMinParameters()
         {
             // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/CreateOrUpdateSqlVirtualMachineMIN.json
@@ -530,9 +407,41 @@ SqlVmAutoBackupDayOfWeek.Monday,SqlVmAutoBackupDayOfWeek.Friday
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Gets all SQL virtual machines in a resource group.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetsASQLVirtualMachine()
+        {
+            // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/GetSqlVirtualMachine.json
+            // this example is just showing the usage of "SqlVirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "testrg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this SqlVmResource
+            SqlVmCollection collection = resourceGroupResource.GetSqlVms();
+
+            // invoke the operation
+            string sqlVmName = "testvm";
+            SqlVmResource result = await collection.GetAsync(sqlVmName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SqlVmData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetsAllSQLVirtualMachinesInAResourceGroup()
         {
             // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/ListByResourceGroupSqlVirtualMachine.json
@@ -563,7 +472,77 @@ SqlVmAutoBackupDayOfWeek.Monday,SqlVmAutoBackupDayOfWeek.Friday
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetsASQLVirtualMachine()
+        {
+            // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/GetSqlVirtualMachine.json
+            // this example is just showing the usage of "SqlVirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "testrg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this SqlVmResource
+            SqlVmCollection collection = resourceGroupResource.GetSqlVms();
+
+            // invoke the operation
+            string sqlVmName = "testvm";
+            bool result = await collection.ExistsAsync(sqlVmName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetsASQLVirtualMachine()
+        {
+            // Generated from example definition: specification/sqlvirtualmachine/resource-manager/Microsoft.SqlVirtualMachine/stable/2022-02-01/examples/GetSqlVirtualMachine.json
+            // this example is just showing the usage of "SqlVirtualMachines_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "testrg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this SqlVmResource
+            SqlVmCollection collection = resourceGroupResource.GetSqlVms();
+
+            // invoke the operation
+            string sqlVmName = "testvm";
+            NullableResponse<SqlVmResource> response = await collection.GetIfExistsAsync(sqlVmName);
+            SqlVmResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                SqlVmData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

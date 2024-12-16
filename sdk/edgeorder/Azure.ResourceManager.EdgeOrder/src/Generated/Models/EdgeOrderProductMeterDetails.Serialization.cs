@@ -19,13 +19,21 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         void IJsonModel<EdgeOrderProductMeterDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderProductMeterDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EdgeOrderProductMeterDetails)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("billingType"u8);
             writer.WriteStringValue(BillingType.ToString());
             if (options.Format != "W" && Optional.IsDefined(Multiplier))
@@ -53,7 +61,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         EdgeOrderProductMeterDetails IJsonModel<EdgeOrderProductMeterDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

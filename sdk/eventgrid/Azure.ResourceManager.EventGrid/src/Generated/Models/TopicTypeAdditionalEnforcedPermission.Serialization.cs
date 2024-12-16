@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         void IJsonModel<TopicTypeAdditionalEnforcedPermission>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<TopicTypeAdditionalEnforcedPermission>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TopicTypeAdditionalEnforcedPermission)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(PermissionName))
             {
                 writer.WritePropertyName("permissionName"u8);
@@ -52,7 +60,6 @@ namespace Azure.ResourceManager.EventGrid.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         TopicTypeAdditionalEnforcedPermission IJsonModel<TopicTypeAdditionalEnforcedPermission>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

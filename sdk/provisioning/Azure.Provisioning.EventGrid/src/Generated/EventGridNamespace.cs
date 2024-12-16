@@ -16,32 +16,48 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// EventGridNamespace.
 /// </summary>
-public partial class EventGridNamespace : Resource
+public partial class EventGridNamespace : ProvisionableResource
 {
     /// <summary>
     /// Name of the namespace.
     /// </summary>
-    public BicepValue<string> Name { get => _name; set => _name.Assign(value); }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<AzureLocation> Location { get => _location; set => _location.Assign(value); }
-    private readonly BicepValue<AzureLocation> _location;
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
     /// Identity information for the Namespace resource.
     /// </summary>
-    public BicepValue<ManagedServiceIdentity> Identity { get => _identity; set => _identity.Assign(value); }
-    private readonly BicepValue<ManagedServiceIdentity> _identity;
+    public ManagedServiceIdentity Identity 
+    {
+        get { Initialize(); return _identity!; }
+        set { Initialize(); AssignOrReplace(ref _identity, value); }
+    }
+    private ManagedServiceIdentity? _identity;
 
     /// <summary>
     /// This can be used to restrict traffic from specific IPs instead of all
     /// IPs. Note: These are considered only if PublicNetworkAccess is enabled.
     /// </summary>
-    public BicepList<EventGridInboundIPRule> InboundIPRules { get => _inboundIPRules; set => _inboundIPRules.Assign(value); }
-    private readonly BicepList<EventGridInboundIPRule> _inboundIPRules;
+    public BicepList<EventGridInboundIPRule> InboundIPRules 
+    {
+        get { Initialize(); return _inboundIPRules!; }
+        set { Initialize(); _inboundIPRules!.Assign(value); }
+    }
+    private BicepList<EventGridInboundIPRule>? _inboundIPRules;
 
     /// <summary>
     /// This is an optional property and it allows the user to specify if the
@@ -53,21 +69,33 @@ public partial class EventGridNamespace : Resource
     /// regions - The default property value would be false.             Once
     /// specified, this property cannot be updated.
     /// </summary>
-    public BicepValue<bool> IsZoneRedundant { get => _isZoneRedundant; set => _isZoneRedundant.Assign(value); }
-    private readonly BicepValue<bool> _isZoneRedundant;
+    public BicepValue<bool> IsZoneRedundant 
+    {
+        get { Initialize(); return _isZoneRedundant!; }
+        set { Initialize(); _isZoneRedundant!.Assign(value); }
+    }
+    private BicepValue<bool>? _isZoneRedundant;
 
     /// <summary>
     /// Minimum TLS version of the publisher allowed to publish to this
     /// namespace. Only TLS version 1.2 is supported.
     /// </summary>
-    public BicepValue<TlsVersion> MinimumTlsVersionAllowed { get => _minimumTlsVersionAllowed; set => _minimumTlsVersionAllowed.Assign(value); }
-    private readonly BicepValue<TlsVersion> _minimumTlsVersionAllowed;
+    public BicepValue<TlsVersion> MinimumTlsVersionAllowed 
+    {
+        get { Initialize(); return _minimumTlsVersionAllowed!; }
+        set { Initialize(); _minimumTlsVersionAllowed!.Assign(value); }
+    }
+    private BicepValue<TlsVersion>? _minimumTlsVersionAllowed;
 
     /// <summary>
     /// List of private endpoint connections.
     /// </summary>
-    public BicepList<EventGridPrivateEndpointConnectionData> PrivateEndpointConnections { get => _privateEndpointConnections; set => _privateEndpointConnections.Assign(value); }
-    private readonly BicepList<EventGridPrivateEndpointConnectionData> _privateEndpointConnections;
+    public BicepList<EventGridPrivateEndpointConnectionData> PrivateEndpointConnections 
+    {
+        get { Initialize(); return _privateEndpointConnections!; }
+        set { Initialize(); _privateEndpointConnections!.Assign(value); }
+    }
+    private BicepList<EventGridPrivateEndpointConnectionData>? _privateEndpointConnections;
 
     /// <summary>
     /// This determines if traffic is allowed over public network. By default
@@ -76,96 +104,121 @@ public partial class EventGridNamespace : Resource
     /// cref=&quot;P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.PubSub.NamespaceProperties.InboundIpRules&quot;
     /// /&gt;
     /// </summary>
-    public BicepValue<EventGridPublicNetworkAccess> PublicNetworkAccess { get => _publicNetworkAccess; set => _publicNetworkAccess.Assign(value); }
-    private readonly BicepValue<EventGridPublicNetworkAccess> _publicNetworkAccess;
+    public BicepValue<EventGridPublicNetworkAccess> PublicNetworkAccess 
+    {
+        get { Initialize(); return _publicNetworkAccess!; }
+        set { Initialize(); _publicNetworkAccess!.Assign(value); }
+    }
+    private BicepValue<EventGridPublicNetworkAccess>? _publicNetworkAccess;
 
     /// <summary>
     /// Represents available Sku pricing tiers.
     /// </summary>
-    public BicepValue<NamespaceSku> Sku { get => _sku; set => _sku.Assign(value); }
-    private readonly BicepValue<NamespaceSku> _sku;
+    public NamespaceSku Sku 
+    {
+        get { Initialize(); return _sku!; }
+        set { Initialize(); AssignOrReplace(ref _sku, value); }
+    }
+    private NamespaceSku? _sku;
 
     /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
-    public BicepDictionary<string> Tags { get => _tags; set => _tags.Assign(value); }
-    private readonly BicepDictionary<string> _tags;
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Topics configuration information for the namespace resource.
     /// </summary>
-    public BicepValue<TopicsConfiguration> TopicsConfiguration { get => _topicsConfiguration; set => _topicsConfiguration.Assign(value); }
-    private readonly BicepValue<TopicsConfiguration> _topicsConfiguration;
+    public TopicsConfiguration TopicsConfiguration 
+    {
+        get { Initialize(); return _topicsConfiguration!; }
+        set { Initialize(); AssignOrReplace(ref _topicsConfiguration, value); }
+    }
+    private TopicsConfiguration? _topicsConfiguration;
 
     /// <summary>
     /// Topic spaces configuration information for the namespace resource.
     /// </summary>
-    public BicepValue<TopicSpacesConfiguration> TopicSpacesConfiguration { get => _topicSpacesConfiguration; set => _topicSpacesConfiguration.Assign(value); }
-    private readonly BicepValue<TopicSpacesConfiguration> _topicSpacesConfiguration;
+    public TopicSpacesConfiguration TopicSpacesConfiguration 
+    {
+        get { Initialize(); return _topicSpacesConfiguration!; }
+        set { Initialize(); AssignOrReplace(ref _topicSpacesConfiguration, value); }
+    }
+    private TopicSpacesConfiguration? _topicSpacesConfiguration;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Provisioning state of the namespace resource.
     /// </summary>
-    public BicepValue<NamespaceProvisioningState> ProvisioningState { get => _provisioningState; }
-    private readonly BicepValue<NamespaceProvisioningState> _provisioningState;
+    public BicepValue<NamespaceProvisioningState> ProvisioningState 
+    {
+        get { Initialize(); return _provisioningState!; }
+    }
+    private BicepValue<NamespaceProvisioningState>? _provisioningState;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Creates a new EventGridNamespace.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the EventGridNamespace resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
     /// and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the EventGridNamespace.</param>
-    public EventGridNamespace(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.EventGrid/namespaces", resourceVersion ?? "2024-06-01-preview")
+    public EventGridNamespace(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.EventGrid/namespaces", resourceVersion)
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isRequired: true);
-        _location = BicepValue<AzureLocation>.DefineProperty(this, "Location", ["location"], isRequired: true);
-        _identity = BicepValue<ManagedServiceIdentity>.DefineProperty(this, "Identity", ["identity"]);
-        _inboundIPRules = BicepList<EventGridInboundIPRule>.DefineProperty(this, "InboundIPRules", ["properties", "inboundIpRules"]);
-        _isZoneRedundant = BicepValue<bool>.DefineProperty(this, "IsZoneRedundant", ["properties", "isZoneRedundant"]);
-        _minimumTlsVersionAllowed = BicepValue<TlsVersion>.DefineProperty(this, "MinimumTlsVersionAllowed", ["properties", "minimumTlsVersionAllowed"]);
-        _privateEndpointConnections = BicepList<EventGridPrivateEndpointConnectionData>.DefineProperty(this, "PrivateEndpointConnections", ["properties", "privateEndpointConnections"]);
-        _publicNetworkAccess = BicepValue<EventGridPublicNetworkAccess>.DefineProperty(this, "PublicNetworkAccess", ["properties", "publicNetworkAccess"]);
-        _sku = BicepValue<NamespaceSku>.DefineProperty(this, "Sku", ["sku"]);
-        _tags = BicepDictionary<string>.DefineProperty(this, "Tags", ["tags"]);
-        _topicsConfiguration = BicepValue<TopicsConfiguration>.DefineProperty(this, "TopicsConfiguration", ["properties", "topicsConfiguration"]);
-        _topicSpacesConfiguration = BicepValue<TopicSpacesConfiguration>.DefineProperty(this, "TopicSpacesConfiguration", ["properties", "topicSpacesConfiguration"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _provisioningState = BicepValue<NamespaceProvisioningState>.DefineProperty(this, "ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>
-    /// Supported EventGridNamespace resource versions.
+    /// Define all the provisionable properties of EventGridNamespace.
     /// </summary>
-    public static class ResourceVersions
+    protected override void DefineProvisionableProperties()
     {
-        /// <summary>
-        /// 2024-06-01-preview.
-        /// </summary>
-        public static readonly string V2024_06_01_preview = "2024-06-01-preview";
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
+        _inboundIPRules = DefineListProperty<EventGridInboundIPRule>("InboundIPRules", ["properties", "inboundIpRules"]);
+        _isZoneRedundant = DefineProperty<bool>("IsZoneRedundant", ["properties", "isZoneRedundant"]);
+        _minimumTlsVersionAllowed = DefineProperty<TlsVersion>("MinimumTlsVersionAllowed", ["properties", "minimumTlsVersionAllowed"]);
+        _privateEndpointConnections = DefineListProperty<EventGridPrivateEndpointConnectionData>("PrivateEndpointConnections", ["properties", "privateEndpointConnections"]);
+        _publicNetworkAccess = DefineProperty<EventGridPublicNetworkAccess>("PublicNetworkAccess", ["properties", "publicNetworkAccess"]);
+        _sku = DefineModelProperty<NamespaceSku>("Sku", ["sku"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _topicsConfiguration = DefineModelProperty<TopicsConfiguration>("TopicsConfiguration", ["properties", "topicsConfiguration"]);
+        _topicSpacesConfiguration = DefineModelProperty<TopicSpacesConfiguration>("TopicSpacesConfiguration", ["properties", "topicSpacesConfiguration"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _provisioningState = DefineProperty<NamespaceProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>
     /// Creates a reference to an existing EventGridNamespace.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the EventGridNamespace resource.  This
     /// can be used to refer to the resource in expressions, but is not the
     /// Azure name of the resource.  This value can contain letters, numbers,
@@ -173,6 +226,6 @@ public partial class EventGridNamespace : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the EventGridNamespace.</param>
     /// <returns>The existing EventGridNamespace resource.</returns>
-    public static EventGridNamespace FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static EventGridNamespace FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

@@ -16,55 +16,84 @@ namespace Azure.Provisioning.Authorization;
 /// <summary>
 /// AuthorizationRoleDefinition.
 /// </summary>
-public partial class AuthorizationRoleDefinition : Resource
+public partial class AuthorizationRoleDefinition : ProvisionableResource
 {
     /// <summary>
     /// Gets the Name.
     /// </summary>
-    public BicepValue<string> Name { get => _name; }
-    private readonly BicepValue<string> _name;
+    public BicepValue<string> Name 
+    {
+        get { Initialize(); return _name!; }
+    }
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Role definition assignable scopes.
     /// </summary>
-    public BicepList<string> AssignableScopes { get => _assignableScopes; set => _assignableScopes.Assign(value); }
-    private readonly BicepList<string> _assignableScopes;
+    public BicepList<string> AssignableScopes 
+    {
+        get { Initialize(); return _assignableScopes!; }
+        set { Initialize(); _assignableScopes!.Assign(value); }
+    }
+    private BicepList<string>? _assignableScopes;
 
     /// <summary>
     /// The role definition description.
     /// </summary>
-    public BicepValue<string> Description { get => _description; set => _description.Assign(value); }
-    private readonly BicepValue<string> _description;
+    public BicepValue<string> Description 
+    {
+        get { Initialize(); return _description!; }
+        set { Initialize(); _description!.Assign(value); }
+    }
+    private BicepValue<string>? _description;
 
     /// <summary>
     /// Role definition permissions.
     /// </summary>
-    public BicepList<RoleDefinitionPermission> Permissions { get => _permissions; set => _permissions.Assign(value); }
-    private readonly BicepList<RoleDefinitionPermission> _permissions;
+    public BicepList<RoleDefinitionPermission> Permissions 
+    {
+        get { Initialize(); return _permissions!; }
+        set { Initialize(); _permissions!.Assign(value); }
+    }
+    private BicepList<RoleDefinitionPermission>? _permissions;
 
     /// <summary>
     /// The role name.
     /// </summary>
-    public BicepValue<string> RoleName { get => _roleName; set => _roleName.Assign(value); }
-    private readonly BicepValue<string> _roleName;
+    public BicepValue<string> RoleName 
+    {
+        get { Initialize(); return _roleName!; }
+        set { Initialize(); _roleName!.Assign(value); }
+    }
+    private BicepValue<string>? _roleName;
 
     /// <summary>
     /// The role type.
     /// </summary>
-    public BicepValue<AuthorizationRoleType> RoleType { get => _roleType; set => _roleType.Assign(value); }
-    private readonly BicepValue<AuthorizationRoleType> _roleType;
+    public BicepValue<AuthorizationRoleType> RoleType 
+    {
+        get { Initialize(); return _roleType!; }
+        set { Initialize(); _roleType!.Assign(value); }
+    }
+    private BicepValue<AuthorizationRoleType>? _roleType;
 
     /// <summary>
     /// Gets the Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id { get => _id; }
-    private readonly BicepValue<ResourceIdentifier> _id;
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
     /// Gets the SystemData.
     /// </summary>
-    public BicepValue<SystemData> SystemData { get => _systemData; }
-    private readonly BicepValue<SystemData> _systemData;
+    public SystemData SystemData 
+    {
+        get { Initialize(); return _systemData!; }
+    }
+    private SystemData? _systemData;
 
     /// <summary>
     /// Get the default value for the Name property.
@@ -74,24 +103,31 @@ public partial class AuthorizationRoleDefinition : Resource
     /// <summary>
     /// Creates a new AuthorizationRoleDefinition.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the AuthorizationRoleDefinition
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
     /// letters, numbers, and underscores.
     /// </param>
     /// <param name="resourceVersion">Version of the AuthorizationRoleDefinition.</param>
-    public AuthorizationRoleDefinition(string identifierName, string? resourceVersion = default)
-        : base(identifierName, "Microsoft.Authorization/roleDefinitions", resourceVersion ?? "2022-04-01")
+    public AuthorizationRoleDefinition(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Authorization/roleDefinitions", resourceVersion ?? "2022-04-01")
     {
-        _name = BicepValue<string>.DefineProperty(this, "Name", ["name"], isOutput: true, defaultValue: GetNameDefaultValue());
-        _assignableScopes = BicepList<string>.DefineProperty(this, "AssignableScopes", ["properties", "assignableScopes"]);
-        _description = BicepValue<string>.DefineProperty(this, "Description", ["properties", "description"]);
-        _permissions = BicepList<RoleDefinitionPermission>.DefineProperty(this, "Permissions", ["properties", "permissions"]);
-        _roleName = BicepValue<string>.DefineProperty(this, "RoleName", ["properties", "roleName"]);
-        _roleType = BicepValue<AuthorizationRoleType>.DefineProperty(this, "RoleType", ["properties", "type"]);
-        _id = BicepValue<ResourceIdentifier>.DefineProperty(this, "Id", ["id"], isOutput: true);
-        _systemData = BicepValue<SystemData>.DefineProperty(this, "SystemData", ["systemData"], isOutput: true);
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of AuthorizationRoleDefinition.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        _name = DefineProperty<string>("Name", ["name"], isOutput: true, defaultValue: GetNameDefaultValue());
+        _assignableScopes = DefineListProperty<string>("AssignableScopes", ["properties", "assignableScopes"]);
+        _description = DefineProperty<string>("Description", ["properties", "description"]);
+        _permissions = DefineListProperty<RoleDefinitionPermission>("Permissions", ["properties", "permissions"]);
+        _roleName = DefineProperty<string>("RoleName", ["properties", "roleName"]);
+        _roleType = DefineProperty<AuthorizationRoleType>("RoleType", ["properties", "type"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
     /// <summary>
@@ -99,11 +135,6 @@ public partial class AuthorizationRoleDefinition : Resource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2023-07-01-preview.
-        /// </summary>
-        public static readonly string V2023_07_01_preview = "2023-07-01-preview";
-
         /// <summary>
         /// 2022-04-01.
         /// </summary>
@@ -143,7 +174,7 @@ public partial class AuthorizationRoleDefinition : Resource
     /// <summary>
     /// Creates a reference to an existing AuthorizationRoleDefinition.
     /// </summary>
-    /// <param name="identifierName">
+    /// <param name="bicepIdentifier">
     /// The the Bicep identifier name of the AuthorizationRoleDefinition
     /// resource.  This can be used to refer to the resource in expressions,
     /// but is not the Azure name of the resource.  This value can contain
@@ -151,6 +182,6 @@ public partial class AuthorizationRoleDefinition : Resource
     /// </param>
     /// <param name="resourceVersion">Version of the AuthorizationRoleDefinition.</param>
     /// <returns>The existing AuthorizationRoleDefinition resource.</returns>
-    public static AuthorizationRoleDefinition FromExisting(string identifierName, string? resourceVersion = default) =>
-        new(identifierName, resourceVersion) { IsExistingResource = true };
+    public static AuthorizationRoleDefinition FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+        new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

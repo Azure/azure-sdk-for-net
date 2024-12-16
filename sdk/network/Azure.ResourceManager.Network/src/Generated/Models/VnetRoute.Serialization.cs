@@ -20,13 +20,21 @@ namespace Azure.ResourceManager.Network.Models
 
         void IJsonModel<VnetRoute>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<VnetRoute>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VnetRoute)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(StaticRoutesConfig))
             {
                 writer.WritePropertyName("staticRoutesConfig"u8);
@@ -67,7 +75,6 @@ namespace Azure.ResourceManager.Network.Models
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         VnetRoute IJsonModel<VnetRoute>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

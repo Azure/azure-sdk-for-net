@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Runtime.InteropServices;
 using Azure.Core;
 using Azure.Identity;
@@ -44,11 +45,11 @@ public class PlaywrightServiceOptions
     {
         if (Os != null && Os != OSPlatform.Linux && Os != OSPlatform.Windows)
         {
-            throw new System.Exception($"Invalid value for {nameof(Os)}: {Os}. Supported values are {ServiceOs.Linux} and {ServiceOs.Windows}");
+            throw new Exception($"Invalid value for {nameof(Os)}: {Os}. Supported values are {ServiceOs.Linux} and {ServiceOs.Windows}");
         }
         if (!string.IsNullOrEmpty(ServiceAuth) && ServiceAuth != ServiceAuthType.EntraId && ServiceAuth != ServiceAuthType.AccessToken)
         {
-            throw new System.Exception($"Invalid value for {nameof(ServiceAuth)}: {ServiceAuth}. Supported values are {ServiceAuthType.EntraId} and {ServiceAuthType.AccessToken}");
+            throw new Exception($"Invalid value for {nameof(ServiceAuth)}: {ServiceAuth}. Supported values are {ServiceAuthType.EntraId} and {ServiceAuthType.AccessToken}");
         }
     }
 
