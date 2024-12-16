@@ -1,15 +1,9 @@
-﻿using Azure.Generator.Tests.Common;
+﻿using Azure.Generator.Providers;
+using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
 using Microsoft.Generator.CSharp.ClientModel.Providers;
-using Microsoft.Generator.CSharp.ClientModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NUnit.Framework;
-using System.ClientModel.Primitives;
-using Azure.Generator.Providers;
+using System.Linq;
 
 namespace Azure.Generator.Tests.Providers.Abstractions
 {

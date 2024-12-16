@@ -21,9 +21,9 @@ namespace BasicTypeSpec
     public partial class BasicTypeSpecClient
     {
         private readonly Uri _endpoint;
-        private const string AuthorizationHeader = "my-api-key";
         /// <summary> A credential used to authenticate to the service. </summary>
         private readonly AzureKeyCredential _keyCredential;
+        private const string AuthorizationHeader = "my-api-key";
         /// <summary> A credential used to authenticate to the service. </summary>
         private readonly TokenCredential _tokenCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://theservice.azure.com/.default" };
@@ -80,7 +80,7 @@ namespace BasicTypeSpec
 
             _endpoint = endpoint;
             _tokenCredential = tokenCredential;
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) });
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
