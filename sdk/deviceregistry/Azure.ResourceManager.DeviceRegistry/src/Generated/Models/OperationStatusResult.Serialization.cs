@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
-    public partial class OperationStatusResult : IUtf8JsonSerializable, IJsonModel<OperationStatusResult>
+    internal partial class OperationStatusResult : IUtf8JsonSerializable, IJsonModel<OperationStatusResult>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationStatusResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
