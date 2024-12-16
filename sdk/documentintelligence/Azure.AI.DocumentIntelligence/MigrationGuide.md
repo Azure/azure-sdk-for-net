@@ -2,7 +2,7 @@
 
 This guide is intended to assist in the migration to `Azure.AI.DocumentIntelligence (1.0.0)` from `Azure.AI.FormRecognizer (4.1.0 or 4.0.0)`. It will focus on side-by-side comparisons for similar operations between libraries. Please note that version `1.0.0` will be used for comparison with `4.1.0`.
 
-Familiarity with the `Azure.AI.FormRecognizer` package is assumed. For those new to the Document Intelligence and the Form Recognizer client libraries for .NET, please refer to the [README][readme] rather than this guide. For an exhaustive list of breaking changes between the packages, see the [CHANGELOG][changelog].
+Familiarity with the `Azure.AI.FormRecognizer` package is assumed. For those new to the Document Intelligence and the Form Recognizer client libraries for .NET, please refer to the [README][readme] rather than this guide.
 
 ## Table of Contents
 - [Migration benefits](#migration-benefits)
@@ -26,11 +26,12 @@ There are many benefits to using the new `Azure.AI.DocumentIntelligence` library
 
 New features provided by the `Azure.AI.DocumentIntelligence` library include:
 - **Markdown content format:** support to output with Markdown content format along with the default plain text. This is only supported for the "prebuilt-layout" model. Markdown content format is deemed a more friendly format for LLM consumption in a chat or automation use scenario.
-- **Query fields:** query fields are reintroduced as a premium add-on feature. When the `DocumentAnalysisFeature.QueryFields` argument is passed to a document analysis request, the service will further extract the values of the fields specified via the parameter `queryFields` to supplement any existing fields defined by the model as fallback.
-- **Split options:** in previous API versions, the document splitting and classification operation always tried to split the input file into multiple documents. To enable a wider set of scenarios, `ClassifyDocument` now supports a `split` parameter. The following values are supported:
+- **Query fields:** query fields are reintroduced as a premium add-on feature. When the `DocumentAnalysisFeature.QueryFields` argument is passed to a document analysis request, the service will further extract the values of the fields specified via the option `QueryFields` to supplement any existing fields defined by the model as fallback.
+- **Split options:** in previous API versions, the document splitting and classification operation always tried to split the input file into multiple documents. To enable a wider set of scenarios, `ClassifyDocument` now supports a `Split` option. The following values are supported:
   - `Auto`: let the service determine where to split.
   - `None`: the entire file is treated as a single document. No splitting is performed.
   - `PerPage`: each page is treated as a separate document. Each empty page is kept as its own document.
+- **Batch analysis:** allows you to bulk process multiple documents using a single request. Rather than having to submit documents individually, you can analyze a collection of documents like invoices, a series of a loan documents, or a group of custom documents simultaneously.
 
 The table below describes the relationship of each client and its supported API version(s):
 
@@ -57,10 +58,7 @@ Some terminology has changed to reflect the enhanced capabilities of the latest 
 
 ### Client usage
 
-We continue to support API key and AAD authentication methods when creating the clients. Below are the differences between the two versions:
-
-- In `Azure.AI.DocumentIntelligence`, we have `DocumentIntelligenceClient` and `DocumentIntelligenceAdministrationClient` which support API version `2024-11-30` and higher.
-- Some client methods have been renamed. See the [CHANGELOG][changelog] for an exhaustive list of changes.
+In `Azure.AI.DocumentIntelligence`, we have `DocumentIntelligenceClient` and `DocumentIntelligenceAdministrationClient` which can only be used with API version `2024-11-30` and higher. We continue to support Microsoft Entra ID and API key authentication methods when creating the clients:
 
 Creating new clients in `Azure.AI.FormRecognizer`:
 ```C#
@@ -83,10 +81,10 @@ var documentIntelligenceAdministrationClient = new DocumentIntelligenceAdministr
 ### Analyzing documents
 
 Differences between the versions:
-- The former `AnalyzeDocument` method taking a `Stream` as the input document is still not supported in `Azure.AI.DocumentIntelligence` 1.0.0. As a workaround you will need to use a URI input or the new Base64 input option, which is described later in this guide ([Analyzing and classifying documents from a stream](#analyzing-and-classifying-documents-from-a-stream)).
-- `AnalyzeDocumentFromUri` has been renamed to `AnalyzeDocument` and its input arguments have been reorganized:
-  - The `documentUri` parameter has been removed. Instead, an `AnalyzeDocumentContent` object must be passed to the method to select the desired input type: URI or Base64 binary data.
-  - The `options` parameter has been removed. Instead, `pages`, `locale`, and `features` options can be passed directly as method parameters.
+- The former `AnalyzeDocument` method taking a `Stream` as the input document is still not supported in `Azure.AI.DocumentIntelligence` 1.0.0. As a workaround you will need to use a URI input or the new binary data input option, which is described later in this guide ([Analyzing and classifying documents from a stream](#analyzing-and-classifying-documents-from-a-stream)).
+- `AnalyzeDocumentFromUri` has been renamed to `AnalyzeDocument`.
+  - The `modelId` and the `documentUri` parameters have been moved into `AnalyzeDocumentOptions`, which is now required. The desired input type must be selected when creating the options object: URI or binary data.
+- Overloads of `AnalyzeDocument` have been added to support simpler scenarios without creating an `AnalyzeDocumentOptions` object.
 - The property `DocumentField.Value` has been removed. A field's value can now be extracted from one of the its new value properties, depending on the type of the field: `ValueAddress` for type `Address`, `ValueBoolean` for type `Boolean`, and so on.
 
 Analyzing documents with `Azure.AI.FormRecognizer`:
@@ -214,10 +212,7 @@ if (invoice.Fields.TryGetValue("InvoiceTotal", out FormField invoiceTotalField))
 Analyzing documents with `Azure.AI.DocumentIntelligence`:
 ```C# Snippet:DocumentIntelligenceAnalyzeWithPrebuiltModelFromUriAsync
 Uri uriSource = new Uri("<uriSource>");
-
-var options = new AnalyzeDocumentOptions("prebuilt-invoice", uriSource);
-
-Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, options);
+Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", uriSource);
 AnalyzeResult result = operation.Value;
 
 // To see the list of all the supported fields returned by service and its corresponding types for the
@@ -298,8 +293,9 @@ for (int i = 0; i < result.Documents.Count; i++)
 ### Classifying documents
 
 Differences between the versions:
-- The former `ClassifyDocument` method taking a `Stream` as the input document is still not supported in `Azure.AI.DocumentIntelligence` 1.0.0. As a workaround you will need to use a URI input or the new Base64 input option, which is described later in this guide ([Analyzing and classifying documents from a stream](#analyzing-and-classifying-documents-from-a-stream)).
-- `ClassifyDocumentFromUri` has been renamed to `ClassifyDocument` and its input arguments have been reorganized. The `documentUri` parameter has been removed. Instead, a `ClassifyDocumentContent` object must be passed to the method to select the desired input type: URI or Base64 binary data.
+- The former `ClassifyDocument` method taking a `Stream` as the input document is still not supported in `Azure.AI.DocumentIntelligence` 1.0.0. As a workaround you will need to use a URI input or the new binary data input option, which is described later in this guide ([Analyzing and classifying documents from a stream](#analyzing-and-classifying-documents-from-a-stream)).
+- `ClassifyDocumentFromUri` has been renamed to `ClassifyDocument`:
+  - The `classifierId` and the `documentUri` parameters have been moved into a new `ClassifyDocumentOptions` property bag. The desired input type must be selected when creating the options object: URI or binary data.
 
 Classifying documents with `Azure.AI.FormRecognizer`:
 ```C#
@@ -338,8 +334,8 @@ foreach (AnalyzedDocument document in result.Documents)
 ### Building a document model
 
 Differences between the versions:
-- Parameters `trainingDataSource`, `buildMode`, `modelId`, and `options` have been removed. The method now takes a `buildRequest` parameter of type `BuildDocumentModelContent` containing all the removed options.
-- After creating a `BuildDocumentModelContent` instance, either property `AzureBlobSource` or `AzureBlobFileListSource` must be set depending on your data source.
+- Parameters `trainingDataSource`, `buildMode`, `modelId` have moved into `BuildDocumentModelOptions`, which is now required.
+- When creating a `BuildDocumentModelOptions` instance, either property `BlobSource` or `BlobFileListSource` must be set depending on your data source.
 
 Building a document model with `Azure.AI.FormRecognizer`:
 ```C#
@@ -404,16 +400,14 @@ foreach (KeyValuePair<string, DocumentTypeDetails> docType in model.DocumentType
 
 ### Analyzing and classifying documents from a stream
 
-Currently neither `AnalyzeDocument` nor `ClassifyDocument` support submitting a document from a `Stream` input. As a temporary workaround, you can make use of the new Base64 input option. The following example illustrates how to submit a local file for analysis:
+Currently neither `AnalyzeDocument` nor `ClassifyDocument` support submitting a document from a `Stream` input. As a temporary workaround, you can make use of the new binary data input option. The following example illustrates how to submit a local file for analysis:
 
 ```C# Snippet:DocumentIntelligenceAnalyzeWithPrebuiltModelFromBytesAsync
 string filePath = "<filePath>";
 byte[] fileBytes = File.ReadAllBytes(filePath);
 
-var bytesSource = BinaryData.FromBytes(fileBytes);
-var options = new AnalyzeDocumentOptions("prebuilt-invoice", bytesSource);
-
-Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, options);
+BinaryData bytesSource = BinaryData.FromBytes(fileBytes);
+Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", bytesSource);
 AnalyzeResult result = operation.Value;
 
 // To see the list of all the supported fields returned by service and its corresponding types for the
@@ -546,7 +540,7 @@ foreach (DocumentLine line in firstPage.Lines)
 
 ### Accessing an existing long-running operation
 
-Storing the ID of a long-running operation to retrieve its status at a later point in time is still not supported in `Azure.AI.DocumentIntelligence` 1.0.0. There are no straightforward workarounds to support this scenario.
+With the exception of the new batch analysis API, storing the ID of a long-running operation to retrieve its status at a later point in time is still not supported in `Azure.AI.DocumentIntelligence` 1.0.0. There are no straightforward workarounds to support this scenario.
 
 ## Additional samples
 

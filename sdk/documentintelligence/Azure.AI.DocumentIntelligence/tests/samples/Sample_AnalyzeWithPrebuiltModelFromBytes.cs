@@ -26,10 +26,8 @@ namespace Azure.AI.DocumentIntelligence.Samples
 #endif
             byte[] fileBytes = File.ReadAllBytes(filePath);
 
-            var bytesSource = BinaryData.FromBytes(fileBytes);
-            var options = new AnalyzeDocumentOptions("prebuilt-invoice", bytesSource);
-
-            Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, options);
+            BinaryData bytesSource = BinaryData.FromBytes(fileBytes);
+            Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", bytesSource);
             AnalyzeResult result = operation.Value;
 
             // To see the list of all the supported fields returned by service and its corresponding types for the

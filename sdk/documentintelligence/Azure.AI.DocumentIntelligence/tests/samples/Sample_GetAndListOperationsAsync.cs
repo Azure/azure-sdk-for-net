@@ -54,6 +54,10 @@ namespace Azure.AI.DocumentIntelligence.Samples
                     case DocumentClassifierBuildOperationDetails classifierOperation:
                         Console.WriteLine($"Classifier ID: {classifierOperation.Result.ClassifierId}");
                         break;
+
+                    case DocumentClassifierCopyToOperationDetails classifierOperation:
+                        Console.WriteLine($"Classifier ID: {classifierOperation.Result.ClassifierId}");
+                        break;
                 }
             }
             else if (operationDetails.Status == DocumentIntelligenceOperationStatus.Failed)
