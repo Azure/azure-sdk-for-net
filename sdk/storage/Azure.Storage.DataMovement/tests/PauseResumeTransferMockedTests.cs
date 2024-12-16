@@ -1493,7 +1493,7 @@ public class PauseResumeTransferMockedTests
             StepProcessor<JobPartInternal> partsProcessor2,
             StepProcessor<Func<Task>> chunksProcessor2) = SimulateDisaster(
                 checkpointer,
-                 ref transferManager1,
+                ref transferManager1,
                 ref jobsProcessor1,
                 ref partsProcessor1,
                 ref chunksProcessor1);
