@@ -1,14 +1,11 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.0.0-beta.4 (2024-12-13)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed a bug where upload results were incomplete for large size classname suites.
+
 
 ## 1.0.0-beta.3 (2024-11-18)
 

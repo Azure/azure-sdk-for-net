@@ -328,7 +328,7 @@ namespace Azure.Storage.DataMovement
                 }
 
                 // Report bytes written before completion
-                ReportBytesWritten(blockSize);
+                await ReportBytesWrittenAsync(blockSize).ConfigureAwait(false);
 
                 // Set completion status to completed
                 await OnTransferStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
@@ -360,7 +360,7 @@ namespace Azure.Storage.DataMovement
                         cancellationToken: _cancellationToken).ConfigureAwait(false);
                 }
 
-                ReportBytesWritten(blockSize);
+                await ReportBytesWrittenAsync(blockSize).ConfigureAwait(false);
             }
         }
 
@@ -372,7 +372,7 @@ namespace Azure.Storage.DataMovement
             {
                 QueuePutBlockTask = jobPart.QueueStageBlockRequest,
                 QueueCommitBlockTask = jobPart.QueueCompleteTransferAsync,
-                ReportProgressInBytes = jobPart.ReportBytesWritten,
+                ReportProgressInBytes = jobPart.ReportBytesWrittenAsync,
                 InvokeFailedHandler = jobPart.InvokeFailedArgAsync,
             };
         }
