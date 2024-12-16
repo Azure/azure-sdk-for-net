@@ -411,10 +411,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobContentInfo>> CreateAsync(
+        public virtual Task<Response<BlobContentInfo>> CreateAsync(
             AppendBlobCreateOptions options,
             CancellationToken cancellationToken = default) =>
-            await CreateInternal(
+            CreateInternal(
                 httpHeaders: options?.HttpHeaders,
                 metadata: options?.Metadata,
                 tags: options?.Tags,
@@ -422,8 +422,7 @@ namespace Azure.Storage.Blobs.Specialized
                 immutabilityPolicy: options?.ImmutabilityPolicy,
                 legalHold: options?.HasLegalHold,
                 async: true,
-                cancellationToken: cancellationToken)
-            .ConfigureAwait(false);
+                cancellationToken: cancellationToken);
 
         /// <summary>
         /// The <see cref="Create(BlobHttpHeaders, Metadata, AppendBlobRequestConditions, CancellationToken)"/>
@@ -509,12 +508,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<BlobContentInfo>> CreateAsync(
+        public virtual Task<Response<BlobContentInfo>> CreateAsync(
             BlobHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             AppendBlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            await CreateInternal(
+            CreateInternal(
                 httpHeaders: httpHeaders,
                 metadata: metadata,
                 tags: default,
@@ -522,8 +521,7 @@ namespace Azure.Storage.Blobs.Specialized
                 async: true,
                 immutabilityPolicy: default,
                 legalHold: default,
-                cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken: cancellationToken);
 
         /// <summary>
         /// The <see cref="CreateIfNotExists(AppendBlobCreateOptions, CancellationToken)"/>
@@ -588,18 +586,17 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobContentInfo>> CreateIfNotExistsAsync(
+        public virtual Task<Response<BlobContentInfo>> CreateIfNotExistsAsync(
             AppendBlobCreateOptions options,
             CancellationToken cancellationToken = default) =>
-            await CreateIfNotExistsInternal(
+            CreateIfNotExistsInternal(
                 httpHeaders: options?.HttpHeaders,
                 metadata: options?.Metadata,
                 tags: options?.Tags,
                 immutabilityPolicy: options?.ImmutabilityPolicy,
                 legalHold: options?.HasLegalHold,
                 async: true,
-                cancellationToken: cancellationToken)
-            .ConfigureAwait(false);
+                cancellationToken: cancellationToken);
 
         /// <summary>
         /// The <see cref="CreateIfNotExists(BlobHttpHeaders, Metadata, CancellationToken)"/>
@@ -675,19 +672,18 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<BlobContentInfo>> CreateIfNotExistsAsync(
+        public virtual Task<Response<BlobContentInfo>> CreateIfNotExistsAsync(
             BlobHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             CancellationToken cancellationToken = default) =>
-            await CreateIfNotExistsInternal(
+            CreateIfNotExistsInternal(
                 httpHeaders: httpHeaders,
                 metadata: metadata,
                 tags: default,
                 immutabilityPolicy: default,
                 legalHold: default,
                 async: true,
-                cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken: cancellationToken);
 
         /// <summary>
         /// The <see cref="CreateIfNotExistsInternal"/> operation creates a new 0-length
@@ -1065,7 +1061,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-        public virtual async Task<Response<BlobAppendInfo>> AppendBlockAsync(
+        public virtual Task<Response<BlobAppendInfo>> AppendBlockAsync(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Stream content,
             byte[] transactionalContentHash,
@@ -1073,14 +1069,13 @@ namespace Azure.Storage.Blobs.Specialized
             IProgress<long> progressHandler,
             CancellationToken cancellationToken)
         {
-            return await AppendBlockInternal(
+            return AppendBlockInternal(
                 content,
                 transactionalContentHash.ToValidationOptions(),
                 conditions,
                 progressHandler,
                 true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
         }
 
         /// <summary>
@@ -1156,18 +1151,17 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobAppendInfo>> AppendBlockAsync(
+        public virtual Task<Response<BlobAppendInfo>> AppendBlockAsync(
             Stream content,
             AppendBlobAppendBlockOptions options = default,
             CancellationToken cancellationToken = default) =>
-            await AppendBlockInternal(
+            AppendBlockInternal(
                 content,
                 options?.TransferValidation,
                 options?.Conditions,
                 options?.ProgressHandler,
                 true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="AppendBlockInternal"/> operation commits a new block
@@ -1398,11 +1392,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobAppendInfo>> AppendBlockFromUriAsync(
+        public virtual Task<Response<BlobAppendInfo>> AppendBlockFromUriAsync(
             Uri sourceUri,
             AppendBlobAppendBlockFromUriOptions options = default,
             CancellationToken cancellationToken = default) =>
-            await AppendBlockFromUriInternal(
+            AppendBlockFromUriInternal(
                 sourceUri,
                 options?.SourceRange ?? default,
                 options?.SourceContentHash,
@@ -1410,8 +1404,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.SourceConditions,
                 options?.SourceAuthentication,
                 async: true,
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="AppendBlockFromUriAsync(Uri, HttpRange, byte[], AppendBlobRequestConditions, AppendBlobRequestConditions, CancellationToken)"/>
@@ -1544,7 +1537,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-        public virtual async Task<Response<BlobAppendInfo>> AppendBlockFromUriAsync(
+        public virtual Task<Response<BlobAppendInfo>> AppendBlockFromUriAsync(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Uri sourceUri,
             HttpRange sourceRange,
@@ -1552,7 +1545,7 @@ namespace Azure.Storage.Blobs.Specialized
             AppendBlobRequestConditions conditions,
             AppendBlobRequestConditions sourceConditions,
             CancellationToken cancellationToken) =>
-            await AppendBlockFromUriInternal(
+            AppendBlockFromUriInternal(
                 sourceUri,
                 sourceRange,
                 sourceContentHash,
@@ -1560,8 +1553,7 @@ namespace Azure.Storage.Blobs.Specialized
                 sourceConditions,
                 sourceAuthentication: default,
                 async: true,
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="AppendBlockFromUriInternal"/> operation commits a new
@@ -1787,14 +1779,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobInfo>> SealAsync(
+        public virtual Task<Response<BlobInfo>> SealAsync(
             AppendBlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
-            => await SealInternal(
+            => SealInternal(
                 conditions,
                 async: true,
-                cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken: cancellationToken);
 
         /// <summary>
         /// Seals the append blob, making it read only.
@@ -1938,17 +1929,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual async Task<Stream> OpenWriteAsync(
+        public virtual Task<Stream> OpenWriteAsync(
 #pragma warning restore AZC0015 // Unexpected client method return type.
             bool overwrite,
             AppendBlobOpenWriteOptions options = default,
             CancellationToken cancellationToken = default)
-            => await OpenWriteInternal(
+            => OpenWriteInternal(
                 overwrite: overwrite,
                 options: options,
                 async: true,
-                cancellationToken: cancellationToken)
-            .ConfigureAwait(false);
+                cancellationToken: cancellationToken);
 
         /// <summary>
         /// Opens a stream for writing to the blob.

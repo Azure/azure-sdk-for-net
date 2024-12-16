@@ -589,7 +589,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobContentInfo>> UploadAsync(
+        public virtual Task<Response<BlobContentInfo>> UploadAsync(
             Stream content,
             BlobUploadOptions options,
             CancellationToken cancellationToken = default)
@@ -599,14 +599,13 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.TransferValidation ?? ClientConfiguration.TransferValidation.Upload,
                 operationName: $"{nameof(BlockBlobClient)}.{nameof(Upload)}");
 
-            return await uploader.UploadInternal(
+            return uploader.UploadInternal(
                 content,
                 expectedContentLength: default,
                 options,
                 options?.ProgressHandler,
                 async: true,
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
         }
 
         /// <summary>
@@ -739,7 +738,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<BlobContentInfo>> UploadAsync(
+        public virtual Task<Response<BlobContentInfo>> UploadAsync(
             Stream content,
             BlobHttpHeaders httpHeaders = default,
             Metadata metadata = default,
@@ -747,7 +746,7 @@ namespace Azure.Storage.Blobs.Specialized
             AccessTier? accessTier = default,
             IProgress<long> progressHandler = default,
             CancellationToken cancellationToken = default)
-            => await UploadAsync(
+            => UploadAsync(
                 content,
                 new BlobUploadOptions
                 {
@@ -757,7 +756,7 @@ namespace Azure.Storage.Blobs.Specialized
                     AccessTier = accessTier,
                     ProgressHandler = progressHandler,
                 },
-                cancellationToken).ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="UploadInternal"/>
@@ -1100,7 +1099,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-        public virtual async Task<Response<BlockInfo>> StageBlockAsync(
+        public virtual Task<Response<BlockInfo>> StageBlockAsync(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             string base64BlockId,
             Stream content,
@@ -1109,15 +1108,14 @@ namespace Azure.Storage.Blobs.Specialized
             IProgress<long> progressHandler,
             CancellationToken cancellationToken)
         {
-            return await StageBlockInternal(
+            return StageBlockInternal(
                 base64BlockId,
                 content,
                 transactionalContentHash.ToValidationOptions(),
                 conditions,
                 progressHandler,
                 true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
         }
 
         /// <summary>
@@ -1207,20 +1205,19 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlockInfo>> StageBlockAsync(
+        public virtual Task<Response<BlockInfo>> StageBlockAsync(
             string base64BlockId,
             Stream content,
             BlockBlobStageBlockOptions options = default,
             CancellationToken cancellationToken = default) =>
-            await StageBlockInternal(
+            StageBlockInternal(
                 base64BlockId,
                 content,
                 options?.TransferValidation,
                 options?.Conditions,
                 options?.ProgressHandler,
                 true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="StageBlockInternal"/> operation creates a new block
@@ -1463,12 +1460,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlockInfo>> StageBlockFromUriAsync(
+        public virtual Task<Response<BlockInfo>> StageBlockFromUriAsync(
             Uri sourceUri,
             string base64BlockId,
             StageBlockFromUriOptions options = default,
             CancellationToken cancellationToken = default) =>
-            await StageBlockFromUriInternal(
+            StageBlockFromUriInternal(
                 sourceUri,
                 base64BlockId,
                 options?.SourceRange ?? default,
@@ -1477,8 +1474,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.DestinationConditions,
                 options?.SourceAuthentication,
                 async: true,
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="StageBlockFromUri(Uri, string, HttpRange, byte[], RequestConditions, BlobRequestConditions, CancellationToken)"/>
@@ -1625,7 +1621,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-        public virtual async Task<Response<BlockInfo>> StageBlockFromUriAsync(
+        public virtual Task<Response<BlockInfo>> StageBlockFromUriAsync(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Uri sourceUri,
             string base64BlockId,
@@ -1634,7 +1630,7 @@ namespace Azure.Storage.Blobs.Specialized
             RequestConditions sourceConditions,
             BlobRequestConditions conditions,
             CancellationToken cancellationToken) =>
-            await StageBlockFromUriInternal(
+            StageBlockFromUriInternal(
                 sourceUri,
                 base64BlockId,
                 sourceRange,
@@ -1643,8 +1639,7 @@ namespace Azure.Storage.Blobs.Specialized
                 conditions,
                 sourceAuthentication: default,
                 async: true,
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="StageBlockFromUriInternal"/> operation creates a new
@@ -1988,11 +1983,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobContentInfo>> CommitBlockListAsync(
+        public virtual Task<Response<BlobContentInfo>> CommitBlockListAsync(
             IEnumerable<string> base64BlockIds,
             CommitBlockListOptions options,
             CancellationToken cancellationToken = default) =>
-            await CommitBlockListInternal(
+            CommitBlockListInternal(
                 base64BlockIds,
                 options?.HttpHeaders,
                 options?.Metadata,
@@ -2002,8 +1997,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.ImmutabilityPolicy,
                 options?.LegalHold,
                 async: true,
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="CommitBlockListAsync(IEnumerable{string}, BlobHttpHeaders, Metadata, BlobRequestConditions, AccessTier?, CancellationToken)"/>
@@ -2058,14 +2052,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<BlobContentInfo>> CommitBlockListAsync(
+        public virtual Task<Response<BlobContentInfo>> CommitBlockListAsync(
             IEnumerable<string> base64BlockIds,
             BlobHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             BlobRequestConditions conditions = default,
             AccessTier? accessTier = default,
             CancellationToken cancellationToken = default) =>
-            await CommitBlockListInternal(
+            CommitBlockListInternal(
                 base64BlockIds: base64BlockIds,
                 blobHttpHeaders: httpHeaders,
                 metadata: metadata,
@@ -2075,8 +2069,7 @@ namespace Azure.Storage.Blobs.Specialized
                 immutabilityPolicy: default,
                 legalHold: default,
                 async: true,
-                cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken: cancellationToken);
 
         /// <summary>
         /// The <see cref="CommitBlockListInternal"/> operation writes a blob by
@@ -2356,18 +2349,17 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlockList>> GetBlockListAsync(
+        public virtual Task<Response<BlockList>> GetBlockListAsync(
             BlockListTypes blockListTypes = BlockListTypes.All,
             string snapshot = default,
             BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            await GetBlockListInternal(
+            GetBlockListInternal(
                 blockListTypes,
                 snapshot,
                 conditions,
                 true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="GetBlockListInternal"/> operation operation retrieves
@@ -2544,16 +2536,15 @@ namespace Azure.Storage.Blobs.Specialized
         /// <returns>
         /// A <see cref="Response{BlobDownloadInfo}"/>.
         /// </returns>
-        public virtual async Task<Response<BlobDownloadInfo>> QueryAsync(
+        public virtual Task<Response<BlobDownloadInfo>> QueryAsync(
             string querySqlExpression,
             BlobQueryOptions options = default,
             CancellationToken cancellationToken = default) =>
-            await QueryInternal(
+            QueryInternal(
                 querySqlExpression,
                 options,
                 async: true,
-                cancellationToken)
-            .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="QueryInternal"/> API returns the
@@ -2724,17 +2715,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual async Task<Stream> OpenWriteAsync(
+        public virtual Task<Stream> OpenWriteAsync(
 #pragma warning restore AZC0015 // Unexpected client method return type.
             bool overwrite,
             BlockBlobOpenWriteOptions options = default,
             CancellationToken cancellationToken = default)
-            => await OpenWriteInternal(
+            => OpenWriteInternal(
                 overwrite: overwrite,
                 options: options,
                 async: true,
-                cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken: cancellationToken);
 
         /// <summary>
         /// Opens a stream for writing to the blob.  If the blob exists,
@@ -2904,17 +2894,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobContentInfo>> SyncUploadFromUriAsync(
+        public virtual Task<Response<BlobContentInfo>> SyncUploadFromUriAsync(
             Uri copySource,
             bool overwrite = false,
             CancellationToken cancellationToken = default)
-            => await SyncUploadFromUriInternal(
+            => SyncUploadFromUriInternal(
                 copySource,
                 overwrite ? null : new BlobSyncUploadFromUriOptions { DestinationConditions = new BlobRequestConditions
                     { IfNoneMatch = new ETag(Constants.Wildcard) } },
                 async: true,
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The Upload from Uri operation creates a new Block Blob where the contents of the
@@ -2989,16 +2978,15 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobContentInfo>> SyncUploadFromUriAsync(
+        public virtual Task<Response<BlobContentInfo>> SyncUploadFromUriAsync(
             Uri copySource,
             BlobSyncUploadFromUriOptions options,
             CancellationToken cancellationToken = default)
-            => await SyncUploadFromUriInternal(
+            => SyncUploadFromUriInternal(
                 copySource,
                 options,
                 async: true,
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The Upload from Uri operation creates a new Block Blob where the contents of the
@@ -3175,8 +3163,8 @@ namespace Azure.Storage.Blobs.Specialized
         {
             return new PartitionedUploader<BlobUploadOptions, BlobContentInfo>.Behaviors
             {
-                SingleUploadStreaming = async (stream, args, progressHandler, validationOptions, operationName, async, cancellationToken)
-                    => await client.UploadInternal(
+                SingleUploadStreaming = (stream, args, progressHandler, validationOptions, operationName, async, cancellationToken)
+                    => client.UploadInternal(
                         stream,
                         args?.HttpHeaders,
                         args?.Metadata,
@@ -3189,9 +3177,9 @@ namespace Azure.Storage.Blobs.Specialized
                         validationOptions,
                         operationName,
                         async,
-                        cancellationToken).ConfigureAwait(false),
-                SingleUploadBinaryData = async (content, args, progressHandler, validationOptions, operationName, async, cancellationToken)
-                    => await client.UploadInternal(
+                        cancellationToken),
+                SingleUploadBinaryData = (content, args, progressHandler, validationOptions, operationName, async, cancellationToken)
+                    => client.UploadInternal(
                         content.ToStream(),
                         args?.HttpHeaders,
                         args?.Metadata,
@@ -3204,8 +3192,8 @@ namespace Azure.Storage.Blobs.Specialized
                         validationOptions,
                         operationName,
                         async,
-                        cancellationToken).ConfigureAwait(false),
-                UploadPartitionStreaming = async (stream, offset, args, progressHandler, validationOptions, async, cancellationToken)
+                        cancellationToken),
+                UploadPartitionStreaming = (stream, offset, args, progressHandler, validationOptions, async, cancellationToken)
                     =>
                 {
                     // Stage Block only accepts LeaseId.
@@ -3217,16 +3205,16 @@ namespace Azure.Storage.Blobs.Specialized
                             LeaseId = args.Conditions.LeaseId
                         };
                     }
-                    await client.StageBlockInternal(
+                    return client.StageBlockInternal(
                             Shared.StorageExtensions.GenerateBlockId(offset),
                             stream,
                             validationOptions,
                             conditions,
                             progressHandler,
                             async,
-                            cancellationToken).ConfigureAwait(false);
+                            cancellationToken);
                 },
-                UploadPartitionBinaryData = async (content, offset, args, progressHandler, validationOptions, async, cancellationToken)
+                UploadPartitionBinaryData = (content, offset, args, progressHandler, validationOptions, async, cancellationToken)
                     =>
                 {
                     // Stage Block only accepts LeaseId.
@@ -3239,20 +3227,17 @@ namespace Azure.Storage.Blobs.Specialized
                         };
                     }
 
-                    using (var stream = content.ToStream())
-                    {
-                        await client.StageBlockInternal(
-                                Shared.StorageExtensions.GenerateBlockId(offset),
-                                stream,
-                                validationOptions,
-                                conditions,
-                                progressHandler,
-                                async,
-                                cancellationToken).ConfigureAwait(false);
-                    }
+                    return client.StageBlockInternal(
+                            Shared.StorageExtensions.GenerateBlockId(offset),
+                            content.ToStream(),
+                            validationOptions,
+                            conditions,
+                            progressHandler,
+                            async,
+                            cancellationToken);
                 },
-                CommitPartitionedUpload = async (partitions, args, async, cancellationToken)
-                    => await client.CommitBlockListInternal(
+                CommitPartitionedUpload = (partitions, args, async, cancellationToken)
+                    => client.CommitBlockListInternal(
                         partitions.Select(partition => Shared.StorageExtensions.GenerateBlockId(partition.Offset)),
                         args?.HttpHeaders,
                         args?.Metadata,
@@ -3262,7 +3247,7 @@ namespace Azure.Storage.Blobs.Specialized
                         args?.ImmutabilityPolicy,
                         args?.LegalHold,
                         async,
-                        cancellationToken).ConfigureAwait(false),
+                        cancellationToken),
                 Scope = operationName => client.ClientConfiguration.ClientDiagnostics.CreateScope(operationName
                     ?? $"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(BlobClient)}.{nameof(Storage.Blobs.BlobClient.Upload)}")
             };

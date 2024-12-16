@@ -338,17 +338,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-        public virtual async Task<Response> AcquireAsync(
+        public virtual Task<Response> AcquireAsync(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             TimeSpan duration,
             RequestConditions conditions,
             RequestContext context) =>
-            (await AcquireInternal(
+            AcquireInternal(
                 duration,
                 conditions,
                 async: true,
-                context)
-                .ConfigureAwait(false));
+                context);
 
         /// <summary>
         /// The <see cref="AcquireInternal"/> operation acquires a lease on
@@ -561,14 +560,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobLease>> RenewAsync(
+        public virtual Task<Response<BlobLease>> RenewAsync(
             RequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            await RenewInternal(
+            RenewInternal(
                 conditions,
                 true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="RenewInternal"/> operation renews the blob or
@@ -780,14 +778,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<ReleasedObjectInfo>> ReleaseAsync(
+        public virtual Task<Response<ReleasedObjectInfo>> ReleaseAsync(
             RequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            await ReleaseInternal(
+            ReleaseInternal(
                 conditions,
                 true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="ReleaseInternal"/> operation releases the
@@ -1004,16 +1001,15 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobLease>> ChangeAsync(
+        public virtual Task<Response<BlobLease>> ChangeAsync(
             string proposedId,
             RequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            await ChangeInternal(
+            ChangeInternal(
                 proposedId,
                 conditions,
                 true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="ChangeInternal"/> operation changes the lease
@@ -1272,16 +1268,15 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobLease>> BreakAsync(
+        public virtual Task<Response<BlobLease>> BreakAsync(
             TimeSpan? breakPeriod = default,
             RequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            await BreakInternal(
+            BreakInternal(
                 breakPeriod,
                 conditions,
                 true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="BreakInternal"/> operation breaks the blob or

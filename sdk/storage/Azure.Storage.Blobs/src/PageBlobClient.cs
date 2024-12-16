@@ -425,11 +425,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobContentInfo>> CreateAsync(
+        public virtual Task<Response<BlobContentInfo>> CreateAsync(
             long size,
             PageBlobCreateOptions options,
             CancellationToken cancellationToken = default) =>
-            await CreateInternal(
+            CreateInternal(
                 size,
                 options?.SequenceNumber,
                 options?.HttpHeaders,
@@ -439,8 +439,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.ImmutabilityPolicy,
                 options?.LegalHold,
                 async: true,
-                cancellationToken)
-            .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="Create(long, long?, BlobHttpHeaders, Metadata, PageBlobRequestConditions, CancellationToken)"/>
@@ -546,14 +545,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<BlobContentInfo>> CreateAsync(
+        public virtual Task<Response<BlobContentInfo>> CreateAsync(
             long size,
             long? sequenceNumber = default,
             BlobHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             PageBlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            await CreateInternal(
+            CreateInternal(
                 size: size,
                 sequenceNumber: sequenceNumber,
                 httpHeaders: httpHeaders,
@@ -563,8 +562,7 @@ namespace Azure.Storage.Blobs.Specialized
                 immutabilityPolicy: default,
                 legalHold: default,
                 async: true,
-                cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken: cancellationToken);
 
         /// <summary>
         /// The <see cref="CreateIfNotExists(long, PageBlobCreateOptions, CancellationToken)"/>
@@ -638,11 +636,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobContentInfo>> CreateIfNotExistsAsync(
+        public virtual Task<Response<BlobContentInfo>> CreateIfNotExistsAsync(
             long size,
             PageBlobCreateOptions options,
             CancellationToken cancellationToken = default) =>
-            await CreateIfNotExistsInternal(
+            CreateIfNotExistsInternal(
                 size,
                 options?.SequenceNumber,
                 options?.HttpHeaders,
@@ -651,8 +649,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.ImmutabilityPolicy,
                 options?.LegalHold,
                 async: true,
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="CreateIfNotExists(long, long?, BlobHttpHeaders, Metadata, CancellationToken)"/>
@@ -748,13 +745,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<BlobContentInfo>> CreateIfNotExistsAsync(
+        public virtual Task<Response<BlobContentInfo>> CreateIfNotExistsAsync(
             long size,
             long? sequenceNumber = default,
             BlobHttpHeaders httpHeaders = default,
             Metadata metadata = default,
             CancellationToken cancellationToken = default) =>
-            await CreateIfNotExistsInternal(
+            CreateIfNotExistsInternal(
                 size: size,
                 sequenceNumber: sequenceNumber,
                 httpHeaders: httpHeaders,
@@ -763,8 +760,7 @@ namespace Azure.Storage.Blobs.Specialized
                 immutabilityPolicy: default,
                 legalHold: default,
                 async: true,
-                cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken: cancellationToken);
 
         /// <summary>
         /// The <see cref="CreateIfNotExistsInternal"/> operation creates a new page blob
@@ -1172,7 +1168,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-        public virtual async Task<Response<PageInfo>> UploadPagesAsync(
+        public virtual Task<Response<PageInfo>> UploadPagesAsync(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Stream content,
             long offset,
@@ -1181,15 +1177,14 @@ namespace Azure.Storage.Blobs.Specialized
             IProgress<long> progressHandler,
             CancellationToken cancellationToken)
         {
-            return await UploadPagesInternal(
+            return UploadPagesInternal(
                 content,
                 offset,
                 transactionalContentHash.ToValidationOptions(),
                 conditions,
                 progressHandler,
                 true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
         }
 
         /// <summary>
@@ -1273,20 +1268,19 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<PageInfo>> UploadPagesAsync(
+        public virtual Task<Response<PageInfo>> UploadPagesAsync(
             Stream content,
             long offset,
             PageBlobUploadPagesOptions options = default,
             CancellationToken cancellationToken = default) =>
-            await UploadPagesInternal(
+            UploadPagesInternal(
                 content,
                 offset,
                 options?.TransferValidation,
                 options?.Conditions,
                 options?.ProgressHandler,
                 true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="UploadPagesInternal"/> operation writes
@@ -1520,16 +1514,15 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<PageInfo>> ClearPagesAsync(
+        public virtual Task<Response<PageInfo>> ClearPagesAsync(
             HttpRange range,
             PageBlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            await ClearPagesInternal(
+            ClearPagesInternal(
                 range,
                 conditions,
                 true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="ClearPagesInternal"/> operation clears one or more
@@ -1951,18 +1944,17 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<PageRangesInfo>> GetPageRangesAsync(
+        public virtual Task<Response<PageRangesInfo>> GetPageRangesAsync(
             HttpRange? range = null,
             string snapshot = null,
             PageBlobRequestConditions conditions = null,
             CancellationToken cancellationToken = default) =>
-            await GetPageRangesInternal(
+            GetPageRangesInternal(
                 range,
                 snapshot,
                 conditions,
                 true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="GetPageRangesInternal"/> operation returns the list
@@ -2436,13 +2428,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<PageRangesInfo>> GetPageRangesDiffAsync(
+        public virtual Task<Response<PageRangesInfo>> GetPageRangesDiffAsync(
             HttpRange? range = null,
             string snapshot = null,
             string previousSnapshot = null,
             PageBlobRequestConditions conditions = null,
             CancellationToken cancellationToken = default) =>
-            await GetPageRangesDiffInternal(
+            GetPageRangesDiffInternal(
                 range,
                 snapshot,
                 previousSnapshot,
@@ -2450,8 +2442,7 @@ namespace Azure.Storage.Blobs.Specialized
                 conditions,
                 async: true,
                 operationName: $"{nameof(PageBlobClient)}.{nameof(GetPageRangesDiff)}",
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="GetPageRangesDiffInternal"/> operation returns the
@@ -2709,13 +2700,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<PageRangesInfo>> GetManagedDiskPageRangesDiffAsync(
+        public virtual Task<Response<PageRangesInfo>> GetManagedDiskPageRangesDiffAsync(
             HttpRange? range = default,
             string snapshot = default,
             Uri previousSnapshotUri = default,
             PageBlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            await GetPageRangesDiffInternal(
+            GetPageRangesDiffInternal(
                 range,
                 snapshot,
                 previousSnapshot: default,
@@ -2723,8 +2714,7 @@ namespace Azure.Storage.Blobs.Specialized
                 conditions,
                 async: true,
                 operationName: $"{nameof(PageBlobClient)}.{nameof(GetManagedDiskPageRangesDiff)}",
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         #endregion GetManagedDiskPageRangesDiff
 
@@ -2804,16 +2794,15 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<PageBlobInfo>> ResizeAsync(
+        public virtual Task<Response<PageBlobInfo>> ResizeAsync(
             long size,
             PageBlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            await ResizeInternal(
+            ResizeInternal(
                 size,
                 conditions,
                 true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="ResizeAsync"/> operation resizes the page blob to
@@ -3037,18 +3026,17 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<PageBlobInfo>> UpdateSequenceNumberAsync(
+        public virtual Task<Response<PageBlobInfo>> UpdateSequenceNumberAsync(
             SequenceNumberAction action,
             long? sequenceNumber = default,
             PageBlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            await UpdateSequenceNumberInternal(
+            UpdateSequenceNumberInternal(
                 action,
                 sequenceNumber,
                 conditions,
                 true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="UpdateSequenceNumberInternal"/> operation changes the
@@ -3677,13 +3665,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<PageInfo>> UploadPagesFromUriAsync(
+        public virtual Task<Response<PageInfo>> UploadPagesFromUriAsync(
             Uri sourceUri,
             HttpRange sourceRange,
             HttpRange range,
             PageBlobUploadPagesFromUriOptions options = default,
             CancellationToken cancellationToken = default) =>
-            await UploadPagesFromUriInternal(
+            UploadPagesFromUriInternal(
                 sourceUri,
                 sourceRange,
                 range,
@@ -3692,8 +3680,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.SourceConditions,
                 options?.SourceAuthentication,
                 async: true,
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="UploadPagesFromUri(Uri, HttpRange, HttpRange, byte[], PageBlobRequestConditions, PageBlobRequestConditions, CancellationToken)"/>
@@ -3836,7 +3823,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
-        public virtual async Task<Response<PageInfo>> UploadPagesFromUriAsync(
+        public virtual Task<Response<PageInfo>> UploadPagesFromUriAsync(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             Uri sourceUri,
             HttpRange sourceRange,
@@ -3845,7 +3832,7 @@ namespace Azure.Storage.Blobs.Specialized
             PageBlobRequestConditions conditions,
             PageBlobRequestConditions sourceConditions,
             CancellationToken cancellationToken) =>
-            await UploadPagesFromUriInternal(
+            UploadPagesFromUriInternal(
                 sourceUri,
                 sourceRange,
                 range,
@@ -3854,8 +3841,7 @@ namespace Azure.Storage.Blobs.Specialized
                 sourceConditions,
                 sourceAuthentication: default,
                 async: true,
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="UploadPagesFromUriInternal"/> operation writes a
@@ -4103,19 +4089,18 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual async Task<Stream> OpenWriteAsync(
+        public virtual Task<Stream> OpenWriteAsync(
 #pragma warning restore AZC0015 // Unexpected client method return type.
             bool overwrite,
             long position,
             PageBlobOpenWriteOptions options = default,
             CancellationToken cancellationToken = default)
-            => await OpenWriteInternal(
+            => OpenWriteInternal(
                 overwrite: overwrite,
                 position: position,
                 options: options,
                 async: true,
-                cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken: cancellationToken);
 
         /// <summary>
         /// Opens a stream for writing to the blob.
