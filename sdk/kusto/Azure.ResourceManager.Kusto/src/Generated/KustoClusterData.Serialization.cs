@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Kusto
             string virtualClusterGraduationProperties = default;
             IReadOnlyList<KustoPrivateEndpointConnectionData> privateEndpointConnections = default;
             MigrationClusterProperties migrationCluster = default;
-            ZoneStatus? zoneStatus = default;
+            KustoClusterZoneStatus? zoneStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.Kusto
                             {
                                 continue;
                             }
-                            zoneStatus = new ZoneStatus(property0.Value.GetString());
+                            zoneStatus = new KustoClusterZoneStatus(property0.Value.GetString());
                             continue;
                         }
                     }
