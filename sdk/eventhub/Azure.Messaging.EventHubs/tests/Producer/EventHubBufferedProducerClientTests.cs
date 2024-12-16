@@ -412,7 +412,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(producer => producer.GetPartitionPropertiesAsync(
                     It.IsAny<string>(),
                     It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new PartitionProperties("test", "1", true, 12345, 6789, 22, new DateTimeOffset(2015, 10, 27, 0, 0, 0, TimeSpan.Zero)));
+                .ReturnsAsync(new PartitionProperties("test", "1", true, 12345, 6789, "22", new DateTimeOffset(2015, 10, 27, 0, 0, 0, TimeSpan.Zero)));
 
             await bufferedProducer.GetPartitionPropertiesAsync(expectedPartition, cancellationSource.Token);
             mockProducer.Verify(producer => producer.GetPartitionPropertiesAsync(expectedPartition, cancellationSource.Token), Times.Once);

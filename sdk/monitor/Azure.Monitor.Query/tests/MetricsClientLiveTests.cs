@@ -173,5 +173,69 @@ namespace Azure.Monitor.Query.Tests
                 metricNames: new List<string> { "Ingress" },
                 metricNamespace: "Microsoft.Storage/storageAccounts"));
         }
+
+        [RecordedTest]
+        public async Task MetricsQueryResourcesWithStartTimeRangeAsync()
+        {
+            MetricsClient client = CreateMetricsClient();
+
+            var resourceId = TestEnvironment.StorageAccountId;
+            // If only starttime is specified, then endtime defaults to the current time.
+            DateTimeOffset start = Recording.UtcNow.Subtract(TimeSpan.FromHours(4));
+
+            Response<MetricsQueryResourcesResult> metricsResultsResponse = await client.QueryResourcesAsync(
+                resourceIds: new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) },
+                metricNames: new List<string> { "Ingress" },
+                metricNamespace: "Microsoft.Storage/storageAccounts",
+                options: new MetricsQueryResourcesOptions { StartTime = start }).ConfigureAwait(false);
+
+            Assert.AreEqual(200, metricsResultsResponse.GetRawResponse().Status);
+            MetricsQueryResourcesResult metricsQueryResults = metricsResultsResponse.Value;
+            Assert.AreEqual(1, metricsQueryResults.Values.Count);
+            Assert.AreEqual(TestEnvironment.StorageAccountId + "/providers/Microsoft.Insights/metrics/Ingress", metricsQueryResults.Values[0].Metrics[0].Id);
+            Assert.AreEqual("Microsoft.Storage/storageAccounts", metricsQueryResults.Values[0].Namespace);
+        }
+
+        [RecordedTest]
+        public async Task MetricsQueryResourcesWithStartTimeEndTimeRangeAsync()
+        {
+            MetricsClient client = CreateMetricsClient();
+
+            var resourceId = TestEnvironment.StorageAccountId;
+
+            DateTimeOffset start = Recording.UtcNow.Subtract(TimeSpan.FromHours(4));
+            DateTimeOffset end = Recording.UtcNow;
+
+            Response<MetricsQueryResourcesResult> metricsResultsResponse = await client.QueryResourcesAsync(
+                resourceIds: new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) },
+                metricNames: new List<string> { "Ingress" },
+                metricNamespace: "Microsoft.Storage/storageAccounts",
+                options: new MetricsQueryResourcesOptions { StartTime = start, EndTime = end }).ConfigureAwait(false);
+
+            Assert.AreEqual(200, metricsResultsResponse.GetRawResponse().Status);
+            MetricsQueryResourcesResult metricsQueryResults = metricsResultsResponse.Value;
+            Assert.AreEqual(1, metricsQueryResults.Values.Count);
+            Assert.AreEqual(TestEnvironment.StorageAccountId + "/providers/Microsoft.Insights/metrics/Ingress", metricsQueryResults.Values[0].Metrics[0].Id);
+            Assert.AreEqual("Microsoft.Storage/storageAccounts", metricsQueryResults.Values[0].Namespace);
+        }
+
+        [Test]
+        [SyncOnly]
+        public void MetricsQueryResourcesWithEndTimeRange()
+        {
+            MetricsClient client = CreateMetricsClient();
+
+            var resourceId = TestEnvironment.StorageAccountId;
+
+            // If only the endtime parameter is given, then the starttime parameter is required.
+            DateTimeOffset end = new DateTimeOffset(TestStartTime).Subtract(TimeSpan.FromHours(4));
+
+            Assert.Throws<AggregateException>(() =>
+                client.QueryResources(
+                resourceIds: new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) },
+                metricNames: new List<string> { "Ingress" },
+                metricNamespace: "Microsoft.Storage/storageAccounts",
+                options: new MetricsQueryResourcesOptions { EndTime = end }));
+        }
     }
 }

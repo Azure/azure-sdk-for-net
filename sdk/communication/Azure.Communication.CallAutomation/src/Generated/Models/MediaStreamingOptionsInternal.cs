@@ -34,13 +34,17 @@ namespace Azure.Communication.CallAutomation
         /// <param name="contentType"> Content type to stream, eg. audio. </param>
         /// <param name="audioChannelType"> Audio channel type to stream, eg. unmixed audio, mixed audio. </param>
         /// <param name="startMediaStreaming"> Determines if the media streaming should be started immediately after call is answered or not. </param>
-        internal MediaStreamingOptionsInternal(string transportUrl, MediaStreamingTransport transportType, MediaStreamingContent contentType, MediaStreamingAudioChannel audioChannelType, bool? startMediaStreaming)
+        /// <param name="enableBidirectional"> A value indicating whether bidirectional streaming is enabled. </param>
+        /// <param name="audioFormat"> Specifies the audio format used for encoding, including sample rate and channel type. </param>
+        internal MediaStreamingOptionsInternal(string transportUrl, MediaStreamingTransport transportType, MediaStreamingContent contentType, MediaStreamingAudioChannel audioChannelType, bool? startMediaStreaming, bool? enableBidirectional, AudioFormat? audioFormat)
         {
             TransportUrl = transportUrl;
             TransportType = transportType;
             ContentType = contentType;
             AudioChannelType = audioChannelType;
             StartMediaStreaming = startMediaStreaming;
+            EnableBidirectional = enableBidirectional;
+            AudioFormat = audioFormat;
         }
 
         /// <summary> Transport URL for media streaming. </summary>
@@ -53,5 +57,9 @@ namespace Azure.Communication.CallAutomation
         public MediaStreamingAudioChannel AudioChannelType { get; }
         /// <summary> Determines if the media streaming should be started immediately after call is answered or not. </summary>
         public bool? StartMediaStreaming { get; set; }
+        /// <summary> A value indicating whether bidirectional streaming is enabled. </summary>
+        public bool? EnableBidirectional { get; set; }
+        /// <summary> Specifies the audio format used for encoding, including sample rate and channel type. </summary>
+        public AudioFormat? AudioFormat { get; set; }
     }
 }
