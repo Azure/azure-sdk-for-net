@@ -911,7 +911,7 @@ namespace Azure.Communication.CallAutomation
         public HoldOptions(Azure.Communication.CommunicationIdentifier targetParticipant) { }
         public System.Uri OperationCallbackUri { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
-        public Azure.Communication.CallAutomation.PlaySource PlaySourceInfo { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.PlaySource PlaySource { get { throw null; } set { } }
         public Azure.Communication.CommunicationIdentifier TargetParticipant { get { throw null; } }
     }
     public partial class HoldResult
