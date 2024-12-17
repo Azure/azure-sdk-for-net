@@ -12,7 +12,7 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> Client options for PhoneNumbersClient. </summary>
     public class PhoneNumbersClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2024_03_01_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2025_02_11;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
@@ -26,6 +26,8 @@ namespace Azure.Communication.PhoneNumbers
             V2022_12_01 = 3,
             /// <summary> Service version "2024-03-01-preview". </summary>
             V2024_03_01_Preview = 4,
+            /// <summary> Service version "2025-02-11". </summary>
+            V2025_02_11 = 5,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -48,6 +50,7 @@ namespace Azure.Communication.PhoneNumbers
                 ServiceVersion.V2022_01_11_Preview_2 => "2022-01-11-preview2",
                 ServiceVersion.V2022_12_01 => "2022-12-01",
                 ServiceVersion.V2024_03_01_Preview => "2024-03-01-preview",
+                ServiceVersion.V2025_02_11 => "2025-02-11",
                 _ => throw new NotSupportedException()
             };
         }

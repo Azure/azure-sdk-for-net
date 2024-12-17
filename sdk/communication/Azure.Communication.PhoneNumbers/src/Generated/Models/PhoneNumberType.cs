@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    /// <summary> Represents the number type of the offering. </summary>
+    /// <summary> The type of phone numbers to search for, e.g. geographic, or tollFree. </summary>
     public readonly partial struct PhoneNumberType : IEquatable<PhoneNumberType>
     {
         private readonly string _value;
