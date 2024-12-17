@@ -10,6 +10,8 @@
 
 ### Bugs Fixed
 
+Convert properties of type Uri to type string in DataProtectionIdentityDetails. Issue at https://github.com/Azure/azure-sdk-for-net/issues/47031
+
 ### Other Changes
 
 ## 1.5.0 (2024-06-17)
