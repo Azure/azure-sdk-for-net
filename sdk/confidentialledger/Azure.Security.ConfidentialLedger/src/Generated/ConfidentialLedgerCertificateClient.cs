@@ -19,7 +19,7 @@ namespace Azure.Security.ConfidentialLedger.Certificate
         private static readonly string[] AuthorizationScopes = new string[] { "https://confidential-ledger.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly Uri _certificateEndpoint;
+        private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -49,7 +49,6 @@ namespace Azure.Security.ConfidentialLedger.Certificate
         /// <exception cref="ArgumentException"> <paramref name="ledgerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfidentialLedgerCertificateClient.xml" path="doc/members/member[@name='GetLedgerIdentityAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetLedgerIdentityAsync(string ledgerId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(ledgerId, nameof(ledgerId));
@@ -84,7 +83,6 @@ namespace Azure.Security.ConfidentialLedger.Certificate
         /// <exception cref="ArgumentException"> <paramref name="ledgerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConfidentialLedgerCertificateClient.xml" path="doc/members/member[@name='GetLedgerIdentity(string,RequestContext)']/*" />
         public virtual Response GetLedgerIdentity(string ledgerId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(ledgerId, nameof(ledgerId));
@@ -109,7 +107,7 @@ namespace Azure.Security.ConfidentialLedger.Certificate
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_certificateEndpoint);
+            uri.Reset(_endpoint);
             uri.AppendPath("/ledgerIdentity/", false);
             uri.AppendPath(ledgerId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
