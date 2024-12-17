@@ -6734,8 +6734,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        /// https://github.com/Azure/azure-sdk-for-net/issues/46907
-        internal virtual Response<ShareFileSymbolicLinkInfo> GetSymbolicLink(
+        public virtual Response<ShareFileSymbolicLinkInfo> GetSymbolicLink(
             CancellationToken cancellationToken = default) =>
             GetSymbolicLinkInternal(
                 async: false,
@@ -6757,8 +6756,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        /// https://github.com/Azure/azure-sdk-for-net/issues/46907
-        internal virtual async Task<Response<ShareFileSymbolicLinkInfo>> GetSymbolicLinkAsync(
+        public virtual async Task<Response<ShareFileSymbolicLinkInfo>> GetSymbolicLinkAsync(
             CancellationToken cancellationToken = default) =>
             await GetSymbolicLinkInternal(
                 async: true,
@@ -6852,8 +6850,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        /// https://github.com/Azure/azure-sdk-for-net/issues/46907
-        internal virtual Response<ShareFileInfo> CreateSymbolicLink(
+        public virtual Response<ShareFileInfo> CreateSymbolicLink(
             string linkText,
             ShareFileCreateSymbolicLinkOptions options = default,
             CancellationToken cancellationToken = default) =>
@@ -6885,8 +6882,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        /// https://github.com/Azure/azure-sdk-for-net/issues/46907
-        internal virtual async Task<Response<ShareFileInfo>> CreateSymbolicLinkAsync(
+        public virtual async Task<Response<ShareFileInfo>> CreateSymbolicLinkAsync(
             string linkText,
             ShareFileCreateSymbolicLinkOptions options = default,
             CancellationToken cancellationToken = default) =>
