@@ -9,13 +9,13 @@ SMS clients can be authenticated using the connection string acquired from an Az
 ```C# Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClientWithToken
 string endpoint = "<endpoint_url>";
 TokenCredential tokenCredential = new DefaultAzureCredential();
-SmsClient client = new SmsClient(new Uri(endpoint), tokenCredential);
+SmsClient smsClient = new SmsClient(new Uri(endpoint), tokenCredential);
 ```
 
 ## Check if a list of recipients is in the Opt Out list
 To check if the recipients are in the Opt Out list, call the function from the `SmsClient.OptOuts.Check` with a list of recipient phone numbers.
 ```C# Snippet:Azure_Communication_Sms_OptOuts_Tests_Samples_Check
-var optOutCheckResults = client.OptOuts.Check(
+var optOutCheckResults = smsClient.OptOuts.Check(
     from: "<from-phone-number>",
     to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" });
         
@@ -28,7 +28,7 @@ foreach (var result in optOutCheckResults.Value)
 ## Add a list of recipients to Opt Out list
 To add the list of recipients to Opt Out list, call the function from the `SmsClient.OptOuts.Add` with a list of recipient phone numbers.
 ```C# Snippet:Azure_Communication_Sms_OptOuts_Tests_Samples_Add
-var optOutAddResults = client.OptOuts.Add(
+var optOutAddResults = smsClient.OptOuts.Add(
     from: "<from-phone-number>",
     to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" });
         
@@ -41,7 +41,7 @@ foreach (var result in optOutAddResults.Value)
 ## Remove a list of recipients from Opt Out list
 To remove the list of recipients to Opt Out list, call the function from the `SmsClient.OptOuts.Remove` with a list of recipient phone numbers.
 ```C# Snippet:Azure_Communication_Sms_OptOuts_Tests_Samples_Remove
-var optOutRemoveResults = client.OptOuts.Remove(
+var optOutRemoveResults = smsClient.OptOuts.Remove(
     from: "<from-phone-number>",
     to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" });
         
