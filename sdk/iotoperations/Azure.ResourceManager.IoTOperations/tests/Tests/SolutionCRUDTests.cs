@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.IoTOperations.Tests
         {
         }
 
+
         [TestCase]
         [RecordedTest]
         public async Task TestSolutionCRUDOperations()
