@@ -13,7 +13,7 @@ namespace Azure.Storage.DataMovement
         #region Delegate Definitions
         public delegate Task QueuePutBlockTaskInternal(long offset, long blockSize, long expectedLength, StorageResourceItemProperties properties);
         public delegate Task QueueCommitBlockTaskInternal(StorageResourceItemProperties sourceProperties);
-        public delegate void ReportProgressInBytes(long bytesWritten);
+        public delegate ValueTask ReportProgressInBytes(long bytesWritten);
         public delegate Task InvokeFailedEventHandlerInternal(Exception ex);
         #endregion Delegate Definitions
 
@@ -99,7 +99,7 @@ namespace Azure.Storage.DataMovement
             try
             {
                 _bytesTransferred += args.BytesTransferred;
-                _reportProgressInBytes(args.BytesTransferred);
+                await _reportProgressInBytes(args.BytesTransferred).ConfigureAwait(false);
 
                 if (_bytesTransferred == _expectedLength)
                 {

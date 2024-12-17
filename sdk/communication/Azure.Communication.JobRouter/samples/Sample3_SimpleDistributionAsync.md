@@ -156,8 +156,8 @@ Console.WriteLine($"Worker 2 has successfully received offer for job2: {queriedW
 // using a logistic function (https://en.wikipedia.org/wiki/Logistic_function).
 //
 // A more detailed documentation can be found here:
-// https://learn.microsoft.com/azure/communication-services/concepts/router/distribution-concepts#default-label-matching
-// https://learn.microsoft.com/azure/communication-services/concepts/router/distribution-concepts#default-worker-selector-matching
+// https://docs.microsoft.com/azure/communication-services/concepts/router/distribution-concepts#default-label-matching
+// https://docs.microsoft.com/azure/communication-services/concepts/router/distribution-concepts#default-worker-selector-matching
 //
 // We are going to create the following:
 // 1. A single distribution policy with distribution mode set to BestWorker - we are going to send out only 1 concurrent offer per job
