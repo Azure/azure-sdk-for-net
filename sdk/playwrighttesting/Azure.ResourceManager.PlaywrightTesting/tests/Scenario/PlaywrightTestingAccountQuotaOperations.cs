@@ -14,9 +14,9 @@ namespace Azure.ResourceManager.PlaywrightTesting.Tests.Scenario
 {
     public class PlaywrightTestingAccountQuotaOperations : PlaywrightTestingManagementTestBase
     {
-        private AccountQuotumCollection _quotaCollection { get; set; }
-        private AccountQuotumResource _quotaResource { get; set; }
-        private AccountQuotumData _quotaData { get; set; }
+        private PlaywrightTestingAccountQuotaCollection _quotaCollection { get; set; }
+        private PlaywrightTestingAccountQuotaResource _quotaResource { get; set; }
+        private PlaywrightTestingAccountQuotaData _quotaData { get; set; }
 
         public PlaywrightTestingAccountQuotaOperations(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Tests.Scenario
             ResourceIdentifier playwrightTestingAccountResourceId = PlaywrightTestingAccountResource.CreateResourceIdentifier(subscription.Id.SubscriptionId, ResourceHelper.RESOURCE_GROUP_NAME_TEST, ResourceHelper.WORKSPACE_NAME);
             PlaywrightTestingAccountResource playwrightTestingAccount = new PlaywrightTestingAccountResource(Client, playwrightTestingAccountResourceId);
 
-            _quotaCollection = playwrightTestingAccount.GetAccountQuota();
+            _quotaCollection = playwrightTestingAccount.GetAllPlaywrightTestingAccountQuota();
         }
 
         [OneTimeTearDown]
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Tests.Scenario
 
             try
             {
-                Response<AccountQuotumResource> getResponse = await _quotaCollection.GetAsync(quotaName);
+                Response<PlaywrightTestingAccountQuotaResource> getResponse = await _quotaCollection.GetAsync(quotaName);
                 Assert.IsNotNull(getResponse, "The response should not be null.");
                 Assert.IsNotNull(getResponse.Value, "The response value should not be null.");
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Tests.Scenario
             Assert.Fail("Expected a RequestFailedException with a 404 status, but the API returned a valid response.");
 
             //List API
-            List<AccountQuotumResource> listResponse = await _quotaCollection.GetAllAsync().ToEnumerableAsync();
+            List<PlaywrightTestingAccountQuotaResource> listResponse = await _quotaCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotNull(listResponse);
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Tests.Scenario
 
             try
             {
-                Response<AccountQuotumResource> getResponse = await _quotaCollection.GetAsync(quotaName);
+                Response<PlaywrightTestingAccountQuotaResource> getResponse = await _quotaCollection.GetAsync(quotaName);
                 Assert.IsNotNull(getResponse, "The response should not be null.");
                 Assert.IsNotNull(getResponse.Value, "The response value should not be null.");
             }

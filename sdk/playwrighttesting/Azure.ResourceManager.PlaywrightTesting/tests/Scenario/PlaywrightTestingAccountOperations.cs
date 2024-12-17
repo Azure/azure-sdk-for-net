@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Tests.Scenario
             Assert.AreEqual(ResourceHelper.RESOURCE_LOCATION, createResponse.Value.Data.Location.Name);
             Assert.AreEqual(PlaywrightTestingProvisioningState.Succeeded, createResponse.Value.Data.Properties.ProvisioningState);
             Assert.IsNotNull(createResponse.Value.Data.Properties.ScalableExecution);
-            Assert.IsTrue(createResponse.Value.Data.Properties.ScalableExecution == EnablementStatus.Enabled);
+            Assert.IsTrue(createResponse.Value.Data.Properties.ScalableExecution == PlaywrightTestingEnablementStatus.Enabled);
 
             //GET API
             Response<PlaywrightTestingAccountResource> getResponse = await _accountCollection.GetAsync(ResourceHelper.WORKSPACE_NAME);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Tests.Scenario
             Assert.AreEqual(ResourceHelper.WORKSPACE_NAME, updateResponseValue.Data.Name);
             Assert.AreEqual(ResourceHelper.RESOURCE_LOCATION, updateResponseValue.Data.Location.Name);
             Assert.AreEqual(PlaywrightTestingProvisioningState.Succeeded, updateResponseValue.Data.Properties.ProvisioningState);
-            Assert.IsTrue(updateResponseValue.Data.Properties.RegionalAffinity == EnablementStatus.Enabled);
+            Assert.IsTrue(updateResponseValue.Data.Properties.RegionalAffinity == PlaywrightTestingEnablementStatus.Enabled);
 
             //DELETE API
             ArmOperation deleteResponse = await updateResponseValue.DeleteAsync(WaitUntil.Completed);
