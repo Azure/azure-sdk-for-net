@@ -36,6 +36,7 @@ namespace Azure.ResourceManager.IoTOperations.Tests
             return await Subscription.GetResourceGroups().GetAsync(name);
         }
 
+        // Get Instances
         protected async Task<InstanceResourceCollection> GetInstanceResourceCollectionAsync(
             string resourceGroupName
         )
@@ -44,6 +45,7 @@ namespace Azure.ResourceManager.IoTOperations.Tests
             return rg.GetInstanceResources();
         }
 
+        // Get Brokers
         protected async Task<BrokerResourceCollection> GetBrokerResourceCollectionAsync(
             string resourceGroupName
         )
@@ -54,6 +56,43 @@ namespace Azure.ResourceManager.IoTOperations.Tests
             return instance.GetBrokerResources();
         }
 
+        // Get BrokerAuthentications
+        protected async Task<BrokerAuthenticationResourceCollection> GetBrokerAuthenticationResourceCollectionAsync(
+            string resourceGroupName
+        )
+        {
+            BrokerResourceCollection brokers = await GetBrokerResourceCollectionAsync(
+                resourceGroupName
+            );
+            BrokerResource broker = await brokers.GetAsync("aio-broker");
+            return broker.GetBrokerAuthenticationResources();
+        }
+
+        // Get BrokerAuthorizations
+        protected async Task<BrokerAuthorizationResourceCollection> GetBrokerAuthorizationResourceCollectionAsync(
+            string resourceGroupName
+        )
+        {
+            BrokerResourceCollection brokers = await GetBrokerResourceCollectionAsync(
+                resourceGroupName
+            );
+            BrokerResource broker = await brokers.GetAsync("aio-broker");
+            return broker.GetBrokerAuthorizationResources();
+        }
+
+        // Get BrokerListeners
+        protected async Task<BrokerListenerResourceCollection> GetBrokerListenerResourceCollectionAsync(
+            string resourceGroupName
+        )
+        {
+            BrokerResourceCollection brokers = await GetBrokerResourceCollectionAsync(
+                resourceGroupName
+            );
+            BrokerResource broker = await brokers.GetAsync("aio-broker");
+            return broker.GetBrokerListenerResources();
+        }
+
+        // Get DataflowProfiles
         protected async Task<DataflowProfileResourceCollection> GetDataflowProfileResourceCollectionAsync(
             string resourceGroupName
         )
@@ -64,56 +103,28 @@ namespace Azure.ResourceManager.IoTOperations.Tests
             return instance.GetDataflowProfileResources();
         }
 
-        // protected static EdgeOrderAddressContactDetails GetDefaultContactDetails()
-        // {
-        //     return new EdgeOrderAddressContactDetails(
-        //         "Public SDK Test",
-        //         "1234567890",
-        //         new List<string> { "testing@microsoft.com" }
-        //     )
-        //     {
-        //         PhoneExtension = "1234",
-        //     };
-        // }
+        // Get Dataflows
+        protected async Task<DataflowResourceCollection> GetDataflowResourceCollectionAsync(
+            string resourceGroupName
+        )
+        {
+            DataflowProfileResourceCollection dataflowProfiles =
+                await GetDataflowProfileResourceCollectionAsync(resourceGroupName);
+            DataflowProfileResource dataflowProfile = await dataflowProfiles.GetAsync(
+                "aio-dataflow-profile"
+            );
+            return dataflowProfile.GetDataflowResources();
+        }
 
-        // protected static EdgeOrderShippingAddress GetDefaultShippingAddress()
-        // {
-        //     return new EdgeOrderShippingAddress("16 TOWNSEND ST", "US")
-        //     {
-        //         StreetAddress2 = "Unit 1",
-        //         City = "San Francisco",
-        //         StateOrProvince = "CA",
-        //         PostalCode = "94107",
-        //         CompanyName = "Microsoft",
-        //         AddressType = EdgeOrderAddressType.Commercial
-        //     };
-        // }
-
-        // protected static HierarchyInformation GetHierarchyInformation()
-        // {
-        //     return new HierarchyInformation
-        //     {
-        //         ProductFamilyName = "AzureStackEdge",
-        //         ProductLineName = "AzureStackEdge",
-        //         ProductName = "AzureStackEdgeGPU",
-        //         ConfigurationName = "EdgeP_Base"
-        //     };
-        // }
-
-        // protected static EdgeOrderItemDetails GetDefaultOrderItemDetails()
-        // {
-        //     return new EdgeOrderItemDetails(
-        //         new ProductDetails(GetHierarchyInformation()),
-        //         OrderItemType.Purchase
-        //     )
-        //     {
-        //         Preferences = new OrderItemPreferences
-        //         {
-        //             TransportPreferences = new TransportPreferences(
-        //                 TransportShipmentType.MicrosoftManaged
-        //             )
-        //         }
-        //     };
-        // }
+        // Get DataflowEndpoints
+        protected async Task<DataflowEndpointResourceCollection> GetDataflowEndpointResourceCollectionAsync(
+            string resourceGroupName
+        )
+        {
+            ResourceGroupResource rg = await GetResourceGroupAsync(resourceGroupName);
+            InstanceResourceCollection instances = rg.GetInstanceResources();
+            InstanceResource instance = await instances.GetAsync("aio-instance");
+            return instance.GetDataflowEndpointResources();
+        }
     }
 }
