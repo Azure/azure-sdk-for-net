@@ -13,6 +13,9 @@
     - ShareDirectoryClient.Create() and .CreateAsync()
     - ShareDirectoryClient.SetHttpHeaders() and .SetHttpHeadersAsync()
 
+### Bugs Fixed
+- Fixed \[BUG\] Unable to create directory with only whiteSpaceChars #42891
+
 ## 12.21.0 (2024-11-12)
 
 ### Features Added
