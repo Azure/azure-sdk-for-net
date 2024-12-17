@@ -5,10 +5,10 @@
   },
   "matrix": {
     "Agent": {
-      "Ubuntu-20.04_NET6.0": {
+      "Ubuntu-20.04_NET9.0": {
         "OSVmImage": "env:LINUXVMIMAGE",
         "Pool": "env:LINUXPOOL",
-        "TestTargetFramework": "net6.0"
+        "TestTargetFramework": "net9.0"
       },
       "Ubuntu-20.04_NET8.0": {
         "OSVmImage": "env:LINUXVMIMAGE",
@@ -25,10 +25,10 @@
         "Pool": "env:WINDOWSPOOL",
         "TestTargetFramework": "net8.0"
       },
-      "MacOS_NET6.0": {
+      "MacOS_NET9.0": {
         "OSVmImage": "env:MACVMIMAGE",
         "Pool": "env:MACPOOL",
-        "TestTargetFramework": "net6.0"
+        "TestTargetFramework": "net9.0"
       },
       "MacOS_NET8.0": {
         "OSVmImage": "env:MACVMIMAGE",
