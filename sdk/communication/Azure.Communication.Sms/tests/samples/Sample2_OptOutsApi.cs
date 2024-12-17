@@ -40,7 +40,7 @@ namespace Azure.Communication.Sms.Tests.samples
         public async Task AddOptOutAsync()
         {
             SmsClient smsClient = CreateSmsClient();
-            #region Snippet:Azure_Communication_Sms_OptOuts_Tests_Samples_Add
+            #region Snippet:Azure_Communication_Sms_OptOuts_Tests_Samples_AddAsync
             var optOutAddResults = await smsClient.OptOuts.AddAsync(
                 //@@ from: "<from-phone-number>", // Your E.164 formatted from phone number used to send SMS
                 //@@ to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" }); // E.164 formatted recipient phone numbers
@@ -50,7 +50,7 @@ namespace Azure.Communication.Sms.Tests.samples
             {
                 Console.WriteLine($"{result.To}: {result.HttpStatusCode}");
             }
-            #endregion Snippet:Azure_Communication_Sms_OptOuts_Tests_Samples_Add
+            #endregion Snippet:Azure_Communication_Sms_OptOuts_Tests_Samples_AddAsync
         }
 
         [Test]
@@ -58,7 +58,7 @@ namespace Azure.Communication.Sms.Tests.samples
         public async Task RemoveOptOutAsync()
         {
             SmsClient smsClient = CreateSmsClient();
-            #region Snippet:Azure_Communication_Sms_OptOuts_Tests_Samples_Remove
+            #region Snippet:Azure_Communication_Sms_OptOuts_Tests_Samples_RemoveAsync
             var optOutRemoveResults = await smsClient.OptOuts.RemoveAsync(
                 //@@ from: "<from-phone-number>", // Your E.164 formatted from phone number used to send SMS
                 //@@ to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" }); // E.164 formatted recipient phone numbers
@@ -69,15 +69,15 @@ namespace Azure.Communication.Sms.Tests.samples
             {
                 Console.WriteLine($"{result.To}: {result.HttpStatusCode}");
             }
-            #endregion Snippet:Azure_Communication_Sms_OptOuts_Tests_Samples_Remove
+            #endregion Snippet:Azure_Communication_Sms_OptOuts_Tests_Samples_RemoveAsync
         }
 
         [Test]
-        [AsyncOnly]
+        [SyncOnly]
         public void CheckOptOut()
         {
             SmsClient smsClient = CreateSmsClient();
-            #region Snippet:Azure_Communication_Sms_OptOuts_Tests_Samples_CheckAsync
+            #region Snippet:Azure_Communication_Sms_OptOuts_Tests_Samples_Check
             var optOutCheckResults = smsClient.OptOuts.Check(
                //@@ from: "<from-phone-number>", // Your E.164 formatted from phone number used to send SMS
                //@@ to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" }); // E.164 formatted recipient phone numbers
@@ -87,11 +87,11 @@ namespace Azure.Communication.Sms.Tests.samples
             {
                 Console.WriteLine($"{result.To}: {result.IsOptedOut}");
             }
-            #endregion Snippet:Azure_Communication_Sms_OptOuts_Tests_Samples_CheckAsync
+            #endregion Snippet:Azure_Communication_Sms_OptOuts_Tests_Samples_Check
         }
 
         [Test]
-        [AsyncOnly]
+        [SyncOnly]
         public void AddOptOut()
         {
             SmsClient smsClient = CreateSmsClient();
