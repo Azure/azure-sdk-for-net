@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network
             get
             {
                 if (LocalNetworkAddressSpace is null)
-                    LocalNetworkAddressSpace = new AddressSpace();
+                    LocalNetworkAddressSpace = new VirtualNetworkAddressSpace();
                 return LocalNetworkAddressSpace.AddressPrefixes;
             }
         }

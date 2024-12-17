@@ -15,11 +15,11 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class VerifierWorkspaceData : IUtf8JsonSerializable, IJsonModel<VerifierWorkspaceData>
+    public partial class NetworkVerifierWorkspaceData : IUtf8JsonSerializable, IJsonModel<NetworkVerifierWorkspaceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VerifierWorkspaceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkVerifierWorkspaceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<VerifierWorkspaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetworkVerifierWorkspaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VerifierWorkspaceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkVerifierWorkspaceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VerifierWorkspaceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkVerifierWorkspaceData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -42,26 +42,21 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(CommonResourceType))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(CommonResourceType);
-            }
         }
 
-        VerifierWorkspaceData IJsonModel<VerifierWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NetworkVerifierWorkspaceData IJsonModel<NetworkVerifierWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VerifierWorkspaceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkVerifierWorkspaceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VerifierWorkspaceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkVerifierWorkspaceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVerifierWorkspaceData(document.RootElement, options);
+            return DeserializeNetworkVerifierWorkspaceData(document.RootElement, options);
         }
 
-        internal static VerifierWorkspaceData DeserializeVerifierWorkspaceData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NetworkVerifierWorkspaceData DeserializeNetworkVerifierWorkspaceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -69,13 +64,12 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            VerifierWorkspaceProperties properties = default;
-            string type = default;
+            NetworkVerifierWorkspaceProperties properties = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type0 = default;
+            ResourceType type = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -87,12 +81,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    properties = VerifierWorkspaceProperties.DeserializeVerifierWorkspaceProperties(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
+                    properties = NetworkVerifierWorkspaceProperties.DeserializeNetworkVerifierWorkspaceProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -126,7 +115,7 @@ namespace Azure.ResourceManager.Network
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type0 = new ResourceType(property.Value.GetString());
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"u8))
@@ -144,47 +133,46 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new VerifierWorkspaceData(
+            return new NetworkVerifierWorkspaceData(
                 id,
                 name,
-                type0,
+                type,
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                type,
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<VerifierWorkspaceData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NetworkVerifierWorkspaceData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VerifierWorkspaceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkVerifierWorkspaceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VerifierWorkspaceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkVerifierWorkspaceData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        VerifierWorkspaceData IPersistableModel<VerifierWorkspaceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NetworkVerifierWorkspaceData IPersistableModel<NetworkVerifierWorkspaceData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VerifierWorkspaceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkVerifierWorkspaceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeVerifierWorkspaceData(document.RootElement, options);
+                        return DeserializeNetworkVerifierWorkspaceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VerifierWorkspaceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkVerifierWorkspaceData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<VerifierWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetworkVerifierWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

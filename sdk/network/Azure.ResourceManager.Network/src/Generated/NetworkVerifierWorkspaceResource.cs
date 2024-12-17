@@ -17,14 +17,14 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A Class representing a VerifierWorkspace along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VerifierWorkspaceResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetVerifierWorkspaceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetworkManagerResource"/> using the GetVerifierWorkspace method.
+    /// A Class representing a NetworkVerifierWorkspace along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkVerifierWorkspaceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkVerifierWorkspaceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NetworkManagerResource"/> using the GetNetworkVerifierWorkspace method.
     /// </summary>
-    public partial class VerifierWorkspaceResource : ArmResource
+    public partial class NetworkVerifierWorkspaceResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="VerifierWorkspaceResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="NetworkVerifierWorkspaceResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="networkManagerName"> The networkManagerName. </param>
@@ -35,35 +35,35 @@ namespace Azure.ResourceManager.Network
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _verifierWorkspaceClientDiagnostics;
-        private readonly VerifierWorkspacesRestOperations _verifierWorkspaceRestClient;
-        private readonly VerifierWorkspaceData _data;
+        private readonly ClientDiagnostics _networkVerifierWorkspaceVerifierWorkspacesClientDiagnostics;
+        private readonly VerifierWorkspacesRestOperations _networkVerifierWorkspaceVerifierWorkspacesRestClient;
+        private readonly NetworkVerifierWorkspaceData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/networkManagers/verifierWorkspaces";
 
-        /// <summary> Initializes a new instance of the <see cref="VerifierWorkspaceResource"/> class for mocking. </summary>
-        protected VerifierWorkspaceResource()
+        /// <summary> Initializes a new instance of the <see cref="NetworkVerifierWorkspaceResource"/> class for mocking. </summary>
+        protected NetworkVerifierWorkspaceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="VerifierWorkspaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkVerifierWorkspaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal VerifierWorkspaceResource(ArmClient client, VerifierWorkspaceData data) : this(client, data.Id)
+        internal NetworkVerifierWorkspaceResource(ArmClient client, NetworkVerifierWorkspaceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="VerifierWorkspaceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkVerifierWorkspaceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal VerifierWorkspaceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal NetworkVerifierWorkspaceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _verifierWorkspaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string verifierWorkspaceApiVersion);
-            _verifierWorkspaceRestClient = new VerifierWorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, verifierWorkspaceApiVersion);
+            _networkVerifierWorkspaceVerifierWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string networkVerifierWorkspaceVerifierWorkspacesApiVersion);
+            _networkVerifierWorkspaceVerifierWorkspacesRestClient = new VerifierWorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkVerifierWorkspaceVerifierWorkspacesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual VerifierWorkspaceData Data
+        public virtual NetworkVerifierWorkspaceData Data
         {
             get
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ReachabilityAnalysisIntentResources in the VerifierWorkspace. </summary>
+        /// <summary> Gets a collection of ReachabilityAnalysisIntentResources in the NetworkVerifierWorkspace. </summary>
         /// <returns> An object representing collection of ReachabilityAnalysisIntentResources and their operations over a ReachabilityAnalysisIntentResource. </returns>
         public virtual ReachabilityAnalysisIntentCollection GetReachabilityAnalysisIntents()
         {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Network
             return GetReachabilityAnalysisIntents().Get(reachabilityAnalysisIntentName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ReachabilityAnalysisRunResources in the VerifierWorkspace. </summary>
+        /// <summary> Gets a collection of ReachabilityAnalysisRunResources in the NetworkVerifierWorkspace. </summary>
         /// <returns> An object representing collection of ReachabilityAnalysisRunResources and their operations over a ReachabilityAnalysisRunResource. </returns>
         public virtual ReachabilityAnalysisRunCollection GetReachabilityAnalysisRuns()
         {
@@ -245,21 +245,21 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="VerifierWorkspaceResource"/></description>
+        /// <description><see cref="NetworkVerifierWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VerifierWorkspaceResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkVerifierWorkspaceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _verifierWorkspaceClientDiagnostics.CreateScope("VerifierWorkspaceResource.Get");
+            using var scope = _networkVerifierWorkspaceVerifierWorkspacesClientDiagnostics.CreateScope("NetworkVerifierWorkspaceResource.Get");
             scope.Start();
             try
             {
-                var response = await _verifierWorkspaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _networkVerifierWorkspaceVerifierWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VerifierWorkspaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkVerifierWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -285,21 +285,21 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="VerifierWorkspaceResource"/></description>
+        /// <description><see cref="NetworkVerifierWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VerifierWorkspaceResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<NetworkVerifierWorkspaceResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _verifierWorkspaceClientDiagnostics.CreateScope("VerifierWorkspaceResource.Get");
+            using var scope = _networkVerifierWorkspaceVerifierWorkspacesClientDiagnostics.CreateScope("NetworkVerifierWorkspaceResource.Get");
             scope.Start();
             try
             {
-                var response = _verifierWorkspaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _networkVerifierWorkspaceVerifierWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VerifierWorkspaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkVerifierWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="VerifierWorkspaceResource"/></description>
+        /// <description><see cref="NetworkVerifierWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -333,12 +333,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _verifierWorkspaceClientDiagnostics.CreateScope("VerifierWorkspaceResource.Delete");
+            using var scope = _networkVerifierWorkspaceVerifierWorkspacesClientDiagnostics.CreateScope("NetworkVerifierWorkspaceResource.Delete");
             scope.Start();
             try
             {
-                var response = await _verifierWorkspaceRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation(_verifierWorkspaceClientDiagnostics, Pipeline, _verifierWorkspaceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _networkVerifierWorkspaceVerifierWorkspacesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation(_networkVerifierWorkspaceVerifierWorkspacesClientDiagnostics, Pipeline, _networkVerifierWorkspaceVerifierWorkspacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="VerifierWorkspaceResource"/></description>
+        /// <description><see cref="NetworkVerifierWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -375,12 +375,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _verifierWorkspaceClientDiagnostics.CreateScope("VerifierWorkspaceResource.Delete");
+            using var scope = _networkVerifierWorkspaceVerifierWorkspacesClientDiagnostics.CreateScope("NetworkVerifierWorkspaceResource.Delete");
             scope.Start();
             try
             {
-                var response = _verifierWorkspaceRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new NetworkArmOperation(_verifierWorkspaceClientDiagnostics, Pipeline, _verifierWorkspaceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _networkVerifierWorkspaceVerifierWorkspacesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new NetworkArmOperation(_networkVerifierWorkspaceVerifierWorkspacesClientDiagnostics, Pipeline, _networkVerifierWorkspaceVerifierWorkspacesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -409,23 +409,23 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="VerifierWorkspaceResource"/></description>
+        /// <description><see cref="NetworkVerifierWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> Verifier Workspace object to create/update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<VerifierWorkspaceResource>> UpdateAsync(VerifierWorkspacePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkVerifierWorkspaceResource>> UpdateAsync(NetworkVerifierWorkspacePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _verifierWorkspaceClientDiagnostics.CreateScope("VerifierWorkspaceResource.Update");
+            using var scope = _networkVerifierWorkspaceVerifierWorkspacesClientDiagnostics.CreateScope("NetworkVerifierWorkspaceResource.Update");
             scope.Start();
             try
             {
-                var response = await _verifierWorkspaceRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new VerifierWorkspaceResource(Client, response.Value), response.GetRawResponse());
+                var response = await _networkVerifierWorkspaceVerifierWorkspacesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new NetworkVerifierWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -451,23 +451,23 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="VerifierWorkspaceResource"/></description>
+        /// <description><see cref="NetworkVerifierWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> Verifier Workspace object to create/update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<VerifierWorkspaceResource> Update(VerifierWorkspacePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkVerifierWorkspaceResource> Update(NetworkVerifierWorkspacePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _verifierWorkspaceClientDiagnostics.CreateScope("VerifierWorkspaceResource.Update");
+            using var scope = _networkVerifierWorkspaceVerifierWorkspacesClientDiagnostics.CreateScope("NetworkVerifierWorkspaceResource.Update");
             scope.Start();
             try
             {
-                var response = _verifierWorkspaceRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new VerifierWorkspaceResource(Client, response.Value), response.GetRawResponse());
+                var response = _networkVerifierWorkspaceVerifierWorkspacesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                return Response.FromValue(new NetworkVerifierWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="VerifierWorkspaceResource"/></description>
+        /// <description><see cref="NetworkVerifierWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -501,12 +501,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<VerifierWorkspaceResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkVerifierWorkspaceResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _verifierWorkspaceClientDiagnostics.CreateScope("VerifierWorkspaceResource.AddTag");
+            using var scope = _networkVerifierWorkspaceVerifierWorkspacesClientDiagnostics.CreateScope("NetworkVerifierWorkspaceResource.AddTag");
             scope.Start();
             try
             {
@@ -515,13 +515,13 @@ namespace Azure.ResourceManager.Network
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _verifierWorkspaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new VerifierWorkspaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _networkVerifierWorkspaceVerifierWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new NetworkVerifierWorkspaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new VerifierWorkspacePatch();
+                    var patch = new NetworkVerifierWorkspacePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="VerifierWorkspaceResource"/></description>
+        /// <description><see cref="NetworkVerifierWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -563,12 +563,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<VerifierWorkspaceResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkVerifierWorkspaceResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _verifierWorkspaceClientDiagnostics.CreateScope("VerifierWorkspaceResource.AddTag");
+            using var scope = _networkVerifierWorkspaceVerifierWorkspacesClientDiagnostics.CreateScope("NetworkVerifierWorkspaceResource.AddTag");
             scope.Start();
             try
             {
@@ -577,13 +577,13 @@ namespace Azure.ResourceManager.Network
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _verifierWorkspaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new VerifierWorkspaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _networkVerifierWorkspaceVerifierWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new NetworkVerifierWorkspaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new VerifierWorkspacePatch();
+                    var patch = new NetworkVerifierWorkspacePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -617,18 +617,18 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="VerifierWorkspaceResource"/></description>
+        /// <description><see cref="NetworkVerifierWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<VerifierWorkspaceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkVerifierWorkspaceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _verifierWorkspaceClientDiagnostics.CreateScope("VerifierWorkspaceResource.SetTags");
+            using var scope = _networkVerifierWorkspaceVerifierWorkspacesClientDiagnostics.CreateScope("NetworkVerifierWorkspaceResource.SetTags");
             scope.Start();
             try
             {
@@ -638,13 +638,13 @@ namespace Azure.ResourceManager.Network
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _verifierWorkspaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new VerifierWorkspaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _networkVerifierWorkspaceVerifierWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new NetworkVerifierWorkspaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new VerifierWorkspacePatch();
+                    var patch = new NetworkVerifierWorkspacePatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return result;
@@ -674,18 +674,18 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="VerifierWorkspaceResource"/></description>
+        /// <description><see cref="NetworkVerifierWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<VerifierWorkspaceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkVerifierWorkspaceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _verifierWorkspaceClientDiagnostics.CreateScope("VerifierWorkspaceResource.SetTags");
+            using var scope = _networkVerifierWorkspaceVerifierWorkspacesClientDiagnostics.CreateScope("NetworkVerifierWorkspaceResource.SetTags");
             scope.Start();
             try
             {
@@ -695,13 +695,13 @@ namespace Azure.ResourceManager.Network
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _verifierWorkspaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new VerifierWorkspaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _networkVerifierWorkspaceVerifierWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new NetworkVerifierWorkspaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new VerifierWorkspacePatch();
+                    var patch = new NetworkVerifierWorkspacePatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(patch, cancellationToken: cancellationToken);
                     return result;
@@ -731,18 +731,18 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="VerifierWorkspaceResource"/></description>
+        /// <description><see cref="NetworkVerifierWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<VerifierWorkspaceResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkVerifierWorkspaceResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _verifierWorkspaceClientDiagnostics.CreateScope("VerifierWorkspaceResource.RemoveTag");
+            using var scope = _networkVerifierWorkspaceVerifierWorkspacesClientDiagnostics.CreateScope("NetworkVerifierWorkspaceResource.RemoveTag");
             scope.Start();
             try
             {
@@ -751,13 +751,13 @@ namespace Azure.ResourceManager.Network
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _verifierWorkspaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new VerifierWorkspaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _networkVerifierWorkspaceVerifierWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new NetworkVerifierWorkspaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new VerifierWorkspacePatch();
+                    var patch = new NetworkVerifierWorkspacePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -791,18 +791,18 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="VerifierWorkspaceResource"/></description>
+        /// <description><see cref="NetworkVerifierWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<VerifierWorkspaceResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkVerifierWorkspaceResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _verifierWorkspaceClientDiagnostics.CreateScope("VerifierWorkspaceResource.RemoveTag");
+            using var scope = _networkVerifierWorkspaceVerifierWorkspacesClientDiagnostics.CreateScope("NetworkVerifierWorkspaceResource.RemoveTag");
             scope.Start();
             try
             {
@@ -811,13 +811,13 @@ namespace Azure.ResourceManager.Network
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _verifierWorkspaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new VerifierWorkspaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _networkVerifierWorkspaceVerifierWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new NetworkVerifierWorkspaceResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new VerifierWorkspacePatch();
+                    var patch = new NetworkVerifierWorkspacePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

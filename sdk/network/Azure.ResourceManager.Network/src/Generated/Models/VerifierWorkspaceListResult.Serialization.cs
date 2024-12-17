@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            IReadOnlyList<VerifierWorkspaceData> value = default;
+            IReadOnlyList<NetworkVerifierWorkspaceData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<VerifierWorkspaceData> array = new List<VerifierWorkspaceData>();
+                    List<NetworkVerifierWorkspaceData> array = new List<NetworkVerifierWorkspaceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VerifierWorkspaceData.DeserializeVerifierWorkspaceData(item, options));
+                        array.Add(NetworkVerifierWorkspaceData.DeserializeNetworkVerifierWorkspaceData(item, options));
                     }
                     value = array;
                     continue;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new VerifierWorkspaceListResult(value ?? new ChangeTrackingList<VerifierWorkspaceData>(), nextLink, serializedAdditionalRawData);
+            return new VerifierWorkspaceListResult(value ?? new ChangeTrackingList<NetworkVerifierWorkspaceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VerifierWorkspaceListResult>.Write(ModelReaderWriterOptions options)

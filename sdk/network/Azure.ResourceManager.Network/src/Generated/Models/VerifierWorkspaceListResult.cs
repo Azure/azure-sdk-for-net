@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="VerifierWorkspaceListResult"/>. </summary>
         internal VerifierWorkspaceListResult()
         {
-            Value = new ChangeTrackingList<VerifierWorkspaceData>();
+            Value = new ChangeTrackingList<NetworkVerifierWorkspaceData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VerifierWorkspaceListResult"/>. </summary>
         /// <param name="value"> Gets a page of Verifier Workspaces. </param>
         /// <param name="nextLink"> Gets the URL to get the next page of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VerifierWorkspaceListResult(IReadOnlyList<VerifierWorkspaceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VerifierWorkspaceListResult(IReadOnlyList<NetworkVerifierWorkspaceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Gets a page of Verifier Workspaces. </summary>
-        public IReadOnlyList<VerifierWorkspaceData> Value { get; }
+        public IReadOnlyList<NetworkVerifierWorkspaceData> Value { get; }
         /// <summary> Gets the URL to get the next page of results. </summary>
         public string NextLink { get; }
     }

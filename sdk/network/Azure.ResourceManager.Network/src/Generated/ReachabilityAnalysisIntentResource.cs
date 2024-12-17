@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network
     /// A Class representing a ReachabilityAnalysisIntent along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ReachabilityAnalysisIntentResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetReachabilityAnalysisIntentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="VerifierWorkspaceResource"/> using the GetReachabilityAnalysisIntent method.
+    /// Otherwise you can get one from its parent resource <see cref="NetworkVerifierWorkspaceResource"/> using the GetReachabilityAnalysisIntent method.
     /// </summary>
     public partial class ReachabilityAnalysisIntentResource : ArmResource
     {

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PoolAssociation : IUtf8JsonSerializable, IJsonModel<PoolAssociation>
+    public partial class IpamPoolAssociation : IUtf8JsonSerializable, IJsonModel<IpamPoolAssociation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PoolAssociation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IpamPoolAssociation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<PoolAssociation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IpamPoolAssociation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PoolAssociation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IpamPoolAssociation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PoolAssociation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IpamPoolAssociation)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("resourceId"u8);
@@ -103,19 +103,19 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        PoolAssociation IJsonModel<PoolAssociation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        IpamPoolAssociation IJsonModel<IpamPoolAssociation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PoolAssociation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IpamPoolAssociation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PoolAssociation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IpamPoolAssociation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePoolAssociation(document.RootElement, options);
+            return DeserializeIpamPoolAssociation(document.RootElement, options);
         }
 
-        internal static PoolAssociation DeserializePoolAssociation(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static IpamPoolAssociation DeserializeIpamPoolAssociation(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PoolAssociation(
+            return new IpamPoolAssociation(
                 resourceId,
                 poolId,
                 description,
@@ -230,35 +230,35 @@ namespace Azure.ResourceManager.Network.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<PoolAssociation>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<IpamPoolAssociation>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PoolAssociation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IpamPoolAssociation>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PoolAssociation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IpamPoolAssociation)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PoolAssociation IPersistableModel<PoolAssociation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        IpamPoolAssociation IPersistableModel<IpamPoolAssociation>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PoolAssociation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IpamPoolAssociation>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializePoolAssociation(document.RootElement, options);
+                        return DeserializeIpamPoolAssociation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PoolAssociation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IpamPoolAssociation)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PoolAssociation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IpamPoolAssociation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this VerifierWorkspaceResource created on azure
-            // for more information of creating VerifierWorkspaceResource, please refer to the document of VerifierWorkspaceResource
+            // this example assumes you already have this NetworkVerifierWorkspaceResource created on azure
+            // for more information of creating NetworkVerifierWorkspaceResource, please refer to the document of NetworkVerifierWorkspaceResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkManagerName = "testNetworkManager";
             string workspaceName = "testWorkspace";
-            ResourceIdentifier verifierWorkspaceResourceId = VerifierWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, workspaceName);
-            VerifierWorkspaceResource verifierWorkspace = client.GetVerifierWorkspaceResource(verifierWorkspaceResourceId);
+            ResourceIdentifier networkVerifierWorkspaceResourceId = NetworkVerifierWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, workspaceName);
+            NetworkVerifierWorkspaceResource networkVerifierWorkspace = client.GetNetworkVerifierWorkspaceResource(networkVerifierWorkspaceResourceId);
 
             // get the collection of this ReachabilityAnalysisRunResource
-            ReachabilityAnalysisRunCollection collection = verifierWorkspace.GetReachabilityAnalysisRuns();
+            ReachabilityAnalysisRunCollection collection = networkVerifierWorkspace.GetReachabilityAnalysisRuns();
 
             // invoke the operation
             string reachabilityAnalysisRunName = "testAnalysisRunName";
@@ -68,17 +68,17 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this VerifierWorkspaceResource created on azure
-            // for more information of creating VerifierWorkspaceResource, please refer to the document of VerifierWorkspaceResource
+            // this example assumes you already have this NetworkVerifierWorkspaceResource created on azure
+            // for more information of creating NetworkVerifierWorkspaceResource, please refer to the document of NetworkVerifierWorkspaceResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkManagerName = "testNetworkManager";
             string workspaceName = "testWorkspace";
-            ResourceIdentifier verifierWorkspaceResourceId = VerifierWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, workspaceName);
-            VerifierWorkspaceResource verifierWorkspace = client.GetVerifierWorkspaceResource(verifierWorkspaceResourceId);
+            ResourceIdentifier networkVerifierWorkspaceResourceId = NetworkVerifierWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, workspaceName);
+            NetworkVerifierWorkspaceResource networkVerifierWorkspace = client.GetNetworkVerifierWorkspaceResource(networkVerifierWorkspaceResourceId);
 
             // get the collection of this ReachabilityAnalysisRunResource
-            ReachabilityAnalysisRunCollection collection = verifierWorkspace.GetReachabilityAnalysisRuns();
+            ReachabilityAnalysisRunCollection collection = networkVerifierWorkspace.GetReachabilityAnalysisRuns();
 
             // invoke the operation
             string reachabilityAnalysisRunName = "testAnalysisRunName";
@@ -103,17 +103,17 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this VerifierWorkspaceResource created on azure
-            // for more information of creating VerifierWorkspaceResource, please refer to the document of VerifierWorkspaceResource
+            // this example assumes you already have this NetworkVerifierWorkspaceResource created on azure
+            // for more information of creating NetworkVerifierWorkspaceResource, please refer to the document of NetworkVerifierWorkspaceResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkManagerName = "testNetworkManager";
             string workspaceName = "testVerifierWorkspace1";
-            ResourceIdentifier verifierWorkspaceResourceId = VerifierWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, workspaceName);
-            VerifierWorkspaceResource verifierWorkspace = client.GetVerifierWorkspaceResource(verifierWorkspaceResourceId);
+            ResourceIdentifier networkVerifierWorkspaceResourceId = NetworkVerifierWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, workspaceName);
+            NetworkVerifierWorkspaceResource networkVerifierWorkspace = client.GetNetworkVerifierWorkspaceResource(networkVerifierWorkspaceResourceId);
 
             // get the collection of this ReachabilityAnalysisRunResource
-            ReachabilityAnalysisRunCollection collection = verifierWorkspace.GetReachabilityAnalysisRuns();
+            ReachabilityAnalysisRunCollection collection = networkVerifierWorkspace.GetReachabilityAnalysisRuns();
 
             // invoke the operation and iterate over the result
             await foreach (ReachabilityAnalysisRunResource item in collection.GetAllAsync())
@@ -140,17 +140,17 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this VerifierWorkspaceResource created on azure
-            // for more information of creating VerifierWorkspaceResource, please refer to the document of VerifierWorkspaceResource
+            // this example assumes you already have this NetworkVerifierWorkspaceResource created on azure
+            // for more information of creating NetworkVerifierWorkspaceResource, please refer to the document of NetworkVerifierWorkspaceResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkManagerName = "testNetworkManager";
             string workspaceName = "testWorkspace";
-            ResourceIdentifier verifierWorkspaceResourceId = VerifierWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, workspaceName);
-            VerifierWorkspaceResource verifierWorkspace = client.GetVerifierWorkspaceResource(verifierWorkspaceResourceId);
+            ResourceIdentifier networkVerifierWorkspaceResourceId = NetworkVerifierWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, workspaceName);
+            NetworkVerifierWorkspaceResource networkVerifierWorkspace = client.GetNetworkVerifierWorkspaceResource(networkVerifierWorkspaceResourceId);
 
             // get the collection of this ReachabilityAnalysisRunResource
-            ReachabilityAnalysisRunCollection collection = verifierWorkspace.GetReachabilityAnalysisRuns();
+            ReachabilityAnalysisRunCollection collection = networkVerifierWorkspace.GetReachabilityAnalysisRuns();
 
             // invoke the operation
             string reachabilityAnalysisRunName = "testAnalysisRunName";
@@ -171,17 +171,17 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this VerifierWorkspaceResource created on azure
-            // for more information of creating VerifierWorkspaceResource, please refer to the document of VerifierWorkspaceResource
+            // this example assumes you already have this NetworkVerifierWorkspaceResource created on azure
+            // for more information of creating NetworkVerifierWorkspaceResource, please refer to the document of NetworkVerifierWorkspaceResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkManagerName = "testNetworkManager";
             string workspaceName = "testWorkspace";
-            ResourceIdentifier verifierWorkspaceResourceId = VerifierWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, workspaceName);
-            VerifierWorkspaceResource verifierWorkspace = client.GetVerifierWorkspaceResource(verifierWorkspaceResourceId);
+            ResourceIdentifier networkVerifierWorkspaceResourceId = NetworkVerifierWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, workspaceName);
+            NetworkVerifierWorkspaceResource networkVerifierWorkspace = client.GetNetworkVerifierWorkspaceResource(networkVerifierWorkspaceResourceId);
 
             // get the collection of this ReachabilityAnalysisRunResource
-            ReachabilityAnalysisRunCollection collection = verifierWorkspace.GetReachabilityAnalysisRuns();
+            ReachabilityAnalysisRunCollection collection = networkVerifierWorkspace.GetReachabilityAnalysisRuns();
 
             // invoke the operation
             string reachabilityAnalysisRunName = "testAnalysisRunName";

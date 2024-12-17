@@ -74,7 +74,7 @@ Name = "gwipconfig1",
             {
                 LocalNetworkGateway2 = new LocalNetworkGatewayData
                 {
-                    LocalNetworkAddressSpace = new AddressSpace
+                    LocalNetworkAddressSpace = new VirtualNetworkAddressSpace
                     {
                         AddressPrefixes = { "10.1.0.0/16" },
                     },

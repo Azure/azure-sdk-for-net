@@ -587,11 +587,11 @@ namespace Azure.ResourceManager.Network
             return GetNetworkManagerSecurityUserConfigurations().Get(configurationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VerifierWorkspaceResources in the NetworkManager. </summary>
-        /// <returns> An object representing collection of VerifierWorkspaceResources and their operations over a VerifierWorkspaceResource. </returns>
-        public virtual VerifierWorkspaceCollection GetVerifierWorkspaces()
+        /// <summary> Gets a collection of NetworkVerifierWorkspaceResources in the NetworkManager. </summary>
+        /// <returns> An object representing collection of NetworkVerifierWorkspaceResources and their operations over a NetworkVerifierWorkspaceResource. </returns>
+        public virtual NetworkVerifierWorkspaceCollection GetNetworkVerifierWorkspaces()
         {
-            return GetCachedClient(client => new VerifierWorkspaceCollection(client, Id));
+            return GetCachedClient(client => new NetworkVerifierWorkspaceCollection(client, Id));
         }
 
         /// <summary>
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="VerifierWorkspaceResource"/></description>
+        /// <description><see cref="NetworkVerifierWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -620,9 +620,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<VerifierWorkspaceResource>> GetVerifierWorkspaceAsync(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkVerifierWorkspaceResource>> GetNetworkVerifierWorkspaceAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
-            return await GetVerifierWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkVerifierWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -642,7 +642,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="VerifierWorkspaceResource"/></description>
+        /// <description><see cref="NetworkVerifierWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -651,9 +651,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<VerifierWorkspaceResource> GetVerifierWorkspace(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkVerifierWorkspaceResource> GetNetworkVerifierWorkspace(string workspaceName, CancellationToken cancellationToken = default)
         {
-            return GetVerifierWorkspaces().Get(workspaceName, cancellationToken);
+            return GetNetworkVerifierWorkspaces().Get(workspaceName, cancellationToken);
         }
 
         /// <summary>

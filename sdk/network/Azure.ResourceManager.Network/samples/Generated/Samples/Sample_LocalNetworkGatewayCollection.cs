@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Samples
             string localNetworkGatewayName = "localgw";
             LocalNetworkGatewayData data = new LocalNetworkGatewayData
             {
-                LocalNetworkAddressSpace = new AddressSpace
+                LocalNetworkAddressSpace = new VirtualNetworkAddressSpace
                 {
                     AddressPrefixes = { "10.1.0.0/16" },
                 },

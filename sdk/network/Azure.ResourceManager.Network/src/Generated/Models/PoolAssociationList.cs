@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="PoolAssociationList"/>. </summary>
         internal PoolAssociationList()
         {
-            Value = new ChangeTrackingList<PoolAssociation>();
+            Value = new ChangeTrackingList<IpamPoolAssociation>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PoolAssociationList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PoolAssociationList(IReadOnlyList<PoolAssociation> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PoolAssociationList(IReadOnlyList<IpamPoolAssociation> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<PoolAssociation> Value { get; }
+        public IReadOnlyList<IpamPoolAssociation> Value { get; }
         /// <summary> The link used to get the next page of operations. </summary>
         public string NextLink { get; }
     }

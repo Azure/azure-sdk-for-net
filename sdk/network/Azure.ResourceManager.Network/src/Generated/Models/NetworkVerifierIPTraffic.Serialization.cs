@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class IPTraffic : IUtf8JsonSerializable, IJsonModel<IPTraffic>
+    public partial class NetworkVerifierIPTraffic : IUtf8JsonSerializable, IJsonModel<NetworkVerifierIPTraffic>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IPTraffic>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkVerifierIPTraffic>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<IPTraffic>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetworkVerifierIPTraffic>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPTraffic>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkVerifierIPTraffic>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPTraffic)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkVerifierIPTraffic)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("sourceIps"u8);
@@ -86,19 +86,19 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        IPTraffic IJsonModel<IPTraffic>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NetworkVerifierIPTraffic IJsonModel<NetworkVerifierIPTraffic>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPTraffic>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkVerifierIPTraffic>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPTraffic)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkVerifierIPTraffic)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIPTraffic(document.RootElement, options);
+            return DeserializeNetworkVerifierIPTraffic(document.RootElement, options);
         }
 
-        internal static IPTraffic DeserializeIPTraffic(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NetworkVerifierIPTraffic DeserializeNetworkVerifierIPTraffic(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new IPTraffic(
+            return new NetworkVerifierIPTraffic(
                 sourceIPs,
                 destinationIPs,
                 sourcePorts,
@@ -180,35 +180,35 @@ namespace Azure.ResourceManager.Network.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<IPTraffic>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NetworkVerifierIPTraffic>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPTraffic>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkVerifierIPTraffic>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IPTraffic)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkVerifierIPTraffic)} does not support writing '{options.Format}' format.");
             }
         }
 
-        IPTraffic IPersistableModel<IPTraffic>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NetworkVerifierIPTraffic IPersistableModel<NetworkVerifierIPTraffic>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPTraffic>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkVerifierIPTraffic>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeIPTraffic(document.RootElement, options);
+                        return DeserializeNetworkVerifierIPTraffic(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IPTraffic)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkVerifierIPTraffic)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<IPTraffic>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetworkVerifierIPTraffic>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

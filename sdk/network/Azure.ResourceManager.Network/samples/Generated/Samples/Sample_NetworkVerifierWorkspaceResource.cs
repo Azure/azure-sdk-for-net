@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Samples
 {
-    public partial class Sample_VerifierWorkspaceResource
+    public partial class Sample_NetworkVerifierWorkspaceResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -28,21 +28,21 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this VerifierWorkspaceResource created on azure
-            // for more information of creating VerifierWorkspaceResource, please refer to the document of VerifierWorkspaceResource
+            // this example assumes you already have this NetworkVerifierWorkspaceResource created on azure
+            // for more information of creating NetworkVerifierWorkspaceResource, please refer to the document of NetworkVerifierWorkspaceResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkManagerName = "testNetworkManager";
             string workspaceName = "testWorkspace";
-            ResourceIdentifier verifierWorkspaceResourceId = VerifierWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, workspaceName);
-            VerifierWorkspaceResource verifierWorkspace = client.GetVerifierWorkspaceResource(verifierWorkspaceResourceId);
+            ResourceIdentifier networkVerifierWorkspaceResourceId = NetworkVerifierWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, workspaceName);
+            NetworkVerifierWorkspaceResource networkVerifierWorkspace = client.GetNetworkVerifierWorkspaceResource(networkVerifierWorkspaceResourceId);
 
             // invoke the operation
-            VerifierWorkspaceResource result = await verifierWorkspace.GetAsync();
+            NetworkVerifierWorkspaceResource result = await networkVerifierWorkspace.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            VerifierWorkspaceData resourceData = result.Data;
+            NetworkVerifierWorkspaceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -59,17 +59,17 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this VerifierWorkspaceResource created on azure
-            // for more information of creating VerifierWorkspaceResource, please refer to the document of VerifierWorkspaceResource
+            // this example assumes you already have this NetworkVerifierWorkspaceResource created on azure
+            // for more information of creating NetworkVerifierWorkspaceResource, please refer to the document of NetworkVerifierWorkspaceResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkManagerName = "testNetworkManager";
             string workspaceName = "testWorkspace";
-            ResourceIdentifier verifierWorkspaceResourceId = VerifierWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, workspaceName);
-            VerifierWorkspaceResource verifierWorkspace = client.GetVerifierWorkspaceResource(verifierWorkspaceResourceId);
+            ResourceIdentifier networkVerifierWorkspaceResourceId = NetworkVerifierWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, workspaceName);
+            NetworkVerifierWorkspaceResource networkVerifierWorkspace = client.GetNetworkVerifierWorkspaceResource(networkVerifierWorkspaceResourceId);
 
             // invoke the operation
-            await verifierWorkspace.DeleteAsync(WaitUntil.Completed);
+            await networkVerifierWorkspace.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -86,22 +86,22 @@ namespace Azure.ResourceManager.Network.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this VerifierWorkspaceResource created on azure
-            // for more information of creating VerifierWorkspaceResource, please refer to the document of VerifierWorkspaceResource
+            // this example assumes you already have this NetworkVerifierWorkspaceResource created on azure
+            // for more information of creating NetworkVerifierWorkspaceResource, please refer to the document of NetworkVerifierWorkspaceResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string networkManagerName = "testNetworkManager";
             string workspaceName = "testWorkspace";
-            ResourceIdentifier verifierWorkspaceResourceId = VerifierWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, workspaceName);
-            VerifierWorkspaceResource verifierWorkspace = client.GetVerifierWorkspaceResource(verifierWorkspaceResourceId);
+            ResourceIdentifier networkVerifierWorkspaceResourceId = NetworkVerifierWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, workspaceName);
+            NetworkVerifierWorkspaceResource networkVerifierWorkspace = client.GetNetworkVerifierWorkspaceResource(networkVerifierWorkspaceResourceId);
 
             // invoke the operation
-            VerifierWorkspacePatch patch = new VerifierWorkspacePatch();
-            VerifierWorkspaceResource result = await verifierWorkspace.UpdateAsync(patch);
+            NetworkVerifierWorkspacePatch patch = new NetworkVerifierWorkspacePatch();
+            NetworkVerifierWorkspaceResource result = await networkVerifierWorkspace.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            VerifierWorkspaceData resourceData = result.Data;
+            NetworkVerifierWorkspaceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

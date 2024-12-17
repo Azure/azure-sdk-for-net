@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network
             get
             {
                 if (CustomRoutes is null)
-                    CustomRoutes = new AddressSpace();
+                    CustomRoutes = new VirtualNetworkAddressSpace();
                 return CustomRoutes.AddressPrefixes;
             }
         }

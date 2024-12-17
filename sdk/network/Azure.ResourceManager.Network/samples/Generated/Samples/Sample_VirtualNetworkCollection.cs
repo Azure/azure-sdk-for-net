@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Samples
             string virtualNetworkName = "test-vnet";
             VirtualNetworkData data = new VirtualNetworkData
             {
-                AddressSpace = new AddressSpace
+                AddressSpace = new VirtualNetworkAddressSpace
                 {
                     AddressPrefixes = { "10.0.0.0/16" },
                 },
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network.Samples
             string virtualNetworkName = "test-vnet";
             VirtualNetworkData data = new VirtualNetworkData
             {
-                AddressSpace = new AddressSpace
+                AddressSpace = new VirtualNetworkAddressSpace
                 {
                     AddressPrefixes = { "10.0.0.0/16" },
                 },
@@ -134,7 +134,7 @@ Name = "test-1",
             string virtualNetworkName = "test-vnet";
             VirtualNetworkData data = new VirtualNetworkData
             {
-                AddressSpace = new AddressSpace
+                AddressSpace = new VirtualNetworkAddressSpace
                 {
                     AddressPrefixes = { "10.0.0.0/16" },
                 },
@@ -186,7 +186,7 @@ Name = "test-1",
             string virtualNetworkName = "test-vnet";
             VirtualNetworkData data = new VirtualNetworkData
             {
-                AddressSpace = new AddressSpace
+                AddressSpace = new VirtualNetworkAddressSpace
                 {
                     AddressPrefixes = { "10.0.0.0/16" },
                 },
@@ -237,7 +237,7 @@ Name = "test-1",
             string virtualNetworkName = "test-vnet";
             VirtualNetworkData data = new VirtualNetworkData
             {
-                AddressSpace = new AddressSpace
+                AddressSpace = new VirtualNetworkAddressSpace
                 {
                     IpamPoolPrefixAllocations = {new IpamPoolPrefixAllocation
 {
@@ -292,7 +292,7 @@ Name = "test-1",
             string virtualNetworkName = "vnet1";
             VirtualNetworkData data = new VirtualNetworkData
             {
-                AddressSpace = new AddressSpace
+                AddressSpace = new VirtualNetworkAddressSpace
                 {
                     AddressPrefixes = { "10.0.0.0/16" },
                 },
@@ -343,7 +343,7 @@ Name = "test-1",
             string virtualNetworkName = "vnet1";
             VirtualNetworkData data = new VirtualNetworkData
             {
-                AddressSpace = new AddressSpace
+                AddressSpace = new VirtualNetworkAddressSpace
                 {
                     AddressPrefixes = { "10.0.0.0/16" },
                 },
@@ -398,7 +398,7 @@ Name = "test-1",
             string virtualNetworkName = "test-vnet";
             VirtualNetworkData data = new VirtualNetworkData
             {
-                AddressSpace = new AddressSpace
+                AddressSpace = new VirtualNetworkAddressSpace
                 {
                     AddressPrefixes = { "10.0.0.0/16" },
                 },
@@ -445,7 +445,7 @@ Name = "test-1",
             string virtualNetworkName = "test-vnet";
             VirtualNetworkData data = new VirtualNetworkData
             {
-                AddressSpace = new AddressSpace
+                AddressSpace = new VirtualNetworkAddressSpace
                 {
                     AddressPrefixes = { "10.0.0.0/16" },
                 },

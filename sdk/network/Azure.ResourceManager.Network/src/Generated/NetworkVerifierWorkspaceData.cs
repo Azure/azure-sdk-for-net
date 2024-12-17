@@ -14,10 +14,10 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing the VerifierWorkspace data model.
+    /// A class representing the NetworkVerifierWorkspace data model.
     /// Instance of Verifier Workspace.
     /// </summary>
-    public partial class VerifierWorkspaceData : TrackedResourceData
+    public partial class NetworkVerifierWorkspaceData : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,13 +51,13 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="VerifierWorkspaceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkVerifierWorkspaceData"/>. </summary>
         /// <param name="location"> The location. </param>
-        public VerifierWorkspaceData(AzureLocation location) : base(location)
+        public NetworkVerifierWorkspaceData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VerifierWorkspaceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkVerifierWorkspaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -65,23 +65,19 @@ namespace Azure.ResourceManager.Network
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Properties of Verifier Workspace resource. </param>
-        /// <param name="commonResourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VerifierWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, VerifierWorkspaceProperties properties, string commonResourceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkVerifierWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkVerifierWorkspaceProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
-            CommonResourceType = commonResourceType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VerifierWorkspaceData"/> for deserialization. </summary>
-        internal VerifierWorkspaceData()
+        /// <summary> Initializes a new instance of <see cref="NetworkVerifierWorkspaceData"/> for deserialization. </summary>
+        internal NetworkVerifierWorkspaceData()
         {
         }
 
         /// <summary> Properties of Verifier Workspace resource. </summary>
-        public VerifierWorkspaceProperties Properties { get; set; }
-        /// <summary> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </summary>
-        public string CommonResourceType { get; }
+        public NetworkVerifierWorkspaceProperties Properties { get; set; }
     }
 }

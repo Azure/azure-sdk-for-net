@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VerifierWorkspaceData>> GetAsync(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkVerifierWorkspaceData>> GetAsync(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -239,13 +239,13 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        VerifierWorkspaceData value = default;
+                        NetworkVerifierWorkspaceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VerifierWorkspaceData.DeserializeVerifierWorkspaceData(document.RootElement);
+                        value = NetworkVerifierWorkspaceData.DeserializeNetworkVerifierWorkspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((VerifierWorkspaceData)null, message.Response);
+                    return Response.FromValue((NetworkVerifierWorkspaceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VerifierWorkspaceData> Get(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, CancellationToken cancellationToken = default)
+        public Response<NetworkVerifierWorkspaceData> Get(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -272,19 +272,19 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        VerifierWorkspaceData value = default;
+                        NetworkVerifierWorkspaceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VerifierWorkspaceData.DeserializeVerifierWorkspaceData(document.RootElement);
+                        value = NetworkVerifierWorkspaceData.DeserializeNetworkVerifierWorkspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((VerifierWorkspaceData)null, message.Response);
+                    return Response.FromValue((NetworkVerifierWorkspaceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, VerifierWorkspaceData data)
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, NetworkVerifierWorkspaceData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Network
             return uri;
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, VerifierWorkspaceData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, NetworkVerifierWorkspaceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VerifierWorkspaceData>> CreateAsync(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, VerifierWorkspaceData data, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkVerifierWorkspaceData>> CreateAsync(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, NetworkVerifierWorkspaceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -350,9 +350,9 @@ namespace Azure.ResourceManager.Network
                 case 200:
                 case 201:
                     {
-                        VerifierWorkspaceData value = default;
+                        NetworkVerifierWorkspaceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VerifierWorkspaceData.DeserializeVerifierWorkspaceData(document.RootElement);
+                        value = NetworkVerifierWorkspaceData.DeserializeNetworkVerifierWorkspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VerifierWorkspaceData> Create(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, VerifierWorkspaceData data, CancellationToken cancellationToken = default)
+        public Response<NetworkVerifierWorkspaceData> Create(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, NetworkVerifierWorkspaceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -384,9 +384,9 @@ namespace Azure.ResourceManager.Network
                 case 200:
                 case 201:
                     {
-                        VerifierWorkspaceData value = default;
+                        NetworkVerifierWorkspaceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VerifierWorkspaceData.DeserializeVerifierWorkspaceData(document.RootElement);
+                        value = NetworkVerifierWorkspaceData.DeserializeNetworkVerifierWorkspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, VerifierWorkspacePatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, NetworkVerifierWorkspacePatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.Network
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, VerifierWorkspacePatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, NetworkVerifierWorkspacePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="workspaceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VerifierWorkspaceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, VerifierWorkspacePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkVerifierWorkspaceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, NetworkVerifierWorkspacePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -459,9 +459,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        VerifierWorkspaceData value = default;
+                        NetworkVerifierWorkspaceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VerifierWorkspaceData.DeserializeVerifierWorkspaceData(document.RootElement);
+                        value = NetworkVerifierWorkspaceData.DeserializeNetworkVerifierWorkspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="workspaceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VerifierWorkspaceData> Update(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, VerifierWorkspacePatch patch, CancellationToken cancellationToken = default)
+        public Response<NetworkVerifierWorkspaceData> Update(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, NetworkVerifierWorkspacePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -492,9 +492,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        VerifierWorkspaceData value = default;
+                        NetworkVerifierWorkspaceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VerifierWorkspaceData.DeserializeVerifierWorkspaceData(document.RootElement);
+                        value = NetworkVerifierWorkspaceData.DeserializeNetworkVerifierWorkspaceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

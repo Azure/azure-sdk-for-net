@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network
             get
             {
                 if (LocalAddressSpace is null)
-                    LocalAddressSpace = new AddressSpace();
+                    LocalAddressSpace = new VirtualNetworkAddressSpace();
                 return LocalAddressSpace.AddressPrefixes;
             }
         }
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
             get
             {
                 if (LocalVirtualNetworkAddressSpace is null)
-                    LocalVirtualNetworkAddressSpace = new AddressSpace();
+                    LocalVirtualNetworkAddressSpace = new VirtualNetworkAddressSpace();
                 return LocalVirtualNetworkAddressSpace.AddressPrefixes;
             }
         }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network
             get
             {
                 if (RemoteAddressSpace is null)
-                    RemoteAddressSpace = new AddressSpace();
+                    RemoteAddressSpace = new VirtualNetworkAddressSpace();
                 return RemoteAddressSpace.AddressPrefixes;
             }
         }
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
             get
             {
                 if (RemoteVirtualNetworkAddressSpace is null)
-                    RemoteVirtualNetworkAddressSpace = new AddressSpace();
+                    RemoteVirtualNetworkAddressSpace = new VirtualNetworkAddressSpace();
                 return RemoteVirtualNetworkAddressSpace.AddressPrefixes;
             }
         }

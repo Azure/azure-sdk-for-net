@@ -827,15 +827,15 @@ namespace Azure.ResourceManager.Network.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="VerifierWorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VerifierWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="VerifierWorkspaceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="NetworkVerifierWorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkVerifierWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="NetworkVerifierWorkspaceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VerifierWorkspaceResource"/> object. </returns>
-        public virtual VerifierWorkspaceResource GetVerifierWorkspaceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkVerifierWorkspaceResource"/> object. </returns>
+        public virtual NetworkVerifierWorkspaceResource GetNetworkVerifierWorkspaceResource(ResourceIdentifier id)
         {
-            VerifierWorkspaceResource.ValidateResourceId(id);
-            return new VerifierWorkspaceResource(Client, id);
+            NetworkVerifierWorkspaceResource.ValidateResourceId(id);
+            return new NetworkVerifierWorkspaceResource(Client, id);
         }
 
         /// <summary>

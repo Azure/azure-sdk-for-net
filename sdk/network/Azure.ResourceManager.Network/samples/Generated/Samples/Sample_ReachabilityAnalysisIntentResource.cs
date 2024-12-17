@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network.Samples
             ReachabilityAnalysisIntentResource reachabilityAnalysisIntent = client.GetReachabilityAnalysisIntentResource(reachabilityAnalysisIntentResourceId);
 
             // invoke the operation
-            ReachabilityAnalysisIntentData data = new ReachabilityAnalysisIntentData(new ReachabilityAnalysisIntentProperties(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/testVmSrc"), new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/testVmDest"), new IPTraffic(new string[] { "10.4.0.0" }, new string[] { "10.4.0.1" }, new string[] { "0" }, new string[] { "0" }, new NetworkProtocol[] { NetworkProtocol.Any }))
+            ReachabilityAnalysisIntentData data = new ReachabilityAnalysisIntentData(new ReachabilityAnalysisIntentProperties(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/testVmSrc"), new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/testVmDest"), new NetworkVerifierIPTraffic(new string[] { "10.4.0.0" }, new string[] { "10.4.0.1" }, new string[] { "0" }, new string[] { "0" }, new NetworkProtocol[] { NetworkProtocol.Any }))
             {
                 Description = "A sample reachability analysis intent",
             });

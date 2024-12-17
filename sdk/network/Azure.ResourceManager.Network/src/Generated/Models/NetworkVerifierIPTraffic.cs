@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IP traffic information. </summary>
-    public partial class IPTraffic
+    public partial class NetworkVerifierIPTraffic
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,14 +46,14 @@ namespace Azure.ResourceManager.Network.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="IPTraffic"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkVerifierIPTraffic"/>. </summary>
         /// <param name="sourceIPs"> List of source IP addresses of the traffic.. </param>
         /// <param name="destinationIPs"> List of destination IP addresses of the traffic.. </param>
         /// <param name="sourcePorts"> The source ports of the traffic. </param>
         /// <param name="destinationPorts"> The destination ports of the traffic. </param>
         /// <param name="protocols"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceIPs"/>, <paramref name="destinationIPs"/>, <paramref name="sourcePorts"/>, <paramref name="destinationPorts"/> or <paramref name="protocols"/> is null. </exception>
-        public IPTraffic(IEnumerable<string> sourceIPs, IEnumerable<string> destinationIPs, IEnumerable<string> sourcePorts, IEnumerable<string> destinationPorts, IEnumerable<NetworkProtocol> protocols)
+        public NetworkVerifierIPTraffic(IEnumerable<string> sourceIPs, IEnumerable<string> destinationIPs, IEnumerable<string> sourcePorts, IEnumerable<string> destinationPorts, IEnumerable<NetworkProtocol> protocols)
         {
             Argument.AssertNotNull(sourceIPs, nameof(sourceIPs));
             Argument.AssertNotNull(destinationIPs, nameof(destinationIPs));
@@ -68,14 +68,14 @@ namespace Azure.ResourceManager.Network.Models
             Protocols = protocols.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IPTraffic"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkVerifierIPTraffic"/>. </summary>
         /// <param name="sourceIPs"> List of source IP addresses of the traffic.. </param>
         /// <param name="destinationIPs"> List of destination IP addresses of the traffic.. </param>
         /// <param name="sourcePorts"> The source ports of the traffic. </param>
         /// <param name="destinationPorts"> The destination ports of the traffic. </param>
         /// <param name="protocols"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IPTraffic(IList<string> sourceIPs, IList<string> destinationIPs, IList<string> sourcePorts, IList<string> destinationPorts, IList<NetworkProtocol> protocols, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkVerifierIPTraffic(IList<string> sourceIPs, IList<string> destinationIPs, IList<string> sourcePorts, IList<string> destinationPorts, IList<NetworkProtocol> protocols, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceIPs = sourceIPs;
             DestinationIPs = destinationIPs;
@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.Network.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IPTraffic"/> for deserialization. </summary>
-        internal IPTraffic()
+        /// <summary> Initializes a new instance of <see cref="NetworkVerifierIPTraffic"/> for deserialization. </summary>
+        internal NetworkVerifierIPTraffic()
         {
         }
 

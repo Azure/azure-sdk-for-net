@@ -18,28 +18,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="VerifierWorkspaceResource"/> and their operations.
-    /// Each <see cref="VerifierWorkspaceResource"/> in the collection will belong to the same instance of <see cref="NetworkManagerResource"/>.
-    /// To get a <see cref="VerifierWorkspaceCollection"/> instance call the GetVerifierWorkspaces method from an instance of <see cref="NetworkManagerResource"/>.
+    /// A class representing a collection of <see cref="NetworkVerifierWorkspaceResource"/> and their operations.
+    /// Each <see cref="NetworkVerifierWorkspaceResource"/> in the collection will belong to the same instance of <see cref="NetworkManagerResource"/>.
+    /// To get a <see cref="NetworkVerifierWorkspaceCollection"/> instance call the GetNetworkVerifierWorkspaces method from an instance of <see cref="NetworkManagerResource"/>.
     /// </summary>
-    public partial class VerifierWorkspaceCollection : ArmCollection, IEnumerable<VerifierWorkspaceResource>, IAsyncEnumerable<VerifierWorkspaceResource>
+    public partial class NetworkVerifierWorkspaceCollection : ArmCollection, IEnumerable<NetworkVerifierWorkspaceResource>, IAsyncEnumerable<NetworkVerifierWorkspaceResource>
     {
-        private readonly ClientDiagnostics _verifierWorkspaceClientDiagnostics;
-        private readonly VerifierWorkspacesRestOperations _verifierWorkspaceRestClient;
+        private readonly ClientDiagnostics _networkVerifierWorkspaceVerifierWorkspacesClientDiagnostics;
+        private readonly VerifierWorkspacesRestOperations _networkVerifierWorkspaceVerifierWorkspacesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="VerifierWorkspaceCollection"/> class for mocking. </summary>
-        protected VerifierWorkspaceCollection()
+        /// <summary> Initializes a new instance of the <see cref="NetworkVerifierWorkspaceCollection"/> class for mocking. </summary>
+        protected NetworkVerifierWorkspaceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="VerifierWorkspaceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkVerifierWorkspaceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal VerifierWorkspaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal NetworkVerifierWorkspaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _verifierWorkspaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", VerifierWorkspaceResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(VerifierWorkspaceResource.ResourceType, out string verifierWorkspaceApiVersion);
-            _verifierWorkspaceRestClient = new VerifierWorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, verifierWorkspaceApiVersion);
+            _networkVerifierWorkspaceVerifierWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkVerifierWorkspaceResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(NetworkVerifierWorkspaceResource.ResourceType, out string networkVerifierWorkspaceVerifierWorkspacesApiVersion);
+            _networkVerifierWorkspaceVerifierWorkspacesRestClient = new VerifierWorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkVerifierWorkspaceVerifierWorkspacesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="VerifierWorkspaceResource"/></description>
+        /// <description><see cref="NetworkVerifierWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -78,19 +78,19 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<VerifierWorkspaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string workspaceName, VerifierWorkspaceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkVerifierWorkspaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string workspaceName, NetworkVerifierWorkspaceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _verifierWorkspaceClientDiagnostics.CreateScope("VerifierWorkspaceCollection.CreateOrUpdate");
+            using var scope = _networkVerifierWorkspaceVerifierWorkspacesClientDiagnostics.CreateScope("NetworkVerifierWorkspaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _verifierWorkspaceRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _verifierWorkspaceRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceName, data);
+                var response = await _networkVerifierWorkspaceVerifierWorkspacesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _networkVerifierWorkspaceVerifierWorkspacesRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceName, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new NetworkArmOperation<VerifierWorkspaceResource>(Response.FromValue(new VerifierWorkspaceResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new NetworkArmOperation<NetworkVerifierWorkspaceResource>(Response.FromValue(new NetworkVerifierWorkspaceResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="VerifierWorkspaceResource"/></description>
+        /// <description><see cref="NetworkVerifierWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -129,19 +129,19 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<VerifierWorkspaceResource> CreateOrUpdate(WaitUntil waitUntil, string workspaceName, VerifierWorkspaceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkVerifierWorkspaceResource> CreateOrUpdate(WaitUntil waitUntil, string workspaceName, NetworkVerifierWorkspaceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _verifierWorkspaceClientDiagnostics.CreateScope("VerifierWorkspaceCollection.CreateOrUpdate");
+            using var scope = _networkVerifierWorkspaceVerifierWorkspacesClientDiagnostics.CreateScope("NetworkVerifierWorkspaceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _verifierWorkspaceRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceName, data, cancellationToken);
-                var uri = _verifierWorkspaceRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceName, data);
+                var response = _networkVerifierWorkspaceVerifierWorkspacesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceName, data, cancellationToken);
+                var uri = _networkVerifierWorkspaceVerifierWorkspacesRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceName, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new NetworkArmOperation<VerifierWorkspaceResource>(Response.FromValue(new VerifierWorkspaceResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new NetworkArmOperation<NetworkVerifierWorkspaceResource>(Response.FromValue(new NetworkVerifierWorkspaceResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="VerifierWorkspaceResource"/></description>
+        /// <description><see cref="NetworkVerifierWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,18 +178,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public virtual async Task<Response<VerifierWorkspaceResource>> GetAsync(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkVerifierWorkspaceResource>> GetAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var scope = _verifierWorkspaceClientDiagnostics.CreateScope("VerifierWorkspaceCollection.Get");
+            using var scope = _networkVerifierWorkspaceVerifierWorkspacesClientDiagnostics.CreateScope("NetworkVerifierWorkspaceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _verifierWorkspaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceName, cancellationToken).ConfigureAwait(false);
+                var response = await _networkVerifierWorkspaceVerifierWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VerifierWorkspaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkVerifierWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="VerifierWorkspaceResource"/></description>
+        /// <description><see cref="NetworkVerifierWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,18 +223,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public virtual Response<VerifierWorkspaceResource> Get(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkVerifierWorkspaceResource> Get(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var scope = _verifierWorkspaceClientDiagnostics.CreateScope("VerifierWorkspaceCollection.Get");
+            using var scope = _networkVerifierWorkspaceVerifierWorkspacesClientDiagnostics.CreateScope("NetworkVerifierWorkspaceCollection.Get");
             scope.Start();
             try
             {
-                var response = _verifierWorkspaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceName, cancellationToken);
+                var response = _networkVerifierWorkspaceVerifierWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VerifierWorkspaceResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkVerifierWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="VerifierWorkspaceResource"/></description>
+        /// <description><see cref="NetworkVerifierWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -270,12 +270,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="sortKey"> Optional key by which to sort. </param>
         /// <param name="sortValue"> Optional sort value for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VerifierWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VerifierWorkspaceResource> GetAllAsync(string skipToken = null, int? skip = null, int? top = null, string sortKey = null, string sortValue = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkVerifierWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkVerifierWorkspaceResource> GetAllAsync(string skipToken = null, int? skip = null, int? top = null, string sortKey = null, string sortValue = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _verifierWorkspaceRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, skip, top, sortKey, sortValue);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _verifierWorkspaceRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, skip, top, sortKey, sortValue);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VerifierWorkspaceResource(Client, VerifierWorkspaceData.DeserializeVerifierWorkspaceData(e)), _verifierWorkspaceClientDiagnostics, Pipeline, "VerifierWorkspaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkVerifierWorkspaceVerifierWorkspacesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, skip, top, sortKey, sortValue);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkVerifierWorkspaceVerifierWorkspacesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, skip, top, sortKey, sortValue);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkVerifierWorkspaceResource(Client, NetworkVerifierWorkspaceData.DeserializeNetworkVerifierWorkspaceData(e)), _networkVerifierWorkspaceVerifierWorkspacesClientDiagnostics, Pipeline, "NetworkVerifierWorkspaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="VerifierWorkspaceResource"/></description>
+        /// <description><see cref="NetworkVerifierWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -305,12 +305,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="sortKey"> Optional key by which to sort. </param>
         /// <param name="sortValue"> Optional sort value for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VerifierWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VerifierWorkspaceResource> GetAll(string skipToken = null, int? skip = null, int? top = null, string sortKey = null, string sortValue = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkVerifierWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkVerifierWorkspaceResource> GetAll(string skipToken = null, int? skip = null, int? top = null, string sortKey = null, string sortValue = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _verifierWorkspaceRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, skip, top, sortKey, sortValue);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _verifierWorkspaceRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, skip, top, sortKey, sortValue);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VerifierWorkspaceResource(Client, VerifierWorkspaceData.DeserializeVerifierWorkspaceData(e)), _verifierWorkspaceClientDiagnostics, Pipeline, "VerifierWorkspaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkVerifierWorkspaceVerifierWorkspacesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, skip, top, sortKey, sortValue);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkVerifierWorkspaceVerifierWorkspacesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, skip, top, sortKey, sortValue);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkVerifierWorkspaceResource(Client, NetworkVerifierWorkspaceData.DeserializeNetworkVerifierWorkspaceData(e)), _networkVerifierWorkspaceVerifierWorkspacesClientDiagnostics, Pipeline, "NetworkVerifierWorkspaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="VerifierWorkspaceResource"/></description>
+        /// <description><see cref="NetworkVerifierWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -342,11 +342,11 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var scope = _verifierWorkspaceClientDiagnostics.CreateScope("VerifierWorkspaceCollection.Exists");
+            using var scope = _networkVerifierWorkspaceVerifierWorkspacesClientDiagnostics.CreateScope("NetworkVerifierWorkspaceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _verifierWorkspaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _networkVerifierWorkspaceVerifierWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="VerifierWorkspaceResource"/></description>
+        /// <description><see cref="NetworkVerifierWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -385,11 +385,11 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var scope = _verifierWorkspaceClientDiagnostics.CreateScope("VerifierWorkspaceCollection.Exists");
+            using var scope = _networkVerifierWorkspaceVerifierWorkspacesClientDiagnostics.CreateScope("NetworkVerifierWorkspaceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _verifierWorkspaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceName, cancellationToken: cancellationToken);
+                var response = _networkVerifierWorkspaceVerifierWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="VerifierWorkspaceResource"/></description>
+        /// <description><see cref="NetworkVerifierWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -424,18 +424,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public virtual async Task<NullableResponse<VerifierWorkspaceResource>> GetIfExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<NetworkVerifierWorkspaceResource>> GetIfExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var scope = _verifierWorkspaceClientDiagnostics.CreateScope("VerifierWorkspaceCollection.GetIfExists");
+            using var scope = _networkVerifierWorkspaceVerifierWorkspacesClientDiagnostics.CreateScope("NetworkVerifierWorkspaceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _verifierWorkspaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _networkVerifierWorkspaceVerifierWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<VerifierWorkspaceResource>(response.GetRawResponse());
-                return Response.FromValue(new VerifierWorkspaceResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<NetworkVerifierWorkspaceResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkVerifierWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="VerifierWorkspaceResource"/></description>
+        /// <description><see cref="NetworkVerifierWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -469,18 +469,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
-        public virtual NullableResponse<VerifierWorkspaceResource> GetIfExists(string workspaceName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<NetworkVerifierWorkspaceResource> GetIfExists(string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var scope = _verifierWorkspaceClientDiagnostics.CreateScope("VerifierWorkspaceCollection.GetIfExists");
+            using var scope = _networkVerifierWorkspaceVerifierWorkspacesClientDiagnostics.CreateScope("NetworkVerifierWorkspaceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _verifierWorkspaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceName, cancellationToken: cancellationToken);
+                var response = _networkVerifierWorkspaceVerifierWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<VerifierWorkspaceResource>(response.GetRawResponse());
-                return Response.FromValue(new VerifierWorkspaceResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<NetworkVerifierWorkspaceResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkVerifierWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        IEnumerator<VerifierWorkspaceResource> IEnumerable<VerifierWorkspaceResource>.GetEnumerator()
+        IEnumerator<NetworkVerifierWorkspaceResource> IEnumerable<NetworkVerifierWorkspaceResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.Network
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<VerifierWorkspaceResource> IAsyncEnumerable<VerifierWorkspaceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<NetworkVerifierWorkspaceResource> IAsyncEnumerable<NetworkVerifierWorkspaceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

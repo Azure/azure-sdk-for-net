@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Represents the VerifierWorkspace update API request interface. </summary>
-    public partial class VerifierWorkspacePatch
+    /// <summary> Representation of basic resource information. </summary>
+    public partial class IpamResourceBasics
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,37 +46,26 @@ namespace Azure.ResourceManager.Network.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="VerifierWorkspacePatch"/>. </summary>
-        public VerifierWorkspacePatch()
+        /// <summary> Initializes a new instance of <see cref="IpamResourceBasics"/>. </summary>
+        internal IpamResourceBasics()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            AddressPrefixes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VerifierWorkspacePatch"/>. </summary>
-        /// <param name="tags"> Dictionary of &lt;string&gt;. </param>
-        /// <param name="properties"> Represents the VerifierWorkspace update properties. </param>
+        /// <summary> Initializes a new instance of <see cref="IpamResourceBasics"/>. </summary>
+        /// <param name="resourceId"> ResourceId of the Azure resource. </param>
+        /// <param name="addressPrefixes"> List of IP address prefixes of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VerifierWorkspacePatch(IDictionary<string, string> tags, VerifierWorkspaceUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IpamResourceBasics(ResourceIdentifier resourceId, IReadOnlyList<string> addressPrefixes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Tags = tags;
-            Properties = properties;
+            ResourceId = resourceId;
+            AddressPrefixes = addressPrefixes;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Dictionary of &lt;string&gt;. </summary>
-        public IDictionary<string, string> Tags { get; }
-        /// <summary> Represents the VerifierWorkspace update properties. </summary>
-        internal VerifierWorkspaceUpdateProperties Properties { get; set; }
-        /// <summary> Gets or sets the verifier workspace update description. </summary>
-        public string VerifierWorkspaceUpdateDescription
-        {
-            get => Properties is null ? default : Properties.Description;
-            set
-            {
-                if (Properties is null)
-                    Properties = new VerifierWorkspaceUpdateProperties();
-                Properties.Description = value;
-            }
-        }
+        /// <summary> ResourceId of the Azure resource. </summary>
+        public ResourceIdentifier ResourceId { get; }
+        /// <summary> List of IP address prefixes of the resource. </summary>
+        public IReadOnlyList<string> AddressPrefixes { get; }
     }
 }

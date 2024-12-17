@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A class representing a collection of <see cref="ReachabilityAnalysisIntentResource"/> and their operations.
-    /// Each <see cref="ReachabilityAnalysisIntentResource"/> in the collection will belong to the same instance of <see cref="VerifierWorkspaceResource"/>.
-    /// To get a <see cref="ReachabilityAnalysisIntentCollection"/> instance call the GetReachabilityAnalysisIntents method from an instance of <see cref="VerifierWorkspaceResource"/>.
+    /// Each <see cref="ReachabilityAnalysisIntentResource"/> in the collection will belong to the same instance of <see cref="NetworkVerifierWorkspaceResource"/>.
+    /// To get a <see cref="ReachabilityAnalysisIntentCollection"/> instance call the GetReachabilityAnalysisIntents method from an instance of <see cref="NetworkVerifierWorkspaceResource"/>.
     /// </summary>
     public partial class ReachabilityAnalysisIntentCollection : ArmCollection, IEnumerable<ReachabilityAnalysisIntentResource>, IAsyncEnumerable<ReachabilityAnalysisIntentResource>
     {
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.Network
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != VerifierWorkspaceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, VerifierWorkspaceResource.ResourceType), nameof(id));
+            if (id.ResourceType != NetworkVerifierWorkspaceResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, NetworkVerifierWorkspaceResource.ResourceType), nameof(id));
         }
 
         /// <summary>

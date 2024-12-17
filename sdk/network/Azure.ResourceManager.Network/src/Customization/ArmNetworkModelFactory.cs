@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Network.VirtualNetworkGatewayData"/> instance for mocking. </returns>
         public static VirtualNetworkGatewayData VirtualNetworkGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, ETag? etag, ManagedServiceIdentity identity, VirtualNetworkGatewayAutoScaleBounds autoScaleBounds, IEnumerable<VirtualNetworkGatewayIPConfiguration> ipConfigurations, VirtualNetworkGatewayType? gatewayType, VpnType? vpnType, VpnGatewayGeneration? vpnGatewayGeneration, bool? enableBgp, bool? enablePrivateIPAddress, bool? active, bool? disableIPSecReplayProtection, ResourceIdentifier gatewayDefaultSiteId, VirtualNetworkGatewaySku sku, VpnClientConfiguration vpnClientConfiguration, IEnumerable<VirtualNetworkGatewayPolicyGroup> virtualNetworkGatewayPolicyGroups, BgpSettings bgpSettings, IEnumerable<string> customRoutesAddressPrefixes, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDnsForwarding, string inboundDnsForwardingEndpoint, ResourceIdentifier vNetExtendedLocationResourceId, IEnumerable<VirtualNetworkGatewayNatRuleData> natRules, bool? enableBgpRouteTranslationForNat, bool? allowVirtualWanTraffic, bool? allowRemoteVnetTraffic, ExpressRouteGatewayAdminState? adminState, ExpressRouteGatewayResiliencyModel? resiliencyModel)
             => VirtualNetworkGatewayData(id, name, resourceType, location, tags, extendedLocation, etag, identity, autoScaleBounds, ipConfigurations, gatewayType, vpnType, vpnGatewayGeneration, enableBgp, enablePrivateIPAddress, active, disableIPSecReplayProtection, gatewayDefaultSiteId, sku, vpnClientConfiguration, virtualNetworkGatewayPolicyGroups, bgpSettings, 
-                                         customRoutesAddressPrefixes != null ? new AddressSpace(customRoutesAddressPrefixes?.ToList(), new ChangeTrackingList<IpamPoolPrefixAllocation>(), null) : null,
+                                         customRoutesAddressPrefixes != null ? new VirtualNetworkAddressSpace(customRoutesAddressPrefixes?.ToList(), new ChangeTrackingList<IpamPoolPrefixAllocation>(), null) : null,
                                          resourceGuid, provisioningState, enableDnsForwarding, inboundDnsForwardingEndpoint, vNetExtendedLocationResourceId, natRules, enableBgpRouteTranslationForNat, allowVirtualWanTraffic, allowRemoteVnetTraffic, adminState, resiliencyModel);
 
         /// <summary> Initializes a new instance of NetworkVirtualApplianceConnectionData. </summary>
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static LocalNetworkGatewayData LocalNetworkGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, IEnumerable<string> localNetworkAddressPrefixes, string gatewayIPAddress, string fqdn, BgpSettings bgpSettings, Guid? resourceGuid, NetworkProvisioningState? provisioningState)
             => LocalNetworkGatewayData(id, name, resourceType, location, tags, etag, 
-                                       localNetworkAddressPrefixes != null ? new AddressSpace(localNetworkAddressPrefixes?.ToList(), new ChangeTrackingList<IpamPoolPrefixAllocation>(), null) : null,
+                                       localNetworkAddressPrefixes != null ? new VirtualNetworkAddressSpace(localNetworkAddressPrefixes?.ToList(), new ChangeTrackingList<IpamPoolPrefixAllocation>(), null) : null,
                                        gatewayIPAddress, fqdn, bgpSettings, resourceGuid, provisioningState);
             
         /// <summary> Initializes a new instance of <see cref="Models.InboundSecurityRule"/>. </summary>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Network.VirtualNetworkData"/> instance for mocking. </returns>
         public static VirtualNetworkData VirtualNetworkData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, ETag? etag, IEnumerable<string> addressPrefixes, IEnumerable<string> dhcpOptionsDnsServers, int? flowTimeoutInMinutes, IEnumerable<SubnetData> subnets, IEnumerable<VirtualNetworkPeeringData> virtualNetworkPeerings, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDdosProtection, bool? enableVmProtection, ResourceIdentifier ddosProtectionPlanId, VirtualNetworkBgpCommunities bgpCommunities, VirtualNetworkEncryption encryption, IEnumerable<WritableSubResource> ipAllocations, IEnumerable<FlowLogData> flowLogs, PrivateEndpointVnetPolicy? privateEndpointVnetPolicy)
             => VirtualNetworkData(id, name, resourceType, location, tags, extendedLocation, etag,
-                                  addressPrefixes != null ? new AddressSpace(addressPrefixes?.ToList(), new ChangeTrackingList<IpamPoolPrefixAllocation>(), null) : null,
+                                  addressPrefixes != null ? new VirtualNetworkAddressSpace(addressPrefixes?.ToList(), new ChangeTrackingList<IpamPoolPrefixAllocation>(), null) : null,
                                   dhcpOptionsDnsServers, flowTimeoutInMinutes, subnets, virtualNetworkPeerings, resourceGuid, provisioningState, enableDdosProtection, enableVmProtection, ddosProtectionPlanId, bgpCommunities, encryption, ipAllocations, flowLogs, privateEndpointVnetPolicy);
 
         /// <summary> Initializes a new instance of <see cref="Models.P2SConnectionConfiguration"/>. </summary>
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Models.P2SConnectionConfiguration"/> instance for mocking. </returns>
         public static P2SConnectionConfiguration P2SConnectionConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IEnumerable<string> vpnClientAddressPrefixes, RoutingConfiguration routingConfiguration, bool? enableInternetSecurity, IEnumerable<WritableSubResource> configurationPolicyGroupAssociations, IEnumerable<VpnServerConfigurationPolicyGroupData> previousConfigurationPolicyGroupAssociations, NetworkProvisioningState? provisioningState)
             => P2SConnectionConfiguration(id, name, resourceType, etag,
-                                          vpnClientAddressPrefixes != null ? new AddressSpace(vpnClientAddressPrefixes?.ToList(), new ChangeTrackingList<IpamPoolPrefixAllocation>(), null) : null,
+                                          vpnClientAddressPrefixes != null ? new VirtualNetworkAddressSpace(vpnClientAddressPrefixes?.ToList(), new ChangeTrackingList<IpamPoolPrefixAllocation>(), null) : null,
                                           routingConfiguration, enableInternetSecurity, configurationPolicyGroupAssociations, previousConfigurationPolicyGroupAssociations, provisioningState);
 
         /// <summary> Initializes a new instance of <see cref="Network.VirtualNetworkPeeringData"/>. </summary>
@@ -511,10 +511,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Network.VirtualNetworkPeeringData"/> instance for mocking. </returns>
         public static VirtualNetworkPeeringData VirtualNetworkPeeringData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, bool? allowVirtualNetworkAccess, bool? allowForwardedTraffic, bool? allowGatewayTransit, bool? useRemoteGateways, ResourceIdentifier remoteVirtualNetworkId, IEnumerable<string> localAddressPrefixes, IEnumerable<string> localVirtualNetworkAddressPrefixes, IEnumerable<string> remoteAddressPrefixes, IEnumerable<string> remoteVirtualNetworkAddressPrefixes, VirtualNetworkBgpCommunities remoteBgpCommunities, VirtualNetworkEncryption remoteVirtualNetworkEncryption, VirtualNetworkPeeringState? peeringState, VirtualNetworkPeeringLevel? peeringSyncLevel, NetworkProvisioningState? provisioningState, bool? doNotVerifyRemoteGateways, Guid? resourceGuid, bool? areCompleteVnetsPeered, bool? enableOnlyIPv6Peering, IEnumerable<string> localSubnetNames, IEnumerable<string> remoteSubnetNames)
             => VirtualNetworkPeeringData(id, name, resourceType, etag, allowVirtualNetworkAccess, allowForwardedTraffic, allowGatewayTransit, useRemoteGateways, remoteVirtualNetworkId,
-                                         localAddressPrefixes != null ? new AddressSpace(localAddressPrefixes?.ToList(), new ChangeTrackingList<IpamPoolPrefixAllocation>(), null) : null,
-                                         localVirtualNetworkAddressPrefixes != null ? new AddressSpace(localVirtualNetworkAddressPrefixes?.ToList(), new ChangeTrackingList<IpamPoolPrefixAllocation>(), null) : null,
-                                         remoteAddressPrefixes != null ? new AddressSpace(remoteAddressPrefixes?.ToList(), new ChangeTrackingList<IpamPoolPrefixAllocation>(), null) : null,
-                                         remoteVirtualNetworkAddressPrefixes != null ? new AddressSpace(remoteVirtualNetworkAddressPrefixes?.ToList(), new ChangeTrackingList<IpamPoolPrefixAllocation>(), null) : null,
+                                         localAddressPrefixes != null ? new VirtualNetworkAddressSpace(localAddressPrefixes?.ToList(), new ChangeTrackingList<IpamPoolPrefixAllocation>(), null) : null,
+                                         localVirtualNetworkAddressPrefixes != null ? new VirtualNetworkAddressSpace(localVirtualNetworkAddressPrefixes?.ToList(), new ChangeTrackingList<IpamPoolPrefixAllocation>(), null) : null,
+                                         remoteAddressPrefixes != null ? new VirtualNetworkAddressSpace(remoteAddressPrefixes?.ToList(), new ChangeTrackingList<IpamPoolPrefixAllocation>(), null) : null,
+                                         remoteVirtualNetworkAddressPrefixes != null ? new VirtualNetworkAddressSpace(remoteVirtualNetworkAddressPrefixes?.ToList(), new ChangeTrackingList<IpamPoolPrefixAllocation>(), null) : null,
                                          remoteBgpCommunities, remoteVirtualNetworkEncryption, peeringState, peeringSyncLevel, provisioningState, doNotVerifyRemoteGateways, resourceGuid, areCompleteVnetsPeered, enableOnlyIPv6Peering, localSubnetNames, remoteSubnetNames);
 
         /// <summary> Initializes a new instance of <see cref="Models.VngClientConnectionConfiguration"/>. </summary>
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Models.VngClientConnectionConfiguration"/> instance for mocking. </returns>
         public static VngClientConnectionConfiguration VngClientConnectionConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IEnumerable<string> vpnClientAddressPrefixes, IEnumerable<WritableSubResource> virtualNetworkGatewayPolicyGroups, NetworkProvisioningState? provisioningState)
             => VngClientConnectionConfiguration(id, name, resourceType, etag,
-                                                vpnClientAddressPrefixes != null ? new AddressSpace(vpnClientAddressPrefixes?.ToList(), new ChangeTrackingList<IpamPoolPrefixAllocation>(), null) : null,
+                                                vpnClientAddressPrefixes != null ? new VirtualNetworkAddressSpace(vpnClientAddressPrefixes?.ToList(), new ChangeTrackingList<IpamPoolPrefixAllocation>(), null) : null,
                                                 virtualNetworkGatewayPolicyGroups,
                                                 provisioningState);
 
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Network.VpnSiteData"/> instance for mocking. </returns>
         public static VpnSiteData VpnSiteData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, ResourceIdentifier virtualWanId, DeviceProperties deviceProperties, string ipAddress, string siteKey, IEnumerable<string> addressPrefixes, BgpSettings bgpProperties, NetworkProvisioningState? provisioningState, bool? isSecuritySite, IEnumerable<VpnSiteLinkData> vpnSiteLinks, O365BreakOutCategoryPolicies o365BreakOutCategories)
             => VpnSiteData(id, name, resourceType, location, tags, etag, virtualWanId, deviceProperties, ipAddress, siteKey,
-                           addressPrefixes != null ? new AddressSpace(addressPrefixes?.ToList(), new ChangeTrackingList<IpamPoolPrefixAllocation>(), null) : null,
+                           addressPrefixes != null ? new VirtualNetworkAddressSpace(addressPrefixes?.ToList(), new ChangeTrackingList<IpamPoolPrefixAllocation>(), null) : null,
                            bgpProperties, provisioningState, isSecuritySite, vpnSiteLinks, o365BreakOutCategories);
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.VirtualNetworkData" />. </summary>

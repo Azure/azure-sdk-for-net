@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Samples
             VpnSiteData data = new VpnSiteData
             {
                 VirtualWanId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualWANs/wan1"),
-                AddressSpace = new AddressSpace
+                AddressSpace = new VirtualNetworkAddressSpace
                 {
                     AddressPrefixes = { "10.0.0.0/16" },
                 },

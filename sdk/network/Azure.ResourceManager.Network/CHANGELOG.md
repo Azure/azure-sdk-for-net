@@ -327,7 +327,7 @@ networkClient.SubscriptionId = subscriptionId;
 var vnet = new VirtualNetwork()
 {
     Location = "westus",
-    AddressSpace = new AddressSpace() { AddressPrefixes = new List<string>() { "10.0.0.0/16" } },
+    AddressSpace = new VirtualNetworkAddressSpace() { AddressPrefixes = new List<string>() { "10.0.0.0/16" } },
     Subnets = new List<Subnet>()
     {
         new Subnet()

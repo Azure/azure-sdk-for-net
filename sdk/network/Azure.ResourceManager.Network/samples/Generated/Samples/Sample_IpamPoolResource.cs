@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network.Samples
             IpamPoolResource ipamPool = client.GetIpamPoolResource(ipamPoolResourceId);
 
             // invoke the operation
-            PoolUsage result = await ipamPool.GetPoolUsageAsync();
+            IpamPoolUsage result = await ipamPool.GetPoolUsageAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Network.Samples
             IpamPoolResource ipamPool = client.GetIpamPoolResource(ipamPoolResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (PoolAssociation item in ipamPool.GetAssociatedResourcesAsync())
+            await foreach (IpamPoolAssociation item in ipamPool.GetAssociatedResourcesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

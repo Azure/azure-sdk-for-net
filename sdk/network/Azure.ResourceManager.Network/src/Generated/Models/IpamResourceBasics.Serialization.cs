@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ResourceBasics : IUtf8JsonSerializable, IJsonModel<ResourceBasics>
+    public partial class IpamResourceBasics : IUtf8JsonSerializable, IJsonModel<IpamResourceBasics>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceBasics>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IpamResourceBasics>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ResourceBasics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IpamResourceBasics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceBasics>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IpamResourceBasics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceBasics)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IpamResourceBasics)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(ResourceId))
@@ -66,19 +66,19 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        ResourceBasics IJsonModel<ResourceBasics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        IpamResourceBasics IJsonModel<IpamResourceBasics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceBasics>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IpamResourceBasics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceBasics)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IpamResourceBasics)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResourceBasics(document.RootElement, options);
+            return DeserializeIpamResourceBasics(document.RootElement, options);
         }
 
-        internal static ResourceBasics DeserializeResourceBasics(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static IpamResourceBasics DeserializeIpamResourceBasics(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -121,38 +121,38 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ResourceBasics(resourceId, addressPrefixes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new IpamResourceBasics(resourceId, addressPrefixes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ResourceBasics>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<IpamResourceBasics>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceBasics>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IpamResourceBasics>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceBasics)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IpamResourceBasics)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ResourceBasics IPersistableModel<ResourceBasics>.Create(BinaryData data, ModelReaderWriterOptions options)
+        IpamResourceBasics IPersistableModel<IpamResourceBasics>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceBasics>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IpamResourceBasics>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeResourceBasics(document.RootElement, options);
+                        return DeserializeIpamResourceBasics(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceBasics)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IpamResourceBasics)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ResourceBasics>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IpamResourceBasics>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

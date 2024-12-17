@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            IReadOnlyList<PoolAssociation> value = default;
+            IReadOnlyList<IpamPoolAssociation> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<PoolAssociation> array = new List<PoolAssociation>();
+                    List<IpamPoolAssociation> array = new List<IpamPoolAssociation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PoolAssociation.DeserializePoolAssociation(item, options));
+                        array.Add(IpamPoolAssociation.DeserializeIpamPoolAssociation(item, options));
                     }
                     value = array;
                     continue;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PoolAssociationList(value ?? new ChangeTrackingList<PoolAssociation>(), nextLink, serializedAdditionalRawData);
+            return new PoolAssociationList(value ?? new ChangeTrackingList<IpamPoolAssociation>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PoolAssociationList>.Write(ModelReaderWriterOptions options)

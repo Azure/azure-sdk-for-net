@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Intent information. </summary>
-    public partial class IntentContent
+    public partial class AnalysisRunIntentContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.Network.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="IntentContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalysisRunIntentContent"/>. </summary>
         /// <param name="sourceResourceId"> Source resource id of the intent. </param>
         /// <param name="destinationResourceId"> Destination resource id of the intent. </param>
         /// <param name="ipTraffic"> IP traffic information. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceResourceId"/>, <paramref name="destinationResourceId"/> or <paramref name="ipTraffic"/> is null. </exception>
-        internal IntentContent(ResourceIdentifier sourceResourceId, ResourceIdentifier destinationResourceId, IPTraffic ipTraffic)
+        internal AnalysisRunIntentContent(ResourceIdentifier sourceResourceId, ResourceIdentifier destinationResourceId, NetworkVerifierIPTraffic ipTraffic)
         {
             Argument.AssertNotNull(sourceResourceId, nameof(sourceResourceId));
             Argument.AssertNotNull(destinationResourceId, nameof(destinationResourceId));
@@ -62,13 +62,13 @@ namespace Azure.ResourceManager.Network.Models
             IPTraffic = ipTraffic;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IntentContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalysisRunIntentContent"/>. </summary>
         /// <param name="description"></param>
         /// <param name="sourceResourceId"> Source resource id of the intent. </param>
         /// <param name="destinationResourceId"> Destination resource id of the intent. </param>
         /// <param name="ipTraffic"> IP traffic information. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IntentContent(string description, ResourceIdentifier sourceResourceId, ResourceIdentifier destinationResourceId, IPTraffic ipTraffic, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AnalysisRunIntentContent(string description, ResourceIdentifier sourceResourceId, ResourceIdentifier destinationResourceId, NetworkVerifierIPTraffic ipTraffic, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             SourceResourceId = sourceResourceId;
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.Network.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IntentContent"/> for deserialization. </summary>
-        internal IntentContent()
+        /// <summary> Initializes a new instance of <see cref="AnalysisRunIntentContent"/> for deserialization. </summary>
+        internal AnalysisRunIntentContent()
         {
         }
 
@@ -89,6 +89,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Destination resource id of the intent. </summary>
         public ResourceIdentifier DestinationResourceId { get; }
         /// <summary> IP traffic information. </summary>
-        public IPTraffic IPTraffic { get; }
+        public NetworkVerifierIPTraffic IPTraffic { get; }
     }
 }

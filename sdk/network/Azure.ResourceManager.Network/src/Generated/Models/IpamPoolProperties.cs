@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             Argument.AssertNotNull(addressPrefixes, nameof(addressPrefixes));
 
-            IPAddressType = new ChangeTrackingList<IPType>();
+            IPAddressType = new ChangeTrackingList<IpamIPType>();
             AddressPrefixes = addressPrefixes.ToList();
         }
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="addressPrefixes"> List of IP address prefixes of the resource. </param>
         /// <param name="provisioningState"> Provisioning states of a resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IpamPoolProperties(string description, string displayName, IReadOnlyList<IPType> ipAddressType, string parentPoolName, IList<string> addressPrefixes, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IpamPoolProperties(string description, string displayName, IReadOnlyList<IpamIPType> ipAddressType, string parentPoolName, IList<string> addressPrefixes, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             DisplayName = displayName;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> String representing a friendly name for the resource. </summary>
         public string DisplayName { get; set; }
         /// <summary> List of IP address type for the IpamPool. </summary>
-        public IReadOnlyList<IPType> IPAddressType { get; }
+        public IReadOnlyList<IpamIPType> IPAddressType { get; }
         /// <summary> String representing parent IpamPool resource name. If empty the IpamPool will be a root pool. </summary>
         public string ParentPoolName { get; set; }
         /// <summary> List of IP address prefixes of the resource. </summary>

@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PoolUsage>> GetPoolUsageAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IpamPoolUsage>> GetPoolUsageAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _ipamPoolClientDiagnostics.CreateScope("IpamPoolResource.GetPoolUsage");
             scope.Start();
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PoolUsage> GetPoolUsage(CancellationToken cancellationToken = default)
+        public virtual Response<IpamPoolUsage> GetPoolUsage(CancellationToken cancellationToken = default)
         {
             using var scope = _ipamPoolClientDiagnostics.CreateScope("IpamPoolResource.GetPoolUsage");
             scope.Start();
@@ -506,12 +506,12 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PoolAssociation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PoolAssociation> GetAssociatedResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="IpamPoolAssociation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<IpamPoolAssociation> GetAssociatedResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _ipamPoolRestClient.CreateListAssociatedResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _ipamPoolRestClient.CreateListAssociatedResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PoolAssociation.DeserializePoolAssociation(e), _ipamPoolClientDiagnostics, Pipeline, "IpamPoolResource.GetAssociatedResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => IpamPoolAssociation.DeserializeIpamPoolAssociation(e), _ipamPoolClientDiagnostics, Pipeline, "IpamPoolResource.GetAssociatedResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -536,12 +536,12 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PoolAssociation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PoolAssociation> GetAssociatedResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IpamPoolAssociation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<IpamPoolAssociation> GetAssociatedResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _ipamPoolRestClient.CreateListAssociatedResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _ipamPoolRestClient.CreateListAssociatedResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PoolAssociation.DeserializePoolAssociation(e), _ipamPoolClientDiagnostics, Pipeline, "IpamPoolResource.GetAssociatedResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => IpamPoolAssociation.DeserializeIpamPoolAssociation(e), _ipamPoolClientDiagnostics, Pipeline, "IpamPoolResource.GetAssociatedResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

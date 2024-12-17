@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network.Models
             string description = default;
             ResourceIdentifier sourceResourceId = default;
             ResourceIdentifier destinationResourceId = default;
-            IPTraffic ipTraffic = default;
+            NetworkVerifierIPTraffic ipTraffic = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("ipTraffic"u8))
                 {
-                    ipTraffic = IPTraffic.DeserializeIPTraffic(property.Value, options);
+                    ipTraffic = NetworkVerifierIPTraffic.DeserializeNetworkVerifierIPTraffic(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

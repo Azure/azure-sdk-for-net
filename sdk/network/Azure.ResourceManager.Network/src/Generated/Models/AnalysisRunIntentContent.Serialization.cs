@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class IntentContent : IUtf8JsonSerializable, IJsonModel<IntentContent>
+    public partial class AnalysisRunIntentContent : IUtf8JsonSerializable, IJsonModel<AnalysisRunIntentContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntentContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalysisRunIntentContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<IntentContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AnalysisRunIntentContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IntentContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AnalysisRunIntentContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntentContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalysisRunIntentContent)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Description))
@@ -62,19 +62,19 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        IntentContent IJsonModel<IntentContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AnalysisRunIntentContent IJsonModel<AnalysisRunIntentContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IntentContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AnalysisRunIntentContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntentContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalysisRunIntentContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIntentContent(document.RootElement, options);
+            return DeserializeAnalysisRunIntentContent(document.RootElement, options);
         }
 
-        internal static IntentContent DeserializeIntentContent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AnalysisRunIntentContent DeserializeAnalysisRunIntentContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network.Models
             string description = default;
             ResourceIdentifier sourceResourceId = default;
             ResourceIdentifier destinationResourceId = default;
-            IPTraffic ipTraffic = default;
+            NetworkVerifierIPTraffic ipTraffic = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("ipTraffic"u8))
                 {
-                    ipTraffic = IPTraffic.DeserializeIPTraffic(property.Value, options);
+                    ipTraffic = NetworkVerifierIPTraffic.DeserializeNetworkVerifierIPTraffic(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -116,38 +116,38 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new IntentContent(description, sourceResourceId, destinationResourceId, ipTraffic, serializedAdditionalRawData);
+            return new AnalysisRunIntentContent(description, sourceResourceId, destinationResourceId, ipTraffic, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<IntentContent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AnalysisRunIntentContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IntentContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AnalysisRunIntentContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IntentContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalysisRunIntentContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        IntentContent IPersistableModel<IntentContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AnalysisRunIntentContent IPersistableModel<AnalysisRunIntentContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IntentContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AnalysisRunIntentContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeIntentContent(document.RootElement, options);
+                        return DeserializeAnalysisRunIntentContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IntentContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalysisRunIntentContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<IntentContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AnalysisRunIntentContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

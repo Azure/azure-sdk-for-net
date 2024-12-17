@@ -12,9 +12,9 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class IListFailoverDetailsOperationSource : IOperationSource<IList<ExpressRouteFailoverTestDetails>>
+    internal class IListFailoverTestDetailsOperationSource : IOperationSource<IList<ExpressRouteFailoverTestDetails>>
     {
-        // Remove until https://github.com/Azure/azure-sdk-for-net/issues/47572 fixed
+        // Remove this file until https://github.com/Azure/azure-sdk-for-net/issues/47572 fixed
         IList<ExpressRouteFailoverTestDetails> IOperationSource<IList<ExpressRouteFailoverTestDetails>>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);

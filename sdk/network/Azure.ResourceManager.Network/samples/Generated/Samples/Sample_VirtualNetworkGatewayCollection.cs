@@ -77,7 +77,7 @@ RadiusServerSecret = "radiusServerSecret",
                     BgpPeeringAddress = "10.0.1.30",
                     PeerWeight = 0,
                 },
-                CustomRoutes = new AddressSpace
+                CustomRoutes = new VirtualNetworkAddressSpace
                 {
                     AddressPrefixes = { "101.168.0.6/32" },
                 },

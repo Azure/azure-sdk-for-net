@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IpamPool usage information. </summary>
-    public partial class PoolUsage
+    public partial class IpamPoolUsage
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.Network.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PoolUsage"/>. </summary>
-        internal PoolUsage()
+        /// <summary> Initializes a new instance of <see cref="IpamPoolUsage"/>. </summary>
+        internal IpamPoolUsage()
         {
             AddressPrefixes = new ChangeTrackingList<string>();
-            ChildPools = new ChangeTrackingList<ResourceBasics>();
+            ChildPools = new ChangeTrackingList<IpamResourceBasics>();
             AllocatedAddressPrefixes = new ChangeTrackingList<string>();
             ReservedAddressPrefixes = new ChangeTrackingList<string>();
             AvailableAddressPrefixes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PoolUsage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IpamPoolUsage"/>. </summary>
         /// <param name="addressPrefixes"> List of IP address prefixes of the resource. </param>
         /// <param name="childPools"> List of IpamPool that are children of this IpamPool. </param>
         /// <param name="allocatedAddressPrefixes"> List of assigned IP address prefixes. </param>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="numberOfReservedIPAddresses"> Total number of reserved IP addresses in the IpamPool. </param>
         /// <param name="numberOfAvailableIPAddresses"> Total number of available IP addresses in the IpamPool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PoolUsage(IReadOnlyList<string> addressPrefixes, IReadOnlyList<ResourceBasics> childPools, IReadOnlyList<string> allocatedAddressPrefixes, IReadOnlyList<string> reservedAddressPrefixes, IReadOnlyList<string> availableAddressPrefixes, string totalNumberOfIPAddresses, string numberOfAllocatedIPAddresses, string numberOfReservedIPAddresses, string numberOfAvailableIPAddresses, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IpamPoolUsage(IReadOnlyList<string> addressPrefixes, IReadOnlyList<IpamResourceBasics> childPools, IReadOnlyList<string> allocatedAddressPrefixes, IReadOnlyList<string> reservedAddressPrefixes, IReadOnlyList<string> availableAddressPrefixes, string totalNumberOfIPAddresses, string numberOfAllocatedIPAddresses, string numberOfReservedIPAddresses, string numberOfAvailableIPAddresses, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AddressPrefixes = addressPrefixes;
             ChildPools = childPools;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> List of IP address prefixes of the resource. </summary>
         public IReadOnlyList<string> AddressPrefixes { get; }
         /// <summary> List of IpamPool that are children of this IpamPool. </summary>
-        public IReadOnlyList<ResourceBasics> ChildPools { get; }
+        public IReadOnlyList<IpamResourceBasics> ChildPools { get; }
         /// <summary> List of assigned IP address prefixes. </summary>
         public IReadOnlyList<string> AllocatedAddressPrefixes { get; }
         /// <summary> List of reserved IP address prefixes. These IP addresses could be reclaimed if not assigned in the given time. </summary>

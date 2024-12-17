@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Properties of Verifier Workspace resource. </summary>
-    public partial class VerifierWorkspaceProperties
+    public partial class NetworkVerifierWorkspaceProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.Network.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="VerifierWorkspaceProperties"/>. </summary>
-        public VerifierWorkspaceProperties()
+        /// <summary> Initializes a new instance of <see cref="NetworkVerifierWorkspaceProperties"/>. </summary>
+        public NetworkVerifierWorkspaceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VerifierWorkspaceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkVerifierWorkspaceProperties"/>. </summary>
         /// <param name="description"></param>
         /// <param name="provisioningState"> Provisioning states of a resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VerifierWorkspaceProperties(string description, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkVerifierWorkspaceProperties(string description, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             ProvisioningState = provisioningState;

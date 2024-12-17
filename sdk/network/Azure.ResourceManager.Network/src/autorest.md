@@ -44,6 +44,7 @@ rename-mapping:
   ActiveConfigurationParameter: ActiveConfigurationContent
   ActiveConnectivityConfiguration.commitTime: CommittedOn
   ActiveConnectivityConfiguration.region: -|azure-location
+  AddressSpace: VirtualNetworkAddressSpace 
   AdminRule: NetworkAdminRule
   AdminRuleCollection: AdminRuleGroup
   AdminRuleCollectionListResult: AdminRuleGroupListResult
@@ -114,6 +115,7 @@ rename-mapping:
   IdpsQueryObject: IdpsQueryContent
   InboundNatPool: LoadBalancerInboundNatPool
   InboundNatPoolPropertiesFormat: LoadBalancerInboundNatPoolProperties
+  IntentContent: AnalysisRunIntentContent
   IpAllocation.properties.type: IPAllocationType
   IpAllocationListResult: NetworkIPAllocationListResult
   IPAllocationMethod: NetworkIPAllocationMethod
@@ -124,6 +126,8 @@ rename-mapping:
   IPConfigurationProfile: NetworkIPConfigurationProfile
   IPPrefixesList: LearnedIPPrefixesListResult
   IPRule: BastionHostIPRule
+  IPTraffic: NetworkVerifierIPTraffic
+  IpType: IpamIPType
   IPVersion: NetworkIPVersion
   IsGlobal: GlobalMeshSupportFlag
   IssueType: ConnectivityIssueType
@@ -142,6 +146,8 @@ rename-mapping:
   PacketCaptureResult.properties.continuousCapture: IsContinuousCapture
   PacketCaptureResult: PacketCapture
   Parameter: RouteMapActionParameter
+  PoolAssociation: IpamPoolAssociation
+  PoolUsage: IpamPoolUsage
   PreferredIPVersion: TestEvalPreferredIPVersion
   PrivateEndpointIPConfiguration.properties.privateIPAddress: -|ip-address
   PrivateEndpointVNetPolicies: PrivateEndpointVnetPolicies
@@ -158,6 +164,7 @@ rename-mapping:
   QueryResults: IdpsSignatureListResult
   ResiliencyModel: ExpressRouteGatewayResiliencyModel
   Resource: NetworkTrackedResourceData
+  ResourceBasics: IpamResourceBasics
   RoutingRule: NetworkManagerRoutingRule
   RoutingRuleCollection: NetworkManagerRoutingRules
   SecurityUserConfiguration: NetworkManagerSecurityUserConfiguration
@@ -197,6 +204,8 @@ rename-mapping:
   UsagesListResult: NetworkUsagesListResult
   UsageUnit: NetworkUsageUnit
   UseHubGateway: HubGatewayUsageFlag
+  VerifierWorkspace: NetworkVerifierWorkspace
+  VerifierWorkspaceProperties: NetworkVerifierWorkspaceProperties
   VirtualApplianceIPConfigurationProperties.primary: IsPrimary
   VirtualNetwork.properties.privateEndpointVNetPolicies: PrivateEndpointVnetPolicy
   VirtualNetworkEncryption.enabled: IsEnabled
@@ -636,5 +645,10 @@ directive:
   #     {
   #         delete $[param];
   #     }
-
+  
+  # Remove the format of id which break current type replacement logic, issue https://github.com/Azure/azure-sdk-for-net/issues/47589 opened to track this requirement.
+  - from: network.json
+    where: $.definitions
+    transform: >
+      delete $.CommonResource.properties.id.format;
 ```

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
             get
             {
                 if (VpnClientAddressPool is null)
-                    VpnClientAddressPool = new AddressSpace();
+                    VpnClientAddressPool = new VirtualNetworkAddressSpace();
                 return VpnClientAddressPool.AddressPrefixes;
             }
         }

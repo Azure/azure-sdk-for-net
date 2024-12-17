@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="errorMessage"></param>
         /// <param name="provisioningState"> Provisioning states of a resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReachabilityAnalysisRunProperties(string description, string intentId, IntentContent intentContent, string analysisResult, string errorMessage, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ReachabilityAnalysisRunProperties(string description, string intentId, AnalysisRunIntentContent intentContent, string analysisResult, string errorMessage, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             IntentId = intentId;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Id of the intent resource to run analysis on. </summary>
         public string IntentId { get; set; }
         /// <summary> Intent information. </summary>
-        public IntentContent IntentContent { get; }
+        public AnalysisRunIntentContent IntentContent { get; }
         /// <summary> Gets the analysis result. </summary>
         public string AnalysisResult { get; }
         /// <summary> Gets the error message. </summary>

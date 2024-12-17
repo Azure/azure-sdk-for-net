@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             string description = default;
             string intentId = default;
-            IntentContent intentContent = default;
+            AnalysisRunIntentContent intentContent = default;
             string analysisResult = default;
             string errorMessage = default;
             NetworkProvisioningState? provisioningState = default;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    intentContent = IntentContent.DeserializeIntentContent(property.Value, options);
+                    intentContent = AnalysisRunIntentContent.DeserializeAnalysisRunIntentContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("analysisResult"u8))

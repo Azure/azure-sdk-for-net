@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PoolUsage : IUtf8JsonSerializable, IJsonModel<PoolUsage>
+    public partial class IpamPoolUsage : IUtf8JsonSerializable, IJsonModel<IpamPoolUsage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PoolUsage>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IpamPoolUsage>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<PoolUsage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IpamPoolUsage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PoolUsage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IpamPoolUsage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PoolUsage)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IpamPoolUsage)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && Optional.IsCollectionDefined(AddressPrefixes))
@@ -121,19 +121,19 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        PoolUsage IJsonModel<PoolUsage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        IpamPoolUsage IJsonModel<IpamPoolUsage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PoolUsage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IpamPoolUsage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PoolUsage)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IpamPoolUsage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePoolUsage(document.RootElement, options);
+            return DeserializeIpamPoolUsage(document.RootElement, options);
         }
 
-        internal static PoolUsage DeserializePoolUsage(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static IpamPoolUsage DeserializeIpamPoolUsage(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             IReadOnlyList<string> addressPrefixes = default;
-            IReadOnlyList<ResourceBasics> childPools = default;
+            IReadOnlyList<IpamResourceBasics> childPools = default;
             IReadOnlyList<string> allocatedAddressPrefixes = default;
             IReadOnlyList<string> reservedAddressPrefixes = default;
             IReadOnlyList<string> availableAddressPrefixes = default;
@@ -174,10 +174,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<ResourceBasics> array = new List<ResourceBasics>();
+                    List<IpamResourceBasics> array = new List<IpamResourceBasics>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceBasics.DeserializeResourceBasics(item, options));
+                        array.Add(IpamResourceBasics.DeserializeIpamResourceBasics(item, options));
                     }
                     childPools = array;
                     continue;
@@ -250,9 +250,9 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PoolUsage(
+            return new IpamPoolUsage(
                 addressPrefixes ?? new ChangeTrackingList<string>(),
-                childPools ?? new ChangeTrackingList<ResourceBasics>(),
+                childPools ?? new ChangeTrackingList<IpamResourceBasics>(),
                 allocatedAddressPrefixes ?? new ChangeTrackingList<string>(),
                 reservedAddressPrefixes ?? new ChangeTrackingList<string>(),
                 availableAddressPrefixes ?? new ChangeTrackingList<string>(),
@@ -263,35 +263,35 @@ namespace Azure.ResourceManager.Network.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<PoolUsage>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<IpamPoolUsage>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PoolUsage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IpamPoolUsage>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PoolUsage)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IpamPoolUsage)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PoolUsage IPersistableModel<PoolUsage>.Create(BinaryData data, ModelReaderWriterOptions options)
+        IpamPoolUsage IPersistableModel<IpamPoolUsage>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PoolUsage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IpamPoolUsage>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializePoolUsage(document.RootElement, options);
+                        return DeserializeIpamPoolUsage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PoolUsage)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IpamPoolUsage)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PoolUsage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IpamPoolUsage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

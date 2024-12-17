@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IpamPool association information. </summary>
-    public partial class PoolAssociation
+    public partial class IpamPoolAssociation
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.Network.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PoolAssociation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IpamPoolAssociation"/>. </summary>
         /// <param name="resourceId"> Resource id of the associated Azure resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        internal PoolAssociation(ResourceIdentifier resourceId)
+        internal IpamPoolAssociation(ResourceIdentifier resourceId)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Models
             ReservedPrefixes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PoolAssociation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IpamPoolAssociation"/>. </summary>
         /// <param name="resourceId"> Resource id of the associated Azure resource. </param>
         /// <param name="poolId"> IpamPool id for which the resource is associated to. </param>
         /// <param name="description"></param>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="createdOn"> Creation time of the association. </param>
         /// <param name="reservationExpiresOn"> Expire time for IP addresses reserved. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PoolAssociation(ResourceIdentifier resourceId, ResourceIdentifier poolId, string description, IReadOnlyList<string> addressPrefixes, IReadOnlyList<string> reservedPrefixes, string totalNumberOfIPAddresses, string numberOfReservedIPAddresses, DateTimeOffset? createdOn, DateTimeOffset? reservationExpiresOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IpamPoolAssociation(ResourceIdentifier resourceId, ResourceIdentifier poolId, string description, IReadOnlyList<string> addressPrefixes, IReadOnlyList<string> reservedPrefixes, string totalNumberOfIPAddresses, string numberOfReservedIPAddresses, DateTimeOffset? createdOn, DateTimeOffset? reservationExpiresOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             PoolId = poolId;
@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.Network.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PoolAssociation"/> for deserialization. </summary>
-        internal PoolAssociation()
+        /// <summary> Initializes a new instance of <see cref="IpamPoolAssociation"/> for deserialization. </summary>
+        internal IpamPoolAssociation()
         {
         }
 

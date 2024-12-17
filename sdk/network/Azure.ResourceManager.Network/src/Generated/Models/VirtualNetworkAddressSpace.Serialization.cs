@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class AddressSpace : IUtf8JsonSerializable, IJsonModel<AddressSpace>
+    public partial class VirtualNetworkAddressSpace : IUtf8JsonSerializable, IJsonModel<VirtualNetworkAddressSpace>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AddressSpace>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualNetworkAddressSpace>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AddressSpace>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VirtualNetworkAddressSpace>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AddressSpace>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkAddressSpace>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AddressSpace)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkAddressSpace)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsCollectionDefined(AddressPrefixes))
@@ -71,19 +71,19 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        AddressSpace IJsonModel<AddressSpace>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        VirtualNetworkAddressSpace IJsonModel<VirtualNetworkAddressSpace>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AddressSpace>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkAddressSpace>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AddressSpace)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkAddressSpace)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAddressSpace(document.RootElement, options);
+            return DeserializeVirtualNetworkAddressSpace(document.RootElement, options);
         }
 
-        internal static AddressSpace DeserializeAddressSpace(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static VirtualNetworkAddressSpace DeserializeVirtualNetworkAddressSpace(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -131,38 +131,38 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AddressSpace(addressPrefixes ?? new ChangeTrackingList<string>(), ipamPoolPrefixAllocations ?? new ChangeTrackingList<IpamPoolPrefixAllocation>(), serializedAdditionalRawData);
+            return new VirtualNetworkAddressSpace(addressPrefixes ?? new ChangeTrackingList<string>(), ipamPoolPrefixAllocations ?? new ChangeTrackingList<IpamPoolPrefixAllocation>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AddressSpace>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<VirtualNetworkAddressSpace>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AddressSpace>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkAddressSpace>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AddressSpace)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkAddressSpace)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AddressSpace IPersistableModel<AddressSpace>.Create(BinaryData data, ModelReaderWriterOptions options)
+        VirtualNetworkAddressSpace IPersistableModel<VirtualNetworkAddressSpace>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AddressSpace>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkAddressSpace>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAddressSpace(document.RootElement, options);
+                        return DeserializeVirtualNetworkAddressSpace(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AddressSpace)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkAddressSpace)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AddressSpace>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VirtualNetworkAddressSpace>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             string description = default;
             string displayName = default;
-            IReadOnlyList<IPType> ipAddressType = default;
+            IReadOnlyList<IpamIPType> ipAddressType = default;
             string parentPoolName = default;
             IList<string> addressPrefixes = default;
             NetworkProvisioningState? provisioningState = default;
@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<IPType> array = new List<IPType>();
+                    List<IpamIPType> array = new List<IpamIPType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new IPType(item.GetString()));
+                        array.Add(new IpamIPType(item.GetString()));
                     }
                     ipAddressType = array;
                     continue;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Network.Models
             return new IpamPoolProperties(
                 description,
                 displayName,
-                ipAddressType ?? new ChangeTrackingList<IPType>(),
+                ipAddressType ?? new ChangeTrackingList<IpamIPType>(),
                 parentPoolName,
                 addressPrefixes,
                 provisioningState,

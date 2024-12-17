@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Samples
 {
-    public partial class Sample_VerifierWorkspaceCollection
+    public partial class Sample_NetworkVerifierWorkspaceCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -36,24 +36,24 @@ namespace Azure.ResourceManager.Network.Samples
             ResourceIdentifier networkManagerResourceId = NetworkManagerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName);
             NetworkManagerResource networkManager = client.GetNetworkManagerResource(networkManagerResourceId);
 
-            // get the collection of this VerifierWorkspaceResource
-            VerifierWorkspaceCollection collection = networkManager.GetVerifierWorkspaces();
+            // get the collection of this NetworkVerifierWorkspaceResource
+            NetworkVerifierWorkspaceCollection collection = networkManager.GetNetworkVerifierWorkspaces();
 
             // invoke the operation
             string workspaceName = "testWorkspace";
-            VerifierWorkspaceData data = new VerifierWorkspaceData(new AzureLocation("eastus"))
+            NetworkVerifierWorkspaceData data = new NetworkVerifierWorkspaceData(new AzureLocation("eastus"))
             {
-                Properties = new VerifierWorkspaceProperties
+                Properties = new NetworkVerifierWorkspaceProperties
                 {
                     Description = "A sample workspace",
                 },
             };
-            ArmOperation<VerifierWorkspaceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, workspaceName, data);
-            VerifierWorkspaceResource result = lro.Value;
+            ArmOperation<NetworkVerifierWorkspaceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, workspaceName, data);
+            NetworkVerifierWorkspaceResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            VerifierWorkspaceData resourceData = result.Data;
+            NetworkVerifierWorkspaceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -78,16 +78,16 @@ namespace Azure.ResourceManager.Network.Samples
             ResourceIdentifier networkManagerResourceId = NetworkManagerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName);
             NetworkManagerResource networkManager = client.GetNetworkManagerResource(networkManagerResourceId);
 
-            // get the collection of this VerifierWorkspaceResource
-            VerifierWorkspaceCollection collection = networkManager.GetVerifierWorkspaces();
+            // get the collection of this NetworkVerifierWorkspaceResource
+            NetworkVerifierWorkspaceCollection collection = networkManager.GetNetworkVerifierWorkspaces();
 
             // invoke the operation
             string workspaceName = "testWorkspace";
-            VerifierWorkspaceResource result = await collection.GetAsync(workspaceName);
+            NetworkVerifierWorkspaceResource result = await collection.GetAsync(workspaceName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            VerifierWorkspaceData resourceData = result.Data;
+            NetworkVerifierWorkspaceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -112,15 +112,15 @@ namespace Azure.ResourceManager.Network.Samples
             ResourceIdentifier networkManagerResourceId = NetworkManagerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName);
             NetworkManagerResource networkManager = client.GetNetworkManagerResource(networkManagerResourceId);
 
-            // get the collection of this VerifierWorkspaceResource
-            VerifierWorkspaceCollection collection = networkManager.GetVerifierWorkspaces();
+            // get the collection of this NetworkVerifierWorkspaceResource
+            NetworkVerifierWorkspaceCollection collection = networkManager.GetNetworkVerifierWorkspaces();
 
             // invoke the operation and iterate over the result
-            await foreach (VerifierWorkspaceResource item in collection.GetAllAsync())
+            await foreach (NetworkVerifierWorkspaceResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                VerifierWorkspaceData resourceData = item.Data;
+                NetworkVerifierWorkspaceData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -148,8 +148,8 @@ namespace Azure.ResourceManager.Network.Samples
             ResourceIdentifier networkManagerResourceId = NetworkManagerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName);
             NetworkManagerResource networkManager = client.GetNetworkManagerResource(networkManagerResourceId);
 
-            // get the collection of this VerifierWorkspaceResource
-            VerifierWorkspaceCollection collection = networkManager.GetVerifierWorkspaces();
+            // get the collection of this NetworkVerifierWorkspaceResource
+            NetworkVerifierWorkspaceCollection collection = networkManager.GetNetworkVerifierWorkspaces();
 
             // invoke the operation
             string workspaceName = "testWorkspace";
@@ -178,13 +178,13 @@ namespace Azure.ResourceManager.Network.Samples
             ResourceIdentifier networkManagerResourceId = NetworkManagerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName);
             NetworkManagerResource networkManager = client.GetNetworkManagerResource(networkManagerResourceId);
 
-            // get the collection of this VerifierWorkspaceResource
-            VerifierWorkspaceCollection collection = networkManager.GetVerifierWorkspaces();
+            // get the collection of this NetworkVerifierWorkspaceResource
+            NetworkVerifierWorkspaceCollection collection = networkManager.GetNetworkVerifierWorkspaces();
 
             // invoke the operation
             string workspaceName = "testWorkspace";
-            NullableResponse<VerifierWorkspaceResource> response = await collection.GetIfExistsAsync(workspaceName);
-            VerifierWorkspaceResource result = response.HasValue ? response.Value : null;
+            NullableResponse<NetworkVerifierWorkspaceResource> response = await collection.GetIfExistsAsync(workspaceName);
+            NetworkVerifierWorkspaceResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                VerifierWorkspaceData resourceData = result.Data;
+                NetworkVerifierWorkspaceData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

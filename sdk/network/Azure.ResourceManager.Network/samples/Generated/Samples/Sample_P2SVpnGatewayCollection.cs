@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Samples
                 VirtualHubId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1"),
                 P2SConnectionConfigurations = {new P2SConnectionConfiguration
 {
-VpnClientAddressPool = new AddressSpace
+VpnClientAddressPool = new VirtualNetworkAddressSpace
 {
 AddressPrefixes = {"101.3.0.0/16"},
 },
