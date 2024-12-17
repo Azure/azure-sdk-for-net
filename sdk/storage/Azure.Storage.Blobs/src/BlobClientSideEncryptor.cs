@@ -76,29 +76,27 @@ namespace Azure.Storage.Blobs
         /// <returns>
         /// Content transform write stream and metadata.
         /// </returns>
-        public async Task<Stream> ClientSideEncryptionOpenWriteInternal(
+        public Task<Stream> ClientSideEncryptionOpenWriteInternal(
             BlockBlobClient blobClient,
             bool overwrite,
             BlockBlobOpenWriteOptions options,
             bool async,
             CancellationToken cancellationToken)
         {
-            Stream encryptionWriteStream = await _encryptor.EncryptedOpenWriteInternal(
-                async (encryptiondata, funcAsync, funcCancellationToken) =>
+            return _encryptor.EncryptedOpenWriteInternal(
+                (encryptiondata, funcAsync, funcCancellationToken) =>
                 {
                     options ??= new BlockBlobOpenWriteOptions();
                     options.Metadata = TransformMetadata(options.Metadata, encryptiondata);
 
-                    return await blobClient.OpenWriteInternal(
+                    return blobClient.OpenWriteInternal(
                             overwrite,
                             options,
                             funcAsync,
-                            funcCancellationToken).ConfigureAwait(false);
+                            funcCancellationToken);
                 },
                 async,
-                cancellationToken).ConfigureAwait(false);
-
-            return encryptionWriteStream;
+                cancellationToken);
         }
 
         /// <summary>
