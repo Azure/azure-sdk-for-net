@@ -26,7 +26,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Prompt to play while on hold.
         /// </summary>
-        public PlaySource PlaySourceInfo { get; set; }
+        public PlaySource PlaySource { get; set; }
 
         /// <summary>
         /// The operation context to correlate the request to the response event.
