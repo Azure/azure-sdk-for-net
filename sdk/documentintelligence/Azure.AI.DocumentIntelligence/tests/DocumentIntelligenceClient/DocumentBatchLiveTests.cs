@@ -18,7 +18,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
         {
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeBatchDocuments()
         {
             var client = CreateDocumentIntelligenceClient();
@@ -38,7 +38,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
             ValidateAcordAnalyzeBatchResult(operation.Value);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetAnalyzeBatchResult()
         {
             var client = CreateDocumentIntelligenceClient();
@@ -65,7 +65,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
             DocumentAssert.AreEqual(operation.Value, operationDetails.Result);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetAnalyzeBatchResults()
         {
             var client = CreateDocumentIntelligenceClient();
@@ -121,7 +121,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteAnalyzeBatchResult()
         {
             var client = CreateDocumentIntelligenceClient();
