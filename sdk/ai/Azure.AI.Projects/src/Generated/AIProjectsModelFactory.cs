@@ -21,7 +21,7 @@ namespace Azure.AI.Projects
         /// Please note <see cref="InputData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ApplicationInsightsConfiguration"/> and <see cref="Dataset"/>.
         /// </param>
-        /// <param name="displayName"> Display Name for evaluation. It helps to find evaluation easily in AI Studio. It does not need to be unique. </param>
+        /// <param name="displayName"> Display Name for evaluation. It helps to find the evaluation easily in AI Foundry. It does not need to be unique. </param>
         /// <param name="description"> Description of the evaluation. It can be used to store additional information about the evaluation and is mutable. </param>
         /// <param name="systemData"> Metadata containing createdBy and modifiedBy information. </param>
         /// <param name="status"> Status of the evaluation. It is set by service and is read-only. </param>
@@ -162,6 +162,15 @@ namespace Azure.AI.Projects
         public static CredentialsApiKeyAuth CredentialsApiKeyAuth(string key = null)
         {
             return new CredentialsApiKeyAuth(key, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.AzureFunctionBinding"/>. </summary>
+        /// <param name="type"> The type of binding, which is always 'storage_queue'. </param>
+        /// <param name="storageQueue"> Storage queue. </param>
+        /// <returns> A new <see cref="Projects.AzureFunctionBinding"/> instance for mocking. </returns>
+        public static AzureFunctionBinding AzureFunctionBinding(AzureFunctionBindingType type = default, AzureFunctionStorageQueue storageQueue = null)
+        {
+            return new AzureFunctionBinding(type, storageQueue, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Projects.ThreadMessageOptions"/>. </summary>

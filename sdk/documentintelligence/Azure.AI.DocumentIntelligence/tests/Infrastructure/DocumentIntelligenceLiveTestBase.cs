@@ -11,11 +11,14 @@ namespace Azure.AI.DocumentIntelligence.Tests
 {
     public class DocumentIntelligenceLiveTestBase : RecordedTestBase<DocumentIntelligenceTestEnvironment>
     {
+        private const string SanitizedContainerUri = "https://sanitized.blob.core.windows.net";
+
         public DocumentIntelligenceLiveTestBase(bool isAsync, RecordedTestMode? mode = null)
             : base(isAsync, mode)
         {
             JsonPathSanitizers.Add("$..accessToken");
-            BodyKeySanitizers.Add(new BodyKeySanitizer("$..containerUrl") { Value = "https://sanitized.blob.core.windows.net" });
+            BodyKeySanitizers.Add(new BodyKeySanitizer("$..containerUrl") { Value = SanitizedContainerUri });
+            BodyKeySanitizers.Add(new BodyKeySanitizer("$..resultContainerUrl") { Value = SanitizedContainerUri });
             SanitizedHeaders.Add("Ocp-Apim-Subscription-Key");
         }
 

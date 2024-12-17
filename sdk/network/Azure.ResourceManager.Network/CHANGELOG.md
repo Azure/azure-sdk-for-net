@@ -1,5 +1,17 @@
 # Release History
 
+## 1.10.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+- Fixed an issue that the `AzureFirewallIPGroups` can't handle number type `ChangeNumber`.
+
+### Other Changes
+
 ## 1.10.0-beta.1 (2024-12-11)
 
 ### Features Added
