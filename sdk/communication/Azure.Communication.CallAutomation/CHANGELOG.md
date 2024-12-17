@@ -3,8 +3,25 @@
 ## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
-- StartRecording now accepts PauseOnStart.
-- Support CreateCallFailed and AnswerCallFailed event
+- The StartRecording function now accepts the PauseOnStart parameter.
+- Added support for CreateCallFailed and AnswerCallFailed events.
+- Enabled audio streaming support for various APIs such as CreateCall, AnswerCall, CreateGroupCall, and ConnectCall.
+  - Receive events for audio streaming, including MediaStreamStarted, MediaStreamStopped, and MediaStreamFailed.
+- Enhanced media streaming with bidirectional capabilities, supporting audio formats in both directions. Currently, it supports sample rates of 24kHz and 16kHz.
+- Added support to manage rooms, server calls, and group calls using the ConnectAPI.
+  - Receive events for CallConnected and ConnectFailed.
+- Added support for ConnectAPI to enable streaming and real-time transcription.
+- Added the ability to hold and unhold participants.
+  - Ability to hold participants with a play source.
+- The new InterruptAudioAnnounce API now allows for the interruption of hold audio
+- With the InterruptHoldAudio option in PlayOptions, it is now possible to interrupt the hold audio.
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+- Introduced audio streaming data parsing capabilities.
 
 ### Breaking Changes
 
