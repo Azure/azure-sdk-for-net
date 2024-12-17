@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.DocumentIntelligence.Tests;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 
 namespace Azure.AI.DocumentIntelligence.Samples
 {
