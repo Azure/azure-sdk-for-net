@@ -77,39 +77,36 @@ foreach (SmsSendResult result in response.Value)
 #### Check if a list of recipients is in the Opt Out list
 To check if the recipients are in the Opt Out list, call the function from the `SmsClient.OptOuts.Check` or  `SmsClient.OptOuts.CheckAsync` with a list of recipient phone numbers.
 ```C# Snippet:Azure_Communication_Sms_OptOuts_Tests_Samples_CheckAsync
-var optOutCheckResults = await client.OptOuts.CheckAsync(
-    from: "<from-phone-number>",
-    to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" });
-        
+var optOutCheckResults = await smsClient.OptOuts.CheckAsync(
+   from: "<from-phone-number>", // Your E.164 formatted from phone number used to send SMS
+   to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" }); // E.164 formatted recipient phone numbers
 foreach (var result in optOutCheckResults.Value)
 {
     Console.WriteLine($"{result.To}: {result.IsOptedOut}");
 }
-
 ```
 #### Add a list of recipients to Opt Out list
 To add the list of recipients to Opt Out list, call the function from the `SmsClient.OptOuts.Add` or `SmsClient.OptOuts.AddAsync` with a list of recipient phone numbers.
 ```C# Snippet:Azure_Communication_Sms_OptOuts_Tests_Samples_AddAsync
-var optOutAddResults = await client.OptOuts.AddAsync(
-    from: "<from-phone-number>",
-    to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" });
-        
+var optOutAddResults = await smsClient.OptOuts.AddAsync(
+    from: "<from-phone-number>", // Your E.164 formatted from phone number used to send SMS
+    to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" }); // E.164 formatted recipient phone numbers
 foreach (var result in optOutAddResults.Value)
 {
-    Console.WriteLine($"{result.To}: { result.HttpStatusCode}");
+    Console.WriteLine($"{result.To}: {result.HttpStatusCode}");
 }
 ```
 
 #### Remove a list of recipients from Opt Out list
 To remove the list of recipients to Opt Out list, call the function from the `SmsClient.OptOuts.Remove` or `SmsClient.OptOuts.RemoveAsync` with a list of recipient phone numbers.
 ```C# Snippet:Azure_Communication_Sms_OptOuts_Tests_Samples_RemoveAsync
-var optOutRemoveResults = await client.OptOuts.RemoveAsync(
-    from: "<from-phone-number>",
-    to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" });
-        
+var optOutRemoveResults = await smsClient.OptOuts.RemoveAsync(
+    from: "<from-phone-number>", // Your E.164 formatted from phone number used to send SMS
+    to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" }); // E.164 formatted recipient phone numbers
+
 foreach (var result in optOutRemoveResults.Value)
 {
-    Console.WriteLine($"{result.To}: { result.HttpStatusCode}");
+    Console.WriteLine($"{result.To}: {result.HttpStatusCode}");
 }
 ```
 

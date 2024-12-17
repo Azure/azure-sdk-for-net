@@ -9,32 +9,29 @@ SMS clients can be authenticated using the connection string acquired from an Az
 ```C# Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClientWithToken
 string endpoint = "<endpoint_url>";
 TokenCredential tokenCredential = new DefaultAzureCredential();
-SmsClient smsClient = new SmsClient(new Uri(endpoint), tokenCredential);
+SmsClient client = new SmsClient(new Uri(endpoint), tokenCredential);
 ```
 
 ## Check if a list of recipients is in the Opt Out list
 To check if the recipients are in the Opt Out list, call the function from the `SmsClient.OptOuts.Check` with a list of recipient phone numbers.
 ```C# Snippet:Azure_Communication_Sms_OptOuts_Tests_Samples_Check
 var optOutCheckResults = smsClient.OptOuts.Check(
-    from: "<from-phone-number>",
-    to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" });
-        
+   from: "<from-phone-number>", // Your E.164 formatted from phone number used to send SMS
+   to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" }); // E.164 formatted recipient phone numbers
 foreach (var result in optOutCheckResults.Value)
 {
     Console.WriteLine($"{result.To}: {result.IsOptedOut}");
 }
-
 ```
 ## Add a list of recipients to Opt Out list
 To add the list of recipients to Opt Out list, call the function from the `SmsClient.OptOuts.Add` with a list of recipient phone numbers.
 ```C# Snippet:Azure_Communication_Sms_OptOuts_Tests_Samples_Add
 var optOutAddResults = smsClient.OptOuts.Add(
-    from: "<from-phone-number>",
-    to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" });
-        
+    from: "<from-phone-number>", // Your E.164 formatted from phone number used to send SMS
+    to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" }); // E.164 formatted recipient phone numbers
 foreach (var result in optOutAddResults.Value)
 {
-    Console.WriteLine($"{result.To}: { result.HttpStatusCode}");
+    Console.WriteLine($"{result.To}: {result.HttpStatusCode}");
 }
 ```
 
@@ -42,12 +39,12 @@ foreach (var result in optOutAddResults.Value)
 To remove the list of recipients to Opt Out list, call the function from the `SmsClient.OptOuts.Remove` with a list of recipient phone numbers.
 ```C# Snippet:Azure_Communication_Sms_OptOuts_Tests_Samples_Remove
 var optOutRemoveResults = smsClient.OptOuts.Remove(
-    from: "<from-phone-number>",
-    to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" });
-        
+    from: "<from-phone-number>", // Your E.164 formatted from phone number used to send SMS
+    to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" }); // E.164 formatted recipient phone numbers
+
 foreach (var result in optOutRemoveResults.Value)
 {
-    Console.WriteLine($"{result.To}: { result.HttpStatusCode}");
+    Console.WriteLine($"{result.To}: {result.HttpStatusCode}");
 }
 ```
 
