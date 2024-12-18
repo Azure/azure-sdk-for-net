@@ -268,8 +268,8 @@ namespace Azure.ResourceManager.MachineLearning
         {
             options ??= new MachineLearningFeatureSetVersionCollectionGetAllOptions();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningFeatureSetVersionFeaturesetVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Skip, options.Tags, options.ListViewType, pageSizeHint, options.VersionName, options.Version, options.Description, options.CreatedBy, options.Stage);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningFeatureSetVersionFeaturesetVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Skip, options.Tags, options.ListViewType, pageSizeHint, options.VersionName, options.Version, options.Description, options.CreatedBy, options.Stage);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningFeatureSetVersionFeaturesetVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Skip, options.Tags, options.ListViewType, pageSize, options.VersionName, options.Version, options.Description, options.CreatedBy, options.Stage);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningFeatureSetVersionFeaturesetVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Skip, options.Tags, options.ListViewType, pageSize, options.VersionName, options.Version, options.Description, options.CreatedBy, options.Stage);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningFeatureSetVersionResource(Client, MachineLearningFeatureSetVersionData.DeserializeMachineLearningFeatureSetVersionData(e)), _machineLearningFeatureSetVersionFeaturesetVersionsClientDiagnostics, Pipeline, "MachineLearningFeatureSetVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -301,8 +301,8 @@ namespace Azure.ResourceManager.MachineLearning
         {
             options ??= new MachineLearningFeatureSetVersionCollectionGetAllOptions();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningFeatureSetVersionFeaturesetVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Skip, options.Tags, options.ListViewType, pageSizeHint, options.VersionName, options.Version, options.Description, options.CreatedBy, options.Stage);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningFeatureSetVersionFeaturesetVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Skip, options.Tags, options.ListViewType, pageSizeHint, options.VersionName, options.Version, options.Description, options.CreatedBy, options.Stage);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningFeatureSetVersionFeaturesetVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Skip, options.Tags, options.ListViewType, pageSize, options.VersionName, options.Version, options.Description, options.CreatedBy, options.Stage);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningFeatureSetVersionFeaturesetVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Skip, options.Tags, options.ListViewType, pageSize, options.VersionName, options.Version, options.Description, options.CreatedBy, options.Stage);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningFeatureSetVersionResource(Client, MachineLearningFeatureSetVersionData.DeserializeMachineLearningFeatureSetVersionData(e)), _machineLearningFeatureSetVersionFeaturesetVersionsClientDiagnostics, Pipeline, "MachineLearningFeatureSetVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
