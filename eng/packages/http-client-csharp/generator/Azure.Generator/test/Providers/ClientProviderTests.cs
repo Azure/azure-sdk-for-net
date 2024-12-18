@@ -20,9 +20,9 @@ namespace Azure.Generator.Tests.Providers
         private const string KeyAuthCategory = "WithKeyAuth";
         private const string OAuth2Category = "WithOAuth2";
         private const string TestClientName = "TestClient";
-        private static readonly InputClient _animalClient = new("animal", "AnimalClient description", [], [], TestClientName);
-        private static readonly InputClient _dogClient = new("dog", "DogClient description", [], [], _animalClient.Name);
-        private static readonly InputClient _huskyClient = new("husky", "HuskyClient description", [], [], _dogClient.Name);
+        private static readonly InputClient _animalClient = new("animal", null, "AnimalClient description", [], [], TestClientName);
+        private static readonly InputClient _dogClient = new("dog", null, "DogClient description", [], [], _animalClient.Name);
+        private static readonly InputClient _huskyClient = new("husky", null, "HuskyClient description", [], [], _dogClient.Name);
 
         private bool _containsSubClients;
         private bool _hasKeyAuth;
