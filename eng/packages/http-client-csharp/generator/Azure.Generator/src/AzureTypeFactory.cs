@@ -66,7 +66,8 @@ namespace Azure.Generator
             InputPrimitiveType? primitiveType = inputType;
             while (primitiveType != null)
             {
-                if (KnownAzureTypes.PrimitiveTypes.TryGetValue(primitiveType.CrossLanguageDefinitionId, out var knownType))
+                var knownType = KnownAzureTypes.GetPrimitiveType(primitiveType.CrossLanguageDefinitionId);
+                if (knownType != null)
                 {
                     return knownType;
                 }
@@ -93,6 +94,7 @@ namespace Azure.Generator
             {
                 Type t when t == typeof(ResourceIdentifier) =>
                     New.Instance(valueType, element.GetString()),
+                Type t when t == typeof(ETag)
                 _ => null,
             };
         }
