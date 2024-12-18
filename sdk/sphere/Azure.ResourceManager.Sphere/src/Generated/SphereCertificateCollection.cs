@@ -170,8 +170,8 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> An async collection of <see cref="SphereCertificateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SphereCertificateResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereCertificateCertificatesRestClient.CreateListByCatalogRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereCertificateCertificatesRestClient.CreateListByCatalogNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereCertificateCertificatesRestClient.CreateListByCatalogRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, maxpagesize);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereCertificateCertificatesRestClient.CreateListByCatalogNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, maxpagesize);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SphereCertificateResource(Client, SphereCertificateData.DeserializeSphereCertificateData(e)), _sphereCertificateCertificatesClientDiagnostics, Pipeline, "SphereCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -204,8 +204,8 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> A collection of <see cref="SphereCertificateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SphereCertificateResource> GetAll(string filter = null, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereCertificateCertificatesRestClient.CreateListByCatalogRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereCertificateCertificatesRestClient.CreateListByCatalogNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereCertificateCertificatesRestClient.CreateListByCatalogRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, maxpagesize);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereCertificateCertificatesRestClient.CreateListByCatalogNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, maxpagesize);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SphereCertificateResource(Client, SphereCertificateData.DeserializeSphereCertificateData(e)), _sphereCertificateCertificatesClientDiagnostics, Pipeline, "SphereCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
