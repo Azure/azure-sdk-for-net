@@ -25,7 +25,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventCatcher
         public bool IsRecording { get; private set; }
         public IEnumerable<RecordedServiceBusReceivedMessage> Entries => _recording.Entries;
 
-        public List<string> KeysToSanitize { get; } = new List<string>() { "rawId", "id", "botAppId", "ivrContext" };
+        public List<string> KeysToSanitize { get; } = new List<string>() { "rawId", "id", "botAppId", "ivrContext", "callerDisplayName", "incomingCallContext" };
 
         public EventRecordPlayer(string sessionFilePath)
         {
@@ -151,7 +151,14 @@ namespace Azure.Communication.CallAutomation.Tests.EventCatcher
                     var result = new Dictionary<string, object?>();
                     while (objEnumerator.MoveNext())
                     {
-                        result.Add(objEnumerator.Current.Name, Scrub(objEnumerator.Current.Value, 0, MaxDepth));
+                        if (KeysToSanitize.Contains(objEnumerator.Current.Name))
+                        {
+                            result.Add(objEnumerator.Current.Name, "Sanitized");
+                        }
+                        else
+                        {
+                            result.Add(objEnumerator.Current.Name, Scrub(objEnumerator.Current.Value, 0, MaxDepth));
+                        }
                     }
 
                     var resultAsString = JsonSerializer.Serialize(result);

@@ -34,9 +34,52 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var options = new AnalyzeDocumentOptions("prebuilt-receipt", uriSource);
 
             Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(waitUntil, options);
-            await operation.WaitForCompletionAsync();
+            string operationId = operation.Id;
 
-            var match = Regex.Match(operation.Id, AnalysisOperationIdPattern);
+            var match = Regex.Match(operationId, AnalysisOperationIdPattern);
+
+            Assert.That(match.Success);
+        }
+
+        [RecordedTest]
+        [TestCase(WaitUntil.Started)]
+        [TestCase(WaitUntil.Completed)]
+        public async Task AnalyzeBatchDocumentsOperationCanParseOperationId(WaitUntil waitUntil)
+        {
+            var client = CreateDocumentIntelligenceClient();
+
+            var sourceContainerUri = new Uri(TestEnvironment.BatchSourceBlobSasUrl);
+            var resultContainerUri = new Uri(TestEnvironment.BatchResultBlobSasUrl);
+            var blobSource = new BlobContentSource(sourceContainerUri);
+            var options = new AnalyzeBatchDocumentsOptions("prebuilt-read", blobSource, resultContainerUri)
+            {
+                OverwriteExisting = true
+            };
+
+            var operation = await client.AnalyzeBatchDocumentsAsync(waitUntil, options);
+            string operationId = operation.Id;
+
+            var match = Regex.Match(operationId, AnalysisOperationIdPattern);
+
+            Assert.That(match.Success);
+        }
+
+        [RecordedTest]
+        [TestCase(WaitUntil.Started)]
+        [TestCase(WaitUntil.Completed)]
+        public async Task ClassifyDocumentOperationCanParseOperationId(WaitUntil waitUntil)
+        {
+            var client = CreateDocumentIntelligenceClient();
+
+            await using var disposableClassifier = await BuildDisposableDocumentClassifierAsync();
+
+            var uriSource = DocumentIntelligenceTestEnvironment.CreateUri(TestFile.Irs1040);
+            var options = new ClassifyDocumentOptions(disposableClassifier.ClassifierId, uriSource);
+
+            var operation = await client.ClassifyDocumentAsync(waitUntil, options);
+            string operationId = operation.Id;
+
+            var match = Regex.Match(operationId, AnalysisOperationIdPattern);
 
             Assert.That(match.Success);
         }
@@ -54,10 +97,13 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var options = new BuildDocumentModelOptions(modelId, DocumentBuildMode.Template, source);
 
             Operation<DocumentModelDetails> operation = null;
+            string operationId = null;
 
             try
             {
                 operation = await client.BuildDocumentModelAsync(waitUntil, options);
+                operationId = operation.Id;
+
                 await operation.WaitForCompletionAsync();
             }
             finally
@@ -68,7 +114,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 }
             }
 
-            var match = Regex.Match(operation.Id, TrainingOperationIdPattern);
+            var match = Regex.Match(operationId, TrainingOperationIdPattern);
 
             Assert.That(match.Success);
         }
@@ -88,10 +134,13 @@ namespace Azure.AI.DocumentIntelligence.Tests
             ModelCopyAuthorization copyAuthorization = await client.AuthorizeModelCopyAsync(authorizeCopyOptions);
 
             Operation<DocumentModelDetails> operation = null;
+            string operationId = null;
 
             try
             {
                 operation = await client.CopyModelToAsync(waitUntil, disposableModel.ModelId, copyAuthorization);
+                operationId = operation.Id;
+
                 await operation.WaitForCompletionAsync();
             }
             finally
@@ -102,7 +151,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 }
             }
 
-            var match = Regex.Match(operation.Id, TrainingOperationIdPattern);
+            var match = Regex.Match(operationId, TrainingOperationIdPattern);
 
             Assert.That(match.Success);
         }
@@ -129,10 +178,13 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var options = new ComposeModelOptions(modelId, disposableClassifier.ClassifierId, docTypes);
 
             Operation<DocumentModelDetails> operation = null;
+            string operationId = null;
 
             try
             {
                 operation = await client.ComposeModelAsync(waitUntil, options);
+                operationId = operation.Id;
+
                 await operation.WaitForCompletionAsync();
             }
             finally
@@ -143,7 +195,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 }
             }
 
-            var match = Regex.Match(operation.Id, TrainingOperationIdPattern);
+            var match = Regex.Match(operationId, TrainingOperationIdPattern);
 
             Assert.That(match.Success);
         }
@@ -170,10 +222,13 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var options = new BuildClassifierOptions(classifierId, docTypes);
 
             Operation<DocumentClassifierDetails> operation = null;
+            string operationId = null;
 
             try
             {
                 operation = await client.BuildClassifierAsync(waitUntil, options);
+                operationId = operation.Id;
+
                 await operation.WaitForCompletionAsync();
             }
             finally
@@ -184,7 +239,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 }
             }
 
-            var match = Regex.Match(operation.Id, TrainingOperationIdPattern);
+            var match = Regex.Match(operationId, TrainingOperationIdPattern);
 
             Assert.That(match.Success);
         }
@@ -204,10 +259,13 @@ namespace Azure.AI.DocumentIntelligence.Tests
             ClassifierCopyAuthorization copyAuthorization = await client.AuthorizeClassifierCopyAsync(authorizeCopyOptions);
 
             Operation<DocumentClassifierDetails> operation = null;
+            string operationId = null;
 
             try
             {
                 operation = await client.CopyClassifierToAsync(waitUntil, disposableClassifier.ClassifierId, copyAuthorization);
+                operationId = operation.Id;
+
                 await operation.WaitForCompletionAsync();
             }
             finally
@@ -218,7 +276,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 }
             }
 
-            var match = Regex.Match(operation.Id, TrainingOperationIdPattern);
+            var match = Regex.Match(operationId, TrainingOperationIdPattern);
 
             Assert.That(match.Success);
         }
