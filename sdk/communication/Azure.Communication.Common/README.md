@@ -127,7 +127,7 @@ var credential = new CommunicationTokenCredential(entraTokenCredentialOptions);
 
 ```
 
-The same approach can be used to authorize your Azure Communication Services resource to receive calls from the Teams resource account.
+The same approach can be used for authorizing an Entra user with a Teams license to use Teams Phone Extensibility features through your Azure Communication Services resource.
 This requires providing the `https://auth.msft.communication.azure.com/TeamsExtension.ManageCalls` scope
 ```C# 
 var options = new InteractiveBrowserCredentialOptions

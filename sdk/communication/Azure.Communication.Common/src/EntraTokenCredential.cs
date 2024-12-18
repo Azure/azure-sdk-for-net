@@ -16,8 +16,12 @@ namespace Azure.Communication
     /// </summary>
     internal sealed class EntraTokenCredential : ICommunicationTokenCredential
     {
-        private const string TeamsExtentionsScopePrefix = "https://auth.msft.communication.azure.com/";
-        private const string EntraScopePrefix = "https://communication.azure.com/clients/";
+        private const string TeamsExtensionScopePrefix = "https://auth.msft.communication.azure.com/";
+        private const string ComunicationClientsScopePrefix = "https://communication.azure.com/clients/";
+        private const string TeamsExtensionEndpoint = "/access/teamsPhone/:exchangeTeamsAccessToken";
+        private const string TeamsExtensionApiVersion = "2025-03-02-preview";
+        private const string ComunicationClientsEndpoint = "/access/entra/:exchangeAccessToken";
+        private const string ComunicationClientsApiVersion = "2024-04-01-preview";
 
         private HttpPipeline _pipeline;
         private string _resourceEndpoint;
@@ -131,19 +135,19 @@ namespace Azure.Communication
         {
             if (_scopes == null || !_scopes.Any())
             {
-                throw new ArgumentException($"Scopes validation failed. Ensure all scopes start with either {TeamsExtentionsScopePrefix} or {EntraScopePrefix}.", nameof(_scopes));
+                throw new ArgumentException($"Scopes validation failed. Ensure all scopes start with either {TeamsExtensionScopePrefix} or {ComunicationClientsScopePrefix}.", nameof(_scopes));
             }
-            else if (_scopes.All(item => item.StartsWith(TeamsExtentionsScopePrefix)))
+            else if (_scopes.All(item => item.StartsWith(TeamsExtensionScopePrefix)))
             {
-                return ("/access/teamsPhone/:exchangeTeamsAccessToken", "2025-03-02-preview");
+                return (TeamsExtensionEndpoint, TeamsExtensionApiVersion);
             }
-            else if (_scopes.All(item => item.StartsWith(EntraScopePrefix)))
+            else if (_scopes.All(item => item.StartsWith(ComunicationClientsScopePrefix)))
             {
-                return ("/access/entra/:exchangeAccessToken", "2024-04-01-preview");
+                return (ComunicationClientsEndpoint, ComunicationClientsApiVersion);
             }
             else
             {
-                throw new ArgumentException($"Scopes validation failed. Ensure all scopes start with either {TeamsExtentionsScopePrefix} or {EntraScopePrefix}.", nameof(_scopes));
+                throw new ArgumentException($"Scopes validation failed. Ensure all scopes start with either {TeamsExtensionScopePrefix} or {ComunicationClientsScopePrefix}.", nameof(_scopes));
             }
         }
 

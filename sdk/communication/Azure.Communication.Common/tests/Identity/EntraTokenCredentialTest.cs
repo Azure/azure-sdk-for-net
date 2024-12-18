@@ -24,8 +24,8 @@ namespace Azure.Communication.Identity
         protected string TokenResponse = string.Format(TokenResponseTemplate, SampleToken, SampleTokenExpiry);
 
         private Mock<TokenCredential> _mockTokenCredential = null!;
-        private const string entraScope = "https://communication.azure.com/clients/VoIP";
-        private const string opsScope = "https://auth.msft.communication.azure.com/TeamsExtension.ManageCalls";
+        private const string communicationClientsScope = "https://communication.azure.com/clients/VoIP";
+        private const string teamsExtensionScope = "https://auth.msft.communication.azure.com/TeamsExtension.ManageCalls";
         private string _resourceEndpoint = "https://myResource.communication.azure.com";
 
         [SetUp]
@@ -39,8 +39,8 @@ namespace Azure.Communication.Identity
         }
 
         [Test]
-        [TestCase(new string[] { entraScope }, typeof(ArgumentException))]
-        [TestCase(new string[] { opsScope }, typeof(ArgumentException))]
+        [TestCase(new string[] { communicationClientsScope }, typeof(ArgumentException))]
+        [TestCase(new string[] { teamsExtensionScope }, typeof(ArgumentException))]
         public void EntraTokenCredential_Init_ThrowsErrorWithNulls(string[] scopes, Type exception)
         {
             Assert.Throws<ArgumentNullException>(() => new EntraCommunicationTokenCredentialOptions(
@@ -60,8 +60,8 @@ namespace Azure.Communication.Identity
         }
 
         [Test]
-        [TestCase(new string[] { entraScope }, typeof(ArgumentException))]
-        [TestCase(new string[] { opsScope }, typeof(ArgumentException))]
+        [TestCase(new string[] { communicationClientsScope }, typeof(ArgumentException))]
+        [TestCase(new string[] { teamsExtensionScope }, typeof(ArgumentException))]
         public void EntraTokenCredential_Init_FetchesTokenImmediately(string[] scopes, Type exception)
         {
             // Arrange
@@ -74,8 +74,8 @@ namespace Azure.Communication.Identity
         }
 
         [Test]
-        [TestCase("/access/entra/:exchangeAccessToken", new string[] { entraScope }, typeof(ArgumentException))]
-        [TestCase("/access/teamsPhone/:exchangeTeamsAccessToken", new string[] { opsScope }, typeof(ArgumentException))]
+        [TestCase("/access/entra/:exchangeAccessToken", new string[] { communicationClientsScope }, typeof(ArgumentException))]
+        [TestCase("/access/teamsPhone/:exchangeTeamsAccessToken", new string[] { teamsExtensionScope }, typeof(ArgumentException))]
         public async Task EntraTokenCredential_GetToken_ReturnsToken(string expectedEndpoint, string[] scopes, Type exception)
         {
             // Arrange
@@ -95,8 +95,8 @@ namespace Azure.Communication.Identity
         }
 
         [Test]
-        [TestCase(new string[] { entraScope }, typeof(ArgumentException))]
-        [TestCase(new string[] { opsScope }, typeof(ArgumentException))]
+        [TestCase(new string[] { communicationClientsScope }, typeof(ArgumentException))]
+        [TestCase(new string[] { teamsExtensionScope }, typeof(ArgumentException))]
         public async Task EntraTokenCredential_GetToken_InternalEntraTokenChangeInvalidatesCachedToken(string[] scopes, Type exception)
         {
             // Arrange
@@ -121,8 +121,8 @@ namespace Azure.Communication.Identity
         }
 
         [Test]
-        [TestCase(new string[] { entraScope }, typeof(ArgumentException))]
-        [TestCase(new string[] { opsScope }, typeof(ArgumentException))]
+        [TestCase(new string[] { communicationClientsScope }, typeof(ArgumentException))]
+        [TestCase(new string[] { teamsExtensionScope }, typeof(ArgumentException))]
         public async Task EntraTokenCredential_GetToken_MultipleCallsReturnsCachedToken(string[] scopes, Type exception)
         {
             // Arrange
@@ -142,8 +142,8 @@ namespace Azure.Communication.Identity
         }
 
         [Test]
-        [TestCase(new string[] { entraScope }, typeof(ArgumentException))]
-        [TestCase(new string[] { opsScope }, typeof(ArgumentException))]
+        [TestCase(new string[] { communicationClientsScope }, typeof(ArgumentException))]
+        [TestCase(new string[] { teamsExtensionScope }, typeof(ArgumentException))]
         public void EntraTokenCredential_GetToken_ThrowsFailedResponse(string[] scopes, Type exception)
         {
             // Arrange
@@ -162,8 +162,8 @@ namespace Azure.Communication.Identity
         }
 
         [Test]
-        [TestCase(new string[] { entraScope }, typeof(ArgumentException))]
-        [TestCase(new string[] { opsScope }, typeof(ArgumentException))]
+        [TestCase(new string[] { communicationClientsScope }, typeof(ArgumentException))]
+        [TestCase(new string[] { teamsExtensionScope }, typeof(ArgumentException))]
         public void EntraTokenCredential_GetToken_ThrowsInvalidJson(string[] scopes, Type exception)
         {
             // Arrange
@@ -183,8 +183,8 @@ namespace Azure.Communication.Identity
         }
 
         [Test]
-        [TestCase(new string[] { entraScope }, typeof(ArgumentException))]
-        [TestCase(new string[] { opsScope }, typeof(ArgumentException))]
+        [TestCase(new string[] { communicationClientsScope }, typeof(ArgumentException))]
+        [TestCase(new string[] { teamsExtensionScope }, typeof(ArgumentException))]
         public void EntraTokenCredential_GetToken_RetriesThreeTimesOnTransientError(string[] scopes, Type exception)
         {
             // Arrange
@@ -212,8 +212,8 @@ namespace Azure.Communication.Identity
         }
 
         [Test]
-        [TestCase(new string[] { entraScope, opsScope }, typeof(ArgumentException))]
-        [TestCase(new string[] { opsScope, entraScope }, typeof(ArgumentException))]
+        [TestCase(new string[] { communicationClientsScope, teamsExtensionScope }, typeof(ArgumentException))]
+        [TestCase(new string[] { teamsExtensionScope, communicationClientsScope }, typeof(ArgumentException))]
         [TestCase(new string[] { "invalidScope" }, typeof(ArgumentException))]
         [TestCase(new string[] { "" }, typeof(ArgumentException))]
         [TestCase(new string[] { }, typeof(ArgumentException))]
