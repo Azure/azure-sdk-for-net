@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <returns> An async collection of <see cref="ScalingPlanResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScalingPlanResource> GetScalingPlansAsync(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ScalingPlanRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, pageSizeHint, isDescending, initialSkip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScalingPlanRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, pageSizeHint, isDescending, initialSkip);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ScalingPlanRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, pageSize, isDescending, initialSkip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScalingPlanRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, pageSize, isDescending, initialSkip);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScalingPlanResource(Client, ScalingPlanData.DeserializeScalingPlanData(e)), ScalingPlanClientDiagnostics, Pipeline, "MockableDesktopVirtualizationSubscriptionResource.GetScalingPlans", "value", "nextLink", cancellationToken);
         }
 
@@ -176,8 +176,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <returns> A collection of <see cref="ScalingPlanResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScalingPlanResource> GetScalingPlans(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ScalingPlanRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, pageSizeHint, isDescending, initialSkip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScalingPlanRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, pageSizeHint, isDescending, initialSkip);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ScalingPlanRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, pageSize, isDescending, initialSkip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScalingPlanRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, pageSize, isDescending, initialSkip);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScalingPlanResource(Client, ScalingPlanData.DeserializeScalingPlanData(e)), ScalingPlanClientDiagnostics, Pipeline, "MockableDesktopVirtualizationSubscriptionResource.GetScalingPlans", "value", "nextLink", cancellationToken);
         }
 
@@ -271,8 +271,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <returns> An async collection of <see cref="HostPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HostPoolResource> GetHostPoolsAsync(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => HostPoolRestClient.CreateListRequest(Id.SubscriptionId, pageSizeHint, isDescending, initialSkip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HostPoolRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, pageSizeHint, isDescending, initialSkip);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HostPoolRestClient.CreateListRequest(Id.SubscriptionId, pageSize, isDescending, initialSkip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HostPoolRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, pageSize, isDescending, initialSkip);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HostPoolResource(Client, HostPoolData.DeserializeHostPoolData(e)), HostPoolClientDiagnostics, Pipeline, "MockableDesktopVirtualizationSubscriptionResource.GetHostPools", "value", "nextLink", cancellationToken);
         }
 
@@ -304,8 +304,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <returns> A collection of <see cref="HostPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HostPoolResource> GetHostPools(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => HostPoolRestClient.CreateListRequest(Id.SubscriptionId, pageSizeHint, isDescending, initialSkip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HostPoolRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, pageSizeHint, isDescending, initialSkip);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HostPoolRestClient.CreateListRequest(Id.SubscriptionId, pageSize, isDescending, initialSkip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HostPoolRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, pageSize, isDescending, initialSkip);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HostPoolResource(Client, HostPoolData.DeserializeHostPoolData(e)), HostPoolClientDiagnostics, Pipeline, "MockableDesktopVirtualizationSubscriptionResource.GetHostPools", "value", "nextLink", cancellationToken);
         }
 
