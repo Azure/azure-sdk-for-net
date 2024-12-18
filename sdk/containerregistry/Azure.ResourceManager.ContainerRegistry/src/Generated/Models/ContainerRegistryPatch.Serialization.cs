@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             ContainerRegistryPublicNetworkAccess? publicNetworkAccess = default;
             ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions = default;
             bool? anonymousPullEnabled = default;
-            MetadataSearch? metadataSearch = default;
+            ContainerRegistryMetadataSearch? metadataSearch = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             {
                                 continue;
                             }
-                            metadataSearch = new MetadataSearch(property0.Value.GetString());
+                            metadataSearch = new ContainerRegistryMetadataSearch(property0.Value.GetString());
                             continue;
                         }
                     }

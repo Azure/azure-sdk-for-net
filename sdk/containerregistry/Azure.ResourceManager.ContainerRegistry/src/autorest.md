@@ -67,74 +67,78 @@ keep-plural-enums:
   - ContainerRegistryOS
 
 prepend-rp-prefix:
-  - KeyVaultProperties
-  - PlatformProperties
-  - TaskStepProperties
-  - Run
-  - RunPatch
-  - RunStatus
-  - RunType
-  - RunListResult
-  - Task
-  - TaskRun
-  - TaskPatch
-  - TaskStatus
-  - TaskListResult
-  - TaskRunListResult
-  - ProvisioningState
-  - Policies
-  - PolicyStatus
-  - Replication
-  - ReplicationPatch
-  - ReplicationListResult
-  - Webhook
-  - IPRule
   - AgentPool
+  - AgentPoolListResult
   - AgentPoolPatch
   - AgentPoolQueueStatus
-  - NetworkRuleSet
-  - DockerBuildStep
-  - TriggerProperties
-  - EncryptionStatus
-  - ExportPolicy
-  - ExportPolicyStatus
-  - FileTaskStep
-  - ImageDescriptor
-  - ImageUpdateTrigger
-  - ImportImageParameters
-  - ImportMode
-  - ImportSource
-  - ImportSourceCredentials
-  - PublicNetworkAccess
-  - RetentionPolicy
-  - RunGetLogResult
-  - SecretObject
-  - SecretObjectType
-  - SourceTrigger
-  - SourceTriggerDescriptor
-  - SourceTriggerEvent
-  - TimerTrigger
-  - TimerTriggerDescriptor
-  - TriggerStatus
-  - TrustPolicy
-  - TrustPolicyType
-  - WebhookAction
-  - WebhookPatch
-  - WebhookStatus
-  - ZoneRedundancy
-  - PasswordName
-  - AgentPoolListResult
   - AgentProperties
-  - EncodedTaskStep
-  - OverrideTaskStepProperties
-  - QuarantinePolicy
-  - UpdateTriggerPayloadType
-  - WebhookListResult
+  - ArchiveData
+  - ArchivePatch
+  - ArchiveVersionData
+  - AuthCredential
   - BaseImageDependency
   - BaseImageDependencyType
   - BaseImageTrigger
   - BaseImageTriggerType
+  - CacheRuleData
+  - CredentialName
   - Credentials
+  - DockerBuildStep
+  - EncodedTaskStep
+  - EncryptionStatus
+  - ExportPipelineData
+  - ExportPolicy
+  - ExportPolicyStatus
+  - FileTaskStep
+  - GenerateCredentialsResult
+  - ImageDescriptor
+  - ImageUpdateTrigger
+  - ImportImageParameters
+  - ImportMode
+  - ImportPipelineData
+  - ImportSource
+  - ImportSourceCredentials
+  - IPRule
+  - KeyVaultProperties
+  - MetadataSearch
+  - NetworkRuleSet
+  - OverrideTaskStepProperties
+  - PasswordName
+  - PipelineOption
+  - PipelineRun
+  - PlatformProperties
+  - Policies
+  - PolicyStatus
+  - ProvisioningState
+  - PublicNetworkAccess
+  - QuarantinePolicy
+  - Replication
+  - ReplicationListResult
+  - ReplicationPatch
+  - RetentionPolicy
+  - Run
+  - RunGetLogResult
+  - RunListResult
+  - RunPatch
+  - RunStatus
+  - RunType
+  - SecretObject
+  - SecretObjectType
+  - SoftDeletePolicy
+  - SourceTrigger
+  - SourceTriggerDescriptor
+  - SourceTriggerEvent
+  - Task
+  - TaskListResult
+  - TaskPatch
+  - TaskRun
+  - TaskRunListResult
+  - TaskStatus
+  - TaskStepProperties
+  - TimerTrigger
+  - TimerTriggerDescriptor
+  - TlsProperties
+  - TlsStatus
   - Token
   - TokenCertificate
   - TokenCertificateName
@@ -142,9 +146,18 @@ prepend-rp-prefix:
   - TokenPassword
   - TokenPasswordName
   - TokenStatus
-  - PipelineRun
-  - GenerateCredentialsResult
-  - SoftDeletePolicy
+  - TriggerProperties
+  - TriggerStatus
+  - TrustPolicy
+  - TrustPolicyType
+  - UpdateTriggerPayloadType
+  - Webhook
+  - WebhookAction
+  - WebhookListResult
+  - WebhookPatch
+  - WebhookStatus
+  - ZoneRedundancy
+  - CredentialSetData
 
 rename-mapping:
   OS: ContainerRegistryOS
@@ -249,6 +262,7 @@ rename-mapping:
   TlsCertificateProperties.location: CertificateLocation
   TokenCredentialsProperties: ContainerRegistryTokenCredentials
   ImportSource.registryUri: RegistryAddress
+  ConnectedRegistryStatusDetail.CorrelationId: -|uuid
 
 override-operation-name:
   Schedules_ScheduleRun: ScheduleRun

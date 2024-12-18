@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <summary> Initializes a new instance of <see cref="CredentialSetData"/>. </summary>
         public CredentialSetData()
         {
-            AuthCredentials = new ChangeTrackingList<AuthCredential>();
+            AuthCredentials = new ChangeTrackingList<ContainerRegistryAuthCredential>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CredentialSetData"/>. </summary>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="createdOn"> The creation date of credential store resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CredentialSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string loginServer, IList<AuthCredential> authCredentials, DateTimeOffset? createdOn, ContainerRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal CredentialSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string loginServer, IList<ContainerRegistryAuthCredential> authCredentials, DateTimeOffset? createdOn, ContainerRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
             LoginServer = loginServer;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Usually consists of a primary and an optional secondary credential.
         /// </summary>
         [WirePath("properties.authCredentials")]
-        public IList<AuthCredential> AuthCredentials { get; }
+        public IList<ContainerRegistryAuthCredential> AuthCredentials { get; }
         /// <summary> The creation date of credential store resource. </summary>
         [WirePath("properties.creationDate")]
         public DateTimeOffset? CreatedOn { get; }

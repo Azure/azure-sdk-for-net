@@ -162,18 +162,18 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="host"> The host of the connected registry. Can be FQDN or IP. </param>
         /// <param name="tls"> The TLS properties of the connected registry login server. </param>
         /// <returns> A new <see cref="Models.ConnectedRegistryLoginServer"/> instance for mocking. </returns>
-        public static ConnectedRegistryLoginServer ConnectedRegistryLoginServer(string host = null, TlsProperties tls = null)
+        public static ConnectedRegistryLoginServer ConnectedRegistryLoginServer(string host = null, ContainerRegistryTlsProperties tls = null)
         {
             return new ConnectedRegistryLoginServer(host, tls, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TlsProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryTlsProperties"/>. </summary>
         /// <param name="status"> Indicates whether HTTPS is enabled for the login server. </param>
         /// <param name="certificate"> The certificate used to configure HTTPS for the login server. </param>
-        /// <returns> A new <see cref="Models.TlsProperties"/> instance for mocking. </returns>
-        public static TlsProperties TlsProperties(TlsStatus? status = null, TlsCertificateProperties certificate = null)
+        /// <returns> A new <see cref="Models.ContainerRegistryTlsProperties"/> instance for mocking. </returns>
+        public static ContainerRegistryTlsProperties ContainerRegistryTlsProperties(ContainerRegistryTlsStatus? status = null, TlsCertificateProperties certificate = null)
         {
-            return new TlsProperties(status, certificate, serializedAdditionalRawData: null);
+            return new ContainerRegistryTlsProperties(status, certificate, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TlsCertificateProperties"/>. </summary>
@@ -217,9 +217,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="createdOn"> The creation date of credential store resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="ContainerRegistry.CredentialSetData"/> instance for mocking. </returns>
-        public static CredentialSetData CredentialSetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServiceIdentity identity = null, string loginServer = null, IEnumerable<AuthCredential> authCredentials = null, DateTimeOffset? createdOn = null, ContainerRegistryProvisioningState? provisioningState = null)
+        public static CredentialSetData CredentialSetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServiceIdentity identity = null, string loginServer = null, IEnumerable<ContainerRegistryAuthCredential> authCredentials = null, DateTimeOffset? createdOn = null, ContainerRegistryProvisioningState? provisioningState = null)
         {
-            authCredentials ??= new List<AuthCredential>();
+            authCredentials ??= new List<ContainerRegistryAuthCredential>();
 
             return new CredentialSetData(
                 id,
@@ -234,15 +234,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AuthCredential"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryAuthCredential"/>. </summary>
         /// <param name="name"> The name of the credential. </param>
         /// <param name="usernameSecretIdentifier"> KeyVault Secret URI for accessing the username. </param>
         /// <param name="passwordSecretIdentifier"> KeyVault Secret URI for accessing the password. </param>
         /// <param name="credentialHealth"> This provides data pertaining to the health of the auth credential. </param>
-        /// <returns> A new <see cref="Models.AuthCredential"/> instance for mocking. </returns>
-        public static AuthCredential AuthCredential(CredentialName? name = null, string usernameSecretIdentifier = null, string passwordSecretIdentifier = null, CredentialHealth credentialHealth = null)
+        /// <returns> A new <see cref="Models.ContainerRegistryAuthCredential"/> instance for mocking. </returns>
+        public static ContainerRegistryAuthCredential ContainerRegistryAuthCredential(ContainerRegistryCredentialName? name = null, string usernameSecretIdentifier = null, string passwordSecretIdentifier = null, CredentialHealth credentialHealth = null)
         {
-            return new AuthCredential(name, usernameSecretIdentifier, passwordSecretIdentifier, credentialHealth, serializedAdditionalRawData: null);
+            return new ContainerRegistryAuthCredential(name, usernameSecretIdentifier, passwordSecretIdentifier, credentialHealth, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CredentialHealth"/>. </summary>
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="metadataSearch"> Determines whether registry artifacts are indexed for metadata search. </param>
         /// <param name="autoGeneratedDomainNameLabelScope"> Determines the domain name label reuse scope. </param>
         /// <returns> A new <see cref="ContainerRegistry.ContainerRegistryData"/> instance for mocking. </returns>
-        public static ContainerRegistryData ContainerRegistryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ContainerRegistrySku sku = null, ManagedServiceIdentity identity = null, string loginServer = null, DateTimeOffset? createdOn = null, ContainerRegistryProvisioningState? provisioningState = null, ContainerRegistryResourceStatus status = null, bool? isAdminUserEnabled = null, ContainerRegistryNetworkRuleSet networkRuleSet = null, ContainerRegistryPolicies policies = null, ContainerRegistryEncryption encryption = null, bool? isDataEndpointEnabled = null, IEnumerable<string> dataEndpointHostNames = null, IEnumerable<ContainerRegistryPrivateEndpointConnectionData> privateEndpointConnections = null, ContainerRegistryPublicNetworkAccess? publicNetworkAccess = null, ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions = null, ContainerRegistryZoneRedundancy? zoneRedundancy = null, bool? isAnonymousPullEnabled = null, MetadataSearch? metadataSearch = null, AutoGeneratedDomainNameLabelScope? autoGeneratedDomainNameLabelScope = null)
+        public static ContainerRegistryData ContainerRegistryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ContainerRegistrySku sku = null, ManagedServiceIdentity identity = null, string loginServer = null, DateTimeOffset? createdOn = null, ContainerRegistryProvisioningState? provisioningState = null, ContainerRegistryResourceStatus status = null, bool? isAdminUserEnabled = null, ContainerRegistryNetworkRuleSet networkRuleSet = null, ContainerRegistryPolicies policies = null, ContainerRegistryEncryption encryption = null, bool? isDataEndpointEnabled = null, IEnumerable<string> dataEndpointHostNames = null, IEnumerable<ContainerRegistryPrivateEndpointConnectionData> privateEndpointConnections = null, ContainerRegistryPublicNetworkAccess? publicNetworkAccess = null, ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions = null, ContainerRegistryZoneRedundancy? zoneRedundancy = null, bool? isAnonymousPullEnabled = null, ContainerRegistryMetadataSearch? metadataSearch = null, AutoGeneratedDomainNameLabelScope? autoGeneratedDomainNameLabelScope = null)
         {
             tags ??= new Dictionary<string, string>();
             dataEndpointHostNames ??= new List<string>();

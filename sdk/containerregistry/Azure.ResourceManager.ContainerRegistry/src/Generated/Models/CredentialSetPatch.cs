@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of <see cref="CredentialSetPatch"/>. </summary>
         public CredentialSetPatch()
         {
-            AuthCredentials = new ChangeTrackingList<AuthCredential>();
+            AuthCredentials = new ChangeTrackingList<ContainerRegistryAuthCredential>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CredentialSetPatch"/>. </summary>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// Usually consists of a primary and an optional secondary credential.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CredentialSetPatch(ManagedServiceIdentity identity, IList<AuthCredential> authCredentials, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CredentialSetPatch(ManagedServiceIdentity identity, IList<ContainerRegistryAuthCredential> authCredentials, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Identity = identity;
             AuthCredentials = authCredentials;
@@ -74,6 +74,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// Usually consists of a primary and an optional secondary credential.
         /// </summary>
         [WirePath("properties.authCredentials")]
-        public IList<AuthCredential> AuthCredentials { get; }
+        public IList<ContainerRegistryAuthCredential> AuthCredentials { get; }
     }
 }

@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class AuthCredential : IUtf8JsonSerializable, IJsonModel<AuthCredential>
+    public partial class ContainerRegistryAuthCredential : IUtf8JsonSerializable, IJsonModel<ContainerRegistryAuthCredential>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AuthCredential>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryAuthCredential>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AuthCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerRegistryAuthCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AuthCredential>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryAuthCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AuthCredential)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryAuthCredential)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Name))
@@ -72,19 +72,19 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
         }
 
-        AuthCredential IJsonModel<AuthCredential>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ContainerRegistryAuthCredential IJsonModel<ContainerRegistryAuthCredential>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AuthCredential>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryAuthCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AuthCredential)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryAuthCredential)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAuthCredential(document.RootElement, options);
+            return DeserializeContainerRegistryAuthCredential(document.RootElement, options);
         }
 
-        internal static AuthCredential DeserializeAuthCredential(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ContainerRegistryAuthCredential DeserializeContainerRegistryAuthCredential(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            CredentialName? name = default;
+            ContainerRegistryCredentialName? name = default;
             string usernameSecretIdentifier = default;
             string passwordSecretIdentifier = default;
             CredentialHealth credentialHealth = default;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    name = new CredentialName(property.Value.GetString());
+                    name = new ContainerRegistryCredentialName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("usernameSecretIdentifier"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AuthCredential(name, usernameSecretIdentifier, passwordSecretIdentifier, credentialHealth, serializedAdditionalRawData);
+            return new ContainerRegistryAuthCredential(name, usernameSecretIdentifier, passwordSecretIdentifier, credentialHealth, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -228,9 +228,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<AuthCredential>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ContainerRegistryAuthCredential>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AuthCredential>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryAuthCredential>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -239,26 +239,26 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AuthCredential)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryAuthCredential)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AuthCredential IPersistableModel<AuthCredential>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ContainerRegistryAuthCredential IPersistableModel<ContainerRegistryAuthCredential>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AuthCredential>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryAuthCredential>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAuthCredential(document.RootElement, options);
+                        return DeserializeContainerRegistryAuthCredential(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AuthCredential)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryAuthCredential)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AuthCredential>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerRegistryAuthCredential>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

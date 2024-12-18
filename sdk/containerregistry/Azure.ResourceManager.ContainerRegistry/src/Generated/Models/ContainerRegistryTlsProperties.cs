@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The TLS properties of the connected registry login server. </summary>
-    public partial class TlsProperties
+    public partial class ContainerRegistryTlsProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="TlsProperties"/>. </summary>
-        internal TlsProperties()
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTlsProperties"/>. </summary>
+        internal ContainerRegistryTlsProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TlsProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTlsProperties"/>. </summary>
         /// <param name="status"> Indicates whether HTTPS is enabled for the login server. </param>
         /// <param name="certificate"> The certificate used to configure HTTPS for the login server. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TlsProperties(TlsStatus? status, TlsCertificateProperties certificate, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerRegistryTlsProperties(ContainerRegistryTlsStatus? status, TlsCertificateProperties certificate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Certificate = certificate;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Indicates whether HTTPS is enabled for the login server. </summary>
         [WirePath("status")]
-        public TlsStatus? Status { get; }
+        public ContainerRegistryTlsStatus? Status { get; }
         /// <summary> The certificate used to configure HTTPS for the login server. </summary>
         [WirePath("certificate")]
         public TlsCertificateProperties Certificate { get; }

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             ManagedServiceIdentity identity = default;
-            IList<AuthCredential> authCredentials = default;
+            IList<ContainerRegistryAuthCredential> authCredentials = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,10 +120,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             {
                                 continue;
                             }
-                            List<AuthCredential> array = new List<AuthCredential>();
+                            List<ContainerRegistryAuthCredential> array = new List<ContainerRegistryAuthCredential>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AuthCredential.DeserializeAuthCredential(item, options));
+                                array.Add(ContainerRegistryAuthCredential.DeserializeContainerRegistryAuthCredential(item, options));
                             }
                             authCredentials = array;
                             continue;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CredentialSetPatch(identity, authCredentials ?? new ChangeTrackingList<AuthCredential>(), serializedAdditionalRawData);
+            return new CredentialSetPatch(identity, authCredentials ?? new ChangeTrackingList<ContainerRegistryAuthCredential>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CredentialSetPatch>.Write(ModelReaderWriterOptions options)

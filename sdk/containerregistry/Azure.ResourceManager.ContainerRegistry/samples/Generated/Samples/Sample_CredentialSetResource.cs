@@ -98,9 +98,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             // invoke the operation
             CredentialSetPatch patch = new CredentialSetPatch
             {
-                AuthCredentials = {new AuthCredential
+                AuthCredentials = {new ContainerRegistryAuthCredential
 {
-Name = CredentialName.Credential1,
+Name = ContainerRegistryCredentialName.Credential1,
 UsernameSecretIdentifier = "https://myvault.vault.azure.net/secrets/username2",
 PasswordSecretIdentifier = "https://myvault.vault.azure.net/secrets/password2",
 }},

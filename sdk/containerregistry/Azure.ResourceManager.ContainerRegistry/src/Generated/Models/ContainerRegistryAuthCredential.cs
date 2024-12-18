@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> Authentication credential stored for an upstream. </summary>
-    public partial class AuthCredential
+    public partial class ContainerRegistryAuthCredential
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,18 +45,18 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AuthCredential"/>. </summary>
-        public AuthCredential()
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryAuthCredential"/>. </summary>
+        public ContainerRegistryAuthCredential()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AuthCredential"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryAuthCredential"/>. </summary>
         /// <param name="name"> The name of the credential. </param>
         /// <param name="usernameSecretIdentifier"> KeyVault Secret URI for accessing the username. </param>
         /// <param name="passwordSecretIdentifier"> KeyVault Secret URI for accessing the password. </param>
         /// <param name="credentialHealth"> This provides data pertaining to the health of the auth credential. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AuthCredential(CredentialName? name, string usernameSecretIdentifier, string passwordSecretIdentifier, CredentialHealth credentialHealth, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerRegistryAuthCredential(ContainerRegistryCredentialName? name, string usernameSecretIdentifier, string passwordSecretIdentifier, CredentialHealth credentialHealth, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             UsernameSecretIdentifier = usernameSecretIdentifier;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> The name of the credential. </summary>
         [WirePath("name")]
-        public CredentialName? Name { get; set; }
+        public ContainerRegistryCredentialName? Name { get; set; }
         /// <summary> KeyVault Secret URI for accessing the username. </summary>
         [WirePath("usernameSecretIdentifier")]
         public string UsernameSecretIdentifier { get; set; }

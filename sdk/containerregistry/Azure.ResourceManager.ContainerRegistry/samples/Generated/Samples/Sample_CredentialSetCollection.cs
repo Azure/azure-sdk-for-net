@@ -46,9 +46,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             {
                 Identity = new ManagedServiceIdentity("SystemAssigned"),
                 LoginServer = "docker.io",
-                AuthCredentials = {new AuthCredential
+                AuthCredentials = {new ContainerRegistryAuthCredential
 {
-Name = CredentialName.Credential1,
+Name = ContainerRegistryCredentialName.Credential1,
 UsernameSecretIdentifier = "https://myvault.vault.azure.net/secrets/username",
 PasswordSecretIdentifier = "https://myvault.vault.azure.net/secrets/password",
 }},

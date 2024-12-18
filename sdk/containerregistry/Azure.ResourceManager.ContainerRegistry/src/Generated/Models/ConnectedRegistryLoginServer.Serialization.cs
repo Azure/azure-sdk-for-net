@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             string host = default;
-            TlsProperties tls = default;
+            ContainerRegistryTlsProperties tls = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    tls = TlsProperties.DeserializeTlsProperties(property.Value, options);
+                    tls = ContainerRegistryTlsProperties.DeserializeContainerRegistryTlsProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

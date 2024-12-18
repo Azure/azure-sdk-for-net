@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             ResourceType type = default;
             SystemData systemData = default;
             string loginServer = default;
-            IList<AuthCredential> authCredentials = default;
+            IList<ContainerRegistryAuthCredential> authCredentials = default;
             DateTimeOffset? creationDate = default;
             ContainerRegistryProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -160,10 +160,10 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            List<AuthCredential> array = new List<AuthCredential>();
+                            List<ContainerRegistryAuthCredential> array = new List<ContainerRegistryAuthCredential>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AuthCredential.DeserializeAuthCredential(item, options));
+                                array.Add(ContainerRegistryAuthCredential.DeserializeContainerRegistryAuthCredential(item, options));
                             }
                             authCredentials = array;
                             continue;
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 systemData,
                 identity,
                 loginServer,
-                authCredentials ?? new ChangeTrackingList<AuthCredential>(),
+                authCredentials ?? new ChangeTrackingList<ContainerRegistryAuthCredential>(),
                 creationDate,
                 provisioningState,
                 serializedAdditionalRawData);

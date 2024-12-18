@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class TlsProperties : IUtf8JsonSerializable, IJsonModel<TlsProperties>
+    public partial class ContainerRegistryTlsProperties : IUtf8JsonSerializable, IJsonModel<ContainerRegistryTlsProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TlsProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryTlsProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<TlsProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerRegistryTlsProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TlsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTlsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TlsProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryTlsProperties)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && Optional.IsDefined(Status))
@@ -62,19 +62,19 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
         }
 
-        TlsProperties IJsonModel<TlsProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ContainerRegistryTlsProperties IJsonModel<ContainerRegistryTlsProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TlsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTlsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TlsProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryTlsProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTlsProperties(document.RootElement, options);
+            return DeserializeContainerRegistryTlsProperties(document.RootElement, options);
         }
 
-        internal static TlsProperties DeserializeTlsProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ContainerRegistryTlsProperties DeserializeContainerRegistryTlsProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            TlsStatus? status = default;
+            ContainerRegistryTlsStatus? status = default;
             TlsCertificateProperties certificate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    status = new TlsStatus(property.Value.GetString());
+                    status = new ContainerRegistryTlsStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("certificate"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TlsProperties(status, certificate, serializedAdditionalRawData);
+            return new ContainerRegistryTlsProperties(status, certificate, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -160,9 +160,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<TlsProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ContainerRegistryTlsProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TlsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTlsProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -171,26 +171,26 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(TlsProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryTlsProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        TlsProperties IPersistableModel<TlsProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ContainerRegistryTlsProperties IPersistableModel<ContainerRegistryTlsProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TlsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTlsProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeTlsProperties(document.RootElement, options);
+                        return DeserializeContainerRegistryTlsProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TlsProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryTlsProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<TlsProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerRegistryTlsProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
