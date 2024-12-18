@@ -1,16 +1,11 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0 (2024-12-18)
 
 ### Features Added
 
+- Upgraded api-version from '2023-10-01-preview' to '2024-12-01'. Spec detail available at https://github.com/Azure/azure-rest-api-specs/tree/c39acac0b3b7ceeee03b594a7b49c9bad6b8e9f2/specification/playwrighttesting/PlaywrightTesting.Management.
 - Exposed `JsonModelWriteCore` for model serialization procedure.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.1 (2024-01-19)
 

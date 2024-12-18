@@ -7,17 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
-using Azure.ResourceManager.PlaywrightTesting.Models;
 
-namespace Azure.ResourceManager.PlaywrightTesting
+namespace Azure.ResourceManager.PlaywrightTesting.Models
 {
-    /// <summary>
-    /// A class representing the PlaywrightTestingQuota data model.
-    /// A subscription quota resource.
-    /// </summary>
-    public partial class PlaywrightTestingQuotaData : ResourceData
+    /// <summary> The subscription quota resource properties. </summary>
+    public partial class PlaywrightTestingQuotaProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,25 +45,29 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingQuotaData"/>. </summary>
-        internal PlaywrightTestingQuotaData()
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingQuotaProperties"/>. </summary>
+        internal PlaywrightTestingQuotaProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingQuotaData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingQuotaProperties"/>. </summary>
+        /// <param name="freeTrial"> The subscription quota resource free-trial properties. </param>
+        /// <param name="offeringType"> Indicates the offering type for the subscription. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PlaywrightTestingQuotaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PlaywrightTestingQuotaProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PlaywrightTestingQuotaProperties(PlaywrightTestingFreeTrialProperties freeTrial, PlaywrightTestingOfferingType? offeringType, PlaywrightTestingProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
+            FreeTrial = freeTrial;
+            OfferingType = offeringType;
+            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
-        public PlaywrightTestingQuotaProperties Properties { get; }
+        /// <summary> The subscription quota resource free-trial properties. </summary>
+        public PlaywrightTestingFreeTrialProperties FreeTrial { get; }
+        /// <summary> Indicates the offering type for the subscription. </summary>
+        public PlaywrightTestingOfferingType? OfferingType { get; }
+        /// <summary> The status of the last operation. </summary>
+        public PlaywrightTestingProvisioningState? ProvisioningState { get; }
     }
 }
