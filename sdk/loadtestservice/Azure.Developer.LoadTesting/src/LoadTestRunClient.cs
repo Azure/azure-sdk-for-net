@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Developer.LoadTesting.Models;
 
 namespace Azure.Developer.LoadTesting
 {
@@ -36,7 +37,7 @@ namespace Azure.Developer.LoadTesting
             try
             {
                 Response initialResponse = CreateOrUpdateTestRun(testRunId, content, oldTestRunId, context);
-                TestRunResultOperation operation = new(testRunId, this, initialResponse);
+                TestRunResultOperation operation = new(testRunId, this, Response.FromValue(TestRun.FromResponse(initialResponse), initialResponse));
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion((TimeSpan)timeSpan, cancellationToken: default);
@@ -77,7 +78,7 @@ namespace Azure.Developer.LoadTesting
             try
             {
                 Response initialResponse = await CreateOrUpdateTestRunAsync(testRunId, content, oldTestRunId, context).ConfigureAwait(false);
-                TestRunResultOperation operation = new(testRunId, this, initialResponse);
+                TestRunResultOperation operation = new(testRunId, this, Response.FromValue(TestRun.FromResponse(initialResponse), initialResponse));
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync((TimeSpan)timeSpan, cancellationToken: default).ConfigureAwait(false);
