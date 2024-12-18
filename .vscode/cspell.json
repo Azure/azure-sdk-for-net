@@ -790,6 +790,7 @@
         "imsi",
         "imei",
         "imeisv",
+        "ipam",
         "tmsi",
         "supi",
         "suci",
