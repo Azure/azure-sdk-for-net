@@ -370,8 +370,8 @@ namespace Azure.ResourceManager.Confluent
         /// <returns> An async collection of <see cref="SCEnvironmentRecord"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SCEnvironmentRecord> GetEnvironmentsAsync(int? pageSize = null, string pageToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _confluentOrganizationOrganizationRestClient.CreateListEnvironmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, pageToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _confluentOrganizationOrganizationRestClient.CreateListEnvironmentsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, pageToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _confluentOrganizationOrganizationRestClient.CreateListEnvironmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSize, pageToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _confluentOrganizationOrganizationRestClient.CreateListEnvironmentsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSize, pageToken);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SCEnvironmentRecord.DeserializeSCEnvironmentRecord(e), _confluentOrganizationOrganizationClientDiagnostics, Pipeline, "ConfluentOrganizationResource.GetEnvironments", "value", "nextLink", cancellationToken);
         }
 
@@ -402,8 +402,8 @@ namespace Azure.ResourceManager.Confluent
         /// <returns> A collection of <see cref="SCEnvironmentRecord"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SCEnvironmentRecord> GetEnvironments(int? pageSize = null, string pageToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _confluentOrganizationOrganizationRestClient.CreateListEnvironmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, pageToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _confluentOrganizationOrganizationRestClient.CreateListEnvironmentsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, pageToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _confluentOrganizationOrganizationRestClient.CreateListEnvironmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSize, pageToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _confluentOrganizationOrganizationRestClient.CreateListEnvironmentsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSize, pageToken);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SCEnvironmentRecord.DeserializeSCEnvironmentRecord(e), _confluentOrganizationOrganizationClientDiagnostics, Pipeline, "ConfluentOrganizationResource.GetEnvironments", "value", "nextLink", cancellationToken);
         }
 
@@ -525,8 +525,8 @@ namespace Azure.ResourceManager.Confluent
         {
             Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _confluentOrganizationOrganizationRestClient.CreateListClustersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentId, pageSizeHint, pageToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _confluentOrganizationOrganizationRestClient.CreateListClustersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentId, pageSizeHint, pageToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _confluentOrganizationOrganizationRestClient.CreateListClustersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentId, pageSize, pageToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _confluentOrganizationOrganizationRestClient.CreateListClustersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentId, pageSize, pageToken);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SCClusterRecord.DeserializeSCClusterRecord(e), _confluentOrganizationOrganizationClientDiagnostics, Pipeline, "ConfluentOrganizationResource.GetClusters", "value", "nextLink", cancellationToken);
         }
 
@@ -562,8 +562,8 @@ namespace Azure.ResourceManager.Confluent
         {
             Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _confluentOrganizationOrganizationRestClient.CreateListClustersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentId, pageSizeHint, pageToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _confluentOrganizationOrganizationRestClient.CreateListClustersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentId, pageSizeHint, pageToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _confluentOrganizationOrganizationRestClient.CreateListClustersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentId, pageSize, pageToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _confluentOrganizationOrganizationRestClient.CreateListClustersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentId, pageSize, pageToken);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SCClusterRecord.DeserializeSCClusterRecord(e), _confluentOrganizationOrganizationClientDiagnostics, Pipeline, "ConfluentOrganizationResource.GetClusters", "value", "nextLink", cancellationToken);
         }
 
@@ -599,8 +599,8 @@ namespace Azure.ResourceManager.Confluent
         {
             Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _confluentOrganizationOrganizationRestClient.CreateListSchemaRegistryClustersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentId, pageSizeHint, pageToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _confluentOrganizationOrganizationRestClient.CreateListSchemaRegistryClustersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentId, pageSizeHint, pageToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _confluentOrganizationOrganizationRestClient.CreateListSchemaRegistryClustersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentId, pageSize, pageToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _confluentOrganizationOrganizationRestClient.CreateListSchemaRegistryClustersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentId, pageSize, pageToken);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SchemaRegistryClusterRecord.DeserializeSchemaRegistryClusterRecord(e), _confluentOrganizationOrganizationClientDiagnostics, Pipeline, "ConfluentOrganizationResource.GetSchemaRegistryClusters", "value", "nextLink", cancellationToken);
         }
 
@@ -636,8 +636,8 @@ namespace Azure.ResourceManager.Confluent
         {
             Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _confluentOrganizationOrganizationRestClient.CreateListSchemaRegistryClustersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentId, pageSizeHint, pageToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _confluentOrganizationOrganizationRestClient.CreateListSchemaRegistryClustersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentId, pageSizeHint, pageToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _confluentOrganizationOrganizationRestClient.CreateListSchemaRegistryClustersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentId, pageSize, pageToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _confluentOrganizationOrganizationRestClient.CreateListSchemaRegistryClustersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentId, pageSize, pageToken);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SchemaRegistryClusterRecord.DeserializeSchemaRegistryClusterRecord(e), _confluentOrganizationOrganizationClientDiagnostics, Pipeline, "ConfluentOrganizationResource.GetSchemaRegistryClusters", "value", "nextLink", cancellationToken);
         }
 
