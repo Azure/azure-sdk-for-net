@@ -119,10 +119,31 @@ var entraTokenCredential = new InteractiveBrowserCredential(options);
 
 var entraTokenCredentialOptions = new EntraCommunicationTokenCredentialOptions(
     resourceEndpoint: "https://<your-resource>.communication.azure.com",
-    entraTokenCredential: entraTokenCredential
-){
-      Scopes = new[] { "https://communication.azure.com/clients/VoIP" }
-};
+    entraTokenCredential: entraTokenCredential,
+    scopes: new[] { "https://communication.azure.com/clients/VoIP" }
+);
+
+var credential = new CommunicationTokenCredential(entraTokenCredentialOptions);
+
+```
+
+The same approach can be used to authorize your Azure Communication Services resource to receive calls from the Teams resource account.
+This requires providing the `https://auth.msft.communication.azure.com/TeamsExtension.ManageCalls` scope
+```C# 
+var options = new InteractiveBrowserCredentialOptions
+    {
+        TenantId = "<your-tenant-id>",
+        ClientId = "<your-client-id>",
+        RedirectUri = new Uri("<your-redirect-uri>"),
+        AuthorityHost = new Uri("https://login.microsoftonline.com/<your-tenant-id>")
+    };
+var entraTokenCredential = new InteractiveBrowserCredential(options);
+
+var entraTokenCredentialOptions = new EntraCommunicationTokenCredentialOptions(
+    resourceEndpoint: "https://<your-resource>.communication.azure.com",
+    entraTokenCredential: entraTokenCredential,
+    scopes: new[] { "https://auth.msft.communication.azure.com/TeamsExtension.ManageCalls" }
+);
 
 var credential = new CommunicationTokenCredential(entraTokenCredentialOptions);
 
