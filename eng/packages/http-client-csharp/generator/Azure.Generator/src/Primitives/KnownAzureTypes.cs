@@ -2,27 +2,26 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Microsoft.Generator.CSharp.ClientModel.Snippets;
 using Microsoft.Generator.CSharp.Expressions;
+using Microsoft.Generator.CSharp.Input;
 using Microsoft.Generator.CSharp.Primitives;
+using Microsoft.Generator.CSharp.Snippets;
+using Microsoft.Generator.CSharp.Statements;
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Net;
+using System.Text.Json;
+using static Microsoft.Generator.CSharp.Snippets.Snippet;
 
 namespace Azure.Generator.Primitives
 {
     internal static class KnownAzureTypes
     {
-        private record struct KnownAzureType(string Id, Type Type, ValueExpression SerializationExpression, ValueExpression DeserializationExpression);
-
-        private static readonly KnownAzureType[] _allKnownAzureTypes = [
-            new(UuidId, typeof(Guid), null!, null!)
-            ];
-
-        private static readonly IReadOnlyDictionary<string, CSharpType> _idToTypes = _allKnownAzureTypes.ToDictionary(t => t.Id, t => new CSharpType(t.Type));
-        private static readonly IReadOnlyDictionary<Type, ValueExpression> _typeToSerializationExpression = _allKnownAzureTypes.ToDictionary(t => t.Type, t => t.SerializationExpression);
-        private static readonly IReadOnlyDictionary<Type, ValueExpression> _typeToDeserializationExpression = _allKnownAzureTypes.ToDictionary(t => t.Type, t => t.DeserializationExpression);
+        public delegate MethodBodyStatement SerializationExpression(ValueExpression value, ScopedApi<Utf8JsonWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format);
+        public delegate ValueExpression DeserializationExpression(CSharpType valueType, ScopedApi<JsonElement> element, SerializationFormat format);
 
         private const string UuidId = "Azure.Core.uuid";
         private const string IPv4AddressId = "Azure.Core.ipV4Address";
@@ -31,7 +30,19 @@ namespace Azure.Generator.Primitives
         private const string AzureLocationId = "Azure.Core.azureLocation";
         private const string ArmIdId = "Azure.Core.armResourceIdentifier";
 
-        private static readonly IReadOnlyDictionary<string, CSharpType> PrimitiveTypes = new Dictionary<string, CSharpType>
+        private static MethodBodyStatement SerializeTypeWithImplicitOperatorToString(ValueExpression value, ScopedApi<Utf8JsonWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format)
+            => writer.WriteStringValue(value);
+
+        private static ValueExpression DeserializeNewInstanceStringLikeType(CSharpType valueType, ScopedApi<JsonElement> element, SerializationFormat format)
+            => New.Instance(valueType, element.GetString());
+
+        private static MethodBodyStatement SerializeTypeWithToString(ValueExpression value, ScopedApi<Utf8JsonWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format)
+            => writer.WriteStringValue(value.InvokeToString());
+
+        private static ValueExpression DeserializeParsableStringLikeType(CSharpType valueType, ScopedApi<JsonElement> element, SerializationFormat format)
+            => Static(valueType).Invoke("Parse", element.GetString());
+
+        private static readonly IReadOnlyDictionary<string, CSharpType> _idToTypes = new Dictionary<string, CSharpType>
         {
             [UuidId] = typeof(Guid),
             [IPv4AddressId] = typeof(IPAddress),
@@ -41,13 +52,28 @@ namespace Azure.Generator.Primitives
             [ArmIdId] = typeof(ResourceIdentifier),
         };
 
+        private static readonly IReadOnlyDictionary<Type, SerializationExpression> _typeToSerializationExpression = new Dictionary<Type, SerializationExpression>
+        {
+            [typeof(Guid)] = SerializeTypeWithImplicitOperatorToString,
+            [typeof(IPAddress)] = SerializeTypeWithToString,
+            [typeof(ETag)] = SerializeTypeWithImplicitOperatorToString,
+            [typeof(AzureLocation)] = SerializeTypeWithImplicitOperatorToString,
+            [typeof(ResourceIdentifier)] = SerializeTypeWithImplicitOperatorToString,
+        };
+
+        private static readonly IReadOnlyDictionary<Type, DeserializationExpression> _typeToDeserializationExpression = new Dictionary<Type, DeserializationExpression>
+        {
+            [typeof(Guid)] = DeserializeNewInstanceStringLikeType,
+            [typeof(IPAddress)] = DeserializeParsableStringLikeType,
+            [typeof(ETag)] = DeserializeParsableStringLikeType,
+            [typeof(AzureLocation)] = DeserializeNewInstanceStringLikeType,
+            [typeof(ResourceIdentifier)] = DeserializeNewInstanceStringLikeType,
+        };
+
         internal static bool TryGetPrimitiveType(string id, [MaybeNullWhen(false)] out CSharpType type) => _idToTypes.TryGetValue(id, out type);
 
-        internal static ValueExpression? TryGetSerializationExpression(Type type) => _typeToSerializationExpression.TryGetValue(type, out var expression) ? expression : null;
+        internal static bool TryGetSerializationExpression(Type type, [MaybeNullWhen(false)] out SerializationExpression expression) => _typeToSerializationExpression.TryGetValue(type, out expression);
 
-        internal static ValueExpression GetDeserializationExpression(Type type)
-        {
-
-        }
+        internal static bool TryGetDeserializationExpression(Type type, [MaybeNullWhen(false)] out DeserializationExpression expression) => _typeToDeserializationExpression.TryGetValue(type, out expression);
     }
 }

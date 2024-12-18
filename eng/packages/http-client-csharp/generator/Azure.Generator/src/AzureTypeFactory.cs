@@ -66,8 +66,7 @@ namespace Azure.Generator
             InputPrimitiveType? primitiveType = inputType;
             while (primitiveType != null)
             {
-                var knownType = KnownAzureTypes.GetPrimitiveType(primitiveType.CrossLanguageDefinitionId);
-                if (knownType != null)
+                if (KnownAzureTypes.TryGetPrimitiveType(primitiveType.CrossLanguageDefinitionId, out var knownType))
                 {
                     return knownType;
                 }
@@ -90,13 +89,9 @@ namespace Azure.Generator
             ScopedApi<JsonElement> element,
             SerializationFormat format)
         {
-            return valueType switch
-            {
-                Type t when t == typeof(ResourceIdentifier) =>
-                    New.Instance(valueType, element.GetString()),
-                Type t when t == typeof(ETag)
-                _ => null,
-            };
+            return KnownAzureTypes.TryGetDeserializationExpression(valueType, out var deserializationExpression) ?
+                deserializationExpression(new CSharpType(valueType), element, format) :
+                null;
         }
 
         /// <inheritdoc/>
@@ -108,12 +103,9 @@ namespace Azure.Generator
 
         private MethodBodyStatement? SerializeValueTypeCore(CSharpType type, SerializationFormat serializationFormat, ValueExpression value, Type valueType, ScopedApi<Utf8JsonWriter> utf8JsonWriter, ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter)
         {
-            return valueType switch
-            {
-                Type t when t == typeof(ResourceIdentifier) =>
-                    utf8JsonWriter.WriteStringValue(value.Property(nameof(ResourceIdentifier.Name))),
-                _ => null,
-            };
+            return KnownAzureTypes.TryGetSerializationExpression(valueType, out var serializationExpression) ?
+                serializationExpression(value, utf8JsonWriter, mrwOptionsParameter, serializationFormat) :
+                null;
         }
     }
 }

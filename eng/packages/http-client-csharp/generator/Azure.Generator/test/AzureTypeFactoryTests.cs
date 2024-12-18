@@ -4,11 +4,14 @@
 using Azure.Core;
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
-using Microsoft.Azure.Test.HttpRecorder;
-using Microsoft.Generator.CSharp.Providers;
+using Microsoft.Generator.CSharp.Expressions;
+using Microsoft.Generator.CSharp.Input;
+using Microsoft.Generator.CSharp.Primitives;
 using NUnit.Framework;
 using System;
+using System.Buffers;
 using System.Net;
+using System.Text.Json;
 
 namespace Azure.Generator.Tests
 {
@@ -18,6 +21,25 @@ namespace Azure.Generator.Tests
         public void SetUp()
         {
             MockHelpers.LoadMockPlugin();
+        }
+
+        [TestCase(typeof(Guid))]
+        [TestCase(typeof(IPAddress))]
+        [TestCase(typeof(ETag))]
+        [TestCase(typeof(AzureLocation))]
+        [TestCase(typeof(ResourceIdentifier))]
+        public void ValidateSerialization(Type type)
+        {
+            var declaration = new CodeWriterDeclaration("value");
+            var value = new VariableExpression(type, declaration);
+            var writerDeclaration = new CodeWriterDeclaration("writer");
+            var writer = new VariableExpression(typeof(Utf8JsonWriter), writerDeclaration);
+
+            var statement = AzureClientPlugin.Instance.TypeFactory.SerializeValueType(type, SerializationFormat.Default, value, type, writer.As<Utf8JsonWriter>(), null!);
+            Assert.IsNotNull(statement);
+
+            var expected = Helpers.GetExpectedFromFile(type.ToString());
+            Assert.AreEqual(expected, statement.ToDisplayString());
         }
 
         [Test]
