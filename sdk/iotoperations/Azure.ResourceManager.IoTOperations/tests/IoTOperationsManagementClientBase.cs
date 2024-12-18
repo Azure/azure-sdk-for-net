@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.IoTOperations.Tests
         {
             ResourceGroupResource rg = await GetResourceGroupAsync(resourceGroupName);
             InstanceResourceCollection instances = rg.GetInstanceResources();
-            InstanceResource instance = await instances.GetAsync("aio-instance");
+            InstanceResource instance = await instances.GetAsync("aio-o5fjq");
             return instance.GetBrokerResources();
         }
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.IoTOperations.Tests
             BrokerResourceCollection brokers = await GetBrokerResourceCollectionAsync(
                 resourceGroupName
             );
-            BrokerResource broker = await brokers.GetAsync("aio-broker");
+            BrokerResource broker = await brokers.GetAsync("default");
             return broker.GetBrokerAuthenticationResources();
         }
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.IoTOperations.Tests
             BrokerResourceCollection brokers = await GetBrokerResourceCollectionAsync(
                 resourceGroupName
             );
-            BrokerResource broker = await brokers.GetAsync("aio-broker");
+            BrokerResource broker = await brokers.GetAsync("default");
             return broker.GetBrokerAuthorizationResources();
         }
 
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.IoTOperations.Tests
             BrokerResourceCollection brokers = await GetBrokerResourceCollectionAsync(
                 resourceGroupName
             );
-            BrokerResource broker = await brokers.GetAsync("aio-broker");
+            BrokerResource broker = await brokers.GetAsync("default");
             return broker.GetBrokerListenerResources();
         }
 
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.IoTOperations.Tests
         {
             ResourceGroupResource rg = await GetResourceGroupAsync(resourceGroupName);
             InstanceResourceCollection instances = rg.GetInstanceResources();
-            InstanceResource instance = await instances.GetAsync("aio-instance");
+            InstanceResource instance = await instances.GetAsync("aio-o5fjq");
             return instance.GetDataflowProfileResources();
         }
 
@@ -110,9 +110,7 @@ namespace Azure.ResourceManager.IoTOperations.Tests
         {
             DataflowProfileResourceCollection dataflowProfiles =
                 await GetDataflowProfileResourceCollectionAsync(resourceGroupName);
-            DataflowProfileResource dataflowProfile = await dataflowProfiles.GetAsync(
-                "aio-dataflow-profile"
-            );
+            DataflowProfileResource dataflowProfile = await dataflowProfiles.GetAsync("default");
             return dataflowProfile.GetDataflowResources();
         }
 
@@ -123,7 +121,7 @@ namespace Azure.ResourceManager.IoTOperations.Tests
         {
             ResourceGroupResource rg = await GetResourceGroupAsync(resourceGroupName);
             InstanceResourceCollection instances = rg.GetInstanceResources();
-            InstanceResource instance = await instances.GetAsync("aio-instance");
+            InstanceResource instance = await instances.GetAsync("aio-o5fjq");
             return instance.GetDataflowEndpointResources();
         }
     }

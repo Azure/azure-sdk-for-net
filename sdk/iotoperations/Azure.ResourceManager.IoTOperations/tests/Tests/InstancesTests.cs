@@ -11,9 +11,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.IoTOperations.Tests
 {
-    public class InstanceTests : IoTOperationsManagementClientBase
+    public class InstancesTests : IoTOperationsManagementClientBase
     {
-        public InstanceTests(bool isAsync)
+        public InstancesTests(bool isAsync)
             : base(isAsync) //, RecordedTestMode.Record
         { }
 
@@ -30,12 +30,6 @@ namespace Azure.ResourceManager.IoTOperations.Tests
         [RecordedTest]
         public async Task TestInstance()
         {
-            // await IoTOperationsManagementTestUtilities.TryRegisterResourceGroupAsync(
-            //     ResourceGroupsOperations,
-            //     IoTOperationsManagementTestUtilities.DefaultResourceLocation,
-            //     IoTOperationsManagementTestUtilities.DefaultResourceGroupName
-            // );
-
             // Get Instances
             InstanceResourceCollection instanceResourceCollection =
                 await GetInstanceResourceCollectionAsync(
@@ -52,7 +46,29 @@ namespace Azure.ResourceManager.IoTOperations.Tests
 
             // Update Instance
             string utcTime = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ");
-            InstanceResourceData instanceResourceData = new InstanceResourceData(
+            InstanceResourceData instanceResourceData = CreateInstanceResourceData(utcTime);
+
+            ArmOperation<InstanceResource> resp =
+                await instanceResourceCollection.CreateOrUpdateAsync(
+                    WaitUntil.Completed,
+                    "aio-o5fjq",
+                    instanceResourceData
+                );
+            InstanceResource updatedInstance = resp.Value;
+
+            Assert.IsNotNull(updatedInstance);
+            Assert.IsNotNull(updatedInstance.Data);
+            Assert.IsNotNull(updatedInstance.Data.Properties);
+            Assert.IsNotNull(updatedInstance.Data.Properties.Description);
+            Assert.AreEqual(
+                updatedInstance.Data.Properties.Description,
+                "Updated Description: " + utcTime
+            );
+        }
+
+        private InstanceResourceData CreateInstanceResourceData(string utcTime)
+        {
+            return new InstanceResourceData(
                 new AzureLocation(IoTOperationsManagementTestUtilities.DefaultResourceLocation),
                 new ExtendedLocation(
                     "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-110596935/providers/Microsoft.ExtendedLocation/customLocations/location-o5fjq",
@@ -71,23 +87,6 @@ namespace Azure.ResourceManager.IoTOperations.Tests
                     Description = "Updated Description: " + utcTime,
                 },
             };
-
-            ArmOperation<InstanceResource> resp =
-                await instanceResourceCollection.CreateOrUpdateAsync(
-                    WaitUntil.Completed,
-                    "aio-o5fjq",
-                    instanceResourceData
-                );
-            InstanceResource updatedInstance = resp.Value;
-
-            Assert.IsNotNull(updatedInstance);
-            Assert.IsNotNull(updatedInstance.Data);
-            Assert.IsNotNull(updatedInstance.Data.Properties);
-            Assert.IsNotNull(updatedInstance.Data.Properties.Description);
-            Assert.AreEqual(
-                updatedInstance.Data.Properties.Description,
-                "Updated Description: " + utcTime
-            );
         }
     }
 }
