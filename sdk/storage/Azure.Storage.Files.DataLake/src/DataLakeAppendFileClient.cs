@@ -678,6 +678,10 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="fastPathSessionData">
         /// Fast path session data.
         /// </param>
+        /// <param name="ifAppendPositionEqual">
+        /// IfAppendPositionEqual ensures that the AppendBlock operation
+        /// succeeds only if the append position is equal to a value.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -696,6 +700,7 @@ namespace Azure.Storage.Files.DataLake
             byte[] contentHash = default,
             IProgress<long> progressHandler = default,
             string fastPathSessionData = default,
+            long? ifAppendPositionEqual = default,
             CancellationToken cancellationToken = default)
             => AppendInternal(
                     content,
@@ -703,6 +708,7 @@ namespace Azure.Storage.Files.DataLake
                     contentHash,
                     progressHandler,
                     fastPathSessionData,
+                    ifAppendPositionEqual,
                     async: false,
                     cancellationToken)
                     .EnsureCompleted();
@@ -733,6 +739,10 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="fastPathSessionData">
         /// Fast path session data.
         /// </param>
+        /// <param name="ifAppendPositionEqual">
+        /// IfAppendPositionEqual ensures that the AppendBlock operation
+        /// succeeds only if the append position is equal to a value.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -751,6 +761,7 @@ namespace Azure.Storage.Files.DataLake
             byte[] contentHash = default,
             IProgress<long> progressHandler = default,
             string fastPathSessionData = default,
+            long? ifAppendPositionEqual = default,
             CancellationToken cancellationToken = default)
             => await AppendInternal(
                     content,
@@ -758,6 +769,7 @@ namespace Azure.Storage.Files.DataLake
                     contentHash,
                     progressHandler,
                     fastPathSessionData,
+                    ifAppendPositionEqual,
                     async: true,
                     cancellationToken)
                     .ConfigureAwait(false);
@@ -789,6 +801,10 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="fastPathSessionData">
         /// Fast path session data.
         /// </param>
+        /// <param name="ifAppendPositionEqual">
+        /// IfAppendPositionEqual ensures that the AppendBlock operation
+        /// succeeds only if the append position is equal to a value.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -810,6 +826,7 @@ namespace Azure.Storage.Files.DataLake
             byte[] contentHash,
             IProgress<long> progressHandler,
             string fastPathSessionData,
+            long? ifAppendPositionEqual,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -837,6 +854,7 @@ namespace Azure.Storage.Files.DataLake
                             contentLength: content?.Length - content?.Position ?? 0,
                             transactionalContentHash: contentHash,
                             fastPathSessionData: fastPathSessionData,
+                            conditionalAppendPosition: ifAppendPositionEqual,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -849,6 +867,7 @@ namespace Azure.Storage.Files.DataLake
                             contentLength: content?.Length - content?.Position ?? 0,
                             transactionalContentHash: contentHash,
                             fastPathSessionData: fastPathSessionData,
+                            conditionalAppendPosition: ifAppendPositionEqual,
                             cancellationToken: cancellationToken);
                     }
 

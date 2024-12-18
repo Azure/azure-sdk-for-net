@@ -1628,7 +1628,7 @@ namespace Azure.Storage.Files.DataLake
             }
             if (conditionalAppendPosition != null)
             {
-                request.Headers.Add("x-ms-blob-condition-appendpos", conditionalAppendPosition.Value);
+                request.Headers.Add("x-ms-conditional-appendpos", conditionalAppendPosition.Value);
             }
             request.Headers.Add("Accept", "application/json");
             if (contentLength != null)

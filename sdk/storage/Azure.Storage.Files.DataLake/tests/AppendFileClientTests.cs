@@ -699,5 +699,40 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNull(concurrentAppendResponse.Value.FastPathSessionData);
             Assert.IsNull(concurrentAppendResponse.Value.FastPathSessionDataExpiresOn);
         }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_12_06)]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task AppendAsync_IfAppendPositionEqual(bool appendPositionEqual)
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeAppendFileClient file = InstrumentClient(test.FileSystem.GetAppendFileClient(GetNewFileName()));
+            await file.CreateAsync();
+            var data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+
+            long? appendPosition = 0;
+
+            if (!appendPositionEqual)
+            {
+                appendPosition = 1;
+            }
+
+            // Act
+            if (appendPositionEqual)
+            {
+                Response<ConcurrentAppendResult> concurrentAppendResponse = await file.AppendAsync(stream, ifAppendPositionEqual: appendPosition);
+                Assert.AreEqual(1, concurrentAppendResponse.Value.CommittedBlockCount);
+            }
+            else
+            {
+                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                    file.AppendAsync(stream, ifAppendPositionEqual: appendPosition),
+                        e => Assert.AreEqual("InvalidAppendPosition", e.ErrorCode));
+            }
+        }
     }
 }
