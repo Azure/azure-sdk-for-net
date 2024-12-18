@@ -49,6 +49,12 @@ jobs:
       # Add a default so the job doesn't fail when the matrix is empty
       container: $[ variables['Container'] ]
 
+    variables:
+      ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
+        ServiceDirectory: '*'
+      ${{ else }}:
+        ServiceDirectory: ${{ parameters.ServiceDirectory }}
+
     templateContext:
       outputs:
         - output: pipelineArtifact
@@ -113,7 +119,7 @@ jobs:
         parameters:
           NuGetCacheKey: Test
       - pwsh: |
-          Write-Host "##vso[task.setvariable variable=CodeCoverageFilePattern]$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}\**\coverage.cobertura.xml"
+          Write-Host "##vso[task.setvariable variable=CodeCoverageFilePattern]$(Build.SourcesDirectory)\sdk\$(ServiceDirectory)\**\coverage.cobertura.xml"
         displayName: Set variable for the project list file and coverage directory
       - template: /eng/pipelines/templates/steps/dotnet-diagnostics.yml
         parameters:
@@ -125,7 +131,7 @@ jobs:
           --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
           --blame-crash-dump-type full --blame-hang-dump-type full --blame-hang-timeout ${{parameters.TestTimeoutInMinutes}}minutes
           /p:SDKType=${{ parameters.SDKType }}
-          /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
+          /p:ServiceDirectory=$(ServiceDirectory)
           /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
           /p:RunApiCompat=false /p:InheritDocEnabled=false
           /p:Configuration=$(BuildConfiguration)
@@ -151,7 +157,7 @@ jobs:
           reports: $(CodeCoverageFilePattern)
           targetdir: $(Build.ArtifactStagingDirectory)\coverage
           reporttypes: Cobertura
-          filefilters: +$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}\**
+          filefilters: +$(Build.SourcesDirectory)\sdk\$(ServiceDirectory)\**
           verbosity: Verbose
       - task: PublishCodeCoverageResults@2
         condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'), eq(variables['coverage.collected'], 'true'))

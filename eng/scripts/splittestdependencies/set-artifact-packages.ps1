@@ -21,7 +21,7 @@ $changedServicesArray = $packageProperties | Where-Object { $packageSet -contain
 $changedServices = $changedServicesArray -join ","
 
 $changedProjects = $packageProperties | Where-Object { $packageSet -contains $_.ArtifactName }
-| ForEach-Object { "$($_.DirectoryPath)/src/$($_.ArtifactName).csproj" }
+| ForEach-Object { "$($_.DirectoryPath)/**/*.csproj"; }
 
 $projectsForGeneration = ($changedProjects | ForEach-Object { "`$(RepoRoot)$_" } | Sort-Object)
 $projectGroups = @()
