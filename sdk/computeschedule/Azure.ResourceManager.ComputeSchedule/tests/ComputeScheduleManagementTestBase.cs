@@ -168,6 +168,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
                 {
                     Console.WriteLine(ex.Message);
                     await Task.Delay(1000);
+                    throw;
                 }
             }
             throw new OperationCanceledException("The operation was canceled before the virtual machine could be created.");
