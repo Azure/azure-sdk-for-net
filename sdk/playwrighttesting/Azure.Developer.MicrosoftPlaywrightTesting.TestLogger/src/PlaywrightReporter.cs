@@ -136,6 +136,12 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         }
 
         var cloudRunId = _environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId);
+        if (cloudRunId?.Length > 200)
+        {
+            _consoleWriter.WriteError($"\n{Constants.s_playwright_service_runId_Length_exceeded_Error}");
+            _environment.Exit(1);
+            return;
+        }
         string? baseUrl = _environment.GetEnvironmentVariable(ReporterConstants.s_pLAYWRIGHT_SERVICE_REPORTING_URL);
         string? accessToken = _environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken);
         if (string.IsNullOrEmpty(baseUrl))
@@ -155,11 +161,16 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         var reporterUtils = new ReporterUtils();
         TokenDetails tokenDetails = reporterUtils.ParseWorkspaceIdFromAccessToken(jsonWebTokenHandler: _jsonWebTokenHandler, accessToken: accessToken);
         var workspaceId = tokenDetails.aid;
-
+        var runNameString = runName?.ToString();
+        if (runNameString?.Length > 200)
+        {
+            runNameString = runNameString.Substring(0, 200);
+            _consoleWriter.WriteLine($"\n{Constants.s_playwright_service_runName_truncated_warning}");
+        }
         var cloudRunMetadata = new CloudRunMetadata
         {
             RunId = cloudRunId,
-            RunName = runName?.ToString(),
+            RunName = runNameString,
             WorkspaceId = workspaceId,
             BaseUri = baseUri,
             EnableResultPublish = _enableResultPublish,

@@ -53,10 +53,10 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                 CloudRunEnabled = false,
                 CiConfig = new CIConfig
                 {
-                    Branch = _cIInfo.Branch,
-                    Author = _cIInfo.Author,
-                    CommitId = _cIInfo.CommitId,
-                    RevisionUrl = _cIInfo.RevisionUrl,
+                    Branch = _cIInfo.Branch?.Length > 500? _cIInfo.Branch?.Substring(0,500): _cIInfo.Branch,
+                    Author = _cIInfo.Author?.Length > 500? _cIInfo.Author?.Substring(0, 500) : _cIInfo.Author,
+                    CommitId = _cIInfo.CommitId?.Length > 500 ? _cIInfo.CommitId?.Substring(0, 500) : _cIInfo.CommitId,
+                    RevisionUrl = _cIInfo.RevisionUrl?.Length > 1000 ? _cIInfo.RevisionUrl?.Substring(0, 1000) : _cIInfo.RevisionUrl,
                     CiProviderName = _cIInfo.Provider ?? CIConstants.s_dEFAULT
                 },
                 TestRunConfig = new ClientConfig // TODO fetch some of these dynamically
@@ -104,16 +104,16 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
             };
             testCaseResultData.TestCombinationId = testCaseResultData.TestExecutionId; // TODO check
             testCaseResultData.TestId = testResultSource.TestCase.Id.ToString();
-            testCaseResultData.TestTitle = testResultSource.TestCase.DisplayName;
+            testCaseResultData.TestTitle = testResultSource.TestCase.DisplayName.Length > 500? testResultSource.TestCase.DisplayName.Substring(0, 500): testResultSource.TestCase.DisplayName;
             var className = FetchTestClassName(testResultSource.TestCase.FullyQualifiedName);
-            testCaseResultData.SuiteTitle = className;
+            testCaseResultData.SuiteTitle = className.Length>500?className.Substring(0,500):className;
             testCaseResultData.SuiteId = ReporterUtils.CalculateSha1Hash(className);
-            testCaseResultData.FileName = FetchFileName(testResultSource.TestCase.Source);
+            testCaseResultData.FileName = FetchFileName(testResultSource.TestCase.Source).Length > 300 ? FetchFileName(testResultSource.TestCase.Source).Substring(0, 300) : FetchFileName(testResultSource.TestCase.Source);
             testCaseResultData.LineNumber = testResultSource.TestCase.LineNumber;
             testCaseResultData.Retry = 0; // TODO Retry and PreviousRetries
             testCaseResultData.WebTestConfig = new WebTestConfig
             {
-                JobName = _cIInfo.JobId ?? "",
+                JobName = _cIInfo.JobId != null && _cIInfo.JobId.Length > 500 ? _cIInfo.JobId.Substring(0, 500) : _cIInfo.JobId ?? "",
                 //ProjectName = "playwright-dotnet", // TODO no project concept NA??
                 //BrowserName = "chromium", // TODO check if possible to get from test
                 Os = ReporterUtils.GetCurrentOS(),
