@@ -6,19 +6,18 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Migration.Assessment.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Migration.Assessment.Samples
 {
     public partial class Sample_MigrationAssessmentAvsAssessmentResource
     {
-        // AvsAssessmentsOperations_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_AvsAssessmentsOperationsGetMaximumSetGen()
         {
             // Generated from example definition: specification/migrate/resource-manager/Microsoft.Migrate/AssessmentProjects/stable/2023-03-15/examples/AvsAssessmentsOperations_Get_MaximumSet_Gen.json
@@ -49,9 +48,36 @@ namespace Azure.ResourceManager.Migration.Assessment.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // AvsAssessmentsOperations_Create_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_AvsAssessmentsOperationsDeleteMaximumSetGen()
+        {
+            // Generated from example definition: specification/migrate/resource-manager/Microsoft.Migrate/AssessmentProjects/stable/2023-03-15/examples/AvsAssessmentsOperations_Delete_MaximumSet_Gen.json
+            // this example is just showing the usage of "AvsAssessmentsOperations_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MigrationAssessmentAvsAssessmentResource created on azure
+            // for more information of creating MigrationAssessmentAvsAssessmentResource, please refer to the document of MigrationAssessmentAvsAssessmentResource
+            string subscriptionId = "4bd2aa0f-2bd2-4d67-91a8-5a4533d58600";
+            string resourceGroupName = "ayagrawrg";
+            string projectName = "app18700project";
+            string groupName = "kuchatur-test";
+            string assessmentName = "asm2";
+            ResourceIdentifier migrationAssessmentAvsAssessmentResourceId = MigrationAssessmentAvsAssessmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName, groupName, assessmentName);
+            MigrationAssessmentAvsAssessmentResource migrationAssessmentAvsAssessment = client.GetMigrationAssessmentAvsAssessmentResource(migrationAssessmentAvsAssessmentResourceId);
+
+            // invoke the operation
+            await migrationAssessmentAvsAssessment.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_AvsAssessmentsOperationsCreateMaximumSetGen()
         {
             // Generated from example definition: specification/migrate/resource-manager/Microsoft.Migrate/AssessmentProjects/stable/2023-03-15/examples/AvsAssessmentsOperations_Create_MaximumSet_Gen.json
@@ -73,7 +99,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Samples
             MigrationAssessmentAvsAssessmentResource migrationAssessmentAvsAssessment = client.GetMigrationAssessmentAvsAssessmentResource(migrationAssessmentAvsAssessmentResourceId);
 
             // invoke the operation
-            MigrationAssessmentAvsAssessmentData data = new MigrationAssessmentAvsAssessmentData()
+            MigrationAssessmentAvsAssessmentData data = new MigrationAssessmentAvsAssessmentData
             {
                 ProvisioningState = MigrationAssessmentProvisioningState.Succeeded,
                 FailuresToTolerateAndRaidLevel = FttAndRaidLevel.Ftt1Raid1,
@@ -104,38 +130,8 @@ namespace Azure.ResourceManager.Migration.Assessment.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // AvsAssessmentsOperations_Delete_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_AvsAssessmentsOperationsDeleteMaximumSetGen()
-        {
-            // Generated from example definition: specification/migrate/resource-manager/Microsoft.Migrate/AssessmentProjects/stable/2023-03-15/examples/AvsAssessmentsOperations_Delete_MaximumSet_Gen.json
-            // this example is just showing the usage of "AvsAssessmentsOperations_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MigrationAssessmentAvsAssessmentResource created on azure
-            // for more information of creating MigrationAssessmentAvsAssessmentResource, please refer to the document of MigrationAssessmentAvsAssessmentResource
-            string subscriptionId = "4bd2aa0f-2bd2-4d67-91a8-5a4533d58600";
-            string resourceGroupName = "ayagrawrg";
-            string projectName = "app18700project";
-            string groupName = "kuchatur-test";
-            string assessmentName = "asm2";
-            ResourceIdentifier migrationAssessmentAvsAssessmentResourceId = MigrationAssessmentAvsAssessmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName, groupName, assessmentName);
-            MigrationAssessmentAvsAssessmentResource migrationAssessmentAvsAssessment = client.GetMigrationAssessmentAvsAssessmentResource(migrationAssessmentAvsAssessmentResourceId);
-
-            // invoke the operation
-            await migrationAssessmentAvsAssessment.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // AvsAssessmentsOperations_DownloadUrl_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DownloadUrl_AvsAssessmentsOperationsDownloadUrlMaximumSetGen()
         {
             // Generated from example definition: specification/migrate/resource-manager/Microsoft.Migrate/AssessmentProjects/stable/2023-03-15/examples/AvsAssessmentsOperations_DownloadUrl_MaximumSet_Gen.json
@@ -157,9 +153,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Samples
             MigrationAssessmentAvsAssessmentResource migrationAssessmentAvsAssessment = client.GetMigrationAssessmentAvsAssessmentResource(migrationAssessmentAvsAssessmentResourceId);
 
             // invoke the operation
-            BinaryData body = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
-            {
-            });
+            BinaryData body = BinaryData.FromObjectAsJson(new object());
             ArmOperation<AssessmentReportDownloadUri> lro = await migrationAssessmentAvsAssessment.DownloadUrlAsync(WaitUntil.Completed, body);
             AssessmentReportDownloadUri result = lro.Value;
 

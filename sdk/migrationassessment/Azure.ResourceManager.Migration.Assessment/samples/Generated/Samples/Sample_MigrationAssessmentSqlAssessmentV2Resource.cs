@@ -6,19 +6,18 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Migration.Assessment.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Migration.Assessment.Samples
 {
     public partial class Sample_MigrationAssessmentSqlAssessmentV2Resource
     {
-        // SqlAssessmentV2Operations_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_SqlAssessmentV2OperationsGetMaximumSetGen()
         {
             // Generated from example definition: specification/migrate/resource-manager/Microsoft.Migrate/AssessmentProjects/stable/2023-03-15/examples/SqlAssessmentV2Operations_Get_MaximumSet_Gen.json
@@ -49,9 +48,36 @@ namespace Azure.ResourceManager.Migration.Assessment.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SqlAssessmentV2Operations_Create_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_SqlAssessmentV2OperationsDeleteMaximumSetGen()
+        {
+            // Generated from example definition: specification/migrate/resource-manager/Microsoft.Migrate/AssessmentProjects/stable/2023-03-15/examples/SqlAssessmentV2Operations_Delete_MaximumSet_Gen.json
+            // this example is just showing the usage of "SqlAssessmentV2Operations_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MigrationAssessmentSqlAssessmentV2Resource created on azure
+            // for more information of creating MigrationAssessmentSqlAssessmentV2Resource, please refer to the document of MigrationAssessmentSqlAssessmentV2Resource
+            string subscriptionId = "4bd2aa0f-2bd2-4d67-91a8-5a4533d58600";
+            string resourceGroupName = "rgmigrate";
+            string projectName = "fci-test6904project";
+            string groupName = "test_fci_hadr";
+            string assessmentName = "test_swagger_1";
+            ResourceIdentifier migrationAssessmentSqlAssessmentV2ResourceId = MigrationAssessmentSqlAssessmentV2Resource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName, groupName, assessmentName);
+            MigrationAssessmentSqlAssessmentV2Resource migrationAssessmentSqlAssessmentV2 = client.GetMigrationAssessmentSqlAssessmentV2Resource(migrationAssessmentSqlAssessmentV2ResourceId);
+
+            // invoke the operation
+            await migrationAssessmentSqlAssessmentV2.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_SqlAssessmentV2OperationsCreateMaximumSetGen()
         {
             // Generated from example definition: specification/migrate/resource-manager/Microsoft.Migrate/AssessmentProjects/stable/2023-03-15/examples/SqlAssessmentV2Operations_Create_MaximumSet_Gen.json
@@ -73,11 +99,11 @@ namespace Azure.ResourceManager.Migration.Assessment.Samples
             MigrationAssessmentSqlAssessmentV2Resource migrationAssessmentSqlAssessmentV2 = client.GetMigrationAssessmentSqlAssessmentV2Resource(migrationAssessmentSqlAssessmentV2ResourceId);
 
             // invoke the operation
-            MigrationAssessmentSqlAssessmentV2Data data = new MigrationAssessmentSqlAssessmentV2Data()
+            MigrationAssessmentSqlAssessmentV2Data data = new MigrationAssessmentSqlAssessmentV2Data
             {
                 OSLicense = MigrationAssessmentOSLicense.Unknown,
                 EnvironmentType = AssessmentEnvironmentType.Production,
-                EntityUptime = new EntityUptime()
+                EntityUptime = new EntityUptime
                 {
                     DaysPerMonth = 30,
                     HoursPerDay = 24,
@@ -85,22 +111,19 @@ namespace Azure.ResourceManager.Migration.Assessment.Samples
                 OptimizationLogic = SqlOptimizationLogic.MinimizeCost,
                 ReservedInstanceForVm = AzureReservedInstance.None,
                 AzureOfferCodeForVm = AzureOfferCode.MSAZR0003P,
-                AzureSqlManagedInstanceSettings = new SqlMISettings()
+                AzureSqlManagedInstanceSettings = new SqlMISettings
                 {
                     AzureSqlServiceTier = AzureSqlServiceTier.Automatic,
                     AzureSqlInstanceType = AzureSqlInstanceType.SingleInstance,
                 },
-                AzureSqlDatabaseSettings = new SqlDBSettings()
+                AzureSqlDatabaseSettings = new SqlDBSettings
                 {
                     AzureSqlServiceTier = AzureSqlServiceTier.Automatic,
                     AzureSqlDataBaseType = AzureSqlDataBaseType.SingleDatabase,
                     AzureSqlComputeTier = MigrationAssessmentComputeTier.Automatic,
                     AzureSqlPurchaseModel = AzureSqlPurchaseModel.VCore,
                 },
-                AzureSqlVmInstanceSeries =
-{
-AzureVmFamily.Eadsv5Series
-},
+                AzureSqlVmInstanceSeries = { AzureVmFamily.Eadsv5Series },
                 MultiSubnetIntent = MultiSubnetIntent.DisasterRecovery,
                 AsyncCommitModeIntent = AsyncCommitModeIntent.DisasterRecovery,
                 DisasterRecoveryLocation = new AzureLocation("EastAsia"),
@@ -126,38 +149,8 @@ AzureVmFamily.Eadsv5Series
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // SqlAssessmentV2Operations_Delete_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_SqlAssessmentV2OperationsDeleteMaximumSetGen()
-        {
-            // Generated from example definition: specification/migrate/resource-manager/Microsoft.Migrate/AssessmentProjects/stable/2023-03-15/examples/SqlAssessmentV2Operations_Delete_MaximumSet_Gen.json
-            // this example is just showing the usage of "SqlAssessmentV2Operations_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MigrationAssessmentSqlAssessmentV2Resource created on azure
-            // for more information of creating MigrationAssessmentSqlAssessmentV2Resource, please refer to the document of MigrationAssessmentSqlAssessmentV2Resource
-            string subscriptionId = "4bd2aa0f-2bd2-4d67-91a8-5a4533d58600";
-            string resourceGroupName = "rgmigrate";
-            string projectName = "fci-test6904project";
-            string groupName = "test_fci_hadr";
-            string assessmentName = "test_swagger_1";
-            ResourceIdentifier migrationAssessmentSqlAssessmentV2ResourceId = MigrationAssessmentSqlAssessmentV2Resource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName, groupName, assessmentName);
-            MigrationAssessmentSqlAssessmentV2Resource migrationAssessmentSqlAssessmentV2 = client.GetMigrationAssessmentSqlAssessmentV2Resource(migrationAssessmentSqlAssessmentV2ResourceId);
-
-            // invoke the operation
-            await migrationAssessmentSqlAssessmentV2.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // SqlAssessmentV2Operations_DownloadUrl_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DownloadUrl_SqlAssessmentV2OperationsDownloadUrlMaximumSetGen()
         {
             // Generated from example definition: specification/migrate/resource-manager/Microsoft.Migrate/AssessmentProjects/stable/2023-03-15/examples/SqlAssessmentV2Operations_DownloadUrl_MaximumSet_Gen.json
@@ -179,9 +172,7 @@ AzureVmFamily.Eadsv5Series
             MigrationAssessmentSqlAssessmentV2Resource migrationAssessmentSqlAssessmentV2 = client.GetMigrationAssessmentSqlAssessmentV2Resource(migrationAssessmentSqlAssessmentV2ResourceId);
 
             // invoke the operation
-            BinaryData body = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
-            {
-            });
+            BinaryData body = BinaryData.FromObjectAsJson(new object());
             ArmOperation<AssessmentReportDownloadUri> lro = await migrationAssessmentSqlAssessmentV2.DownloadUrlAsync(WaitUntil.Completed, body);
             AssessmentReportDownloadUri result = lro.Value;
 

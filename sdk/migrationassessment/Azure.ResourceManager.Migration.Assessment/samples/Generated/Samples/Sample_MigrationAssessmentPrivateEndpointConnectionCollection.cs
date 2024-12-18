@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Migration.Assessment.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Migration.Assessment.Samples
 {
     public partial class Sample_MigrationAssessmentPrivateEndpointConnectionCollection
     {
-        // PrivateEndpointConnectionOperations_ListByAssessmentProject_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_PrivateEndpointConnectionOperationsListByAssessmentProjectMaximumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_PrivateEndpointConnectionOperationsUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/migrate/resource-manager/Microsoft.Migrate/AssessmentProjects/stable/2023-03-15/examples/PrivateEndpointConnectionOperations_ListByAssessmentProject_MaximumSet_Gen.json
-            // this example is just showing the usage of "PrivateEndpointConnectionOperations_ListByAssessmentProject" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/migrate/resource-manager/Microsoft.Migrate/AssessmentProjects/stable/2023-03-15/examples/PrivateEndpointConnectionOperations_Update_MaximumSet_Gen.json
+            // this example is just showing the usage of "PrivateEndpointConnectionOperations_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -39,22 +39,29 @@ namespace Azure.ResourceManager.Migration.Assessment.Samples
             // get the collection of this MigrationAssessmentPrivateEndpointConnectionResource
             MigrationAssessmentPrivateEndpointConnectionCollection collection = migrationAssessmentAssessmentProject.GetMigrationAssessmentPrivateEndpointConnections();
 
-            // invoke the operation and iterate over the result
-            await foreach (MigrationAssessmentPrivateEndpointConnectionResource item in collection.GetAllAsync())
+            // invoke the operation
+            string privateEndpointConnectionName = "sakanwar1204project1634pe.bf42f8a1-09f5-4ee4-aea6-a019cc60f9d7";
+            MigrationAssessmentPrivateEndpointConnectionData data = new MigrationAssessmentPrivateEndpointConnectionData
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                MigrationAssessmentPrivateEndpointConnectionData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                ConnectionState = new MigrationAssessmentPrivateLinkServiceConnectionState
+                {
+                    Status = MigrationAssessmentPrivateEndpointServiceConnectionStatus.Approved,
+                    Description = null,
+                    ActionsRequired = "",
+                },
+            };
+            ArmOperation<MigrationAssessmentPrivateEndpointConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionName, data);
+            MigrationAssessmentPrivateEndpointConnectionResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            MigrationAssessmentPrivateEndpointConnectionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PrivateEndpointConnectionOperations_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_PrivateEndpointConnectionOperationsGetMaximumSetGen()
         {
             // Generated from example definition: specification/migrate/resource-manager/Microsoft.Migrate/AssessmentProjects/stable/2023-03-15/examples/PrivateEndpointConnectionOperations_Get_MaximumSet_Gen.json
@@ -87,9 +94,44 @@ namespace Azure.ResourceManager.Migration.Assessment.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PrivateEndpointConnectionOperations_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_PrivateEndpointConnectionOperationsListByAssessmentProjectMaximumSetGen()
+        {
+            // Generated from example definition: specification/migrate/resource-manager/Microsoft.Migrate/AssessmentProjects/stable/2023-03-15/examples/PrivateEndpointConnectionOperations_ListByAssessmentProject_MaximumSet_Gen.json
+            // this example is just showing the usage of "PrivateEndpointConnectionOperations_ListByAssessmentProject" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MigrationAssessmentAssessmentProjectResource created on azure
+            // for more information of creating MigrationAssessmentAssessmentProjectResource, please refer to the document of MigrationAssessmentAssessmentProjectResource
+            string subscriptionId = "4bd2aa0f-2bd2-4d67-91a8-5a4533d58600";
+            string resourceGroupName = "sakanwar";
+            string projectName = "sakanwar1204project";
+            ResourceIdentifier migrationAssessmentAssessmentProjectResourceId = MigrationAssessmentAssessmentProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
+            MigrationAssessmentAssessmentProjectResource migrationAssessmentAssessmentProject = client.GetMigrationAssessmentAssessmentProjectResource(migrationAssessmentAssessmentProjectResourceId);
+
+            // get the collection of this MigrationAssessmentPrivateEndpointConnectionResource
+            MigrationAssessmentPrivateEndpointConnectionCollection collection = migrationAssessmentAssessmentProject.GetMigrationAssessmentPrivateEndpointConnections();
+
+            // invoke the operation and iterate over the result
+            await foreach (MigrationAssessmentPrivateEndpointConnectionResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                MigrationAssessmentPrivateEndpointConnectionData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_PrivateEndpointConnectionOperationsGetMaximumSetGen()
         {
             // Generated from example definition: specification/migrate/resource-manager/Microsoft.Migrate/AssessmentProjects/stable/2023-03-15/examples/PrivateEndpointConnectionOperations_Get_MaximumSet_Gen.json
@@ -118,9 +160,8 @@ namespace Azure.ResourceManager.Migration.Assessment.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // PrivateEndpointConnectionOperations_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_PrivateEndpointConnectionOperationsGetMaximumSetGen()
         {
             // Generated from example definition: specification/migrate/resource-manager/Microsoft.Migrate/AssessmentProjects/stable/2023-03-15/examples/PrivateEndpointConnectionOperations_Get_MaximumSet_Gen.json
@@ -149,7 +190,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -159,51 +200,6 @@ namespace Azure.ResourceManager.Migration.Assessment.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        // PrivateEndpointConnectionOperations_Update_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_PrivateEndpointConnectionOperationsUpdateMaximumSetGen()
-        {
-            // Generated from example definition: specification/migrate/resource-manager/Microsoft.Migrate/AssessmentProjects/stable/2023-03-15/examples/PrivateEndpointConnectionOperations_Update_MaximumSet_Gen.json
-            // this example is just showing the usage of "PrivateEndpointConnectionOperations_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MigrationAssessmentAssessmentProjectResource created on azure
-            // for more information of creating MigrationAssessmentAssessmentProjectResource, please refer to the document of MigrationAssessmentAssessmentProjectResource
-            string subscriptionId = "4bd2aa0f-2bd2-4d67-91a8-5a4533d58600";
-            string resourceGroupName = "sakanwar";
-            string projectName = "sakanwar1204project";
-            ResourceIdentifier migrationAssessmentAssessmentProjectResourceId = MigrationAssessmentAssessmentProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
-            MigrationAssessmentAssessmentProjectResource migrationAssessmentAssessmentProject = client.GetMigrationAssessmentAssessmentProjectResource(migrationAssessmentAssessmentProjectResourceId);
-
-            // get the collection of this MigrationAssessmentPrivateEndpointConnectionResource
-            MigrationAssessmentPrivateEndpointConnectionCollection collection = migrationAssessmentAssessmentProject.GetMigrationAssessmentPrivateEndpointConnections();
-
-            // invoke the operation
-            string privateEndpointConnectionName = "sakanwar1204project1634pe.bf42f8a1-09f5-4ee4-aea6-a019cc60f9d7";
-            MigrationAssessmentPrivateEndpointConnectionData data = new MigrationAssessmentPrivateEndpointConnectionData()
-            {
-                ConnectionState = new MigrationAssessmentPrivateLinkServiceConnectionState()
-                {
-                    Status = MigrationAssessmentPrivateEndpointServiceConnectionStatus.Approved,
-                    Description = null,
-                    ActionsRequired = "",
-                },
-            };
-            ArmOperation<MigrationAssessmentPrivateEndpointConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionName, data);
-            MigrationAssessmentPrivateEndpointConnectionResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            MigrationAssessmentPrivateEndpointConnectionData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

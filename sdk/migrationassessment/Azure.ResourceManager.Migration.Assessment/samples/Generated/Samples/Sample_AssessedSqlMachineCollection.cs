@@ -9,14 +9,50 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Migration.Assessment.Samples
 {
     public partial class Sample_AssessedSqlMachineCollection
     {
-        // AssessedSqlMachinesOperations_ListBySqlAssessmentV2_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_AssessedSqlMachinesOperationsGetMaximumSetGen()
+        {
+            // Generated from example definition: specification/migrate/resource-manager/Microsoft.Migrate/AssessmentProjects/stable/2023-03-15/examples/AssessedSqlMachinesOperations_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "AssessedSqlMachinesOperations_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MigrationAssessmentSqlAssessmentV2Resource created on azure
+            // for more information of creating MigrationAssessmentSqlAssessmentV2Resource, please refer to the document of MigrationAssessmentSqlAssessmentV2Resource
+            string subscriptionId = "4bd2aa0f-2bd2-4d67-91a8-5a4533d58600";
+            string resourceGroupName = "rgmigrate";
+            string projectName = "fci-test6904project";
+            string groupName = "test_fci_hadr";
+            string assessmentName = "test_swagger_1";
+            ResourceIdentifier migrationAssessmentSqlAssessmentV2ResourceId = MigrationAssessmentSqlAssessmentV2Resource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName, groupName, assessmentName);
+            MigrationAssessmentSqlAssessmentV2Resource migrationAssessmentSqlAssessmentV2 = client.GetMigrationAssessmentSqlAssessmentV2Resource(migrationAssessmentSqlAssessmentV2ResourceId);
+
+            // get the collection of this AssessedSqlMachineResource
+            AssessedSqlMachineCollection collection = migrationAssessmentSqlAssessmentV2.GetAssessedSqlMachines();
+
+            // invoke the operation
+            string assessedSqlMachineName = "cc64c9dc-b38e-435d-85ad-d509df5d92c6";
+            AssessedSqlMachineResource result = await collection.GetAsync(assessedSqlMachineName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            AssessedSqlMachineData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_AssessedSqlMachinesOperationsListBySqlAssessmentV2MaximumSetGen()
         {
             // Generated from example definition: specification/migrate/resource-manager/Microsoft.Migrate/AssessmentProjects/stable/2023-03-15/examples/AssessedSqlMachinesOperations_ListBySqlAssessmentV2_MaximumSet_Gen.json
@@ -54,49 +90,11 @@ namespace Azure.ResourceManager.Migration.Assessment.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // AssessedSqlMachinesOperations_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_AssessedSqlMachinesOperationsGetMaximumSetGen()
-        {
-            // Generated from example definition: specification/migrate/resource-manager/Microsoft.Migrate/AssessmentProjects/stable/2023-03-15/examples/AssessedSqlMachinesOperations_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "AssessedSqlMachinesOperations_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MigrationAssessmentSqlAssessmentV2Resource created on azure
-            // for more information of creating MigrationAssessmentSqlAssessmentV2Resource, please refer to the document of MigrationAssessmentSqlAssessmentV2Resource
-            string subscriptionId = "4bd2aa0f-2bd2-4d67-91a8-5a4533d58600";
-            string resourceGroupName = "rgmigrate";
-            string projectName = "fci-test6904project";
-            string groupName = "test_fci_hadr";
-            string assessmentName = "test_swagger_1";
-            ResourceIdentifier migrationAssessmentSqlAssessmentV2ResourceId = MigrationAssessmentSqlAssessmentV2Resource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName, groupName, assessmentName);
-            MigrationAssessmentSqlAssessmentV2Resource migrationAssessmentSqlAssessmentV2 = client.GetMigrationAssessmentSqlAssessmentV2Resource(migrationAssessmentSqlAssessmentV2ResourceId);
-
-            // get the collection of this AssessedSqlMachineResource
-            AssessedSqlMachineCollection collection = migrationAssessmentSqlAssessmentV2.GetAssessedSqlMachines();
-
-            // invoke the operation
-            string assessedSqlMachineName = "cc64c9dc-b38e-435d-85ad-d509df5d92c6";
-            AssessedSqlMachineResource result = await collection.GetAsync(assessedSqlMachineName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            AssessedSqlMachineData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // AssessedSqlMachinesOperations_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_AssessedSqlMachinesOperationsGetMaximumSetGen()
         {
             // Generated from example definition: specification/migrate/resource-manager/Microsoft.Migrate/AssessmentProjects/stable/2023-03-15/examples/AssessedSqlMachinesOperations_Get_MaximumSet_Gen.json
@@ -127,9 +125,8 @@ namespace Azure.ResourceManager.Migration.Assessment.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // AssessedSqlMachinesOperations_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_AssessedSqlMachinesOperationsGetMaximumSetGen()
         {
             // Generated from example definition: specification/migrate/resource-manager/Microsoft.Migrate/AssessmentProjects/stable/2023-03-15/examples/AssessedSqlMachinesOperations_Get_MaximumSet_Gen.json
@@ -160,7 +157,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

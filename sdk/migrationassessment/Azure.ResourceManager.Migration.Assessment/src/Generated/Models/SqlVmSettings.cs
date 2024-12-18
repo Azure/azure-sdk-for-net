@@ -48,7 +48,6 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// <summary> Initializes a new instance of <see cref="SqlVmSettings"/>. </summary>
         public SqlVmSettings()
         {
-            InstanceSeries = new ChangeTrackingList<AzureVmFamily>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SqlVmSettings"/>. </summary>
@@ -67,6 +66,6 @@ namespace Azure.ResourceManager.Migration.Assessment.Models
         /// Gets or sets the Azure VM families (calling instance series to keep it
         /// consistent with other targets).
         /// </summary>
-        public IList<AzureVmFamily> InstanceSeries { get; }
+        public IList<AzureVmFamily> InstanceSeries { get; set; }
     }
 }

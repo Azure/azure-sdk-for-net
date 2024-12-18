@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Migration.Assessment.Samples
 {
     public partial class Sample_AssessedSqlRecommendedEntityResource
     {
-        // AssessedSqlRecommendedEntityOperations_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_AssessedSqlRecommendedEntityOperationsGetMaximumSetGen()
         {
             // Generated from example definition: specification/migrate/resource-manager/Microsoft.Migrate/AssessmentProjects/stable/2023-03-15/examples/AssessedSqlRecommendedEntityOperations_Get_MaximumSet_Gen.json

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
             targetRegion = AzureLocation.BrazilSouth;
             targetSubscriptionId = DefaultSubscription.Data.SubscriptionId;
             tenantId = Guid.Parse("50d65f49-5a31-4b70-b34a-a73bb29b77c5");
-            rg = await DefaultSubscription.GetResourceGroups().GetAsync("sdkTestProject");
+            rg = await DefaultSubscription.GetResourceGroups().GetAsync("sakanwar");
 
             string assessmentProjName = Recording.GenerateAssetName("assessmentProj-");
 
@@ -203,6 +203,75 @@ namespace Azure.ResourceManager.Migration.Assessment.Tests
 
             // Delete Import Collector
             await importCollectorResource.DeleteAsync(WaitUntil.Completed);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task TestSqlCollectorOperations()
+        {
+            string rgName = rg.Id.Name;
+            var vmwareCollectorCollection = assessmentProjectResource.GetMigrationAssessmentVMwareCollectors();
+
+            // Create VMware Collector
+            var vmwareCollectorData = new MigrationAssessmentVMwareCollectorData()
+            {
+                ProvisioningState = MigrationAssessmentProvisioningState.Succeeded,
+                AgentProperties = agentProperties,
+                DiscoverySiteId =
+                    string.Format($"/subscriptions/{targetSubscriptionId}/resourceGroups/{rgName}/providers/Microsoft.OffAzure/VMwareSites/{Recording.GenerateAssetName("site-")}"),
+            };
+            string vmwareCollectorName = Recording.GenerateAssetName("vmwareCollector-");
+            var vmwareCollectorResponse =
+                await vmwareCollectorCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmwareCollectorName, vmwareCollectorData);
+            var vmwareCollectorResource = vmwareCollectorResponse.Value;
+            Assert.IsTrue(vmwareCollectorResponse.HasCompleted);
+            Assert.IsNotNull(vmwareCollectorResource);
+
+            var sqlAgentProperties = new CollectorAgentPropertiesBase()
+            {
+                Id = Recording.GenerateAssetName("agentId-"),
+                Version = "2.0.1993.19",
+                LastHeartbeatOn = DateTimeOffset.Parse("2022-07-07T14:25:35.708325Z"),
+                SpnDetails = new CollectorAgentSpnPropertiesBase()
+                {
+                    Authority = $"https://login.windows.net/{tenantId}",
+                    ApplicationId = "5db4fda9-7d3d-410e-ba13-a84ec7d2f01f",
+                    Audience = Recording.GenerateAssetName("audience-"),
+                    ObjectId = "2354347c-7ed1-44c3-8f39-b3a972e3ce0e",
+                    TenantId = tenantId,
+                },
+            };
+
+            var sqlCollectorCollection = assessmentProjectResource.GetMigrationAssessmentSqlCollectors();
+
+            // Create SQL Collector
+            var sqlCollectorData = new MigrationAssessmentSqlCollectorData()
+            {
+                ProvisioningState = MigrationAssessmentProvisioningState.Succeeded,
+                AgentProperties = sqlAgentProperties,
+                DiscoverySiteId =
+                    string.Format($"{vmwareCollectorResource.Id}/SqlSites/{Recording.GenerateAssetName("site-")}"),
+            };
+            string sqlCollectorName = Recording.GenerateAssetName("sqlCollector-");
+            var sqlCollectorResponse =
+                await sqlCollectorCollection.CreateOrUpdateAsync(WaitUntil.Completed, sqlCollectorName, sqlCollectorData);
+            var sqlCollectorResource = sqlCollectorResponse.Value;
+            Assert.IsTrue(sqlCollectorResponse.HasCompleted);
+            Assert.IsNotNull(sqlCollectorResource);
+
+            // Get SQL Collector
+            sqlCollectorResource = await sqlCollectorCollection.GetAsync(sqlCollectorName);
+            Assert.IsNotNull(sqlCollectorResource);
+            Assert.AreEqual(sqlCollectorResource.Data.Name, sqlCollectorName);
+
+            // Get All SQL Collectors
+            var allSqlCollectors = sqlCollectorCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.IsNotNull(allSqlCollectors);
+            Assert.GreaterOrEqual(allSqlCollectors.Result.Count, 1);
+
+            // Delete SQL Collector
+            await sqlCollectorResource.DeleteAsync(WaitUntil.Completed);
+            await vmwareCollectorResource.DeleteAsync(WaitUntil.Completed);
         }
     }
 }

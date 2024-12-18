@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Migration.Assessment.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Migration.Assessment.Samples
 {
     public partial class Sample_MigrationAssessmentServerCollectorCollection
     {
-        // ServerCollectorsOperations_ListByAssessmentProject_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ServerCollectorsOperationsListByAssessmentProjectMaximumSetGen()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_ServerCollectorsOperationsCreateMaximumSetGen()
         {
-            // Generated from example definition: specification/migrate/resource-manager/Microsoft.Migrate/AssessmentProjects/stable/2023-03-15/examples/ServerCollectorsOperations_ListByAssessmentProject_MaximumSet_Gen.json
-            // this example is just showing the usage of "ServerCollectorsOperations_ListByAssessmentProject" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/migrate/resource-manager/Microsoft.Migrate/AssessmentProjects/stable/2023-03-15/examples/ServerCollectorsOperations_Create_MaximumSet_Gen.json
+            // this example is just showing the usage of "ServerCollectorsOperations_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -39,22 +39,39 @@ namespace Azure.ResourceManager.Migration.Assessment.Samples
             // get the collection of this MigrationAssessmentServerCollectorResource
             MigrationAssessmentServerCollectorCollection collection = migrationAssessmentAssessmentProject.GetMigrationAssessmentServerCollectors();
 
-            // invoke the operation and iterate over the result
-            await foreach (MigrationAssessmentServerCollectorResource item in collection.GetAllAsync())
+            // invoke the operation
+            string serverCollectorName = "walter389fcollector";
+            MigrationAssessmentServerCollectorData data = new MigrationAssessmentServerCollectorData
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                MigrationAssessmentServerCollectorData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                ProvisioningState = MigrationAssessmentProvisioningState.Succeeded,
+                AgentProperties = new CollectorAgentPropertiesBase
+                {
+                    Id = "498e4965-bbb1-47c2-8613-345baff9c509",
+                    Version = null,
+                    LastHeartbeatOn = default,
+                    SpnDetails = new CollectorAgentSpnPropertiesBase
+                    {
+                        Authority = "https://login.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47",
+                        ApplicationId = "65153d2f-9afb-44e8-b3ca-1369150b7354",
+                        Audience = "65153d2f-9afb-44e8-b3ca-1369150b7354",
+                        ObjectId = "ddde6f96-87c8-420b-9d4d-f16a5090519e",
+                        TenantId = Guid.Parse("72f988bf-86f1-41af-91ab-2d7cd011db47"),
+                    },
+                },
+                DiscoverySiteId = "/subscriptions/4bd2aa0f-2bd2-4d67-91a8-5a4533d58600/resourceGroups/ayagrawRG/providers/Microsoft.OffAzure/ServerSites/walter7155site",
+            };
+            ArmOperation<MigrationAssessmentServerCollectorResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serverCollectorName, data);
+            MigrationAssessmentServerCollectorResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            MigrationAssessmentServerCollectorData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ServerCollectorsOperations_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ServerCollectorsOperationsGetMaximumSetGen()
         {
             // Generated from example definition: specification/migrate/resource-manager/Microsoft.Migrate/AssessmentProjects/stable/2023-03-15/examples/ServerCollectorsOperations_Get_MaximumSet_Gen.json
@@ -87,9 +104,44 @@ namespace Azure.ResourceManager.Migration.Assessment.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // ServerCollectorsOperations_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ServerCollectorsOperationsListByAssessmentProjectMaximumSetGen()
+        {
+            // Generated from example definition: specification/migrate/resource-manager/Microsoft.Migrate/AssessmentProjects/stable/2023-03-15/examples/ServerCollectorsOperations_ListByAssessmentProject_MaximumSet_Gen.json
+            // this example is just showing the usage of "ServerCollectorsOperations_ListByAssessmentProject" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MigrationAssessmentAssessmentProjectResource created on azure
+            // for more information of creating MigrationAssessmentAssessmentProjectResource, please refer to the document of MigrationAssessmentAssessmentProjectResource
+            string subscriptionId = "4bd2aa0f-2bd2-4d67-91a8-5a4533d58600";
+            string resourceGroupName = "ayagrawRG";
+            string projectName = "app18700project";
+            ResourceIdentifier migrationAssessmentAssessmentProjectResourceId = MigrationAssessmentAssessmentProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
+            MigrationAssessmentAssessmentProjectResource migrationAssessmentAssessmentProject = client.GetMigrationAssessmentAssessmentProjectResource(migrationAssessmentAssessmentProjectResourceId);
+
+            // get the collection of this MigrationAssessmentServerCollectorResource
+            MigrationAssessmentServerCollectorCollection collection = migrationAssessmentAssessmentProject.GetMigrationAssessmentServerCollectors();
+
+            // invoke the operation and iterate over the result
+            await foreach (MigrationAssessmentServerCollectorResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                MigrationAssessmentServerCollectorData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_ServerCollectorsOperationsGetMaximumSetGen()
         {
             // Generated from example definition: specification/migrate/resource-manager/Microsoft.Migrate/AssessmentProjects/stable/2023-03-15/examples/ServerCollectorsOperations_Get_MaximumSet_Gen.json
@@ -118,9 +170,8 @@ namespace Azure.ResourceManager.Migration.Assessment.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ServerCollectorsOperations_Get_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ServerCollectorsOperationsGetMaximumSetGen()
         {
             // Generated from example definition: specification/migrate/resource-manager/Microsoft.Migrate/AssessmentProjects/stable/2023-03-15/examples/ServerCollectorsOperations_Get_MaximumSet_Gen.json
@@ -149,7 +200,7 @@ namespace Azure.ResourceManager.Migration.Assessment.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -159,61 +210,6 @@ namespace Azure.ResourceManager.Migration.Assessment.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        // ServerCollectorsOperations_Create_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_ServerCollectorsOperationsCreateMaximumSetGen()
-        {
-            // Generated from example definition: specification/migrate/resource-manager/Microsoft.Migrate/AssessmentProjects/stable/2023-03-15/examples/ServerCollectorsOperations_Create_MaximumSet_Gen.json
-            // this example is just showing the usage of "ServerCollectorsOperations_Create" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MigrationAssessmentAssessmentProjectResource created on azure
-            // for more information of creating MigrationAssessmentAssessmentProjectResource, please refer to the document of MigrationAssessmentAssessmentProjectResource
-            string subscriptionId = "4bd2aa0f-2bd2-4d67-91a8-5a4533d58600";
-            string resourceGroupName = "ayagrawRG";
-            string projectName = "app18700project";
-            ResourceIdentifier migrationAssessmentAssessmentProjectResourceId = MigrationAssessmentAssessmentProjectResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, projectName);
-            MigrationAssessmentAssessmentProjectResource migrationAssessmentAssessmentProject = client.GetMigrationAssessmentAssessmentProjectResource(migrationAssessmentAssessmentProjectResourceId);
-
-            // get the collection of this MigrationAssessmentServerCollectorResource
-            MigrationAssessmentServerCollectorCollection collection = migrationAssessmentAssessmentProject.GetMigrationAssessmentServerCollectors();
-
-            // invoke the operation
-            string serverCollectorName = "walter389fcollector";
-            MigrationAssessmentServerCollectorData data = new MigrationAssessmentServerCollectorData()
-            {
-                ProvisioningState = MigrationAssessmentProvisioningState.Succeeded,
-                AgentProperties = new CollectorAgentPropertiesBase()
-                {
-                    Id = "498e4965-bbb1-47c2-8613-345baff9c509",
-                    Version = null,
-                    LastHeartbeatOn = null,
-                    SpnDetails = new CollectorAgentSpnPropertiesBase()
-                    {
-                        Authority = "https://login.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47",
-                        ApplicationId = "65153d2f-9afb-44e8-b3ca-1369150b7354",
-                        Audience = "65153d2f-9afb-44e8-b3ca-1369150b7354",
-                        ObjectId = "ddde6f96-87c8-420b-9d4d-f16a5090519e",
-                        TenantId = Guid.Parse("72f988bf-86f1-41af-91ab-2d7cd011db47"),
-                    },
-                },
-                DiscoverySiteId = "/subscriptions/4bd2aa0f-2bd2-4d67-91a8-5a4533d58600/resourceGroups/ayagrawRG/providers/Microsoft.OffAzure/ServerSites/walter7155site",
-            };
-            ArmOperation<MigrationAssessmentServerCollectorResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serverCollectorName, data);
-            MigrationAssessmentServerCollectorResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            MigrationAssessmentServerCollectorData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

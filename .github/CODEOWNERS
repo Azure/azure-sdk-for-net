@@ -1072,6 +1072,12 @@
 # ServiceLabel: %%HybridConnectivity %Mgmt
 # ServiceOwners:                                                   @alexmahonic @PriyankaHariharan @apmehrotra
 
+# PRLabel: %Migration Assessment
+/sdk/migrationassessment/Azure.ResourceManager.*/                   @srilipta-swain
+
+# ServiceLabel: %%Migration Assessment %Mgmt
+# ServiceOwners:                                                   @srilipta-swain
+
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp
 /eng/common/                                                       @Azure/azure-sdk-eng

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -274,22 +273,7 @@ namespace Azure.ResourceManager.Migration.Assessment
             content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
-            string requestBody = ReadRequestBody(message);
             return message;
-        }
-
-        private string ReadRequestBody(HttpMessage message)
-        {
-            message.Request.Content.TryComputeLength(out long length);
-            using (var memoryStream = new MemoryStream(new byte[length]))
-            {
-                message.Request.Content.WriteTo(memoryStream, CancellationToken.None);
-                memoryStream.Position = 0;
-                using (var reader = new StreamReader(memoryStream))
-                {
-                    return reader.ReadToEnd();
-                }
-            }
         }
 
         /// <summary> Create a PrivateEndpointConnection. </summary>
