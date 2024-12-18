@@ -668,7 +668,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
-        [PlaybackOnly("This feature is not enabled in prod")]
+        [Ignore("This feature is not enabled in prod")]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2021_08_06)]
         public async Task AppendAsync_FastPath()
         {
