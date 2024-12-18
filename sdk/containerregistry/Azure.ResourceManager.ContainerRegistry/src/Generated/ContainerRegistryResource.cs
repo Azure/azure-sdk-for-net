@@ -99,14 +99,14 @@ namespace Azure.ResourceManager.ContainerRegistry
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ArchiveResources in the ContainerRegistry. </summary>
+        /// <summary> Gets a collection of ContainerRegistryArchiveResources in the ContainerRegistry. </summary>
         /// <param name="packageType"> The type of the package resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="packageType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="packageType"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of ArchiveResources and their operations over a ArchiveResource. </returns>
-        public virtual ArchiveCollection GetArchives(string packageType)
+        /// <returns> An object representing collection of ContainerRegistryArchiveResources and their operations over a ContainerRegistryArchiveResource. </returns>
+        public virtual ContainerRegistryArchiveCollection GetContainerRegistryArchives(string packageType)
         {
-            return new ArchiveCollection(Client, Id, packageType);
+            return new ContainerRegistryArchiveCollection(Client, Id, packageType);
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ArchiveResource"/></description>
+        /// <description><see cref="ContainerRegistryArchiveResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -136,9 +136,9 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="packageType"/> or <paramref name="archiveName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="packageType"/> or <paramref name="archiveName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ArchiveResource>> GetArchiveAsync(string packageType, string archiveName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerRegistryArchiveResource>> GetContainerRegistryArchiveAsync(string packageType, string archiveName, CancellationToken cancellationToken = default)
         {
-            return await GetArchives(packageType).GetAsync(archiveName, cancellationToken).ConfigureAwait(false);
+            return await GetContainerRegistryArchives(packageType).GetAsync(archiveName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ArchiveResource"/></description>
+        /// <description><see cref="ContainerRegistryArchiveResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -168,47 +168,16 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="packageType"/> or <paramref name="archiveName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="packageType"/> or <paramref name="archiveName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ArchiveResource> GetArchive(string packageType, string archiveName, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerRegistryArchiveResource> GetContainerRegistryArchive(string packageType, string archiveName, CancellationToken cancellationToken = default)
         {
-            return GetArchives(packageType).Get(archiveName, cancellationToken);
+            return GetContainerRegistryArchives(packageType).Get(archiveName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CacheRuleResources in the ContainerRegistry. </summary>
-        /// <returns> An object representing collection of CacheRuleResources and their operations over a CacheRuleResource. </returns>
-        public virtual CacheRuleCollection GetCacheRules()
+        /// <summary> Gets a collection of ContainerRegistryCacheRuleResources in the ContainerRegistry. </summary>
+        /// <returns> An object representing collection of ContainerRegistryCacheRuleResources and their operations over a ContainerRegistryCacheRuleResource. </returns>
+        public virtual ContainerRegistryCacheRuleCollection GetContainerRegistryCacheRules()
         {
-            return GetCachedClient(client => new CacheRuleCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the properties of the specified cache rule resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/cacheRules/{cacheRuleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CacheRules_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CacheRuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cacheRuleName"> The name of the cache rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cacheRuleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="cacheRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CacheRuleResource>> GetCacheRuleAsync(string cacheRuleName, CancellationToken cancellationToken = default)
-        {
-            return await GetCacheRules().GetAsync(cacheRuleName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new ContainerRegistryCacheRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -228,7 +197,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CacheRuleResource"/></description>
+        /// <description><see cref="ContainerRegistryCacheRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,9 +206,40 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="cacheRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cacheRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CacheRuleResource> GetCacheRule(string cacheRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerRegistryCacheRuleResource>> GetContainerRegistryCacheRuleAsync(string cacheRuleName, CancellationToken cancellationToken = default)
         {
-            return GetCacheRules().Get(cacheRuleName, cancellationToken);
+            return await GetContainerRegistryCacheRules().GetAsync(cacheRuleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the properties of the specified cache rule resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/cacheRules/{cacheRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CacheRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryCacheRuleResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cacheRuleName"> The name of the cache rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="cacheRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cacheRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ContainerRegistryCacheRuleResource> GetContainerRegistryCacheRule(string cacheRuleName, CancellationToken cancellationToken = default)
+        {
+            return GetContainerRegistryCacheRules().Get(cacheRuleName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ConnectedRegistryResources in the ContainerRegistry. </summary>
@@ -311,11 +311,11 @@ namespace Azure.ResourceManager.ContainerRegistry
             return GetConnectedRegistries().Get(connectedRegistryName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CredentialSetResources in the ContainerRegistry. </summary>
-        /// <returns> An object representing collection of CredentialSetResources and their operations over a CredentialSetResource. </returns>
-        public virtual CredentialSetCollection GetCredentialSets()
+        /// <summary> Gets a collection of ContainerRegistryCredentialSetResources in the ContainerRegistry. </summary>
+        /// <returns> An object representing collection of ContainerRegistryCredentialSetResources and their operations over a ContainerRegistryCredentialSetResource. </returns>
+        public virtual ContainerRegistryCredentialSetCollection GetContainerRegistryCredentialSets()
         {
-            return GetCachedClient(client => new CredentialSetCollection(client, Id));
+            return GetCachedClient(client => new ContainerRegistryCredentialSetCollection(client, Id));
         }
 
         /// <summary>
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CredentialSetResource"/></description>
+        /// <description><see cref="ContainerRegistryCredentialSetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -344,9 +344,9 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="credentialSetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="credentialSetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CredentialSetResource>> GetCredentialSetAsync(string credentialSetName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerRegistryCredentialSetResource>> GetContainerRegistryCredentialSetAsync(string credentialSetName, CancellationToken cancellationToken = default)
         {
-            return await GetCredentialSets().GetAsync(credentialSetName, cancellationToken).ConfigureAwait(false);
+            return await GetContainerRegistryCredentialSets().GetAsync(credentialSetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CredentialSetResource"/></description>
+        /// <description><see cref="ContainerRegistryCredentialSetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -375,47 +375,16 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="credentialSetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="credentialSetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CredentialSetResource> GetCredentialSet(string credentialSetName, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerRegistryCredentialSetResource> GetContainerRegistryCredentialSet(string credentialSetName, CancellationToken cancellationToken = default)
         {
-            return GetCredentialSets().Get(credentialSetName, cancellationToken);
+            return GetContainerRegistryCredentialSets().Get(credentialSetName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ExportPipelineResources in the ContainerRegistry. </summary>
-        /// <returns> An object representing collection of ExportPipelineResources and their operations over a ExportPipelineResource. </returns>
-        public virtual ExportPipelineCollection GetExportPipelines()
+        /// <summary> Gets a collection of ContainerRegistryExportPipelineResources in the ContainerRegistry. </summary>
+        /// <returns> An object representing collection of ContainerRegistryExportPipelineResources and their operations over a ContainerRegistryExportPipelineResource. </returns>
+        public virtual ContainerRegistryExportPipelineCollection GetContainerRegistryExportPipelines()
         {
-            return GetCachedClient(client => new ExportPipelineCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the properties of the export pipeline.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/exportPipelines/{exportPipelineName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ExportPipelines_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ExportPipelineResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="exportPipelineName"> The name of the export pipeline. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="exportPipelineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="exportPipelineName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ExportPipelineResource>> GetExportPipelineAsync(string exportPipelineName, CancellationToken cancellationToken = default)
-        {
-            return await GetExportPipelines().GetAsync(exportPipelineName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new ContainerRegistryExportPipelineCollection(client, Id));
         }
 
         /// <summary>
@@ -435,7 +404,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ExportPipelineResource"/></description>
+        /// <description><see cref="ContainerRegistryExportPipelineResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -444,9 +413,40 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="exportPipelineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="exportPipelineName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ExportPipelineResource> GetExportPipeline(string exportPipelineName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerRegistryExportPipelineResource>> GetContainerRegistryExportPipelineAsync(string exportPipelineName, CancellationToken cancellationToken = default)
         {
-            return GetExportPipelines().Get(exportPipelineName, cancellationToken);
+            return await GetContainerRegistryExportPipelines().GetAsync(exportPipelineName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the properties of the export pipeline.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/exportPipelines/{exportPipelineName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExportPipelines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryExportPipelineResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="exportPipelineName"> The name of the export pipeline. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="exportPipelineName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="exportPipelineName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ContainerRegistryExportPipelineResource> GetContainerRegistryExportPipeline(string exportPipelineName, CancellationToken cancellationToken = default)
+        {
+            return GetContainerRegistryExportPipelines().Get(exportPipelineName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ContainerRegistryPrivateLinkResources in the ContainerRegistry. </summary>
@@ -518,11 +518,11 @@ namespace Azure.ResourceManager.ContainerRegistry
             return GetContainerRegistryPrivateLinkResources().Get(groupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ImportPipelineResources in the ContainerRegistry. </summary>
-        /// <returns> An object representing collection of ImportPipelineResources and their operations over a ImportPipelineResource. </returns>
-        public virtual ImportPipelineCollection GetImportPipelines()
+        /// <summary> Gets a collection of ContainerRegistryImportPipelineResources in the ContainerRegistry. </summary>
+        /// <returns> An object representing collection of ContainerRegistryImportPipelineResources and their operations over a ContainerRegistryImportPipelineResource. </returns>
+        public virtual ContainerRegistryImportPipelineCollection GetContainerRegistryImportPipelines()
         {
-            return GetCachedClient(client => new ImportPipelineCollection(client, Id));
+            return GetCachedClient(client => new ContainerRegistryImportPipelineCollection(client, Id));
         }
 
         /// <summary>
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ImportPipelineResource"/></description>
+        /// <description><see cref="ContainerRegistryImportPipelineResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -551,9 +551,9 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="importPipelineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="importPipelineName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ImportPipelineResource>> GetImportPipelineAsync(string importPipelineName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerRegistryImportPipelineResource>> GetContainerRegistryImportPipelineAsync(string importPipelineName, CancellationToken cancellationToken = default)
         {
-            return await GetImportPipelines().GetAsync(importPipelineName, cancellationToken).ConfigureAwait(false);
+            return await GetContainerRegistryImportPipelines().GetAsync(importPipelineName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ImportPipelineResource"/></description>
+        /// <description><see cref="ContainerRegistryImportPipelineResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -582,9 +582,9 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="importPipelineName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="importPipelineName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ImportPipelineResource> GetImportPipeline(string importPipelineName, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerRegistryImportPipelineResource> GetContainerRegistryImportPipeline(string importPipelineName, CancellationToken cancellationToken = default)
         {
-            return GetImportPipelines().Get(importPipelineName, cancellationToken);
+            return GetContainerRegistryImportPipelines().Get(importPipelineName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ContainerRegistryPipelineRunResources in the ContainerRegistry. </summary>

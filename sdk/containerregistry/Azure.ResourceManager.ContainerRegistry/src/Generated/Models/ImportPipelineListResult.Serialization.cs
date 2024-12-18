@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            IReadOnlyList<ImportPipelineData> value = default;
+            IReadOnlyList<ContainerRegistryImportPipelineData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    List<ImportPipelineData> array = new List<ImportPipelineData>();
+                    List<ContainerRegistryImportPipelineData> array = new List<ContainerRegistryImportPipelineData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ImportPipelineData.DeserializeImportPipelineData(item, options));
+                        array.Add(ContainerRegistryImportPipelineData.DeserializeContainerRegistryImportPipelineData(item, options));
                     }
                     value = array;
                     continue;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ImportPipelineListResult(value ?? new ChangeTrackingList<ImportPipelineData>(), nextLink, serializedAdditionalRawData);
+            return new ImportPipelineListResult(value ?? new ChangeTrackingList<ContainerRegistryImportPipelineData>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

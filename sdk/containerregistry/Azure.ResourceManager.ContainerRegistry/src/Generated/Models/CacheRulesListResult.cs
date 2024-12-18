@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of <see cref="CacheRulesListResult"/>. </summary>
         internal CacheRulesListResult()
         {
-            Value = new ChangeTrackingList<CacheRuleData>();
+            Value = new ChangeTrackingList<ContainerRegistryCacheRuleData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CacheRulesListResult"/>. </summary>
         /// <param name="value"> The list of cache rules. </param>
         /// <param name="nextLink"> If provided, client must use NextLink URI to request next list of cache rules. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CacheRulesListResult(IReadOnlyList<CacheRuleData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CacheRulesListResult(IReadOnlyList<ContainerRegistryCacheRuleData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The list of cache rules. </summary>
-        public IReadOnlyList<CacheRuleData> Value { get; }
+        public IReadOnlyList<ContainerRegistryCacheRuleData> Value { get; }
         /// <summary> If provided, client must use NextLink URI to request next list of cache rules. </summary>
         public string NextLink { get; }
     }

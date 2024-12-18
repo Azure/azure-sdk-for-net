@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (options.Format != "W" && Optional.IsDefined(CorrelationId))
             {
                 writer.WritePropertyName("correlationId"u8);
-                writer.WriteStringValue(CorrelationId);
+                writer.WriteStringValue(CorrelationId.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             string code = default;
             string description = default;
             DateTimeOffset? timestamp = default;
-            string correlationId = default;
+            Guid? correlationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +132,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 if (property.NameEquals("correlationId"u8))
                 {
-                    correlationId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    correlationId = property.Value.GetGuid();
                     continue;
                 }
                 if (options.Format != "W")
@@ -257,15 +261,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 if (Optional.IsDefined(CorrelationId))
                 {
                     builder.Append("  correlationId: ");
-                    if (CorrelationId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CorrelationId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CorrelationId}'");
-                    }
+                    builder.AppendLine($"'{CorrelationId.Value.ToString()}'");
                 }
             }
 

@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of <see cref="ImportPipelineListResult"/>. </summary>
         internal ImportPipelineListResult()
         {
-            Value = new ChangeTrackingList<ImportPipelineData>();
+            Value = new ChangeTrackingList<ContainerRegistryImportPipelineData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ImportPipelineListResult"/>. </summary>
         /// <param name="value"> The list of import pipelines. Since this list may be incomplete, the nextLink field should be used to request the next list of import pipelines. </param>
         /// <param name="nextLink"> The URI that can be used to request the next list of pipeline runs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImportPipelineListResult(IReadOnlyList<ImportPipelineData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ImportPipelineListResult(IReadOnlyList<ContainerRegistryImportPipelineData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The list of import pipelines. Since this list may be incomplete, the nextLink field should be used to request the next list of import pipelines. </summary>
-        public IReadOnlyList<ImportPipelineData> Value { get; }
+        public IReadOnlyList<ContainerRegistryImportPipelineData> Value { get; }
         /// <summary> The URI that can be used to request the next list of pipeline runs. </summary>
         public string NextLink { get; }
     }

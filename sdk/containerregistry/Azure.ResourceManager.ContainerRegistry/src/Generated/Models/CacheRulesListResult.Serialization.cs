@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            IReadOnlyList<CacheRuleData> value = default;
+            IReadOnlyList<ContainerRegistryCacheRuleData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    List<CacheRuleData> array = new List<CacheRuleData>();
+                    List<ContainerRegistryCacheRuleData> array = new List<ContainerRegistryCacheRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CacheRuleData.DeserializeCacheRuleData(item, options));
+                        array.Add(ContainerRegistryCacheRuleData.DeserializeContainerRegistryCacheRuleData(item, options));
                     }
                     value = array;
                     continue;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CacheRulesListResult(value ?? new ChangeTrackingList<CacheRuleData>(), nextLink, serializedAdditionalRawData);
+            return new CacheRulesListResult(value ?? new ChangeTrackingList<ContainerRegistryCacheRuleData>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            IReadOnlyList<ArchiveData> value = default;
+            IReadOnlyList<ContainerRegistryArchiveData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    List<ArchiveData> array = new List<ArchiveData>();
+                    List<ContainerRegistryArchiveData> array = new List<ContainerRegistryArchiveData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ArchiveData.DeserializeArchiveData(item, options));
+                        array.Add(ContainerRegistryArchiveData.DeserializeContainerRegistryArchiveData(item, options));
                     }
                     value = array;
                     continue;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ArchiveListResult(value ?? new ChangeTrackingList<ArchiveData>(), nextLink, serializedAdditionalRawData);
+            return new ArchiveListResult(value ?? new ChangeTrackingList<ContainerRegistryArchiveData>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

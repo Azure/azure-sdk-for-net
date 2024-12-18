@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of <see cref="CredentialSetListResult"/>. </summary>
         internal CredentialSetListResult()
         {
-            Value = new ChangeTrackingList<CredentialSetData>();
+            Value = new ChangeTrackingList<ContainerRegistryCredentialSetData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CredentialSetListResult"/>. </summary>
         /// <param name="value"> The list of credential sets. Since this list may be incomplete, the nextLink field should be used to request the next list of credential sets. </param>
         /// <param name="nextLink"> The URI that can be used to request the next list of credential sets. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CredentialSetListResult(IReadOnlyList<CredentialSetData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CredentialSetListResult(IReadOnlyList<ContainerRegistryCredentialSetData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The list of credential sets. Since this list may be incomplete, the nextLink field should be used to request the next list of credential sets. </summary>
-        public IReadOnlyList<CredentialSetData> Value { get; }
+        public IReadOnlyList<ContainerRegistryCredentialSetData> Value { get; }
         /// <summary> The URI that can be used to request the next list of credential sets. </summary>
         public string NextLink { get; }
     }

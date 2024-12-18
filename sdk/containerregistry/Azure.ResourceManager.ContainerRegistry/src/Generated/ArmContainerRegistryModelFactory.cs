@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmContainerRegistryModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ArchiveData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ContainerRegistryArchiveData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="repositoryEndpointPrefix"></param>
         /// <param name="repositoryEndpoint"></param>
         /// <param name="provisioningState"> The provisioning state of the archive at the time the operation was called. </param>
-        /// <returns> A new <see cref="ContainerRegistry.ArchiveData"/> instance for mocking. </returns>
-        public static ArchiveData ArchiveData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ArchivePackageSourceProperties packageSource = null, string publishedVersion = null, string repositoryEndpointPrefix = null, string repositoryEndpoint = null, ContainerRegistryProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="ContainerRegistry.ContainerRegistryArchiveData"/> instance for mocking. </returns>
+        public static ContainerRegistryArchiveData ContainerRegistryArchiveData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ArchivePackageSourceProperties packageSource = null, string publishedVersion = null, string repositoryEndpointPrefix = null, string repositoryEndpoint = null, ContainerRegistryProvisioningState? provisioningState = null)
         {
-            return new ArchiveData(
+            return new ContainerRegistryArchiveData(
                 id,
                 name,
                 resourceType,
@@ -43,17 +43,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ArchiveVersionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ContainerRegistryArchiveVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> The provisioning state of the archive at the time the operation was called. </param>
         /// <param name="archiveVersionErrorMessage"> The detailed error message for the archive version in the case of failure. </param>
-        /// <returns> A new <see cref="ContainerRegistry.ArchiveVersionData"/> instance for mocking. </returns>
-        public static ArchiveVersionData ArchiveVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ContainerRegistryProvisioningState? provisioningState = null, string archiveVersionErrorMessage = null)
+        /// <returns> A new <see cref="ContainerRegistry.ContainerRegistryArchiveVersionData"/> instance for mocking. </returns>
+        public static ContainerRegistryArchiveVersionData ContainerRegistryArchiveVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ContainerRegistryProvisioningState? provisioningState = null, string archiveVersionErrorMessage = null)
         {
-            return new ArchiveVersionData(
+            return new ContainerRegistryArchiveVersionData(
                 id,
                 name,
                 resourceType,
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistry.CacheRuleData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ContainerRegistryCacheRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -76,10 +76,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// </param>
         /// <param name="createdOn"> The creation date of the cache rule. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="ContainerRegistry.CacheRuleData"/> instance for mocking. </returns>
-        public static CacheRuleData CacheRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier credentialSetResourceId = null, string sourceRepository = null, string targetRepository = null, DateTimeOffset? createdOn = null, ContainerRegistryProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="ContainerRegistry.ContainerRegistryCacheRuleData"/> instance for mocking. </returns>
+        public static ContainerRegistryCacheRuleData ContainerRegistryCacheRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier credentialSetResourceId = null, string sourceRepository = null, string targetRepository = null, DateTimeOffset? createdOn = null, ContainerRegistryProvisioningState? provisioningState = null)
         {
-            return new CacheRuleData(
+            return new ContainerRegistryCacheRuleData(
                 id,
                 name,
                 resourceType,
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="timestamp"> The timestamp of the status. </param>
         /// <param name="correlationId"> The correlation ID of the status. </param>
         /// <returns> A new <see cref="Models.ConnectedRegistryStatusDetail"/> instance for mocking. </returns>
-        public static ConnectedRegistryStatusDetail ConnectedRegistryStatusDetail(string statusDetailType = null, string code = null, string description = null, DateTimeOffset? timestamp = null, string correlationId = null)
+        public static ConnectedRegistryStatusDetail ConnectedRegistryStatusDetail(string statusDetailType = null, string code = null, string description = null, DateTimeOffset? timestamp = null, Guid? correlationId = null)
         {
             return new ConnectedRegistryStatusDetail(
                 statusDetailType,
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistry.CredentialSetData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ContainerRegistryCredentialSetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -216,12 +216,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// </param>
         /// <param name="createdOn"> The creation date of credential store resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="ContainerRegistry.CredentialSetData"/> instance for mocking. </returns>
-        public static CredentialSetData CredentialSetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServiceIdentity identity = null, string loginServer = null, IEnumerable<ContainerRegistryAuthCredential> authCredentials = null, DateTimeOffset? createdOn = null, ContainerRegistryProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="ContainerRegistry.ContainerRegistryCredentialSetData"/> instance for mocking. </returns>
+        public static ContainerRegistryCredentialSetData ContainerRegistryCredentialSetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServiceIdentity identity = null, string loginServer = null, IEnumerable<ContainerRegistryAuthCredential> authCredentials = null, DateTimeOffset? createdOn = null, ContainerRegistryProvisioningState? provisioningState = null)
         {
             authCredentials ??= new List<ContainerRegistryAuthCredential>();
 
-            return new CredentialSetData(
+            return new ContainerRegistryCredentialSetData(
                 id,
                 name,
                 resourceType,
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new CredentialHealth(status, errorCode, errorMessage, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ExportPipelineData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ContainerRegistryExportPipelineData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -265,12 +265,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="target"> The target properties of the export pipeline. </param>
         /// <param name="options"> The list of all options configured for the pipeline. </param>
         /// <param name="provisioningState"> The provisioning state of the pipeline at the time the operation was called. </param>
-        /// <returns> A new <see cref="ContainerRegistry.ExportPipelineData"/> instance for mocking. </returns>
-        public static ExportPipelineData ExportPipelineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ManagedServiceIdentity identity = null, ExportPipelineTargetProperties target = null, IEnumerable<PipelineOption> options = null, ContainerRegistryProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="ContainerRegistry.ContainerRegistryExportPipelineData"/> instance for mocking. </returns>
+        public static ContainerRegistryExportPipelineData ContainerRegistryExportPipelineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ManagedServiceIdentity identity = null, ExportPipelineTargetProperties target = null, IEnumerable<ContainerRegistryPipelineOption> options = null, ContainerRegistryProvisioningState? provisioningState = null)
         {
-            options ??= new List<PipelineOption>();
+            options ??= new List<ContainerRegistryPipelineOption>();
 
-            return new ExportPipelineData(
+            return new ContainerRegistryExportPipelineData(
                 id,
                 name,
                 resourceType,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryImportSourceCredentials(username, password, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ImportPipelineData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ContainerRegistryImportPipelineData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -333,12 +333,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="sourceTriggerStatus"> The properties that describe the trigger of the import pipeline. </param>
         /// <param name="options"> The list of all options configured for the pipeline. </param>
         /// <param name="provisioningState"> The provisioning state of the pipeline at the time the operation was called. </param>
-        /// <returns> A new <see cref="ContainerRegistry.ImportPipelineData"/> instance for mocking. </returns>
-        public static ImportPipelineData ImportPipelineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ManagedServiceIdentity identity = null, ImportPipelineSourceProperties source = null, ContainerRegistryTriggerStatus? sourceTriggerStatus = null, IEnumerable<PipelineOption> options = null, ContainerRegistryProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="ContainerRegistry.ContainerRegistryImportPipelineData"/> instance for mocking. </returns>
+        public static ContainerRegistryImportPipelineData ContainerRegistryImportPipelineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ManagedServiceIdentity identity = null, ImportPipelineSourceProperties source = null, ContainerRegistryTriggerStatus? sourceTriggerStatus = null, IEnumerable<ContainerRegistryPipelineOption> options = null, ContainerRegistryProvisioningState? provisioningState = null)
         {
-            options ??= new List<PipelineOption>();
+            options ??= new List<ContainerRegistryPipelineOption>();
 
-            return new ImportPipelineData(
+            return new ContainerRegistryImportPipelineData(
                 id,
                 name,
                 resourceType,

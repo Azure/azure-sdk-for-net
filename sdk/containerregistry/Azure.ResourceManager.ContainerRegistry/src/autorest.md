@@ -72,21 +72,23 @@ prepend-rp-prefix:
   - AgentPoolPatch
   - AgentPoolQueueStatus
   - AgentProperties
-  - ArchiveData
+  - Archive
   - ArchivePatch
-  - ArchiveVersionData
+  - ArchiveVersion
   - AuthCredential
   - BaseImageDependency
   - BaseImageDependencyType
   - BaseImageTrigger
   - BaseImageTriggerType
+  - CacheRule
   - CacheRuleData
   - CredentialName
   - Credentials
+  - CredentialSet
   - DockerBuildStep
   - EncodedTaskStep
   - EncryptionStatus
-  - ExportPipelineData
+  - ExportPipeline
   - ExportPolicy
   - ExportPolicyStatus
   - FileTaskStep
@@ -95,7 +97,7 @@ prepend-rp-prefix:
   - ImageUpdateTrigger
   - ImportImageParameters
   - ImportMode
-  - ImportPipelineData
+  - ImportPipeline
   - ImportSource
   - ImportSourceCredentials
   - IPRule
@@ -104,7 +106,7 @@ prepend-rp-prefix:
   - NetworkRuleSet
   - OverrideTaskStepProperties
   - PasswordName
-  - PipelineOption
+  - PipelineOptions
   - PipelineRun
   - PlatformProperties
   - Policies
@@ -157,7 +159,6 @@ prepend-rp-prefix:
   - WebhookPatch
   - WebhookStatus
   - ZoneRedundancy
-  - CredentialSetData
 
 rename-mapping:
   OS: ContainerRegistryOS
@@ -247,6 +248,7 @@ rename-mapping:
   LoggingProperties: ConnectedRegistryLogging
   StatusDetailProperties: ConnectedRegistryStatusDetail
   StatusDetailProperties.type: StatusDetailType
+  StatusDetailProperties.correlationId: -|uuid
   AuditLogStatus: ConnectedRegistryAuditLogStatus
   CertificateType: TlsCertificateLocationType
   GenerateCredentialsParameters: ContainerRegistryGenerateCredentialsContent
@@ -262,7 +264,6 @@ rename-mapping:
   TlsCertificateProperties.location: CertificateLocation
   TokenCredentialsProperties: ContainerRegistryTokenCredentials
   ImportSource.registryUri: RegistryAddress
-  ConnectedRegistryStatusDetail.CorrelationId: -|uuid
 
 override-operation-name:
   Schedules_ScheduleRun: ScheduleRun
