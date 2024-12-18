@@ -14,8 +14,6 @@ Azure AI Document Intelligence is a cloud service that uses machine learning to 
 
 ## Getting started
 
-This section should include everything a developer needs to do to install and create their first client connection *very quickly*.
-
 ### Install the package
 
 Install the Azure Document Intelligence client library for .NET with [NuGet][nuget]:
@@ -29,15 +27,15 @@ dotnet add package Azure.AI.DocumentIntelligence
 ### Prerequisites
 
 * An [Azure subscription][azure_sub].
-* A [Cognitive Services or Document Intelligence resource][cognitive_resource] to use this package.
+* A [Document Intelligence][docint_resource] or an [Azure AI services][ai_resource] resource to use this package.
 
-#### Create a Cognitive Services or Document Intelligence resource
+#### Create a Document Intelligence or an Azure AI services resource
 
-Document Intelligence supports both [multi-service and single-service access][cognitive_resource_portal]. Create a Cognitive Services resource if you plan to access multiple cognitive services under a single endpoint and key. For Document Intelligence access only, create a Document Intelligence resource. Please note that you will need a single-service resource if you intend to use [Azure Active Directory authentication](#create-documentintelligenceclient-with-azure-active-directory-credential).
+Document Intelligence supports both [multi-service and single-service access][ai_resource]. Create an Azure AI services resource if you plan to access multiple Azure AI services under a single endpoint and key. For Document Intelligence access only, create a Document Intelligence resource. Please note that you will need a single-service resource if you intend to use [Microsoft Entra ID authentication](#create-documentintelligenceclient-with-microsoft-entra-id).
 
 You can create either resource using:
 
-* Option 1: [Azure Portal][cognitive_resource_portal].
+* Option 1: [Azure Portal][ai_resource].
 * Option 2: [Azure CLI][cognitive_resource_cli].
 
 Below is an example of how you can create a Document Intelligence resource using the CLI:
@@ -49,7 +47,7 @@ az group create --name <your-resource-name> --location <location>
 ```
 
 ```PowerShell
-# Create the Form Recognizer resource
+# Create the Document Intelligence resource
 az cognitiveservices account create \
     --name <resource-name> \
     --resource-group <resource-group-name> \
@@ -81,31 +79,13 @@ Regional endpoint: https://<region>.api.cognitive.microsoft.com/
 Custom subdomain: https://<resource-name>.cognitiveservices.azure.com/
 ```
 
-A regional endpoint is the same for every resource in a region. A complete list of supported regional endpoints can be consulted [here][regional_endpoints]. Please note that regional endpoints do not support AAD authentication.
+A regional endpoint is the same for every resource in a region. A complete list of supported regional endpoints can be consulted [here][regional_endpoints]. Please note that regional endpoints do not support Microsoft Entra ID authentication.
 
-A custom subdomain, on the other hand, is a name that is unique to the Document Intelligence resource. They can only be used by [single-service resources][cognitive_resource_portal].
+A custom subdomain, on the other hand, is a name that is unique to the Document Intelligence resource. They can only be used by [single-service resources][ai_resource].
 
-#### Get the API Key
+#### Create DocumentIntelligenceClient with Microsoft Entra ID
 
-The API key can be found in the [Azure Portal][azure_portal] or by running the following Azure CLI command:
-
-```PowerShell
-az cognitiveservices account keys list --name "<resource-name>" --resource-group "<resource-group-name>"
-```
-
-#### Create DocumentIntelligenceClient with AzureKeyCredential
-
-Once you have the value for the API key, create an `AzureKeyCredential`. With the endpoint and key credential, you can create the [`DocumentIntelligenceClient`][doc_intelligence_client_class]:
-
-```C# Snippet:CreateDocumentIntelligenceClientApiKey
-string endpoint = "<endpoint>";
-string apiKey = "<apiKey>";
-var client = new DocumentIntelligenceClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-```
-
-#### Create DocumentIntelligenceClient with Azure Active Directory Credential
-
-`AzureKeyCredential` authentication is used in the examples in this getting started guide, but you can also authenticate with Azure Active Directory using the [Azure Identity library][azure_identity]. Note that regional endpoints do not support AAD authentication. Create a [custom subdomain][custom_subdomain] for your resource in order to use this type of authentication.
+You can authenticate with Microsoft Entra ID by using the [Azure Identity library][azure_identity]. Note that regional endpoints do not support identity-based authentication. Create a [custom subdomain][custom_subdomain] for your resource in order to use this type of authentication.
 
 To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below, or other credential providers provided with the Azure SDK, please install the `Azure.Identity` package:
 
@@ -113,14 +93,34 @@ To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below
 dotnet add package Azure.Identity
 ```
 
-You will also need to [register a new AAD application][register_aad_app] and [grant access][aad_grant_access] to Document Intelligence by assigning the `"Cognitive Services User"` role to your service principal.
-
-Set the values of the client ID, tenant ID, and client secret of the AAD application as environment variables: AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_CLIENT_SECRET.
+You will also need to [register a new Microsoft Entra application][register_aad_app] and grant access to Document Intelligence by assigning the `"Cognitive Services Data Reader"` role to your service principal.
 
 ```C# Snippet:CreateDocumentIntelligenceClient
 string endpoint = "<endpoint>";
 var credential = new DefaultAzureCredential();
 var client = new DocumentIntelligenceClient(new Uri(endpoint), credential);
+```
+
+#### Create DocumentIntelligenceClient with AzureKeyCredential
+
+It is strongly recommended to use Microsoft Entra ID as your default authentication approach. On the other hand, using an `AzureKeyCredential` can be helpful on getting-started scenarios since it can be set up fastly.
+
+##### Get the API Key
+
+The API key can be found in the [Azure Portal][azure_portal_get_endpoint] or by running the following Azure CLI command:
+
+```PowerShell
+az cognitiveservices account keys list --name "<resource-name>" --resource-group "<resource-group-name>"
+```
+
+##### Create the client
+
+Once you have the value for the API key, create an `AzureKeyCredential`. With the endpoint and key credential, you can create the [`DocumentIntelligenceClient`][doc_intelligence_client_class]:
+
+```C# Snippet:CreateDocumentIntelligenceClientApiKey
+string endpoint = "<endpoint>";
+string apiKey = "<apiKey>";
+var client = new DocumentIntelligenceClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
 ## Key concepts
@@ -182,10 +182,7 @@ Extract text, selection marks, table structures, styles, and paragraphs, along w
 
 ```C# Snippet:DocumentIntelligenceExtractLayoutFromUriAsync
 Uri uriSource = new Uri("<uriSource>");
-
-var options = new AnalyzeDocumentOptions("prebuilt-layout", uriSource);
-
-Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, options);
+Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", uriSource);
 AnalyzeResult result = operation.Value;
 
 foreach (DocumentPage page in result.Pages)
@@ -281,10 +278,7 @@ For example, to analyze fields from an invoice, use the prebuilt Invoice model p
 
 ```C# Snippet:DocumentIntelligenceAnalyzeWithPrebuiltModelFromUriAsync
 Uri uriSource = new Uri("<uriSource>");
-
-var options = new AnalyzeDocumentOptions("prebuilt-invoice", uriSource);
-
-Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, options);
+Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", uriSource);
 AnalyzeResult result = operation.Value;
 
 // To see the list of all the supported fields returned by service and its corresponding types for the
@@ -518,7 +512,7 @@ For more information, see [here][classify_document].
 
 ### General
 
-When you interact with the Document Intelligence client library using the .NET SDK, errors returned by the service will result in a `RequestFailedException` with the same HTTP status code returned by the [REST API][docint_rest_api] request.
+When you interact with the Document Intelligence client library using the .NET SDK, errors returned by the service will result in a `RequestFailedException` with the same HTTP status code returned by the REST API request.
 
 For example, if you submit a receipt image with an invalid `Uri`, a `400` error is returned, indicating "Bad Request".
 
@@ -548,12 +542,15 @@ Content:
     {"error":{"code":"InvalidRequest","message":"Invalid request.","innererror":{"code":"InvalidContent","message":"The file is corrupted or format is unsupported. Refer to documentation for the list of supported formats."}}}
 
 Headers:
-    Transfer-Encoding: chunked
+    ms-azure-ai-errorcode: REDACTED
+    x-ms-error-code: REDACTED
     x-envoy-upstream-service-time: REDACTED
-    apim-request-id: REDACTED
+    apim-request-id: 4ca2a2ff-aaa5-4ffa-864f-cbd8f4a847f7
     Strict-Transport-Security: REDACTED
     X-Content-Type-Options: REDACTED
-    Date: Fri, 01 Oct 2021 02:55:44 GMT
+    x-ms-region: REDACTED
+    Date: Mon, 16 Dec 2024 23:25:15 GMT
+    Content-Length: 221
     Content-Type: application/json; charset=utf-8
 ```
 
@@ -601,27 +598,25 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 <!-- LINKS -->
 [docint_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/documentintelligence/Azure.AI.DocumentIntelligence/src
 [docint_docs]: https://learn.microsoft.com/azure/cognitive-services/form-recognizer/
-[docint_refdocs]: https://aka.ms/azsdk/net/docs/ref/formrecognizer
-[docint_nuget_package]: https://www.nuget.org/packages/Azure.AI.FormRecognizer
+[docint_refdocs]: https://learn.microsoft.com/dotnet/api/overview/azure/cognitiveservices/documentintelligence?view=azure-dotnet
+[docint_nuget_package]: https://www.nuget.org/packages/Azure.AI.DocumentIntelligence
 [docint_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/documentintelligence/Azure.AI.DocumentIntelligence/samples/README.md
-[docint_rest_api]: https://aka.ms/azsdk/formrecognizer/restapi
 [docint_models]: https://aka.ms/azsdk/formrecognizer/models
 [docint_errors]: https://aka.ms/azsdk/formrecognizer/errors
 [docint_build_model]: https://aka.ms/azsdk/formrecognizer/buildmodel
-[cognitive_resource]: https://learn.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
+[docint_resource]: https://learn.microsoft.com/azure/ai-services/document-intelligence/how-to-guides/create-document-intelligence-resource
+[ai_resource]: https://learn.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
 
 
 [doc_intelligence_client_class]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/documentintelligence/Azure.AI.DocumentIntelligence/src/DocumentIntelligenceClient.cs
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity
 [register_aad_app]: https://learn.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
-[aad_grant_access]: https://learn.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
 [custom_subdomain]: https://learn.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md
-[cognitive_resource_portal]: https://learn.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
 [cognitive_resource_cli]: https://learn.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
 [regional_endpoints]: https://learn.microsoft.com/azure/cognitive-services/cognitive-services-custom-subdomains#is-there-a-list-of-regional-endpoints
 [azure_cli_endpoint_lookup]: https://learn.microsoft.com/cli/azure/cognitiveservices/account?view=azure-cli-latest#az-cognitiveservices-account-show
-[azure_portal_get_endpoint]: https://learn.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account?tabs=multiservice%2Cwindows#get-the-keys-for-your-resource
+[azure_portal_get_endpoint]: https://learn.microsoft.com/azure/ai-services/document-intelligence/how-to-guides/create-document-intelligence-resource#get-endpoint-url-and-keys
 
 
 [di_studio]: https://aka.ms/azsdk/formrecognizer/formrecognizerstudio
@@ -643,7 +638,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [azure_cli]: https://learn.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [nuget]: https://www.nuget.org/
-[azure_portal]: https://portal.azure.com
 
 [cla]: https://cla.microsoft.com
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/

@@ -23,10 +23,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
 #else
             Uri uriSource = DocumentIntelligenceTestEnvironment.CreateUri("Form_1.jpg");
 #endif
-
-            var options = new AnalyzeDocumentOptions("prebuilt-layout", uriSource);
-
-            Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, options);
+            Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", uriSource);
             AnalyzeResult result = operation.Value;
 
             foreach (DocumentPage page in result.Pages)
