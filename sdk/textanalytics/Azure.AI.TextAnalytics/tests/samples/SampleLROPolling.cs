@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Samples
         public async Task LROPolling()
         {
             Uri endpoint = new(TestEnvironment.Endpoint);
-            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            var credential = TestEnvironment.Credential;
             TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
 
             string documentA =

@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Samples
         public void RecognizeEntitiesBatch()
         {
             Uri endpoint = new(TestEnvironment.Endpoint);
-            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            var credential = TestEnvironment.Credential;
             TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
 
             #region Snippet:Sample4_RecognizeEntitiesBatch
