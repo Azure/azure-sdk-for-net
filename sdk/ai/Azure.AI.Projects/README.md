@@ -4,6 +4,12 @@ Use the AI Projects client library to:
 * **Develop Agents using the Azure AI Agent Service**, leveraging an extensive ecosystem of models, tools, and capabilities from OpenAI, Microsoft, and other LLM providers. The Azure AI Agent Service enables the building of Agents for a wide range of generative AI use cases. The package is currently in preview.
 * **Enumerate connections** in your Azure AI Studio project and get connection properties. For example, get the inference endpoint URL and credentials associated with your Azure OpenAI connection.
 
+[Product documentation][product_doc]
+| [Samples][samples]
+| [API reference documentation][api_ref_docs]
+| [Package (NuGet)][nuget]
+| [SDK source code][source_code]
+
 ## Table of contents
 
 - [Getting started](#getting-started)
@@ -20,6 +26,9 @@ Use the AI Projects client library to:
       - [Retrieve messages](#retrieve-messages)
     - [File search](#file-search)
     - [Function call](#function-call)
+    - [Azure function call](#azure-function-call)
+    - [Azure Function Call](#create-agent-with-azure-function-call)
+    - [OpenAPI](#create-agent-with-openapi)
 - [Troubleshooting](#troubleshooting)
 - [Next steps](#next-steps)
 - [Contributing](#contributing)
@@ -347,6 +356,126 @@ while (runResponse.Value.Status == RunStatus.Queued
     || runResponse.Value.Status == RunStatus.InProgress);
 ```
 
+#### Azure function call
+
+We also can use Azure Function from inside the agent. In the example below we are calling function "foo", which responds "Bar". In this example we create `AzureFunctionToolDefinition` object, with the function name, description, input and output queues, followed by function parameters.  
+```C# Snippet:AzureFunctionsDefineFunctionTools
+AzureFunctionToolDefinition azureFnTool = new(
+    name: "foo",
+    description: "Get answers from the foo bot.",
+    inputBinding: new AzureFunctionBinding(
+        new AzureFunctionStorageQueue(
+            queueName: "azure-function-foo-input",
+            storageServiceEndpoint: storageQueueUri
+        )
+    ),
+    outputBinding: new AzureFunctionBinding(
+        new AzureFunctionStorageQueue(
+            queueName: "azure-function-tool-output",
+            storageServiceEndpoint: storageQueueUri
+        )
+    ),
+    parameters: BinaryData.FromObjectAsJson(
+            new
+            {
+                Type = "object",
+                Properties = new
+                {
+                    query = new
+                    {
+                        Type = "string",
+                        Description = "The question to ask.",
+                    },
+                    outputqueueuri = new
+                    {
+                        Type = "string",
+                        Description = "The full output queue uri."
+                    }
+                },
+            },
+        new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }
+    )
+);
+```
+
+Note that in this scenario we are asking agent to supply storage queue URI to the azure function whenever it is called.
+```C# Snippet:AzureFunctionsCreateAgentWithFunctionTools
+Response<Agent> agentResponse = await client.CreateAgentAsync(
+    model: "gpt-4",
+    name: "azure-function-agent-foo",
+        instructions: "You are a helpful support agent. Use the provided function any "
+        + "time the prompt contains the string 'What would foo say?'. When you invoke "
+        + "the function, ALWAYS specify the output queue uri parameter as "
+        + $"'{storageQueueUri}/azure-function-tool-output'. Always responds with "
+        + "\"Foo says\" and then the response from the tool.",
+    tools: new List<ToolDefinition> { azureFnTool }
+    );
+Agent agent = agentResponse.Value;
+```
+
+After we have created a message with request to ask "What would foo say?", we need to wait while the run is in queued, in progress or requires action states.
+```C# Snippet:AzureFunctionsHandlePollingWithRequiredAction
+Response<ThreadMessage> messageResponse = await client.CreateMessageAsync(
+    thread.Id,
+    MessageRole.User,
+    "What is the most prevalent element in the universe? What would foo say?");
+ThreadMessage message = messageResponse.Value;
+
+Response<ThreadRun> runResponse = await client.CreateRunAsync(thread, agent);
+
+do
+{
+    await Task.Delay(TimeSpan.FromMilliseconds(500));
+    runResponse = await client.GetRunAsync(thread.Id, runResponse.Value.Id);
+}
+while (runResponse.Value.Status == RunStatus.Queued
+    || runResponse.Value.Status == RunStatus.InProgress
+    || runResponse.Value.Status == RunStatus.RequiresAction);
+```
+
+#### Create Agent With OpenAPI
+
+OpenAPI specifications describe REST operations against a specific endpoint. Agents SDK can read an OpenAPI spec, create a function from it, and call that function against the REST endpoint without additional client-side execution.
+
+Here is an example creating an OpenAPI tool (using anonymous authentication):
+```C# Snippet:OpenAPIDefineFunctionTools
+OpenApiAnonymousAuthDetails oaiAuth = new();
+OpenApiToolDefinition openapiTool = new(
+    name: "get_weather",
+    description: "Retrieve weather information for a location",
+    spec: BinaryData.FromBytes(File.ReadAllBytes(file_path)),
+    auth: oaiAuth
+);
+
+Response<Agent> agentResponse = await client.CreateAgentAsync(
+    model: "gpt-4",
+    name: "azure-function-agent-foo",
+    instructions: "You are a helpful assistant.",
+    tools: new List<ToolDefinition> { openapiTool }
+    );
+Agent agent = agentResponse.Value;
+```
+
+In this example we are using the `weather_openapi.json` file and agent will request the wttr.in website for the weather in a location fron the prompt.
+```C# Snippet:OpenAPIHandlePollingWithRequiredAction
+Response<ThreadMessage> messageResponse = await client.CreateMessageAsync(
+    thread.Id,
+    MessageRole.User,
+    "What's the weather in Seattle?");
+ThreadMessage message = messageResponse.Value;
+
+Response<ThreadRun> runResponse = await client.CreateRunAsync(thread, agent);
+
+do
+{
+    await Task.Delay(TimeSpan.FromMilliseconds(500));
+    runResponse = await client.GetRunAsync(thread.Id, runResponse.Value.Id);
+}
+while (runResponse.Value.Status == RunStatus.Queued
+    || runResponse.Value.Status == RunStatus.InProgress
+    || runResponse.Value.Status == RunStatus.RequiresAction);
+```
+
 ## Troubleshooting
 
 Any operation that fails will throw a [RequestFailedException][RequestFailedException]. The exception's `code` will hold the HTTP response status code. The exception's `message` contains a detailed message that may be helpful in diagnosing the issue:
@@ -385,6 +514,10 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 <!-- LINKS -->
 [RequestFailedException]: https://learn.microsoft.com/dotnet/api/azure.requestfailedexception?view=azure-dotnet
 [samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/ai/Azure.AI.Projects/tests/Samples
+[api_ref_docs]: https://learn.microsoft.com/dotnet/api/azure.ai.projects?view=azure-dotnet-preview
+[nuget]: https://www.nuget.org/packages/Azure.AI.Projects
+[source_code]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/ai/Azure.AI.Projects
+[product_doc]: https://learn.microsoft.com/azure/ai-studio/
 [azure_identity]: https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet
 [azure_identity_dac]: https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet
 [aiprojects_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md

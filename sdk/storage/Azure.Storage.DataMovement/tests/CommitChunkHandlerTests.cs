@@ -116,7 +116,8 @@ namespace Azure.Storage.DataMovement.Tests
         private Mock<CommitChunkHandler.ReportProgressInBytes> GetReportProgressInBytesTask()
         {
             var mock = new Mock<CommitChunkHandler.ReportProgressInBytes>(MockBehavior.Strict);
-            mock.Setup(del => del(It.IsNotNull<long>()));
+            mock.Setup(del => del(It.IsNotNull<long>()))
+                .Returns(new ValueTask());
             return mock;
         }
 

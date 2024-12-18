@@ -51,7 +51,7 @@ namespace Azure.Storage.DataMovement
     }
     public partial class DataTransferProgress
     {
-        protected internal DataTransferProgress() { }
+        internal DataTransferProgress() { }
         public long? BytesTransferred { get { throw null; } }
         public long CompletedCount { get { throw null; } }
         public long FailedCount { get { throw null; } }

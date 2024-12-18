@@ -159,7 +159,6 @@ public static class CloudMachineInfrastructureConfiguration
     /// <returns></returns>
     public static IHostApplicationBuilder AddCloudMachine(this IHostApplicationBuilder builder, CloudMachineInfrastructure cm)
     {
-        builder.Configuration.AddCloudMachineConfiguration(cm);
         builder.Services.AddSingleton(new CloudMachineClient(cm.Connections));
         return builder;
     }

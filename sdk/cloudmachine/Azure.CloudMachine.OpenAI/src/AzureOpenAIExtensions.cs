@@ -142,4 +142,12 @@ public static class AzureOpenAIExtensions
     /// <param name="completion"></param>
     public static void Add(this List<ChatMessage> messages, ChatCompletion completion)
         => messages.Add(ChatMessage.CreateAssistantMessage(completion));
+
+    /// <summary>
+    /// Adds a list of tool chat messages to the list of chat messages.
+    /// </summary>
+    /// <param name="messages"></param>
+    /// <param name="toolCallResults"></param>
+    public static void Add(this List<ChatMessage> messages, IEnumerable<ToolChatMessage> toolCallResults)
+        => messages.AddRange(toolCallResults);
 }
