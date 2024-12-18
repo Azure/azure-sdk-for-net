@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_GroupQuotaSubscriptionsPutSubscriptions()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotasSubscriptions/PutGroupQuotasSubscription.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-10-15-preview/examples/GroupQuotasSubscriptions/PutGroupQuotasSubscription.json
             // this example is just showing the usage of "GroupQuotaSubscriptions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GroupQuotaSubscriptionsGetSubscriptions()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotasSubscriptions/GetGroupQuotaSubscriptions.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-10-15-preview/examples/GroupQuotasSubscriptions/GetGroupQuotaSubscriptions.json
             // this example is just showing the usage of "GroupQuotaSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.Quota.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GroupQuotaSubscriptionsListSubscriptions()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotasSubscriptions/ListGroupQuotaSubscriptions.json
-            // this example is just showing the usage of "GroupQuotaSubscriptions_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-10-15-preview/examples/GroupQuotasSubscriptions/GetGroupQuotaSubscriptions.json
+            // this example is just showing the usage of "GroupQuotaSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GroupQuotaSubscriptionsGetSubscriptions()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotasSubscriptions/GetGroupQuotaSubscriptions.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-10-15-preview/examples/GroupQuotasSubscriptions/GetGroupQuotaSubscriptions.json
             // this example is just showing the usage of "GroupQuotaSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -150,8 +150,8 @@ namespace Azure.ResourceManager.Quota.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GroupQuotaSubscriptionsGetSubscriptions()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotasSubscriptions/GetGroupQuotaSubscriptions.json
-            // this example is just showing the usage of "GroupQuotaSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-10-15-preview/examples/GroupQuotasSubscriptions/ListGroupQuotaSubscriptions.json
+            // this example is just showing the usage of "GroupQuotaSubscriptions_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

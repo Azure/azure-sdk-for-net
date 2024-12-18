@@ -7,17 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Quota.Models;
 
-namespace Azure.ResourceManager.Quota
+namespace Azure.ResourceManager.Quota.Models
 {
-    /// <summary>
-    /// A class representing the SubscriptionQuotaAllocation data model.
-    /// Quota allocated to a subscription for the specific Resource Provider, Location, ResourceName. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota.
-    /// </summary>
-    public partial class SubscriptionQuotaAllocationData : ResourceData
+    /// <summary> Group Quota limit. </summary>
+    public partial class GroupQuotaLimit
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,26 +45,22 @@ namespace Azure.ResourceManager.Quota
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionQuotaAllocationData"/>. </summary>
-        public SubscriptionQuotaAllocationData()
+        /// <summary> Initializes a new instance of <see cref="GroupQuotaLimit"/>. </summary>
+        public GroupQuotaLimit()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionQuotaAllocationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Quota properties for the specified resource. </param>
+        /// <summary> Initializes a new instance of <see cref="GroupQuotaLimit"/>. </summary>
+        /// <param name="properties"> Group Quota properties for the specified resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionQuotaAllocationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubscriptionQuotaDetails properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal GroupQuotaLimit(GroupQuotaDetails properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Quota properties for the specified resource. </summary>
+        /// <summary> Group Quota properties for the specified resource. </summary>
         [WirePath("properties")]
-        public SubscriptionQuotaDetails Properties { get; set; }
+        public GroupQuotaDetails Properties { get; set; }
     }
 }

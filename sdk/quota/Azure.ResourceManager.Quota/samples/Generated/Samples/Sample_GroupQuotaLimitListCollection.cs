@@ -13,48 +13,13 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Quota.Samples
 {
-    public partial class Sample_GroupQuotaLimitCollection
+    public partial class Sample_GroupQuotaLimitListCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GroupQuotaLimitsGetRequestForCompute()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotaLimits/GetGroupQuotaLimits-Compute.json
-            // this example is just showing the usage of "GroupQuotaLimits_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this GroupQuotaEntityResource created on azure
-            // for more information of creating GroupQuotaEntityResource, please refer to the document of GroupQuotaEntityResource
-            string managementGroupId = "E7EC67B3-7657-4966-BFFC-41EFD36BAA09";
-            string groupQuotaName = "groupquota1";
-            ResourceIdentifier groupQuotaEntityResourceId = GroupQuotaEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
-            GroupQuotaEntityResource groupQuotaEntity = client.GetGroupQuotaEntityResource(groupQuotaEntityResourceId);
-
-            // get the collection of this GroupQuotaLimitResource
-            string resourceProviderName = "Microsoft.Compute";
-            GroupQuotaLimitCollection collection = groupQuotaEntity.GetGroupQuotaLimits(resourceProviderName);
-
-            // invoke the operation
-            string resourceName = "cores";
-            string filter = "location eq westus";
-            GroupQuotaLimitResource result = await collection.GetAsync(resourceName, filter);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            GroupQuotaLimitData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_GroupQuotaLimitsListRequestForCompute()
-        {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotaLimits/ListGroupQuotaLimits-Compute.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-10-15-preview/examples/GroupQuotaLimits/ListGroupQuotaLimits-Compute.json
             // this example is just showing the usage of "GroupQuotaLimits_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -69,20 +34,47 @@ namespace Azure.ResourceManager.Quota.Samples
             ResourceIdentifier groupQuotaEntityResourceId = GroupQuotaEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
             GroupQuotaEntityResource groupQuotaEntity = client.GetGroupQuotaEntityResource(groupQuotaEntityResourceId);
 
-            // get the collection of this GroupQuotaLimitResource
-            string resourceProviderName = "Microsoft.Compute";
-            GroupQuotaLimitCollection collection = groupQuotaEntity.GetGroupQuotaLimits(resourceProviderName);
+            // get the collection of this GroupQuotaLimitListResource
+            GroupQuotaLimitListCollection collection = groupQuotaEntity.GetGroupQuotaLimitLists();
 
-            // invoke the operation and iterate over the result
-            string filter = "location eq westus";
-            await foreach (GroupQuotaLimitResource item in collection.GetAllAsync(filter))
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                GroupQuotaLimitData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+            // invoke the operation
+            string resourceProviderName = "Microsoft.Compute";
+            AzureLocation location = new AzureLocation("westus");
+            GroupQuotaLimitListResource result = await collection.GetAsync(resourceProviderName, location);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            GroupQuotaLimitListData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_GroupQuotaLimitsListRequestForCompute()
+        {
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-10-15-preview/examples/GroupQuotaLimits/ListGroupQuotaLimits-Compute.json
+            // this example is just showing the usage of "GroupQuotaLimits_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this GroupQuotaEntityResource created on azure
+            // for more information of creating GroupQuotaEntityResource, please refer to the document of GroupQuotaEntityResource
+            string managementGroupId = "E7EC67B3-7657-4966-BFFC-41EFD36BAA09";
+            string groupQuotaName = "groupquota1";
+            ResourceIdentifier groupQuotaEntityResourceId = GroupQuotaEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
+            GroupQuotaEntityResource groupQuotaEntity = client.GetGroupQuotaEntityResource(groupQuotaEntityResourceId);
+
+            // get the collection of this GroupQuotaLimitListResource
+            GroupQuotaLimitListCollection collection = groupQuotaEntity.GetGroupQuotaLimitLists();
+
+            // invoke the operation
+            string resourceProviderName = "Microsoft.Compute";
+            AzureLocation location = new AzureLocation("westus");
+            bool result = await collection.ExistsAsync(resourceProviderName, location);
 
             Console.WriteLine("Succeeded");
         }
@@ -91,8 +83,8 @@ namespace Azure.ResourceManager.Quota.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GroupQuotaLimitsGetRequestForCompute()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotaLimits/GetGroupQuotaLimits-Compute.json
-            // this example is just showing the usage of "GroupQuotaLimits_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-10-15-preview/examples/GroupQuotaLimits/ListGroupQuotaLimits-Compute.json
+            // this example is just showing the usage of "GroupQuotaLimits_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -106,56 +98,24 @@ namespace Azure.ResourceManager.Quota.Samples
             ResourceIdentifier groupQuotaEntityResourceId = GroupQuotaEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
             GroupQuotaEntityResource groupQuotaEntity = client.GetGroupQuotaEntityResource(groupQuotaEntityResourceId);
 
-            // get the collection of this GroupQuotaLimitResource
-            string resourceProviderName = "Microsoft.Compute";
-            GroupQuotaLimitCollection collection = groupQuotaEntity.GetGroupQuotaLimits(resourceProviderName);
+            // get the collection of this GroupQuotaLimitListResource
+            GroupQuotaLimitListCollection collection = groupQuotaEntity.GetGroupQuotaLimitLists();
 
             // invoke the operation
-            string resourceName = "cores";
-            string filter = "location eq westus";
-            bool result = await collection.ExistsAsync(resourceName, filter);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_GroupQuotaLimitsGetRequestForCompute()
-        {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/GroupQuotaLimits/GetGroupQuotaLimits-Compute.json
-            // this example is just showing the usage of "GroupQuotaLimits_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this GroupQuotaEntityResource created on azure
-            // for more information of creating GroupQuotaEntityResource, please refer to the document of GroupQuotaEntityResource
-            string managementGroupId = "E7EC67B3-7657-4966-BFFC-41EFD36BAA09";
-            string groupQuotaName = "groupquota1";
-            ResourceIdentifier groupQuotaEntityResourceId = GroupQuotaEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
-            GroupQuotaEntityResource groupQuotaEntity = client.GetGroupQuotaEntityResource(groupQuotaEntityResourceId);
-
-            // get the collection of this GroupQuotaLimitResource
             string resourceProviderName = "Microsoft.Compute";
-            GroupQuotaLimitCollection collection = groupQuotaEntity.GetGroupQuotaLimits(resourceProviderName);
-
-            // invoke the operation
-            string resourceName = "cores";
-            string filter = "location eq westus";
-            NullableResponse<GroupQuotaLimitResource> response = await collection.GetIfExistsAsync(resourceName, filter);
-            GroupQuotaLimitResource result = response.HasValue ? response.Value : null;
+            AzureLocation location = new AzureLocation("westus");
+            NullableResponse<GroupQuotaLimitListResource> response = await collection.GetIfExistsAsync(resourceProviderName, location);
+            GroupQuotaLimitListResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
-                Console.WriteLine("Succeeded with null as result");
+                Console.WriteLine($"Succeeded with null as result");
             }
             else
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                GroupQuotaLimitData resourceData = result.Data;
+                GroupQuotaLimitListData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
