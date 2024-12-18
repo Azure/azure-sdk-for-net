@@ -10,6 +10,7 @@ Azure AI Document Intelligence is a cloud service that uses machine learning to 
 - Prebuilt - Analyze data from certain types of common documents using prebuilt models. Supported documents include receipts, invoices, business cards, identity documents, US W2 tax forms, and more.
 - Custom analysis - Build custom document models to analyze text, field values, selection marks, table structures, styles, and paragraphs from documents. Custom models are built with your own data, so they're tailored to your documents.
 - Custom classification - Build custom classifier models that combine layout and language features to accurately detect and identify documents you process within your application.
+- A Change that will never merge
 
 [Source code][formreco_client_src] | [Package (NuGet)][formreco_nuget_package] | [API reference documentation][formreco_refdocs] | [Product documentation][formreco_docs] | [Samples][formreco_samples]
 
