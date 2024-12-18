@@ -271,8 +271,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An async collection of <see cref="ScalingPlanPersonalScheduleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScalingPlanPersonalScheduleResource> GetAllAsync(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _scalingPlanPersonalScheduleRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scalingPlanPersonalScheduleRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _scalingPlanPersonalScheduleRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSize, isDescending, initialSkip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scalingPlanPersonalScheduleRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSize, isDescending, initialSkip);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScalingPlanPersonalScheduleResource(Client, ScalingPlanPersonalScheduleData.DeserializeScalingPlanPersonalScheduleData(e)), _scalingPlanPersonalScheduleClientDiagnostics, Pipeline, "ScalingPlanPersonalScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -304,8 +304,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> A collection of <see cref="ScalingPlanPersonalScheduleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScalingPlanPersonalScheduleResource> GetAll(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _scalingPlanPersonalScheduleRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scalingPlanPersonalScheduleRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _scalingPlanPersonalScheduleRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSize, isDescending, initialSkip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scalingPlanPersonalScheduleRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSize, isDescending, initialSkip);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScalingPlanPersonalScheduleResource(Client, ScalingPlanPersonalScheduleData.DeserializeScalingPlanPersonalScheduleData(e)), _scalingPlanPersonalScheduleClientDiagnostics, Pipeline, "ScalingPlanPersonalScheduleCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 

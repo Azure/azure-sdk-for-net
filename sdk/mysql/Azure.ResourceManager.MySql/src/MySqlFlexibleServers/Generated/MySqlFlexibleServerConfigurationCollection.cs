@@ -268,8 +268,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <returns> An async collection of <see cref="MySqlFlexibleServerConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MySqlFlexibleServerConfigurationResource> GetAllAsync(string tags = null, string keyword = null, int? page = null, int? pageSize = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFlexibleServerConfigurationConfigurationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, keyword, page, pageSizeHint);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlFlexibleServerConfigurationConfigurationsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, keyword, page, pageSizeHint);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFlexibleServerConfigurationConfigurationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, keyword, page, pageSize);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlFlexibleServerConfigurationConfigurationsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, keyword, page, pageSize);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlFlexibleServerConfigurationResource(Client, MySqlFlexibleServerConfigurationData.DeserializeMySqlFlexibleServerConfigurationData(e)), _mySqlFlexibleServerConfigurationConfigurationsClientDiagnostics, Pipeline, "MySqlFlexibleServerConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -302,8 +302,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <returns> A collection of <see cref="MySqlFlexibleServerConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MySqlFlexibleServerConfigurationResource> GetAll(string tags = null, string keyword = null, int? page = null, int? pageSize = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFlexibleServerConfigurationConfigurationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, keyword, page, pageSizeHint);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlFlexibleServerConfigurationConfigurationsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, keyword, page, pageSizeHint);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlFlexibleServerConfigurationConfigurationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, keyword, page, pageSize);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlFlexibleServerConfigurationConfigurationsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tags, keyword, page, pageSize);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlFlexibleServerConfigurationResource(Client, MySqlFlexibleServerConfigurationData.DeserializeMySqlFlexibleServerConfigurationData(e)), _mySqlFlexibleServerConfigurationConfigurationsClientDiagnostics, Pipeline, "MySqlFlexibleServerConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 

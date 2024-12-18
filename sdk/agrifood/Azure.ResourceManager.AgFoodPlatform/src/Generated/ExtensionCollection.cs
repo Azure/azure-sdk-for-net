@@ -271,8 +271,8 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <returns> An async collection of <see cref="ExtensionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExtensionResource> GetAllAsync(IEnumerable<string> extensionIds = null, IEnumerable<string> extensionCategories = null, int? maxPageSize = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _extensionRestClient.CreateListByFarmBeatsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionIds, extensionCategories, pageSizeHint, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _extensionRestClient.CreateListByFarmBeatsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionIds, extensionCategories, pageSizeHint, skipToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _extensionRestClient.CreateListByFarmBeatsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionIds, extensionCategories, maxPageSize, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _extensionRestClient.CreateListByFarmBeatsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionIds, extensionCategories, maxPageSize, skipToken);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExtensionResource(Client, ExtensionData.DeserializeExtensionData(e)), _extensionClientDiagnostics, Pipeline, "ExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -308,8 +308,8 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <returns> A collection of <see cref="ExtensionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExtensionResource> GetAll(IEnumerable<string> extensionIds = null, IEnumerable<string> extensionCategories = null, int? maxPageSize = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _extensionRestClient.CreateListByFarmBeatsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionIds, extensionCategories, pageSizeHint, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _extensionRestClient.CreateListByFarmBeatsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionIds, extensionCategories, pageSizeHint, skipToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _extensionRestClient.CreateListByFarmBeatsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionIds, extensionCategories, maxPageSize, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _extensionRestClient.CreateListByFarmBeatsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionIds, extensionCategories, maxPageSize, skipToken);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExtensionResource(Client, ExtensionData.DeserializeExtensionData(e)), _extensionClientDiagnostics, Pipeline, "ExtensionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 

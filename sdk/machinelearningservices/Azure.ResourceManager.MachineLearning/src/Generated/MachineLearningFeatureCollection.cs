@@ -170,8 +170,8 @@ namespace Azure.ResourceManager.MachineLearning
         {
             options ??= new MachineLearningFeatureCollectionGetAllOptions();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningFeatureFeaturesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options.Skip, options.Tags, options.FeatureName, options.Description, options.ListViewType, pageSizeHint);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningFeatureFeaturesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options.Skip, options.Tags, options.FeatureName, options.Description, options.ListViewType, pageSizeHint);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningFeatureFeaturesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options.Skip, options.Tags, options.FeatureName, options.Description, options.ListViewType, pageSize);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningFeatureFeaturesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options.Skip, options.Tags, options.FeatureName, options.Description, options.ListViewType, pageSize);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningFeatureResource(Client, MachineLearningFeatureData.DeserializeMachineLearningFeatureData(e)), _machineLearningFeatureFeaturesClientDiagnostics, Pipeline, "MachineLearningFeatureCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -203,8 +203,8 @@ namespace Azure.ResourceManager.MachineLearning
         {
             options ??= new MachineLearningFeatureCollectionGetAllOptions();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningFeatureFeaturesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options.Skip, options.Tags, options.FeatureName, options.Description, options.ListViewType, pageSizeHint);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningFeatureFeaturesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options.Skip, options.Tags, options.FeatureName, options.Description, options.ListViewType, pageSizeHint);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningFeatureFeaturesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options.Skip, options.Tags, options.FeatureName, options.Description, options.ListViewType, pageSize);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningFeatureFeaturesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, options.Skip, options.Tags, options.FeatureName, options.Description, options.ListViewType, pageSize);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningFeatureResource(Client, MachineLearningFeatureData.DeserializeMachineLearningFeatureData(e)), _machineLearningFeatureFeaturesClientDiagnostics, Pipeline, "MachineLearningFeatureCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 

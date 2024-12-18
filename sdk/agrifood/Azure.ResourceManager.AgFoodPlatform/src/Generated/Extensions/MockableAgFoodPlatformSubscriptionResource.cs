@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.AgFoodPlatform.Mocking
         /// <returns> An async collection of <see cref="FarmBeatResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FarmBeatResource> GetFarmBeatsAsync(int? maxPageSize = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => FarmBeatFarmBeatsModelsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, pageSizeHint, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FarmBeatFarmBeatsModelsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, pageSizeHint, skipToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => FarmBeatFarmBeatsModelsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, maxPageSize, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FarmBeatFarmBeatsModelsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, maxPageSize, skipToken);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FarmBeatResource(Client, FarmBeatData.DeserializeFarmBeatData(e)), FarmBeatFarmBeatsModelsClientDiagnostics, Pipeline, "MockableAgFoodPlatformSubscriptionResource.GetFarmBeats", "value", "nextLink", cancellationToken);
         }
 
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.AgFoodPlatform.Mocking
         /// <returns> A collection of <see cref="FarmBeatResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FarmBeatResource> GetFarmBeats(int? maxPageSize = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => FarmBeatFarmBeatsModelsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, pageSizeHint, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FarmBeatFarmBeatsModelsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, pageSizeHint, skipToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => FarmBeatFarmBeatsModelsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, maxPageSize, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FarmBeatFarmBeatsModelsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, maxPageSize, skipToken);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FarmBeatResource(Client, FarmBeatData.DeserializeFarmBeatData(e)), FarmBeatFarmBeatsModelsClientDiagnostics, Pipeline, "MockableAgFoodPlatformSubscriptionResource.GetFarmBeats", "value", "nextLink", cancellationToken);
         }
 
