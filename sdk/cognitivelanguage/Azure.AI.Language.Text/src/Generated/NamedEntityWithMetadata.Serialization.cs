@@ -49,15 +49,21 @@ namespace Azure.AI.Language.Text
             writer.WriteNumberValue(Length);
             writer.WritePropertyName("confidenceScore"u8);
             writer.WriteNumberValue(ConfidenceScore);
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
-            writer.WritePropertyName("tags"u8);
-            writer.WriteStartArray();
-            foreach (var item in Tags)
+            if (Optional.IsDefined(Type))
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type);
             }
-            writer.WriteEndArray();
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartArray();
+                foreach (var item in Tags)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
@@ -150,6 +156,10 @@ namespace Azure.AI.Language.Text
                 }
                 if (property.NameEquals("tags"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<EntityTag> array = new List<EntityTag>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -181,7 +191,7 @@ namespace Azure.AI.Language.Text
                 length,
                 confidenceScore,
                 type,
-                tags,
+                tags ?? new ChangeTrackingList<EntityTag>(),
                 metadata,
                 serializedAdditionalRawData);
         }

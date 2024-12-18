@@ -59,7 +59,7 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
-            EntitiesResult results = default;
+            EntitiesWithMetadataAutoResult results = default;
             AnalyzeTextResultsKind kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -67,7 +67,7 @@ namespace Azure.AI.Language.Text
             {
                 if (property.NameEquals("results"u8))
                 {
-                    results = EntitiesResult.DeserializeEntitiesResult(property.Value, options);
+                    results = EntitiesWithMetadataAutoResult.DeserializeEntitiesWithMetadataAutoResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
