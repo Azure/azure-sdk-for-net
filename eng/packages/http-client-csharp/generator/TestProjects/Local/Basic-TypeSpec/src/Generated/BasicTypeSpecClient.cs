@@ -21,9 +21,12 @@ namespace BasicTypeSpec
     public partial class BasicTypeSpecClient
     {
         private readonly Uri _endpoint;
-        private const string AuthorizationHeader = "my-api-key";
         /// <summary> A credential used to authenticate to the service. </summary>
         private readonly AzureKeyCredential _keyCredential;
+        private const string AuthorizationHeader = "my-api-key";
+        /// <summary> A credential used to authenticate to the service. </summary>
+        private readonly TokenCredential _tokenCredential;
+        private static readonly string[] AuthorizationScopes = new string[] { "https://theservice.azure.com/.default" };
 
         /// <summary> Initializes a new instance of BasicTypeSpecClient for mocking. </summary>
         protected BasicTypeSpecClient()
@@ -35,6 +38,14 @@ namespace BasicTypeSpec
         /// <param name="keyCredential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="keyCredential"/> is null. </exception>
         public BasicTypeSpecClient(Uri endpoint, AzureKeyCredential keyCredential) : this(endpoint, keyCredential, new BasicTypeSpecClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of BasicTypeSpecClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="tokenCredential"> A credential used to authenticate to the service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="tokenCredential"/> is null. </exception>
+        public BasicTypeSpecClient(Uri endpoint, TokenCredential tokenCredential) : this(endpoint, tokenCredential, new BasicTypeSpecClientOptions())
         {
         }
 
@@ -53,6 +64,23 @@ namespace BasicTypeSpec
             _endpoint = endpoint;
             _keyCredential = keyCredential;
             Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) });
+        }
+
+        /// <summary> Initializes a new instance of BasicTypeSpecClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="tokenCredential"> A credential used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="tokenCredential"/> is null. </exception>
+        public BasicTypeSpecClient(Uri endpoint, TokenCredential tokenCredential, BasicTypeSpecClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
+
+            options ??= new BasicTypeSpecClientOptions();
+
+            _endpoint = endpoint;
+            _tokenCredential = tokenCredential;
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -110,14 +138,15 @@ namespace BasicTypeSpec
         /// <param name="headParameter"></param>
         /// <param name="queryParameter"></param>
         /// <param name="optionalQuery"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="headParameter"/> or <paramref name="queryParameter"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Thing> SayHi(string headParameter, string queryParameter, string optionalQuery = null)
+        public virtual Response<Thing> SayHi(string headParameter, string queryParameter, string optionalQuery = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(headParameter, nameof(headParameter));
             Argument.AssertNotNull(queryParameter, nameof(queryParameter));
 
-            Response result = SayHi(headParameter, queryParameter, optionalQuery, context: null);
+            Response result = SayHi(headParameter, queryParameter, optionalQuery, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((Thing)result, result);
         }
 
@@ -191,15 +220,16 @@ namespace BasicTypeSpec
         /// <param name="p2"></param>
         /// <param name="p1"></param>
         /// <param name="action"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="p2"/>, <paramref name="p1"/> or <paramref name="action"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<RoundTripModel> HelloAgain(string p2, string p1, RoundTripModel action)
+        public virtual Response<RoundTripModel> HelloAgain(string p2, string p1, RoundTripModel action, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(p2, nameof(p2));
             Argument.AssertNotNull(p1, nameof(p1));
             Argument.AssertNotNull(action, nameof(action));
 
-            Response result = HelloAgain(p2, p1, action, context: null);
+            Response result = HelloAgain(p2, p1, action, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((RoundTripModel)result, result);
         }
 
@@ -305,10 +335,11 @@ namespace BasicTypeSpec
         }
 
         /// <summary> Return hi in demo2. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Thing> HelloDemo2()
+        public virtual Response<Thing> HelloDemo2(CancellationToken cancellationToken = default)
         {
-            Response result = HelloDemo2(context: null);
+            Response result = HelloDemo2(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((Thing)result, result);
         }
 
@@ -365,13 +396,14 @@ namespace BasicTypeSpec
 
         /// <summary> Create with literal value. </summary>
         /// <param name="body"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Thing> CreateLiteral(Thing body)
+        public virtual Response<Thing> CreateLiteral(Thing body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = CreateLiteral(body, context: null);
+            Response result = CreateLiteral(body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((Thing)result, result);
         }
 
@@ -423,10 +455,11 @@ namespace BasicTypeSpec
         }
 
         /// <summary> Send literal parameters. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Thing> HelloLiteral()
+        public virtual Response<Thing> HelloLiteral(CancellationToken cancellationToken = default)
         {
-            Response result = HelloLiteral(context: null);
+            Response result = HelloLiteral(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((Thing)result, result);
         }
 
@@ -477,10 +510,11 @@ namespace BasicTypeSpec
 
         /// <summary> top level method. </summary>
         /// <param name="action"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Thing> TopAction(DateTimeOffset action)
+        public virtual Response<Thing> TopAction(DateTimeOffset action, CancellationToken cancellationToken = default)
         {
-            Response result = TopAction(action, context: null);
+            Response result = TopAction(action, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((Thing)result, result);
         }
 
@@ -626,9 +660,10 @@ namespace BasicTypeSpec
         /// <param name="optionalLiteralFloat"> optional literal float. </param>
         /// <param name="optionalLiteralBool"> optional literal bool. </param>
         /// <param name="optionalNullableList"> optional nullable collection. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="requiredUnion"/> or <paramref name="requiredBadDescription"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Thing> AnonymousBody(string name, BinaryData requiredUnion, ThingRequiredLiteralString requiredLiteralString, ThingRequiredLiteralInt requiredLiteralInt, ThingRequiredLiteralFloat requiredLiteralFloat, bool requiredLiteralBool, string requiredBadDescription, IEnumerable<int> requiredNullableList, ThingOptionalLiteralString? optionalLiteralString = default, ThingOptionalLiteralInt? optionalLiteralInt = default, ThingOptionalLiteralFloat? optionalLiteralFloat = default, bool? optionalLiteralBool = default, IEnumerable<int> optionalNullableList = default)
+        public virtual Response<Thing> AnonymousBody(string name, BinaryData requiredUnion, ThingRequiredLiteralString requiredLiteralString, ThingRequiredLiteralInt requiredLiteralInt, ThingRequiredLiteralFloat requiredLiteralFloat, bool requiredLiteralBool, string requiredBadDescription, IEnumerable<int> requiredNullableList, ThingOptionalLiteralString? optionalLiteralString = default, ThingOptionalLiteralInt? optionalLiteralInt = default, ThingOptionalLiteralFloat? optionalLiteralFloat = default, bool? optionalLiteralBool = default, IEnumerable<int> optionalNullableList = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(requiredUnion, nameof(requiredUnion));
@@ -649,7 +684,7 @@ namespace BasicTypeSpec
                 optionalNullableList?.ToList() as IList<int> ?? new ChangeTrackingList<int>(),
                 requiredNullableList?.ToList() as IList<int> ?? new ChangeTrackingList<int>(),
                 null);
-            Response result = AnonymousBody(spreadModel, context: null);
+            Response result = AnonymousBody(spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((Thing)result, result);
         }
 
@@ -739,14 +774,15 @@ namespace BasicTypeSpec
 
         /// <summary> Model can have its friendly name. </summary>
         /// <param name="name"> name of the NotFriend. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Friend> FriendlyModel(string name)
+        public virtual Response<Friend> FriendlyModel(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             Friend spreadModel = new Friend(name, null);
-            Response result = FriendlyModel(spreadModel, context: null);
+            Response result = FriendlyModel(spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((Friend)result, result);
         }
 
@@ -799,10 +835,11 @@ namespace BasicTypeSpec
         }
 
         /// <summary> addTimeHeader. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response AddTimeHeader()
+        public virtual Response AddTimeHeader(CancellationToken cancellationToken = default)
         {
-            return AddTimeHeader(context: null);
+            return AddTimeHeader(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary> addTimeHeader. </summary>
@@ -857,14 +894,15 @@ namespace BasicTypeSpec
 
         /// <summary> Model can have its projected name. </summary>
         /// <param name="name"> name of the ModelWithProjectedName. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ProjectedModel> ProjectedNameModel(string name)
+        public virtual Response<ProjectedModel> ProjectedNameModel(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             ProjectedModel spreadModel = new ProjectedModel(name, null);
-            Response result = ProjectedNameModel(spreadModel, context: null);
+            Response result = ProjectedNameModel(spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((ProjectedModel)result, result);
         }
 
@@ -917,10 +955,11 @@ namespace BasicTypeSpec
         }
 
         /// <summary> return anonymous model. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ReturnsAnonymousModelResponse> ReturnsAnonymousModel()
+        public virtual Response<ReturnsAnonymousModelResponse> ReturnsAnonymousModel(CancellationToken cancellationToken = default)
         {
-            Response result = ReturnsAnonymousModel(context: null);
+            Response result = ReturnsAnonymousModel(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((ReturnsAnonymousModelResponse)result, result);
         }
 
@@ -977,13 +1016,14 @@ namespace BasicTypeSpec
 
         /// <summary> get extensible enum. </summary>
         /// <param name="accept"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accept"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<string> GetUnknownValue(string accept)
+        public virtual Response<string> GetUnknownValue(string accept, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(accept, nameof(accept));
 
-            Response result = GetUnknownValue(accept, context: null);
+            Response result = GetUnknownValue(accept, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue(result.Content.ToObjectFromJson<string>(), result);
         }
 
@@ -1044,13 +1084,14 @@ namespace BasicTypeSpec
 
         /// <summary> When set protocol false and convenient true, then the protocol method should be internal. </summary>
         /// <param name="body"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Thing> InternalProtocol(Thing body)
+        public virtual Response<Thing> InternalProtocol(Thing body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = InternalProtocol(body, context: null);
+            Response result = InternalProtocol(body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((Thing)result, result);
         }
 
@@ -1102,10 +1143,11 @@ namespace BasicTypeSpec
         }
 
         /// <summary> When set protocol false and convenient true, the convenient method should be generated even it has the same signature as protocol one. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response StillConvenient()
+        public virtual Response StillConvenient(CancellationToken cancellationToken = default)
         {
-            return StillConvenient(context: null);
+            return StillConvenient(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary> When set protocol false and convenient true, the convenient method should be generated even it has the same signature as protocol one. </summary>
@@ -1160,13 +1202,14 @@ namespace BasicTypeSpec
 
         /// <summary> head as boolean. </summary>
         /// <param name="id"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response HeadAsBoolean(string id)
+        public virtual Response HeadAsBoolean(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(id, nameof(id));
 
-            return HeadAsBoolean(id, context: null);
+            return HeadAsBoolean(id, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary> head as boolean. </summary>
