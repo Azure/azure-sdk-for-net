@@ -105,23 +105,23 @@ using var tokenCredential = new CommunicationTokenCredential(
 ### Create a credential with a token credential capable of obtaining an Entra user token
 
 For scenarios where an Entra user can be used with Communication Services, you need to initialize any implementation of [Azure.Core.TokenCredential](https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet) and provide it to the ``EntraCommunicationTokenCredentialOptions``.
-Along with this, you must provide the URI of the Azure Communication Services resource and the scopes required for the Entra user token. These scopes determine the permissions granted to the token:
-
+Along with this, you must provide the URI of the Azure Communication Services resource and the scopes required for the Entra user token. These scopes determine the permissions granted to the token.
+If the scopes are not provided, by default, it sets the scopes to `https://communication.azure.com/clients/.default`.
 ```C# 
 var options = new InteractiveBrowserCredentialOptions
     {
         TenantId = "<your-tenant-id>",
         ClientId = "<your-client-id>",
-        RedirectUri = new Uri("<your-redirect-uri>"),
-        AuthorityHost = new Uri("https://login.microsoftonline.com/<your-tenant-id>")
+        RedirectUri = new Uri("<your-redirect-uri>")
     };
 var entraTokenCredential = new InteractiveBrowserCredential(options);
 
 var entraTokenCredentialOptions = new EntraCommunicationTokenCredentialOptions(
     resourceEndpoint: "https://<your-resource>.communication.azure.com",
-    entraTokenCredential: entraTokenCredential,
-    scopes: new[] { "https://communication.azure.com/clients/VoIP" }
-);
+    entraTokenCredential: entraTokenCredential)
+    {
+      Scopes = new[] { "https://communication.azure.com/clients/VoIP" }
+    };
 
 var credential = new CommunicationTokenCredential(entraTokenCredentialOptions);
 
@@ -134,16 +134,17 @@ var options = new InteractiveBrowserCredentialOptions
     {
         TenantId = "<your-tenant-id>",
         ClientId = "<your-client-id>",
-        RedirectUri = new Uri("<your-redirect-uri>"),
-        AuthorityHost = new Uri("https://login.microsoftonline.com/<your-tenant-id>")
+        RedirectUri = new Uri("<your-redirect-uri>")
     };
 var entraTokenCredential = new InteractiveBrowserCredential(options);
 
 var entraTokenCredentialOptions = new EntraCommunicationTokenCredentialOptions(
     resourceEndpoint: "https://<your-resource>.communication.azure.com",
-    entraTokenCredential: entraTokenCredential,
-    scopes: new[] { "https://auth.msft.communication.azure.com/TeamsExtension.ManageCalls" }
-);
+    entraTokenCredential: entraTokenCredential)
+    )
+    {
+      Scopes = new[] { "https://auth.msft.communication.azure.com/TeamsExtension.ManageCalls" }
+    };
 
 var credential = new CommunicationTokenCredential(entraTokenCredentialOptions);
 
