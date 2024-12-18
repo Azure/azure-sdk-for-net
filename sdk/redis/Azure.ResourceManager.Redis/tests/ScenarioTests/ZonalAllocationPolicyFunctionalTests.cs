@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Redis.Tests
             Assert.AreEqual(RedisSkuFamily.BasicOrStandard, responseCreate.Data.Sku.Family);
             Assert.AreEqual(0, responseCreate.Data.Sku.Capacity);
             Assert.AreEqual(ZonalAllocationPolicy.Automatic, responseCreate.Data.ZonalAllocationPolicy);
-            Assert.Null(responseCreate.Data.Zones);
+            Assert.IsEmpty(responseCreate.Data.Zones);
 
             await responseCreate.DeleteAsync(WaitUntil.Completed);
             var falseResult = (await Collection.ExistsAsync(redisCacheName)).Value;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Redis.Tests
             Assert.AreEqual(RedisSkuFamily.Premium, responseCreate.Data.Sku.Family);
             Assert.AreEqual(1, responseCreate.Data.Sku.Capacity);
             Assert.AreEqual(ZonalAllocationPolicy.Automatic, responseCreate.Data.ZonalAllocationPolicy);
-            Assert.Null(responseCreate.Data.Zones);
+            Assert.IsEmpty(responseCreate.Data.Zones);
 
             await responseCreate.DeleteAsync(WaitUntil.Completed);
             var falseResult = (await Collection.ExistsAsync(redisCacheName)).Value;
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Redis.Tests
             Assert.AreEqual(RedisSkuFamily.Premium, responseCreate.Data.Sku.Family);
             Assert.AreEqual(1, responseCreate.Data.Sku.Capacity);
             Assert.AreEqual(ZonalAllocationPolicy.NoZones, responseCreate.Data.ZonalAllocationPolicy);
-            Assert.Null(responseCreate.Data.Zones);
+            Assert.IsEmpty(responseCreate.Data.Zones);
 
             await responseCreate.DeleteAsync(WaitUntil.Completed);
             var falseResult = (await Collection.ExistsAsync(redisCacheName)).Value;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Redis.Tests
             Assert.AreEqual(RedisSkuFamily.Premium, responseCreate.Data.Sku.Family);
             Assert.AreEqual(1, responseCreate.Data.Sku.Capacity);
             Assert.AreEqual(ZonalAllocationPolicy.NoZones, responseCreate.Data.ZonalAllocationPolicy);
-            Assert.Null(responseCreate.Data.Zones);
+            Assert.IsEmpty(responseCreate.Data.Zones);
 
             var patch = new RedisPatch()
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Redis.Tests
 
             var responseUpdate = (await responseCreate.UpdateAsync(WaitUntil.Completed, patch)).Value;
             var response = (await ResourceGroup.GetAllRedis().GetAsync(redisCacheName)).Value;
-            Assert.AreEqual(ZonalAllocationPolicy.Automatic, responseCreate.Data.ZonalAllocationPolicy);
+            Assert.AreEqual(ZonalAllocationPolicy.Automatic, response.Data.ZonalAllocationPolicy);
 
             await responseUpdate.DeleteAsync(WaitUntil.Completed);
             var falseResult = (await Collection.ExistsAsync(redisCacheName)).Value;
