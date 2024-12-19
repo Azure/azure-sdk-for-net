@@ -4323,6 +4323,18 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2025_07_05)]
+        public async Task GetAccountInfoAsync_OAuth()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
+
+            // Act
+            await test.Container.GetAccountInfoAsync();
+        }
+
+        [RecordedTest]
         public void CanMockClientConstructors()
         {
             // One has to call .Object to trigger constructor. It's lazy.
