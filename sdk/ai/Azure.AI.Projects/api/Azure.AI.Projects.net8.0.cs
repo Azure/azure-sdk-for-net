@@ -968,6 +968,7 @@ namespace Azure.AI.Projects
     public partial class FileSearchToolResource : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.FileSearchToolResource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.FileSearchToolResource>
     {
         public FileSearchToolResource() { }
+        public FileSearchToolResource(System.Collections.Generic.IList<string> vectorStoreIds, System.Collections.Generic.IList<Azure.AI.Projects.VectorStoreConfigurations> vectorStores) { }
         public System.Collections.Generic.IList<string> VectorStoreIds { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.Projects.VectorStoreConfigurations> VectorStores { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1151,7 +1152,9 @@ namespace Azure.AI.Projects
     }
     public partial class MessageAttachment : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.MessageAttachment>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.MessageAttachment>
     {
+        public MessageAttachment(Azure.AI.Projects.VectorStoreDataSource ds, System.Collections.Generic.List<Azure.AI.Projects.ToolDefinition> tools) { }
         public MessageAttachment(System.Collections.Generic.IEnumerable<System.BinaryData> tools) { }
+        public MessageAttachment(string fileId, System.Collections.Generic.List<Azure.AI.Projects.ToolDefinition> tools) { }
         public Azure.AI.Projects.VectorStoreDataSource DataSource { get { throw null; } set { } }
         public string FileId { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.BinaryData> Tools { get { throw null; } }

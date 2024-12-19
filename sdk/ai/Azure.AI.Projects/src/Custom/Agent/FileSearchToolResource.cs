@@ -1,0 +1,23 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System.Collections.Generic;
+
+namespace Azure.AI.Projects
+{
+    public partial class FileSearchToolResource
+    {
+        //internal FileSearchToolResource( IDictionary<string, BinaryData> serializedAdditionalRawData)
+        public FileSearchToolResource(
+            IList<string> vectorStoreIds,
+            IList<VectorStoreConfigurations> vectorStores
+        )
+        {
+            VectorStoreIds = vectorStoreIds;
+            if (vectorStores == null)
+                VectorStores = new ChangeTrackingList<VectorStoreConfigurations>();
+            else
+                VectorStores = vectorStores;
+        }
+    }
+}
