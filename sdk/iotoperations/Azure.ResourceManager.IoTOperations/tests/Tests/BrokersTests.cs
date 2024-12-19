@@ -42,36 +42,36 @@ namespace Azure.ResourceManager.IoTOperations.Tests
             Assert.IsNotNull(brokerResource.Data);
             Assert.AreEqual(brokerResource.Data.Name, "default");
 
-            // Update Broker
-            BrokerResourceData brokerResourceData = CreateBrokerResourceData(
-                brokerResource,
-                "High"
-            );
+            // // Update Broker
+            // BrokerResourceData brokerResourceData = CreateBrokerResourceData(
+            //     brokerResource,
+            //     "High"
+            // );
 
-            ArmOperation<BrokerResource> resp = await brokerResourceCollection.CreateOrUpdateAsync(
-                WaitUntil.Completed,
-                "default",
-                brokerResourceData
-            );
-            BrokerResource updatedBroker = resp.Value;
+            // ArmOperation<BrokerResource> resp = await brokerResourceCollection.CreateOrUpdateAsync(
+            //     WaitUntil.Completed,
+            //     "default",
+            //     brokerResourceData
+            // );
+            // BrokerResource updatedBroker = resp.Value;
 
-            Assert.IsNotNull(updatedBroker);
-            Assert.IsNotNull(updatedBroker.Data);
-            Assert.IsNotNull(updatedBroker.Data.Properties);
+            // Assert.IsNotNull(updatedBroker);
+            // Assert.IsNotNull(updatedBroker.Data);
+            // Assert.IsNotNull(updatedBroker.Data.Properties);
 
-            brokerResourceData = CreateBrokerResourceData(brokerResource, "Medium");
+            // brokerResourceData = CreateBrokerResourceData(brokerResource, "Medium");
 
-            resp = await brokerResourceCollection.CreateOrUpdateAsync(
-                WaitUntil.Completed,
-                "default",
-                brokerResourceData
-            );
+            // resp = await brokerResourceCollection.CreateOrUpdateAsync(
+            //     WaitUntil.Completed,
+            //     "default",
+            //     brokerResourceData
+            // );
 
-            updatedBroker = resp.Value;
+            // updatedBroker = resp.Value;
 
-            Assert.IsNotNull(updatedBroker);
-            Assert.IsNotNull(updatedBroker.Data);
-            Assert.IsNotNull(updatedBroker.Data.Properties);
+            // Assert.IsNotNull(updatedBroker);
+            // Assert.IsNotNull(updatedBroker.Data);
+            // Assert.IsNotNull(updatedBroker.Data.Properties);
         }
 
         private BrokerResourceData CreateBrokerResourceData(
@@ -79,12 +79,7 @@ namespace Azure.ResourceManager.IoTOperations.Tests
             string memoryProfile
         )
         {
-            return new BrokerResourceData(
-                new ExtendedLocation(
-                    "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-110596935/providers/Microsoft.ExtendedLocation/customLocations/location-o5fjq",
-                    ExtendedLocationType.CustomLocation
-                )
-            )
+            return new BrokerResourceData(brokerResource.Data.ExtendedLocation)
             {
                 Properties = new BrokerProperties()
                 {

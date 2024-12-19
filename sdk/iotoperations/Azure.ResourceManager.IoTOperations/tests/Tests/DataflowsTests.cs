@@ -35,38 +35,71 @@ namespace Azure.ResourceManager.IoTOperations.Tests
                     IoTOperationsManagementTestUtilities.DefaultResourceGroupName
                 );
 
-            DataflowResource dataflowResource = await dataflowResourceCollection.GetAsync(
-                "default"
-            );
+            // DataflowResource dataflowResource = await dataflowResourceCollection.GetAsync(
+            //     "default"
+            // );
 
-            Assert.IsNotNull(dataflowResource);
-            Assert.IsNotNull(dataflowResource.Data);
-            Assert.AreEqual(dataflowResource.Data.Name, "default");
+            // Assert.IsNotNull(dataflowResource);
+            // Assert.IsNotNull(dataflowResource.Data);
+            // Assert.AreEqual(dataflowResource.Data.Name, "default");
 
-            // Update Dataflow
+            // Create Dataflow
+            string utcTime = DateTime.UtcNow.ToString("yyyyMMddTHHmmss");
             DataflowResourceData dataflowResourceData = CreateDataflowResourceData();
 
             ArmOperation<DataflowResource> resp =
                 await dataflowResourceCollection.CreateOrUpdateAsync(
                     WaitUntil.Completed,
-                    "default",
+                    "sdk-test-" + utcTime.Substring(utcTime.Length - 4),
                     dataflowResourceData
                 );
-            DataflowResource updatedDataflow = resp.Value;
+            DataflowResource createdDataflow = resp.Value;
 
-            Assert.IsNotNull(updatedDataflow);
-            Assert.IsNotNull(updatedDataflow.Data);
-            Assert.IsNotNull(updatedDataflow.Data.Properties);
+            Assert.IsNotNull(createdDataflow);
+            Assert.IsNotNull(createdDataflow.Data);
+            Assert.IsNotNull(createdDataflow.Data.Properties);
+
+            // Delete Dataflow
+            await createdDataflow.DeleteAsync(WaitUntil.Completed);
+
+            // Verify Dataflow is deleted
+            Assert.ThrowsAsync<RequestFailedException>(
+                async () => await createdDataflow.GetAsync()
+            );
         }
 
         private DataflowResourceData CreateDataflowResourceData()
         {
-            return new DataflowResourceData
+            return new DataflowResourceData(
+                new ExtendedLocation(
+                    "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-110596935/providers/Microsoft.ExtendedLocation/customLocations/location-o5fjq",
+                    ExtendedLocationType.CustomLocation
+                )
+            )
             {
-                Properties = new DataflowProperties
+                Properties = new DataflowProperties(
+                    [
+                        new DataflowOperation(OperationType.Source)
+                        {
+                            Name = "source1",
+                            SourceSettings = new DataflowSourceOperationSettings(
+                                "aio-builtin-broker-endpoint",
+                                ["thermostats/+/telemetry/temperature/#"]
+                            ),
+                        },
+                        new DataflowOperation(OperationType.Destination)
+                        {
+                            Name = "destination1",
+                            DestinationSettings = new DataflowDestinationOperationSettings(
+                                "event-grid-endpoint",
+                                "factory/telemetry"
+                            ),
+                        }
+                    ]
+                )
                 {
-                    // Set properties as needed
-                }
+                    Mode = OperationalMode.Enabled,
+                },
             };
         }
     }

@@ -45,8 +45,11 @@ namespace Azure.ResourceManager.IoTOperations.Tests
             Assert.AreEqual(instanceResource.Data.Name, "aio-o5fjq");
 
             // Update Instance
-            string utcTime = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ");
-            InstanceResourceData instanceResourceData = CreateInstanceResourceData(utcTime);
+            string utcTime = DateTime.UtcNow.ToString("yyyyMMddTHHmmss");
+            InstanceResourceData instanceResourceData = CreateInstanceResourceData(
+                utcTime,
+                instanceResource
+            );
 
             ArmOperation<InstanceResource> resp =
                 await instanceResourceCollection.CreateOrUpdateAsync(
@@ -66,22 +69,18 @@ namespace Azure.ResourceManager.IoTOperations.Tests
             );
         }
 
-        private InstanceResourceData CreateInstanceResourceData(string utcTime)
+        private InstanceResourceData CreateInstanceResourceData(
+            string utcTime,
+            InstanceResource instanceResource
+        )
         {
             return new InstanceResourceData(
                 new AzureLocation(IoTOperationsManagementTestUtilities.DefaultResourceLocation),
-                new ExtendedLocation(
-                    "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-110596935/providers/Microsoft.ExtendedLocation/customLocations/location-o5fjq",
-                    ExtendedLocationType.CustomLocation
-                )
+                instanceResource.Data.ExtendedLocation
             )
             {
                 Properties = new InstanceProperties(
-                    new SchemaRegistryRef(
-                        new ResourceIdentifier(
-                            "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-110596935/providers/Microsoft.DeviceRegistry/schemaRegistries/aio-sr-a66bef4c65"
-                        )
-                    )
+                    instanceResource.Data.Properties.SchemaRegistryRef
                 )
                 {
                     Description = "Updated Description: " + utcTime,

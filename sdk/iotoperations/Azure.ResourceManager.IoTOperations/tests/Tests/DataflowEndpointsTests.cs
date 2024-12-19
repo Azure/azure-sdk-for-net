@@ -42,73 +42,40 @@ namespace Azure.ResourceManager.IoTOperations.Tests
             Assert.IsNotNull(dataflowEndpointsResource.Data);
             Assert.AreEqual(dataflowEndpointsResource.Data.Name, "default");
 
-            // Update DataflowEndpoint
-            string utcTime = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ");
+            // Create new DataflowEndpoint
+            string utcTime = DateTime.UtcNow.ToString("yyyyMMddTHHmmss");
 
             DataflowEndpointResourceData dataflowEndpointsResourceData =
-                CreateDataflowEndpointResourceData(dataflowEndpointsResource, utcTime);
+                CreateDataflowEndpointResourceData(dataflowEndpointsResource);
 
             ArmOperation<DataflowEndpointResource> resp =
                 await dataflowEndpointsResourceCollection.CreateOrUpdateAsync(
                     WaitUntil.Completed,
-                    "default",
+                    "sdk-test-" + utcTime.Substring(utcTime.Length - 4),
                     dataflowEndpointsResourceData
                 );
-            DataflowEndpointResource updatedDataflowEndpoint = resp.Value;
+            DataflowEndpointResource createdDataflowEndpoint = resp.Value;
 
-            Assert.IsNotNull(updatedDataflowEndpoint);
-            Assert.IsNotNull(updatedDataflowEndpoint.Data);
-            Assert.IsNotNull(updatedDataflowEndpoint.Data.Properties);
+            Assert.IsNotNull(createdDataflowEndpoint);
+            Assert.IsNotNull(createdDataflowEndpoint.Data);
+            Assert.IsNotNull(createdDataflowEndpoint.Data.Properties);
+
+            // Delete DataflowEndpoint
+            await createdDataflowEndpoint.DeleteAsync(WaitUntil.Completed);
+
+            // Verify DataflowEndpoint is deleted
+            Assert.ThrowsAsync<RequestFailedException>(
+                async () => await createdDataflowEndpoint.GetAsync()
+            );
         }
 
         private DataflowEndpointResourceData CreateDataflowEndpointResourceData(
-            DataflowEndpointResource dataflowEndpointsResource,
-            string utcTime
+            DataflowEndpointResource dataflowEndpointsResource
         )
         {
-            EndpointType endpointType = dataflowEndpointsResource.Data.Properties.EndpointType;
-            DataflowEndpointMqtt mqttSettings = new DataflowEndpointMqtt
+            return new DataflowEndpointResourceData(dataflowEndpointsResource.Data.ExtendedLocation)
             {
-                Host = dataflowEndpointsResource.Data.Properties.MqttSettings.Host,
-                Authentication = dataflowEndpointsResource
-                    .Data
-                    .Properties
-                    .MqttSettings
-                    .Authentication,
-                Tls = dataflowEndpointsResource.Data.Properties.MqttSettings.Tls,
-                Protocol = dataflowEndpointsResource.Data.Properties.MqttSettings.Protocol,
-                KeepAliveSeconds = dataflowEndpointsResource
-                    .Data
-                    .Properties
-                    .MqttSettings
-                    .KeepAliveSeconds,
-                Retain = dataflowEndpointsResource.Data.Properties.MqttSettings.Retain,
-                Qos = dataflowEndpointsResource.Data.Properties.MqttSettings.Qos,
-                SessionExpirySeconds = dataflowEndpointsResource
-                    .Data
-                    .Properties
-                    .MqttSettings
-                    .SessionExpirySeconds,
-                CloudEventAttributes = dataflowEndpointsResource
-                    .Data
-                    .Properties
-                    .MqttSettings
-                    .CloudEventAttributes,
-            };
-            return new DataflowEndpointResourceData(
-                new ExtendedLocation(
-                    "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-110596935/providers/Microsoft.ExtendedLocation/customLocations/location-o5fjq",
-                    ExtendedLocationType.CustomLocation
-                )
-            )
-            {
-                Properties = new DataflowEndpointProperties
-                {
-                    EndpointType = endpointType,
-                    MqttSettings = mqttSettings,
-                    LocalStoragePersistentVolumeClaimRef = "dummy-volume-claim-ref-" + utcTime,
-                },
-                // LocalStoragePersistentVolumeClaimRef = "LocalStoragePersistentVolumeClaimRef",
+                Properties = dataflowEndpointsResource.Data.Properties
             };
         }
     }

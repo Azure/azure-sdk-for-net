@@ -3,7 +3,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.IoTOperations.Models;
 using Azure.ResourceManager.IoTOperations.Tests.Helpers;
@@ -42,31 +41,71 @@ namespace Azure.ResourceManager.IoTOperations.Tests
             Assert.IsNotNull(brokerListenerResource.Data);
             Assert.AreEqual(brokerListenerResource.Data.Name, "default");
 
-            // Update BrokerListener
+            // Create new BrokerListener
+            string utcTime = DateTime.UtcNow.ToString("yyyyMMddTHHmmss");
+
             BrokerListenerResourceData brokerListenerResourceData =
-                CreateBrokerListenerResourceData();
+                CreateBrokerListenerResourceData(brokerListenerResource);
 
             ArmOperation<BrokerListenerResource> resp =
                 await brokerListenerResourceCollection.CreateOrUpdateAsync(
                     WaitUntil.Completed,
-                    "default",
+                    "sdk-test-" + utcTime.Substring(utcTime.Length - 4),
                     brokerListenerResourceData
                 );
-            BrokerListenerResource updatedBrokerListener = resp.Value;
 
-            Assert.IsNotNull(updatedBrokerListener);
-            Assert.IsNotNull(updatedBrokerListener.Data);
-            Assert.IsNotNull(updatedBrokerListener.Data.Properties);
+            BrokerListenerResource createdBrokerListener = resp.Value;
+            Assert.IsNotNull(createdBrokerListener);
+            Assert.IsNotNull(createdBrokerListener.Data);
+            Assert.IsNotNull(createdBrokerListener.Data.Properties);
+
+            // Delete BrokerListener
+            await createdBrokerListener.DeleteAsync(WaitUntil.Completed);
+
+            // Verify BrokerListener is deleted
+            Assert.ThrowsAsync<RequestFailedException>(
+                async () => await createdBrokerListener.GetAsync()
+            );
         }
 
-        private BrokerListenerResourceData CreateBrokerListenerResourceData()
+        private BrokerListenerResourceData CreateBrokerListenerResourceData(
+            BrokerListenerResource brokerListenerResource
+        )
         {
-            return new BrokerListenerResourceData
+            return new BrokerListenerResourceData(brokerListenerResource.Data.ExtendedLocation)
             {
-                Properties = new BrokerListenerProperties
+                Properties = new BrokerListenerProperties(
+                    [
+                        new ListenerPort(1883) { Protocol = "Mqtt" },
+                        new ListenerPort(9883)
+                        {
+                            Protocol = "Mqtt",
+                            AuthenticationRef = "default",
+                            Tls = new TlsCertMethod()
+                            {
+                                CertManagerCertificateSpec = new CertManagerCertificateSpec()
+                                {
+                                    IssuerRef = new CertManagerIssuerRef()
+                                    {
+                                        Group = "cert-manager.io",
+                                        Kind = "ClusterIssuer",
+                                        Name = "azure-iot-operations-aio-certificate-issuer"
+                                    },
+                                    PrivateKey = new CertManagerPrivateKey()
+                                    {
+                                        Algorithm = "Ec256",
+                                        RotationPolicy = "Always"
+                                    },
+                                },
+                                Mode = TlsCertMethodMode.Automatic,
+                            }
+                        },
+                    ]
+                )
                 {
-                    // Set properties as needed
-                }
+                    ServiceName = "aio-dmqtt-frontend-test",
+                    ServiceType = "LoadBalancer",
+                },
             };
         }
     }

@@ -42,59 +42,32 @@ namespace Azure.ResourceManager.IoTOperations.Tests
             Assert.IsNotNull(dataflowProfileResource.Data);
             Assert.AreEqual(dataflowProfileResource.Data.Name, "default");
 
-            // Update DataflowProfile
-            ProfileDiagnostics Diagnostics = new ProfileDiagnostics { LogsLevel = "warn" };
+            // Create new DataflowProfile
+            string utcTime = DateTime.UtcNow.ToString("yyyyMMddTHHmmss");
 
             DataflowProfileResourceData dataflowProfileResourceData =
-                CreateDataflowProfileResourceData(dataflowProfileResource, Diagnostics);
+                CreateDataflowProfileResourceData(dataflowProfileResource);
 
             ArmOperation<DataflowProfileResource> resp =
                 await dataflowProfileResourceCollection.CreateOrUpdateAsync(
                     WaitUntil.Completed,
-                    "default",
+                    "sdk-test",
                     dataflowProfileResourceData
                 );
-            DataflowProfileResource updatedDataflowProfile = resp.Value;
+            DataflowProfileResource createdDataflowProfile = resp.Value;
 
-            Assert.IsNotNull(updatedDataflowProfile);
-            Assert.IsNotNull(updatedDataflowProfile.Data);
-            Assert.IsNotNull(updatedDataflowProfile.Data.Properties);
-
-            Diagnostics = new ProfileDiagnostics { LogsLevel = "info" };
-            dataflowProfileResourceData = CreateDataflowProfileResourceData(
-                dataflowProfileResource,
-                Diagnostics
-            );
-
-            resp = await dataflowProfileResourceCollection.CreateOrUpdateAsync(
-                WaitUntil.Completed,
-                "default",
-                dataflowProfileResourceData
-            );
-            updatedDataflowProfile = resp.Value;
-
-            Assert.IsNotNull(updatedDataflowProfile);
-            Assert.IsNotNull(updatedDataflowProfile.Data);
-            Assert.IsNotNull(updatedDataflowProfile.Data.Properties);
+            Assert.IsNotNull(createdDataflowProfile);
+            Assert.IsNotNull(createdDataflowProfile.Data);
+            Assert.IsNotNull(createdDataflowProfile.Data.Properties);
         }
 
         private DataflowProfileResourceData CreateDataflowProfileResourceData(
-            DataflowProfileResource dataflowProfileResource,
-            ProfileDiagnostics diagnostics
+            DataflowProfileResource dataflowProfileResource
         )
         {
-            return new DataflowProfileResourceData(
-                new ExtendedLocation(
-                    "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-110596935/providers/Microsoft.ExtendedLocation/customLocations/location-o5fjq",
-                    ExtendedLocationType.CustomLocation
-                )
-            )
+            return new DataflowProfileResourceData(dataflowProfileResource.Data.ExtendedLocation)
             {
-                Properties = new DataflowProfileProperties
-                {
-                    Diagnostics = diagnostics,
-                    InstanceCount = dataflowProfileResource.Data.Properties.InstanceCount,
-                }
+                Properties = dataflowProfileResource.Data.Properties
             };
         }
     }

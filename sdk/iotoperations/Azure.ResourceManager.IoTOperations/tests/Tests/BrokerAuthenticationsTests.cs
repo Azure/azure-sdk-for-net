@@ -42,31 +42,42 @@ namespace Azure.ResourceManager.IoTOperations.Tests
             Assert.IsNotNull(brokerAuthenticationResource.Data);
             Assert.AreEqual(brokerAuthenticationResource.Data.Name, "default");
 
-            // Update BrokerAuthentication
+            // Create BrokerAuthentication
+            string utcTime = DateTime.UtcNow.ToString("yyyyMMddTHHmmss");
+
             BrokerAuthenticationResourceData brokerAuthenticationResourceData =
-                CreateBrokerAuthenticationResourceData();
+                CreateBrokerAuthenticationResourceData(brokerAuthenticationResource);
 
             ArmOperation<BrokerAuthenticationResource> resp =
                 await brokerAuthenticationResourceCollection.CreateOrUpdateAsync(
                     WaitUntil.Completed,
-                    "default",
+                    "sdk-test-" + utcTime.Substring(utcTime.Length - 4),
                     brokerAuthenticationResourceData
                 );
-            BrokerAuthenticationResource updatedBrokerAuthentication = resp.Value;
+            BrokerAuthenticationResource createdBrokerAuthentication = resp.Value;
 
-            Assert.IsNotNull(updatedBrokerAuthentication);
-            Assert.IsNotNull(updatedBrokerAuthentication.Data);
-            Assert.IsNotNull(updatedBrokerAuthentication.Data.Properties);
+            Assert.IsNotNull(createdBrokerAuthentication);
+            Assert.IsNotNull(createdBrokerAuthentication.Data);
+            Assert.IsNotNull(createdBrokerAuthentication.Data.Properties);
+
+            // Delete BrokerAuthentication
+            await createdBrokerAuthentication.DeleteAsync(WaitUntil.Completed);
+
+            // Verify BrokerAuthentication is deleted
+            Assert.ThrowsAsync<RequestFailedException>(
+                async () => await createdBrokerAuthentication.GetAsync()
+            );
         }
 
-        private BrokerAuthenticationResourceData CreateBrokerAuthenticationResourceData()
+        private BrokerAuthenticationResourceData CreateBrokerAuthenticationResourceData(
+            BrokerAuthenticationResource brokerAuthenticationResource
+        )
         {
-            return new BrokerAuthenticationResourceData
+            return new BrokerAuthenticationResourceData(
+                brokerAuthenticationResource.Data.ExtendedLocation
+            )
             {
-                Properties = new BrokerAuthenticationProperties
-                {
-                    // Set properties as needed
-                }
+                Properties = brokerAuthenticationResource.Data.Properties
             };
         }
     }
