@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class AddressSpace : IUtf8JsonSerializable, IJsonModel<AddressSpace>
+    internal partial class IpamPoolList : IUtf8JsonSerializable, IJsonModel<IpamPoolList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AddressSpace>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IpamPoolList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AddressSpace>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IpamPoolList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,21 +28,26 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AddressSpace>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IpamPoolList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AddressSpace)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IpamPoolList)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsCollectionDefined(AddressPrefixes))
+            if (Optional.IsCollectionDefined(Value))
             {
-                writer.WritePropertyName("addressPrefixes"u8);
+                writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (var item in AddressPrefixes)
+                foreach (var item in Value)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -61,19 +66,19 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        AddressSpace IJsonModel<AddressSpace>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        IpamPoolList IJsonModel<IpamPoolList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AddressSpace>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IpamPoolList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AddressSpace)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IpamPoolList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAddressSpace(document.RootElement, options);
+            return DeserializeIpamPoolList(document.RootElement, options);
         }
 
-        internal static AddressSpace DeserializeAddressSpace(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static IpamPoolList DeserializeIpamPoolList(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -81,23 +86,29 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            IList<string> addressPrefixes = default;
+            IReadOnlyList<IpamPoolData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("addressPrefixes"u8))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<IpamPoolData> array = new List<IpamPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(IpamPoolData.DeserializeIpamPoolData(item, options));
                     }
-                    addressPrefixes = array;
+                    value = array;
+                    continue;
+                }
+                if (property.NameEquals("nextLink"u8))
+                {
+                    nextLink = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -106,38 +117,38 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AddressSpace(addressPrefixes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new IpamPoolList(value ?? new ChangeTrackingList<IpamPoolData>(), nextLink, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AddressSpace>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<IpamPoolList>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AddressSpace>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IpamPoolList>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AddressSpace)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IpamPoolList)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AddressSpace IPersistableModel<AddressSpace>.Create(BinaryData data, ModelReaderWriterOptions options)
+        IpamPoolList IPersistableModel<IpamPoolList>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AddressSpace>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<IpamPoolList>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAddressSpace(document.RootElement, options);
+                        return DeserializeIpamPoolList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AddressSpace)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IpamPoolList)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AddressSpace>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IpamPoolList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

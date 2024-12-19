@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.Network.Models
 
         private const string IPPrefixValue = "IPPrefix";
         private const string ServiceTagValue = "ServiceTag";
+        private const string NetworkGroupValue = "NetworkGroup";
 
         /// <summary> IPPrefix. </summary>
         public static AddressPrefixType IPPrefix { get; } = new AddressPrefixType(IPPrefixValue);
         /// <summary> ServiceTag. </summary>
         public static AddressPrefixType ServiceTag { get; } = new AddressPrefixType(ServiceTagValue);
+        /// <summary> NetworkGroup. </summary>
+        public static AddressPrefixType NetworkGroup { get; } = new AddressPrefixType(NetworkGroupValue);
         /// <summary> Determines if two <see cref="AddressPrefixType"/> values are the same. </summary>
         public static bool operator ==(AddressPrefixType left, AddressPrefixType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AddressPrefixType"/> values are not the same. </summary>
