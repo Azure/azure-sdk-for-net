@@ -1,0 +1,1 @@
+new global::System.Guid(element.GetString())

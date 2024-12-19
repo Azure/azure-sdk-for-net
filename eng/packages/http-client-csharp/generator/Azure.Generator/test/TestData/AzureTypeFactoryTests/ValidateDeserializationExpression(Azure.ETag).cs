@@ -1,0 +1,1 @@
+global::Azure.ETag.Parse(element.GetString())

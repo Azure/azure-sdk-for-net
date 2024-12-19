@@ -1,0 +1,1 @@
+new global::Azure.Core.ResourceIdentifier(element.GetString())
