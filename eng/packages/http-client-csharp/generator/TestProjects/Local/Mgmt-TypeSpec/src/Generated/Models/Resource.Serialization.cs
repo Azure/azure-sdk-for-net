@@ -37,7 +37,7 @@ namespace MgmtTypeSpec.Models
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id.Name);
+                writer.WriteStringValue(Id);
             }
             if (options.Format != "W" && Optional.IsDefined(Name))
             {

@@ -37,12 +37,12 @@ namespace MgmtTypeSpec.Models
             if (options.Format != "W" && Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
-                writer.WriteStringValue(PrincipalId.Value);
+                writer.WriteStringValue(PrincipalId);
             }
             if (options.Format != "W" && Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
-                writer.WriteStringValue(ClientId.Value);
+                writer.WriteStringValue(ClientId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -93,7 +93,7 @@ namespace MgmtTypeSpec.Models
                     {
                         continue;
                     }
-                    principalId = prop.Value.GetGuid();
+                    principalId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("clientId"u8))
@@ -102,7 +102,7 @@ namespace MgmtTypeSpec.Models
                     {
                         continue;
                     }
-                    clientId = prop.Value.GetGuid();
+                    clientId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

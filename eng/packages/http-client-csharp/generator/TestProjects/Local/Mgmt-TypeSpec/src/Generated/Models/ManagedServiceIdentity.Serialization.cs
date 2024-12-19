@@ -41,12 +41,12 @@ namespace MgmtTypeSpec.Models
             if (options.Format != "W" && Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
-                writer.WriteStringValue(PrincipalId.Value);
+                writer.WriteStringValue(PrincipalId);
             }
             if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId.Value);
+                writer.WriteStringValue(TenantId);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
@@ -112,7 +112,7 @@ namespace MgmtTypeSpec.Models
                     {
                         continue;
                     }
-                    principalId = prop.Value.GetGuid();
+                    principalId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("tenantId"u8))
@@ -121,7 +121,7 @@ namespace MgmtTypeSpec.Models
                     {
                         continue;
                     }
-                    tenantId = prop.Value.GetGuid();
+                    tenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("type"u8))

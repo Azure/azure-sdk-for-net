@@ -4,11 +4,17 @@
 using Azure.Core;
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
-using Microsoft.Azure.Test.HttpRecorder;
+using Microsoft.Generator.CSharp.Expressions;
+using Microsoft.Generator.CSharp.Input;
+using Microsoft.Generator.CSharp.Primitives;
 using Microsoft.Generator.CSharp.Providers;
+using Microsoft.Generator.CSharp.Snippets;
 using NUnit.Framework;
 using System;
+using System.Buffers;
+using System.ClientModel.Primitives;
 using System.Net;
+using System.Text.Json;
 
 namespace Azure.Generator.Tests
 {
@@ -18,6 +24,40 @@ namespace Azure.Generator.Tests
         public void SetUp()
         {
             MockHelpers.LoadMockPlugin();
+        }
+
+        [TestCase(typeof(Guid))]
+        [TestCase(typeof(IPAddress))]
+        [TestCase(typeof(ETag))]
+        [TestCase(typeof(AzureLocation))]
+        [TestCase(typeof(ResourceIdentifier))]
+        public void ValidateSerializationStatement(Type type)
+        {
+            var value = new ParameterProvider("value", $"", type).AsExpression().As(type);
+            var writer = new ParameterProvider("writer", $"", typeof(Utf8JsonWriter)).AsExpression().As<Utf8JsonWriter>();
+            var options = new ParameterProvider("options", $"", typeof(ModelReaderWriterOptions)).AsExpression().As<ModelReaderWriterOptions>();
+
+            var statement = AzureClientPlugin.Instance.TypeFactory.SerializeValueType(type, SerializationFormat.Default, value, type, writer, options);
+            Assert.IsNotNull(statement);
+
+            var expected = Helpers.GetExpectedFromFile(type.ToString());
+            Assert.AreEqual(expected, statement.ToDisplayString());
+        }
+
+        [TestCase(typeof(Guid))]
+        [TestCase(typeof(IPAddress))]
+        [TestCase(typeof(ETag))]
+        [TestCase(typeof(AzureLocation))]
+        [TestCase(typeof(ResourceIdentifier))]
+        public void ValidateDeserializationExpression(Type type)
+        {
+            var element = new ParameterProvider("element", $"", typeof(JsonElement)).AsExpression().As<JsonElement>();
+
+            var expression = AzureClientPlugin.Instance.TypeFactory.GetValueTypeDeserializationExpression(type, element, SerializationFormat.Default);
+            Assert.IsNotNull(expression);
+
+            var expected = Helpers.GetExpectedFromFile(type.ToString());
+            Assert.AreEqual(expected, expression.ToDisplayString());
         }
 
         [Test]
