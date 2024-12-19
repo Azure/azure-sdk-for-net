@@ -2589,13 +2589,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null;
+            string? callConnectionId = null, uniqueId = null;
             try
             {
                 try
                 {
                     // setup service bus
-                    var uniqueId = await ServiceBusWithNewCall(user, target);
+                    uniqueId = await ServiceBusWithNewCall(user, target);
                     var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId, false);
                     callConnectionId = result.CallerCallConnectionId;
                     var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
@@ -2688,7 +2688,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId);
+                await CleanUpCall(client, callConnectionId, uniqueId);
             }
         }
 
