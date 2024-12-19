@@ -24,9 +24,6 @@ namespace Azure.Generator
     public class AzureTypeFactory : ScmTypeFactory
     {
         /// <inheritdoc/>
-        public override CSharpType KeyCredentialType => typeof(AzureKeyCredential);
-
-        /// <inheritdoc/>
         public override IClientResponseApi ClientResponseApi => AzureClientResponseProvider.Instance;
 
         /// <inheritdoc/>

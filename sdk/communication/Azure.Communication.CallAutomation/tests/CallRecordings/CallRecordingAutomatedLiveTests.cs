@@ -31,7 +31,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             bool stopRecording = false;
 
             // setup service bus
-            var uniqueId = await ServiceBusWithNewCall(user, target);
+            string uniqueId = await ServiceBusWithNewCall(user, target);
 
             // create call and assert response
             var createCallOptions = new CreateCallOptions(new CallInvite(target), new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
@@ -111,7 +111,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId);
+                await CleanUpCall(client, callConnectionId, uniqueId);
             }
         }
 
@@ -134,14 +134,14 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null;
+            string? callConnectionId = null, uniqueId = null;
 
             try
             {
                 try
                 {
                     // setup service bus
-                    var uniqueId = await ServiceBusWithNewCall(user, target);
+                    uniqueId = await ServiceBusWithNewCall(user, target);
 
                     // create call and assert response
                     var createCallOptions = new CreateCallOptions(new CallInvite(target), new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
@@ -209,7 +209,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId);
+                await CleanUpCall(client, callConnectionId, uniqueId);
             }
         }
 
@@ -231,14 +231,14 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null;
+            string? callConnectionId = null, uniqueId = null;
 
             try
             {
                 try
                 {
                     // setup service bus
-                    var uniqueId = await ServiceBusWithNewCall(user, target);
+                    uniqueId = await ServiceBusWithNewCall(user, target);
 
                     // create call and assert response
                     var createCallOptions = new CreateCallOptions(new CallInvite(target), new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
@@ -309,7 +309,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId);
+                await CleanUpCall(client, callConnectionId, uniqueId);
             }
         }
     }

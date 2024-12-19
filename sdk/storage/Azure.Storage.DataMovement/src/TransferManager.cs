@@ -109,7 +109,7 @@ namespace Azure.Storage.DataMovement
         {
             await foreach (JobPartInternal partItem in job.ProcessJobToJobPartAsync().ConfigureAwait(false))
             {
-                job.IncrementJobParts();
+                await job.IncrementJobParts().ConfigureAwait(false);
                 await _partsProcessor.QueueAsync(partItem, cancellationToken).ConfigureAwait(false);
             }
         }

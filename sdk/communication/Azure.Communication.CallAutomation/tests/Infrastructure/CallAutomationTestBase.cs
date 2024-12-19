@@ -87,8 +87,9 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         private const string DataSubscriptionId = "\"dataSubscriptionId\"";
         protected string CreateOrAnswerCallOrGetCallConnectionPayload = string.Format(DummyPayload, NoneMediaStreamingSubscription, NoneTranscriptionSubscription);
         protected string CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionAndTranscriptionPayload = string.Format(DummyPayload, MediaStreamingSubscription, TranscriptionSubscription);
+        protected string CreateOrAnswerCallOrGetCallConnectionPayloadWithTeamsAppSource = string.Format(DummyOPSPayload, NoneMediaStreamingSubscription, NoneTranscriptionSubscription);
 
-        internal CallAutomationClient CreateMockCallAutomationClient(int responseCode, object? responseContent = null, HttpHeader[]? httpHeaders = null, bool isOPSCall = false)
+        internal CallAutomationClient CreateMockCallAutomationClient(int responseCode, object? responseContent = null, HttpHeader[]? httpHeaders = null)
         {
             var mockResponse = new MockResponse(responseCode);
 
@@ -112,11 +113,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                 }
             }
 
-            var callAutomationClientOptions = isOPSCall ? new CallAutomationClientOptions()
-            {
-                OPSSource = new MicrosoftTeamsAppIdentifier(SourceId),
-                Transport = new MockTransport(mockResponse)
-            } : new CallAutomationClientOptions()
+            var callAutomationClientOptions = new CallAutomationClientOptions()
             {
                 Source = new CommunicationUserIdentifier(SourceId),
                 Transport = new MockTransport(mockResponse)
@@ -157,8 +154,8 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         {
             Assert.AreEqual(CallConnectionId, callConnectionProperties.CallConnectionId);
             Assert.AreEqual(ServerCallId, callConnectionProperties.ServerCallId);
-            var opsSourceUser = (MicrosoftTeamsAppIdentifier)callConnectionProperties.Source;
-            Assert.AreEqual(SourceId, opsSourceUser.AppId);
+            var teamsAppSourceUser = (MicrosoftTeamsAppIdentifier)callConnectionProperties.Source;
+            Assert.AreEqual(SourceId, teamsAppSourceUser.AppId);
             Assert.AreEqual(callConnectionProperties.Targets.Count, 1);
             var targetUser = (CommunicationUserIdentifier)callConnectionProperties.Targets[0];
             Assert.AreEqual(TargetId, targetUser.Id);

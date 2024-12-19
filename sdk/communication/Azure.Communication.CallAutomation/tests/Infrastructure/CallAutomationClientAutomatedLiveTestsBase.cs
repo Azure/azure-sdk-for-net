@@ -19,6 +19,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
+using Azure.Identity;
 using Azure.Messaging.ServiceBus;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -53,6 +54,8 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             JsonPathSanitizers.Add("$..botAppId");
             JsonPathSanitizers.Add("$..ivrContext");
             JsonPathSanitizers.Add("$..dialog.botAppId");
+            BodyKeySanitizers.Add(new BodyKeySanitizer("..sourceDisplayName") { Value = SanitizeValue });
+            BodyKeySanitizers.Add(new BodyKeySanitizer("..incomingCallContext") { Value = SanitizeValue });
             BodyKeySanitizers.Add(new BodyKeySanitizer("..callbackUri") { Value = @"https://sanitized.skype.com/api/servicebuscallback/events?q=SanitizedSanitized" });
             BodyKeySanitizers.Add(new BodyKeySanitizer("..transportUrl") { Value = @"wss://sanitized.skype.com" });
             BodyKeySanitizers.Add(new BodyKeySanitizer("..cognitiveServicesEndpoint") { Value = @"https://sanitized.skype.com" });
@@ -110,7 +113,16 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         {
             var connectionString = TestEnvironment.LiveTestStaticConnectionString;
 
-            CallAutomationClient callAutomationClient = new CallAutomationClient(connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs(source));
+            CallAutomationClient callAutomationClient;
+
+            if (TestEnvironment.PMAEndpoint == null || TestEnvironment.PMAEndpoint.Length == 0)
+            {
+                callAutomationClient = new CallAutomationClient(connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs(source));
+            }
+            else
+            {
+                callAutomationClient = new CallAutomationClient(new Uri(TestEnvironment.PMAEndpoint), connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs(source));
+            }
 
             return InstrumentClient(callAutomationClient);
         }
@@ -170,6 +182,37 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             return TestEnvironment.ResourceIdentifier;
         }
 
+        protected void GetPhoneNumbers(out CommunicationIdentifier sourcePhone, out CommunicationIdentifier target)
+        {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                sourcePhone = new PhoneNumberIdentifier("Sanitized");
+                target = new PhoneNumberIdentifier("Sanitized");
+            }
+            else
+            {
+                PhoneNumbersClient phoneNumbersClient = new PhoneNumbersClient(TestEnvironment.LiveTestStaticConnectionString);
+                var purchasedPhoneNumbers = phoneNumbersClient.GetPurchasedPhoneNumbers();
+                List<string> phoneNumbers = new List<string>();
+                foreach (var phoneNumber in purchasedPhoneNumbers)
+                {
+                    phoneNumbers.Add(phoneNumber.PhoneNumber);
+                    Console.WriteLine($"Phone number: {phoneNumber.PhoneNumber}, monthly cost: {phoneNumber.Cost}");
+                }
+
+                Random random = new Random();
+                int num1 = random.Next(0, phoneNumbers.Count);
+                int num2;
+                do
+                {
+                    num2 = random.Next(0, phoneNumbers.Count);
+                } while (num2 == num1);
+
+                target = new PhoneNumberIdentifier(phoneNumbers[num1]);
+                sourcePhone = new PhoneNumberIdentifier(phoneNumbers[num2]);
+            }
+        }
+
         /// <summary>
         /// Creates a <see cref="CommunicationIdentityClient" /> with the connectionstring via environment
         /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
@@ -193,7 +236,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                 await Task.Delay(milliSeconds);
         }
 
-        protected async Task CleanUpCall(CallAutomationClient client, string? callConnectionId)
+        protected async Task CleanUpCall(CallAutomationClient client, string? callConnectionId, string? uniqueId)
         {
             try
             {
@@ -206,6 +249,11 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                             await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
                         }
                     }
+                }
+
+                if (!string.IsNullOrEmpty(uniqueId))
+                {
+                    await DeRegisterCallBackWithDispatcher(uniqueId);
                 }
             }
             catch
@@ -231,7 +279,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 
         private void HandleServiceBusReceivedMessage(RecordedServiceBusReceivedMessage receivedMessage)
         {
-            string body = receivedMessage.Body.ToString();
+            string body = Regex.Unescape(receivedMessage.Body.ToString());
 
             if (!string.IsNullOrEmpty(body))
             {
@@ -271,7 +319,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             string fromId = unparsed.Split(new string[] { "\"from\":{\"kind\":" }, StringSplitOptions.None)[1].Split(new string[] { "\"rawId\":\"" }, StringSplitOptions.None)[1].Split(new string[] { "\"" }, StringSplitOptions.None)[0];
             string toId = unparsed.Split(new string[] { "\"to\":{\"kind\":" }, StringSplitOptions.None)[1].Split(new string[] { "\"rawId\":\"" }, StringSplitOptions.None)[1].Split(new string[] { "\"" }, StringSplitOptions.None)[0];
 
-            return fromId + toId;
+            return RemoveAllNonChar(fromId + toId);
         }
 
         private string ParseIdsFromIdentifier(CommunicationIdentifier inputIdentifier)
@@ -289,10 +337,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                     }
                     else
                     {
-                        /* Change the plus + sign to it's unicode without the special characters i.e. u002B.
-                         * It's required because the dispacther app receives the incoming call context for pstn call
-                         * with the + as unicode in it and builds the topic id with it to send the event.*/
-                        return RemoveAllNonChar(((PhoneNumberIdentifier)inputIdentifier).RawId).Insert(1, "u002B");
+                        return RemoveAllNonChar(((PhoneNumberIdentifier)inputIdentifier).RawId);
                     }
                 case MicrosoftTeamsUserIdentifier:
                     return RemoveAllNonChar(((MicrosoftTeamsUserIdentifier)inputIdentifier).RawId);
@@ -347,7 +392,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             }
         }
 
-        private HttpMessage CreateDeRegisterCallBackWithDispatcherRequest(IEnumerable<string> ids)
+        private HttpMessage CreateDeRegisterCallBackWithDispatcherRequest(string uniqueId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -356,25 +401,22 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(TestEnvironment.DispatcherEndpoint, false);
             uri.AppendPath("/api/servicebuscallback/unsubscribe", false);
-
+            uri.AppendQuery("q", uniqueId, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(ids);
-            request.Content = content;
+            ;
             return message;
         }
 
-        private async Task DeRegisterCallBackWithDispatcher()
+        private async Task DeRegisterCallBackWithDispatcher(string? uniqueId)
         {
-            if (Mode == RecordedTestMode.Playback)
+            if (Mode == RecordedTestMode.Playback || string.IsNullOrEmpty(uniqueId))
             {
                 // Skip when playback
                 return;
             }
-            using var message = CreateDeRegisterCallBackWithDispatcherRequest(_recordedEventListener.ActiveQueues);
+            using var message = CreateDeRegisterCallBackWithDispatcherRequest(uniqueId!);
             await _pipeline.SendAsync(message, CancellationToken.None).ConfigureAwait(false);
             var response = message.Response;
             if (response.IsError)
@@ -385,8 +427,34 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 
         private ServiceBusClient CreateServiceBusClient()
         {
-            var serviceBusClient = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString,
-                new ServiceBusClientOptions() { TransportType = ServiceBusTransportType.AmqpWebSockets });
+            AzureCliCredential credential = new AzureCliCredential();
+            var serviceBusClient = new ServiceBusClient(
+                TestEnvironment.ServiceBusNamespace,
+                credential,
+                new ServiceBusClientOptions()
+                {
+                    TransportType = ServiceBusTransportType.AmqpWebSockets
+                });
+
+            if (Mode != RecordedTestMode.Playback)
+            {
+                // verify connection with service bus
+                // if having issue with connection, log in with "az login" in console
+                try
+                {
+                    var sender = serviceBusClient.CreateSender("testSender");
+                    var batch = sender.CreateMessageBatchAsync().Result;
+                }
+                catch (AuthenticationFailedException)
+                {
+                    throw;
+                }
+                catch (Exception)
+                {
+                    // continue;
+                }
+            }
+
             return InstrumentClient(serviceBusClient);
         }
     }

@@ -1,16 +1,11 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.5.0 (2024-12-18)
 
 ### Features Added
 
-- Exposed `JsonModelWriteCore` for model serialization procedure.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+  - Exposed `JsonModelWriteCore` for model serialization procedure.
+  - Adds support for choosing ZonalAllocationPolicy for your Azure Cache for Redis instance.
 
 ## 1.4.0 (2024-07-11)
 

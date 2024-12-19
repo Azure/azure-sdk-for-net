@@ -263,7 +263,7 @@ namespace Azure.Storage.DataMovement
                     initial: true).ConfigureAwait(false);
                 if (successfulInitialCopy)
                 {
-                    ReportBytesWritten(initialLength.Value);
+                    await ReportBytesWrittenAsync(initialLength.Value).ConfigureAwait(false);
                     if (totalLength == initialLength)
                     {
                         // Complete download since it was done in one go
@@ -316,7 +316,7 @@ namespace Azure.Storage.DataMovement
                     initial: true).ConfigureAwait(false);
                 if (successfulCopy)
                 {
-                    ReportBytesWritten(downloadLength);
+                    await ReportBytesWrittenAsync(downloadLength).ConfigureAwait(false);
                     // Queue the work to end the download
                     await QueueCompleteFileDownload().ConfigureAwait(false);
                 }
@@ -470,7 +470,7 @@ namespace Azure.Storage.DataMovement
             return new DownloadChunkHandler.Behaviors()
             {
                 CopyToDestinationFile = jobPart.CopyToStreamInternal,
-                ReportProgressInBytes = jobPart.ReportBytesWritten,
+                ReportProgressInBytes = jobPart.ReportBytesWrittenAsync,
                 InvokeFailedHandler = jobPart.InvokeFailedArgAsync,
                 QueueCompleteFileDownload = jobPart.QueueCompleteFileDownload
             };

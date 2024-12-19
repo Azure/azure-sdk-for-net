@@ -36,22 +36,45 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
             writer.WritePropertyName("operationId"u8);
             writer.WriteStringValue(OperationId);
-            writer.WritePropertyName("resourceId"u8);
-            writer.WriteStringValue(ResourceId);
-            writer.WritePropertyName("opType"u8);
-            writer.WriteStringValue(OpType.ToString());
-            writer.WritePropertyName("subscriptionId"u8);
-            writer.WriteStringValue(SubscriptionId);
-            writer.WritePropertyName("deadline"u8);
-            writer.WriteStringValue(Deadline, "O");
-            writer.WritePropertyName("deadlineType"u8);
-            writer.WriteStringValue(DeadlineType.ToString());
-            writer.WritePropertyName("state"u8);
-            writer.WriteStringValue(State.ToString());
-            if (Optional.IsDefined(TimeZone))
+            if (Optional.IsDefined(ResourceId))
+            {
+                writer.WritePropertyName("resourceId"u8);
+                writer.WriteStringValue(ResourceId);
+            }
+            if (Optional.IsDefined(OpType))
+            {
+                writer.WritePropertyName("opType"u8);
+                writer.WriteStringValue(OpType.Value.ToString());
+            }
+            if (Optional.IsDefined(SubscriptionId))
+            {
+                writer.WritePropertyName("subscriptionId"u8);
+                writer.WriteStringValue(SubscriptionId);
+            }
+            if (Optional.IsDefined(Deadline))
+            {
+                writer.WritePropertyName("deadline"u8);
+                writer.WriteStringValue(Deadline.Value, "O");
+            }
+            if (Optional.IsDefined(DeadlineType))
+            {
+                writer.WritePropertyName("deadlineType"u8);
+                writer.WriteStringValue(DeadlineType.Value.ToString());
+            }
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (Optional.IsDefined(Timezone))
+            {
+                writer.WritePropertyName("timezone"u8);
+                writer.WriteStringValue(Timezone);
+            }
+            if (Optional.IsDefined(OperationTimezone))
             {
                 writer.WritePropertyName("timeZone"u8);
-                writer.WriteStringValue(TimeZone);
+                writer.WriteStringValue(OperationTimezone);
             }
             if (Optional.IsDefined(ResourceOperationError))
             {
@@ -107,11 +130,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
             string operationId = default;
             ResourceIdentifier resourceId = default;
-            ResourceOperationType opType = default;
+            ResourceOperationType? opType = default;
             string subscriptionId = default;
-            DateTimeOffset deadline = default;
-            ScheduledActionDeadlineType deadlineType = default;
-            ScheduledActionOperationState state = default;
+            DateTimeOffset? deadline = default;
+            ScheduledActionDeadlineType? deadlineType = default;
+            ScheduledActionOperationState? state = default;
+            string timezone = default;
             string timeZone = default;
             ResourceOperationError resourceOperationError = default;
             DateTimeOffset? completedAt = default;
@@ -127,11 +151,19 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 }
                 if (property.NameEquals("resourceId"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("opType"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     opType = new ResourceOperationType(property.Value.GetString());
                     continue;
                 }
@@ -142,17 +174,34 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 }
                 if (property.NameEquals("deadline"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     deadline = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("deadlineType"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     deadlineType = new ScheduledActionDeadlineType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("state"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     state = new ScheduledActionOperationState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("timezone"u8))
+                {
+                    timezone = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("timeZone"u8))
@@ -201,6 +250,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 deadline,
                 deadlineType,
                 state,
+                timezone,
                 timeZone,
                 resourceOperationError,
                 completedAt,
