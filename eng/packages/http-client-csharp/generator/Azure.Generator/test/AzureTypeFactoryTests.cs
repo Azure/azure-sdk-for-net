@@ -26,12 +26,12 @@ namespace Azure.Generator.Tests
             MockHelpers.LoadMockPlugin();
         }
 
-        [TestCase(typeof(Guid))]
-        [TestCase(typeof(IPAddress))]
-        [TestCase(typeof(ETag))]
-        [TestCase(typeof(AzureLocation))]
-        [TestCase(typeof(ResourceIdentifier))]
-        public void ValidateSerializationStatement(Type type)
+        [TestCase(typeof(Guid), "writer.WriteStringValue(value);")]
+        [TestCase(typeof(IPAddress), "writer.WriteStringValue(value.ToString());")]
+        [TestCase(typeof(ETag), "writer.WriteStringValue(value.ToString());")]
+        [TestCase(typeof(AzureLocation), "writer.WriteStringValue(value);")]
+        [TestCase(typeof(ResourceIdentifier), "writer.WriteStringValue(value);")]
+        public void ValidateSerializationStatement(Type type, string expected)
         {
             var value = new ParameterProvider("value", $"", type).AsExpression().As(type);
             var writer = new ParameterProvider("writer", $"", typeof(Utf8JsonWriter)).AsExpression().As<Utf8JsonWriter>();
@@ -40,23 +40,21 @@ namespace Azure.Generator.Tests
             var statement = AzureClientPlugin.Instance.TypeFactory.SerializeValueType(type, SerializationFormat.Default, value, type, writer, options);
             Assert.IsNotNull(statement);
 
-            var expected = Helpers.GetExpectedFromFile(type.ToString());
-            Assert.AreEqual(expected, statement.ToDisplayString());
+            Assert.AreEqual(expected, statement.ToDisplayString().TrimEnd());
         }
 
-        [TestCase(typeof(Guid))]
-        [TestCase(typeof(IPAddress))]
-        [TestCase(typeof(ETag))]
-        [TestCase(typeof(AzureLocation))]
-        [TestCase(typeof(ResourceIdentifier))]
-        public void ValidateDeserializationExpression(Type type)
+        [TestCase(typeof(Guid), "new global::System.Guid(element.GetString())")]
+        [TestCase(typeof(IPAddress), "global::System.Net.IPAddress.Parse(element.GetString())")]
+        [TestCase(typeof(ETag), "new global::Azure.ETag(element.GetString())")]
+        [TestCase(typeof(AzureLocation), "new global::Azure.Core.AzureLocation(element.GetString())")]
+        [TestCase(typeof(ResourceIdentifier), "new global::Azure.Core.ResourceIdentifier(element.GetString())")]
+        public void ValidateDeserializationExpression(Type type, string expected)
         {
             var element = new ParameterProvider("element", $"", typeof(JsonElement)).AsExpression().As<JsonElement>();
 
             var expression = AzureClientPlugin.Instance.TypeFactory.GetValueTypeDeserializationExpression(type, element, SerializationFormat.Default);
             Assert.IsNotNull(expression);
 
-            var expected = Helpers.GetExpectedFromFile(type.ToString());
             Assert.AreEqual(expected, expression.ToDisplayString());
         }
 
