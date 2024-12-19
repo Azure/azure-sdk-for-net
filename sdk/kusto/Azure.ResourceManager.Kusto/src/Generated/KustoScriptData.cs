@@ -67,8 +67,10 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="forceUpdateTag"> A unique string. If changed the script will be applied again. </param>
         /// <param name="shouldContinueOnErrors"> Flag that indicates whether to continue if one of the command fails. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
+        /// <param name="scriptLevel"> Differentiates between the type of script commands included - Database or Cluster. The default is Database. </param>
+        /// <param name="principalPermissionsAction"> Indicates if the permissions for the script caller are kept following completion of the script. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KustoScriptData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri scriptUri, string scriptUriSasToken, string scriptContent, string forceUpdateTag, bool? shouldContinueOnErrors, KustoProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal KustoScriptData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri scriptUri, string scriptUriSasToken, string scriptContent, string forceUpdateTag, bool? shouldContinueOnErrors, KustoProvisioningState? provisioningState, KustoScriptLevel? scriptLevel, PrincipalPermissionsAction? principalPermissionsAction, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ScriptUri = scriptUri;
             ScriptUriSasToken = scriptUriSasToken;
@@ -76,6 +78,8 @@ namespace Azure.ResourceManager.Kusto
             ForceUpdateTag = forceUpdateTag;
             ShouldContinueOnErrors = shouldContinueOnErrors;
             ProvisioningState = provisioningState;
+            ScriptLevel = scriptLevel;
+            PrincipalPermissionsAction = principalPermissionsAction;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -91,5 +95,9 @@ namespace Azure.ResourceManager.Kusto
         public bool? ShouldContinueOnErrors { get; set; }
         /// <summary> The provisioned state of the resource. </summary>
         public KustoProvisioningState? ProvisioningState { get; }
+        /// <summary> Differentiates between the type of script commands included - Database or Cluster. The default is Database. </summary>
+        public KustoScriptLevel? ScriptLevel { get; set; }
+        /// <summary> Indicates if the permissions for the script caller are kept following completion of the script. </summary>
+        public PrincipalPermissionsAction? PrincipalPermissionsAction { get; set; }
     }
 }
