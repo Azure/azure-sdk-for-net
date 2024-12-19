@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Tests
     public class ProtectedBackupItemsTests : RecoveryServicesBackupManagementTestBase
     {
         public ProtectedBackupItemsTests(bool isAsync) :
-            base(isAsync, RecordedTestMode.Record)
+            base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

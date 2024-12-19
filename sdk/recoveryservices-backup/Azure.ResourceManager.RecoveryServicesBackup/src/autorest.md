@@ -190,7 +190,7 @@ rename-mapping:
   AzureVmWorkloadProtectionPolicy.makePolicyConsistent: DoesMakePolicyConsistent
   TriggerDataMoveRequest.pauseGC: DoesPauseGC
   ProtectedItem.sourceResourceId: -|arm-id
-  ProtectedItem.policyId: -|arm-id
+  ProtectedItem.policyId: policyStringId
   ProtectedItem.lastRecoveryPoint: LastRecoverOn
   ProtectionIntent.sourceResourceId: -|arm-id
   ProtectionIntent.itemId: -|arm-id

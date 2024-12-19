@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             BackupDataSourceType? workloadType = default;
             string containerName = default;
             ResourceIdentifier sourceResourceId = default;
-            ResourceIdentifier policyId = default;
+            string policyId = default;
             DateTimeOffset? lastRecoveryPoint = default;
             string backupSetName = default;
             BackupCreateMode? createMode = default;
@@ -312,11 +312,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (property.NameEquals("policyId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    policyId = new ResourceIdentifier(property.Value.GetString());
+                    policyId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("lastRecoveryPoint"u8))
