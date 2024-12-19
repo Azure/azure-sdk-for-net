@@ -272,8 +272,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An async collection of <see cref="ScalingPlanResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ScalingPlanResource> GetAllAsync(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _scalingPlanRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, pageSizeHint, isDescending, initialSkip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scalingPlanRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, pageSizeHint, isDescending, initialSkip);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _scalingPlanRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, pageSize, isDescending, initialSkip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scalingPlanRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, pageSize, isDescending, initialSkip);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScalingPlanResource(Client, ScalingPlanData.DeserializeScalingPlanData(e)), _scalingPlanClientDiagnostics, Pipeline, "ScalingPlanCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -305,8 +305,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> A collection of <see cref="ScalingPlanResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ScalingPlanResource> GetAll(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _scalingPlanRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, pageSizeHint, isDescending, initialSkip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scalingPlanRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, pageSizeHint, isDescending, initialSkip);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _scalingPlanRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, pageSize, isDescending, initialSkip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scalingPlanRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, pageSize, isDescending, initialSkip);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScalingPlanResource(Client, ScalingPlanData.DeserializeScalingPlanData(e)), _scalingPlanClientDiagnostics, Pipeline, "ScalingPlanCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 

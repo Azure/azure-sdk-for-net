@@ -268,8 +268,8 @@ namespace Azure.ResourceManager.MachineLearning
         {
             options ??= new MachineLearningFeatureStoreEntityContainerCollectionGetAllOptions();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.Tags, options.ListViewType, pageSizeHint, options.Name, options.Description, options.CreatedBy);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.Tags, options.ListViewType, pageSizeHint, options.Name, options.Description, options.CreatedBy);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.Tags, options.ListViewType, pageSize, options.Name, options.Description, options.CreatedBy);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.Tags, options.ListViewType, pageSize, options.Name, options.Description, options.CreatedBy);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningFeatureStoreEntityContainerResource(Client, MachineLearningFeatureStoreEntityContainerData.DeserializeMachineLearningFeatureStoreEntityContainerData(e)), _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersClientDiagnostics, Pipeline, "MachineLearningFeatureStoreEntityContainerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -301,8 +301,8 @@ namespace Azure.ResourceManager.MachineLearning
         {
             options ??= new MachineLearningFeatureStoreEntityContainerCollectionGetAllOptions();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.Tags, options.ListViewType, pageSizeHint, options.Name, options.Description, options.CreatedBy);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.Tags, options.ListViewType, pageSizeHint, options.Name, options.Description, options.CreatedBy);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.Tags, options.ListViewType, pageSize, options.Name, options.Description, options.CreatedBy);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, options.Skip, options.Tags, options.ListViewType, pageSize, options.Name, options.Description, options.CreatedBy);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningFeatureStoreEntityContainerResource(Client, MachineLearningFeatureStoreEntityContainerData.DeserializeMachineLearningFeatureStoreEntityContainerData(e)), _machineLearningFeatureStoreEntityContainerFeaturestoreEntityContainersClientDiagnostics, Pipeline, "MachineLearningFeatureStoreEntityContainerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
