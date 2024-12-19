@@ -7,12 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Qumulo.Models
 {
-    /// <summary> The response of a FileSystemResource list operation. </summary>
-    internal partial class QumuloFileSystemResourceListResult
+    /// <summary> The type used for update operations of the FileSystemResource. </summary>
+    public partial class FileSystemResourcePatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +46,30 @@ namespace Azure.ResourceManager.Qumulo.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="QumuloFileSystemResourceListResult"/>. </summary>
-        /// <param name="value"> The FileSystemResource items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal QumuloFileSystemResourceListResult(IEnumerable<QumuloFileSystemResourceData> value)
+        /// <summary> Initializes a new instance of <see cref="FileSystemResourcePatch"/>. </summary>
+        public FileSystemResourcePatch()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="QumuloFileSystemResourceListResult"/>. </summary>
-        /// <param name="value"> The FileSystemResource items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <summary> Initializes a new instance of <see cref="FileSystemResourcePatch"/>. </summary>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> The updatable properties of the FileSystemResource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QumuloFileSystemResourceListResult(IReadOnlyList<QumuloFileSystemResourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FileSystemResourcePatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, FileSystemResourceUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            Identity = identity;
+            Tags = tags;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="QumuloFileSystemResourceListResult"/> for deserialization. </summary>
-        internal QumuloFileSystemResourceListResult()
-        {
-        }
-
-        /// <summary> The FileSystemResource items on this page. </summary>
-        public IReadOnlyList<QumuloFileSystemResourceData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public string NextLink { get; }
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
+        /// <summary> The updatable properties of the FileSystemResource. </summary>
+        public FileSystemResourceUpdateProperties Properties { get; set; }
     }
 }

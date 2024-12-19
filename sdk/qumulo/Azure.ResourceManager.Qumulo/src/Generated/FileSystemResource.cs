@@ -18,14 +18,14 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Qumulo
 {
     /// <summary>
-    /// A Class representing a QumuloFileSystemResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="QumuloFileSystemResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetQumuloFileSystemResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetQumuloFileSystemResource method.
+    /// A Class representing a FileSystemResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FileSystemResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetFileSystemResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetFileSystemResource method.
     /// </summary>
-    public partial class QumuloFileSystemResource : ArmResource
+    public partial class FileSystemResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="QumuloFileSystemResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="FileSystemResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="fileSystemName"> The fileSystemName. </param>
@@ -35,35 +35,35 @@ namespace Azure.ResourceManager.Qumulo
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _qumuloFileSystemResourceFileSystemsClientDiagnostics;
-        private readonly FileSystemsRestOperations _qumuloFileSystemResourceFileSystemsRestClient;
-        private readonly QumuloFileSystemResourceData _data;
+        private readonly ClientDiagnostics _fileSystemResourceFileSystemsClientDiagnostics;
+        private readonly FileSystemsRestOperations _fileSystemResourceFileSystemsRestClient;
+        private readonly FileSystemResourceData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Qumulo.Storage/fileSystems";
 
-        /// <summary> Initializes a new instance of the <see cref="QumuloFileSystemResource"/> class for mocking. </summary>
-        protected QumuloFileSystemResource()
+        /// <summary> Initializes a new instance of the <see cref="FileSystemResource"/> class for mocking. </summary>
+        protected FileSystemResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="QumuloFileSystemResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FileSystemResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal QumuloFileSystemResource(ArmClient client, QumuloFileSystemResourceData data) : this(client, data.Id)
+        internal FileSystemResource(ArmClient client, FileSystemResourceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="QumuloFileSystemResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FileSystemResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal QumuloFileSystemResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal FileSystemResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _qumuloFileSystemResourceFileSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Qumulo", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string qumuloFileSystemResourceFileSystemsApiVersion);
-            _qumuloFileSystemResourceFileSystemsRestClient = new FileSystemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, qumuloFileSystemResourceFileSystemsApiVersion);
+            _fileSystemResourceFileSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Qumulo", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string fileSystemResourceFileSystemsApiVersion);
+            _fileSystemResourceFileSystemsRestClient = new FileSystemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, fileSystemResourceFileSystemsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Qumulo
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual QumuloFileSystemResourceData Data
+        public virtual FileSystemResourceData Data
         {
             get
             {
@@ -99,29 +99,29 @@ namespace Azure.ResourceManager.Qumulo
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FileSystems_Get</description>
+        /// <description>FileSystemResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-12</description>
+        /// <description>2024-06-19</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="QumuloFileSystemResource"/></description>
+        /// <description><see cref="FileSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<QumuloFileSystemResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FileSystemResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _qumuloFileSystemResourceFileSystemsClientDiagnostics.CreateScope("QumuloFileSystemResource.Get");
+            using var scope = _fileSystemResourceFileSystemsClientDiagnostics.CreateScope("FileSystemResource.Get");
             scope.Start();
             try
             {
-                var response = await _qumuloFileSystemResourceFileSystemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _fileSystemResourceFileSystemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new QumuloFileSystemResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FileSystemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -139,29 +139,29 @@ namespace Azure.ResourceManager.Qumulo
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FileSystems_Get</description>
+        /// <description>FileSystemResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-12</description>
+        /// <description>2024-06-19</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="QumuloFileSystemResource"/></description>
+        /// <description><see cref="FileSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<QumuloFileSystemResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<FileSystemResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _qumuloFileSystemResourceFileSystemsClientDiagnostics.CreateScope("QumuloFileSystemResource.Get");
+            using var scope = _fileSystemResourceFileSystemsClientDiagnostics.CreateScope("FileSystemResource.Get");
             scope.Start();
             try
             {
-                var response = _qumuloFileSystemResourceFileSystemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _fileSystemResourceFileSystemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new QumuloFileSystemResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new FileSystemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -179,15 +179,15 @@ namespace Azure.ResourceManager.Qumulo
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FileSystems_Delete</description>
+        /// <description>FileSystemResource_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-12</description>
+        /// <description>2024-06-19</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="QumuloFileSystemResource"/></description>
+        /// <description><see cref="FileSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,12 +195,12 @@ namespace Azure.ResourceManager.Qumulo
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _qumuloFileSystemResourceFileSystemsClientDiagnostics.CreateScope("QumuloFileSystemResource.Delete");
+            using var scope = _fileSystemResourceFileSystemsClientDiagnostics.CreateScope("FileSystemResource.Delete");
             scope.Start();
             try
             {
-                var response = await _qumuloFileSystemResourceFileSystemsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new QumuloArmOperation(_qumuloFileSystemResourceFileSystemsClientDiagnostics, Pipeline, _qumuloFileSystemResourceFileSystemsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _fileSystemResourceFileSystemsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new QumuloArmOperation(_fileSystemResourceFileSystemsClientDiagnostics, Pipeline, _fileSystemResourceFileSystemsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -221,15 +221,15 @@ namespace Azure.ResourceManager.Qumulo
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FileSystems_Delete</description>
+        /// <description>FileSystemResource_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-12</description>
+        /// <description>2024-06-19</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="QumuloFileSystemResource"/></description>
+        /// <description><see cref="FileSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,12 +237,12 @@ namespace Azure.ResourceManager.Qumulo
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _qumuloFileSystemResourceFileSystemsClientDiagnostics.CreateScope("QumuloFileSystemResource.Delete");
+            using var scope = _fileSystemResourceFileSystemsClientDiagnostics.CreateScope("FileSystemResource.Delete");
             scope.Start();
             try
             {
-                var response = _qumuloFileSystemResourceFileSystemsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new QumuloArmOperation(_qumuloFileSystemResourceFileSystemsClientDiagnostics, Pipeline, _qumuloFileSystemResourceFileSystemsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _fileSystemResourceFileSystemsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new QumuloArmOperation(_fileSystemResourceFileSystemsClientDiagnostics, Pipeline, _fileSystemResourceFileSystemsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -263,31 +263,31 @@ namespace Azure.ResourceManager.Qumulo
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FileSystems_Update</description>
+        /// <description>FileSystemResource_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-12</description>
+        /// <description>2024-06-19</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="QumuloFileSystemResource"/></description>
+        /// <description><see cref="FileSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<QumuloFileSystemResource>> UpdateAsync(QumuloFileSystemResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FileSystemResource>> UpdateAsync(FileSystemResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _qumuloFileSystemResourceFileSystemsClientDiagnostics.CreateScope("QumuloFileSystemResource.Update");
+            using var scope = _fileSystemResourceFileSystemsClientDiagnostics.CreateScope("FileSystemResource.Update");
             scope.Start();
             try
             {
-                var response = await _qumuloFileSystemResourceFileSystemsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new QumuloFileSystemResource(Client, response.Value), response.GetRawResponse());
+                var response = await _fileSystemResourceFileSystemsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new FileSystemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -305,31 +305,31 @@ namespace Azure.ResourceManager.Qumulo
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FileSystems_Update</description>
+        /// <description>FileSystemResource_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-12</description>
+        /// <description>2024-06-19</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="QumuloFileSystemResource"/></description>
+        /// <description><see cref="FileSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<QumuloFileSystemResource> Update(QumuloFileSystemResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<FileSystemResource> Update(FileSystemResourcePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _qumuloFileSystemResourceFileSystemsClientDiagnostics.CreateScope("QumuloFileSystemResource.Update");
+            using var scope = _fileSystemResourceFileSystemsClientDiagnostics.CreateScope("FileSystemResource.Update");
             scope.Start();
             try
             {
-                var response = _qumuloFileSystemResourceFileSystemsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new QumuloFileSystemResource(Client, response.Value), response.GetRawResponse());
+                var response = _fileSystemResourceFileSystemsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                return Response.FromValue(new FileSystemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -347,15 +347,15 @@ namespace Azure.ResourceManager.Qumulo
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FileSystems_Get</description>
+        /// <description>FileSystemResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-12</description>
+        /// <description>2024-06-19</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="QumuloFileSystemResource"/></description>
+        /// <description><see cref="FileSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -363,12 +363,12 @@ namespace Azure.ResourceManager.Qumulo
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<QumuloFileSystemResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FileSystemResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _qumuloFileSystemResourceFileSystemsClientDiagnostics.CreateScope("QumuloFileSystemResource.AddTag");
+            using var scope = _fileSystemResourceFileSystemsClientDiagnostics.CreateScope("FileSystemResource.AddTag");
             scope.Start();
             try
             {
@@ -377,13 +377,13 @@ namespace Azure.ResourceManager.Qumulo
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _qumuloFileSystemResourceFileSystemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new QumuloFileSystemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _fileSystemResourceFileSystemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new FileSystemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new QumuloFileSystemResourcePatch();
+                    var patch = new FileSystemResourcePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -409,15 +409,15 @@ namespace Azure.ResourceManager.Qumulo
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FileSystems_Get</description>
+        /// <description>FileSystemResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-12</description>
+        /// <description>2024-06-19</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="QumuloFileSystemResource"/></description>
+        /// <description><see cref="FileSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -425,12 +425,12 @@ namespace Azure.ResourceManager.Qumulo
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<QumuloFileSystemResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<FileSystemResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _qumuloFileSystemResourceFileSystemsClientDiagnostics.CreateScope("QumuloFileSystemResource.AddTag");
+            using var scope = _fileSystemResourceFileSystemsClientDiagnostics.CreateScope("FileSystemResource.AddTag");
             scope.Start();
             try
             {
@@ -439,13 +439,13 @@ namespace Azure.ResourceManager.Qumulo
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _qumuloFileSystemResourceFileSystemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new QumuloFileSystemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _fileSystemResourceFileSystemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new FileSystemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new QumuloFileSystemResourcePatch();
+                    var patch = new FileSystemResourcePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -471,26 +471,26 @@ namespace Azure.ResourceManager.Qumulo
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FileSystems_Get</description>
+        /// <description>FileSystemResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-12</description>
+        /// <description>2024-06-19</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="QumuloFileSystemResource"/></description>
+        /// <description><see cref="FileSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<QumuloFileSystemResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FileSystemResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _qumuloFileSystemResourceFileSystemsClientDiagnostics.CreateScope("QumuloFileSystemResource.SetTags");
+            using var scope = _fileSystemResourceFileSystemsClientDiagnostics.CreateScope("FileSystemResource.SetTags");
             scope.Start();
             try
             {
@@ -500,13 +500,13 @@ namespace Azure.ResourceManager.Qumulo
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _qumuloFileSystemResourceFileSystemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new QumuloFileSystemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _fileSystemResourceFileSystemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new FileSystemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new QumuloFileSystemResourcePatch();
+                    var patch = new FileSystemResourcePatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return result;
@@ -528,26 +528,26 @@ namespace Azure.ResourceManager.Qumulo
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FileSystems_Get</description>
+        /// <description>FileSystemResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-12</description>
+        /// <description>2024-06-19</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="QumuloFileSystemResource"/></description>
+        /// <description><see cref="FileSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<QumuloFileSystemResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<FileSystemResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _qumuloFileSystemResourceFileSystemsClientDiagnostics.CreateScope("QumuloFileSystemResource.SetTags");
+            using var scope = _fileSystemResourceFileSystemsClientDiagnostics.CreateScope("FileSystemResource.SetTags");
             scope.Start();
             try
             {
@@ -557,13 +557,13 @@ namespace Azure.ResourceManager.Qumulo
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _qumuloFileSystemResourceFileSystemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new QumuloFileSystemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _fileSystemResourceFileSystemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new FileSystemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new QumuloFileSystemResourcePatch();
+                    var patch = new FileSystemResourcePatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(patch, cancellationToken: cancellationToken);
                     return result;
@@ -585,26 +585,26 @@ namespace Azure.ResourceManager.Qumulo
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FileSystems_Get</description>
+        /// <description>FileSystemResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-12</description>
+        /// <description>2024-06-19</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="QumuloFileSystemResource"/></description>
+        /// <description><see cref="FileSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<QumuloFileSystemResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FileSystemResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _qumuloFileSystemResourceFileSystemsClientDiagnostics.CreateScope("QumuloFileSystemResource.RemoveTag");
+            using var scope = _fileSystemResourceFileSystemsClientDiagnostics.CreateScope("FileSystemResource.RemoveTag");
             scope.Start();
             try
             {
@@ -613,13 +613,13 @@ namespace Azure.ResourceManager.Qumulo
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _qumuloFileSystemResourceFileSystemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new QumuloFileSystemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _fileSystemResourceFileSystemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new FileSystemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new QumuloFileSystemResourcePatch();
+                    var patch = new FileSystemResourcePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -645,26 +645,26 @@ namespace Azure.ResourceManager.Qumulo
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FileSystems_Get</description>
+        /// <description>FileSystemResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-10-12</description>
+        /// <description>2024-06-19</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="QumuloFileSystemResource"/></description>
+        /// <description><see cref="FileSystemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<QumuloFileSystemResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<FileSystemResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _qumuloFileSystemResourceFileSystemsClientDiagnostics.CreateScope("QumuloFileSystemResource.RemoveTag");
+            using var scope = _fileSystemResourceFileSystemsClientDiagnostics.CreateScope("FileSystemResource.RemoveTag");
             scope.Start();
             try
             {
@@ -673,13 +673,13 @@ namespace Azure.ResourceManager.Qumulo
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _qumuloFileSystemResourceFileSystemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new QumuloFileSystemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _fileSystemResourceFileSystemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new FileSystemResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new QumuloFileSystemResourcePatch();
+                    var patch = new FileSystemResourcePatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
