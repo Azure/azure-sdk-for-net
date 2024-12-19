@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Chaos.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
@@ -20,8 +21,8 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetChaosExperiments_ListAllExperimentsInASubscription()
         {
-            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/ListExperimentsInASubscription.json
-            // this example is just showing the usage of "Experiments_ListAll" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01-preview/Experiments_ListAll.json
+            // this example is just showing the usage of "Experiment_ListAll" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -35,8 +36,7 @@ namespace Azure.ResourceManager.Chaos.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            string continuationToken = null;
-            await foreach (ChaosExperimentResource item in subscriptionResource.GetChaosExperimentsAsync(continuationToken: continuationToken))
+            await foreach (ChaosExperimentResource item in subscriptionResource.GetChaosExperimentsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -46,6 +46,63 @@ namespace Azure.ResourceManager.Chaos.Samples
             }
 
             Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetPrivateAccesses_ListAllPrivateAccessesInASubscription()
+        {
+            // Generated from example definition: 2024-11-01-preview/PrivateAccesses_ListAll.json
+            // this example is just showing the usage of "PrivateAccess_ListAll" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "6b052e15-03d3-4f17-b2e1-be7f07588291";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (PrivateAccessResource item in subscriptionResource.GetPrivateAccessesAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                PrivateAccessData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetOperationStatus_GetsChaosStudioAsyncOperationStatus()
+        {
+            // Generated from example definition: 2024-11-01-preview/OperationStatuses_Get.json
+            // this example is just showing the usage of "OperationStatuses_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "e25c0d12-0335-4fec-8ef8-3b4f9a10649e";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation
+            string location = "westus2";
+            string operationId = "4bdadd97-207c-4de8-9bba-08339ae099c7";
+            OperationStatusResult result = await subscriptionResource.GetOperationStatusAsync(location, operationId);
+
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }
