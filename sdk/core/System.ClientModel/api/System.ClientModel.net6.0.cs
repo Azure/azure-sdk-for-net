@@ -302,3 +302,128 @@ namespace System.ClientModel.Primitives
         public void SetHeader(string name, string value) { }
     }
 }
+namespace System.ClientModel.Primitives.FullDuplexMessaging
+{
+    public sealed partial class DuplexClientPipeline : System.IAsyncDisposable, System.IDisposable
+    {
+        internal DuplexClientPipeline() { }
+        public static System.ClientModel.Primitives.FullDuplexMessaging.DuplexClientPipeline Create(System.ClientModel.Primitives.PipelineResponse response, System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineOptions options) { throw null; }
+        public System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest CreateMessage() { throw null; }
+        public void Dispose() { }
+        public System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }
+        public System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse> GetResponses() { throw null; }
+        public System.Collections.Generic.IAsyncEnumerable<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse> GetResponsesAsync() { throw null; }
+        public void Send(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest message) { }
+        public System.Threading.Tasks.Task SendAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest message) { throw null; }
+    }
+    public partial class DuplexClientResult
+    {
+        protected DuplexClientResult(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse response) { }
+        public static System.ClientModel.Primitives.FullDuplexMessaging.DuplexClientResult FromResponse(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse response) { throw null; }
+        public static System.ClientModel.Primitives.FullDuplexMessaging.DuplexClientResult<T> FromValue<T>(T value, System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse response) { throw null; }
+        public System.ClientModel.Primitives.FullDuplexMessaging.WebSocketResponse GetWebSocketResponse() { throw null; }
+    }
+    public partial class DuplexClientResult<T> : System.ClientModel.Primitives.FullDuplexMessaging.DuplexClientResult
+    {
+        protected internal DuplexClientResult(T value, System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse response) : base (default(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse)) { }
+        public T Value { get { throw null; } }
+        public static implicit operator T (System.ClientModel.Primitives.FullDuplexMessaging.DuplexClientResult<T> result) { throw null; }
+    }
+    public partial class DuplexConnectionResult : System.IDisposable
+    {
+        protected DuplexConnectionResult(System.ClientModel.Primitives.PipelineResponse response, System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineOptions options) { }
+        public System.ClientModel.Primitives.FullDuplexMessaging.DuplexClientPipeline Pipeline { get { throw null; } }
+        public void Dispose() { }
+        protected virtual void Dispose(bool disposing) { }
+        public virtual System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.FullDuplexMessaging.DuplexClientResult?> GetResults(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IAsyncEnumerable<System.ClientModel.Primitives.FullDuplexMessaging.DuplexClientResult?> GetResultsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected void Send(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.FullDuplexMessaging.DuplexRequestOptions? options = null) { }
+        protected System.Threading.Tasks.Task SendAsync(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.FullDuplexMessaging.DuplexRequestOptions? options = null) { throw null; }
+    }
+    public partial class DuplexPipelineOptions
+    {
+        public DuplexPipelineOptions() { }
+        public int? HeartbeatMilliseconds { get { throw null; } set { } }
+        protected void AssertNotFrozen() { }
+        public virtual void Freeze() { }
+    }
+    public abstract partial class DuplexPipelinePolicy
+    {
+        protected DuplexPipelinePolicy() { }
+        public abstract void Process(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest clientMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelinePolicy> pipeline, int currentIndex);
+        public abstract void Process(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse serviceMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelinePolicy> pipeline, int currentIndex);
+        public abstract System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest clientMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelinePolicy> pipeline, int currentIndex);
+        public abstract System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse serviceMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelinePolicy> pipeline, int currentIndex);
+        protected static void ProcessNext(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest clientMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelinePolicy> pipeline, int currentIndex) { }
+        protected static void ProcessNext(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse serviceMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelinePolicy> pipeline, int currentIndex) { }
+        protected static System.Threading.Tasks.ValueTask ProcessNextAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest clientMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelinePolicy> pipeline, int currentIndex) { throw null; }
+        protected static System.Threading.Tasks.ValueTask ProcessNextAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse serviceMessage, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelinePolicy> pipeline, int currentIndex) { throw null; }
+    }
+    public abstract partial class DuplexPipelineRequest : System.IDisposable
+    {
+        protected DuplexPipelineRequest() { }
+        public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
+        public System.ClientModel.BinaryContent? Content { get { throw null; } set { } }
+        public void Dispose() { }
+        protected virtual void Dispose(bool disposing) { }
+        public void SetProperty(System.Type key, object? value) { }
+        public bool TryGetProperty(System.Type key, out object? value) { throw null; }
+    }
+    public abstract partial class DuplexPipelineResponse
+    {
+        protected DuplexPipelineResponse() { }
+        public System.BinaryData? Content { get { throw null; } set { } }
+        public void SetProperty(System.Type key, object? value) { }
+        public bool TryGetProperty(System.Type key, out object? value) { throw null; }
+    }
+    public abstract partial class DuplexPipelineTransport : System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelinePolicy
+    {
+        protected DuplexPipelineTransport() { }
+        public System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest CreateRequest() { throw null; }
+        protected abstract System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest CreateRequestCore();
+        public void Process(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest request) { }
+        public sealed override void Process(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest request, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelinePolicy> pipeline, int currentIndex) { }
+        public void Process(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse response) { }
+        public sealed override void Process(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse response, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelinePolicy> pipeline, int currentIndex) { }
+        public System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest request) { throw null; }
+        public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest request, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelinePolicy> pipeline, int currentIndex) { throw null; }
+        public System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse response) { throw null; }
+        public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse response, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelinePolicy> pipeline, int currentIndex) { throw null; }
+        protected abstract void ProcessCore(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest request);
+        protected abstract void ProcessCore(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse response);
+        protected abstract System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest request);
+        protected abstract System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse response);
+    }
+    public partial class DuplexRequestOptions
+    {
+        public DuplexRequestOptions() { }
+        public System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
+        public bool? LastOfMessage { get { throw null; } set { } }
+        protected internal void Apply(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest message) { }
+        protected void AssertNotFrozen() { }
+        public virtual void Freeze() { }
+    }
+    public partial class WebSocketDuplexPipelineTransport : System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineTransport, System.IAsyncDisposable, System.IDisposable
+    {
+        public WebSocketDuplexPipelineTransport() { }
+        protected override System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest CreateRequestCore() { throw null; }
+        public void Dispose() { }
+        protected virtual void Dispose(bool disposing) { }
+        public System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }
+        protected override void ProcessCore(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest clientMessage) { }
+        protected override void ProcessCore(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse serviceMessage) { }
+        protected override System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest clientMessage) { throw null; }
+        protected override System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse serviceMessage) { throw null; }
+    }
+    public abstract partial class WebSocketRequest : System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineRequest
+    {
+        protected WebSocketRequest() { }
+        public bool? LastOfMessage { get { throw null; } set { } }
+    }
+    public abstract partial class WebSocketResponse : System.ClientModel.Primitives.FullDuplexMessaging.DuplexPipelineResponse
+    {
+        protected WebSocketResponse() { }
+        public abstract string ContentType { get; }
+        public abstract bool LastOfMessage { get; }
+    }
+}
