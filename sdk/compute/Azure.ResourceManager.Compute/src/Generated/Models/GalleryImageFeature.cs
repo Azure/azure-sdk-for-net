@@ -53,11 +53,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="GalleryImageFeature"/>. </summary>
         /// <param name="name"> The name of the gallery image feature. </param>
         /// <param name="value"> The value of the gallery image feature. </param>
+        /// <param name="startsAtVersion"> The minimum gallery image version which supports this feature. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryImageFeature(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GalleryImageFeature(string name, string value, string startsAtVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Value = value;
+            StartsAtVersion = startsAtVersion;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -65,5 +67,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string Name { get; set; }
         /// <summary> The value of the gallery image feature. </summary>
         public string Value { get; set; }
+        /// <summary> The minimum gallery image version which supports this feature. </summary>
+        public string StartsAtVersion { get; set; }
     }
 }

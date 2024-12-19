@@ -1,14 +1,19 @@
 # Release History
 
-## 1.7.0-beta.3 (Unreleased)
+## 1.7.0 (2024-12-29)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added new classes named `GalleryInVmAccessControlProfileCollection`, `ComputeGalleryValidationProfile`, `ExecutedValidation`, `AdditionalReplicaSet`, `GallerySoftDeleted`, `GallerySoftDeletedResourceList`, `ComputeGalleryEndpointAccess`, `ComputeGalleryEndpointTypes`, and `ComputeGalleryPlatformAttribute`.
+- Added a new property named `BlockDeletionBeforeEndOfLife` to `GalleryImageVersionSafertyProfile` class.
+- Added a new property named `StartsAtVersion` to `GalleryImageFeature` class.
+- Added a new property named `AllowUpdateImage` to `GalleryImageData` class.
+- Added new properties named `ValidationsProfile` and `EnableRestore` to `GalleryImageVersionData` class.
+- Added a new property named `EnableRestore` to `GalleryImageVersionPatch` class.
+- Added a new property named `SecurityUefiSettings` to `GalleryList` class.
+- Added a new property named `ScriptBehaviorAfterReboot` to `UserARtifactSettings` class.
+- Added a new property named `AdditionalReplicaSets` to `TargetRegion` class.
+- Added a new property named `Identity` to `GalleryData` class.
 
 ## 1.7.0-beta.2 (2024-12-11)
 
