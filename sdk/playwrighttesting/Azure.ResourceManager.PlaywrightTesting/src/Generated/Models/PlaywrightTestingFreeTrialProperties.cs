@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Azure.ResourceManager.PlaywrightTesting.Models
 {
-    /// <summary> Collection of resources. </summary>
-    internal partial class AppServicePlanResourceListResult
+    /// <summary> The subscription quota resource free-trial properties. </summary>
+    public partial class PlaywrightTestingFreeTrialProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +45,34 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AppServicePlanResourceListResult"/>. </summary>
-        /// <param name="value"> Collection of resources. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal AppServicePlanResourceListResult(IEnumerable<string> value)
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingFreeTrialProperties"/>. </summary>
+        /// <param name="accountId"> The Playwright service account id. </param>
+        /// <param name="state"> The free-trial state. </param>
+        internal PlaywrightTestingFreeTrialProperties(string accountId, PlaywrightTestingFreeTrialState state)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
+            AccountId = accountId;
+            State = state;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppServicePlanResourceListResult"/>. </summary>
-        /// <param name="value"> Collection of resources. </param>
-        /// <param name="nextLink"> Link to next page of resources. </param>
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingFreeTrialProperties"/>. </summary>
+        /// <param name="accountId"> The Playwright service account id. </param>
+        /// <param name="state"> The free-trial state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServicePlanResourceListResult(IReadOnlyList<string> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PlaywrightTestingFreeTrialProperties(string accountId, PlaywrightTestingFreeTrialState state, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            AccountId = accountId;
+            State = state;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppServicePlanResourceListResult"/> for deserialization. </summary>
-        internal AppServicePlanResourceListResult()
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingFreeTrialProperties"/> for deserialization. </summary>
+        internal PlaywrightTestingFreeTrialProperties()
         {
         }
 
-        /// <summary> Collection of resources. </summary>
-        public IReadOnlyList<string> Value { get; }
-        /// <summary> Link to next page of resources. </summary>
-        public string NextLink { get; }
+        /// <summary> The Playwright service account id. </summary>
+        public string AccountId { get; }
+        /// <summary> The free-trial state. </summary>
+        public PlaywrightTestingFreeTrialState State { get; }
     }
 }

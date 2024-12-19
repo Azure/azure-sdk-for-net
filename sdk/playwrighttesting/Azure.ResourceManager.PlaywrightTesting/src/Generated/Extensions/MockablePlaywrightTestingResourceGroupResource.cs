@@ -45,15 +45,15 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts/{accountName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Accounts_Get</description>
+        /// <description>Account_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2024-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -61,14 +61,14 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> Name of account. </param>
+        /// <param name="accountName"> Name of account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PlaywrightTestingAccountResource>> GetPlaywrightTestingAccountAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlaywrightTestingAccountResource>> GetPlaywrightTestingAccountAsync(string accountName, CancellationToken cancellationToken = default)
         {
-            return await GetPlaywrightTestingAccounts().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetPlaywrightTestingAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -76,15 +76,15 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts/{accountName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Accounts_Get</description>
+        /// <description>Account_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2024-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -92,14 +92,14 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> Name of account. </param>
+        /// <param name="accountName"> Name of account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PlaywrightTestingAccountResource> GetPlaywrightTestingAccount(string name, CancellationToken cancellationToken = default)
+        public virtual Response<PlaywrightTestingAccountResource> GetPlaywrightTestingAccount(string accountName, CancellationToken cancellationToken = default)
         {
-            return GetPlaywrightTestingAccounts().Get(name, cancellationToken);
+            return GetPlaywrightTestingAccounts().Get(accountName, cancellationToken);
         }
     }
 }

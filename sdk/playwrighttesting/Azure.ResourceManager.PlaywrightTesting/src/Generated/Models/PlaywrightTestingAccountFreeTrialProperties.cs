@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PlaywrightTesting.Models
 {
-    /// <summary> The free-trial properties. </summary>
-    public partial class FreeTrialProperties
+    /// <summary> The Playwright service account quota resource free-trial properties. </summary>
+    public partial class PlaywrightTestingAccountFreeTrialProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,53 +45,43 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="FreeTrialProperties"/>. </summary>
-        /// <param name="accountId"> The playwright account id. </param>
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingAccountFreeTrialProperties"/>. </summary>
         /// <param name="createdOn"> The free-trial createdAt utcDateTime. </param>
         /// <param name="expiryOn"> The free-trial expiryAt utcDateTime. </param>
         /// <param name="allocatedValue"> The free-trial allocated limit value eg. allocated free minutes. </param>
         /// <param name="usedValue"> The free-trial used value eg. used free minutes. </param>
         /// <param name="percentageUsed"> The free-trial percentage used. </param>
-        /// <param name="state"> The free-trial state. </param>
-        public FreeTrialProperties(string accountId, DateTimeOffset createdOn, DateTimeOffset expiryOn, int allocatedValue, int usedValue, decimal percentageUsed, FreeTrialState state)
+        internal PlaywrightTestingAccountFreeTrialProperties(DateTimeOffset createdOn, DateTimeOffset expiryOn, int allocatedValue, int usedValue, float percentageUsed)
         {
-            AccountId = accountId;
             CreatedOn = createdOn;
             ExpiryOn = expiryOn;
             AllocatedValue = allocatedValue;
             UsedValue = usedValue;
             PercentageUsed = percentageUsed;
-            State = state;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FreeTrialProperties"/>. </summary>
-        /// <param name="accountId"> The playwright account id. </param>
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingAccountFreeTrialProperties"/>. </summary>
         /// <param name="createdOn"> The free-trial createdAt utcDateTime. </param>
         /// <param name="expiryOn"> The free-trial expiryAt utcDateTime. </param>
         /// <param name="allocatedValue"> The free-trial allocated limit value eg. allocated free minutes. </param>
         /// <param name="usedValue"> The free-trial used value eg. used free minutes. </param>
         /// <param name="percentageUsed"> The free-trial percentage used. </param>
-        /// <param name="state"> The free-trial state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FreeTrialProperties(string accountId, DateTimeOffset createdOn, DateTimeOffset expiryOn, int allocatedValue, int usedValue, decimal percentageUsed, FreeTrialState state, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PlaywrightTestingAccountFreeTrialProperties(DateTimeOffset createdOn, DateTimeOffset expiryOn, int allocatedValue, int usedValue, float percentageUsed, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            AccountId = accountId;
             CreatedOn = createdOn;
             ExpiryOn = expiryOn;
             AllocatedValue = allocatedValue;
             UsedValue = usedValue;
             PercentageUsed = percentageUsed;
-            State = state;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FreeTrialProperties"/> for deserialization. </summary>
-        internal FreeTrialProperties()
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingAccountFreeTrialProperties"/> for deserialization. </summary>
+        internal PlaywrightTestingAccountFreeTrialProperties()
         {
         }
 
-        /// <summary> The playwright account id. </summary>
-        public string AccountId { get; }
         /// <summary> The free-trial createdAt utcDateTime. </summary>
         public DateTimeOffset CreatedOn { get; }
         /// <summary> The free-trial expiryAt utcDateTime. </summary>
@@ -101,8 +91,6 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
         /// <summary> The free-trial used value eg. used free minutes. </summary>
         public int UsedValue { get; }
         /// <summary> The free-trial percentage used. </summary>
-        public decimal PercentageUsed { get; }
-        /// <summary> The free-trial state. </summary>
-        public FreeTrialState State { get; }
+        public float PercentageUsed { get; }
     }
 }

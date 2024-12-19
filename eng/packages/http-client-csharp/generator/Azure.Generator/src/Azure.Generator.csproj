@@ -31,5 +31,5 @@
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Compile>
 	</ItemGroup>
-	
+
 </Project>
