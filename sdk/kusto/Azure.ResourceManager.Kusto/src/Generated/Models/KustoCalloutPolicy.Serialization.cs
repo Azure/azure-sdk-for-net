@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class CalloutPolicy : IUtf8JsonSerializable, IJsonModel<CalloutPolicy>
+    public partial class KustoCalloutPolicy : IUtf8JsonSerializable, IJsonModel<KustoCalloutPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CalloutPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoCalloutPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CalloutPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<KustoCalloutPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CalloutPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KustoCalloutPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CalloutPolicy)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoCalloutPolicy)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(CalloutUriRegex))
@@ -71,19 +71,19 @@ namespace Azure.ResourceManager.Kusto.Models
             }
         }
 
-        CalloutPolicy IJsonModel<CalloutPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        KustoCalloutPolicy IJsonModel<KustoCalloutPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CalloutPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KustoCalloutPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CalloutPolicy)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoCalloutPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCalloutPolicy(document.RootElement, options);
+            return DeserializeKustoCalloutPolicy(document.RootElement, options);
         }
 
-        internal static CalloutPolicy DeserializeCalloutPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static KustoCalloutPolicy DeserializeKustoCalloutPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -133,38 +133,38 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CalloutPolicy(calloutUriRegex, calloutType, outboundAccess, calloutId, serializedAdditionalRawData);
+            return new KustoCalloutPolicy(calloutUriRegex, calloutType, outboundAccess, calloutId, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CalloutPolicy>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<KustoCalloutPolicy>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CalloutPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KustoCalloutPolicy>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CalloutPolicy)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoCalloutPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CalloutPolicy IPersistableModel<CalloutPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        KustoCalloutPolicy IPersistableModel<KustoCalloutPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CalloutPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KustoCalloutPolicy>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeCalloutPolicy(document.RootElement, options);
+                        return DeserializeKustoCalloutPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CalloutPolicy)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoCalloutPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CalloutPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<KustoCalloutPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

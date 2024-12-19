@@ -1733,11 +1733,11 @@ namespace Azure.ResourceManager.Kusto
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CalloutPolicy"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CalloutPolicy> GetCalloutPoliciesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="KustoCalloutPolicy"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<KustoCalloutPolicy> GetCalloutPoliciesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoClusterClustersRestClient.CreateListCalloutPoliciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CalloutPolicy.DeserializeCalloutPolicy(e), _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetCalloutPolicies", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => KustoCalloutPolicy.DeserializeKustoCalloutPolicy(e), _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetCalloutPolicies", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1762,11 +1762,11 @@ namespace Azure.ResourceManager.Kusto
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CalloutPolicy"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CalloutPolicy> GetCalloutPolicies(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="KustoCalloutPolicy"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<KustoCalloutPolicy> GetCalloutPolicies(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoClusterClustersRestClient.CreateListCalloutPoliciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CalloutPolicy.DeserializeCalloutPolicy(e), _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetCalloutPolicies", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => KustoCalloutPolicy.DeserializeKustoCalloutPolicy(e), _kustoClusterClustersClientDiagnostics, Pipeline, "KustoClusterResource.GetCalloutPolicies", "value", null, cancellationToken);
         }
 
         /// <summary>

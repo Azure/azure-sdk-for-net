@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Kusto.Samples
             // invoke the operation
             CalloutPoliciesList calloutPolicies = new CalloutPoliciesList
             {
-                Value = {new CalloutPolicy
+                Value = {new KustoCalloutPolicy
 {
 CalloutUriRegex = "*",
 CalloutType = CalloutType.Kusto,
@@ -440,7 +440,7 @@ OutboundAccess = KustoCalloutPolicyOutboundAccess.Allow,
             KustoClusterResource kustoCluster = client.GetKustoClusterResource(kustoClusterResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (CalloutPolicy item in kustoCluster.GetCalloutPoliciesAsync())
+            await foreach (KustoCalloutPolicy item in kustoCluster.GetCalloutPoliciesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

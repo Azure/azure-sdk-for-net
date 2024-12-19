@@ -235,6 +235,7 @@ rename-mapping:
   ScriptLevel: KustoScriptLevel
   FollowerDatabaseDefinitionGet: KustoFollowerDatabase
   FollowerDatabaseDefinitionGet.properties.clusterResourceId: -|arm-id
+  CalloutPolicy: KustoCalloutPolicy
 
 
 

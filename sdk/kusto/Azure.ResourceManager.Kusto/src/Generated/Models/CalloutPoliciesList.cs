@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> Initializes a new instance of <see cref="CalloutPoliciesList"/>. </summary>
         public CalloutPoliciesList()
         {
-            Value = new ChangeTrackingList<CalloutPolicy>();
+            Value = new ChangeTrackingList<KustoCalloutPolicy>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CalloutPoliciesList"/>. </summary>
         /// <param name="value"> A list of the service's callout policies. </param>
         /// <param name="nextLink"> The URL to get the next set of callout policies list results if there are any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CalloutPoliciesList(IList<CalloutPolicy> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CalloutPoliciesList(IList<KustoCalloutPolicy> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Kusto.Models
         }
 
         /// <summary> A list of the service's callout policies. </summary>
-        public IList<CalloutPolicy> Value { get; }
+        public IList<KustoCalloutPolicy> Value { get; }
         /// <summary> The URL to get the next set of callout policies list results if there are any. </summary>
         public string NextLink { get; set; }
     }

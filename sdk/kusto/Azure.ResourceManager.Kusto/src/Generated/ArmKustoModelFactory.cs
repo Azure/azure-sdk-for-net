@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="migrationCluster"> Properties of the peer cluster involved in a migration to/from this cluster. </param>
         /// <param name="zoneStatus"> Indicates whether the cluster is zonal or non-zonal. </param>
         /// <returns> A new <see cref="Kusto.KustoClusterData"/> instance for mocking. </returns>
-        public static KustoClusterData KustoClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, KustoSku sku = null, IEnumerable<string> zones = null, ManagedServiceIdentity identity = null, ETag? etag = null, KustoClusterState? state = null, KustoProvisioningState? provisioningState = null, Uri clusterUri = null, Uri dataIngestionUri = null, string stateReason = null, IEnumerable<KustoClusterTrustedExternalTenant> trustedExternalTenants = null, OptimizedAutoscale optimizedAutoscale = null, bool? isDiskEncryptionEnabled = null, bool? isStreamingIngestEnabled = null, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration = null, KustoKeyVaultProperties keyVaultProperties = null, bool? isPurgeEnabled = null, IEnumerable<KustoLanguageExtension> languageExtensionsValue = null, bool? isDoubleEncryptionEnabled = null, KustoClusterPublicNetworkAccess? publicNetworkAccess = null, IEnumerable<string> allowedIPRangeList = null, KustoClusterEngineType? engineType = null, IEnumerable<AcceptedAudience> acceptedAudiences = null, bool? isAutoStopEnabled = null, KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess = null, IEnumerable<string> allowedFqdnList = null, IEnumerable<CalloutPolicy> calloutPolicies = null, KustoClusterPublicIPType? publicIPType = null, string virtualClusterGraduationProperties = null, IEnumerable<KustoPrivateEndpointConnectionData> privateEndpointConnections = null, MigrationClusterProperties migrationCluster = null, KustoClusterZoneStatus? zoneStatus = null)
+        public static KustoClusterData KustoClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, KustoSku sku = null, IEnumerable<string> zones = null, ManagedServiceIdentity identity = null, ETag? etag = null, KustoClusterState? state = null, KustoProvisioningState? provisioningState = null, Uri clusterUri = null, Uri dataIngestionUri = null, string stateReason = null, IEnumerable<KustoClusterTrustedExternalTenant> trustedExternalTenants = null, OptimizedAutoscale optimizedAutoscale = null, bool? isDiskEncryptionEnabled = null, bool? isStreamingIngestEnabled = null, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration = null, KustoKeyVaultProperties keyVaultProperties = null, bool? isPurgeEnabled = null, IEnumerable<KustoLanguageExtension> languageExtensionsValue = null, bool? isDoubleEncryptionEnabled = null, KustoClusterPublicNetworkAccess? publicNetworkAccess = null, IEnumerable<string> allowedIPRangeList = null, KustoClusterEngineType? engineType = null, IEnumerable<AcceptedAudience> acceptedAudiences = null, bool? isAutoStopEnabled = null, KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess = null, IEnumerable<string> allowedFqdnList = null, IEnumerable<KustoCalloutPolicy> calloutPolicies = null, KustoClusterPublicIPType? publicIPType = null, string virtualClusterGraduationProperties = null, IEnumerable<KustoPrivateEndpointConnectionData> privateEndpointConnections = null, MigrationClusterProperties migrationCluster = null, KustoClusterZoneStatus? zoneStatus = null)
         {
             tags ??= new Dictionary<string, string>();
             zones ??= new List<string>();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Kusto.Models
             allowedIPRangeList ??= new List<string>();
             acceptedAudiences ??= new List<AcceptedAudience>();
             allowedFqdnList ??= new List<string>();
-            calloutPolicies ??= new List<CalloutPolicy>();
+            calloutPolicies ??= new List<KustoCalloutPolicy>();
             privateEndpointConnections ??= new List<KustoPrivateEndpointConnectionData>();
 
             return new KustoClusterData(
@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.Kusto.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CalloutPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KustoCalloutPolicy"/>. </summary>
         /// <param name="calloutUriRegex"> Regular expression or FQDN pattern for the callout URI. </param>
         /// <param name="calloutType"> Type of the callout service, specifying the kind of external resource or service being accessed. </param>
         /// <param name="outboundAccess"> Indicates whether outbound access is permitted for the specified URI pattern. </param>
         /// <param name="calloutId"> Unique identifier for the callout configuration. </param>
-        /// <returns> A new <see cref="Models.CalloutPolicy"/> instance for mocking. </returns>
-        public static CalloutPolicy CalloutPolicy(string calloutUriRegex = null, CalloutType? calloutType = null, KustoCalloutPolicyOutboundAccess? outboundAccess = null, string calloutId = null)
+        /// <returns> A new <see cref="Models.KustoCalloutPolicy"/> instance for mocking. </returns>
+        public static KustoCalloutPolicy KustoCalloutPolicy(string calloutUriRegex = null, CalloutType? calloutType = null, KustoCalloutPolicyOutboundAccess? outboundAccess = null, string calloutId = null)
         {
-            return new CalloutPolicy(calloutUriRegex, calloutType, outboundAccess, calloutId, serializedAdditionalRawData: null);
+            return new KustoCalloutPolicy(calloutUriRegex, calloutType, outboundAccess, calloutId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Kusto.KustoPrivateEndpointConnectionData"/>. </summary>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="migrationCluster"> Properties of the peer cluster involved in a migration to/from this cluster. </param>
         /// <param name="zoneStatus"> Indicates whether the cluster is zonal or non-zonal. </param>
         /// <returns> A new <see cref="Models.KustoClusterPatch"/> instance for mocking. </returns>
-        public static KustoClusterPatch KustoClusterPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, KustoSku sku = null, IEnumerable<string> zones = null, ManagedServiceIdentity identity = null, KustoClusterState? state = null, KustoProvisioningState? provisioningState = null, Uri uri = null, Uri dataIngestionUri = null, string stateReason = null, IEnumerable<KustoClusterTrustedExternalTenant> trustedExternalTenants = null, OptimizedAutoscale optimizedAutoscale = null, bool? isDiskEncryptionEnabled = null, bool? isStreamingIngestEnabled = null, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration = null, KustoKeyVaultProperties keyVaultProperties = null, bool? isPurgeEnabled = null, IEnumerable<KustoLanguageExtension> languageExtensionsValue = null, bool? isDoubleEncryptionEnabled = null, KustoClusterPublicNetworkAccess? publicNetworkAccess = null, IEnumerable<string> allowedIPRangeList = null, KustoClusterEngineType? engineType = null, IEnumerable<AcceptedAudience> acceptedAudiences = null, bool? isAutoStopEnabled = null, KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess = null, IEnumerable<string> allowedFqdnList = null, IEnumerable<CalloutPolicy> calloutPolicies = null, KustoClusterPublicIPType? publicIPType = null, string virtualClusterGraduationProperties = null, IEnumerable<KustoPrivateEndpointConnectionData> privateEndpointConnections = null, MigrationClusterProperties migrationCluster = null, KustoClusterZoneStatus? zoneStatus = null)
+        public static KustoClusterPatch KustoClusterPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, KustoSku sku = null, IEnumerable<string> zones = null, ManagedServiceIdentity identity = null, KustoClusterState? state = null, KustoProvisioningState? provisioningState = null, Uri uri = null, Uri dataIngestionUri = null, string stateReason = null, IEnumerable<KustoClusterTrustedExternalTenant> trustedExternalTenants = null, OptimizedAutoscale optimizedAutoscale = null, bool? isDiskEncryptionEnabled = null, bool? isStreamingIngestEnabled = null, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration = null, KustoKeyVaultProperties keyVaultProperties = null, bool? isPurgeEnabled = null, IEnumerable<KustoLanguageExtension> languageExtensionsValue = null, bool? isDoubleEncryptionEnabled = null, KustoClusterPublicNetworkAccess? publicNetworkAccess = null, IEnumerable<string> allowedIPRangeList = null, KustoClusterEngineType? engineType = null, IEnumerable<AcceptedAudience> acceptedAudiences = null, bool? isAutoStopEnabled = null, KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess = null, IEnumerable<string> allowedFqdnList = null, IEnumerable<KustoCalloutPolicy> calloutPolicies = null, KustoClusterPublicIPType? publicIPType = null, string virtualClusterGraduationProperties = null, IEnumerable<KustoPrivateEndpointConnectionData> privateEndpointConnections = null, MigrationClusterProperties migrationCluster = null, KustoClusterZoneStatus? zoneStatus = null)
         {
             tags ??= new Dictionary<string, string>();
             zones ??= new List<string>();
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Kusto.Models
             allowedIPRangeList ??= new List<string>();
             acceptedAudiences ??= new List<AcceptedAudience>();
             allowedFqdnList ??= new List<string>();
-            calloutPolicies ??= new List<CalloutPolicy>();
+            calloutPolicies ??= new List<KustoCalloutPolicy>();
             privateEndpointConnections ??= new List<KustoPrivateEndpointConnectionData>();
 
             return new KustoClusterPatch(

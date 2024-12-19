@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         {
             await TestInitialCalloutPolicies();
 
-            var calloutPolicy = new CalloutPolicy { CalloutUriRegex = "*", CalloutType = CalloutType.Kusto, OutboundAccess = KustoCalloutPolicyOutboundAccess.Allow};
+            var calloutPolicy = new KustoCalloutPolicy { CalloutUriRegex = "*", CalloutType = CalloutType.Kusto, OutboundAccess = KustoCalloutPolicyOutboundAccess.Allow};
 
             await TestAddCalloutPolicy(calloutPolicy);
 
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             AssertCalloutPolicyListsEqual(calloutPoliciesBase, calloutPolicies);
         }
 
-        private async Task TestAddCalloutPolicy(CalloutPolicy calloutPolicy)
+        private async Task TestAddCalloutPolicy(KustoCalloutPolicy calloutPolicy)
         {
             var calloutPoliciesList = new CalloutPoliciesList { Value = { calloutPolicy } };
 
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             await AssertCalloutPolicyInList(calloutPolicy, true);
         }
 
-        private async Task TestRemoveCalloutPolicy(CalloutPolicy calloutPolicy)
+        private async Task TestRemoveCalloutPolicy(KustoCalloutPolicy calloutPolicy)
         {
             var calloutPolicyFromCluster = await GetCalloutPolicyFromClusterAsync(calloutPolicy);
             var calloutPolicyToRemove = new CalloutPolicyToRemove { CalloutId = calloutPolicyFromCluster.CalloutId };
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             await AssertCalloutPolicyInList(calloutPolicy, false);
         }
 
-        private async Task<CalloutPolicy> GetCalloutPolicyFromClusterAsync(CalloutPolicy policy)
+        private async Task<KustoCalloutPolicy> GetCalloutPolicyFromClusterAsync(KustoCalloutPolicy policy)
         {
             var calloutPoliciesList = await Cluster.GetCalloutPoliciesAsync().ToListAsync();
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             throw new Exception("CalloutPolicy not found in the cluster.");
         }
 
-        private async Task AssertCalloutPolicyInList(CalloutPolicy policy, bool shouldBeInList)
+        private async Task AssertCalloutPolicyInList(KustoCalloutPolicy policy, bool shouldBeInList)
         {
             var updatedCalloutPoliciesList = await Cluster.GetCalloutPoliciesAsync().ToListAsync();
 
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             }
         }
 
-        private void AssertCalloutPolicyListsEqual(IList<CalloutPolicy> expected, IList<CalloutPolicy> actual)
+        private void AssertCalloutPolicyListsEqual(IList<KustoCalloutPolicy> expected, IList<KustoCalloutPolicy> actual)
         {
             if (expected is null)
             {

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            IList<CalloutPolicy> value = default;
+            IList<KustoCalloutPolicy> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.Kusto.Models
                     {
                         continue;
                     }
-                    List<CalloutPolicy> array = new List<CalloutPolicy>();
+                    List<KustoCalloutPolicy> array = new List<KustoCalloutPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CalloutPolicy.DeserializeCalloutPolicy(item, options));
+                        array.Add(KustoCalloutPolicy.DeserializeKustoCalloutPolicy(item, options));
                     }
                     value = array;
                     continue;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CalloutPoliciesList(value ?? new ChangeTrackingList<CalloutPolicy>(), nextLink, serializedAdditionalRawData);
+            return new CalloutPoliciesList(value ?? new ChangeTrackingList<KustoCalloutPolicy>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CalloutPoliciesList>.Write(ModelReaderWriterOptions options)

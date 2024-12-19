@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Kusto.Models
 {
     /// <summary> Configuration for external callout policies, including URI patterns, access types, and service types. </summary>
-    public partial class CalloutPolicy
+    public partial class KustoCalloutPolicy
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,18 +45,18 @@ namespace Azure.ResourceManager.Kusto.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CalloutPolicy"/>. </summary>
-        public CalloutPolicy()
+        /// <summary> Initializes a new instance of <see cref="KustoCalloutPolicy"/>. </summary>
+        public KustoCalloutPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CalloutPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoCalloutPolicy"/>. </summary>
         /// <param name="calloutUriRegex"> Regular expression or FQDN pattern for the callout URI. </param>
         /// <param name="calloutType"> Type of the callout service, specifying the kind of external resource or service being accessed. </param>
         /// <param name="outboundAccess"> Indicates whether outbound access is permitted for the specified URI pattern. </param>
         /// <param name="calloutId"> Unique identifier for the callout configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CalloutPolicy(string calloutUriRegex, CalloutType? calloutType, KustoCalloutPolicyOutboundAccess? outboundAccess, string calloutId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal KustoCalloutPolicy(string calloutUriRegex, CalloutType? calloutType, KustoCalloutPolicyOutboundAccess? outboundAccess, string calloutId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CalloutUriRegex = calloutUriRegex;
             CalloutType = calloutType;

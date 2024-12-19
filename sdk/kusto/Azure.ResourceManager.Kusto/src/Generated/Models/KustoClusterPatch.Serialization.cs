@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Kusto.Models
             bool? enableAutoStop = default;
             KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess = default;
             IList<string> allowedFqdnList = default;
-            IList<CalloutPolicy> calloutPolicies = default;
+            IList<KustoCalloutPolicy> calloutPolicies = default;
             KustoClusterPublicIPType? publicIPType = default;
             string virtualClusterGraduationProperties = default;
             IReadOnlyList<KustoPrivateEndpointConnectionData> privateEndpointConnections = default;
@@ -581,10 +581,10 @@ namespace Azure.ResourceManager.Kusto.Models
                             {
                                 continue;
                             }
-                            List<CalloutPolicy> array = new List<CalloutPolicy>();
+                            List<KustoCalloutPolicy> array = new List<KustoCalloutPolicy>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CalloutPolicy.DeserializeCalloutPolicy(item, options));
+                                array.Add(KustoCalloutPolicy.DeserializeKustoCalloutPolicy(item, options));
                             }
                             calloutPolicies = array;
                             continue;
@@ -675,7 +675,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 enableAutoStop,
                 restrictOutboundNetworkAccess,
                 allowedFqdnList ?? new ChangeTrackingList<string>(),
-                calloutPolicies ?? new ChangeTrackingList<CalloutPolicy>(),
+                calloutPolicies ?? new ChangeTrackingList<KustoCalloutPolicy>(),
                 publicIPType,
                 virtualClusterGraduationProperties,
                 privateEndpointConnections ?? new ChangeTrackingList<KustoPrivateEndpointConnectionData>(),
