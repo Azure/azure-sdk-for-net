@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Qumulo.Models
 {
-    public partial class QumuloUserDetails : IUtf8JsonSerializable, IJsonModel<QumuloUserDetails>
+    public partial class UserDetails : IUtf8JsonSerializable, IJsonModel<UserDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QumuloUserDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<QumuloUserDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<UserDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,17 +28,14 @@ namespace Azure.ResourceManager.Qumulo.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QumuloUserDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UserDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QumuloUserDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(UserDetails)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Email))
-            {
-                writer.WritePropertyName("email"u8);
-                writer.WriteStringValue(Email);
-            }
+            writer.WritePropertyName("email"u8);
+            writer.WriteStringValue(Email);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -56,19 +53,19 @@ namespace Azure.ResourceManager.Qumulo.Models
             }
         }
 
-        QumuloUserDetails IJsonModel<QumuloUserDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        UserDetails IJsonModel<UserDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QumuloUserDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UserDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QumuloUserDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(UserDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeQumuloUserDetails(document.RootElement, options);
+            return DeserializeUserDetails(document.RootElement, options);
         }
 
-        internal static QumuloUserDetails DeserializeQumuloUserDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UserDetails DeserializeUserDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -92,38 +89,38 @@ namespace Azure.ResourceManager.Qumulo.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new QumuloUserDetails(email, serializedAdditionalRawData);
+            return new UserDetails(email, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<QumuloUserDetails>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<UserDetails>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QumuloUserDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UserDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QumuloUserDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
-        QumuloUserDetails IPersistableModel<QumuloUserDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        UserDetails IPersistableModel<UserDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QumuloUserDetails>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UserDetails>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeQumuloUserDetails(document.RootElement, options);
+                        return DeserializeUserDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QumuloUserDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<QumuloUserDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<UserDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
