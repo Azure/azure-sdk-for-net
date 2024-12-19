@@ -3,9 +3,12 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
+using Microsoft.Extensions.Options;
 using NUnit.Framework;
+using System;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.Quota.Tests
@@ -14,8 +17,8 @@ namespace Azure.ResourceManager.Quota.Tests
     {
         protected ArmClient Client { get; private set; }
 
-        protected QuotaManagementTestBase(bool isAsync, RecordedTestMode mode)
-        : base(isAsync, mode)
+        protected QuotaManagementTestBase(bool isAsync, ResourceType resourceType, string apiVersion, RecordedTestMode mode)
+        : base(isAsync, resourceType, apiVersion, mode)
         {
         }
 
@@ -27,7 +30,8 @@ namespace Azure.ResourceManager.Quota.Tests
         [SetUp]
         public void CreateCommonClient()
         {
-            Client = GetArmClient();
+            var options = new ArmClientOptions();
+            Client = GetArmClient(options);
         }
 
         protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)

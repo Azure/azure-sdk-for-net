@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Quota.Models
 {
-    /// <summary> List of Group Quota Limit details. </summary>
-    internal partial class GroupQuotaLimitList
+    /// <summary> The SubscriptionQuotaAllocationsListProperties. </summary>
+    public partial class SubscriptionQuotaAllocationsListProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +45,33 @@ namespace Azure.ResourceManager.Quota.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="GroupQuotaLimitList"/>. </summary>
-        internal GroupQuotaLimitList()
+        /// <summary> Initializes a new instance of <see cref="SubscriptionQuotaAllocationsListProperties"/>. </summary>
+        public SubscriptionQuotaAllocationsListProperties()
         {
-            Value = new ChangeTrackingList<GroupQuotaLimitData>();
+            Value = new ChangeTrackingList<SubscriptionQuotaAllocations>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="GroupQuotaLimitList"/>. </summary>
-        /// <param name="value"> List of Group Quota Limit details. </param>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionQuotaAllocationsListProperties"/>. </summary>
+        /// <param name="provisioningState"> Request status. </param>
+        /// <param name="value"> Subscription quota list. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GroupQuotaLimitList(IReadOnlyList<GroupQuotaLimitData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SubscriptionQuotaAllocationsListProperties(QuotaRequestStatus? provisioningState, IList<SubscriptionQuotaAllocations> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            ProvisioningState = provisioningState;
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of Group Quota Limit details. </summary>
-        public IReadOnlyList<GroupQuotaLimitData> Value { get; }
+        /// <summary> Request status. </summary>
+        [WirePath("provisioningState")]
+        public QuotaRequestStatus? ProvisioningState { get; }
+        /// <summary> Subscription quota list. </summary>
+        [WirePath("value")]
+        public IList<SubscriptionQuotaAllocations> Value { get; }
         /// <summary> The URL to use for getting the next set of results. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }
