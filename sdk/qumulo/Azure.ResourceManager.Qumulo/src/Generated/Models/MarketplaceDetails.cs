@@ -48,17 +48,14 @@ namespace Azure.ResourceManager.Qumulo.Models
         /// <summary> Initializes a new instance of <see cref="MarketplaceDetails"/>. </summary>
         /// <param name="planId"> Plan Id. </param>
         /// <param name="offerId"> Offer Id. </param>
-        /// <param name="publisherId"> Publisher Id. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="planId"/>, <paramref name="offerId"/> or <paramref name="publisherId"/> is null. </exception>
-        public MarketplaceDetails(string planId, string offerId, string publisherId)
+        /// <exception cref="ArgumentNullException"> <paramref name="planId"/> or <paramref name="offerId"/> is null. </exception>
+        public MarketplaceDetails(string planId, string offerId)
         {
             Argument.AssertNotNull(planId, nameof(planId));
             Argument.AssertNotNull(offerId, nameof(offerId));
-            Argument.AssertNotNull(publisherId, nameof(publisherId));
 
             PlanId = planId;
             OfferId = offerId;
-            PublisherId = publisherId;
         }
 
         /// <summary> Initializes a new instance of <see cref="MarketplaceDetails"/>. </summary>
@@ -66,14 +63,16 @@ namespace Azure.ResourceManager.Qumulo.Models
         /// <param name="planId"> Plan Id. </param>
         /// <param name="offerId"> Offer Id. </param>
         /// <param name="publisherId"> Publisher Id. </param>
+        /// <param name="termUnit"> Term Unit. </param>
         /// <param name="marketplaceSubscriptionStatus"> Marketplace subscription status. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MarketplaceDetails(string marketplaceSubscriptionId, string planId, string offerId, string publisherId, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MarketplaceDetails(string marketplaceSubscriptionId, string planId, string offerId, string publisherId, string termUnit, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MarketplaceSubscriptionId = marketplaceSubscriptionId;
             PlanId = planId;
             OfferId = offerId;
             PublisherId = publisherId;
+            TermUnit = termUnit;
             MarketplaceSubscriptionStatus = marketplaceSubscriptionStatus;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -91,6 +90,8 @@ namespace Azure.ResourceManager.Qumulo.Models
         public string OfferId { get; set; }
         /// <summary> Publisher Id. </summary>
         public string PublisherId { get; set; }
+        /// <summary> Term Unit. </summary>
+        public string TermUnit { get; set; }
         /// <summary> Marketplace subscription status. </summary>
         public MarketplaceSubscriptionStatus? MarketplaceSubscriptionStatus { get; }
     }

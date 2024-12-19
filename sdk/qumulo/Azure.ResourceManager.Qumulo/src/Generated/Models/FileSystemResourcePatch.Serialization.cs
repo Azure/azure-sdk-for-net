@@ -14,11 +14,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Qumulo.Models
 {
-    public partial class QumuloFileSystemResourcePatch : IUtf8JsonSerializable, IJsonModel<QumuloFileSystemResourcePatch>
+    public partial class FileSystemResourcePatch : IUtf8JsonSerializable, IJsonModel<FileSystemResourcePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QumuloFileSystemResourcePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FileSystemResourcePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<QumuloFileSystemResourcePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FileSystemResourcePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,16 +29,17 @@ namespace Azure.ResourceManager.Qumulo.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QumuloFileSystemResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FileSystemResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QumuloFileSystemResourcePatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FileSystemResourcePatch)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -73,19 +74,19 @@ namespace Azure.ResourceManager.Qumulo.Models
             }
         }
 
-        QumuloFileSystemResourcePatch IJsonModel<QumuloFileSystemResourcePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        FileSystemResourcePatch IJsonModel<FileSystemResourcePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QumuloFileSystemResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FileSystemResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QumuloFileSystemResourcePatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FileSystemResourcePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeQumuloFileSystemResourcePatch(document.RootElement, options);
+            return DeserializeFileSystemResourcePatch(document.RootElement, options);
         }
 
-        internal static QumuloFileSystemResourcePatch DeserializeQumuloFileSystemResourcePatch(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static FileSystemResourcePatch DeserializeFileSystemResourcePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -106,7 +107,8 @@ namespace Azure.ResourceManager.Qumulo.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -138,38 +140,38 @@ namespace Azure.ResourceManager.Qumulo.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new QumuloFileSystemResourcePatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), properties, serializedAdditionalRawData);
+            return new FileSystemResourcePatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), properties, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<QumuloFileSystemResourcePatch>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<FileSystemResourcePatch>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QumuloFileSystemResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FileSystemResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QumuloFileSystemResourcePatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileSystemResourcePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
-        QumuloFileSystemResourcePatch IPersistableModel<QumuloFileSystemResourcePatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        FileSystemResourcePatch IPersistableModel<FileSystemResourcePatch>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QumuloFileSystemResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FileSystemResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeQumuloFileSystemResourcePatch(document.RootElement, options);
+                        return DeserializeFileSystemResourcePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QumuloFileSystemResourcePatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileSystemResourcePatch)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<QumuloFileSystemResourcePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FileSystemResourcePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
