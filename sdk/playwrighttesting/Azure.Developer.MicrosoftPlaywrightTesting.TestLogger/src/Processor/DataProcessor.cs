@@ -104,16 +104,17 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
             };
             testCaseResultData.TestCombinationId = testCaseResultData.TestExecutionId; // TODO check
             testCaseResultData.TestId = testResultSource.TestCase.Id.ToString();
-            testCaseResultData.TestTitle = testResultSource.TestCase.DisplayName.Length > 500? testResultSource.TestCase.DisplayName.Substring(0, 500): testResultSource.TestCase.DisplayName;
+            testCaseResultData.TestTitle = ReporterUtils.TruncateData(testResultSource.TestCase.DisplayName, 500)!;
+            testCaseResultData.TestTitle = ReporterUtils.TruncateData(testResultSource.TestCase.DisplayName, 500)!;
             var className = FetchTestClassName(testResultSource.TestCase.FullyQualifiedName);
-            testCaseResultData.SuiteTitle = className.Length>500?className.Substring(0,500):className;
+            testCaseResultData.SuiteTitle = ReporterUtils.TruncateData(className,500)!;
             testCaseResultData.SuiteId = ReporterUtils.CalculateSha1Hash(className);
-            testCaseResultData.FileName = FetchFileName(testResultSource.TestCase.Source).Length > 300 ? FetchFileName(testResultSource.TestCase.Source).Substring(0, 300) : FetchFileName(testResultSource.TestCase.Source);
+            testCaseResultData.FileName = ReporterUtils.TruncateData(FetchFileName(testResultSource.TestCase.Source),300)!;
             testCaseResultData.LineNumber = testResultSource.TestCase.LineNumber;
             testCaseResultData.Retry = 0; // TODO Retry and PreviousRetries
             testCaseResultData.WebTestConfig = new WebTestConfig
             {
-                JobName = _cIInfo.JobId != null && _cIInfo.JobId.Length > 500 ? _cIInfo.JobId.Substring(0, 500) : _cIInfo.JobId ?? "",
+                JobName = _cIInfo.JobId != null ? ReporterUtils.TruncateData(_cIInfo.JobId, 500) ?? "" : "",
                 //ProjectName = "playwright-dotnet", // TODO no project concept NA??
                 //BrowserName = "chromium", // TODO check if possible to get from test
                 Os = ReporterUtils.GetCurrentOS(),
