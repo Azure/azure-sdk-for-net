@@ -8,8 +8,8 @@ csharp: true
 library-name: ContainerRegistry
 namespace: Azure.ResourceManager.ContainerRegistry
 # default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/8a28143c7271d4496296ed47f70c3cb5a9981e57/specification/containerregistry/resource-manager/readme.md
-tag: package-2022-12
+require: https://github.com/Azure/azure-rest-api-specs/blob/0a27976a58c16279e827bda36004d1b74b3d922a/specification/containerregistry/resource-manager/readme.md
+tag: package-2024-11-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -18,6 +18,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
@@ -66,74 +67,80 @@ keep-plural-enums:
   - ContainerRegistryOS
 
 prepend-rp-prefix:
-  - KeyVaultProperties
-  - PlatformProperties
-  - TaskStepProperties
-  - Run
-  - RunPatch
-  - RunStatus
-  - RunType
-  - RunListResult
-  - Task
-  - TaskRun
-  - TaskPatch
-  - TaskStatus
-  - TaskListResult
-  - TaskRunListResult
-  - ProvisioningState
-  - Policies
-  - PolicyStatus
-  - Replication
-  - ReplicationPatch
-  - ReplicationListResult
-  - Webhook
-  - IPRule
   - AgentPool
+  - AgentPoolListResult
   - AgentPoolPatch
   - AgentPoolQueueStatus
-  - NetworkRuleSet
-  - DockerBuildStep
-  - TriggerProperties
-  - EncryptionStatus
-  - ExportPolicy
-  - ExportPolicyStatus
-  - FileTaskStep
-  - ImageDescriptor
-  - ImageUpdateTrigger
-  - ImportImageParameters
-  - ImportMode
-  - ImportSource
-  - ImportSourceCredentials
-  - PublicNetworkAccess
-  - RetentionPolicy
-  - RunGetLogResult
-  - SecretObject
-  - SecretObjectType
-  - SourceTrigger
-  - SourceTriggerDescriptor
-  - SourceTriggerEvent
-  - TimerTrigger
-  - TimerTriggerDescriptor
-  - TriggerStatus
-  - TrustPolicy
-  - TrustPolicyType
-  - WebhookAction
-  - WebhookPatch
-  - WebhookStatus
-  - ZoneRedundancy
-  - PasswordName
-  - AgentPoolListResult
   - AgentProperties
-  - EncodedTaskStep
-  - OverrideTaskStepProperties
-  - QuarantinePolicy
-  - UpdateTriggerPayloadType
-  - WebhookListResult
+  - Archive
+  - ArchivePatch
+  - ArchiveVersion
+  - AuthCredential
   - BaseImageDependency
   - BaseImageDependencyType
   - BaseImageTrigger
   - BaseImageTriggerType
+  - CacheRule
+  - CacheRuleData
+  - CredentialName
   - Credentials
+  - CredentialSet
+  - DockerBuildStep
+  - EncodedTaskStep
+  - EncryptionStatus
+  - ExportPipeline
+  - ExportPolicy
+  - ExportPolicyStatus
+  - FileTaskStep
+  - GenerateCredentialsResult
+  - ImageDescriptor
+  - ImageUpdateTrigger
+  - ImportImageParameters
+  - ImportMode
+  - ImportPipeline
+  - ImportSource
+  - ImportSourceCredentials
+  - IPRule
+  - KeyVaultProperties
+  - MetadataSearch
+  - NetworkRuleSet
+  - OverrideTaskStepProperties
+  - PasswordName
+  - PipelineOptions
+  - PipelineRun
+  - PlatformProperties
+  - Policies
+  - PolicyStatus
+  - ProvisioningState
+  - PublicNetworkAccess
+  - QuarantinePolicy
+  - Replication
+  - ReplicationListResult
+  - ReplicationPatch
+  - RetentionPolicy
+  - Run
+  - RunGetLogResult
+  - RunListResult
+  - RunPatch
+  - RunStatus
+  - RunType
+  - SecretObject
+  - SecretObjectType
+  - SoftDeletePolicy
+  - SourceTrigger
+  - SourceTriggerDescriptor
+  - SourceTriggerEvent
+  - Task
+  - TaskListResult
+  - TaskPatch
+  - TaskRun
+  - TaskRunListResult
+  - TaskStatus
+  - TaskStepProperties
+  - TimerTrigger
+  - TimerTriggerDescriptor
+  - TlsProperties
+  - TlsStatus
   - Token
   - TokenCertificate
   - TokenCertificateName
@@ -141,9 +148,17 @@ prepend-rp-prefix:
   - TokenPassword
   - TokenPasswordName
   - TokenStatus
-  - PipelineRun
-  - GenerateCredentialsResult
-  - SoftDeletePolicy
+  - TriggerProperties
+  - TriggerStatus
+  - TrustPolicy
+  - TrustPolicyType
+  - UpdateTriggerPayloadType
+  - Webhook
+  - WebhookAction
+  - WebhookListResult
+  - WebhookPatch
+  - WebhookStatus
+  - ZoneRedundancy
 
 rename-mapping:
   OS: ContainerRegistryOS
@@ -233,6 +248,7 @@ rename-mapping:
   LoggingProperties: ConnectedRegistryLogging
   StatusDetailProperties: ConnectedRegistryStatusDetail
   StatusDetailProperties.type: StatusDetailType
+  StatusDetailProperties.correlationId: -|uuid
   AuditLogStatus: ConnectedRegistryAuditLogStatus
   CertificateType: TlsCertificateLocationType
   GenerateCredentialsParameters: ContainerRegistryGenerateCredentialsContent
