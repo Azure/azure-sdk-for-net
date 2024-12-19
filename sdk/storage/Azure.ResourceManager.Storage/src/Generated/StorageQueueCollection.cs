@@ -270,8 +270,8 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An async collection of <see cref="StorageQueueResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageQueueResource> GetAllAsync(int? maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _storageQueueQueueRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, pageSizeHint, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageQueueQueueRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, pageSizeHint, filter);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _storageQueueQueueRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageQueueQueueRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageQueueResource(Client, StorageQueueData.DeserializeStorageQueueData(e)), _storageQueueQueueClientDiagnostics, Pipeline, "StorageQueueCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -302,8 +302,8 @@ namespace Azure.ResourceManager.Storage
         /// <returns> A collection of <see cref="StorageQueueResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageQueueResource> GetAll(int? maxpagesize = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _storageQueueQueueRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, pageSizeHint, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageQueueQueueRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, pageSizeHint, filter);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _storageQueueQueueRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageQueueQueueRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, maxpagesize, filter);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageQueueResource(Client, StorageQueueData.DeserializeStorageQueueData(e)), _storageQueueQueueClientDiagnostics, Pipeline, "StorageQueueCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
