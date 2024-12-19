@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (Optional.IsDefined(PolicyId))
+            if (Optional.IsDefined(PolicyStringId))
             {
                 writer.WritePropertyName("policyId"u8);
-                writer.WriteStringValue(PolicyId);
+                writer.WriteStringValue(PolicyStringId);
             }
             if (Optional.IsDefined(LastRecoverOn))
             {
