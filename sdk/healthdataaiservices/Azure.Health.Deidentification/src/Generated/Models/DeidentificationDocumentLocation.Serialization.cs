@@ -43,7 +43,7 @@ namespace Azure.Health.Deidentification.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(Etag);
+                writer.WriteStringValue(Etag.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -95,7 +95,7 @@ namespace Azure.Health.Deidentification.Models
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    etag = ETag.Parse(prop.Value.GetString());
+                    etag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
