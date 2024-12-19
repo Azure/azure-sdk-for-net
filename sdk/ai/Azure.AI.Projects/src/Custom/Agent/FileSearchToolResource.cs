@@ -7,7 +7,6 @@ namespace Azure.AI.Projects
 {
     public partial class FileSearchToolResource
     {
-        //internal FileSearchToolResource( IDictionary<string, BinaryData> serializedAdditionalRawData)
         public FileSearchToolResource(
             IList<string> vectorStoreIds,
             IList<VectorStoreConfigurations> vectorStores

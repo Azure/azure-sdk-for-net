@@ -222,7 +222,6 @@ var ds = new VectorStoreDataSource(
     assetType: VectorStoreDataSourceAssetType.UriAsset
 );
 var vectorStoreTask = await client.CreateVectorStoreAsync(
-    fileIds: null,
     name: "sample_vector_store",
     storeConfiguration: new VectorStoreConfiguration(
         dataSources: new List<VectorStoreDataSource> { ds }
@@ -242,7 +241,7 @@ Response<Agent> agentResponse = await client.CreateAgentAsync(
 );
 ```
 
-We also can attach files to the existing vector vector store. In the code snippet below, we first create an empty vector store and add file to it.
+We also can attach files to the existing vector store. In the code snippet below, we first create an empty vector store and add file to it.
 
 ```C# Snippet:BatchFileAttachment
 var ds = new VectorStoreDataSource(
@@ -250,7 +249,6 @@ var ds = new VectorStoreDataSource(
     assetType: VectorStoreDataSourceAssetType.UriAsset
 );
 var vectorStoreTask = await client.CreateVectorStoreAsync(
-    fileIds: null,
     name: "sample_vector_store"
 );
 var vectorStore = vectorStoreTask.Value;
@@ -266,7 +264,7 @@ FileSearchToolResource fileSearchResource = new([vectorStore.Id], null);
 
 #### Create Message with Code Interpreter Attachment
 
-To attach a file with the context to the message, the `MessageAttachment` class have to be used. To be able to process the attached file contents we need to provide the `List` with the single element `CodeInterpreterToolDefinition` as a `tools` parameter to both `CreateAgent` method and `MessageAttachment` class constructor.
+To attach a file with the context to the message, use the `MessageAttachment` class. To be able to process the attached file contents we need to provide the `List` with the single element `CodeInterpreterToolDefinition` as a `tools` parameter to both `CreateAgent` method and `MessageAttachment` class constructor.
 
 Here is an example to pass `CodeInterpreterTool` as tool:
 
@@ -302,7 +300,7 @@ Response<ThreadMessage> messageResponse = await client.CreateMessageAsync(
 ThreadMessage message = messageResponse.Value;
 ```
 
-Azure blob storage can be used as a message attachment. In this case `VectorStoreDataSource` have to be used as a data source:
+Azure blob storage can be used as a message attachment. In this case, use `VectorStoreDataSource` as a data source:
 
 ```C# Snippet:CreateMessageAttachmentWithBlobStore
 var ds = new VectorStoreDataSource(

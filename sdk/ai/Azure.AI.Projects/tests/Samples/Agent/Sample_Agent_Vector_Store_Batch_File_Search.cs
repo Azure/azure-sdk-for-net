@@ -14,7 +14,7 @@ using NUnit.Framework.Internal.Execution;
 
 namespace Azure.AI.Projects.Tests;
 
-internal class Sample_Agent_Vector_Store_Batch_File_Search : SamplesBase<AIProjectsTestEnvironment>
+public partial class Sample_Agent_Vector_Store_Batch_File_Search : SamplesBase<AIProjectsTestEnvironment>
 {
     private static string GetFile([CallerFilePath] string pth = "")
     {
@@ -31,7 +31,6 @@ internal class Sample_Agent_Vector_Store_Batch_File_Search : SamplesBase<AIProje
         AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
 
         var vectorStoreTask = await client.CreateVectorStoreAsync(
-            fileIds: null,
             name: "sample_vector_store"
         );
         var vectorStore = vectorStoreTask.Value;

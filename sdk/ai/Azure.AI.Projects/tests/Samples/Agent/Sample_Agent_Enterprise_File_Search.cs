@@ -12,7 +12,7 @@ using NUnit.Framework.Internal.Execution;
 
 namespace Azure.AI.Projects.Tests;
 
-internal class Sample_Agent_Enterptise_File_Search : SamplesBase<AIProjectsTestEnvironment>
+public partial class Sample_Agent_Enterprise_File_Search : SamplesBase<AIProjectsTestEnvironment>
 {
     [Test]
     public async Task EnterpriseFileSearch()
@@ -30,7 +30,6 @@ internal class Sample_Agent_Enterptise_File_Search : SamplesBase<AIProjectsTestE
             assetType: VectorStoreDataSourceAssetType.UriAsset
         );
         var vectorStoreTask = await client.CreateVectorStoreAsync(
-            fileIds: null,
             name: "sample_vector_store",
             storeConfiguration: new VectorStoreConfiguration(
                 dataSources: new List<VectorStoreDataSource> { ds }
