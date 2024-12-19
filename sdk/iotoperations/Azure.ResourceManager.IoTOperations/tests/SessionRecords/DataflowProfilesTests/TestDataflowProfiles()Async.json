@@ -1,0 +1,498 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd?api-version=2022-12-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-108c78fc13ffba88cfc9bad0279350bb-9573658af0bbb36a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.13.0 (.NET 8.0.10; Ubuntu 22.04.3 LTS)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "473",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Dec 2024 00:09:59 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "408d5251-1470-49f7-89e1-ec579900bd77",
+        "x-ms-ratelimit-remaining-subscription-global-reads": "16499",
+        "x-ms-ratelimit-remaining-subscription-reads": "1099",
+        "x-ms-request-id": "408d5251-1470-49f7-89e1-ec579900bd77",
+        "x-ms-routing-request-id": "WESTUS2:20241219T001000Z:408d5251-1470-49f7-89e1-ec579900bd77",
+        "X-MSEdge-Ref": "Ref A: 32114CF96FB74D4F8212C41B10414A7F Ref B: CO6AA3150218023 Ref C: 2024-12-19T00:10:00Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "C-AI-MG-Placement-Subscription-Level": "2023-08-31"
+        },
+        "subscriptionId": "d4ccd08b-0809-446d-a8b7-7af8a90109cd",
+        "tenantId": "00000000-0000-0000-0000-000000000000",
+        "displayName": "CommonInfra-AIO-OnDemandClusters",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourcegroups/sdk-test-cluster-110596935?api-version=2022-09-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-5d0b03c8d2596e277748475be4cb6a0b-a4c979c70659b008-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.13.0 (.NET 8.0.10; Ubuntu 22.04.3 LTS)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "423",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Dec 2024 00:09:59 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "3b0cd2b8-3bce-4833-9733-4148a89f42a8",
+        "x-ms-ratelimit-remaining-subscription-global-reads": "16499",
+        "x-ms-ratelimit-remaining-subscription-reads": "1099",
+        "x-ms-request-id": "3b0cd2b8-3bce-4833-9733-4148a89f42a8",
+        "x-ms-routing-request-id": "WESTUS2:20241219T001000Z:3b0cd2b8-3bce-4833-9733-4148a89f42a8",
+        "X-MSEdge-Ref": "Ref A: F87D7C1F0FB04DCCABE375A4CC34D6EB Ref B: CO6AA3150218023 Ref C: 2024-12-19T00:10:00Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-110596935",
+        "name": "sdk-test-cluster-110596935",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus2",
+        "tags": {
+          "x-iot-environment": "atlas-on-demand",
+          "x-iot-owner": "henrymorales@microsoft.com",
+          "x-iot-do-not-delete": "true",
+          "x-iot-create-time": "1734470045",
+          "PREDEPLOYED": "true"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-110596935/providers/Microsoft.IoTOperations/instances/aio-o5fjq?api-version=2024-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-d9f033f6c0e708dd40416e0a55d91125-ac9ee072eeff161e-00",
+        "User-Agent": "azsdk-net-ResourceManager.IoTOperations/1.0.0-alpha.20241218.1 (.NET 8.0.10; Ubuntu 22.04.3 LTS)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1025",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Dec 2024 00:10:00 GMT",
+        "ETag": "\"300cd632-0000-0200-0000-67635f620000\"",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-correlation-request-id": "1a88310a-c611-4539-be15-d7f1e17da3ca",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-global-reads": "16499",
+        "x-ms-ratelimit-remaining-subscription-reads": "1099",
+        "x-ms-request-id": "17edee00-a077-4e3a-a159-c357f38f5683",
+        "x-ms-routing-request-id": "WESTUS2:20241219T001000Z:1a88310a-c611-4539-be15-d7f1e17da3ca",
+        "X-MSEdge-Ref": "Ref A: 30E022DE5EB84433A2A7F25F7355DEE8 Ref B: CO6AA3150218023 Ref C: 2024-12-19T00:10:00Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-110596935/providers/Microsoft.IoTOperations/instances/aio-o5fjq",
+        "name": "aio-o5fjq",
+        "type": "microsoft.iotoperations/instances",
+        "location": "eastus2",
+        "extendedLocation": {
+          "name": "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-110596935/providers/Microsoft.ExtendedLocation/customLocations/location-o5fjq",
+          "type": "CustomLocation"
+        },
+        "systemData": {
+          "createdBy": "Sanitized",
+          "createdByType": "Application",
+          "createdAt": "2024-12-17T21:50:03.8760218Z",
+          "lastModifiedBy": "Sanitized",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2024-12-18T23:48:50.6650541Z"
+        },
+        "identity": {
+          "type": "None"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "version": "1.0.9",
+          "description": "Updated Description: 20241218T234815",
+          "schemaRegistryRef": {
+            "resourceId": "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-110596935/providers/Microsoft.DeviceRegistry/schemaRegistries/aio-sr-a66bef4c65"
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-110596935/providers/Microsoft.IoTOperations/instances/aio-o5fjq/dataflowProfiles/default?api-version=2024-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-dc6a67c3249c9999aebe6a61718c25f4-f01f1e52c3cb415c-00",
+        "User-Agent": "azsdk-net-ResourceManager.IoTOperations/1.0.0-alpha.20241218.1 (.NET 8.0.10; Ubuntu 22.04.3 LTS)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "837",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Dec 2024 00:10:00 GMT",
+        "ETag": "\"7807c2f3-0000-0200-0000-6761fcd60000\"",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-correlation-request-id": "c1da9bd9-e854-4e10-aa30-d1649d6e2080",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-global-reads": "16499",
+        "x-ms-ratelimit-remaining-subscription-reads": "1099",
+        "x-ms-request-id": "a4d5b3e9-ca40-4bb1-9cb3-8e408da0e0b7",
+        "x-ms-routing-request-id": "WESTUS2:20241219T001000Z:c1da9bd9-e854-4e10-aa30-d1649d6e2080",
+        "X-MSEdge-Ref": "Ref A: 512B4F23C44E4A1393DEB0C520C642BF Ref B: CO6AA3150218023 Ref C: 2024-12-19T00:10:00Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-110596935/providers/Microsoft.IoTOperations/instances/aio-o5fjq/dataflowProfiles/default",
+        "name": "default",
+        "type": "microsoft.iotoperations/instances/dataflowprofiles",
+        "extendedLocation": {
+          "name": "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-110596935/providers/Microsoft.ExtendedLocation/customLocations/location-o5fjq",
+          "type": "CustomLocation"
+        },
+        "systemData": {
+          "createdBy": "Sanitized",
+          "createdByType": "Application",
+          "createdAt": "2024-12-17T21:51:53.4995728Z",
+          "lastModifiedBy": "Sanitized",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2024-12-17T22:36:06.0992144Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "instanceCount": 1,
+          "diagnostics": {
+            "logs": {
+              "level": "info"
+            },
+            "metrics": {
+              "prometheusPort": 9600
+            }
+          }
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-110596935/providers/Microsoft.IoTOperations/instances/aio-o5fjq/dataflowProfiles/sdk-test?api-version=2024-11-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "324",
+        "Content-Type": "application/json",
+        "traceparent": "00-e09d2948403fba5be61117c6decaa845-86cacf0113dcae1e-00",
+        "User-Agent": "azsdk-net-ResourceManager.IoTOperations/1.0.0-alpha.20241218.1 (.NET 8.0.10; Ubuntu 22.04.3 LTS)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "properties": {
+          "diagnostics": {
+            "logs": {
+              "level": "info"
+            },
+            "metrics": {
+              "prometheusPort": 9600
+            }
+          },
+          "instanceCount": 1
+        },
+        "extendedLocation": {
+          "name": "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-110596935/providers/Microsoft.ExtendedLocation/customLocations/location-o5fjq",
+          "type": "CustomLocation"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Accept-Ranges": "bytes",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/providers/Microsoft.IoTOperations/locations/EASTUS2/operationStatuses/b82cf091-5b12-4354-b939-310371c43909*7D1A3E288DB76E783F45E0EC170EDFA54AAAFDA1C357CFD7AEF325BC6C096548?api-version=2024-11-01&t=638701638020285434&c=MIIHpTCCBo2gAwIBAgITOgM6dTLGpzYZpvPtgQAEAzp1MjANBgkqhkiG9w0BAQsFADBEMRMwEQYKCZImiZPyLGQBGRYDR0JMMRMwEQYKCZImiZPyLGQBGRYDQU1FMRgwFgYDVQQDEw9BTUUgSU5GUkEgQ0EgMDEwHhcNMjQwNjI2MDEzMjIxWhcNMjUwNjIxMDEzMjIxWjBAMT4wPAYDVQQDEzVhc3luY29wZXJhdGlvbnNpZ25pbmdjZXJ0aWZpY2F0ZS5tYW5hZ2VtZW50LmF6dXJlLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAPPPKY5bDN03KptFFhiyLIyn86BlrXYFIZWYXA-hY7_WbLyWN0IxcLIUBW_I-9u-YsXOHk9WPMlUYHIFPgHW7A3FsSGfl9dd6YGapKoSSw0NkTpNXM58R54BBgLp7AhiWzK15D9T-XELNSU4Wq9sEeA5T24kazcgS2MUkzELH0I9dwu7g0dwJIuIJkoJjEzg1b1Q3Ie5HKHHNbjottJn7Q5LBS-9QtQyruuwaNTgSJpCoi4PBKVIOTBYL_Nv1wecmKmfWcT0mnhQE9zjhJTbcoN9hKSvAMqsDHtxWUFZosiw3JKIY0zb59CrVGSuOhfN3qaarwN9EAlXLqc4ZyKpsTkCAwEAAaOCBJIwggSOMCcGCSsGAQQBgjcVCgQaMBgwCgYIKwYBBQUHAwEwCgYIKwYBBQUHAwIwPQYJKwYBBAGCNxUHBDAwLgYmKwYBBAGCNxUIhpDjDYTVtHiE8Ys-hZvdFs6dEoFggvX2K4Py0SACAWQCAQowggHaBggrBgEFBQcBAQSCAcwwggHIMGYGCCsGAQUFBzAChlpodHRwOi8vY3JsLm1pY3Jvc29mdC5jb20vcGtpaW5mcmEvQ2VydHMvQlkyUEtJSU5UQ0EwMS5BTUUuR0JMX0FNRSUyMElORlJBJTIwQ0ElMjAwMSg0KS5jcnQwVgYIKwYBBQUHMAKGSmh0dHA6Ly9jcmwxLmFtZS5nYmwvYWlhL0JZMlBLSUlOVENBMDEuQU1FLkdCTF9BTUUlMjBJTkZSQSUyMENBJTIwMDEoNCkuY3J0MFYGCCsGAQUFBzAChkpodHRwOi8vY3JsMi5hbWUuZ2JsL2FpYS9CWTJQS0lJTlRDQTAxLkFNRS5HQkxfQU1FJTIwSU5GUkElMjBDQSUyMDAxKDQpLmNydDBWBggrBgEFBQcwAoZKaHR0cDovL2NybDMuYW1lLmdibC9haWEvQlkyUEtJSU5UQ0EwMS5BTUUuR0JMX0FNRSUyMElORlJBJTIwQ0ElMjAwMSg0KS5jcnQwVgYIKwYBBQUHMAKGSmh0dHA6Ly9jcmw0LmFtZS5nYmwvYWlhL0JZMlBLSUlOVENBMDEuQU1FLkdCTF9BTUUlMjBJTkZSQSUyMENBJTIwMDEoNCkuY3J0MB0GA1UdDgQWBBRk_38CqdKjPVylWUR4uuqhbFGeHTAOBgNVHQ8BAf8EBAMCBaAwggE1BgNVHR8EggEsMIIBKDCCASSgggEgoIIBHIZCaHR0cDovL2NybC5taWNyb3NvZnQuY29tL3BraWluZnJhL0NSTC9BTUUlMjBJTkZSQSUyMENBJTIwMDEoNCkuY3JshjRodHRwOi8vY3JsMS5hbWUuZ2JsL2NybC9BTUUlMjBJTkZSQSUyMENBJTIwMDEoNCkuY3JshjRodHRwOi8vY3JsMi5hbWUuZ2JsL2NybC9BTUUlMjBJTkZSQSUyMENBJTIwMDEoNCkuY3JshjRodHRwOi8vY3JsMy5hbWUuZ2JsL2NybC9BTUUlMjBJTkZSQSUyMENBJTIwMDEoNCkuY3JshjRodHRwOi8vY3JsNC5hbWUuZ2JsL2NybC9BTUUlMjBJTkZSQSUyMENBJTIwMDEoNCkuY3JsMIGdBgNVHSAEgZUwgZIwDAYKKwYBBAGCN3sBATBmBgorBgEEAYI3ewICMFgwVgYIKwYBBQUHAgIwSh5IADMAMwBlADAAMQA5ADIAMQAtADQAZAA2ADQALQA0AGYAOABjAC0AYQAwADUANQAtADUAYgBkAGEAZgBmAGQANQBlADMAMwBkMAwGCisGAQQBgjd7AwEwDAYKKwYBBAGCN3sEATAfBgNVHSMEGDAWgBTl2Ztn_PjsurvwwKidileIud8-YzAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwDQYJKoZIhvcNAQELBQADggEBAFsx7FtYAzSo98T5ydNFa0ukjPZ6XCQc9zo7ldqy235P_zJAUkaNgCU4EGOzbZJDoMa8mAfhyukL_0GfPeApUaY2e44ZOzoYAkeEuDiwcs-9zoQ1fCyXhn0pCumGFXRilX9KjAPaYTzDvQMEllTy_ZViwTahuKaGtFVamZguBPdaeYC_0oybtTVNQCs8hGnffhNZOMASB-5pFs35MNxsDWTVIQksDee419jqpsbWLkh6rnanILO1O_ihwb-WpvRQByQ5NGpG1-z0MQ6nRpr9wWxUi-DsrVsD38NTMIPc2uei4Ivf6qnGRvOOj0fmsciWuTTEXMaD-5a81mGlzhZc09Q&s=A4OJ2CMnGfeW81rRMjfBdh03zrooLTnbRE44LGEq9usn2WgDN06AEPa3jiXlFSYO5GjMLn7jSMdqxda2PfQxTnr-ps4m4q8RNoCBhmIHkNI6D6Jrdy6wBwAIvE-3pyldPev90o5MTQbjy_FHQSLfSErrnpAgEkEwWwOzgKPQX35_5bBh8xEedC7az-YkYh4YDDvRrSRiEM-DvY7hms5vb-cGzRN7BS6rSI8tFutmondW7uJ5gc6rBQWmJTvPkjLWRPj9hLUGdWrUQD2jIt4C5MoVIhymbnHH8G00UfHtDgkk3w400Aq8h7gBOGR5EDJ4Y9GBcLGGddMQ5_6WMj7Hlw&h=mhnl8xdw9n96wst9cKK0OeXJnEAND12g-_t-NdlVVLM",
+        "Cache-Control": "no-cache",
+        "Content-Length": "824",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Dec 2024 00:10:01 GMT",
+        "ETag": "\"9607e4d0-0000-0200-0000-676364590000\"",
+        "Expires": "-1",
+        "mise-correlation-id": "707fc0a7-b90c-4f59-ad89-f2db22e03fb5",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "x-azure-ref": "Sanitized",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-correlation-request-id": "063c334f-7532-4f8a-b667-127473166c5a",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-global-writes": "11999",
+        "x-ms-ratelimit-remaining-subscription-writes": "799",
+        "x-ms-request-id": "00000000-0000-0000-0000-000000000000",
+        "x-ms-routing-request-id": "WESTUS2:20241219T001002Z:063c334f-7532-4f8a-b667-127473166c5a",
+        "X-MSEdge-Ref": "Ref A: 2145C31FC10441F682ECFBF8783CDD78 Ref B: CO6AA3150218023 Ref C: 2024-12-19T00:10:00Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-110596935/providers/Microsoft.IoTOperations/instances/aio-o5fjq/dataflowProfiles/sdk-test",
+        "name": "sdk-test",
+        "type": "microsoft.iotoperations/instances/dataflowprofiles",
+        "extendedLocation": {
+          "name": "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-110596935/providers/Microsoft.ExtendedLocation/customLocations/location-o5fjq",
+          "type": "CustomLocation"
+        },
+        "systemData": {
+          "createdBy": "Sanitized",
+          "createdByType": "User",
+          "createdAt": "2024-12-18T23:13:43.8418111Z",
+          "lastModifiedBy": "Sanitized",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2024-12-19T00:10:01.2941658Z"
+        },
+        "properties": {
+          "provisioningState": "Accepted",
+          "diagnostics": {
+            "logs": {
+              "level": "info"
+            },
+            "metrics": {
+              "prometheusPort": 9600
+            }
+          },
+          "instanceCount": 1
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/providers/Microsoft.IoTOperations/locations/EASTUS2/operationStatuses/b82cf091-5b12-4354-b939-310371c43909*7D1A3E288DB76E783F45E0EC170EDFA54AAAFDA1C357CFD7AEF325BC6C096548?api-version=2024-11-01&t=638701638020285434&c=MIIHpTCCBo2gAwIBAgITOgM6dTLGpzYZpvPtgQAEAzp1MjANBgkqhkiG9w0BAQsFADBEMRMwEQYKCZImiZPyLGQBGRYDR0JMMRMwEQYKCZImiZPyLGQBGRYDQU1FMRgwFgYDVQQDEw9BTUUgSU5GUkEgQ0EgMDEwHhcNMjQwNjI2MDEzMjIxWhcNMjUwNjIxMDEzMjIxWjBAMT4wPAYDVQQDEzVhc3luY29wZXJhdGlvbnNpZ25pbmdjZXJ0aWZpY2F0ZS5tYW5hZ2VtZW50LmF6dXJlLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAPPPKY5bDN03KptFFhiyLIyn86BlrXYFIZWYXA-hY7_WbLyWN0IxcLIUBW_I-9u-YsXOHk9WPMlUYHIFPgHW7A3FsSGfl9dd6YGapKoSSw0NkTpNXM58R54BBgLp7AhiWzK15D9T-XELNSU4Wq9sEeA5T24kazcgS2MUkzELH0I9dwu7g0dwJIuIJkoJjEzg1b1Q3Ie5HKHHNbjottJn7Q5LBS-9QtQyruuwaNTgSJpCoi4PBKVIOTBYL_Nv1wecmKmfWcT0mnhQE9zjhJTbcoN9hKSvAMqsDHtxWUFZosiw3JKIY0zb59CrVGSuOhfN3qaarwN9EAlXLqc4ZyKpsTkCAwEAAaOCBJIwggSOMCcGCSsGAQQBgjcVCgQaMBgwCgYIKwYBBQUHAwEwCgYIKwYBBQUHAwIwPQYJKwYBBAGCNxUHBDAwLgYmKwYBBAGCNxUIhpDjDYTVtHiE8Ys-hZvdFs6dEoFggvX2K4Py0SACAWQCAQowggHaBggrBgEFBQcBAQSCAcwwggHIMGYGCCsGAQUFBzAChlpodHRwOi8vY3JsLm1pY3Jvc29mdC5jb20vcGtpaW5mcmEvQ2VydHMvQlkyUEtJSU5UQ0EwMS5BTUUuR0JMX0FNRSUyMElORlJBJTIwQ0ElMjAwMSg0KS5jcnQwVgYIKwYBBQUHMAKGSmh0dHA6Ly9jcmwxLmFtZS5nYmwvYWlhL0JZMlBLSUlOVENBMDEuQU1FLkdCTF9BTUUlMjBJTkZSQSUyMENBJTIwMDEoNCkuY3J0MFYGCCsGAQUFBzAChkpodHRwOi8vY3JsMi5hbWUuZ2JsL2FpYS9CWTJQS0lJTlRDQTAxLkFNRS5HQkxfQU1FJTIwSU5GUkElMjBDQSUyMDAxKDQpLmNydDBWBggrBgEFBQcwAoZKaHR0cDovL2NybDMuYW1lLmdibC9haWEvQlkyUEtJSU5UQ0EwMS5BTUUuR0JMX0FNRSUyMElORlJBJTIwQ0ElMjAwMSg0KS5jcnQwVgYIKwYBBQUHMAKGSmh0dHA6Ly9jcmw0LmFtZS5nYmwvYWlhL0JZMlBLSUlOVENBMDEuQU1FLkdCTF9BTUUlMjBJTkZSQSUyMENBJTIwMDEoNCkuY3J0MB0GA1UdDgQWBBRk_38CqdKjPVylWUR4uuqhbFGeHTAOBgNVHQ8BAf8EBAMCBaAwggE1BgNVHR8EggEsMIIBKDCCASSgggEgoIIBHIZCaHR0cDovL2NybC5taWNyb3NvZnQuY29tL3BraWluZnJhL0NSTC9BTUUlMjBJTkZSQSUyMENBJTIwMDEoNCkuY3JshjRodHRwOi8vY3JsMS5hbWUuZ2JsL2NybC9BTUUlMjBJTkZSQSUyMENBJTIwMDEoNCkuY3JshjRodHRwOi8vY3JsMi5hbWUuZ2JsL2NybC9BTUUlMjBJTkZSQSUyMENBJTIwMDEoNCkuY3JshjRodHRwOi8vY3JsMy5hbWUuZ2JsL2NybC9BTUUlMjBJTkZSQSUyMENBJTIwMDEoNCkuY3JshjRodHRwOi8vY3JsNC5hbWUuZ2JsL2NybC9BTUUlMjBJTkZSQSUyMENBJTIwMDEoNCkuY3JsMIGdBgNVHSAEgZUwgZIwDAYKKwYBBAGCN3sBATBmBgorBgEEAYI3ewICMFgwVgYIKwYBBQUHAgIwSh5IADMAMwBlADAAMQA5ADIAMQAtADQAZAA2ADQALQA0AGYAOABjAC0AYQAwADUANQAtADUAYgBkAGEAZgBmAGQANQBlADMAMwBkMAwGCisGAQQBgjd7AwEwDAYKKwYBBAGCN3sEATAfBgNVHSMEGDAWgBTl2Ztn_PjsurvwwKidileIud8-YzAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwDQYJKoZIhvcNAQELBQADggEBAFsx7FtYAzSo98T5ydNFa0ukjPZ6XCQc9zo7ldqy235P_zJAUkaNgCU4EGOzbZJDoMa8mAfhyukL_0GfPeApUaY2e44ZOzoYAkeEuDiwcs-9zoQ1fCyXhn0pCumGFXRilX9KjAPaYTzDvQMEllTy_ZViwTahuKaGtFVamZguBPdaeYC_0oybtTVNQCs8hGnffhNZOMASB-5pFs35MNxsDWTVIQksDee419jqpsbWLkh6rnanILO1O_ihwb-WpvRQByQ5NGpG1-z0MQ6nRpr9wWxUi-DsrVsD38NTMIPc2uei4Ivf6qnGRvOOj0fmsciWuTTEXMaD-5a81mGlzhZc09Q&s=A4OJ2CMnGfeW81rRMjfBdh03zrooLTnbRE44LGEq9usn2WgDN06AEPa3jiXlFSYO5GjMLn7jSMdqxda2PfQxTnr-ps4m4q8RNoCBhmIHkNI6D6Jrdy6wBwAIvE-3pyldPev90o5MTQbjy_FHQSLfSErrnpAgEkEwWwOzgKPQX35_5bBh8xEedC7az-YkYh4YDDvRrSRiEM-DvY7hms5vb-cGzRN7BS6rSI8tFutmondW7uJ5gc6rBQWmJTvPkjLWRPj9hLUGdWrUQD2jIt4C5MoVIhymbnHH8G00UfHtDgkk3w400Aq8h7gBOGR5EDJ4Y9GBcLGGddMQ5_6WMj7Hlw&h=mhnl8xdw9n96wst9cKK0OeXJnEAND12g-_t-NdlVVLM",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-e09d2948403fba5be61117c6decaa845-6eb616c197d850cf-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.13.0 (.NET 8.0.10; Ubuntu 22.04.3 LTS)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "595",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Dec 2024 00:10:01 GMT",
+        "ETag": "\"1b39e459-0000-0200-0000-676364590000\"",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-correlation-request-id": "fec366f2-a6c1-4e43-a0cd-8de5ed17f343",
+        "x-ms-ratelimit-remaining-subscription-global-reads": "16499",
+        "x-ms-ratelimit-remaining-subscription-reads": "1099",
+        "x-ms-request-id": "2e59896b-f84d-4c2d-be22-57c3f0025cff",
+        "x-ms-routing-request-id": "WESTUS2:20241219T001002Z:fec366f2-a6c1-4e43-a0cd-8de5ed17f343",
+        "X-MSEdge-Ref": "Ref A: 2AD6AA3935514BE5B0000EEFED647E73 Ref B: CO6AA3150218023 Ref C: 2024-12-19T00:10:02Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/providers/Microsoft.IoTOperations/locations/EASTUS2/operationStatuses/b82cf091-5b12-4354-b939-310371c43909*7D1A3E288DB76E783F45E0EC170EDFA54AAAFDA1C357CFD7AEF325BC6C096548",
+        "name": "b82cf091-5b12-4354-b939-310371c43909*7D1A3E288DB76E783F45E0EC170EDFA54AAAFDA1C357CFD7AEF325BC6C096548",
+        "resourceId": "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-110596935/providers/Microsoft.IoTOperations/instances/aio-o5fjq/dataflowProfiles/sdk-test",
+        "status": "Accepted",
+        "startTime": "2024-12-19T00:10:01.3690824Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/providers/Microsoft.IoTOperations/locations/EASTUS2/operationStatuses/b82cf091-5b12-4354-b939-310371c43909*7D1A3E288DB76E783F45E0EC170EDFA54AAAFDA1C357CFD7AEF325BC6C096548?api-version=2024-11-01&t=638701638020285434&c=MIIHpTCCBo2gAwIBAgITOgM6dTLGpzYZpvPtgQAEAzp1MjANBgkqhkiG9w0BAQsFADBEMRMwEQYKCZImiZPyLGQBGRYDR0JMMRMwEQYKCZImiZPyLGQBGRYDQU1FMRgwFgYDVQQDEw9BTUUgSU5GUkEgQ0EgMDEwHhcNMjQwNjI2MDEzMjIxWhcNMjUwNjIxMDEzMjIxWjBAMT4wPAYDVQQDEzVhc3luY29wZXJhdGlvbnNpZ25pbmdjZXJ0aWZpY2F0ZS5tYW5hZ2VtZW50LmF6dXJlLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAPPPKY5bDN03KptFFhiyLIyn86BlrXYFIZWYXA-hY7_WbLyWN0IxcLIUBW_I-9u-YsXOHk9WPMlUYHIFPgHW7A3FsSGfl9dd6YGapKoSSw0NkTpNXM58R54BBgLp7AhiWzK15D9T-XELNSU4Wq9sEeA5T24kazcgS2MUkzELH0I9dwu7g0dwJIuIJkoJjEzg1b1Q3Ie5HKHHNbjottJn7Q5LBS-9QtQyruuwaNTgSJpCoi4PBKVIOTBYL_Nv1wecmKmfWcT0mnhQE9zjhJTbcoN9hKSvAMqsDHtxWUFZosiw3JKIY0zb59CrVGSuOhfN3qaarwN9EAlXLqc4ZyKpsTkCAwEAAaOCBJIwggSOMCcGCSsGAQQBgjcVCgQaMBgwCgYIKwYBBQUHAwEwCgYIKwYBBQUHAwIwPQYJKwYBBAGCNxUHBDAwLgYmKwYBBAGCNxUIhpDjDYTVtHiE8Ys-hZvdFs6dEoFggvX2K4Py0SACAWQCAQowggHaBggrBgEFBQcBAQSCAcwwggHIMGYGCCsGAQUFBzAChlpodHRwOi8vY3JsLm1pY3Jvc29mdC5jb20vcGtpaW5mcmEvQ2VydHMvQlkyUEtJSU5UQ0EwMS5BTUUuR0JMX0FNRSUyMElORlJBJTIwQ0ElMjAwMSg0KS5jcnQwVgYIKwYBBQUHMAKGSmh0dHA6Ly9jcmwxLmFtZS5nYmwvYWlhL0JZMlBLSUlOVENBMDEuQU1FLkdCTF9BTUUlMjBJTkZSQSUyMENBJTIwMDEoNCkuY3J0MFYGCCsGAQUFBzAChkpodHRwOi8vY3JsMi5hbWUuZ2JsL2FpYS9CWTJQS0lJTlRDQTAxLkFNRS5HQkxfQU1FJTIwSU5GUkElMjBDQSUyMDAxKDQpLmNydDBWBggrBgEFBQcwAoZKaHR0cDovL2NybDMuYW1lLmdibC9haWEvQlkyUEtJSU5UQ0EwMS5BTUUuR0JMX0FNRSUyMElORlJBJTIwQ0ElMjAwMSg0KS5jcnQwVgYIKwYBBQUHMAKGSmh0dHA6Ly9jcmw0LmFtZS5nYmwvYWlhL0JZMlBLSUlOVENBMDEuQU1FLkdCTF9BTUUlMjBJTkZSQSUyMENBJTIwMDEoNCkuY3J0MB0GA1UdDgQWBBRk_38CqdKjPVylWUR4uuqhbFGeHTAOBgNVHQ8BAf8EBAMCBaAwggE1BgNVHR8EggEsMIIBKDCCASSgggEgoIIBHIZCaHR0cDovL2NybC5taWNyb3NvZnQuY29tL3BraWluZnJhL0NSTC9BTUUlMjBJTkZSQSUyMENBJTIwMDEoNCkuY3JshjRodHRwOi8vY3JsMS5hbWUuZ2JsL2NybC9BTUUlMjBJTkZSQSUyMENBJTIwMDEoNCkuY3JshjRodHRwOi8vY3JsMi5hbWUuZ2JsL2NybC9BTUUlMjBJTkZSQSUyMENBJTIwMDEoNCkuY3JshjRodHRwOi8vY3JsMy5hbWUuZ2JsL2NybC9BTUUlMjBJTkZSQSUyMENBJTIwMDEoNCkuY3JshjRodHRwOi8vY3JsNC5hbWUuZ2JsL2NybC9BTUUlMjBJTkZSQSUyMENBJTIwMDEoNCkuY3JsMIGdBgNVHSAEgZUwgZIwDAYKKwYBBAGCN3sBATBmBgorBgEEAYI3ewICMFgwVgYIKwYBBQUHAgIwSh5IADMAMwBlADAAMQA5ADIAMQAtADQAZAA2ADQALQA0AGYAOABjAC0AYQAwADUANQAtADUAYgBkAGEAZgBmAGQANQBlADMAMwBkMAwGCisGAQQBgjd7AwEwDAYKKwYBBAGCN3sEATAfBgNVHSMEGDAWgBTl2Ztn_PjsurvwwKidileIud8-YzAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwDQYJKoZIhvcNAQELBQADggEBAFsx7FtYAzSo98T5ydNFa0ukjPZ6XCQc9zo7ldqy235P_zJAUkaNgCU4EGOzbZJDoMa8mAfhyukL_0GfPeApUaY2e44ZOzoYAkeEuDiwcs-9zoQ1fCyXhn0pCumGFXRilX9KjAPaYTzDvQMEllTy_ZViwTahuKaGtFVamZguBPdaeYC_0oybtTVNQCs8hGnffhNZOMASB-5pFs35MNxsDWTVIQksDee419jqpsbWLkh6rnanILO1O_ihwb-WpvRQByQ5NGpG1-z0MQ6nRpr9wWxUi-DsrVsD38NTMIPc2uei4Ivf6qnGRvOOj0fmsciWuTTEXMaD-5a81mGlzhZc09Q&s=A4OJ2CMnGfeW81rRMjfBdh03zrooLTnbRE44LGEq9usn2WgDN06AEPa3jiXlFSYO5GjMLn7jSMdqxda2PfQxTnr-ps4m4q8RNoCBhmIHkNI6D6Jrdy6wBwAIvE-3pyldPev90o5MTQbjy_FHQSLfSErrnpAgEkEwWwOzgKPQX35_5bBh8xEedC7az-YkYh4YDDvRrSRiEM-DvY7hms5vb-cGzRN7BS6rSI8tFutmondW7uJ5gc6rBQWmJTvPkjLWRPj9hLUGdWrUQD2jIt4C5MoVIhymbnHH8G00UfHtDgkk3w400Aq8h7gBOGR5EDJ4Y9GBcLGGddMQ5_6WMj7Hlw&h=mhnl8xdw9n96wst9cKK0OeXJnEAND12g-_t-NdlVVLM",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-e09d2948403fba5be61117c6decaa845-6e8bd7432f352769-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.13.0 (.NET 8.0.10; Ubuntu 22.04.3 LTS)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "595",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Dec 2024 00:10:02 GMT",
+        "ETag": "\"1b39f259-0000-0200-0000-6763645b0000\"",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-correlation-request-id": "e42a9a85-dce1-488d-a1a2-1aa1fdfd5c46",
+        "x-ms-ratelimit-remaining-subscription-global-reads": "16499",
+        "x-ms-ratelimit-remaining-subscription-reads": "1099",
+        "x-ms-request-id": "edeb89b0-8e9f-456e-8743-64f28c20712d",
+        "x-ms-routing-request-id": "WESTUS2:20241219T001003Z:e42a9a85-dce1-488d-a1a2-1aa1fdfd5c46",
+        "X-MSEdge-Ref": "Ref A: FECBFF870789400DB4808B61495BA17D Ref B: CO6AA3150218023 Ref C: 2024-12-19T00:10:03Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/providers/Microsoft.IoTOperations/locations/EASTUS2/operationStatuses/b82cf091-5b12-4354-b939-310371c43909*7D1A3E288DB76E783F45E0EC170EDFA54AAAFDA1C357CFD7AEF325BC6C096548",
+        "name": "b82cf091-5b12-4354-b939-310371c43909*7D1A3E288DB76E783F45E0EC170EDFA54AAAFDA1C357CFD7AEF325BC6C096548",
+        "resourceId": "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-110596935/providers/Microsoft.IoTOperations/instances/aio-o5fjq/dataflowProfiles/sdk-test",
+        "status": "Accepted",
+        "startTime": "2024-12-19T00:10:01.3690824Z"
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/providers/Microsoft.IoTOperations/locations/EASTUS2/operationStatuses/b82cf091-5b12-4354-b939-310371c43909*7D1A3E288DB76E783F45E0EC170EDFA54AAAFDA1C357CFD7AEF325BC6C096548?api-version=2024-11-01&t=638701638020285434&c=MIIHpTCCBo2gAwIBAgITOgM6dTLGpzYZpvPtgQAEAzp1MjANBgkqhkiG9w0BAQsFADBEMRMwEQYKCZImiZPyLGQBGRYDR0JMMRMwEQYKCZImiZPyLGQBGRYDQU1FMRgwFgYDVQQDEw9BTUUgSU5GUkEgQ0EgMDEwHhcNMjQwNjI2MDEzMjIxWhcNMjUwNjIxMDEzMjIxWjBAMT4wPAYDVQQDEzVhc3luY29wZXJhdGlvbnNpZ25pbmdjZXJ0aWZpY2F0ZS5tYW5hZ2VtZW50LmF6dXJlLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAPPPKY5bDN03KptFFhiyLIyn86BlrXYFIZWYXA-hY7_WbLyWN0IxcLIUBW_I-9u-YsXOHk9WPMlUYHIFPgHW7A3FsSGfl9dd6YGapKoSSw0NkTpNXM58R54BBgLp7AhiWzK15D9T-XELNSU4Wq9sEeA5T24kazcgS2MUkzELH0I9dwu7g0dwJIuIJkoJjEzg1b1Q3Ie5HKHHNbjottJn7Q5LBS-9QtQyruuwaNTgSJpCoi4PBKVIOTBYL_Nv1wecmKmfWcT0mnhQE9zjhJTbcoN9hKSvAMqsDHtxWUFZosiw3JKIY0zb59CrVGSuOhfN3qaarwN9EAlXLqc4ZyKpsTkCAwEAAaOCBJIwggSOMCcGCSsGAQQBgjcVCgQaMBgwCgYIKwYBBQUHAwEwCgYIKwYBBQUHAwIwPQYJKwYBBAGCNxUHBDAwLgYmKwYBBAGCNxUIhpDjDYTVtHiE8Ys-hZvdFs6dEoFggvX2K4Py0SACAWQCAQowggHaBggrBgEFBQcBAQSCAcwwggHIMGYGCCsGAQUFBzAChlpodHRwOi8vY3JsLm1pY3Jvc29mdC5jb20vcGtpaW5mcmEvQ2VydHMvQlkyUEtJSU5UQ0EwMS5BTUUuR0JMX0FNRSUyMElORlJBJTIwQ0ElMjAwMSg0KS5jcnQwVgYIKwYBBQUHMAKGSmh0dHA6Ly9jcmwxLmFtZS5nYmwvYWlhL0JZMlBLSUlOVENBMDEuQU1FLkdCTF9BTUUlMjBJTkZSQSUyMENBJTIwMDEoNCkuY3J0MFYGCCsGAQUFBzAChkpodHRwOi8vY3JsMi5hbWUuZ2JsL2FpYS9CWTJQS0lJTlRDQTAxLkFNRS5HQkxfQU1FJTIwSU5GUkElMjBDQSUyMDAxKDQpLmNydDBWBggrBgEFBQcwAoZKaHR0cDovL2NybDMuYW1lLmdibC9haWEvQlkyUEtJSU5UQ0EwMS5BTUUuR0JMX0FNRSUyMElORlJBJTIwQ0ElMjAwMSg0KS5jcnQwVgYIKwYBBQUHMAKGSmh0dHA6Ly9jcmw0LmFtZS5nYmwvYWlhL0JZMlBLSUlOVENBMDEuQU1FLkdCTF9BTUUlMjBJTkZSQSUyMENBJTIwMDEoNCkuY3J0MB0GA1UdDgQWBBRk_38CqdKjPVylWUR4uuqhbFGeHTAOBgNVHQ8BAf8EBAMCBaAwggE1BgNVHR8EggEsMIIBKDCCASSgggEgoIIBHIZCaHR0cDovL2NybC5taWNyb3NvZnQuY29tL3BraWluZnJhL0NSTC9BTUUlMjBJTkZSQSUyMENBJTIwMDEoNCkuY3JshjRodHRwOi8vY3JsMS5hbWUuZ2JsL2NybC9BTUUlMjBJTkZSQSUyMENBJTIwMDEoNCkuY3JshjRodHRwOi8vY3JsMi5hbWUuZ2JsL2NybC9BTUUlMjBJTkZSQSUyMENBJTIwMDEoNCkuY3JshjRodHRwOi8vY3JsMy5hbWUuZ2JsL2NybC9BTUUlMjBJTkZSQSUyMENBJTIwMDEoNCkuY3JshjRodHRwOi8vY3JsNC5hbWUuZ2JsL2NybC9BTUUlMjBJTkZSQSUyMENBJTIwMDEoNCkuY3JsMIGdBgNVHSAEgZUwgZIwDAYKKwYBBAGCN3sBATBmBgorBgEEAYI3ewICMFgwVgYIKwYBBQUHAgIwSh5IADMAMwBlADAAMQA5ADIAMQAtADQAZAA2ADQALQA0AGYAOABjAC0AYQAwADUANQAtADUAYgBkAGEAZgBmAGQANQBlADMAMwBkMAwGCisGAQQBgjd7AwEwDAYKKwYBBAGCN3sEATAfBgNVHSMEGDAWgBTl2Ztn_PjsurvwwKidileIud8-YzAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwDQYJKoZIhvcNAQELBQADggEBAFsx7FtYAzSo98T5ydNFa0ukjPZ6XCQc9zo7ldqy235P_zJAUkaNgCU4EGOzbZJDoMa8mAfhyukL_0GfPeApUaY2e44ZOzoYAkeEuDiwcs-9zoQ1fCyXhn0pCumGFXRilX9KjAPaYTzDvQMEllTy_ZViwTahuKaGtFVamZguBPdaeYC_0oybtTVNQCs8hGnffhNZOMASB-5pFs35MNxsDWTVIQksDee419jqpsbWLkh6rnanILO1O_ihwb-WpvRQByQ5NGpG1-z0MQ6nRpr9wWxUi-DsrVsD38NTMIPc2uei4Ivf6qnGRvOOj0fmsciWuTTEXMaD-5a81mGlzhZc09Q&s=A4OJ2CMnGfeW81rRMjfBdh03zrooLTnbRE44LGEq9usn2WgDN06AEPa3jiXlFSYO5GjMLn7jSMdqxda2PfQxTnr-ps4m4q8RNoCBhmIHkNI6D6Jrdy6wBwAIvE-3pyldPev90o5MTQbjy_FHQSLfSErrnpAgEkEwWwOzgKPQX35_5bBh8xEedC7az-YkYh4YDDvRrSRiEM-DvY7hms5vb-cGzRN7BS6rSI8tFutmondW7uJ5gc6rBQWmJTvPkjLWRPj9hLUGdWrUQD2jIt4C5MoVIhymbnHH8G00UfHtDgkk3w400Aq8h7gBOGR5EDJ4Y9GBcLGGddMQ5_6WMj7Hlw&h=mhnl8xdw9n96wst9cKK0OeXJnEAND12g-_t-NdlVVLM",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-e09d2948403fba5be61117c6decaa845-94134e5b42c5e8fd-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.13.0 (.NET 8.0.10; Ubuntu 22.04.3 LTS)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "701",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Dec 2024 00:10:03 GMT",
+        "ETag": "\"1b39f659-0000-0200-0000-6763645c0000\"",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-correlation-request-id": "994eca38-2d78-4545-a8e6-70bc0d3b6d2f",
+        "x-ms-ratelimit-remaining-subscription-global-reads": "16499",
+        "x-ms-ratelimit-remaining-subscription-reads": "1099",
+        "x-ms-request-id": "ea8f6a9e-48c5-4380-a185-991de0c78f1e",
+        "x-ms-routing-request-id": "WESTUS2:20241219T001004Z:994eca38-2d78-4545-a8e6-70bc0d3b6d2f",
+        "X-MSEdge-Ref": "Ref A: 3F31686AED834EF090F287903B34FD60 Ref B: CO6AA3150218023 Ref C: 2024-12-19T00:10:04Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/providers/Microsoft.IoTOperations/locations/EASTUS2/operationStatuses/b82cf091-5b12-4354-b939-310371c43909*7D1A3E288DB76E783F45E0EC170EDFA54AAAFDA1C357CFD7AEF325BC6C096548",
+        "name": "b82cf091-5b12-4354-b939-310371c43909*7D1A3E288DB76E783F45E0EC170EDFA54AAAFDA1C357CFD7AEF325BC6C096548",
+        "resourceId": "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-110596935/providers/Microsoft.IoTOperations/instances/aio-o5fjq/dataflowProfiles/sdk-test",
+        "status": "Succeeded",
+        "startTime": "2024-12-19T00:10:01.3690824Z",
+        "endTime": "2024-12-19T00:10:04.0021725Z",
+        "properties": {
+          "message": "DataflowProfile created successfully"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-110596935/providers/Microsoft.IoTOperations/instances/aio-o5fjq/dataflowProfiles/sdk-test?api-version=2024-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-e09d2948403fba5be61117c6decaa845-c30e9bc1ac5b275c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.13.0 (.NET 8.0.10; Ubuntu 22.04.3 LTS)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "825",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 19 Dec 2024 00:10:04 GMT",
+        "ETag": "\"960707d1-0000-0200-0000-6763645c0000\"",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-correlation-request-id": "2f8abf35-a7ee-476b-8996-f74f823fbb67",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-global-reads": "16499",
+        "x-ms-ratelimit-remaining-subscription-reads": "1099",
+        "x-ms-request-id": "1948d095-ebb2-49b4-8edb-7601a0a420a6",
+        "x-ms-routing-request-id": "WESTUS2:20241219T001004Z:2f8abf35-a7ee-476b-8996-f74f823fbb67",
+        "X-MSEdge-Ref": "Ref A: BBB544562B3D4340A71744694ED7B17B Ref B: CO6AA3150218023 Ref C: 2024-12-19T00:10:04Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-110596935/providers/Microsoft.IoTOperations/instances/aio-o5fjq/dataflowProfiles/sdk-test",
+        "name": "sdk-test",
+        "type": "microsoft.iotoperations/instances/dataflowprofiles",
+        "extendedLocation": {
+          "name": "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-110596935/providers/Microsoft.ExtendedLocation/customLocations/location-o5fjq",
+          "type": "CustomLocation"
+        },
+        "systemData": {
+          "createdBy": "Sanitized",
+          "createdByType": "User",
+          "createdAt": "2024-12-18T23:13:43.8418111Z",
+          "lastModifiedBy": "Sanitized",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2024-12-19T00:10:01.2941658Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "diagnostics": {
+            "logs": {
+              "level": "info"
+            },
+            "metrics": {
+              "prometheusPort": 9600
+            }
+          },
+          "instanceCount": 1
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "2094232387",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "d4ccd08b-0809-446d-a8b7-7af8a90109cd"
+  }
+}
