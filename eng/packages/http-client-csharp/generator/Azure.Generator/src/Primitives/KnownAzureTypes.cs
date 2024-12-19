@@ -56,7 +56,7 @@ namespace Azure.Generator.Primitives
         {
             [typeof(Guid)] = SerializeTypeWithImplicitOperatorToString,
             [typeof(IPAddress)] = SerializeTypeWithToString,
-            [typeof(ETag)] = SerializeTypeWithImplicitOperatorToString,
+            [typeof(ETag)] = SerializeTypeWithToString,
             [typeof(AzureLocation)] = SerializeTypeWithImplicitOperatorToString,
             [typeof(ResourceIdentifier)] = SerializeTypeWithImplicitOperatorToString,
         };
@@ -65,7 +65,7 @@ namespace Azure.Generator.Primitives
         {
             [typeof(Guid)] = DeserializeNewInstanceStringLikeType,
             [typeof(IPAddress)] = DeserializeParsableStringLikeType,
-            [typeof(ETag)] = DeserializeParsableStringLikeType,
+            [typeof(ETag)] = DeserializeNewInstanceStringLikeType,
             [typeof(AzureLocation)] = DeserializeNewInstanceStringLikeType,
             [typeof(ResourceIdentifier)] = DeserializeNewInstanceStringLikeType,
         };

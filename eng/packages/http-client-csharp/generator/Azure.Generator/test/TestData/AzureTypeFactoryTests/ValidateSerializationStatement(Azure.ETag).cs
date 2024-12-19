@@ -1,1 +1,1 @@
-writer.WriteStringValue(value);
+writer.WriteStringValue(value.ToString());
