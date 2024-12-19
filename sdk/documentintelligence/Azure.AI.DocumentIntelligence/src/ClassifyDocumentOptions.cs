@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.AI.DocumentIntelligence
 {
@@ -60,6 +61,30 @@ namespace Azure.AI.DocumentIntelligence
 
         internal ClassifyDocumentOptions()
         {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="ClassifyDocumentOptions"/>.
+        /// </summary>
+        /// <param name="classifierId"> Unique document classifier name. </param>
+        /// <param name="uriSource"> Document URL to classify. </param>
+        /// <param name="bytesSource"> Bytes of the document to classify. </param>
+        /// <param name="split"> Document splitting mode </param>
+        /// <param name="pages"> 1-based page numbers to analyze.  Ex. "1-3,5,7-9". </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClassifyDocumentOptions(string classifierId,
+            Uri uriSource,
+            BinaryData bytesSource,
+            SplitMode? split,
+            string pages,
+            IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ClassifierId = classifierId;
+            UriSource = uriSource;
+            BytesSource = bytesSource;
+            Split = split;
+            Pages = pages;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>
