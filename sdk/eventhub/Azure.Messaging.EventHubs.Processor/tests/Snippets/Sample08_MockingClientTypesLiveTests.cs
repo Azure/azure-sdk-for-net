@@ -64,7 +64,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 systemProperties: new Dictionary<string, object>(), //arbitrary value
                 partitionKey: "sample-key",
                 sequenceNumber: 1000,
-                offset: 1500,
+                offsetString: "1500:1:3344.1",
                 enqueuedTime: DateTimeOffset.Parse("11:36 PM"));
 
             // This creates a new instance of ProcessEventArgs to pass into the handler directly.
@@ -130,7 +130,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     systemProperties: new Dictionary<string, object>(), //arbitrary value
                     partitionKey: "sample-key",
                     sequenceNumber: 1000,
-                    offset: 1500,
+                    offsetString: "1500:1:1111",
                     enqueuedTime: DateTimeOffset.Parse("11:36 PM"));
 
                 ProcessEventArgs eventArgs = new(

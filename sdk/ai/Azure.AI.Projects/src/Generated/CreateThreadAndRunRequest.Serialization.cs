@@ -197,6 +197,11 @@ namespace Azure.AI.Projects
                     writer.WriteNull("response_format");
                 }
             }
+            if (Optional.IsDefined(ParallelToolCalls))
+            {
+                writer.WritePropertyName("parallel_tool_calls"u8);
+                writer.WriteBooleanValue(ParallelToolCalls.Value);
+            }
             if (Optional.IsCollectionDefined(Metadata))
             {
                 if (Metadata != null)
@@ -266,6 +271,7 @@ namespace Azure.AI.Projects
             TruncationObject truncationStrategy = default;
             BinaryData toolChoice = default;
             BinaryData responseFormat = default;
+            bool? parallelToolCalls = default;
             IReadOnlyDictionary<string, string> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -408,6 +414,15 @@ namespace Azure.AI.Projects
                     responseFormat = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (property.NameEquals("parallel_tool_calls"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    parallelToolCalls = property.Value.GetBoolean();
+                    continue;
+                }
                 if (property.NameEquals("metadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -443,6 +458,7 @@ namespace Azure.AI.Projects
                 truncationStrategy,
                 toolChoice,
                 responseFormat,
+                parallelToolCalls,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }

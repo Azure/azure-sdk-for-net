@@ -45,7 +45,7 @@ namespace Azure.AI.DocumentIntelligence
             writer.WritePropertyName("accessToken"u8);
             writer.WriteStringValue(AccessToken);
             writer.WritePropertyName("expirationDateTime"u8);
-            writer.WriteStringValue(ExpirationDateTime, "O");
+            writer.WriteStringValue(ExpiresOn, "O");
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

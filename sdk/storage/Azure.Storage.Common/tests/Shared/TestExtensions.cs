@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Azure.Storage
@@ -216,13 +217,14 @@ namespace Azure.Storage
         {
             if (credentials is StorageSharedKeyCredential sharedKeyCredentials)
             {
+                string sanitizedBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes("Sanitized"));
                 return string.Format(
                     CultureInfo.InvariantCulture,
                     "{0}={1};{2}={3}",
                     Constants.ConnectionStrings.AccountNameSetting,
                     sharedKeyCredentials.AccountName,
                     Constants.ConnectionStrings.AccountKeySetting,
-                    exportSecrets ? ((StorageSharedKeyCredential)credentials).ExportBase64EncodedKey() : "Sanitized");
+                    exportSecrets ? ((StorageSharedKeyCredential)credentials).ExportBase64EncodedKey() : sanitizedBase64);
             }
             else if (credentials is SharedAccessSignatureCredentials sasCredentials)
             {
