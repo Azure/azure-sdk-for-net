@@ -215,12 +215,12 @@ internal class Constants
     internal static readonly string s_invalid_os_error = "Invalid operating system, supported values are 'linux' and 'windows'.";
     internal static readonly string s_workspace_mismatch_error = "The provided access token does not match the specified workspace URL. Please verify that both values are correct.";
     internal static readonly string s_invalid_service_endpoint_error_message = "The service endpoint provided is invalid. Please verify the endpoint URL and try again.";
+    internal static readonly string s_playwright_service_runId_length_exceeded_error_message = "The runId cannot be more than 200 characters long";
 
     internal static readonly string s_playwright_service_disable_scalable_execution_environment_variable = "_MPT_DISABLE_SCALABLE_EXECUTION";
     internal static readonly string s_playwright_service_reporting_url_environment_variable = "_MPT_REPORTING_URL";
     internal static readonly string s_playwright_service_workspace_id_environment_variable = "_MPT_WORKSPACE_ID";
     internal static readonly string s_playwright_service_auth_type_environment_variable = "_MPT_AUTH_TYPE";
-    internal static readonly string s_playwright_service_runId_Length_exceeded_Error = "The runId cannot be more than 200 characters long";
 
     // Warning constants
     internal static readonly string s_playwright_service_runName_truncated_warning = "WARNING: The runName cannot exceed 200 characters. Therefore, it will be truncated to 200 characters.";

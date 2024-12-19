@@ -136,12 +136,6 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         }
 
         var cloudRunId = _environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId);
-        if (cloudRunId?.Length > 200)
-        {
-            _consoleWriter.WriteError($"\n{Constants.s_playwright_service_runId_Length_exceeded_Error}");
-            _environment.Exit(1);
-            return;
-        }
         string? baseUrl = _environment.GetEnvironmentVariable(ReporterConstants.s_pLAYWRIGHT_SERVICE_REPORTING_URL);
         string? accessToken = _environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken);
         if (string.IsNullOrEmpty(baseUrl))
@@ -156,7 +150,12 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
             _environment.Exit(1);
             return;
         }
-
+        if (cloudRunId?.Length > 200)
+        {
+            _consoleWriter.WriteError(Constants.s_playwright_service_runId_length_exceeded_error_message);
+            _environment.Exit(1);
+            return;
+        }
         var baseUri = new Uri(baseUrl);
         var reporterUtils = new ReporterUtils();
         TokenDetails tokenDetails = reporterUtils.ParseWorkspaceIdFromAccessToken(jsonWebTokenHandler: _jsonWebTokenHandler, accessToken: accessToken);
@@ -165,7 +164,7 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         if (runNameString?.Length > 200)
         {
             runNameString = runNameString.Substring(0, 200);
-            _consoleWriter.WriteLine($"\n{Constants.s_playwright_service_runName_truncated_warning}");
+            _consoleWriter.WriteLine(Constants.s_playwright_service_runName_truncated_warning);
         }
         var cloudRunMetadata = new CloudRunMetadata
         {

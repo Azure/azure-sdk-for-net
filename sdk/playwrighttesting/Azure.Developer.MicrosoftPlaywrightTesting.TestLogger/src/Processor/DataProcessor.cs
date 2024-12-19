@@ -53,10 +53,10 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                 CloudRunEnabled = false,
                 CiConfig = new CIConfig
                 {
-                    Branch = _cIInfo.Branch?.Length > 500? _cIInfo.Branch?.Substring(0,500): _cIInfo.Branch,
-                    Author = _cIInfo.Author?.Length > 500? _cIInfo.Author?.Substring(0, 500) : _cIInfo.Author,
-                    CommitId = _cIInfo.CommitId?.Length > 500 ? _cIInfo.CommitId?.Substring(0, 500) : _cIInfo.CommitId,
-                    RevisionUrl = _cIInfo.RevisionUrl?.Length > 1000 ? _cIInfo.RevisionUrl?.Substring(0, 1000) : _cIInfo.RevisionUrl,
+                    Branch = ReporterUtils.TruncateData(_cIInfo.Branch, 500),
+                    Author = ReporterUtils.TruncateData(_cIInfo.Author,500),
+                    CommitId = ReporterUtils.TruncateData(_cIInfo.CommitId,500),
+                    RevisionUrl = ReporterUtils.TruncateData(_cIInfo.RevisionUrl,1000),
                     CiProviderName = _cIInfo.Provider ?? CIConstants.s_dEFAULT
                 },
                 TestRunConfig = new ClientConfig // TODO fetch some of these dynamically
