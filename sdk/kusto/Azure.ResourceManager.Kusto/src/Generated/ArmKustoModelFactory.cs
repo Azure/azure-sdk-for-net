@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="outboundAccess"> Indicates whether outbound access is permitted for the specified URI pattern. </param>
         /// <param name="calloutId"> Unique identifier for the callout configuration. </param>
         /// <returns> A new <see cref="Models.KustoCalloutPolicy"/> instance for mocking. </returns>
-        public static KustoCalloutPolicy KustoCalloutPolicy(string calloutUriRegex = null, CalloutType? calloutType = null, KustoCalloutPolicyOutboundAccess? outboundAccess = null, string calloutId = null)
+        public static KustoCalloutPolicy KustoCalloutPolicy(string calloutUriRegex = null, KustoCalloutPolicyCalloutType? calloutType = null, KustoCalloutPolicyOutboundAccess? outboundAccess = null, string calloutId = null)
         {
             return new KustoCalloutPolicy(calloutUriRegex, calloutType, outboundAccess, calloutId, serializedAdditionalRawData: null);
         }

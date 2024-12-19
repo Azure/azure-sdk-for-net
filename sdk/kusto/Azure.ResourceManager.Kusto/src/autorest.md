@@ -236,6 +236,8 @@ rename-mapping:
   FollowerDatabaseDefinitionGet: KustoFollowerDatabase
   FollowerDatabaseDefinitionGet.properties.clusterResourceId: -|arm-id
   CalloutPolicy: KustoCalloutPolicy
+  CalloutType: KustoCalloutPolicyCalloutType
+
 
 
 

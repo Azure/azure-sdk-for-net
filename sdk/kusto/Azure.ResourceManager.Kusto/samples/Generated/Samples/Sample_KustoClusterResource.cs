@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Kusto.Samples
                 Value = {new KustoCalloutPolicy
 {
 CalloutUriRegex = "*",
-CalloutType = CalloutType.Kusto,
+CalloutType = KustoCalloutPolicyCalloutType.Kusto,
 OutboundAccess = KustoCalloutPolicyOutboundAccess.Allow,
 }},
             };
