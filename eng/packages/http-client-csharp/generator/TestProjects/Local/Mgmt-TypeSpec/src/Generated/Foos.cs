@@ -19,6 +19,9 @@ namespace MgmtTypeSpec
     public partial class Foos
     {
         private readonly Uri _endpoint;
+        /// <summary> A credential used to authenticate to the service. </summary>
+        private readonly TokenCredential _tokenCredential;
+        private static readonly string[] AuthorizationScopes = new string[] { "user_impersonation" };
         private readonly string _apiVersion;
         private readonly Guid _subscriptionId;
 
@@ -27,10 +30,11 @@ namespace MgmtTypeSpec
         {
         }
 
-        internal Foos(HttpPipeline pipeline, Uri endpoint, string apiVersion, Guid subscriptionId)
+        internal Foos(HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion, Guid subscriptionId)
         {
             _endpoint = endpoint;
             Pipeline = pipeline;
+            _tokenCredential = tokenCredential;
             _apiVersion = apiVersion;
             _subscriptionId = subscriptionId;
         }
@@ -92,15 +96,16 @@ namespace MgmtTypeSpec
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fooName"> The name of the Foo. </param>
         /// <param name="resource"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="fooName"/> or <paramref name="resource"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Foo> CreateOrUpdate(string resourceGroupName, string fooName, Foo resource)
+        public virtual Response<Foo> CreateOrUpdate(string resourceGroupName, string fooName, Foo resource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(fooName, nameof(fooName));
             Argument.AssertNotNull(resource, nameof(resource));
 
-            Response result = CreateOrUpdate(resourceGroupName, fooName, resource, context: null);
+            Response result = CreateOrUpdate(resourceGroupName, fooName, resource, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((Foo)result, result);
         }
 
@@ -170,14 +175,15 @@ namespace MgmtTypeSpec
         /// <summary> Get a Foo. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fooName"> The name of the Foo. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="fooName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Foo> Get(string resourceGroupName, string fooName)
+        public virtual Response<Foo> Get(string resourceGroupName, string fooName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(fooName, nameof(fooName));
 
-            Response result = Get(resourceGroupName, fooName, context: null);
+            Response result = Get(resourceGroupName, fooName, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((Foo)result, result);
         }
 
@@ -245,14 +251,15 @@ namespace MgmtTypeSpec
         /// <summary> Delete a Foo. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fooName"> The name of the Foo. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="fooName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Delete(string resourceGroupName, string fooName)
+        public virtual Response Delete(string resourceGroupName, string fooName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(fooName, nameof(fooName));
 
-            return Delete(resourceGroupName, fooName, context: null);
+            return Delete(resourceGroupName, fooName, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary> Delete a Foo. </summary>
@@ -313,13 +320,14 @@ namespace MgmtTypeSpec
 
         /// <summary> List Foo resources by resource group. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<FooListResult> List(string resourceGroupName)
+        public virtual Response<FooListResult> List(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
 
-            Response result = List(resourceGroupName, context: null);
+            Response result = List(resourceGroupName, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((FooListResult)result, result);
         }
 

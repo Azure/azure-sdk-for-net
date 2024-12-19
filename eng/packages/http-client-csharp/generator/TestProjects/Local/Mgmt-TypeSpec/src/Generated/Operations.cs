@@ -19,6 +19,9 @@ namespace MgmtTypeSpec
     public partial class Operations
     {
         private readonly Uri _endpoint;
+        /// <summary> A credential used to authenticate to the service. </summary>
+        private readonly TokenCredential _tokenCredential;
+        private static readonly string[] AuthorizationScopes = new string[] { "user_impersonation" };
         private readonly string _apiVersion;
 
         /// <summary> Initializes a new instance of Operations for mocking. </summary>
@@ -26,10 +29,11 @@ namespace MgmtTypeSpec
         {
         }
 
-        internal Operations(HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal Operations(HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
             _endpoint = endpoint;
             Pipeline = pipeline;
+            _tokenCredential = tokenCredential;
             _apiVersion = apiVersion;
         }
 
@@ -71,10 +75,11 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> List the operations for the provider. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<OperationListResult> List()
+        public virtual Response<OperationListResult> List(CancellationToken cancellationToken = default)
         {
-            Response result = List(context: null);
+            Response result = List(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((OperationListResult)result, result);
         }
 
