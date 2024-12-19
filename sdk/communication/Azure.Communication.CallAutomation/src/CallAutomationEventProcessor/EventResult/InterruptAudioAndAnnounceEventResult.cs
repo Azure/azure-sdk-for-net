@@ -3,8 +3,8 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary><see cref="PlayEventResult"/> is returned from WaitForEvent of <see cref="PlayResult"/>.</summary>
-    public class PlayEventResult
+    /// <summary><see cref="InterruptAudioAndAnnounceEventResult"/> is returned from WaitForEvent of <see cref="InterruptAudioAndAnnounceResult"/>.</summary>
+    public class InterruptAudioAndAnnounceEventResult
     {
         /// <summary>
         /// Indicates whether the returned event is considered successful or not.
@@ -36,7 +36,7 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public PlayFailed FailureResult { get; }
 
-        internal PlayEventResult(bool isSuccess, PlayCompleted successResult, PlayFailed failureResult, PlayStarted startResult, PlayPaused pauseResult, PlayResumed resumeResult)
+        internal InterruptAudioAndAnnounceEventResult(bool isSuccess, PlayCompleted successResult, PlayFailed failureResult, PlayStarted startResult, PlayPaused pauseResult, PlayResumed resumeResult)
         {
             IsSuccess = isSuccess;
             SuccessResult = successResult;
