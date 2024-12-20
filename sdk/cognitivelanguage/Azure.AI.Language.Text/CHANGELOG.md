@@ -13,7 +13,6 @@
 
 - Removed support for analyze-text API Versions
   - 2023-11-15-preview
-  -
 
 ## 1.0.0-beta.1 (2024-08-06)
 
