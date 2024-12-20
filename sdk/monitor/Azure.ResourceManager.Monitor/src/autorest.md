@@ -7,8 +7,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Monitor
 namespace: Azure.ResourceManager.Monitor
-require: https://github.com/Azure/azure-rest-api-specs/blob/cf406046c304ec528a84ae1a151f3d1a647058a2/specification/monitor/resource-manager/readme.md
-tag: package-track2-stable
+require: https://github.com/Azure/azure-rest-api-specs/blob/12492edbcf4c2d43d153da544ffbf1ffe7cbd20b/specification/monitor/resource-manager/readme.md
+tag: package-preview-2024-10
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -373,6 +373,9 @@ directive:
     where: $.definitions.AutoscaleSetting.properties.predictiveAutoscalePolicy
     transform: $["x-nullable"] = true;
   # duplicate schema resolution
+  - from: actionGroups_API.json
+    where: $.definitions.ErrorResponse
+    transform: $["x-ms-client-name"] = "ActionGroupsErrorResponse"
   - from: activityLogAlerts_API.json
     where: $.definitions.AzureResource
     transform: $["x-ms-client-name"] = "ActivityLogAlertsResource"
