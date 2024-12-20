@@ -488,6 +488,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.AuthorizationActionMapping>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.AuthorizationActionMapping>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class AsyncTimeoutRules : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.AsyncTimeoutRules>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.AsyncTimeoutRules>
+    {
+        public AsyncTimeoutRules() { }
+        public string ActionName { get { throw null; } set { } }
+        public string Timeout { get { throw null; } set { } }
+        Azure.ResourceManager.ProviderHub.Models.AsyncTimeoutRules System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.AsyncTimeoutRules>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.AsyncTimeoutRules>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ProviderHub.Models.AsyncTimeoutRules System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.AsyncTimeoutRules>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.AsyncTimeoutRules>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.AsyncTimeoutRules>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class CanaryTrafficRegionRolloutConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProviderHub.Models.CanaryTrafficRegionRolloutConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProviderHub.Models.CanaryTrafficRegionRolloutConfiguration>
     {
         public CanaryTrafficRegionRolloutConfiguration() { }
@@ -1432,6 +1443,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     {
         public ResourceTypeRegistrationProperties() { }
         public System.Collections.Generic.IList<string> AllowedUnauthorizedActions { get { throw null; } }
+        public Azure.ResourceManager.ProviderHub.Models.AsyncTimeoutRules? AsyncTimeoutRules { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.AuthorizationActionMapping> AuthorizationActionMappings { get { throw null; } }
         public Azure.ResourceManager.ProviderHub.Models.CheckNameAvailabilitySpecifications CheckNameAvailabilitySpecifications { get { throw null; } set { } }
         public string DefaultApiVersion { get { throw null; } set { } }
