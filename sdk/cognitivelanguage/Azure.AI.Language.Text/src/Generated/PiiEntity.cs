@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Entity object with tags. </summary>
-    public partial class PiiEntityWithTags
+    public partial class PiiEntity
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,14 +45,14 @@ namespace Azure.AI.Language.Text
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PiiEntityWithTags"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PiiEntity"/>. </summary>
         /// <param name="text"> Entity text as appears in the request. </param>
         /// <param name="category"> Entity type. </param>
         /// <param name="offset"> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </param>
         /// <param name="length"> Length for the entity text. Use of different 'stringIndexType' values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="category"/> is null. </exception>
-        internal PiiEntityWithTags(string text, string category, int offset, int length, double confidenceScore)
+        internal PiiEntity(string text, string category, int offset, int length, double confidenceScore)
         {
             Argument.AssertNotNull(text, nameof(text));
             Argument.AssertNotNull(category, nameof(category));
@@ -65,7 +65,7 @@ namespace Azure.AI.Language.Text
             Tags = new ChangeTrackingList<EntityTag>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PiiEntityWithTags"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PiiEntity"/>. </summary>
         /// <param name="text"> Entity text as appears in the request. </param>
         /// <param name="category"> Entity type. </param>
         /// <param name="subcategory"> (Optional) Entity sub type. </param>
@@ -78,7 +78,7 @@ namespace Azure.AI.Language.Text
         /// <param name="maskOffset"> Start position of masked text in the redacted text when using the redaction policy kind “MaskWithEntityType”. </param>
         /// <param name="maskLength"> The length of the masked text. Will be present when using the redaction policy kind “MaskWithEntityType”. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PiiEntityWithTags(string text, string category, string subcategory, int offset, int length, double confidenceScore, string type, IReadOnlyList<EntityTag> tags, string mask, int? maskOffset, int? maskLength, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PiiEntity(string text, string category, string subcategory, int offset, int length, double confidenceScore, string type, IReadOnlyList<EntityTag> tags, string mask, int? maskOffset, int? maskLength, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Text = text;
             Category = category;
@@ -94,8 +94,8 @@ namespace Azure.AI.Language.Text
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PiiEntityWithTags"/> for deserialization. </summary>
-        internal PiiEntityWithTags()
+        /// <summary> Initializes a new instance of <see cref="PiiEntity"/> for deserialization. </summary>
+        internal PiiEntity()
         {
         }
 

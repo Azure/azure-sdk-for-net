@@ -61,7 +61,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             Response<AnalyzeTextResult> response = client.AnalyzeText(body);
             AnalyzeTextEntitiesResult entitiesTaskResult = (AnalyzeTextEntitiesResult)response.Value;
 
-            foreach (EntitiesDocumentResultWithMetadataDetectedLanguage nerResult in entitiesTaskResult.Results.Documents)
+            foreach (EntityActionResult nerResult in entitiesTaskResult.Results.Documents)
             {
                 Console.WriteLine($"Result for document with Id = \"{nerResult.Id}\":");
 

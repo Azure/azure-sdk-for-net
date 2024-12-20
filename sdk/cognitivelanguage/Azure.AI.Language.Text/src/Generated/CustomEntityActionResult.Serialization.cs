@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text
 {
-    public partial class EntitiesDocumentResultWithMetadataDetectedLanguage : IUtf8JsonSerializable, IJsonModel<EntitiesDocumentResultWithMetadataDetectedLanguage>
+    public partial class CustomEntityActionResult : IUtf8JsonSerializable, IJsonModel<CustomEntityActionResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EntitiesDocumentResultWithMetadataDetectedLanguage>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomEntityActionResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<EntitiesDocumentResultWithMetadataDetectedLanguage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CustomEntityActionResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EntitiesDocumentResultWithMetadataDetectedLanguage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CustomEntityActionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EntitiesDocumentResultWithMetadataDetectedLanguage)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomEntityActionResult)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("id"u8);
@@ -77,19 +77,19 @@ namespace Azure.AI.Language.Text
             }
         }
 
-        EntitiesDocumentResultWithMetadataDetectedLanguage IJsonModel<EntitiesDocumentResultWithMetadataDetectedLanguage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CustomEntityActionResult IJsonModel<CustomEntityActionResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EntitiesDocumentResultWithMetadataDetectedLanguage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CustomEntityActionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EntitiesDocumentResultWithMetadataDetectedLanguage)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomEntityActionResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEntitiesDocumentResultWithMetadataDetectedLanguage(document.RootElement, options);
+            return DeserializeCustomEntityActionResult(document.RootElement, options);
         }
 
-        internal static EntitiesDocumentResultWithMetadataDetectedLanguage DeserializeEntitiesDocumentResultWithMetadataDetectedLanguage(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CustomEntityActionResult DeserializeCustomEntityActionResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -100,7 +100,7 @@ namespace Azure.AI.Language.Text
             string id = default;
             IReadOnlyList<DocumentWarning> warnings = default;
             DocumentStatistics statistics = default;
-            IReadOnlyList<NamedEntityWithMetadata> entities = default;
+            IReadOnlyList<NamedEntity> entities = default;
             DetectedLanguage detectedLanguage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -132,10 +132,10 @@ namespace Azure.AI.Language.Text
                 }
                 if (property.NameEquals("entities"u8))
                 {
-                    List<NamedEntityWithMetadata> array = new List<NamedEntityWithMetadata>();
+                    List<NamedEntity> array = new List<NamedEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NamedEntityWithMetadata.DeserializeNamedEntityWithMetadata(item, options));
+                        array.Add(NamedEntity.DeserializeNamedEntity(item, options));
                     }
                     entities = array;
                     continue;
@@ -155,7 +155,7 @@ namespace Azure.AI.Language.Text
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new EntitiesDocumentResultWithMetadataDetectedLanguage(
+            return new CustomEntityActionResult(
                 id,
                 warnings,
                 statistics,
@@ -164,43 +164,43 @@ namespace Azure.AI.Language.Text
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<EntitiesDocumentResultWithMetadataDetectedLanguage>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CustomEntityActionResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EntitiesDocumentResultWithMetadataDetectedLanguage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CustomEntityActionResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EntitiesDocumentResultWithMetadataDetectedLanguage)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomEntityActionResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        EntitiesDocumentResultWithMetadataDetectedLanguage IPersistableModel<EntitiesDocumentResultWithMetadataDetectedLanguage>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CustomEntityActionResult IPersistableModel<CustomEntityActionResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EntitiesDocumentResultWithMetadataDetectedLanguage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CustomEntityActionResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeEntitiesDocumentResultWithMetadataDetectedLanguage(document.RootElement, options);
+                        return DeserializeCustomEntityActionResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EntitiesDocumentResultWithMetadataDetectedLanguage)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomEntityActionResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<EntitiesDocumentResultWithMetadataDetectedLanguage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CustomEntityActionResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static EntitiesDocumentResultWithMetadataDetectedLanguage FromResponse(Response response)
+        internal static CustomEntityActionResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeEntitiesDocumentResultWithMetadataDetectedLanguage(document.RootElement);
+            return DeserializeCustomEntityActionResult(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

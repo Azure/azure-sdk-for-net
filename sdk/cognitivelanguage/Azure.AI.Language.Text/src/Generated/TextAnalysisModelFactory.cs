@@ -223,27 +223,27 @@ namespace Azure.AI.Language.Text
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> Response by document. </param>
         /// <returns> A new <see cref="Text.EntitiesWithMetadataAutoResult"/> instance for mocking. </returns>
-        public static EntitiesWithMetadataAutoResult EntitiesWithMetadataAutoResult(IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string modelVersion = null, IEnumerable<EntitiesDocumentResultWithMetadataDetectedLanguage> documents = null)
+        public static EntitiesWithMetadataAutoResult EntitiesWithMetadataAutoResult(IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string modelVersion = null, IEnumerable<EntityActionResult> documents = null)
         {
             errors ??= new List<DocumentError>();
-            documents ??= new List<EntitiesDocumentResultWithMetadataDetectedLanguage>();
+            documents ??= new List<EntityActionResult>();
 
             return new EntitiesWithMetadataAutoResult(errors?.ToList(), statistics, modelVersion, documents?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Text.EntitiesDocumentResultWithMetadataDetectedLanguage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.EntityActionResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="entities"> Recognized entities in the document. </param>
         /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
-        /// <returns> A new <see cref="Text.EntitiesDocumentResultWithMetadataDetectedLanguage"/> instance for mocking. </returns>
-        public static EntitiesDocumentResultWithMetadataDetectedLanguage EntitiesDocumentResultWithMetadataDetectedLanguage(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, IEnumerable<NamedEntityWithMetadata> entities = null, DetectedLanguage detectedLanguage = null)
+        /// <returns> A new <see cref="Text.EntityActionResult"/> instance for mocking. </returns>
+        public static EntityActionResult EntityActionResult(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, IEnumerable<NamedEntityWithMetadata> entities = null, DetectedLanguage detectedLanguage = null)
         {
             warnings ??= new List<DocumentWarning>();
             entities ??= new List<NamedEntityWithMetadata>();
 
-            return new EntitiesDocumentResultWithMetadataDetectedLanguage(
+            return new EntityActionResult(
                 id,
                 warnings?.ToList(),
                 statistics,
@@ -597,10 +597,10 @@ namespace Azure.AI.Language.Text
         /// <param name="entities"> Recognized entities in the document. </param>
         /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
         /// <returns> A new <see cref="Text.PiiActionResult"/> instance for mocking. </returns>
-        public static PiiActionResult PiiActionResult(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, string redactedText = null, IEnumerable<PiiEntityWithTags> entities = null, DetectedLanguage detectedLanguage = null)
+        public static PiiActionResult PiiActionResult(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, string redactedText = null, IEnumerable<PiiEntity> entities = null, DetectedLanguage detectedLanguage = null)
         {
             warnings ??= new List<DocumentWarning>();
-            entities ??= new List<PiiEntityWithTags>();
+            entities ??= new List<PiiEntity>();
 
             return new PiiActionResult(
                 id,
@@ -612,7 +612,7 @@ namespace Azure.AI.Language.Text
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Text.PiiEntityWithTags"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.PiiEntity"/>. </summary>
         /// <param name="text"> Entity text as appears in the request. </param>
         /// <param name="category"> Entity type. </param>
         /// <param name="subcategory"> (Optional) Entity sub type. </param>
@@ -624,12 +624,12 @@ namespace Azure.AI.Language.Text
         /// <param name="mask"> Optional field which will be returned only when using the redaction policy kind “MaskWithEntityType”.  This field will contain the exact mask text used to mask the PII entity in the original text. </param>
         /// <param name="maskOffset"> Start position of masked text in the redacted text when using the redaction policy kind “MaskWithEntityType”. </param>
         /// <param name="maskLength"> The length of the masked text. Will be present when using the redaction policy kind “MaskWithEntityType”. </param>
-        /// <returns> A new <see cref="Text.PiiEntityWithTags"/> instance for mocking. </returns>
-        public static PiiEntityWithTags PiiEntityWithTags(string text = null, string category = null, string subcategory = null, int offset = default, int length = default, double confidenceScore = default, string type = null, IEnumerable<EntityTag> tags = null, string mask = null, int? maskOffset = null, int? maskLength = null)
+        /// <returns> A new <see cref="Text.PiiEntity"/> instance for mocking. </returns>
+        public static PiiEntity PiiEntity(string text = null, string category = null, string subcategory = null, int offset = default, int length = default, double confidenceScore = default, string type = null, IEnumerable<EntityTag> tags = null, string mask = null, int? maskOffset = null, int? maskLength = null)
         {
             tags ??= new List<EntityTag>();
 
-            return new PiiEntityWithTags(
+            return new PiiEntity(
                 text,
                 category,
                 subcategory,
@@ -875,10 +875,10 @@ namespace Azure.AI.Language.Text
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <param name="documents"> Enumeration of the document results. </param>
         /// <returns> A new <see cref="Text.CustomEntitiesResult"/> instance for mocking. </returns>
-        public static CustomEntitiesResult CustomEntitiesResult(IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string projectName = null, string deploymentName = null, IEnumerable<EntityActionResult> documents = null)
+        public static CustomEntitiesResult CustomEntitiesResult(IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string projectName = null, string deploymentName = null, IEnumerable<CustomEntityActionResult> documents = null)
         {
             errors ??= new List<DocumentError>();
-            documents ??= new List<EntityActionResult>();
+            documents ??= new List<CustomEntityActionResult>();
 
             return new CustomEntitiesResult(
                 errors?.ToList(),
@@ -889,19 +889,19 @@ namespace Azure.AI.Language.Text
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Text.EntityActionResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.CustomEntityActionResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="entities"> Recognized entities in the document. </param>
         /// <param name="detectedLanguage"> If 'language' is set to 'auto' for the document in the request this field will contain a 2 letter ISO 639-1 representation of the language detected for this document. </param>
-        /// <returns> A new <see cref="Text.EntityActionResult"/> instance for mocking. </returns>
-        public static EntityActionResult EntityActionResult(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, IEnumerable<NamedEntity> entities = null, DetectedLanguage detectedLanguage = null)
+        /// <returns> A new <see cref="Text.CustomEntityActionResult"/> instance for mocking. </returns>
+        public static CustomEntityActionResult CustomEntityActionResult(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, IEnumerable<NamedEntity> entities = null, DetectedLanguage detectedLanguage = null)
         {
             warnings ??= new List<DocumentWarning>();
             entities ??= new List<NamedEntity>();
 
-            return new EntityActionResult(
+            return new CustomEntityActionResult(
                 id,
                 warnings?.ToList(),
                 statistics,
@@ -1055,26 +1055,26 @@ namespace Azure.AI.Language.Text
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <param name="documents"> Response by document. </param>
         /// <returns> A new <see cref="Text.EntitiesResult"/> instance for mocking. </returns>
-        public static EntitiesResult EntitiesResult(IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string modelVersion = null, IEnumerable<EntitiesDocumentResultWithMetadata> documents = null)
+        public static EntitiesResult EntitiesResult(IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string modelVersion = null, IEnumerable<EntityActionResultWithMetadata> documents = null)
         {
             errors ??= new List<DocumentError>();
-            documents ??= new List<EntitiesDocumentResultWithMetadata>();
+            documents ??= new List<EntityActionResultWithMetadata>();
 
             return new EntitiesResult(errors?.ToList(), statistics, modelVersion, documents?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Text.EntitiesDocumentResultWithMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.EntityActionResultWithMetadata"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
         /// <param name="entities"> Recognized entities in the document. </param>
-        /// <returns> A new <see cref="Text.EntitiesDocumentResultWithMetadata"/> instance for mocking. </returns>
-        public static EntitiesDocumentResultWithMetadata EntitiesDocumentResultWithMetadata(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, IEnumerable<NamedEntityWithMetadata> entities = null)
+        /// <returns> A new <see cref="Text.EntityActionResultWithMetadata"/> instance for mocking. </returns>
+        public static EntityActionResultWithMetadata EntityActionResultWithMetadata(string id = null, IEnumerable<DocumentWarning> warnings = null, DocumentStatistics statistics = null, IEnumerable<NamedEntityWithMetadata> entities = null)
         {
             warnings ??= new List<DocumentWarning>();
             entities ??= new List<NamedEntityWithMetadata>();
 
-            return new EntitiesDocumentResultWithMetadata(id, warnings?.ToList(), statistics, entities?.ToList(), serializedAdditionalRawData: null);
+            return new EntityActionResultWithMetadata(id, warnings?.ToList(), statistics, entities?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.HealthcareOperationResult"/>. </summary>

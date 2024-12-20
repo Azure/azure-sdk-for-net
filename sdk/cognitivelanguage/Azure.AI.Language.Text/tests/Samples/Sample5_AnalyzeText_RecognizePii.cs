@@ -59,7 +59,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                 Console.WriteLine($"  Redacted Text: \"{piiResult.RedactedText}\":");
                 Console.WriteLine($"  Recognized {piiResult.Entities.Count} entities:");
 
-                foreach (PiiEntityWithTags entity in piiResult.Entities)
+                foreach (PiiEntity entity in piiResult.Entities)
                 {
                     Console.WriteLine($"    Text: {entity.Text}");
                     Console.WriteLine($"    Offset: {entity.Offset}");
@@ -133,7 +133,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                 Console.WriteLine($"  Redacted Text: \"{piiResult.RedactedText}\":");
                 Console.WriteLine($"  Recognized {piiResult.Entities.Count} entities:");
 
-                foreach (PiiEntityWithTags entity in piiResult.Entities)
+                foreach (PiiEntity entity in piiResult.Entities)
                 {
                     Console.WriteLine($"    Text: {entity.Text}");
                     Console.WriteLine($"    Offset: {entity.Offset}");

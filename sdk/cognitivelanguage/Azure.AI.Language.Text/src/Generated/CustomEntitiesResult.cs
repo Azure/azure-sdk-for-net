@@ -52,7 +52,7 @@ namespace Azure.AI.Language.Text
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <param name="documents"> Enumeration of the document results. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="errors"/>, <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="documents"/> is null. </exception>
-        internal CustomEntitiesResult(IEnumerable<DocumentError> errors, string projectName, string deploymentName, IEnumerable<EntityActionResult> documents)
+        internal CustomEntitiesResult(IEnumerable<DocumentError> errors, string projectName, string deploymentName, IEnumerable<CustomEntityActionResult> documents)
         {
             Argument.AssertNotNull(errors, nameof(errors));
             Argument.AssertNotNull(projectName, nameof(projectName));
@@ -72,7 +72,7 @@ namespace Azure.AI.Language.Text
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <param name="documents"> Enumeration of the document results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomEntitiesResult(IReadOnlyList<DocumentError> errors, RequestStatistics statistics, string projectName, string deploymentName, IReadOnlyList<EntityActionResult> documents, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CustomEntitiesResult(IReadOnlyList<DocumentError> errors, RequestStatistics statistics, string projectName, string deploymentName, IReadOnlyList<CustomEntityActionResult> documents, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Errors = errors;
             Statistics = statistics;
@@ -96,6 +96,6 @@ namespace Azure.AI.Language.Text
         /// <summary> This field indicates the deployment name for the model. </summary>
         public string DeploymentName { get; }
         /// <summary> Enumeration of the document results. </summary>
-        public IReadOnlyList<EntityActionResult> Documents { get; }
+        public IReadOnlyList<CustomEntityActionResult> Documents { get; }
     }
 }

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text
 {
-    public partial class PiiEntityWithTags : IUtf8JsonSerializable, IJsonModel<PiiEntityWithTags>
+    public partial class PiiEntity : IUtf8JsonSerializable, IJsonModel<PiiEntity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PiiEntityWithTags>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PiiEntity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<PiiEntityWithTags>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PiiEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PiiEntityWithTags>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PiiEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PiiEntityWithTags)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PiiEntity)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("text"u8);
@@ -96,19 +96,19 @@ namespace Azure.AI.Language.Text
             }
         }
 
-        PiiEntityWithTags IJsonModel<PiiEntityWithTags>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PiiEntity IJsonModel<PiiEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PiiEntityWithTags>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PiiEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PiiEntityWithTags)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PiiEntity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePiiEntityWithTags(document.RootElement, options);
+            return DeserializePiiEntity(document.RootElement, options);
         }
 
-        internal static PiiEntityWithTags DeserializePiiEntityWithTags(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PiiEntity DeserializePiiEntity(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -209,7 +209,7 @@ namespace Azure.AI.Language.Text
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PiiEntityWithTags(
+            return new PiiEntity(
                 text,
                 category,
                 subcategory,
@@ -224,43 +224,43 @@ namespace Azure.AI.Language.Text
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<PiiEntityWithTags>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PiiEntity>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PiiEntityWithTags>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PiiEntity>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PiiEntityWithTags)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PiiEntity)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PiiEntityWithTags IPersistableModel<PiiEntityWithTags>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PiiEntity IPersistableModel<PiiEntity>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PiiEntityWithTags>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PiiEntity>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializePiiEntityWithTags(document.RootElement, options);
+                        return DeserializePiiEntity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PiiEntityWithTags)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PiiEntity)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PiiEntityWithTags>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PiiEntity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static PiiEntityWithTags FromResponse(Response response)
+        internal static PiiEntity FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializePiiEntityWithTags(document.RootElement);
+            return DeserializePiiEntity(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text
 {
-    public partial class EntitiesDocumentResultWithMetadata : IUtf8JsonSerializable, IJsonModel<EntitiesDocumentResultWithMetadata>
+    public partial class EntityActionResultWithMetadata : IUtf8JsonSerializable, IJsonModel<EntityActionResultWithMetadata>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EntitiesDocumentResultWithMetadata>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EntityActionResultWithMetadata>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<EntitiesDocumentResultWithMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EntityActionResultWithMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EntitiesDocumentResultWithMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EntityActionResultWithMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EntitiesDocumentResultWithMetadata)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EntityActionResultWithMetadata)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("id"u8);
@@ -72,19 +72,19 @@ namespace Azure.AI.Language.Text
             }
         }
 
-        EntitiesDocumentResultWithMetadata IJsonModel<EntitiesDocumentResultWithMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        EntityActionResultWithMetadata IJsonModel<EntityActionResultWithMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EntitiesDocumentResultWithMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EntityActionResultWithMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EntitiesDocumentResultWithMetadata)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EntityActionResultWithMetadata)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEntitiesDocumentResultWithMetadata(document.RootElement, options);
+            return DeserializeEntityActionResultWithMetadata(document.RootElement, options);
         }
 
-        internal static EntitiesDocumentResultWithMetadata DeserializeEntitiesDocumentResultWithMetadata(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static EntityActionResultWithMetadata DeserializeEntityActionResultWithMetadata(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -140,46 +140,46 @@ namespace Azure.AI.Language.Text
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new EntitiesDocumentResultWithMetadata(id, warnings, statistics, entities, serializedAdditionalRawData);
+            return new EntityActionResultWithMetadata(id, warnings, statistics, entities, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<EntitiesDocumentResultWithMetadata>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<EntityActionResultWithMetadata>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EntitiesDocumentResultWithMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EntityActionResultWithMetadata>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EntitiesDocumentResultWithMetadata)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EntityActionResultWithMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
-        EntitiesDocumentResultWithMetadata IPersistableModel<EntitiesDocumentResultWithMetadata>.Create(BinaryData data, ModelReaderWriterOptions options)
+        EntityActionResultWithMetadata IPersistableModel<EntityActionResultWithMetadata>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EntitiesDocumentResultWithMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EntityActionResultWithMetadata>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeEntitiesDocumentResultWithMetadata(document.RootElement, options);
+                        return DeserializeEntityActionResultWithMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EntitiesDocumentResultWithMetadata)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EntityActionResultWithMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<EntitiesDocumentResultWithMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EntityActionResultWithMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static EntitiesDocumentResultWithMetadata FromResponse(Response response)
+        internal static EntityActionResultWithMetadata FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeEntitiesDocumentResultWithMetadata(document.RootElement);
+            return DeserializeEntityActionResultWithMetadata(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
