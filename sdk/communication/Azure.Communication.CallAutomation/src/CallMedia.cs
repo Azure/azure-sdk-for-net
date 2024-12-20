@@ -244,7 +244,7 @@ namespace Azure.Communication.CallAutomation
 
             if (options != null)
             {
-                request.PlayOptions = new PlayOptionsInternal(options.Loop, options.InterruptCallMediaOperation, options.InterruptHoldAudio);
+                request.PlayOptions = new PlayOptionsInternal(options.Loop, options.InterruptCallMediaOperation);
                 request.OperationContext = options.OperationContext;
                 request.OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri;
             }
