@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.Kusto.Models
         private const string Python3_10_8Value = "Python3_10_8";
         private const string Python3108DLValue = "Python3_10_8_DL";
         private const string PythonCustomImageValue = "PythonCustomImage";
+        private const string Python3117Value = "Python3_11_7";
+        private const string Python3117DLValue = "Python3_11_7_DL";
 
         /// <summary> R. </summary>
         public static KustoLanguageExtensionImageName R { get; } = new KustoLanguageExtensionImageName(RValue);
@@ -34,6 +36,10 @@ namespace Azure.ResourceManager.Kusto.Models
         public static KustoLanguageExtensionImageName Python3108DL { get; } = new KustoLanguageExtensionImageName(Python3108DLValue);
         /// <summary> PythonCustomImage. </summary>
         public static KustoLanguageExtensionImageName PythonCustomImage { get; } = new KustoLanguageExtensionImageName(PythonCustomImageValue);
+        /// <summary> Python3_11_7. </summary>
+        public static KustoLanguageExtensionImageName Python3117 { get; } = new KustoLanguageExtensionImageName(Python3117Value);
+        /// <summary> Python3_11_7_DL. </summary>
+        public static KustoLanguageExtensionImageName Python3117DL { get; } = new KustoLanguageExtensionImageName(Python3117DLValue);
         /// <summary> Determines if two <see cref="KustoLanguageExtensionImageName"/> values are the same. </summary>
         public static bool operator ==(KustoLanguageExtensionImageName left, KustoLanguageExtensionImageName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoLanguageExtensionImageName"/> values are not the same. </summary>
