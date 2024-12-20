@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public ResourceIdentifier PolicyId
         {
             get => string.IsNullOrEmpty(PolicyStringId) ? null : new ResourceIdentifier(PolicyId);
-            set => PolicyId = new ResourceIdentifier(PolicyStringId);
+            set => PolicyStringId = value.ToString();
         }
     }
 }
