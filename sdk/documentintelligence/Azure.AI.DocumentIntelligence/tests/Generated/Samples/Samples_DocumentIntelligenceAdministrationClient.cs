@@ -73,11 +73,11 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-            AuthorizeCopyContent authorizeCopyRequest = new AuthorizeCopyContent("targetModel")
+            AuthorizeModelCopyOptions authorizeCopyRequest = new AuthorizeModelCopyOptions("targetModel")
             {
                 Description = "Target model description",
             };
-            Response<CopyAuthorization> response = client.AuthorizeModelCopy(authorizeCopyRequest);
+            Response<ModelCopyAuthorization> response = client.AuthorizeModelCopy(authorizeCopyRequest);
         }
 
         [Test]
@@ -88,11 +88,11 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-            AuthorizeCopyContent authorizeCopyRequest = new AuthorizeCopyContent("targetModel")
+            AuthorizeModelCopyOptions authorizeCopyRequest = new AuthorizeModelCopyOptions("targetModel")
             {
                 Description = "Target model description",
             };
-            Response<CopyAuthorization> response = await client.AuthorizeModelCopyAsync(authorizeCopyRequest);
+            Response<ModelCopyAuthorization> response = await client.AuthorizeModelCopyAsync(authorizeCopyRequest);
         }
 
         [Test]
@@ -227,13 +227,13 @@ namespace Azure.AI.DocumentIntelligence.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentIntelligenceAdministrationClient_GetResourceInfo_GetResourceDetails()
+        public void Example_DocumentIntelligenceAdministrationClient_GetResourceDetails_GetResourceDetails()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-            Response response = client.GetResourceInfo(null);
+            Response response = client.GetResourceDetails(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("customDocumentModels").GetProperty("count").ToString());
@@ -242,13 +242,13 @@ namespace Azure.AI.DocumentIntelligence.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentIntelligenceAdministrationClient_GetResourceInfo_GetResourceDetails_Async()
+        public async Task Example_DocumentIntelligenceAdministrationClient_GetResourceDetails_GetResourceDetails_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-            Response response = await client.GetResourceInfoAsync(null);
+            Response response = await client.GetResourceDetailsAsync(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("customDocumentModels").GetProperty("count").ToString());
@@ -257,29 +257,29 @@ namespace Azure.AI.DocumentIntelligence.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentIntelligenceAdministrationClient_GetResourceInfo_GetResourceDetails_Convenience()
+        public void Example_DocumentIntelligenceAdministrationClient_GetResourceDetails_GetResourceDetails_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-            Response<ResourceDetails> response = client.GetResourceInfo();
+            Response<DocumentIntelligenceResourceDetails> response = client.GetResourceDetails();
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentIntelligenceAdministrationClient_GetResourceInfo_GetResourceDetails_Convenience_Async()
+        public async Task Example_DocumentIntelligenceAdministrationClient_GetResourceDetails_GetResourceDetails_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-            Response<ResourceDetails> response = await client.GetResourceInfoAsync();
+            Response<DocumentIntelligenceResourceDetails> response = await client.GetResourceDetailsAsync();
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_OperationDetails_GetOperation_GetOperation()
+        public void Example_DocumentIntelligenceOperationDetails_GetOperation_GetOperation()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -298,7 +298,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_OperationDetails_GetOperation_GetOperation_Async()
+        public async Task Example_DocumentIntelligenceOperationDetails_GetOperation_GetOperation_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -317,24 +317,24 @@ namespace Azure.AI.DocumentIntelligence.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_OperationDetails_GetOperation_GetOperation_Convenience()
+        public void Example_DocumentIntelligenceOperationDetails_GetOperation_GetOperation_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-            Response<OperationDetails> response = client.GetOperation("b704bb00-d130-4f3f-a1d8-ca96de3eabb4");
+            Response<DocumentIntelligenceOperationDetails> response = client.GetOperation("b704bb00-d130-4f3f-a1d8-ca96de3eabb4");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_OperationDetails_GetOperation_GetOperation_Convenience_Async()
+        public async Task Example_DocumentIntelligenceOperationDetails_GetOperation_GetOperation_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-            Response<OperationDetails> response = await client.GetOperationAsync("b704bb00-d130-4f3f-a1d8-ca96de3eabb4");
+            Response<DocumentIntelligenceOperationDetails> response = await client.GetOperationAsync("b704bb00-d130-4f3f-a1d8-ca96de3eabb4");
         }
 
         [Test]
@@ -393,7 +393,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-            AuthorizeClassifierCopyContent authorizeCopyRequest = new AuthorizeClassifierCopyContent("targetClassifier")
+            AuthorizeClassifierCopyOptions authorizeCopyRequest = new AuthorizeClassifierCopyOptions("targetClassifier")
             {
                 Description = "Target classifier description",
             };
@@ -408,7 +408,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-            AuthorizeClassifierCopyContent authorizeCopyRequest = new AuthorizeClassifierCopyContent("targetClassifier")
+            AuthorizeClassifierCopyOptions authorizeCopyRequest = new AuthorizeClassifierCopyOptions("targetClassifier")
             {
                 Description = "Target classifier description",
             };
@@ -557,7 +557,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_OperationDetails_GetOperations_GetOperations()
+        public void Example_DocumentIntelligenceOperationDetails_GetOperations_GetOperations()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -577,7 +577,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_OperationDetails_GetOperations_GetOperations_Async()
+        public async Task Example_DocumentIntelligenceOperationDetails_GetOperations_GetOperations_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -597,26 +597,26 @@ namespace Azure.AI.DocumentIntelligence.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_OperationDetails_GetOperations_GetOperations_Convenience()
+        public void Example_DocumentIntelligenceOperationDetails_GetOperations_GetOperations_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-            foreach (OperationDetails item in client.GetOperations())
+            foreach (DocumentIntelligenceOperationDetails item in client.GetOperations())
             {
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_OperationDetails_GetOperations_GetOperations_Convenience_Async()
+        public async Task Example_DocumentIntelligenceOperationDetails_GetOperations_GetOperations_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-            await foreach (OperationDetails item in client.GetOperationsAsync())
+            await foreach (DocumentIntelligenceOperationDetails item in client.GetOperationsAsync())
             {
             }
         }
@@ -753,13 +753,9 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-            BuildDocumentModelContent buildRequest = new BuildDocumentModelContent("myCustomModel", DocumentBuildMode.Template)
+            BuildDocumentModelOptions buildRequest = new BuildDocumentModelOptions("myCustomModel", DocumentBuildMode.Template)
             {
                 Description = "Custom model description",
-                AzureBlobSource = new AzureBlobContentSource(new Uri("https://myStorageAccount.blob.core.windows.net/myContainer?mySasToken"))
-                {
-                    Prefix = "trainingDocs/",
-                },
                 Tags =
 {
 ["createdBy"] = "myUserId"
@@ -777,13 +773,9 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-            BuildDocumentModelContent buildRequest = new BuildDocumentModelContent("myCustomModel", DocumentBuildMode.Template)
+            BuildDocumentModelOptions buildRequest = new BuildDocumentModelOptions("myCustomModel", DocumentBuildMode.Template)
             {
                 Description = "Custom model description",
-                AzureBlobSource = new AzureBlobContentSource(new Uri("https://myStorageAccount.blob.core.windows.net/myContainer?mySasToken"))
-                {
-                    Prefix = "trainingDocs/",
-                },
                 Tags =
 {
 ["createdBy"] = "myUserId"
@@ -867,7 +859,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-            ComposeDocumentModelContent composeRequest = new ComposeDocumentModelContent("composedModel", "customClassifier", new Dictionary<string, DocumentTypeDetails>
+            ComposeModelOptions composeRequest = new ComposeModelOptions("composedModel", "customClassifier", new Dictionary<string, DocumentTypeDetails>
             {
                 ["formA"] = new DocumentTypeDetails
                 {
@@ -893,7 +885,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-            ComposeDocumentModelContent composeRequest = new ComposeDocumentModelContent("composedModel", "customClassifier", new Dictionary<string, DocumentTypeDetails>
+            ComposeModelOptions composeRequest = new ComposeModelOptions("composedModel", "customClassifier", new Dictionary<string, DocumentTypeDetails>
             {
                 ["formA"] = new DocumentTypeDetails
                 {
@@ -969,7 +961,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-            CopyAuthorization copyToRequest = new CopyAuthorization(
+            ModelCopyAuthorization copyToRequest = new ModelCopyAuthorization(
                 "/subscriptions/targetSub/resourceGroups/targetRG/providers/Microsoft.CognitiveServices/accounts/targetService",
                 "targetResourceRegion",
                 "targetModel",
@@ -988,7 +980,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-            CopyAuthorization copyToRequest = new CopyAuthorization(
+            ModelCopyAuthorization copyToRequest = new ModelCopyAuthorization(
                 "/subscriptions/targetSub/resourceGroups/targetRG/providers/Microsoft.CognitiveServices/accounts/targetService",
                 "targetResourceRegion",
                 "targetModel",
@@ -1091,19 +1083,10 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-            BuildDocumentClassifierContent buildRequest = new BuildDocumentClassifierContent("myClassifier", new Dictionary<string, ClassifierDocumentTypeDetails>
+            BuildClassifierOptions buildRequest = new BuildClassifierOptions("myClassifier", new Dictionary<string, ClassifierDocumentTypeDetails>
             {
-                ["formA"] = new ClassifierDocumentTypeDetails
-                {
-                    AzureBlobSource = new AzureBlobContentSource(new Uri("https://myStorageAccount.blob.core.windows.net/myContainer?mySasToken"))
-                    {
-                        Prefix = "formADocs/",
-                    },
-                },
-                ["formB"] = new ClassifierDocumentTypeDetails
-                {
-                    AzureBlobFileListSource = new AzureBlobFileListContentSource(new Uri("https://myStorageAccount.blob.core.windows.net/myContainer?mySasToken"), "formB.jsonl"),
-                }
+                ["formA"] = new ClassifierDocumentTypeDetails(),
+                ["formB"] = new ClassifierDocumentTypeDetails()
             })
             {
                 Description = "Classifier description",
@@ -1120,19 +1103,10 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-            BuildDocumentClassifierContent buildRequest = new BuildDocumentClassifierContent("myClassifier", new Dictionary<string, ClassifierDocumentTypeDetails>
+            BuildClassifierOptions buildRequest = new BuildClassifierOptions("myClassifier", new Dictionary<string, ClassifierDocumentTypeDetails>
             {
-                ["formA"] = new ClassifierDocumentTypeDetails
-                {
-                    AzureBlobSource = new AzureBlobContentSource(new Uri("https://myStorageAccount.blob.core.windows.net/myContainer?mySasToken"))
-                    {
-                        Prefix = "formADocs/",
-                    },
-                },
-                ["formB"] = new ClassifierDocumentTypeDetails
-                {
-                    AzureBlobFileListSource = new AzureBlobFileListContentSource(new Uri("https://myStorageAccount.blob.core.windows.net/myContainer?mySasToken"), "formB.jsonl"),
-                }
+                ["formA"] = new ClassifierDocumentTypeDetails(),
+                ["formB"] = new ClassifierDocumentTypeDetails()
             })
             {
                 Description = "Classifier description",

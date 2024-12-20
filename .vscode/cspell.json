@@ -264,7 +264,7 @@
         "Hvci"
       ]
     },
-	  {
+    {
       "filename": "**/sdk/computefleet/**/*.cs",
       "words": [
         "Rdma"
@@ -834,6 +834,7 @@
         "Gcmaes",
         "Generatevirtualwanvpnserverconfigurationvpnprofile",
         "ikev",
+        "ipam",
         "Ipconfiguration",
         "Mbps",
         "Nics",
@@ -917,7 +918,7 @@
       ]
     },
     {
-      "filename": "**/sdk/maps/Azure.Maps.TimeZone/**/*.cs",
+      "filename": "**/sdk/maps/Azure.Maps.TimeZones/**/*.cs",
       "words": [
         "Posix",
         "posix",
@@ -1617,6 +1618,18 @@
       "words": [
         "AOAI",
         "Rerank"
+      ]
+    },
+    {
+      "filename": "**/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/api/*.cs",
+      "words": [
+        "prebuilts"
+      ]
+    },
+    {
+      "filename": "**/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/api/*.cs",
+      "words": [
+        "prebuilts"
       ]
     }
   ],

@@ -75,4 +75,3 @@ namespace Azure.AI.OpenAI
         internal string Message { get; set; }
     }
 }
-
