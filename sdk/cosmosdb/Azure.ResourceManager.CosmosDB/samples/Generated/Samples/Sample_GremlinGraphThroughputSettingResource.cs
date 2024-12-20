@@ -71,14 +71,12 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             GremlinGraphThroughputSettingResource gremlinGraphThroughputSetting = client.GetGremlinGraphThroughputSettingResource(gremlinGraphThroughputSettingResourceId);
 
             // invoke the operation
-            ThroughputSettingsUpdateData data = new ThroughputSettingsUpdateData(new AzureLocation("West US"), new ThroughputSettingsResourceInfo()
+            ThroughputSettingsUpdateData data = new ThroughputSettingsUpdateData(new AzureLocation("West US"), new ThroughputSettingsResourceInfo
             {
                 Throughput = 400,
             })
             {
-                Tags =
-{
-},
+                Tags = { },
             };
             ArmOperation<GremlinGraphThroughputSettingResource> lro = await gremlinGraphThroughputSetting.CreateOrUpdateAsync(WaitUntil.Completed, data);
             GremlinGraphThroughputSettingResource result = lro.Value;

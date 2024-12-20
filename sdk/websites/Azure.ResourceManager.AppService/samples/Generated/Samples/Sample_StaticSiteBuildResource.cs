@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.AppService.Samples
             StaticSiteBuildResource staticSiteBuild = client.GetStaticSiteBuildResource(staticSiteBuildResourceId);
 
             // invoke the operation
-            AppServiceConfigurationDictionary appSettings = new AppServiceConfigurationDictionary()
+            AppServiceConfigurationDictionary appSettings = new AppServiceConfigurationDictionary
             {
                 Properties =
 {
 ["setting1"] = "someval",
-["setting2"] = "someval2",
+["setting2"] = "someval2"
 },
             };
             AppServiceConfigurationDictionary result = await staticSiteBuild.CreateOrUpdateAppSettingsAsync(appSettings);
@@ -131,12 +131,12 @@ namespace Azure.ResourceManager.AppService.Samples
             StaticSiteBuildResource staticSiteBuild = client.GetStaticSiteBuildResource(staticSiteBuildResourceId);
 
             // invoke the operation
-            AppServiceConfigurationDictionary appSettings = new AppServiceConfigurationDictionary()
+            AppServiceConfigurationDictionary appSettings = new AppServiceConfigurationDictionary
             {
                 Properties =
 {
 ["setting1"] = "someval",
-["setting2"] = "someval2",
+["setting2"] = "someval2"
 },
             };
             AppServiceConfigurationDictionary result = await staticSiteBuild.CreateOrUpdateFunctionAppSettingsAsync(appSettings);
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.AppService.Samples
             StaticSiteBuildResource staticSiteBuild = client.GetStaticSiteBuildResource(staticSiteBuildResourceId);
 
             // invoke the operation
-            StaticSiteZipDeployment staticSiteZipDeploymentEnvelope = new StaticSiteZipDeployment()
+            StaticSiteZipDeployment staticSiteZipDeploymentEnvelope = new StaticSiteZipDeployment
             {
                 AppZipUri = new Uri("https://teststorageaccount.net/happy-sea-15afae3e-master-81828877/app-zipdeploy.zip"),
                 ApiZipUri = new Uri("https://teststorageaccount.net/happy-sea-15afae3e-master-81828877/api-zipdeploy.zip"),

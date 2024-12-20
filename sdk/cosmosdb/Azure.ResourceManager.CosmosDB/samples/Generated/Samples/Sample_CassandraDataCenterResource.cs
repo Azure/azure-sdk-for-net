@@ -96,9 +96,9 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             CassandraDataCenterResource cassandraDataCenter = client.GetCassandraDataCenterResource(cassandraDataCenterResourceId);
 
             // invoke the operation
-            CassandraDataCenterData data = new CassandraDataCenterData()
+            CassandraDataCenterData data = new CassandraDataCenterData
             {
-                Properties = new CassandraDataCenterProperties()
+                Properties = new CassandraDataCenterProperties
                 {
                     DataCenterLocation = new AzureLocation("West US 2"),
                     DelegatedSubnetId = new ResourceIdentifier("/subscriptions/536e130b-d7d6-4ac7-98a5-de20d69588d2/resourceGroups/customer-vnet-rg/providers/Microsoft.Network/virtualNetworks/customer-vnet/subnets/dc1-subnet"),

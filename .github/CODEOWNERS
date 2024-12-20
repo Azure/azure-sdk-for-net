@@ -90,7 +90,7 @@
 # ServiceOwners:                                                   @Azure/aks-pm
 
 # ServiceLabel: %Alerts Management
-# ServiceOwners:                                                   @liadtal @yairgil
+# ServiceOwners:                                                   @yairgil
 
 # ServiceLabel: %ARM
 # ServiceOwners:                                                   @armleads-azure
@@ -544,10 +544,10 @@
 # ServiceOwners:                                                   @aim-for-better @idear1203 @deshriva
 
 # PRLabel: %Health Deidentification
-/sdk/healthdataaiservices/                                         @GrahamMThomas
+/sdk/healthdataaiservices/                                         @alexathomases
 
 # ServiceLabel: %Health Deidentification
-# ServiceOwners:                                                   @GrahamMThomas
+# ServiceOwners:                                                   @alexathomases
 
 # ServiceLabel: %HPC Cache
 # ServiceOwners:                                                   @romahamu @omzevall
@@ -1039,12 +1039,6 @@
 # ServiceLabel: %Operator Nexus - Network Cloud %Mgmt
 # ServiceOwners:                                                   @Azure/azure-sdk-write-networkcloud
 
-# PRLabel: %Oracle
-/sdk/oracle/Azure.ResourceManager.*/                               @v-jamcheung @v-rvilathurs @v-eelhomsi
-
-# ServiceLabel: %Oracle %Mgmt
-# ServiceOwners:                                                   @v-jamcheung @v-rvilathurs @v-eelhomsi
-
 # PRLabel: %Quota
 /sdk/quota/Azure.ResourceManager.*/                                @tejasm-microsoft
 
@@ -1073,10 +1067,10 @@
 # ServiceOwners:                                                   @sahilarora92 @dhruvil009 @rahuls-microsoft
 
 # PRLabel: %HybridConnectivity
-/sdk/hybridconnectivity/Azure.ResourceManager.*/                   @alexmahonic
+/sdk/hybridconnectivity/Azure.ResourceManager.*/                   @alexmahonic @PriyankaHariharan @apmehrotra
 
 # ServiceLabel: %%HybridConnectivity %Mgmt
-# ServiceOwners:                                                   @alexmahonic
+# ServiceOwners:                                                   @alexmahonic @PriyankaHariharan @apmehrotra
 
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp

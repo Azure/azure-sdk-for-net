@@ -37,6 +37,18 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("defaultOversampling");
                 }
             }
+            if (Optional.IsDefined(RescoringOptions))
+            {
+                if (RescoringOptions != null)
+                {
+                    writer.WritePropertyName("rescoringOptions"u8);
+                    writer.WriteObjectValue(RescoringOptions);
+                }
+                else
+                {
+                    writer.WriteNull("rescoringOptions");
+                }
+            }
             if (Optional.IsDefined(TruncationDimension))
             {
                 if (TruncationDimension != null)

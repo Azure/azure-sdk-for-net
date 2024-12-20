@@ -586,7 +586,7 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][coc_faq] or contact [opencode@microsoft.com][coc_contact] with any additional questions or comments.
 
 <!-- LINKS -->
-[azure_cli]: https://docs.microsoft.com/cli/azure/
+[azure_cli]: https://learn.microsoft.com/cli/azure/
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
 [azure_identity_install]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#install-the-package
 [azure_portal]: https://portal.azure.com/
@@ -595,10 +595,10 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [coc_contact]: mailto:opencode@microsoft.com
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
-[cognitive_auth]: https://docs.microsoft.com/azure/cognitive-services/authentication/
+[cognitive_auth]: https://learn.microsoft.com/azure/cognitive-services/authentication/
 [contributing]: https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md
 [core_logging]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
-[custom_domain]: https://docs.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
+[custom_domain]: https://learn.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential
 [language_studio]: https://language.cognitive.azure.com/
 [nuget]: https://www.nuget.org/
@@ -607,9 +607,9 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [conversationanalysis_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/src/
 [conversationanalysis_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/
 [conversationanalysis_nuget_package]: https://www.nuget.org/packages/Azure.AI.Language.Conversations/
-[conversationanalysis_docs]: https://docs.microsoft.com/azure/cognitive-services/language-service/conversational-language-understanding/overview
-[conversationanalysis_docs_demos]: https://docs.microsoft.com/azure/cognitive-services/language-service/conversational-language-understanding/quickstart
-[conversationanalysis_docs_features]: https://docs.microsoft.com/azure/cognitive-services/language-service/conversational-language-understanding/overview
-[conversationanalysis_refdocs]: https://docs.microsoft.com/dotnet/api/azure.ai.language.conversations
+[conversationanalysis_docs]: https://learn.microsoft.com/azure/cognitive-services/language-service/conversational-language-understanding/overview
+[conversationanalysis_docs_demos]: https://learn.microsoft.com/azure/cognitive-services/language-service/conversational-language-understanding/quickstart
+[conversationanalysis_docs_features]: https://learn.microsoft.com/azure/cognitive-services/language-service/conversational-language-understanding/overview
+[conversationanalysis_refdocs]: https://learn.microsoft.com/dotnet/api/azure.ai.language.conversations
 [conversationanalysis_restdocs]: https://learn.microsoft.com/rest/api/language/
 [conversationalauthoring_samples]: https://github.com/Azure/azure-sdk-for-net/tree/Azure.AI.Language.Conversations_1.1.0/sdk/cognitivelanguage/Azure.AI.Language.Conversations#create-a-conversationauthoringclient

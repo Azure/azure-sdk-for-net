@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.AppPlatform.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppPlatform.Samples
@@ -97,14 +96,14 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             AppPlatformServiceData data = new AppPlatformServiceData(new AzureLocation("eastus"))
             {
                 Properties = new AppPlatformServiceProperties(),
-                Sku = new AppPlatformSku()
+                Sku = new AppPlatformSku
                 {
                     Name = "S0",
                     Tier = "Standard",
                 },
                 Tags =
 {
-["key1"] = "value1",
+["key1"] = "value1"
 },
             };
             ArmOperation<AppPlatformServiceResource> lro = await appPlatformService.UpdateAsync(WaitUntil.Completed, data);
@@ -276,63 +275,6 @@ namespace Azure.ResourceManager.AppPlatform.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CheckAppPlatformNameAvailability_ServicesCheckNameAvailability()
-        {
-            // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Services_CheckNameAvailability.json
-            // this example is just showing the usage of "Services_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation
-            AzureLocation location = new AzureLocation("eastus");
-            AppPlatformNameAvailabilityContent content = new AppPlatformNameAvailabilityContent(new ResourceType("Microsoft.AppPlatform/Spring"), "myservice");
-            AppPlatformNameAvailabilityResult result = await subscriptionResource.CheckAppPlatformNameAvailabilityAsync(location, content);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAppPlatformServices_ServicesListBySubscription()
-        {
-            // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Services_ListBySubscription.json
-            // this example is just showing the usage of "Services_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (AppPlatformServiceResource item in subscriptionResource.GetAppPlatformServicesAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                AppPlatformServiceData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task ValidateConfigServer_ConfigServersValidate()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/ConfigServers_Validate.json
@@ -352,15 +294,12 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             AppPlatformServiceResource appPlatformService = client.GetAppPlatformServiceResource(appPlatformServiceResourceId);
 
             // invoke the operation
-            ConfigServerSettings settings = new ConfigServerSettings()
+            ConfigServerSettings settings = new ConfigServerSettings
             {
                 GitProperty = new AppPlatformConfigServerGitProperty(new Uri("https://github.com/fake-user/fake-repository.git"))
                 {
                     Label = "master",
-                    SearchPaths =
-{
-"/"
-},
+                    SearchPaths = { "/" },
                 },
             };
             ArmOperation<ConfigServerSettingsValidateResult> lro = await appPlatformService.ValidateConfigServerAsync(WaitUntil.Completed, settings);

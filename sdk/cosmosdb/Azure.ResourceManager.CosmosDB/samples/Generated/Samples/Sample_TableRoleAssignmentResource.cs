@@ -48,44 +48,6 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_CosmosDBTableRoleAssignmentCreateUpdate()
-        {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/tablerbac/CosmosDBTableRoleAssignmentCreateUpdate.json
-            // this example is just showing the usage of "TableResources_CreateUpdateTableRoleAssignment" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this TableRoleAssignmentResource created on azure
-            // for more information of creating TableRoleAssignmentResource, please refer to the document of TableRoleAssignmentResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "myResourceGroupName";
-            string accountName = "myAccountName";
-            string roleAssignmentId = "myRoleAssignmentId";
-            ResourceIdentifier tableRoleAssignmentResourceId = TableRoleAssignmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, roleAssignmentId);
-            TableRoleAssignmentResource tableRoleAssignmentResource = client.GetTableRoleAssignmentResource(tableRoleAssignmentResourceId);
-
-            // invoke the operation
-            TableRoleAssignmentResourceData data = new TableRoleAssignmentResourceData()
-            {
-                RoleDefinitionId = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/myResourceGroupName/providers/Microsoft.DocumentDB/databaseAccounts/myAccountName/tableRoleDefinitions/myRoleDefinitionId",
-                Scope = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/myResourceGroupName/providers/Microsoft.DocumentDB/databaseAccounts/myAccountName/dbs/purchases/colls/redmond-purchases",
-                PrincipalId = Guid.Parse("myPrincipalId"),
-            };
-            ArmOperation<TableRoleAssignmentResource> lro = await tableRoleAssignmentResource.UpdateAsync(WaitUntil.Completed, data);
-            TableRoleAssignmentResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            TableRoleAssignmentResourceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Delete_CosmosDBTableRoleAssignmentDelete()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/tablerbac/CosmosDBTableRoleAssignmentDelete.json
@@ -109,6 +71,44 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             await tableRoleAssignmentResource.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_CosmosDBTableRoleAssignmentCreateUpdate()
+        {
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/tablerbac/CosmosDBTableRoleAssignmentCreateUpdate.json
+            // this example is just showing the usage of "TableResources_CreateUpdateTableRoleAssignment" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this TableRoleAssignmentResource created on azure
+            // for more information of creating TableRoleAssignmentResource, please refer to the document of TableRoleAssignmentResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "myResourceGroupName";
+            string accountName = "myAccountName";
+            string roleAssignmentId = "myRoleAssignmentId";
+            ResourceIdentifier tableRoleAssignmentResourceId = TableRoleAssignmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, roleAssignmentId);
+            TableRoleAssignmentResource tableRoleAssignmentResource = client.GetTableRoleAssignmentResource(tableRoleAssignmentResourceId);
+
+            // invoke the operation
+            TableRoleAssignmentResourceData data = new TableRoleAssignmentResourceData
+            {
+                RoleDefinitionId = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/myResourceGroupName/providers/Microsoft.DocumentDB/databaseAccounts/myAccountName/tableRoleDefinitions/myRoleDefinitionId",
+                Scope = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/myResourceGroupName/providers/Microsoft.DocumentDB/databaseAccounts/myAccountName/dbs/purchases/colls/redmond-purchases",
+                PrincipalId = Guid.Parse("myPrincipalId"),
+            };
+            ArmOperation<TableRoleAssignmentResource> lro = await tableRoleAssignmentResource.UpdateAsync(WaitUntil.Completed, data);
+            TableRoleAssignmentResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            TableRoleAssignmentResourceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

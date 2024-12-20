@@ -11,7 +11,6 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.CosmosDB.Samples
@@ -50,103 +49,6 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_CosmosDBDatabaseAccountPatch()
-        {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBDatabaseAccountPatch.json
-            // this example is just showing the usage of "DatabaseAccounts_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CosmosDBAccountResource created on azure
-            // for more information of creating CosmosDBAccountResource, please refer to the document of CosmosDBAccountResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string accountName = "ddb1";
-            ResourceIdentifier cosmosDBAccountResourceId = CosmosDBAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            CosmosDBAccountResource cosmosDBAccount = client.GetCosmosDBAccountResource(cosmosDBAccountResourceId);
-
-            // invoke the operation
-            CosmosDBAccountPatch patch = new CosmosDBAccountPatch()
-            {
-                Tags =
-{
-["dept"] = "finance",
-},
-                Location = new AzureLocation("westus"),
-                Identity = new ManagedServiceIdentity("SystemAssigned,UserAssigned")
-                {
-                    UserAssignedIdentities =
-{
-[new ResourceIdentifier("/subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/eu2cgroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1")] = new UserAssignedIdentity(),
-},
-                },
-                ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness)
-                {
-                    MaxStalenessPrefix = 200L,
-                    MaxIntervalInSeconds = 10,
-                },
-                IPRules =
-{
-new CosmosDBIPAddressOrRange()
-{
-IPAddressOrRange = "23.43.230.120",
-},new CosmosDBIPAddressOrRange()
-{
-IPAddressOrRange = "110.12.240.0/12",
-}
-},
-                IsVirtualNetworkFilterEnabled = true,
-                VirtualNetworkRules =
-{
-new CosmosDBVirtualNetworkRule()
-{
-Id = new ResourceIdentifier("/subscriptions/subId/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet1"),
-IgnoreMissingVnetServiceEndpoint = false,
-}
-},
-                DefaultIdentity = "FirstPartyIdentity",
-                IsFreeTierEnabled = false,
-                IsAnalyticalStorageEnabled = true,
-                AnalyticalStorageSchemaType = AnalyticalStorageSchemaType.WellDefined,
-                BackupPolicy = new PeriodicModeBackupPolicy()
-                {
-                    PeriodicModeProperties = new PeriodicModeProperties()
-                    {
-                        BackupIntervalInMinutes = 240,
-                        BackupRetentionIntervalInHours = 720,
-                        BackupStorageRedundancy = CosmosDBBackupStorageRedundancy.Geo,
-                    },
-                },
-                NetworkAclBypass = NetworkAclBypass.AzureServices,
-                NetworkAclBypassResourceIds =
-{
-new ResourceIdentifier("/subscriptions/subId/resourcegroups/rgName/providers/Microsoft.Synapse/workspaces/workspaceName")
-},
-                DiagnosticLogEnableFullTextQuery = EnableFullTextQuery.True,
-                CapacityTotalThroughputLimit = 2000,
-                CapacityMode = CapacityMode.Provisioned,
-                EnablePartitionMerge = true,
-                EnableBurstCapacity = true,
-                MinimalTlsVersion = CosmosDBMinimalTlsVersion.Tls,
-                EnablePriorityBasedExecution = true,
-                DefaultPriorityLevel = DefaultPriorityLevel.Low,
-                EnablePerRegionPerPartitionAutoscale = true,
-            };
-            ArmOperation<CosmosDBAccountResource> lro = await cosmosDBAccount.UpdateAsync(WaitUntil.Completed, patch);
-            CosmosDBAccountResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            CosmosDBAccountData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Delete_CosmosDBDatabaseAccountDelete()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBDatabaseAccountDelete.json
@@ -173,6 +75,94 @@ new ResourceIdentifier("/subscriptions/subId/resourcegroups/rgName/providers/Mic
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Update_CosmosDBDatabaseAccountPatch()
+        {
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBDatabaseAccountPatch.json
+            // this example is just showing the usage of "DatabaseAccounts_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CosmosDBAccountResource created on azure
+            // for more information of creating CosmosDBAccountResource, please refer to the document of CosmosDBAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string accountName = "ddb1";
+            ResourceIdentifier cosmosDBAccountResourceId = CosmosDBAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            CosmosDBAccountResource cosmosDBAccount = client.GetCosmosDBAccountResource(cosmosDBAccountResourceId);
+
+            // invoke the operation
+            CosmosDBAccountPatch patch = new CosmosDBAccountPatch
+            {
+                Tags =
+{
+["dept"] = "finance"
+},
+                Location = new AzureLocation("westus"),
+                Identity = new ManagedServiceIdentity("SystemAssigned,UserAssigned")
+                {
+                    UserAssignedIdentities =
+{
+[new ResourceIdentifier("/subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/eu2cgroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1")] = new UserAssignedIdentity()
+},
+                },
+                ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness)
+                {
+                    MaxStalenessPrefix = 200L,
+                    MaxIntervalInSeconds = 10,
+                },
+                IPRules = {new CosmosDBIPAddressOrRange
+{
+IPAddressOrRange = "23.43.230.120",
+}, new CosmosDBIPAddressOrRange
+{
+IPAddressOrRange = "110.12.240.0/12",
+}},
+                IsVirtualNetworkFilterEnabled = true,
+                VirtualNetworkRules = {new CosmosDBVirtualNetworkRule
+{
+Id = new ResourceIdentifier("/subscriptions/subId/resourceGroups/rg/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet1"),
+IgnoreMissingVnetServiceEndpoint = false,
+}},
+                DefaultIdentity = "FirstPartyIdentity",
+                IsFreeTierEnabled = false,
+                IsAnalyticalStorageEnabled = true,
+                AnalyticalStorageSchemaType = AnalyticalStorageSchemaType.WellDefined,
+                BackupPolicy = new PeriodicModeBackupPolicy
+                {
+                    PeriodicModeProperties = new PeriodicModeProperties
+                    {
+                        BackupIntervalInMinutes = 240,
+                        BackupRetentionIntervalInHours = 720,
+                        BackupStorageRedundancy = CosmosDBBackupStorageRedundancy.Geo,
+                    },
+                },
+                NetworkAclBypass = NetworkAclBypass.AzureServices,
+                NetworkAclBypassResourceIds = { new ResourceIdentifier("/subscriptions/subId/resourcegroups/rgName/providers/Microsoft.Synapse/workspaces/workspaceName") },
+                DiagnosticLogEnableFullTextQuery = EnableFullTextQuery.True,
+                CapacityTotalThroughputLimit = 2000,
+                CapacityMode = CapacityMode.Provisioned,
+                EnablePartitionMerge = true,
+                EnableBurstCapacity = true,
+                MinimalTlsVersion = CosmosDBMinimalTlsVersion.Tls,
+                EnablePriorityBasedExecution = true,
+                DefaultPriorityLevel = DefaultPriorityLevel.Low,
+                EnablePerRegionPerPartitionAutoscale = true,
+            };
+            ArmOperation<CosmosDBAccountResource> lro = await cosmosDBAccount.UpdateAsync(WaitUntil.Completed, patch);
+            CosmosDBAccountResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CosmosDBAccountData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task FailoverPriorityChange_CosmosDBDatabaseAccountFailoverPriorityChange()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBDatabaseAccountFailoverPriorityChange.json
@@ -194,48 +184,18 @@ new ResourceIdentifier("/subscriptions/subId/resourcegroups/rgName/providers/Mic
             // invoke the operation
             CosmosDBFailoverPolicies failoverParameters = new CosmosDBFailoverPolicies(new CosmosDBFailoverPolicy[]
             {
-new CosmosDBFailoverPolicy()
+new CosmosDBFailoverPolicy
 {
 LocationName = new AzureLocation("eastus"),
 FailoverPriority = 0,
-},new CosmosDBFailoverPolicy()
+},
+new CosmosDBFailoverPolicy
 {
 LocationName = new AzureLocation("westus"),
 FailoverPriority = 1,
 }
             });
             await cosmosDBAccount.FailoverPriorityChangeAsync(WaitUntil.Completed, failoverParameters);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetCosmosDBAccounts_CosmosDBDatabaseAccountList()
-        {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBDatabaseAccountList.json
-            // this example is just showing the usage of "DatabaseAccounts_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (CosmosDBAccountResource item in subscriptionResource.GetCosmosDBAccountsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                CosmosDBAccountData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
 
             Console.WriteLine("Succeeded");
         }
@@ -429,29 +389,6 @@ FailoverPriority = 1,
             await cosmosDBAccount.RegenerateKeyAsync(WaitUntil.Completed, content);
 
             Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CheckNameExistsDatabaseAccount_CosmosDBDatabaseAccountCheckNameExists()
-        {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBDatabaseAccountCheckNameExists.json
-            // this example is just showing the usage of "DatabaseAccounts_CheckNameExists" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // invoke the operation
-            string accountName = "ddb1";
-            bool result = await tenantResource.CheckNameExistsDatabaseAccountAsync(accountName);
-
-            Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]

@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network
             ResourceType? type = default;
             AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            AddressSpace localNetworkAddressSpace = default;
+            VirtualNetworkAddressSpace localNetworkAddressSpace = default;
             string gatewayIPAddress = default;
             string fqdn = default;
             BgpSettings bgpSettings = default;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            localNetworkAddressSpace = AddressSpace.DeserializeAddressSpace(property0.Value, options);
+                            localNetworkAddressSpace = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("gatewayIpAddress"u8))

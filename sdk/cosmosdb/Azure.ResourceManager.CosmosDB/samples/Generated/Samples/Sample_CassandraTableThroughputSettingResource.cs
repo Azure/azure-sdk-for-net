@@ -71,14 +71,12 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             CassandraTableThroughputSettingResource cassandraTableThroughputSetting = client.GetCassandraTableThroughputSettingResource(cassandraTableThroughputSettingResourceId);
 
             // invoke the operation
-            ThroughputSettingsUpdateData data = new ThroughputSettingsUpdateData(new AzureLocation("West US"), new ThroughputSettingsResourceInfo()
+            ThroughputSettingsUpdateData data = new ThroughputSettingsUpdateData(new AzureLocation("West US"), new ThroughputSettingsResourceInfo
             {
                 Throughput = 400,
             })
             {
-                Tags =
-{
-},
+                Tags = { },
             };
             ArmOperation<CassandraTableThroughputSettingResource> lro = await cassandraTableThroughputSetting.CreateOrUpdateAsync(WaitUntil.Completed, data);
             CassandraTableThroughputSettingResource result = lro.Value;

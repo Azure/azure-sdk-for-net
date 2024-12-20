@@ -49,6 +49,33 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_CosmosDBMongoDBDatabaseDelete()
+        {
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBMongoDBDatabaseDelete.json
+            // this example is just showing the usage of "MongoDBResources_DeleteMongoDBDatabase" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MongoDBDatabaseResource created on azure
+            // for more information of creating MongoDBDatabaseResource, please refer to the document of MongoDBDatabaseResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string accountName = "ddb1";
+            string databaseName = "databaseName";
+            ResourceIdentifier mongoDBDatabaseResourceId = MongoDBDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, databaseName);
+            MongoDBDatabaseResource mongoDBDatabase = client.GetMongoDBDatabaseResource(mongoDBDatabaseResourceId);
+
+            // invoke the operation
+            await mongoDBDatabase.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CosmosDBMongoDBDatabaseCreateUpdate()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBMongoDBDatabaseCreateUpdate.json
@@ -72,9 +99,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             MongoDBDatabaseCreateOrUpdateContent content = new MongoDBDatabaseCreateOrUpdateContent(new AzureLocation("West US"), new MongoDBDatabaseResourceInfo("databaseName"))
             {
                 Options = new CosmosDBCreateUpdateConfig(),
-                Tags =
-{
-},
+                Tags = { },
             };
             ArmOperation<MongoDBDatabaseResource> lro = await mongoDBDatabase.UpdateAsync(WaitUntil.Completed, content);
             MongoDBDatabaseResource result = lro.Value;
@@ -110,7 +135,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             // invoke the operation
             MongoDBDatabaseCreateOrUpdateContent content = new MongoDBDatabaseCreateOrUpdateContent(new AzureLocation("West US"), new MongoDBDatabaseResourceInfo("databaseName")
             {
-                RestoreParameters = new ResourceRestoreParameters()
+                RestoreParameters = new ResourceRestoreParameters
                 {
                     RestoreSource = "/subscriptions/subid/providers/Microsoft.DocumentDB/locations/WestUS/restorableDatabaseAccounts/restorableDatabaseAccountId",
                     RestoreTimestampInUtc = DateTimeOffset.Parse("2022-07-20T18:28:00Z"),
@@ -120,9 +145,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             })
             {
                 Options = new CosmosDBCreateUpdateConfig(),
-                Tags =
-{
-},
+                Tags = { },
             };
             ArmOperation<MongoDBDatabaseResource> lro = await mongoDBDatabase.UpdateAsync(WaitUntil.Completed, content);
             MongoDBDatabaseResource result = lro.Value;
@@ -132,33 +155,6 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             MongoDBDatabaseData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_CosmosDBMongoDBDatabaseDelete()
-        {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBMongoDBDatabaseDelete.json
-            // this example is just showing the usage of "MongoDBResources_DeleteMongoDBDatabase" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MongoDBDatabaseResource created on azure
-            // for more information of creating MongoDBDatabaseResource, please refer to the document of MongoDBDatabaseResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string accountName = "ddb1";
-            string databaseName = "databaseName";
-            ResourceIdentifier mongoDBDatabaseResourceId = MongoDBDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, databaseName);
-            MongoDBDatabaseResource mongoDBDatabase = client.GetMongoDBDatabaseResource(mongoDBDatabaseResourceId);
-
-            // invoke the operation
-            await mongoDBDatabase.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -183,7 +179,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             MongoDBDatabaseResource mongoDBDatabase = client.GetMongoDBDatabaseResource(mongoDBDatabaseResourceId);
 
             // invoke the operation
-            MergeParameters mergeParameters = new MergeParameters()
+            MergeParameters mergeParameters = new MergeParameters
             {
                 IsDryRun = false,
             };

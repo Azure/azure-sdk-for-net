@@ -51,7 +51,7 @@ namespace Azure.Storage.DataMovement
     }
     public partial class DataTransferProgress
     {
-        protected internal DataTransferProgress() { }
+        internal DataTransferProgress() { }
         public long? BytesTransferred { get { throw null; } }
         public long CompletedCount { get { throw null; } }
         public long FailedCount { get { throw null; } }
@@ -220,6 +220,7 @@ namespace Azure.Storage.DataMovement
     {
         public StorageResourceWriteToOffsetOptions() { }
         public string BlockId { get { throw null; } set { } }
+        public bool Initial { get { throw null; } set { } }
         public long? Position { get { throw null; } set { } }
         public Azure.Storage.DataMovement.StorageResourceItemProperties SourceProperties { get { throw null; } set { } }
     }

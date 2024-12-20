@@ -47,54 +47,6 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_CreateSecurityContactData()
-        {
-            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2020-01-01-preview/examples/SecurityContacts/CreateSecurityContact_example.json
-            // this example is just showing the usage of "SecurityContacts_Create" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SecurityContactResource created on azure
-            // for more information of creating SecurityContactResource, please refer to the document of SecurityContactResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
-            string securityContactName = "default";
-            ResourceIdentifier securityContactResourceId = SecurityContactResource.CreateResourceIdentifier(subscriptionId, securityContactName);
-            SecurityContactResource securityContact = client.GetSecurityContactResource(securityContactResourceId);
-
-            // invoke the operation
-            SecurityContactData data = new SecurityContactData()
-            {
-                Emails = "john@contoso.com;jane@contoso.com",
-                Phone = "(214)275-4038",
-                AlertNotifications = new SecurityContactPropertiesAlertNotifications()
-                {
-                    State = SecurityAlertNotificationState.On,
-                    MinimalSeverity = SecurityAlertMinimalSeverity.Low,
-                },
-                NotificationsByRole = new SecurityContactPropertiesNotificationsByRole()
-                {
-                    State = SecurityAlertNotificationByRoleState.On,
-                    Roles =
-{
-SecurityAlertReceivingRole.Owner
-},
-                },
-            };
-            ArmOperation<SecurityContactResource> lro = await securityContact.UpdateAsync(WaitUntil.Completed, data);
-            SecurityContactResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            SecurityContactData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeletesASecurityContactData()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2020-01-01-preview/examples/SecurityContacts/DeleteSecurityContact_example.json
@@ -116,6 +68,51 @@ SecurityAlertReceivingRole.Owner
             await securityContact.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_CreateSecurityContactData()
+        {
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2020-01-01-preview/examples/SecurityContacts/CreateSecurityContact_example.json
+            // this example is just showing the usage of "SecurityContacts_Create" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SecurityContactResource created on azure
+            // for more information of creating SecurityContactResource, please refer to the document of SecurityContactResource
+            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            string securityContactName = "default";
+            ResourceIdentifier securityContactResourceId = SecurityContactResource.CreateResourceIdentifier(subscriptionId, securityContactName);
+            SecurityContactResource securityContact = client.GetSecurityContactResource(securityContactResourceId);
+
+            // invoke the operation
+            SecurityContactData data = new SecurityContactData
+            {
+                Emails = "john@contoso.com;jane@contoso.com",
+                Phone = "(214)275-4038",
+                AlertNotifications = new SecurityContactPropertiesAlertNotifications
+                {
+                    State = SecurityAlertNotificationState.On,
+                    MinimalSeverity = SecurityAlertMinimalSeverity.Low,
+                },
+                NotificationsByRole = new SecurityContactPropertiesNotificationsByRole
+                {
+                    State = SecurityAlertNotificationByRoleState.On,
+                    Roles = { SecurityAlertReceivingRole.Owner },
+                },
+            };
+            ArmOperation<SecurityContactResource> lro = await securityContact.UpdateAsync(WaitUntil.Completed, data);
+            SecurityContactResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SecurityContactData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

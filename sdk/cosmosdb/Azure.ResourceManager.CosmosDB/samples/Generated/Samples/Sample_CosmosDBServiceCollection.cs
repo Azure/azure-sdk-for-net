@@ -18,42 +18,6 @@ namespace Azure.ResourceManager.CosmosDB.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_CosmosDBServicesList()
-        {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBServicesList.json
-            // this example is just showing the usage of "Service_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CosmosDBAccountResource created on azure
-            // for more information of creating CosmosDBAccountResource, please refer to the document of CosmosDBAccountResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string accountName = "ddb1";
-            ResourceIdentifier cosmosDBAccountResourceId = CosmosDBAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            CosmosDBAccountResource cosmosDBAccount = client.GetCosmosDBAccountResource(cosmosDBAccountResourceId);
-
-            // get the collection of this CosmosDBServiceResource
-            CosmosDBServiceCollection collection = cosmosDBAccount.GetCosmosDBServices();
-
-            // invoke the operation and iterate over the result
-            await foreach (CosmosDBServiceResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                CosmosDBServiceData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_DataTransferServiceCreate()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBDataTransferServiceCreate.json
@@ -77,9 +41,9 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // invoke the operation
             string serviceName = "DataTransfer";
-            CosmosDBServiceCreateOrUpdateContent content = new CosmosDBServiceCreateOrUpdateContent()
+            CosmosDBServiceCreateOrUpdateContent content = new CosmosDBServiceCreateOrUpdateContent
             {
-                Properties = new DataTransferServiceResourceCreateUpdateProperties()
+                Properties = new DataTransferServiceResourceCreateUpdateProperties
                 {
                     InstanceSize = CosmosDBServiceSize.CosmosD4S,
                     InstanceCount = 1,
@@ -120,9 +84,9 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // invoke the operation
             string serviceName = "GraphAPICompute";
-            CosmosDBServiceCreateOrUpdateContent content = new CosmosDBServiceCreateOrUpdateContent()
+            CosmosDBServiceCreateOrUpdateContent content = new CosmosDBServiceCreateOrUpdateContent
             {
-                Properties = new GraphApiComputeServiceResourceCreateUpdateProperties()
+                Properties = new GraphApiComputeServiceResourceCreateUpdateProperties
                 {
                     InstanceSize = CosmosDBServiceSize.CosmosD4S,
                     InstanceCount = 1,
@@ -163,9 +127,9 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // invoke the operation
             string serviceName = "MaterializedViewsBuilder";
-            CosmosDBServiceCreateOrUpdateContent content = new CosmosDBServiceCreateOrUpdateContent()
+            CosmosDBServiceCreateOrUpdateContent content = new CosmosDBServiceCreateOrUpdateContent
             {
-                Properties = new MaterializedViewsBuilderServiceResourceCreateUpdateProperties()
+                Properties = new MaterializedViewsBuilderServiceResourceCreateUpdateProperties
                 {
                     InstanceSize = CosmosDBServiceSize.CosmosD4S,
                     InstanceCount = 1,
@@ -206,9 +170,9 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // invoke the operation
             string serviceName = "SqlDedicatedGateway";
-            CosmosDBServiceCreateOrUpdateContent content = new CosmosDBServiceCreateOrUpdateContent()
+            CosmosDBServiceCreateOrUpdateContent content = new CosmosDBServiceCreateOrUpdateContent
             {
-                Properties = new SqlDedicatedGatewayServiceResourceCreateUpdateProperties()
+                Properties = new SqlDedicatedGatewayServiceResourceCreateUpdateProperties
                 {
                     DedicatedGatewayType = DedicatedGatewayType.IntegratedCache,
                     InstanceSize = CosmosDBServiceSize.CosmosD4S,
@@ -261,6 +225,144 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Get_GraphAPIComputeServiceGet()
+        {
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBGraphAPIComputeServiceGet.json
+            // this example is just showing the usage of "Service_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CosmosDBAccountResource created on azure
+            // for more information of creating CosmosDBAccountResource, please refer to the document of CosmosDBAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string accountName = "ddb1";
+            ResourceIdentifier cosmosDBAccountResourceId = CosmosDBAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            CosmosDBAccountResource cosmosDBAccount = client.GetCosmosDBAccountResource(cosmosDBAccountResourceId);
+
+            // get the collection of this CosmosDBServiceResource
+            CosmosDBServiceCollection collection = cosmosDBAccount.GetCosmosDBServices();
+
+            // invoke the operation
+            string serviceName = "GraphAPICompute";
+            CosmosDBServiceResource result = await collection.GetAsync(serviceName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CosmosDBServiceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_MaterializedViewsBuilderServiceGet()
+        {
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBMaterializedViewsBuilderServiceGet.json
+            // this example is just showing the usage of "Service_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CosmosDBAccountResource created on azure
+            // for more information of creating CosmosDBAccountResource, please refer to the document of CosmosDBAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string accountName = "ddb1";
+            ResourceIdentifier cosmosDBAccountResourceId = CosmosDBAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            CosmosDBAccountResource cosmosDBAccount = client.GetCosmosDBAccountResource(cosmosDBAccountResourceId);
+
+            // get the collection of this CosmosDBServiceResource
+            CosmosDBServiceCollection collection = cosmosDBAccount.GetCosmosDBServices();
+
+            // invoke the operation
+            string serviceName = "MaterializedViewsBuilder";
+            CosmosDBServiceResource result = await collection.GetAsync(serviceName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CosmosDBServiceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_SqlDedicatedGatewayServiceGet()
+        {
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/services/sqldedicatedgateway/CosmosDBSqlDedicatedGatewayServiceGet.json
+            // this example is just showing the usage of "Service_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CosmosDBAccountResource created on azure
+            // for more information of creating CosmosDBAccountResource, please refer to the document of CosmosDBAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string accountName = "ddb1";
+            ResourceIdentifier cosmosDBAccountResourceId = CosmosDBAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            CosmosDBAccountResource cosmosDBAccount = client.GetCosmosDBAccountResource(cosmosDBAccountResourceId);
+
+            // get the collection of this CosmosDBServiceResource
+            CosmosDBServiceCollection collection = cosmosDBAccount.GetCosmosDBServices();
+
+            // invoke the operation
+            string serviceName = "SqlDedicatedGateway";
+            CosmosDBServiceResource result = await collection.GetAsync(serviceName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CosmosDBServiceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_CosmosDBServicesList()
+        {
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBServicesList.json
+            // this example is just showing the usage of "Service_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CosmosDBAccountResource created on azure
+            // for more information of creating CosmosDBAccountResource, please refer to the document of CosmosDBAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string accountName = "ddb1";
+            ResourceIdentifier cosmosDBAccountResourceId = CosmosDBAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            CosmosDBAccountResource cosmosDBAccount = client.GetCosmosDBAccountResource(cosmosDBAccountResourceId);
+
+            // get the collection of this CosmosDBServiceResource
+            CosmosDBServiceCollection collection = cosmosDBAccount.GetCosmosDBServices();
+
+            // invoke the operation and iterate over the result
+            await foreach (CosmosDBServiceResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                CosmosDBServiceData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_DataTransferServiceGet()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBDataTransferServiceGet.json
@@ -284,6 +386,96 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // invoke the operation
             string serviceName = "DataTransfer";
+            bool result = await collection.ExistsAsync(serviceName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GraphAPIComputeServiceGet()
+        {
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBGraphAPIComputeServiceGet.json
+            // this example is just showing the usage of "Service_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CosmosDBAccountResource created on azure
+            // for more information of creating CosmosDBAccountResource, please refer to the document of CosmosDBAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string accountName = "ddb1";
+            ResourceIdentifier cosmosDBAccountResourceId = CosmosDBAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            CosmosDBAccountResource cosmosDBAccount = client.GetCosmosDBAccountResource(cosmosDBAccountResourceId);
+
+            // get the collection of this CosmosDBServiceResource
+            CosmosDBServiceCollection collection = cosmosDBAccount.GetCosmosDBServices();
+
+            // invoke the operation
+            string serviceName = "GraphAPICompute";
+            bool result = await collection.ExistsAsync(serviceName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_MaterializedViewsBuilderServiceGet()
+        {
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBMaterializedViewsBuilderServiceGet.json
+            // this example is just showing the usage of "Service_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CosmosDBAccountResource created on azure
+            // for more information of creating CosmosDBAccountResource, please refer to the document of CosmosDBAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string accountName = "ddb1";
+            ResourceIdentifier cosmosDBAccountResourceId = CosmosDBAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            CosmosDBAccountResource cosmosDBAccount = client.GetCosmosDBAccountResource(cosmosDBAccountResourceId);
+
+            // get the collection of this CosmosDBServiceResource
+            CosmosDBServiceCollection collection = cosmosDBAccount.GetCosmosDBServices();
+
+            // invoke the operation
+            string serviceName = "MaterializedViewsBuilder";
+            bool result = await collection.ExistsAsync(serviceName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_SqlDedicatedGatewayServiceGet()
+        {
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/services/sqldedicatedgateway/CosmosDBSqlDedicatedGatewayServiceGet.json
+            // this example is just showing the usage of "Service_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CosmosDBAccountResource created on azure
+            // for more information of creating CosmosDBAccountResource, please refer to the document of CosmosDBAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string accountName = "ddb1";
+            ResourceIdentifier cosmosDBAccountResourceId = CosmosDBAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            CosmosDBAccountResource cosmosDBAccount = client.GetCosmosDBAccountResource(cosmosDBAccountResourceId);
+
+            // get the collection of this CosmosDBServiceResource
+            CosmosDBServiceCollection collection = cosmosDBAccount.GetCosmosDBServices();
+
+            // invoke the operation
+            string serviceName = "SqlDedicatedGateway";
             bool result = await collection.ExistsAsync(serviceName);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -333,70 +525,6 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_GraphAPIComputeServiceGet()
-        {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBGraphAPIComputeServiceGet.json
-            // this example is just showing the usage of "Service_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CosmosDBAccountResource created on azure
-            // for more information of creating CosmosDBAccountResource, please refer to the document of CosmosDBAccountResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string accountName = "ddb1";
-            ResourceIdentifier cosmosDBAccountResourceId = CosmosDBAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            CosmosDBAccountResource cosmosDBAccount = client.GetCosmosDBAccountResource(cosmosDBAccountResourceId);
-
-            // get the collection of this CosmosDBServiceResource
-            CosmosDBServiceCollection collection = cosmosDBAccount.GetCosmosDBServices();
-
-            // invoke the operation
-            string serviceName = "GraphAPICompute";
-            CosmosDBServiceResource result = await collection.GetAsync(serviceName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            CosmosDBServiceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Exists_GraphAPIComputeServiceGet()
-        {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBGraphAPIComputeServiceGet.json
-            // this example is just showing the usage of "Service_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CosmosDBAccountResource created on azure
-            // for more information of creating CosmosDBAccountResource, please refer to the document of CosmosDBAccountResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string accountName = "ddb1";
-            ResourceIdentifier cosmosDBAccountResourceId = CosmosDBAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            CosmosDBAccountResource cosmosDBAccount = client.GetCosmosDBAccountResource(cosmosDBAccountResourceId);
-
-            // get the collection of this CosmosDBServiceResource
-            CosmosDBServiceCollection collection = cosmosDBAccount.GetCosmosDBServices();
-
-            // invoke the operation
-            string serviceName = "GraphAPICompute";
-            bool result = await collection.ExistsAsync(serviceName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GraphAPIComputeServiceGet()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBGraphAPIComputeServiceGet.json
@@ -439,70 +567,6 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_MaterializedViewsBuilderServiceGet()
-        {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBMaterializedViewsBuilderServiceGet.json
-            // this example is just showing the usage of "Service_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CosmosDBAccountResource created on azure
-            // for more information of creating CosmosDBAccountResource, please refer to the document of CosmosDBAccountResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string accountName = "ddb1";
-            ResourceIdentifier cosmosDBAccountResourceId = CosmosDBAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            CosmosDBAccountResource cosmosDBAccount = client.GetCosmosDBAccountResource(cosmosDBAccountResourceId);
-
-            // get the collection of this CosmosDBServiceResource
-            CosmosDBServiceCollection collection = cosmosDBAccount.GetCosmosDBServices();
-
-            // invoke the operation
-            string serviceName = "MaterializedViewsBuilder";
-            CosmosDBServiceResource result = await collection.GetAsync(serviceName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            CosmosDBServiceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Exists_MaterializedViewsBuilderServiceGet()
-        {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBMaterializedViewsBuilderServiceGet.json
-            // this example is just showing the usage of "Service_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CosmosDBAccountResource created on azure
-            // for more information of creating CosmosDBAccountResource, please refer to the document of CosmosDBAccountResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string accountName = "ddb1";
-            ResourceIdentifier cosmosDBAccountResourceId = CosmosDBAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            CosmosDBAccountResource cosmosDBAccount = client.GetCosmosDBAccountResource(cosmosDBAccountResourceId);
-
-            // get the collection of this CosmosDBServiceResource
-            CosmosDBServiceCollection collection = cosmosDBAccount.GetCosmosDBServices();
-
-            // invoke the operation
-            string serviceName = "MaterializedViewsBuilder";
-            bool result = await collection.ExistsAsync(serviceName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_MaterializedViewsBuilderServiceGet()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBMaterializedViewsBuilderServiceGet.json
@@ -541,70 +605,6 @@ namespace Azure.ResourceManager.CosmosDB.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Get_SqlDedicatedGatewayServiceGet()
-        {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/services/sqldedicatedgateway/CosmosDBSqlDedicatedGatewayServiceGet.json
-            // this example is just showing the usage of "Service_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CosmosDBAccountResource created on azure
-            // for more information of creating CosmosDBAccountResource, please refer to the document of CosmosDBAccountResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string accountName = "ddb1";
-            ResourceIdentifier cosmosDBAccountResourceId = CosmosDBAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            CosmosDBAccountResource cosmosDBAccount = client.GetCosmosDBAccountResource(cosmosDBAccountResourceId);
-
-            // get the collection of this CosmosDBServiceResource
-            CosmosDBServiceCollection collection = cosmosDBAccount.GetCosmosDBServices();
-
-            // invoke the operation
-            string serviceName = "SqlDedicatedGateway";
-            CosmosDBServiceResource result = await collection.GetAsync(serviceName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            CosmosDBServiceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Exists_SqlDedicatedGatewayServiceGet()
-        {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/services/sqldedicatedgateway/CosmosDBSqlDedicatedGatewayServiceGet.json
-            // this example is just showing the usage of "Service_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CosmosDBAccountResource created on azure
-            // for more information of creating CosmosDBAccountResource, please refer to the document of CosmosDBAccountResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string accountName = "ddb1";
-            ResourceIdentifier cosmosDBAccountResourceId = CosmosDBAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            CosmosDBAccountResource cosmosDBAccount = client.GetCosmosDBAccountResource(cosmosDBAccountResourceId);
-
-            // get the collection of this CosmosDBServiceResource
-            CosmosDBServiceCollection collection = cosmosDBAccount.GetCosmosDBServices();
-
-            // invoke the operation
-            string serviceName = "SqlDedicatedGateway";
-            bool result = await collection.ExistsAsync(serviceName);
-
-            Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]

@@ -69,14 +69,12 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             CosmosTableThroughputSettingResource cosmosTableThroughputSetting = client.GetCosmosTableThroughputSettingResource(cosmosTableThroughputSettingResourceId);
 
             // invoke the operation
-            ThroughputSettingsUpdateData data = new ThroughputSettingsUpdateData(new AzureLocation("West US"), new ThroughputSettingsResourceInfo()
+            ThroughputSettingsUpdateData data = new ThroughputSettingsUpdateData(new AzureLocation("West US"), new ThroughputSettingsResourceInfo
             {
                 Throughput = 400,
             })
             {
-                Tags =
-{
-},
+                Tags = { },
             };
             ArmOperation<CosmosTableThroughputSettingResource> lro = await cosmosTableThroughputSetting.CreateOrUpdateAsync(WaitUntil.Completed, data);
             CosmosTableThroughputSettingResource result = lro.Value;

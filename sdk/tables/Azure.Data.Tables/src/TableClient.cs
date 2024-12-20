@@ -234,7 +234,7 @@ namespace Azure.Data.Tables
             _version = options.VersionString;
             _diagnostics = new ClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, _pipeline, _endpoint.AbsoluteUri, _version);
-            _batchOperations = new TableRestClient(_diagnostics, CreateBatchPipeline(), _tableOperations.endpoint, _tableOperations.clientVersion);
+            _batchOperations = new TableRestClient(_diagnostics, _batchPipeline, _tableOperations.endpoint, _tableOperations.clientVersion);
             Name = tableName;
             Uri = new TableUriBuilder(_endpoint) { Query = null, Sas = null, Tablename = Name }.ToUri();
         }
@@ -286,7 +286,7 @@ namespace Azure.Data.Tables
             _version = options.VersionString;
             _diagnostics = new ClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, _pipeline, _endpoint.AbsoluteUri, _version);
-            _batchOperations = new TableRestClient(_diagnostics, CreateBatchPipeline(), _tableOperations.endpoint, _tableOperations.clientVersion);
+            _batchOperations = new TableRestClient(_diagnostics, _batchPipeline, _tableOperations.endpoint, _tableOperations.clientVersion);
             Name = tableName;
             Uri = new TableUriBuilder(_endpoint) { Query = null, Sas = null, Tablename = Name }.ToUri();
         }
@@ -337,7 +337,7 @@ namespace Azure.Data.Tables
             _version = options.VersionString;
             _diagnostics = new ClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, _pipeline, _endpoint.AbsoluteUri, _version);
-            _batchOperations = new TableRestClient(_diagnostics, CreateBatchPipeline(), _tableOperations.endpoint, _tableOperations.clientVersion);
+            _batchOperations = new TableRestClient(_diagnostics, _batchPipeline, _tableOperations.endpoint, _tableOperations.clientVersion);
             Name = tableName;
             Uri = new TableUriBuilder(_endpoint) { Query = null, Sas = null, Tablename = Name }.ToUri();
         }
@@ -363,7 +363,7 @@ namespace Azure.Data.Tables
             {
                 _tableOperations = tableOperations;
             }
-            _batchOperations = new TableRestClient(diagnostics, CreateBatchPipeline(), _tableOperations.endpoint, _tableOperations.clientVersion);
+            _batchOperations = new TableRestClient(diagnostics, _batchPipeline, _tableOperations.endpoint, _tableOperations.clientVersion);
             _version = version;
             Name = table;
             Uri = new TableUriBuilder(_endpoint) { Query = null, Sas = null, Tablename = Name }.ToUri();
@@ -1742,6 +1742,8 @@ namespace Azure.Data.Tables
 
             return msg;
         }
+
+        private static readonly HttpPipeline _batchPipeline = CreateBatchPipeline();
 
         /// <summary>
         /// Creates a pipeline to use for processing sub-operations before they are combined into a single multipart request.

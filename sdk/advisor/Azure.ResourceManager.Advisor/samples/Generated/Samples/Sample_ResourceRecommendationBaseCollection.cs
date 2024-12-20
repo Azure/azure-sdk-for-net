@@ -17,6 +17,33 @@ namespace Azure.ResourceManager.Advisor.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetRecommendationDetail()
+        {
+            // Generated from example definition: specification/advisor/resource-manager/Microsoft.Advisor/stable/2020-01-01/examples/GetRecommendationDetail.json
+            // this example is just showing the usage of "Recommendations_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this ResourceRecommendationBaseResource
+            string resourceUri = "resourceUri";
+            ResourceRecommendationBaseCollection collection = client.GetResourceRecommendationBases(new ResourceIdentifier(resourceUri));
+
+            // invoke the operation
+            string recommendationId = "recommendationId";
+            ResourceRecommendationBaseResource result = await collection.GetAsync(recommendationId);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ResourceRecommendationBaseData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListRecommendations()
         {
             // Generated from example definition: specification/advisor/resource-manager/Microsoft.Advisor/stable/2020-01-01/examples/ListRecommendations.json
@@ -27,13 +54,10 @@ namespace Azure.ResourceManager.Advisor.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this ResourceRecommendationBaseResource
             string subscriptionId = "subscriptionId";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}", subscriptionId));
-            ResourceRecommendationBaseCollection collection = client.GetResourceRecommendationBases(scopeId);
+            string scope = $"/subscriptions/{subscriptionId}";
+            ResourceRecommendationBaseCollection collection = client.GetResourceRecommendationBases(new ResourceIdentifier(scope));
 
             // invoke the operation and iterate over the result
             int? top = 10;
@@ -51,37 +75,6 @@ namespace Azure.ResourceManager.Advisor.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_GetRecommendationDetail()
-        {
-            // Generated from example definition: specification/advisor/resource-manager/Microsoft.Advisor/stable/2020-01-01/examples/GetRecommendationDetail.json
-            // this example is just showing the usage of "Recommendations_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this ResourceRecommendationBaseResource
-            string resourceUri = "resourceUri";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceUri));
-            ResourceRecommendationBaseCollection collection = client.GetResourceRecommendationBases(scopeId);
-
-            // invoke the operation
-            string recommendationId = "recommendationId";
-            ResourceRecommendationBaseResource result = await collection.GetAsync(recommendationId);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ResourceRecommendationBaseData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetRecommendationDetail()
         {
             // Generated from example definition: specification/advisor/resource-manager/Microsoft.Advisor/stable/2020-01-01/examples/GetRecommendationDetail.json
@@ -92,13 +85,9 @@ namespace Azure.ResourceManager.Advisor.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this ResourceRecommendationBaseResource
             string resourceUri = "resourceUri";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceUri));
-            ResourceRecommendationBaseCollection collection = client.GetResourceRecommendationBases(scopeId);
+            ResourceRecommendationBaseCollection collection = client.GetResourceRecommendationBases(new ResourceIdentifier(resourceUri));
 
             // invoke the operation
             string recommendationId = "recommendationId";
@@ -119,13 +108,9 @@ namespace Azure.ResourceManager.Advisor.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this ResourceRecommendationBaseResource
             string resourceUri = "resourceUri";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceUri));
-            ResourceRecommendationBaseCollection collection = client.GetResourceRecommendationBases(scopeId);
+            ResourceRecommendationBaseCollection collection = client.GetResourceRecommendationBases(new ResourceIdentifier(resourceUri));
 
             // invoke the operation
             string recommendationId = "recommendationId";
