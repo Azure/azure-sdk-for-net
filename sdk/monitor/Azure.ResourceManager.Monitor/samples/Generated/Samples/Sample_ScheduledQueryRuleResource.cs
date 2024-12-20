@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Monitor.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetScheduledQueryRules_ListScheduledQueryRulesBySubscription()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2022-06-15/examples/listScheduledQueryRulesBySubscription.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-01-01-preview/examples/listScheduledQueryRulesBySubscription.json
             // this example is just showing the usage of "ScheduledQueryRules_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Monitor.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAScheduledQueryRuleForSingleResource()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2022-06-15/examples/getScheduledQueryRule.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-01-01-preview/examples/getScheduledQueryRule.json
             // this example is just showing the usage of "ScheduledQueryRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Monitor.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateOrUpdateAScheduledQueryRule()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2022-06-15/examples/patchScheduledQueryRule.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-01-01-preview/examples/patchScheduledQueryRule.json
             // this example is just showing the usage of "ScheduledQueryRules_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Monitor.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteAScheduledQueryRule()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2022-06-15/examples/deleteScheduledQueryRule.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-01-01-preview/examples/deleteScheduledQueryRule.json
             // this example is just showing the usage of "ScheduledQueryRules_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

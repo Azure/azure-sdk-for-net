@@ -5,20 +5,59 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Operators allowed in the rule condition. </summary>
-    public enum MonitorConditionOperator
+    /// <summary> The criteria operator. Relevant and required only for rules of the kind LogAlert. </summary>
+    public readonly partial struct MonitorConditionOperator : IEquatable<MonitorConditionOperator>
     {
-        /// <summary> GreaterThan. </summary>
-        GreaterThan,
-        /// <summary> GreaterThanOrEqual. </summary>
-        GreaterThanOrEqual,
-        /// <summary> LessThan. </summary>
-        LessThan,
-        /// <summary> LessThanOrEqual. </summary>
-        LessThanOrEqual,
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="MonitorConditionOperator"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MonitorConditionOperator(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string EqualsValueValue = "Equals";
+        private const string GreaterThanValue = "GreaterThan";
+        private const string GreaterThanOrEqualValue = "GreaterThanOrEqual";
+        private const string LessThanValue = "LessThan";
+        private const string LessThanOrEqualValue = "LessThanOrEqual";
+        private const string GreaterOrLessThanValue = "GreaterOrLessThan";
+
         /// <summary> Equals. </summary>
-        EqualsValue
+        public static MonitorConditionOperator EqualsValue { get; } = new MonitorConditionOperator(EqualsValueValue);
+        /// <summary> GreaterThan. </summary>
+        public static MonitorConditionOperator GreaterThan { get; } = new MonitorConditionOperator(GreaterThanValue);
+        /// <summary> GreaterThanOrEqual. </summary>
+        public static MonitorConditionOperator GreaterThanOrEqual { get; } = new MonitorConditionOperator(GreaterThanOrEqualValue);
+        /// <summary> LessThan. </summary>
+        public static MonitorConditionOperator LessThan { get; } = new MonitorConditionOperator(LessThanValue);
+        /// <summary> LessThanOrEqual. </summary>
+        public static MonitorConditionOperator LessThanOrEqual { get; } = new MonitorConditionOperator(LessThanOrEqualValue);
+        /// <summary> GreaterOrLessThan. </summary>
+        public static MonitorConditionOperator GreaterOrLessThan { get; } = new MonitorConditionOperator(GreaterOrLessThanValue);
+        /// <summary> Determines if two <see cref="MonitorConditionOperator"/> values are the same. </summary>
+        public static bool operator ==(MonitorConditionOperator left, MonitorConditionOperator right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="MonitorConditionOperator"/> values are not the same. </summary>
+        public static bool operator !=(MonitorConditionOperator left, MonitorConditionOperator right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitorConditionOperator"/>. </summary>
+        public static implicit operator MonitorConditionOperator(string value) => new MonitorConditionOperator(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is MonitorConditionOperator other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(MonitorConditionOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

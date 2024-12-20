@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
 using Azure.ResourceManager.Resources;
 
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAnActionGroup()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2023-01-01/examples/getActionGroup.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-10-01-preview/examples/getActionGroup.json
             // this example is just showing the usage of "ActionGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.Monitor.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteAnActionGroup()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2023-01-01/examples/deleteActionGroup.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-10-01-preview/examples/deleteActionGroup.json
             // this example is just showing the usage of "ActionGroups_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Monitor.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_PatchAnActionGroup()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2023-01-01/examples/patchActionGroup.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-10-01-preview/examples/patchActionGroup.json
             // this example is just showing the usage of "ActionGroups_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -103,6 +104,7 @@ namespace Azure.ResourceManager.Monitor.Samples
 ["key1"] = "value1",
 ["key2"] = "value2",
 },
+                Identity = new ManagedServiceIdentity("SystemAssigned"),
                 IsEnabled = false,
             };
             ActionGroupResource result = await actionGroup.UpdateAsync(patch);
@@ -119,7 +121,7 @@ namespace Azure.ResourceManager.Monitor.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateNotifications_CreateNotificationsAtResourceGroupLevel()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2023-01-01/examples/postTestNotificationsAtActionGroupResourceLevel.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-10-01-preview/examples/postTestNotificationsAtActionGroupResourceLevel.json
             // this example is just showing the usage of "ActionGroups_CreateNotificationsAtActionGroupResourceLevel" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -192,6 +194,7 @@ new MonitorVoiceReceiver("Sample voice","1","1234567890")
 new MonitorLogicAppReceiver("Sample logicApp",new ResourceIdentifier("/subscriptions/187f412d-1758-44d9-b052-169e2564721d/resourceGroups/LogicApp/providers/Microsoft.Logic/workflows/testLogicApp"),new Uri("https://prod-27.northcentralus.logic.azure.com/workflows/68e572e818e5457ba898763b7db90877/triggers/manual/paths/invoke/azns/test?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Abpsb72UYJxPPvmDo937uzofupO5r_vIeWEx7KVHo7w"))
 {
 UseCommonAlertSchema = false,
+ManagedIdentity = "f11979a4-36d1-45d0-9097-a0da3c7e855d",
 }
 },
                 AzureFunctionReceivers =
@@ -199,6 +202,7 @@ UseCommonAlertSchema = false,
 new MonitorAzureFunctionReceiver("Sample azureFunction",new ResourceIdentifier("/subscriptions/5def922a-3ed4-49c1-b9fd-05ec533819a3/resourceGroups/aznsTest/providers/Microsoft.Web/sites/testFunctionApp"),"HttpTriggerCSharp1",new Uri("http://test.me"))
 {
 UseCommonAlertSchema = true,
+ManagedIdentity = "f11979a4-36d1-45d0-9097-a0da3c7e855d",
 }
 },
                 ArmRoleReceivers =
@@ -230,7 +234,7 @@ TenantId = Guid.Parse("68a4459a-ccb8-493c-b9da-dd30457d1b84"),
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetNotificationStatus_GetNotificationDetailsAtResourceGroupLevel()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2023-01-01/examples/getTestNotificationsAtActionGroupResourceLevel.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-10-01-preview/examples/getTestNotificationsAtActionGroupResourceLevel.json
             // this example is just showing the usage of "ActionGroups_GetTestNotificationsAtActionGroupResourceLevel" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -258,7 +262,7 @@ TenantId = Guid.Parse("68a4459a-ccb8-493c-b9da-dd30457d1b84"),
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetActionGroups_ListActionGroupsAtSubscriptionLevel()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2023-01-01/examples/listActionGroups.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-10-01-preview/examples/listActionGroups.json
             // this example is just showing the usage of "ActionGroups_ListBySubscriptionId" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -290,7 +294,7 @@ TenantId = Guid.Parse("68a4459a-ccb8-493c-b9da-dd30457d1b84"),
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task EnableReceiver_EnableTheReceiver()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2023-01-01/examples/enableReceiver.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-10-01-preview/examples/enableReceiver.json
             // this example is just showing the usage of "ActionGroups_EnableReceiver" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

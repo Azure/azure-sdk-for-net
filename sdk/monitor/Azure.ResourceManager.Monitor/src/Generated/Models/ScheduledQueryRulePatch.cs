@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -54,6 +55,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ScheduledQueryRulePatch"/>. </summary>
+        /// <param name="identity"> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="createdWithApiVersion"> The api-version used when creating this alert rule. </param>
         /// <param name="isLegacyLogAnalyticsRule"> True if alert rule is legacy Log Analytic rule. </param>
@@ -73,9 +75,11 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="checkWorkspaceAlertsStorageConfigured"> The flag which indicates whether this scheduled query rule should be stored in the customer's storage. The default is false. Relevant only for rules of the kind LogAlert. </param>
         /// <param name="skipQueryValidation"> The flag which indicates whether the provided query should be validated or not. The default is false. Relevant only for rules of the kind LogAlert. </param>
         /// <param name="autoMitigate"> The flag that indicates whether the alert should be automatically resolved or not. The default is true. Relevant only for rules of the kind LogAlert. </param>
+        /// <param name="resolveConfiguration"> Defines the configuration for resolving fired alerts. Relevant only for rules of the kind LogAlert. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledQueryRulePatch(IDictionary<string, string> tags, string createdWithApiVersion, bool? isLegacyLogAnalyticsRule, string description, string displayName, AlertSeverity? severity, bool? isEnabled, IList<string> scopes, TimeSpan? evaluationFrequency, TimeSpan? windowSize, TimeSpan? overrideQueryTimeRange, IList<string> targetResourceTypes, ScheduledQueryRuleCriteria criteria, TimeSpan? muteActionsDuration, ScheduledQueryRuleActions actions, bool? isWorkspaceAlertsStorageConfigured, bool? checkWorkspaceAlertsStorageConfigured, bool? skipQueryValidation, bool? autoMitigate, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ScheduledQueryRulePatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, string createdWithApiVersion, bool? isLegacyLogAnalyticsRule, string description, string displayName, AlertSeverity? severity, bool? isEnabled, IList<string> scopes, TimeSpan? evaluationFrequency, TimeSpan? windowSize, TimeSpan? overrideQueryTimeRange, IList<string> targetResourceTypes, ScheduledQueryRuleCriteria criteria, TimeSpan? muteActionsDuration, ScheduledQueryRuleActions actions, bool? isWorkspaceAlertsStorageConfigured, bool? checkWorkspaceAlertsStorageConfigured, bool? skipQueryValidation, bool? autoMitigate, ScheduledQueryRuleResolveConfiguration resolveConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Identity = identity;
             Tags = tags;
             CreatedWithApiVersion = createdWithApiVersion;
             IsLegacyLogAnalyticsRule = isLegacyLogAnalyticsRule;
@@ -95,9 +99,12 @@ namespace Azure.ResourceManager.Monitor.Models
             CheckWorkspaceAlertsStorageConfigured = checkWorkspaceAlertsStorageConfigured;
             SkipQueryValidation = skipQueryValidation;
             AutoMitigate = autoMitigate;
+            ResolveConfiguration = resolveConfiguration;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The api-version used when creating this alert rule. </summary>
@@ -147,5 +154,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public bool? SkipQueryValidation { get; set; }
         /// <summary> The flag that indicates whether the alert should be automatically resolved or not. The default is true. Relevant only for rules of the kind LogAlert. </summary>
         public bool? AutoMitigate { get; set; }
+        /// <summary> Defines the configuration for resolving fired alerts. Relevant only for rules of the kind LogAlert. </summary>
+        public ScheduledQueryRuleResolveConfiguration ResolveConfiguration { get; set; }
     }
 }

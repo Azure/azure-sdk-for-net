@@ -6,9 +6,11 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
 using Azure.ResourceManager.Resources;
 
@@ -21,7 +23,7 @@ namespace Azure.ResourceManager.Monitor.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateAnActionGroup()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2023-01-01/examples/createOrUpdateActionGroup.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-10-01-preview/examples/createOrUpdateActionGroup.json
             // this example is just showing the usage of "ActionGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -71,6 +73,7 @@ UseAadAuth = true,
 ObjectId = "d3bb868c-fe44-452c-aa26-769a6538c808",
 IdentifierUri = new Uri("http://someidentifier/d7811ba3-7996-4a93-99b6-6b2f3f355f8a"),
 TenantId = Guid.Parse("68a4459a-ccb8-493c-b9da-dd30457d1b84"),
+ManagedIdentity = "30fe7a91-cd31-4edf-96ab-52883b3199cd",
 }
 },
                 ItsmReceivers =
@@ -88,6 +91,7 @@ new MonitorAutomationRunbookReceiver(new ResourceIdentifier("/subscriptions/187f
 Name = "testRunbook",
 ServiceUri = new Uri("<serviceUri>"),
 UseCommonAlertSchema = true,
+ManagedIdentity = "30fe7a91-cd31-4edf-96ab-52883b3199cd",
 }
 },
                 VoiceReceivers =
@@ -99,6 +103,7 @@ new MonitorVoiceReceiver("Sample voice","1","1234567890")
 new MonitorLogicAppReceiver("Sample logicApp",new ResourceIdentifier("/subscriptions/187f412d-1758-44d9-b052-169e2564721d/resourceGroups/LogicApp/providers/Microsoft.Logic/workflows/testLogicApp"),new Uri("https://prod-27.northcentralus.logic.azure.com/workflows/68e572e818e5457ba898763b7db90877/triggers/manual/paths/invoke/azns/test?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Abpsb72UYJxPPvmDo937uzofupO5r_vIeWEx7KVHo7w"))
 {
 UseCommonAlertSchema = false,
+ManagedIdentity = "30fe7a91-cd31-4edf-96ab-52883b3199cd",
 }
 },
                 AzureFunctionReceivers =
@@ -106,6 +111,7 @@ UseCommonAlertSchema = false,
 new MonitorAzureFunctionReceiver("Sample azureFunction",new ResourceIdentifier("/subscriptions/5def922a-3ed4-49c1-b9fd-05ec533819a3/resourceGroups/aznsTest/providers/Microsoft.Web/sites/testFunctionApp"),"HttpTriggerCSharp1",new Uri("http://test.me"))
 {
 UseCommonAlertSchema = true,
+ManagedIdentity = "30fe7a91-cd31-4edf-96ab-52883b3199cd",
 }
 },
                 ArmRoleReceivers =
@@ -120,8 +126,30 @@ UseCommonAlertSchema = true,
 new MonitorEventHubReceiver("Sample eventHub","testEventHubNameSpace","testEventHub","187f412d-1758-44d9-b052-169e2564721d")
 {
 TenantId = Guid.Parse("68a4459a-ccb8-493c-b9da-dd30457d1b84"),
+ManagedIdentity = "30fe7a91-cd31-4edf-96ab-52883b3199cd",
 }
 },
+                IncidentReceivers =
+{
+new IncidentReceiver("IncidentAction",new IncidentServiceConnection("IncidentConnection","8be638e7-1419-42d4-a059-437a5f4f4e4e"),IncidentManagementService.Icm,new Dictionary<string, string>()
+{
+["icm.automitigationenabled"] = "true",
+["icm.correlationid"] = "${data.essentials.signalType}://${data.essentials.originAlertId}",
+["icm.monitorid"] = "${data.essentials.alertRule}",
+["icm.occurringlocation.environment"] = "PROD",
+["icm.routingid"] = "${data.essentials.monitoringService}://${data.essentials.signalType}",
+["icm.title"] = "${data.essentials.severity}:${data.essentials.monitorCondition} ${data.essentials.monitoringService}:${data.essentials.signalType} ${data.essentials.alertTargetIds}",
+["icm.tsgid"] = "https://microsoft.com",
+})
+},
+                Identity = new ManagedServiceIdentity("UserAssigned")
+                {
+                    UserAssignedIdentities =
+{
+[new ResourceIdentifier("/subscriptions/b67f7fec-69fc-4974-9099-a26bd6ffeda3/resourceGroups/AzSecPackAutoConfigRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/ThomasTestManagedIdentity_123")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("/subscriptions/b67f7fec-69fc-4974-9099-a26bd6ffeda3/resourceGroups/AzSecPackAutoConfigRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/ThomasTestManagedIdentity_456")] = new UserAssignedIdentity(),
+},
+                },
                 Tags =
 {
 },
@@ -141,7 +169,7 @@ TenantId = Guid.Parse("68a4459a-ccb8-493c-b9da-dd30457d1b84"),
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAnActionGroup()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2023-01-01/examples/getActionGroup.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-10-01-preview/examples/getActionGroup.json
             // this example is just showing the usage of "ActionGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -175,7 +203,7 @@ TenantId = Guid.Parse("68a4459a-ccb8-493c-b9da-dd30457d1b84"),
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetAnActionGroup()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2023-01-01/examples/getActionGroup.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-10-01-preview/examples/getActionGroup.json
             // this example is just showing the usage of "ActionGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -205,7 +233,7 @@ TenantId = Guid.Parse("68a4459a-ccb8-493c-b9da-dd30457d1b84"),
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GetAnActionGroup()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2023-01-01/examples/getActionGroup.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-10-01-preview/examples/getActionGroup.json
             // this example is just showing the usage of "ActionGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -247,7 +275,7 @@ TenantId = Guid.Parse("68a4459a-ccb8-493c-b9da-dd30457d1b84"),
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListActionGroupsAtResourceGroupLevel()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2023-01-01/examples/listActionGroups.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-10-01-preview/examples/listActionGroups.json
             // this example is just showing the usage of "ActionGroups_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
