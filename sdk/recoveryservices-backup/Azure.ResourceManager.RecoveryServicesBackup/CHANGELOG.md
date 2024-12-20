@@ -11,6 +11,8 @@
 
 ### Bugs Fixed
 
+Convert the property policyId of type ResourceIdentifier to type String in ProtectedItem. Issue at https://github.com/Azure/azure-sdk-for-net/issues/47381
+
 ### Other Changes
 
 ## 1.2.0 (2024-01-03)
