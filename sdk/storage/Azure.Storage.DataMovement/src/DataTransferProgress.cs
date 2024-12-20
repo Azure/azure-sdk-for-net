@@ -8,10 +8,7 @@ namespace Azure.Storage.DataMovement
     /// </summary>
     public class DataTransferProgress
     {
-        /// <summary>
-        /// Constructor for mocking.
-        /// </summary>
-        protected internal DataTransferProgress() { }
+        internal DataTransferProgress() { }
 
         /// <summary>
         /// Number of files that were transferred successfully.

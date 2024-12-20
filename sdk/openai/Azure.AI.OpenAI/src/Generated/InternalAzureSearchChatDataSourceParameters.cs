@@ -149,4 +149,3 @@ namespace Azure.AI.OpenAI.Chat
         public string Filter { get; set; }
     }
 }
-

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Storage.DataMovement.Tests;
 using BaseBlobs::Azure.Storage.Blobs;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
@@ -298,7 +299,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 waitTime: 30);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35558")]
+        [LiveOnly]
         [Test]
         [TestCase(0)]
         [TestCase(150)]
@@ -310,22 +311,27 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             await PopulateTestContainer(source.Container);
 
-            StorageResourceContainer sourceResource =
-                new BlobStorageResourceContainer(source.Container);
-            StorageResourceContainer destinationResource =
-                new LocalDirectoryStorageResourceContainer(destination.DirectoryPath);
+            BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
+            LocalFilesStorageResourceProvider localProvider = new();
 
-            TransferManager transferManager = new TransferManager();
+            TransferManagerOptions transferManagerOptions = new()
+            {
+                ResumeProviders = [blobProvider, localProvider]
+            };
+            TransferManager transferManager = new(transferManagerOptions);
 
-            TestProgressHandler progressHandler = new TestProgressHandler();
-            DataTransferOptions transferOptions = new DataTransferOptions()
+            TestProgressHandler progressHandler = new();
+            DataTransferOptions transferOptions = new()
             {
                 ProgressHandlerOptions = new ProgressHandlerOptions(progressHandler, true)
             };
-            TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
+            TestEventsRaised testEventsRaised = new(transferOptions);
 
             // Act - Start transfer
-            DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, transferOptions);
+            DataTransfer transfer = await transferManager.StartTransferAsync(
+                blobProvider.FromContainer(source.Container.Uri),
+                localProvider.FromDirectory(destination.DirectoryPath),
+                transferOptions);
 
             // TODO: This can likely be replaced with something better once mocking is in place
             // Wait for the transfer to start happening
@@ -334,7 +340,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             // Pause transfer
             CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await transferManager.PauseTransferIfRunningAsync(transfer.Id, tokenSource.Token);
-            Assert.AreEqual(DataTransferState.Paused, transfer.TransferStatus);
+            Assert.AreEqual(DataTransferState.Paused, transfer.TransferStatus.State);
 
             // Record the current number of progress updates to use during assertions
             int pause = progressHandler.Updates.Count;
@@ -348,7 +354,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             await resumeTransfer.WaitForCompletionAsync(tokenSource.Token);
 
             // Assert
-            Assert.AreEqual(DataTransferState.Completed, resumeTransfer.TransferStatus);
+            Assert.AreEqual(DataTransferState.Completed, resumeTransfer.TransferStatus.State);
             ProgressHandlerAsserts.AssertFileProgress(progressHandler.Updates, 5, pauseIndexes: pause);
             ProgressHandlerAsserts.AssertBytesTransferred(progressHandler.Updates, _expectedBytesTransferred);
         }
