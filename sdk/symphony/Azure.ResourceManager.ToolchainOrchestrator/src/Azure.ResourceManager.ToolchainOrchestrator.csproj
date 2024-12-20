@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Version>1.0.0-beta.1</Version>
+    <PackageId>Azure.ResourceManager.ToolchainOrchestrator</PackageId>
+    <Description>Azure Resource Manager client SDK for Azure resource provider ToolchainOrchestrator.</Description>
+    <PackageTags>azure;management;arm;resource manager;toolchainorchestrator</PackageTags>
+  </PropertyGroup>
+  <ItemGroup>
+    <GlobalAnalyzerConfigFiles Include="$(MSBuildThisFileDirectory)Azure.ResourceManager.ToolchainOrchestrator.globalconfig" />
+  </ItemGroup>
+</Project>
