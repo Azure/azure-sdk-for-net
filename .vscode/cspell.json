@@ -834,6 +834,7 @@
         "Gcmaes",
         "Generatevirtualwanvpnserverconfigurationvpnprofile",
         "ikev",
+        "ipam",
         "Ipconfiguration",
         "Mbps",
         "Nics",

@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> AddressSpace contains an array of IP address ranges that can be used by subnets of the virtual network. </summary>
-    internal partial class AddressSpace
+    /// <summary> The FailoverConnectionDetails. </summary>
+    public partial class FailoverConnectionDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +45,29 @@ namespace Azure.ResourceManager.Network.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AddressSpace"/>. </summary>
-        public AddressSpace()
+        /// <summary> Initializes a new instance of <see cref="FailoverConnectionDetails"/>. </summary>
+        public FailoverConnectionDetails()
         {
-            AddressPrefixes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AddressSpace"/>. </summary>
-        /// <param name="addressPrefixes"> A list of address blocks reserved for this virtual network in CIDR notation. </param>
+        /// <summary> Initializes a new instance of <see cref="FailoverConnectionDetails"/>. </summary>
+        /// <param name="failoverConnectionName"> Name of the failover connection. </param>
+        /// <param name="failoverLocation"> Location of the failover connection. </param>
+        /// <param name="isVerified"> Whether the customer was able to establish connectivity through this failover connection or not. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AddressSpace(IList<string> addressPrefixes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FailoverConnectionDetails(string failoverConnectionName, string failoverLocation, bool? isVerified, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            AddressPrefixes = addressPrefixes;
+            FailoverConnectionName = failoverConnectionName;
+            FailoverLocation = failoverLocation;
+            IsVerified = isVerified;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
-        public IList<string> AddressPrefixes { get; }
+        /// <summary> Name of the failover connection. </summary>
+        public string FailoverConnectionName { get; set; }
+        /// <summary> Location of the failover connection. </summary>
+        public string FailoverLocation { get; set; }
+        /// <summary> Whether the customer was able to establish connectivity through this failover connection or not. </summary>
+        public bool? IsVerified { get; set; }
     }
 }

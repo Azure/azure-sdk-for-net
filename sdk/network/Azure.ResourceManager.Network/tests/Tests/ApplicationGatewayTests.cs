@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.Network.Tests
             var vnet = new VirtualNetworkData()
             {
                 Location = location,
-                AddressSpace = new AddressSpace() { AddressPrefixes = { "10.0.0.0/16", } },
+                AddressSpace = new VirtualNetworkAddressSpace() { AddressPrefixes = { "10.0.0.0/16", } },
                 DhcpOptions = new DhcpOptions() { DnsServers = { "10.1.1.1", "10.1.2.4" } },
                 Subnets = {
                         new SubnetData() { Name = gwSubnetName, AddressPrefix = "10.0.0.0/24" },
@@ -788,7 +788,7 @@ namespace Azure.ResourceManager.Network.Tests
             var vnetdata = new VirtualNetworkData()
             {
                 Location = location,
-                AddressSpace = new AddressSpace() { AddressPrefixes = { "10.21.0.0/16", } },
+                AddressSpace = new VirtualNetworkAddressSpace() { AddressPrefixes = { "10.21.0.0/16", } },
                 DhcpOptions = new DhcpOptions() { DnsServers = { "10.21.1.1", "10.21.2.4" } },
                 Subnets = {
                         new SubnetData() { Name = BackendSubnetName, AddressPrefix = "10.21.1.0/24" },
