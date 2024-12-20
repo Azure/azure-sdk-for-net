@@ -13,7 +13,7 @@ namespace Azure.Identity.Tests.Mock
     {
         public Func<CancellationToken, IManagedIdentityApplication> ClientAppFactory { get; set; }
         public Func<TokenRequestContext, CancellationToken, AuthenticationResult> AcquireTokenForManagedIdentityAsyncFactory { get; set; }
-        // public Func<string[], string, string, AzureCloudInstance, string, bool, CancellationToken, AuthenticationResult> RefreshTokenFactory { get; set; }
+
         public MockMsalManagedIdentityClient() { }
 
         public MockMsalManagedIdentityClient(AuthenticationResult result)
