@@ -952,12 +952,11 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<AccountInfo>> GetAccountInfoAsync(
+        public virtual Task<Response<AccountInfo>> GetAccountInfoAsync(
             CancellationToken cancellationToken = default) =>
-            await GetAccountInfoInternal(
+            GetAccountInfoInternal(
                 true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="GetAccountInfoInternal"/> operation returns the sku
@@ -1077,12 +1076,11 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobServiceProperties>> GetPropertiesAsync(
+        public virtual Task<Response<BlobServiceProperties>> GetPropertiesAsync(
             CancellationToken cancellationToken = default) =>
-            await GetPropertiesInternal(
+            GetPropertiesInternal(
                 true, //async
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="GetPropertiesInternal"/> operation gets the properties
@@ -1216,14 +1214,13 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
-        public virtual async Task<Response> SetPropertiesAsync(
+        public virtual Task<Response> SetPropertiesAsync(
             BlobServiceProperties properties,
             CancellationToken cancellationToken = default) =>
-            await SetPropertiesInternal(
+            SetPropertiesInternal(
                 properties,
                 true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="SetPropertiesInternal"/> operation sets properties for
@@ -1358,12 +1355,11 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobServiceStatistics>> GetStatisticsAsync(
+        public virtual Task<Response<BlobServiceStatistics>> GetStatisticsAsync(
             CancellationToken cancellationToken = default) =>
-            await GetStatisticsInternal(
+            GetStatisticsInternal(
                 true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="GetStatisticsInternal"/> operation retrieves
@@ -1501,16 +1497,15 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
-        public virtual async Task<Response<UserDelegationKey>> GetUserDelegationKeyAsync(
+        public virtual Task<Response<UserDelegationKey>> GetUserDelegationKeyAsync(
             DateTimeOffset? startsOn,
             DateTimeOffset expiresOn,
             CancellationToken cancellationToken = default) =>
-            await GetUserDelegationKeyInternal(
+            GetUserDelegationKeyInternal(
                 startsOn,
                 expiresOn,
                 true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="GetUserDelegationKeyInternal"/> operation retrieves a
@@ -1847,17 +1842,16 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobContainerClient>> UndeleteBlobContainerAsync(
+        public virtual Task<Response<BlobContainerClient>> UndeleteBlobContainerAsync(
             string deletedContainerName,
             string deletedContainerVersion,
             CancellationToken cancellationToken = default)
-            => await UndeleteBlobContainerInternal(
+            => UndeleteBlobContainerInternal(
                 deletedContainerName,
                 deletedContainerVersion,
                 deletedContainerName,
                 async: true,
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// Restores a previously deleted container.
@@ -1926,18 +1920,17 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<BlobContainerClient>> UndeleteBlobContainerAsync(
+        public virtual Task<Response<BlobContainerClient>> UndeleteBlobContainerAsync(
             string deletedContainerName,
             string deletedContainerVersion,
             string destinationContainerName,
             CancellationToken cancellationToken = default)
-            => await UndeleteBlobContainerInternal(
+            => UndeleteBlobContainerInternal(
                 deletedContainerName,
                 deletedContainerVersion,
                 destinationContainerName,
                 async: true,
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// Restores a previously deleted container.
@@ -2100,18 +2093,17 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal virtual async Task<Response<BlobContainerClient>> RenameBlobContainerAsync(
+        internal virtual Task<Response<BlobContainerClient>> RenameBlobContainerAsync(
             string sourceContainerName,
             string destinationContainerName,
             BlobRequestConditions sourceConditions = default,
             CancellationToken cancellationToken = default)
-            => await RenameBlobContainerInternal(
+            => RenameBlobContainerInternal(
                 sourceContainerName,
                 destinationContainerName,
                 sourceConditions,
                 async: true,
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// Renames an existing Blob Container.
