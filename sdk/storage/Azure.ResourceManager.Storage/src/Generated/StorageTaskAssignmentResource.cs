@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.Storage
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageTaskAssignmentInstancesReportRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, pageSizeHint, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageTaskAssignmentInstancesReportRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, pageSizeHint, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => StorageTaskReportInstance.DeserializeStorageTaskReportInstance(e), _storageTaskAssignmentInstancesReportClientDiagnostics, Pipeline, "StorageTaskAssignmentResource.GetStorageTaskAssignmentInstancesReports", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => StorageTaskReportInstance.DeserializeStorageTaskReportInstance(e), _storageTaskAssignmentInstancesReportClientDiagnostics, Pipeline, "StorageTaskAssignmentResource.GetStorageTaskAssignmentInstancesReports", "value", "nextLink", maxpagesize, cancellationToken);
         }
 
         /// <summary>
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.Storage
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageTaskAssignmentInstancesReportRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, pageSizeHint, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageTaskAssignmentInstancesReportRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, pageSizeHint, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => StorageTaskReportInstance.DeserializeStorageTaskReportInstance(e), _storageTaskAssignmentInstancesReportClientDiagnostics, Pipeline, "StorageTaskAssignmentResource.GetStorageTaskAssignmentInstancesReports", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => StorageTaskReportInstance.DeserializeStorageTaskReportInstance(e), _storageTaskAssignmentInstancesReportClientDiagnostics, Pipeline, "StorageTaskAssignmentResource.GetStorageTaskAssignmentInstancesReports", "value", "nextLink", maxpagesize, cancellationToken);
         }
     }
 }
