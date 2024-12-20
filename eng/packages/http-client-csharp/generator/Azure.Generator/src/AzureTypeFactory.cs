@@ -15,6 +15,7 @@ using Microsoft.Generator.CSharp.Snippets;
 using Microsoft.Generator.CSharp.Statements;
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using static Microsoft.Generator.CSharp.Snippets.Snippet;
 
@@ -112,6 +113,23 @@ namespace Azure.Generator
                     utf8JsonWriter.WriteStringValue(value.Property(nameof(ResourceIdentifier.Name))),
                 _ => null,
             };
+        }
+
+        /// <inheritdoc/>
+        protected override ClientProvider CreateClientCore(InputClient inputClient) => base.CreateClientCore(TransformInputClient(inputClient));
+
+        private InputClient TransformInputClient(InputClient client)
+        {
+            var operationsToKeep = new List<InputOperation>();
+            foreach (var operation in client.Operations)
+            {
+                // operations_list has been covered in Azure.ResourceManager already, we don't need to generate it in the client
+                if (operation.CrossLanguageDefinitionId != "Azure.ResourceManager.Operations.list")
+                {
+                    operationsToKeep.Add(operation);
+                }
+            }
+            return new InputClient(client.Name, client.Summary, client.Doc, operationsToKeep, client.Parameters, client.Parent);
         }
     }
 }

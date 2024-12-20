@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using MgmtTypeSpec;
 
 namespace MgmtTypeSpec.Models
 {
@@ -17,14 +16,8 @@ namespace MgmtTypeSpec.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExtendedLocation"/>. </summary>
-        /// <param name="name"> The name of the extended location. </param>
-        /// <param name="type"> The type of the extended location. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public ExtendedLocation(string name, ExtendedLocationType @type)
+        internal ExtendedLocation(string name, ExtendedLocationType @type)
         {
-            Argument.AssertNotNull(name, nameof(name));
-
             Name = name;
             Type = @type;
         }
@@ -37,9 +30,9 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> The name of the extended location. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> The type of the extended location. </summary>
-        public ExtendedLocationType Type { get; set; }
+        public ExtendedLocationType Type { get; }
     }
 }

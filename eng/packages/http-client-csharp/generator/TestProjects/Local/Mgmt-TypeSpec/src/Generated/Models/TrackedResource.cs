@@ -15,13 +15,8 @@ namespace MgmtTypeSpec.Models
     /// <summary> The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'. </summary>
     public partial class TrackedResource : Resource
     {
-        /// <summary> Initializes a new instance of <see cref="TrackedResource"/>. </summary>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public TrackedResource(string location)
+        internal TrackedResource(string location)
         {
-            Argument.AssertNotNull(location, nameof(location));
-
             Tags = new ChangeTrackingDictionary<string, string>();
             Location = location;
         }
@@ -36,6 +31,6 @@ namespace MgmtTypeSpec.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; set; }
+        public string Location { get; }
     }
 }
