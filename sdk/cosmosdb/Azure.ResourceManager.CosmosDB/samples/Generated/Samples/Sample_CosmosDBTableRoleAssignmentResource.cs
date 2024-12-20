@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.CosmosDB.Samples
 {
-    public partial class Sample_TableRoleAssignmentResource
+    public partial class Sample_CosmosDBTableRoleAssignmentResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -27,21 +27,21 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TableRoleAssignmentResource created on azure
-            // for more information of creating TableRoleAssignmentResource, please refer to the document of TableRoleAssignmentResource
+            // this example assumes you already have this CosmosDBTableRoleAssignmentResource created on azure
+            // for more information of creating CosmosDBTableRoleAssignmentResource, please refer to the document of CosmosDBTableRoleAssignmentResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "myResourceGroupName";
             string accountName = "myAccountName";
             string roleAssignmentId = "myRoleAssignmentId";
-            ResourceIdentifier tableRoleAssignmentResourceId = TableRoleAssignmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, roleAssignmentId);
-            TableRoleAssignmentResource tableRoleAssignmentResource = client.GetTableRoleAssignmentResource(tableRoleAssignmentResourceId);
+            ResourceIdentifier cosmosDBTableRoleAssignmentResourceId = CosmosDBTableRoleAssignmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, roleAssignmentId);
+            CosmosDBTableRoleAssignmentResource cosmosDBTableRoleAssignment = client.GetCosmosDBTableRoleAssignmentResource(cosmosDBTableRoleAssignmentResourceId);
 
             // invoke the operation
-            TableRoleAssignmentResource result = await tableRoleAssignmentResource.GetAsync();
+            CosmosDBTableRoleAssignmentResource result = await cosmosDBTableRoleAssignment.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            TableRoleAssignmentResourceData resourceData = result.Data;
+            CosmosDBTableRoleAssignmentData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -58,17 +58,17 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TableRoleAssignmentResource created on azure
-            // for more information of creating TableRoleAssignmentResource, please refer to the document of TableRoleAssignmentResource
+            // this example assumes you already have this CosmosDBTableRoleAssignmentResource created on azure
+            // for more information of creating CosmosDBTableRoleAssignmentResource, please refer to the document of CosmosDBTableRoleAssignmentResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "myResourceGroupName";
             string accountName = "myAccountName";
             string roleAssignmentId = "myRoleAssignmentId";
-            ResourceIdentifier tableRoleAssignmentResourceId = TableRoleAssignmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, roleAssignmentId);
-            TableRoleAssignmentResource tableRoleAssignmentResource = client.GetTableRoleAssignmentResource(tableRoleAssignmentResourceId);
+            ResourceIdentifier cosmosDBTableRoleAssignmentResourceId = CosmosDBTableRoleAssignmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, roleAssignmentId);
+            CosmosDBTableRoleAssignmentResource cosmosDBTableRoleAssignment = client.GetCosmosDBTableRoleAssignmentResource(cosmosDBTableRoleAssignmentResourceId);
 
             // invoke the operation
-            await tableRoleAssignmentResource.DeleteAsync(WaitUntil.Completed);
+            await cosmosDBTableRoleAssignment.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -85,28 +85,28 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TableRoleAssignmentResource created on azure
-            // for more information of creating TableRoleAssignmentResource, please refer to the document of TableRoleAssignmentResource
+            // this example assumes you already have this CosmosDBTableRoleAssignmentResource created on azure
+            // for more information of creating CosmosDBTableRoleAssignmentResource, please refer to the document of CosmosDBTableRoleAssignmentResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "myResourceGroupName";
             string accountName = "myAccountName";
             string roleAssignmentId = "myRoleAssignmentId";
-            ResourceIdentifier tableRoleAssignmentResourceId = TableRoleAssignmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, roleAssignmentId);
-            TableRoleAssignmentResource tableRoleAssignmentResource = client.GetTableRoleAssignmentResource(tableRoleAssignmentResourceId);
+            ResourceIdentifier cosmosDBTableRoleAssignmentResourceId = CosmosDBTableRoleAssignmentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, roleAssignmentId);
+            CosmosDBTableRoleAssignmentResource cosmosDBTableRoleAssignment = client.GetCosmosDBTableRoleAssignmentResource(cosmosDBTableRoleAssignmentResourceId);
 
             // invoke the operation
-            TableRoleAssignmentResourceData data = new TableRoleAssignmentResourceData
+            CosmosDBTableRoleAssignmentData data = new CosmosDBTableRoleAssignmentData
             {
-                RoleDefinitionId = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/myResourceGroupName/providers/Microsoft.DocumentDB/databaseAccounts/myAccountName/tableRoleDefinitions/myRoleDefinitionId",
-                Scope = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/myResourceGroupName/providers/Microsoft.DocumentDB/databaseAccounts/myAccountName/dbs/purchases/colls/redmond-purchases",
+                RoleDefinitionId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/myResourceGroupName/providers/Microsoft.DocumentDB/databaseAccounts/myAccountName/tableRoleDefinitions/myRoleDefinitionId"),
+                Scope = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/myResourceGroupName/providers/Microsoft.DocumentDB/databaseAccounts/myAccountName/dbs/purchases/colls/redmond-purchases"),
                 PrincipalId = Guid.Parse("myPrincipalId"),
             };
-            ArmOperation<TableRoleAssignmentResource> lro = await tableRoleAssignmentResource.UpdateAsync(WaitUntil.Completed, data);
-            TableRoleAssignmentResource result = lro.Value;
+            ArmOperation<CosmosDBTableRoleAssignmentResource> lro = await cosmosDBTableRoleAssignment.UpdateAsync(WaitUntil.Completed, data);
+            CosmosDBTableRoleAssignmentResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            TableRoleAssignmentResourceData resourceData = result.Data;
+            CosmosDBTableRoleAssignmentData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

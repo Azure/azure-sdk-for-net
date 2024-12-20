@@ -222,7 +222,6 @@ rename-mapping:
   CreateMode: CosmosDBAccountCreateMode
   KeyKind: CosmosDBAccountKeyKind
   NodeState: CassandraNodeState
-  Permission: CosmosDBSqlRolePermission
   RestoreMode: CosmosDBAccountRestoreMode
   RestoreParameters: CosmosDBAccountRestoreParameters
   RoleDefinitionType: CosmosDBSqlRoleDefinitionType
@@ -320,6 +319,19 @@ rename-mapping:
   AutoReplicate: CassandraAutoReplicateForm
   AzureConnectionType: ServiceConnectionType
   RestoreParametersBase.restoreWithTtlDisabled: IsRestoreWithTtlDisabled
+  TableRoleAssignmentResource: CosmosDBTableRoleAssignment
+  TableRoleAssignmentResource.properties.roleDefinitionId: -|arm-id
+  TableRoleAssignmentResource.properties.scope: -|arm-id
+  TableRoleDefinitionResource: CosmosDBTableRoleDefinition
+  TableRoleDefinitionResource.properties.id: PathId
+  TableRoleDefinitionResource.properties.type: RoleDefinitionType
+  DistanceFunction: VectorDistanceFunction
+  VectorEmbedding: CosmosDBVectorEmbedding
+  VectorDataType: CosmosDBVectorDataType
+  VectorIndex: CosmosDBVectorIndex
+  VectorIndexType: CosmosDBVectorIndexType
+  VectorIndexType.diskANN: DiskAnn
+  ThroughputBucketResource: CosmosDBThroughputBucket
 
 prepend-rp-prefix:
 - UniqueKey
@@ -465,6 +477,14 @@ directive:
   transform: >
     $.chaosFaultProperties.properties.action['x-ms-client-name'] = "CosmosDBChaosFaultSupportedActions";
     $.chaosFaultProperties.properties.action['x-ms-enum']['name'] = "CosmosDBChaosFaultSupportedActions";
+- from: rbac.json
+  where: $.definitions
+  transform: >
+    $.Permission['x-ms-client-name'] = "CosmosDBSqlRolePermission";
+- from: tablerbac.json
+  where: $.definitions
+  transform: >
+    $.Permission['x-ms-client-name'] = "CosmosDBTableRolePermission";
 
 # Below is a workaround for ADO 6196
 - remove-operation:

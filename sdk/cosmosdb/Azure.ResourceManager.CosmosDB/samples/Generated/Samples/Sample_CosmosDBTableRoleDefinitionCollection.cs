@@ -9,18 +9,19 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.CosmosDB.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.CosmosDB.Samples
 {
-    public partial class Sample_TableRoleAssignmentResourceCollection
+    public partial class Sample_CosmosDBTableRoleDefinitionCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_CosmosDBTableRoleAssignmentCreateUpdate()
+        public async Task CreateOrUpdate_CosmosDBTableRoleDefinitionCreateUpdate()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/tablerbac/CosmosDBTableRoleAssignmentCreateUpdate.json
-            // this example is just showing the usage of "TableResources_CreateUpdateTableRoleAssignment" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/tablerbac/CosmosDBTableRoleDefinitionCreateUpdate.json
+            // this example is just showing the usage of "TableResources_CreateUpdateTableRoleDefinition" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -35,33 +36,38 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             ResourceIdentifier cosmosDBAccountResourceId = CosmosDBAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             CosmosDBAccountResource cosmosDBAccount = client.GetCosmosDBAccountResource(cosmosDBAccountResourceId);
 
-            // get the collection of this TableRoleAssignmentResource
-            TableRoleAssignmentResourceCollection collection = cosmosDBAccount.GetTableRoleAssignmentResources();
+            // get the collection of this CosmosDBTableRoleDefinitionResource
+            CosmosDBTableRoleDefinitionCollection collection = cosmosDBAccount.GetCosmosDBTableRoleDefinitions();
 
             // invoke the operation
-            string roleAssignmentId = "myRoleAssignmentId";
-            TableRoleAssignmentResourceData data = new TableRoleAssignmentResourceData
+            string roleDefinitionId = "myRoleDefinitionId";
+            CosmosDBTableRoleDefinitionData data = new CosmosDBTableRoleDefinitionData
             {
-                RoleDefinitionId = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/myResourceGroupName/providers/Microsoft.DocumentDB/databaseAccounts/myAccountName/tableRoleDefinitions/myRoleDefinitionId",
-                Scope = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/myResourceGroupName/providers/Microsoft.DocumentDB/databaseAccounts/myAccountName/dbs/purchases/colls/redmond-purchases",
-                PrincipalId = Guid.Parse("myPrincipalId"),
+                RoleName = "myRoleName",
+                RoleDefinitionType = CosmosDBSqlRoleDefinitionType.CustomRole,
+                AssignableScopes = { "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/myResourceGroupName/providers/Microsoft.DocumentDB/databaseAccounts/myAccountName/dbs/sales", "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/myResourceGroupName/providers/Microsoft.DocumentDB/databaseAccounts/myAccountName/dbs/purchases" },
+                Permissions = {new CosmosDBTableRolePermission
+{
+DataActions = {"Microsoft.DocumentDB/databaseAccounts/tableDatabases/containers/entities/create", "Microsoft.DocumentDB/databaseAccounts/tableDatabases/containers/entities/read"},
+NotDataActions = {},
+}},
             };
-            ArmOperation<TableRoleAssignmentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, roleAssignmentId, data);
-            TableRoleAssignmentResource result = lro.Value;
+            ArmOperation<CosmosDBTableRoleDefinitionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, roleDefinitionId, data);
+            CosmosDBTableRoleDefinitionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            TableRoleAssignmentResourceData resourceData = result.Data;
+            CosmosDBTableRoleDefinitionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_CosmosDBTableRoleAssignmentGet()
+        public async Task Get_CosmosDBTableRoleDefinitionGet()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/tablerbac/CosmosDBTableRoleAssignmentGet.json
-            // this example is just showing the usage of "TableResources_GetTableRoleAssignment" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/tablerbac/CosmosDBTableRoleDefinitionGet.json
+            // this example is just showing the usage of "TableResources_GetTableRoleDefinition" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -76,26 +82,26 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             ResourceIdentifier cosmosDBAccountResourceId = CosmosDBAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             CosmosDBAccountResource cosmosDBAccount = client.GetCosmosDBAccountResource(cosmosDBAccountResourceId);
 
-            // get the collection of this TableRoleAssignmentResource
-            TableRoleAssignmentResourceCollection collection = cosmosDBAccount.GetTableRoleAssignmentResources();
+            // get the collection of this CosmosDBTableRoleDefinitionResource
+            CosmosDBTableRoleDefinitionCollection collection = cosmosDBAccount.GetCosmosDBTableRoleDefinitions();
 
             // invoke the operation
-            string roleAssignmentId = "myRoleAssignmentId";
-            TableRoleAssignmentResource result = await collection.GetAsync(roleAssignmentId);
+            string roleDefinitionId = "myRoleDefinitionId";
+            CosmosDBTableRoleDefinitionResource result = await collection.GetAsync(roleDefinitionId);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            TableRoleAssignmentResourceData resourceData = result.Data;
+            CosmosDBTableRoleDefinitionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_CosmosDBTableRoleAssignmentList()
+        public async Task GetAll_CosmosDBTableRoleDefinitionList()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/tablerbac/CosmosDBTableRoleAssignmentList.json
-            // this example is just showing the usage of "TableResources_ListTableRoleAssignments" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/tablerbac/CosmosDBTableRoleDefinitionList.json
+            // this example is just showing the usage of "TableResources_ListTableRoleDefinitions" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -110,15 +116,15 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             ResourceIdentifier cosmosDBAccountResourceId = CosmosDBAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             CosmosDBAccountResource cosmosDBAccount = client.GetCosmosDBAccountResource(cosmosDBAccountResourceId);
 
-            // get the collection of this TableRoleAssignmentResource
-            TableRoleAssignmentResourceCollection collection = cosmosDBAccount.GetTableRoleAssignmentResources();
+            // get the collection of this CosmosDBTableRoleDefinitionResource
+            CosmosDBTableRoleDefinitionCollection collection = cosmosDBAccount.GetCosmosDBTableRoleDefinitions();
 
             // invoke the operation and iterate over the result
-            await foreach (TableRoleAssignmentResource item in collection.GetAllAsync())
+            await foreach (CosmosDBTableRoleDefinitionResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                TableRoleAssignmentResourceData resourceData = item.Data;
+                CosmosDBTableRoleDefinitionData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -128,10 +134,10 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_CosmosDBTableRoleAssignmentGet()
+        public async Task Exists_CosmosDBTableRoleDefinitionGet()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/tablerbac/CosmosDBTableRoleAssignmentGet.json
-            // this example is just showing the usage of "TableResources_GetTableRoleAssignment" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/tablerbac/CosmosDBTableRoleDefinitionGet.json
+            // this example is just showing the usage of "TableResources_GetTableRoleDefinition" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -146,22 +152,22 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             ResourceIdentifier cosmosDBAccountResourceId = CosmosDBAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             CosmosDBAccountResource cosmosDBAccount = client.GetCosmosDBAccountResource(cosmosDBAccountResourceId);
 
-            // get the collection of this TableRoleAssignmentResource
-            TableRoleAssignmentResourceCollection collection = cosmosDBAccount.GetTableRoleAssignmentResources();
+            // get the collection of this CosmosDBTableRoleDefinitionResource
+            CosmosDBTableRoleDefinitionCollection collection = cosmosDBAccount.GetCosmosDBTableRoleDefinitions();
 
             // invoke the operation
-            string roleAssignmentId = "myRoleAssignmentId";
-            bool result = await collection.ExistsAsync(roleAssignmentId);
+            string roleDefinitionId = "myRoleDefinitionId";
+            bool result = await collection.ExistsAsync(roleDefinitionId);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_CosmosDBTableRoleAssignmentGet()
+        public async Task GetIfExists_CosmosDBTableRoleDefinitionGet()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/tablerbac/CosmosDBTableRoleAssignmentGet.json
-            // this example is just showing the usage of "TableResources_GetTableRoleAssignment" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/tablerbac/CosmosDBTableRoleDefinitionGet.json
+            // this example is just showing the usage of "TableResources_GetTableRoleDefinition" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -176,13 +182,13 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             ResourceIdentifier cosmosDBAccountResourceId = CosmosDBAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             CosmosDBAccountResource cosmosDBAccount = client.GetCosmosDBAccountResource(cosmosDBAccountResourceId);
 
-            // get the collection of this TableRoleAssignmentResource
-            TableRoleAssignmentResourceCollection collection = cosmosDBAccount.GetTableRoleAssignmentResources();
+            // get the collection of this CosmosDBTableRoleDefinitionResource
+            CosmosDBTableRoleDefinitionCollection collection = cosmosDBAccount.GetCosmosDBTableRoleDefinitions();
 
             // invoke the operation
-            string roleAssignmentId = "myRoleAssignmentId";
-            NullableResponse<TableRoleAssignmentResource> response = await collection.GetIfExistsAsync(roleAssignmentId);
-            TableRoleAssignmentResource result = response.HasValue ? response.Value : null;
+            string roleDefinitionId = "myRoleDefinitionId";
+            NullableResponse<CosmosDBTableRoleDefinitionResource> response = await collection.GetIfExistsAsync(roleDefinitionId);
+            CosmosDBTableRoleDefinitionResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -192,7 +198,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                TableRoleAssignmentResourceData resourceData = result.Data;
+                CosmosDBTableRoleDefinitionData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

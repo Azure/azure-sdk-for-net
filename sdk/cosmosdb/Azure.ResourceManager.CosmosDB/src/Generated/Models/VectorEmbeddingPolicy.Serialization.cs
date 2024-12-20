@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            IList<VectorEmbedding> vectorEmbeddings = default;
+            IList<CosmosDBVectorEmbedding> vectorEmbeddings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<VectorEmbedding> array = new List<VectorEmbedding>();
+                    List<CosmosDBVectorEmbedding> array = new List<CosmosDBVectorEmbedding>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VectorEmbedding.DeserializeVectorEmbedding(item, options));
+                        array.Add(CosmosDBVectorEmbedding.DeserializeCosmosDBVectorEmbedding(item, options));
                     }
                     vectorEmbeddings = array;
                     continue;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new VectorEmbeddingPolicy(vectorEmbeddings ?? new ChangeTrackingList<VectorEmbedding>(), serializedAdditionalRawData);
+            return new VectorEmbeddingPolicy(vectorEmbeddings ?? new ChangeTrackingList<CosmosDBVectorEmbedding>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

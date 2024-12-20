@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.CosmosDB.Samples
 {
-    public partial class Sample_TableRoleDefinitionResource
+    public partial class Sample_CosmosDBTableRoleDefinitionResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -28,21 +28,21 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TableRoleDefinitionResource created on azure
-            // for more information of creating TableRoleDefinitionResource, please refer to the document of TableRoleDefinitionResource
+            // this example assumes you already have this CosmosDBTableRoleDefinitionResource created on azure
+            // for more information of creating CosmosDBTableRoleDefinitionResource, please refer to the document of CosmosDBTableRoleDefinitionResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "myResourceGroupName";
             string accountName = "myAccountName";
             string roleDefinitionId = "myRoleDefinitionId";
-            ResourceIdentifier tableRoleDefinitionResourceId = TableRoleDefinitionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, roleDefinitionId);
-            TableRoleDefinitionResource tableRoleDefinitionResource = client.GetTableRoleDefinitionResource(tableRoleDefinitionResourceId);
+            ResourceIdentifier cosmosDBTableRoleDefinitionResourceId = CosmosDBTableRoleDefinitionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, roleDefinitionId);
+            CosmosDBTableRoleDefinitionResource cosmosDBTableRoleDefinition = client.GetCosmosDBTableRoleDefinitionResource(cosmosDBTableRoleDefinitionResourceId);
 
             // invoke the operation
-            TableRoleDefinitionResource result = await tableRoleDefinitionResource.GetAsync();
+            CosmosDBTableRoleDefinitionResource result = await cosmosDBTableRoleDefinition.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            TableRoleDefinitionResourceData resourceData = result.Data;
+            CosmosDBTableRoleDefinitionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -59,17 +59,17 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TableRoleDefinitionResource created on azure
-            // for more information of creating TableRoleDefinitionResource, please refer to the document of TableRoleDefinitionResource
+            // this example assumes you already have this CosmosDBTableRoleDefinitionResource created on azure
+            // for more information of creating CosmosDBTableRoleDefinitionResource, please refer to the document of CosmosDBTableRoleDefinitionResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "myResourceGroupName";
             string accountName = "myAccountName";
             string roleDefinitionId = "myRoleDefinitionId";
-            ResourceIdentifier tableRoleDefinitionResourceId = TableRoleDefinitionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, roleDefinitionId);
-            TableRoleDefinitionResource tableRoleDefinitionResource = client.GetTableRoleDefinitionResource(tableRoleDefinitionResourceId);
+            ResourceIdentifier cosmosDBTableRoleDefinitionResourceId = CosmosDBTableRoleDefinitionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, roleDefinitionId);
+            CosmosDBTableRoleDefinitionResource cosmosDBTableRoleDefinition = client.GetCosmosDBTableRoleDefinitionResource(cosmosDBTableRoleDefinitionResourceId);
 
             // invoke the operation
-            await tableRoleDefinitionResource.DeleteAsync(WaitUntil.Completed);
+            await cosmosDBTableRoleDefinition.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -86,33 +86,33 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TableRoleDefinitionResource created on azure
-            // for more information of creating TableRoleDefinitionResource, please refer to the document of TableRoleDefinitionResource
+            // this example assumes you already have this CosmosDBTableRoleDefinitionResource created on azure
+            // for more information of creating CosmosDBTableRoleDefinitionResource, please refer to the document of CosmosDBTableRoleDefinitionResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "myResourceGroupName";
             string accountName = "myAccountName";
             string roleDefinitionId = "myRoleDefinitionId";
-            ResourceIdentifier tableRoleDefinitionResourceId = TableRoleDefinitionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, roleDefinitionId);
-            TableRoleDefinitionResource tableRoleDefinitionResource = client.GetTableRoleDefinitionResource(tableRoleDefinitionResourceId);
+            ResourceIdentifier cosmosDBTableRoleDefinitionResourceId = CosmosDBTableRoleDefinitionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, roleDefinitionId);
+            CosmosDBTableRoleDefinitionResource cosmosDBTableRoleDefinition = client.GetCosmosDBTableRoleDefinitionResource(cosmosDBTableRoleDefinitionResourceId);
 
             // invoke the operation
-            TableRoleDefinitionResourceData data = new TableRoleDefinitionResourceData
+            CosmosDBTableRoleDefinitionData data = new CosmosDBTableRoleDefinitionData
             {
                 RoleName = "myRoleName",
-                TypePropertiesType = CosmosDBSqlRoleDefinitionType.CustomRole,
+                RoleDefinitionType = CosmosDBSqlRoleDefinitionType.CustomRole,
                 AssignableScopes = { "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/myResourceGroupName/providers/Microsoft.DocumentDB/databaseAccounts/myAccountName/dbs/sales", "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/myResourceGroupName/providers/Microsoft.DocumentDB/databaseAccounts/myAccountName/dbs/purchases" },
-                Permissions = {new PermissionAutoGenerated
+                Permissions = {new CosmosDBTableRolePermission
 {
 DataActions = {"Microsoft.DocumentDB/databaseAccounts/tableDatabases/containers/entities/create", "Microsoft.DocumentDB/databaseAccounts/tableDatabases/containers/entities/read"},
 NotDataActions = {},
 }},
             };
-            ArmOperation<TableRoleDefinitionResource> lro = await tableRoleDefinitionResource.UpdateAsync(WaitUntil.Completed, data);
-            TableRoleDefinitionResource result = lro.Value;
+            ArmOperation<CosmosDBTableRoleDefinitionResource> lro = await cosmosDBTableRoleDefinition.UpdateAsync(WaitUntil.Completed, data);
+            CosmosDBTableRoleDefinitionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            TableRoleDefinitionResourceData resourceData = result.Data;
+            CosmosDBTableRoleDefinitionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

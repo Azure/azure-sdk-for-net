@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class VectorEmbedding : IUtf8JsonSerializable, IJsonModel<VectorEmbedding>
+    public partial class CosmosDBVectorEmbedding : IUtf8JsonSerializable, IJsonModel<CosmosDBVectorEmbedding>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VectorEmbedding>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBVectorEmbedding>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<VectorEmbedding>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CosmosDBVectorEmbedding>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VectorEmbedding>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBVectorEmbedding>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VectorEmbedding)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBVectorEmbedding)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("path"u8);
@@ -60,19 +60,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
         }
 
-        VectorEmbedding IJsonModel<VectorEmbedding>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CosmosDBVectorEmbedding IJsonModel<CosmosDBVectorEmbedding>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VectorEmbedding>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBVectorEmbedding>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VectorEmbedding)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBVectorEmbedding)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVectorEmbedding(document.RootElement, options);
+            return DeserializeCosmosDBVectorEmbedding(document.RootElement, options);
         }
 
-        internal static VectorEmbedding DeserializeVectorEmbedding(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CosmosDBVectorEmbedding DeserializeCosmosDBVectorEmbedding(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             string path = default;
-            VectorDataType dataType = default;
-            DistanceFunction distanceFunction = default;
+            CosmosDBVectorDataType dataType = default;
+            VectorDistanceFunction distanceFunction = default;
             int dimensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (property.NameEquals("dataType"u8))
                 {
-                    dataType = new VectorDataType(property.Value.GetString());
+                    dataType = new CosmosDBVectorDataType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("distanceFunction"u8))
                 {
-                    distanceFunction = new DistanceFunction(property.Value.GetString());
+                    distanceFunction = new VectorDistanceFunction(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dimensions"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new VectorEmbedding(path, dataType, distanceFunction, dimensions, serializedAdditionalRawData);
+            return new CosmosDBVectorEmbedding(path, dataType, distanceFunction, dimensions, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -191,9 +191,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<VectorEmbedding>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CosmosDBVectorEmbedding>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VectorEmbedding>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBVectorEmbedding>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -202,26 +202,26 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(VectorEmbedding)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBVectorEmbedding)} does not support writing '{options.Format}' format.");
             }
         }
 
-        VectorEmbedding IPersistableModel<VectorEmbedding>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CosmosDBVectorEmbedding IPersistableModel<CosmosDBVectorEmbedding>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VectorEmbedding>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBVectorEmbedding>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeVectorEmbedding(document.RootElement, options);
+                        return DeserializeCosmosDBVectorEmbedding(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VectorEmbedding)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBVectorEmbedding)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<VectorEmbedding>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CosmosDBVectorEmbedding>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

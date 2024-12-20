@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="ThroughputSettingsResourceInfo"/>. </summary>
         public ThroughputSettingsResourceInfo()
         {
-            ThroughputBuckets = new ChangeTrackingList<ThroughputBucketResource>();
+            ThroughputBuckets = new ChangeTrackingList<CosmosDBThroughputBucket>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ThroughputSettingsResourceInfo"/>. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="softAllowedMaximumThroughput"> The maximum throughput value or the maximum maxThroughput value (for autoscale) that can be specified. </param>
         /// <param name="throughputBuckets"> Array of Throughput Bucket limits to be applied to the Cosmos DB container. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ThroughputSettingsResourceInfo(int? throughput, AutoscaleSettingsResourceInfo autoscaleSettings, string minimumThroughput, string offerReplacePending, string instantMaximumThroughput, string softAllowedMaximumThroughput, IList<ThroughputBucketResource> throughputBuckets, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ThroughputSettingsResourceInfo(int? throughput, AutoscaleSettingsResourceInfo autoscaleSettings, string minimumThroughput, string offerReplacePending, string instantMaximumThroughput, string softAllowedMaximumThroughput, IList<CosmosDBThroughputBucket> throughputBuckets, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Throughput = throughput;
             AutoscaleSettings = autoscaleSettings;
@@ -92,6 +92,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string SoftAllowedMaximumThroughput { get; }
         /// <summary> Array of Throughput Bucket limits to be applied to the Cosmos DB container. </summary>
         [WirePath("throughputBuckets")]
-        public IList<ThroughputBucketResource> ThroughputBuckets { get; }
+        public IList<CosmosDBThroughputBucket> ThroughputBuckets { get; }
     }
 }

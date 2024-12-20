@@ -532,41 +532,41 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="TableRoleDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TableRoleDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="TableRoleDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CosmosDBTableRoleDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBTableRoleDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBTableRoleDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetTableRoleDefinitionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBTableRoleDefinitionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="TableRoleDefinitionResource"/> object. </returns>
-        public static TableRoleDefinitionResource GetTableRoleDefinitionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBTableRoleDefinitionResource"/> object. </returns>
+        public static CosmosDBTableRoleDefinitionResource GetCosmosDBTableRoleDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCosmosDBArmClient(client).GetTableRoleDefinitionResource(id);
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBTableRoleDefinitionResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="TableRoleAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TableRoleAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="TableRoleAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="CosmosDBTableRoleAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBTableRoleAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBTableRoleAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetTableRoleAssignmentResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBTableRoleAssignmentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="TableRoleAssignmentResource"/> object. </returns>
-        public static TableRoleAssignmentResource GetTableRoleAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBTableRoleAssignmentResource"/> object. </returns>
+        public static CosmosDBTableRoleAssignmentResource GetCosmosDBTableRoleAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableCosmosDBArmClient(client).GetTableRoleAssignmentResource(id);
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBTableRoleAssignmentResource(id);
         }
 
         /// <summary>

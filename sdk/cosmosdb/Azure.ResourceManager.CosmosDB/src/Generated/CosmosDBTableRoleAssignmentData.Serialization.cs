@@ -15,11 +15,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    public partial class TableRoleAssignmentResourceData : IUtf8JsonSerializable, IJsonModel<TableRoleAssignmentResourceData>
+    public partial class CosmosDBTableRoleAssignmentData : IUtf8JsonSerializable, IJsonModel<CosmosDBTableRoleAssignmentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TableRoleAssignmentResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBTableRoleAssignmentData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<TableRoleAssignmentResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CosmosDBTableRoleAssignmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TableRoleAssignmentResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBTableRoleAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TableRoleAssignmentResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBTableRoleAssignmentData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -62,19 +62,19 @@ namespace Azure.ResourceManager.CosmosDB
             writer.WriteEndObject();
         }
 
-        TableRoleAssignmentResourceData IJsonModel<TableRoleAssignmentResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CosmosDBTableRoleAssignmentData IJsonModel<CosmosDBTableRoleAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TableRoleAssignmentResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBTableRoleAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TableRoleAssignmentResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBTableRoleAssignmentData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTableRoleAssignmentResourceData(document.RootElement, options);
+            return DeserializeCosmosDBTableRoleAssignmentData(document.RootElement, options);
         }
 
-        internal static TableRoleAssignmentResourceData DeserializeTableRoleAssignmentResourceData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CosmosDBTableRoleAssignmentData DeserializeCosmosDBTableRoleAssignmentData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.CosmosDB
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string roleDefinitionId = default;
-            string scope = default;
+            ResourceIdentifier roleDefinitionId = default;
+            ResourceIdentifier scope = default;
             Guid? principalId = default;
             string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -129,12 +129,20 @@ namespace Azure.ResourceManager.CosmosDB
                     {
                         if (property0.NameEquals("roleDefinitionId"u8))
                         {
-                            roleDefinitionId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            roleDefinitionId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("scope"u8))
                         {
-                            scope = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            scope = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("principalId"u8))
@@ -160,7 +168,7 @@ namespace Azure.ResourceManager.CosmosDB
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TableRoleAssignmentResourceData(
+            return new CosmosDBTableRoleAssignmentData(
                 id,
                 name,
                 type,
@@ -249,15 +257,7 @@ namespace Azure.ResourceManager.CosmosDB
                 if (Optional.IsDefined(RoleDefinitionId))
                 {
                     builder.Append("    roleDefinitionId: ");
-                    if (RoleDefinitionId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{RoleDefinitionId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{RoleDefinitionId}'");
-                    }
+                    builder.AppendLine($"'{RoleDefinitionId.ToString()}'");
                 }
             }
 
@@ -272,15 +272,7 @@ namespace Azure.ResourceManager.CosmosDB
                 if (Optional.IsDefined(Scope))
                 {
                     builder.Append("    scope: ");
-                    if (Scope.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Scope}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Scope}'");
-                    }
+                    builder.AppendLine($"'{Scope.ToString()}'");
                 }
             }
 
@@ -327,9 +319,9 @@ namespace Azure.ResourceManager.CosmosDB
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<TableRoleAssignmentResourceData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CosmosDBTableRoleAssignmentData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TableRoleAssignmentResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBTableRoleAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -338,26 +330,26 @@ namespace Azure.ResourceManager.CosmosDB
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(TableRoleAssignmentResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBTableRoleAssignmentData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        TableRoleAssignmentResourceData IPersistableModel<TableRoleAssignmentResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CosmosDBTableRoleAssignmentData IPersistableModel<CosmosDBTableRoleAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TableRoleAssignmentResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBTableRoleAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeTableRoleAssignmentResourceData(document.RootElement, options);
+                        return DeserializeCosmosDBTableRoleAssignmentData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TableRoleAssignmentResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBTableRoleAssignmentData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<TableRoleAssignmentResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CosmosDBTableRoleAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

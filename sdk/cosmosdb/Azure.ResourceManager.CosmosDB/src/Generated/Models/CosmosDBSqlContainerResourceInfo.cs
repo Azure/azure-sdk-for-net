@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         internal VectorEmbeddingPolicy VectorEmbeddingPolicy { get; set; }
         /// <summary> List of vector embeddings. </summary>
         [WirePath("vectorEmbeddingPolicy.vectorEmbeddings")]
-        public IList<VectorEmbedding> VectorEmbeddings
+        public IList<CosmosDBVectorEmbedding> VectorEmbeddings
         {
             get
             {

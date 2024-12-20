@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ThroughputBucketResource : IUtf8JsonSerializable, IJsonModel<ThroughputBucketResource>
+    public partial class CosmosDBVectorIndex : IUtf8JsonSerializable, IJsonModel<CosmosDBVectorIndex>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThroughputBucketResource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBVectorIndex>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ThroughputBucketResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CosmosDBVectorIndex>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,16 +29,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ThroughputBucketResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBVectorIndex>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThroughputBucketResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBVectorIndex)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("id"u8);
-            writer.WriteNumberValue(Id);
-            writer.WritePropertyName("maxThroughputPercentage"u8);
-            writer.WriteNumberValue(MaxThroughputPercentage);
+            writer.WritePropertyName("path"u8);
+            writer.WriteStringValue(Path);
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(IndexType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
         }
 
-        ThroughputBucketResource IJsonModel<ThroughputBucketResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CosmosDBVectorIndex IJsonModel<CosmosDBVectorIndex>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ThroughputBucketResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBVectorIndex>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThroughputBucketResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBVectorIndex)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeThroughputBucketResource(document.RootElement, options);
+            return DeserializeCosmosDBVectorIndex(document.RootElement, options);
         }
 
-        internal static ThroughputBucketResource DeserializeThroughputBucketResource(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CosmosDBVectorIndex DeserializeCosmosDBVectorIndex(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -76,20 +76,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            int id = default;
-            int maxThroughputPercentage = default;
+            string path = default;
+            CosmosDBVectorIndexType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (property.NameEquals("path"u8))
                 {
-                    id = property.Value.GetInt32();
+                    path = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("maxThroughputPercentage"u8))
+                if (property.NameEquals("type"u8))
                 {
-                    maxThroughputPercentage = property.Value.GetInt32();
+                    type = new CosmosDBVectorIndexType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ThroughputBucketResource(id, maxThroughputPercentage, serializedAdditionalRawData);
+            return new CosmosDBVectorIndex(path, type, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -112,37 +112,48 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Path), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("  id: ");
+                builder.Append("  path: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                builder.Append("  id: ");
-                builder.AppendLine($"{Id}");
+                if (Optional.IsDefined(Path))
+                {
+                    builder.Append("  path: ");
+                    if (Path.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Path}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Path}'");
+                    }
+                }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxThroughputPercentage), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IndexType), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("  maxThroughputPercentage: ");
+                builder.Append("  type: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                builder.Append("  maxThroughputPercentage: ");
-                builder.AppendLine($"{MaxThroughputPercentage}");
+                builder.Append("  type: ");
+                builder.AppendLine($"'{IndexType.ToString()}'");
             }
 
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<ThroughputBucketResource>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CosmosDBVectorIndex>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ThroughputBucketResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBVectorIndex>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -151,26 +162,26 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ThroughputBucketResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBVectorIndex)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ThroughputBucketResource IPersistableModel<ThroughputBucketResource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CosmosDBVectorIndex IPersistableModel<CosmosDBVectorIndex>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ThroughputBucketResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBVectorIndex>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeThroughputBucketResource(document.RootElement, options);
+                        return DeserializeCosmosDBVectorIndex(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ThroughputBucketResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBVectorIndex)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ThroughputBucketResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CosmosDBVectorIndex>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string offerReplacePending = default;
             string instantMaximumThroughput = default;
             string softAllowedMaximumThroughput = default;
-            IList<ThroughputBucketResource> throughputBuckets = default;
+            IList<CosmosDBThroughputBucket> throughputBuckets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,10 +168,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<ThroughputBucketResource> array = new List<ThroughputBucketResource>();
+                    List<CosmosDBThroughputBucket> array = new List<CosmosDBThroughputBucket>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ThroughputBucketResource.DeserializeThroughputBucketResource(item, options));
+                        array.Add(CosmosDBThroughputBucket.DeserializeCosmosDBThroughputBucket(item, options));
                     }
                     throughputBuckets = array;
                     continue;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 offerReplacePending,
                 instantMaximumThroughput,
                 softAllowedMaximumThroughput,
-                throughputBuckets ?? new ChangeTrackingList<ThroughputBucketResource>(),
+                throughputBuckets ?? new ChangeTrackingList<CosmosDBThroughputBucket>(),
                 serializedAdditionalRawData);
         }
 

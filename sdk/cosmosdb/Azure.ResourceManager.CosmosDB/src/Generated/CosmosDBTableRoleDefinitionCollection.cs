@@ -18,28 +18,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A class representing a collection of <see cref="TableRoleDefinitionResource"/> and their operations.
-    /// Each <see cref="TableRoleDefinitionResource"/> in the collection will belong to the same instance of <see cref="CosmosDBAccountResource"/>.
-    /// To get a <see cref="TableRoleDefinitionResourceCollection"/> instance call the GetTableRoleDefinitionResources method from an instance of <see cref="CosmosDBAccountResource"/>.
+    /// A class representing a collection of <see cref="CosmosDBTableRoleDefinitionResource"/> and their operations.
+    /// Each <see cref="CosmosDBTableRoleDefinitionResource"/> in the collection will belong to the same instance of <see cref="CosmosDBAccountResource"/>.
+    /// To get a <see cref="CosmosDBTableRoleDefinitionCollection"/> instance call the GetCosmosDBTableRoleDefinitions method from an instance of <see cref="CosmosDBAccountResource"/>.
     /// </summary>
-    public partial class TableRoleDefinitionResourceCollection : ArmCollection, IEnumerable<TableRoleDefinitionResource>, IAsyncEnumerable<TableRoleDefinitionResource>
+    public partial class CosmosDBTableRoleDefinitionCollection : ArmCollection, IEnumerable<CosmosDBTableRoleDefinitionResource>, IAsyncEnumerable<CosmosDBTableRoleDefinitionResource>
     {
-        private readonly ClientDiagnostics _tableRoleDefinitionResourceTableResourcesClientDiagnostics;
-        private readonly TableResourcesRestOperations _tableRoleDefinitionResourceTableResourcesRestClient;
+        private readonly ClientDiagnostics _cosmosDBTableRoleDefinitionTableResourcesClientDiagnostics;
+        private readonly TableResourcesRestOperations _cosmosDBTableRoleDefinitionTableResourcesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="TableRoleDefinitionResourceCollection"/> class for mocking. </summary>
-        protected TableRoleDefinitionResourceCollection()
+        /// <summary> Initializes a new instance of the <see cref="CosmosDBTableRoleDefinitionCollection"/> class for mocking. </summary>
+        protected CosmosDBTableRoleDefinitionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="TableRoleDefinitionResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CosmosDBTableRoleDefinitionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal TableRoleDefinitionResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal CosmosDBTableRoleDefinitionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _tableRoleDefinitionResourceTableResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", TableRoleDefinitionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(TableRoleDefinitionResource.ResourceType, out string tableRoleDefinitionResourceTableResourcesApiVersion);
-            _tableRoleDefinitionResourceTableResourcesRestClient = new TableResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, tableRoleDefinitionResourceTableResourcesApiVersion);
+            _cosmosDBTableRoleDefinitionTableResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBTableRoleDefinitionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(CosmosDBTableRoleDefinitionResource.ResourceType, out string cosmosDBTableRoleDefinitionTableResourcesApiVersion);
+            _cosmosDBTableRoleDefinitionTableResourcesRestClient = new TableResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBTableRoleDefinitionTableResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="TableRoleDefinitionResource"/></description>
+        /// <description><see cref="CosmosDBTableRoleDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -78,17 +78,17 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<TableRoleDefinitionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string roleDefinitionId, TableRoleDefinitionResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CosmosDBTableRoleDefinitionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string roleDefinitionId, CosmosDBTableRoleDefinitionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _tableRoleDefinitionResourceTableResourcesClientDiagnostics.CreateScope("TableRoleDefinitionResourceCollection.CreateOrUpdate");
+            using var scope = _cosmosDBTableRoleDefinitionTableResourcesClientDiagnostics.CreateScope("CosmosDBTableRoleDefinitionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _tableRoleDefinitionResourceTableResourcesRestClient.CreateUpdateTableRoleDefinitionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<TableRoleDefinitionResource>(new TableRoleDefinitionResourceOperationSource(Client), _tableRoleDefinitionResourceTableResourcesClientDiagnostics, Pipeline, _tableRoleDefinitionResourceTableResourcesRestClient.CreateCreateUpdateTableRoleDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _cosmosDBTableRoleDefinitionTableResourcesRestClient.CreateUpdateTableRoleDefinitionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, data, cancellationToken).ConfigureAwait(false);
+                var operation = new CosmosDBArmOperation<CosmosDBTableRoleDefinitionResource>(new CosmosDBTableRoleDefinitionOperationSource(Client), _cosmosDBTableRoleDefinitionTableResourcesClientDiagnostics, Pipeline, _cosmosDBTableRoleDefinitionTableResourcesRestClient.CreateCreateUpdateTableRoleDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="TableRoleDefinitionResource"/></description>
+        /// <description><see cref="CosmosDBTableRoleDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,17 +127,17 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<TableRoleDefinitionResource> CreateOrUpdate(WaitUntil waitUntil, string roleDefinitionId, TableRoleDefinitionResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CosmosDBTableRoleDefinitionResource> CreateOrUpdate(WaitUntil waitUntil, string roleDefinitionId, CosmosDBTableRoleDefinitionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _tableRoleDefinitionResourceTableResourcesClientDiagnostics.CreateScope("TableRoleDefinitionResourceCollection.CreateOrUpdate");
+            using var scope = _cosmosDBTableRoleDefinitionTableResourcesClientDiagnostics.CreateScope("CosmosDBTableRoleDefinitionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _tableRoleDefinitionResourceTableResourcesRestClient.CreateUpdateTableRoleDefinition(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, data, cancellationToken);
-                var operation = new CosmosDBArmOperation<TableRoleDefinitionResource>(new TableRoleDefinitionResourceOperationSource(Client), _tableRoleDefinitionResourceTableResourcesClientDiagnostics, Pipeline, _tableRoleDefinitionResourceTableResourcesRestClient.CreateCreateUpdateTableRoleDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, data).Request, response, OperationFinalStateVia.Location);
+                var response = _cosmosDBTableRoleDefinitionTableResourcesRestClient.CreateUpdateTableRoleDefinition(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, data, cancellationToken);
+                var operation = new CosmosDBArmOperation<CosmosDBTableRoleDefinitionResource>(new CosmosDBTableRoleDefinitionOperationSource(Client), _cosmosDBTableRoleDefinitionTableResourcesClientDiagnostics, Pipeline, _cosmosDBTableRoleDefinitionTableResourcesRestClient.CreateCreateUpdateTableRoleDefinitionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="TableRoleDefinitionResource"/></description>
+        /// <description><see cref="CosmosDBTableRoleDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -174,18 +174,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
-        public virtual async Task<Response<TableRoleDefinitionResource>> GetAsync(string roleDefinitionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CosmosDBTableRoleDefinitionResource>> GetAsync(string roleDefinitionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
 
-            using var scope = _tableRoleDefinitionResourceTableResourcesClientDiagnostics.CreateScope("TableRoleDefinitionResourceCollection.Get");
+            using var scope = _cosmosDBTableRoleDefinitionTableResourcesClientDiagnostics.CreateScope("CosmosDBTableRoleDefinitionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _tableRoleDefinitionResourceTableResourcesRestClient.GetTableRoleDefinitionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, cancellationToken).ConfigureAwait(false);
+                var response = await _cosmosDBTableRoleDefinitionTableResourcesRestClient.GetTableRoleDefinitionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TableRoleDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CosmosDBTableRoleDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="TableRoleDefinitionResource"/></description>
+        /// <description><see cref="CosmosDBTableRoleDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,18 +219,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
-        public virtual Response<TableRoleDefinitionResource> Get(string roleDefinitionId, CancellationToken cancellationToken = default)
+        public virtual Response<CosmosDBTableRoleDefinitionResource> Get(string roleDefinitionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
 
-            using var scope = _tableRoleDefinitionResourceTableResourcesClientDiagnostics.CreateScope("TableRoleDefinitionResourceCollection.Get");
+            using var scope = _cosmosDBTableRoleDefinitionTableResourcesClientDiagnostics.CreateScope("CosmosDBTableRoleDefinitionCollection.Get");
             scope.Start();
             try
             {
-                var response = _tableRoleDefinitionResourceTableResourcesRestClient.GetTableRoleDefinition(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, cancellationToken);
+                var response = _cosmosDBTableRoleDefinitionTableResourcesRestClient.GetTableRoleDefinition(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TableRoleDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CosmosDBTableRoleDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -256,16 +256,16 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="TableRoleDefinitionResource"/></description>
+        /// <description><see cref="CosmosDBTableRoleDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TableRoleDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TableRoleDefinitionResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CosmosDBTableRoleDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CosmosDBTableRoleDefinitionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _tableRoleDefinitionResourceTableResourcesRestClient.CreateListTableRoleDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new TableRoleDefinitionResource(Client, TableRoleDefinitionResourceData.DeserializeTableRoleDefinitionResourceData(e)), _tableRoleDefinitionResourceTableResourcesClientDiagnostics, Pipeline, "TableRoleDefinitionResourceCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBTableRoleDefinitionTableResourcesRestClient.CreateListTableRoleDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBTableRoleDefinitionResource(Client, CosmosDBTableRoleDefinitionData.DeserializeCosmosDBTableRoleDefinitionData(e)), _cosmosDBTableRoleDefinitionTableResourcesClientDiagnostics, Pipeline, "CosmosDBTableRoleDefinitionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -285,16 +285,16 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="TableRoleDefinitionResource"/></description>
+        /// <description><see cref="CosmosDBTableRoleDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TableRoleDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TableRoleDefinitionResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CosmosDBTableRoleDefinitionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CosmosDBTableRoleDefinitionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _tableRoleDefinitionResourceTableResourcesRestClient.CreateListTableRoleDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new TableRoleDefinitionResource(Client, TableRoleDefinitionResourceData.DeserializeTableRoleDefinitionResourceData(e)), _tableRoleDefinitionResourceTableResourcesClientDiagnostics, Pipeline, "TableRoleDefinitionResourceCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBTableRoleDefinitionTableResourcesRestClient.CreateListTableRoleDefinitionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBTableRoleDefinitionResource(Client, CosmosDBTableRoleDefinitionData.DeserializeCosmosDBTableRoleDefinitionData(e)), _cosmosDBTableRoleDefinitionTableResourcesClientDiagnostics, Pipeline, "CosmosDBTableRoleDefinitionCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="TableRoleDefinitionResource"/></description>
+        /// <description><see cref="CosmosDBTableRoleDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -326,11 +326,11 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
 
-            using var scope = _tableRoleDefinitionResourceTableResourcesClientDiagnostics.CreateScope("TableRoleDefinitionResourceCollection.Exists");
+            using var scope = _cosmosDBTableRoleDefinitionTableResourcesClientDiagnostics.CreateScope("CosmosDBTableRoleDefinitionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _tableRoleDefinitionResourceTableResourcesRestClient.GetTableRoleDefinitionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _cosmosDBTableRoleDefinitionTableResourcesRestClient.GetTableRoleDefinitionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="TableRoleDefinitionResource"/></description>
+        /// <description><see cref="CosmosDBTableRoleDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -369,11 +369,11 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
 
-            using var scope = _tableRoleDefinitionResourceTableResourcesClientDiagnostics.CreateScope("TableRoleDefinitionResourceCollection.Exists");
+            using var scope = _cosmosDBTableRoleDefinitionTableResourcesClientDiagnostics.CreateScope("CosmosDBTableRoleDefinitionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _tableRoleDefinitionResourceTableResourcesRestClient.GetTableRoleDefinition(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, cancellationToken: cancellationToken);
+                var response = _cosmosDBTableRoleDefinitionTableResourcesRestClient.GetTableRoleDefinition(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="TableRoleDefinitionResource"/></description>
+        /// <description><see cref="CosmosDBTableRoleDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -408,18 +408,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
-        public virtual async Task<NullableResponse<TableRoleDefinitionResource>> GetIfExistsAsync(string roleDefinitionId, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<CosmosDBTableRoleDefinitionResource>> GetIfExistsAsync(string roleDefinitionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
 
-            using var scope = _tableRoleDefinitionResourceTableResourcesClientDiagnostics.CreateScope("TableRoleDefinitionResourceCollection.GetIfExists");
+            using var scope = _cosmosDBTableRoleDefinitionTableResourcesClientDiagnostics.CreateScope("CosmosDBTableRoleDefinitionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _tableRoleDefinitionResourceTableResourcesRestClient.GetTableRoleDefinitionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _cosmosDBTableRoleDefinitionTableResourcesRestClient.GetTableRoleDefinitionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<TableRoleDefinitionResource>(response.GetRawResponse());
-                return Response.FromValue(new TableRoleDefinitionResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<CosmosDBTableRoleDefinitionResource>(response.GetRawResponse());
+                return Response.FromValue(new CosmosDBTableRoleDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="TableRoleDefinitionResource"/></description>
+        /// <description><see cref="CosmosDBTableRoleDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -453,18 +453,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
-        public virtual NullableResponse<TableRoleDefinitionResource> GetIfExists(string roleDefinitionId, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<CosmosDBTableRoleDefinitionResource> GetIfExists(string roleDefinitionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
 
-            using var scope = _tableRoleDefinitionResourceTableResourcesClientDiagnostics.CreateScope("TableRoleDefinitionResourceCollection.GetIfExists");
+            using var scope = _cosmosDBTableRoleDefinitionTableResourcesClientDiagnostics.CreateScope("CosmosDBTableRoleDefinitionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _tableRoleDefinitionResourceTableResourcesRestClient.GetTableRoleDefinition(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, cancellationToken: cancellationToken);
+                var response = _cosmosDBTableRoleDefinitionTableResourcesRestClient.GetTableRoleDefinition(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleDefinitionId, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<TableRoleDefinitionResource>(response.GetRawResponse());
-                return Response.FromValue(new TableRoleDefinitionResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<CosmosDBTableRoleDefinitionResource>(response.GetRawResponse());
+                return Response.FromValue(new CosmosDBTableRoleDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        IEnumerator<TableRoleDefinitionResource> IEnumerable<TableRoleDefinitionResource>.GetEnumerator()
+        IEnumerator<CosmosDBTableRoleDefinitionResource> IEnumerable<CosmosDBTableRoleDefinitionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.CosmosDB
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<TableRoleDefinitionResource> IAsyncEnumerable<TableRoleDefinitionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<CosmosDBTableRoleDefinitionResource> IAsyncEnumerable<CosmosDBTableRoleDefinitionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

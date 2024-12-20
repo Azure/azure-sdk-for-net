@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             IList<CosmosDBExcludedPath> excludedPaths = default;
             IList<IList<CosmosDBCompositePath>> compositeIndexes = default;
             IList<SpatialSpec> spatialIndexes = default;
-            IList<VectorIndex> vectorIndexes = default;
+            IList<CosmosDBVectorIndex> vectorIndexes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -246,10 +246,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<VectorIndex> array = new List<VectorIndex>();
+                    List<CosmosDBVectorIndex> array = new List<CosmosDBVectorIndex>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VectorIndex.DeserializeVectorIndex(item, options));
+                        array.Add(CosmosDBVectorIndex.DeserializeCosmosDBVectorIndex(item, options));
                     }
                     vectorIndexes = array;
                     continue;
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 excludedPaths ?? new ChangeTrackingList<CosmosDBExcludedPath>(),
                 compositeIndexes ?? new ChangeTrackingList<IList<CosmosDBCompositePath>>(),
                 spatialIndexes ?? new ChangeTrackingList<SpatialSpec>(),
-                vectorIndexes ?? new ChangeTrackingList<VectorIndex>(),
+                vectorIndexes ?? new ChangeTrackingList<CosmosDBVectorIndex>(),
                 serializedAdditionalRawData);
         }
 

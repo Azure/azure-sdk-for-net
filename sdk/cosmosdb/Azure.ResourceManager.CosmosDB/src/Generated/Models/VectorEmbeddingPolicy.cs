@@ -48,13 +48,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="VectorEmbeddingPolicy"/>. </summary>
         public VectorEmbeddingPolicy()
         {
-            VectorEmbeddings = new ChangeTrackingList<VectorEmbedding>();
+            VectorEmbeddings = new ChangeTrackingList<CosmosDBVectorEmbedding>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VectorEmbeddingPolicy"/>. </summary>
         /// <param name="vectorEmbeddings"> List of vector embeddings. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VectorEmbeddingPolicy(IList<VectorEmbedding> vectorEmbeddings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VectorEmbeddingPolicy(IList<CosmosDBVectorEmbedding> vectorEmbeddings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VectorEmbeddings = vectorEmbeddings;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -62,6 +62,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> List of vector embeddings. </summary>
         [WirePath("vectorEmbeddings")]
-        public IList<VectorEmbedding> VectorEmbeddings { get; }
+        public IList<CosmosDBVectorEmbedding> VectorEmbeddings { get; }
     }
 }

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             ExcludedPaths = new ChangeTrackingList<CosmosDBExcludedPath>();
             CompositeIndexes = new ChangeTrackingList<IList<CosmosDBCompositePath>>();
             SpatialIndexes = new ChangeTrackingList<SpatialSpec>();
-            VectorIndexes = new ChangeTrackingList<VectorIndex>();
+            VectorIndexes = new ChangeTrackingList<CosmosDBVectorIndex>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBIndexingPolicy"/>. </summary>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="spatialIndexes"> List of spatial specifics. </param>
         /// <param name="vectorIndexes"> List of paths to include in the vector indexing. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBIndexingPolicy(bool? isAutomatic, CosmosDBIndexingMode? indexingMode, IList<CosmosDBIncludedPath> includedPaths, IList<CosmosDBExcludedPath> excludedPaths, IList<IList<CosmosDBCompositePath>> compositeIndexes, IList<SpatialSpec> spatialIndexes, IList<VectorIndex> vectorIndexes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CosmosDBIndexingPolicy(bool? isAutomatic, CosmosDBIndexingMode? indexingMode, IList<CosmosDBIncludedPath> includedPaths, IList<CosmosDBExcludedPath> excludedPaths, IList<IList<CosmosDBCompositePath>> compositeIndexes, IList<SpatialSpec> spatialIndexes, IList<CosmosDBVectorIndex> vectorIndexes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsAutomatic = isAutomatic;
             IndexingMode = indexingMode;
@@ -96,6 +96,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public IList<SpatialSpec> SpatialIndexes { get; }
         /// <summary> List of paths to include in the vector indexing. </summary>
         [WirePath("vectorIndexes")]
-        public IList<VectorIndex> VectorIndexes { get; }
+        public IList<CosmosDBVectorIndex> VectorIndexes { get; }
     }
 }

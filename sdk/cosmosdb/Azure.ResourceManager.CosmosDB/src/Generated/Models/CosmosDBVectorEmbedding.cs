@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Represents a vector embedding. A vector embedding is used to define a vector field in the documents. </summary>
-    public partial class VectorEmbedding
+    public partial class CosmosDBVectorEmbedding
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,13 +45,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="VectorEmbedding"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBVectorEmbedding"/>. </summary>
         /// <param name="path"> The path to the vector field in the document. </param>
         /// <param name="dataType"> Indicates the data type of vector. </param>
         /// <param name="distanceFunction"> The distance function to use for distance calculation in between vectors. </param>
         /// <param name="dimensions"> The number of dimensions in the vector. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>
-        public VectorEmbedding(string path, VectorDataType dataType, DistanceFunction distanceFunction, int dimensions)
+        public CosmosDBVectorEmbedding(string path, CosmosDBVectorDataType dataType, VectorDistanceFunction distanceFunction, int dimensions)
         {
             Argument.AssertNotNull(path, nameof(path));
 
@@ -61,13 +61,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Dimensions = dimensions;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VectorEmbedding"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBVectorEmbedding"/>. </summary>
         /// <param name="path"> The path to the vector field in the document. </param>
         /// <param name="dataType"> Indicates the data type of vector. </param>
         /// <param name="distanceFunction"> The distance function to use for distance calculation in between vectors. </param>
         /// <param name="dimensions"> The number of dimensions in the vector. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VectorEmbedding(string path, VectorDataType dataType, DistanceFunction distanceFunction, int dimensions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CosmosDBVectorEmbedding(string path, CosmosDBVectorDataType dataType, VectorDistanceFunction distanceFunction, int dimensions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Path = path;
             DataType = dataType;
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VectorEmbedding"/> for deserialization. </summary>
-        internal VectorEmbedding()
+        /// <summary> Initializes a new instance of <see cref="CosmosDBVectorEmbedding"/> for deserialization. </summary>
+        internal CosmosDBVectorEmbedding()
         {
         }
 
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string Path { get; set; }
         /// <summary> Indicates the data type of vector. </summary>
         [WirePath("dataType")]
-        public VectorDataType DataType { get; set; }
+        public CosmosDBVectorDataType DataType { get; set; }
         /// <summary> The distance function to use for distance calculation in between vectors. </summary>
         [WirePath("distanceFunction")]
-        public DistanceFunction DistanceFunction { get; set; }
+        public VectorDistanceFunction DistanceFunction { get; set; }
         /// <summary> The number of dimensions in the vector. </summary>
         [WirePath("dimensions")]
         public int Dimensions { get; set; }

@@ -17,11 +17,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    public partial class TableRoleDefinitionResourceData : IUtf8JsonSerializable, IJsonModel<TableRoleDefinitionResourceData>
+    public partial class CosmosDBTableRoleDefinitionData : IUtf8JsonSerializable, IJsonModel<CosmosDBTableRoleDefinitionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TableRoleDefinitionResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBTableRoleDefinitionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<TableRoleDefinitionResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CosmosDBTableRoleDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -32,29 +32,29 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TableRoleDefinitionResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBTableRoleDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TableRoleDefinitionResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBTableRoleDefinitionData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IdPropertiesId))
+            if (Optional.IsDefined(PathId))
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(IdPropertiesId);
+                writer.WriteStringValue(PathId);
             }
             if (Optional.IsDefined(RoleName))
             {
                 writer.WritePropertyName("roleName"u8);
                 writer.WriteStringValue(RoleName);
             }
-            if (Optional.IsDefined(TypePropertiesType))
+            if (Optional.IsDefined(RoleDefinitionType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(TypePropertiesType.Value.ToSerialString());
+                writer.WriteStringValue(RoleDefinitionType.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(AssignableScopes))
             {
@@ -79,19 +79,19 @@ namespace Azure.ResourceManager.CosmosDB
             writer.WriteEndObject();
         }
 
-        TableRoleDefinitionResourceData IJsonModel<TableRoleDefinitionResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CosmosDBTableRoleDefinitionData IJsonModel<CosmosDBTableRoleDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TableRoleDefinitionResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBTableRoleDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TableRoleDefinitionResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBTableRoleDefinitionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTableRoleDefinitionResourceData(document.RootElement, options);
+            return DeserializeCosmosDBTableRoleDefinitionData(document.RootElement, options);
         }
 
-        internal static TableRoleDefinitionResourceData DeserializeTableRoleDefinitionResourceData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CosmosDBTableRoleDefinitionData DeserializeCosmosDBTableRoleDefinitionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CosmosDB
             string roleName = default;
             CosmosDBSqlRoleDefinitionType? type0 = default;
             IList<string> assignableScopes = default;
-            IList<PermissionAutoGenerated> permissions = default;
+            IList<CosmosDBTableRolePermission> permissions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -184,10 +184,10 @@ namespace Azure.ResourceManager.CosmosDB
                             {
                                 continue;
                             }
-                            List<PermissionAutoGenerated> array = new List<PermissionAutoGenerated>();
+                            List<CosmosDBTableRolePermission> array = new List<CosmosDBTableRolePermission>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PermissionAutoGenerated.DeserializePermissionAutoGenerated(item, options));
+                                array.Add(CosmosDBTableRolePermission.DeserializeCosmosDBTableRolePermission(item, options));
                             }
                             permissions = array;
                             continue;
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.CosmosDB
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TableRoleDefinitionResourceData(
+            return new CosmosDBTableRoleDefinitionData(
                 id,
                 name,
                 type,
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.CosmosDB
                 roleName,
                 type0,
                 assignableScopes ?? new ChangeTrackingList<string>(),
-                permissions ?? new ChangeTrackingList<PermissionAutoGenerated>(),
+                permissions ?? new ChangeTrackingList<CosmosDBTableRolePermission>(),
                 serializedAdditionalRawData);
         }
 
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.CosmosDB
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IdPropertiesId), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PathId), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    id: ");
@@ -288,17 +288,17 @@ namespace Azure.ResourceManager.CosmosDB
             }
             else
             {
-                if (Optional.IsDefined(IdPropertiesId))
+                if (Optional.IsDefined(PathId))
                 {
                     builder.Append("    id: ");
-                    if (IdPropertiesId.Contains(Environment.NewLine))
+                    if (PathId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{IdPropertiesId}'''");
+                        builder.AppendLine($"{PathId}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{IdPropertiesId}'");
+                        builder.AppendLine($"'{PathId}'");
                     }
                 }
             }
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.CosmosDB
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TypePropertiesType), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoleDefinitionType), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    type: ");
@@ -334,10 +334,10 @@ namespace Azure.ResourceManager.CosmosDB
             }
             else
             {
-                if (Optional.IsDefined(TypePropertiesType))
+                if (Optional.IsDefined(RoleDefinitionType))
                 {
                     builder.Append("    type: ");
-                    builder.AppendLine($"'{TypePropertiesType.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{RoleDefinitionType.Value.ToSerialString()}'");
                 }
             }
 
@@ -405,9 +405,9 @@ namespace Azure.ResourceManager.CosmosDB
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<TableRoleDefinitionResourceData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CosmosDBTableRoleDefinitionData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TableRoleDefinitionResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBTableRoleDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -416,26 +416,26 @@ namespace Azure.ResourceManager.CosmosDB
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(TableRoleDefinitionResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBTableRoleDefinitionData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        TableRoleDefinitionResourceData IPersistableModel<TableRoleDefinitionResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CosmosDBTableRoleDefinitionData IPersistableModel<CosmosDBTableRoleDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TableRoleDefinitionResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBTableRoleDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeTableRoleDefinitionResourceData(document.RootElement, options);
+                        return DeserializeCosmosDBTableRoleDefinitionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TableRoleDefinitionResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBTableRoleDefinitionData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<TableRoleDefinitionResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CosmosDBTableRoleDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -64,7 +64,7 @@ Kind = CosmosDBIndexKind.Range,
 }},
 }},
                     ExcludedPaths = { },
-                    VectorIndexes = { new VectorIndex("/vectorPath1", VectorIndexType.Flat), new VectorIndex("/vectorPath2", VectorIndexType.QuantizedFlat), new VectorIndex("/vectorPath3", VectorIndexType.DiskANN) },
+                    VectorIndexes = { new CosmosDBVectorIndex("/vectorPath1", CosmosDBVectorIndexType.Flat), new CosmosDBVectorIndex("/vectorPath2", CosmosDBVectorIndexType.QuantizedFlat), new CosmosDBVectorIndex("/vectorPath3", CosmosDBVectorIndexType.DiskAnn) },
                 },
                 PartitionKey = new CosmosDBContainerPartitionKey
                 {
@@ -90,7 +90,7 @@ new CosmosDBClientEncryptionIncludedPath("/path", "keyId", "Deterministic", "AEA
 Name = "cp_lowerName",
 Query = "SELECT VALUE LOWER(c.name) FROM c",
 }},
-                VectorEmbeddings = { new VectorEmbedding("/vectorPath1", VectorDataType.Float32, DistanceFunction.Euclidean, 400), new VectorEmbedding("/vectorPath2", VectorDataType.Uint8, DistanceFunction.Cosine, 512), new VectorEmbedding("/vectorPath3", VectorDataType.Int8, DistanceFunction.Dotproduct, 512) },
+                VectorEmbeddings = { new CosmosDBVectorEmbedding("/vectorPath1", CosmosDBVectorDataType.Float32, VectorDistanceFunction.Euclidean, 400), new CosmosDBVectorEmbedding("/vectorPath2", CosmosDBVectorDataType.Uint8, VectorDistanceFunction.Cosine, 512), new CosmosDBVectorEmbedding("/vectorPath3", CosmosDBVectorDataType.Int8, VectorDistanceFunction.Dotproduct, 512) },
             })
             {
                 Options = new CosmosDBCreateUpdateConfig(),

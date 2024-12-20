@@ -13,10 +13,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A class representing the TableRoleAssignmentResource data model.
+    /// A class representing the CosmosDBTableRoleAssignment data model.
     /// Parameters to create and update an Azure Cosmos DB Table Role Assignment.
     /// </summary>
-    public partial class TableRoleAssignmentResourceData : ResourceData
+    public partial class CosmosDBTableRoleAssignmentData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="TableRoleAssignmentResourceData"/>. </summary>
-        public TableRoleAssignmentResourceData()
+        /// <summary> Initializes a new instance of <see cref="CosmosDBTableRoleAssignmentData"/>. </summary>
+        public CosmosDBTableRoleAssignmentData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TableRoleAssignmentResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBTableRoleAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="principalId"> The unique identifier for the associated AAD principal in the AAD graph to which access is being granted through this Table Role Assignment. Tenant ID for the principal is inferred using the tenant associated with the subscription. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TableRoleAssignmentResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string roleDefinitionId, string scope, Guid? principalId, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal CosmosDBTableRoleAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier roleDefinitionId, ResourceIdentifier scope, Guid? principalId, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             RoleDefinitionId = roleDefinitionId;
             Scope = scope;
@@ -76,10 +76,10 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> The unique identifier for the associated Role Definition. </summary>
         [WirePath("properties.roleDefinitionId")]
-        public string RoleDefinitionId { get; set; }
+        public ResourceIdentifier RoleDefinitionId { get; set; }
         /// <summary> The data plane resource path for which access is being granted through this Table Role Assignment. </summary>
         [WirePath("properties.scope")]
-        public string Scope { get; set; }
+        public ResourceIdentifier Scope { get; set; }
         /// <summary> The unique identifier for the associated AAD principal in the AAD graph to which access is being granted through this Table Role Assignment. Tenant ID for the principal is inferred using the tenant associated with the subscription. </summary>
         [WirePath("properties.principalId")]
         public Guid? PrincipalId { get; set; }

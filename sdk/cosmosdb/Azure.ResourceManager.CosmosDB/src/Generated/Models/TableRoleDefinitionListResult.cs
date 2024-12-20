@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="TableRoleDefinitionListResult"/>. </summary>
         internal TableRoleDefinitionListResult()
         {
-            Value = new ChangeTrackingList<TableRoleDefinitionResourceData>();
+            Value = new ChangeTrackingList<CosmosDBTableRoleDefinitionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TableRoleDefinitionListResult"/>. </summary>
         /// <param name="value"> List of Role Definitions and their properties. </param>
         /// <param name="nextLink"> The link used to get the next page of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TableRoleDefinitionListResult(IReadOnlyList<TableRoleDefinitionResourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TableRoleDefinitionListResult(IReadOnlyList<CosmosDBTableRoleDefinitionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> List of Role Definitions and their properties. </summary>
-        public IReadOnlyList<TableRoleDefinitionResourceData> Value { get; }
+        public IReadOnlyList<CosmosDBTableRoleDefinitionData> Value { get; }
         /// <summary> The link used to get the next page of results. </summary>
         public string NextLink { get; }
     }

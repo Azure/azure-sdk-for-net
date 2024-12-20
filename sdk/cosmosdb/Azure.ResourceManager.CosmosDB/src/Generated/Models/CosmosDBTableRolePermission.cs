@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> The VectorIndex. </summary>
-    public partial class VectorIndex
+    /// <summary> The set of data plane operations permitted through this Role Definition. </summary>
+    public partial class CosmosDBTableRolePermission
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,39 +45,34 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="VectorIndex"/>. </summary>
-        /// <param name="path"> The path to the vector field in the document. </param>
-        /// <param name="indexType"> The index type of the vector. Currently, flat, diskANN, and quantizedFlat are supported. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>
-        public VectorIndex(string path, VectorIndexType indexType)
+        /// <summary> Initializes a new instance of <see cref="CosmosDBTableRolePermission"/>. </summary>
+        public CosmosDBTableRolePermission()
         {
-            Argument.AssertNotNull(path, nameof(path));
-
-            Path = path;
-            IndexType = indexType;
+            DataActions = new ChangeTrackingList<string>();
+            NotDataActions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VectorIndex"/>. </summary>
-        /// <param name="path"> The path to the vector field in the document. </param>
-        /// <param name="indexType"> The index type of the vector. Currently, flat, diskANN, and quantizedFlat are supported. </param>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBTableRolePermission"/>. </summary>
+        /// <param name="id"> The id for the permission. </param>
+        /// <param name="dataActions"> An array of data actions that are allowed. </param>
+        /// <param name="notDataActions"> An array of data actions that are denied. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VectorIndex(string path, VectorIndexType indexType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CosmosDBTableRolePermission(string id, IList<string> dataActions, IList<string> notDataActions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Path = path;
-            IndexType = indexType;
+            Id = id;
+            DataActions = dataActions;
+            NotDataActions = notDataActions;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VectorIndex"/> for deserialization. </summary>
-        internal VectorIndex()
-        {
-        }
-
-        /// <summary> The path to the vector field in the document. </summary>
-        [WirePath("path")]
-        public string Path { get; set; }
-        /// <summary> The index type of the vector. Currently, flat, diskANN, and quantizedFlat are supported. </summary>
-        [WirePath("type")]
-        public VectorIndexType IndexType { get; set; }
+        /// <summary> The id for the permission. </summary>
+        [WirePath("id")]
+        public string Id { get; set; }
+        /// <summary> An array of data actions that are allowed. </summary>
+        [WirePath("dataActions")]
+        public IList<string> DataActions { get; }
+        /// <summary> An array of data actions that are denied. </summary>
+        [WirePath("notDataActions")]
+        public IList<string> NotDataActions { get; }
     }
 }

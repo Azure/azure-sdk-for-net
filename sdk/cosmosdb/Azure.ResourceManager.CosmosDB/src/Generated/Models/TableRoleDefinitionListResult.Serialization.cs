@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            IReadOnlyList<TableRoleDefinitionResourceData> value = default;
+            IReadOnlyList<CosmosDBTableRoleDefinitionData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<TableRoleDefinitionResourceData> array = new List<TableRoleDefinitionResourceData>();
+                    List<CosmosDBTableRoleDefinitionData> array = new List<CosmosDBTableRoleDefinitionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TableRoleDefinitionResourceData.DeserializeTableRoleDefinitionResourceData(item, options));
+                        array.Add(CosmosDBTableRoleDefinitionData.DeserializeCosmosDBTableRoleDefinitionData(item, options));
                     }
                     value = array;
                     continue;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TableRoleDefinitionListResult(value ?? new ChangeTrackingList<TableRoleDefinitionResourceData>(), nextLink, serializedAdditionalRawData);
+            return new TableRoleDefinitionListResult(value ?? new ChangeTrackingList<CosmosDBTableRoleDefinitionData>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

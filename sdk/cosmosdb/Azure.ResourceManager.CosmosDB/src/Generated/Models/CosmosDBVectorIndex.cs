@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> Cosmos DB throughput bucket object. </summary>
-    public partial class ThroughputBucketResource
+    /// <summary> The CosmosDBVectorIndex. </summary>
+    public partial class CosmosDBVectorIndex
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,36 +45,39 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ThroughputBucketResource"/>. </summary>
-        /// <param name="id"> Represents the throughput bucket id. </param>
-        /// <param name="maxThroughputPercentage"> Represents maximum percentage throughput that can be used by the bucket. </param>
-        public ThroughputBucketResource(int id, int maxThroughputPercentage)
+        /// <summary> Initializes a new instance of <see cref="CosmosDBVectorIndex"/>. </summary>
+        /// <param name="path"> The path to the vector field in the document. </param>
+        /// <param name="indexType"> The index type of the vector. Currently, flat, diskANN, and quantizedFlat are supported. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>
+        public CosmosDBVectorIndex(string path, CosmosDBVectorIndexType indexType)
         {
-            Id = id;
-            MaxThroughputPercentage = maxThroughputPercentage;
+            Argument.AssertNotNull(path, nameof(path));
+
+            Path = path;
+            IndexType = indexType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ThroughputBucketResource"/>. </summary>
-        /// <param name="id"> Represents the throughput bucket id. </param>
-        /// <param name="maxThroughputPercentage"> Represents maximum percentage throughput that can be used by the bucket. </param>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBVectorIndex"/>. </summary>
+        /// <param name="path"> The path to the vector field in the document. </param>
+        /// <param name="indexType"> The index type of the vector. Currently, flat, diskANN, and quantizedFlat are supported. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ThroughputBucketResource(int id, int maxThroughputPercentage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CosmosDBVectorIndex(string path, CosmosDBVectorIndexType indexType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Id = id;
-            MaxThroughputPercentage = maxThroughputPercentage;
+            Path = path;
+            IndexType = indexType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ThroughputBucketResource"/> for deserialization. </summary>
-        internal ThroughputBucketResource()
+        /// <summary> Initializes a new instance of <see cref="CosmosDBVectorIndex"/> for deserialization. </summary>
+        internal CosmosDBVectorIndex()
         {
         }
 
-        /// <summary> Represents the throughput bucket id. </summary>
-        [WirePath("id")]
-        public int Id { get; set; }
-        /// <summary> Represents maximum percentage throughput that can be used by the bucket. </summary>
-        [WirePath("maxThroughputPercentage")]
-        public int MaxThroughputPercentage { get; set; }
+        /// <summary> The path to the vector field in the document. </summary>
+        [WirePath("path")]
+        public string Path { get; set; }
+        /// <summary> The index type of the vector. Currently, flat, diskANN, and quantizedFlat are supported. </summary>
+        [WirePath("type")]
+        public CosmosDBVectorIndexType IndexType { get; set; }
     }
 }
