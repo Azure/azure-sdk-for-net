@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.NetApp
             bool? isLargeVolume = default;
             ResourceIdentifier originatingResourceId = default;
             long? inheritedSizeInBytes = default;
-            VolumeLanguage? language = default;
+            NetAppVolumeLanguage? language = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -1118,7 +1118,7 @@ namespace Azure.ResourceManager.NetApp
                                 language = null;
                                 continue;
                             }
-                            language = new VolumeLanguage(property0.Value.GetString());
+                            language = new NetAppVolumeLanguage(property0.Value.GetString());
                             continue;
                         }
                     }

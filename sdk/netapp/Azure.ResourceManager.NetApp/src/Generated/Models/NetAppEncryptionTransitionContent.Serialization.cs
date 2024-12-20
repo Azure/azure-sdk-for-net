@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class EncryptionTransitionContent : IUtf8JsonSerializable, IJsonModel<EncryptionTransitionContent>
+    public partial class NetAppEncryptionTransitionContent : IUtf8JsonSerializable, IJsonModel<NetAppEncryptionTransitionContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EncryptionTransitionContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppEncryptionTransitionContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<EncryptionTransitionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetAppEncryptionTransitionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EncryptionTransitionContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppEncryptionTransitionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EncryptionTransitionContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppEncryptionTransitionContent)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("virtualNetworkId"u8);
@@ -55,19 +55,19 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-        EncryptionTransitionContent IJsonModel<EncryptionTransitionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NetAppEncryptionTransitionContent IJsonModel<NetAppEncryptionTransitionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EncryptionTransitionContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppEncryptionTransitionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EncryptionTransitionContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppEncryptionTransitionContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEncryptionTransitionContent(document.RootElement, options);
+            return DeserializeNetAppEncryptionTransitionContent(document.RootElement, options);
         }
 
-        internal static EncryptionTransitionContent DeserializeEncryptionTransitionContent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NetAppEncryptionTransitionContent DeserializeNetAppEncryptionTransitionContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -97,38 +97,38 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new EncryptionTransitionContent(virtualNetworkId, privateEndpointId, serializedAdditionalRawData);
+            return new NetAppEncryptionTransitionContent(virtualNetworkId, privateEndpointId, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<EncryptionTransitionContent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NetAppEncryptionTransitionContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EncryptionTransitionContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppEncryptionTransitionContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EncryptionTransitionContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppEncryptionTransitionContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        EncryptionTransitionContent IPersistableModel<EncryptionTransitionContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NetAppEncryptionTransitionContent IPersistableModel<NetAppEncryptionTransitionContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EncryptionTransitionContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppEncryptionTransitionContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeEncryptionTransitionContent(document.RootElement, options);
+                        return DeserializeNetAppEncryptionTransitionContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EncryptionTransitionContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppEncryptionTransitionContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<EncryptionTransitionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetAppEncryptionTransitionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

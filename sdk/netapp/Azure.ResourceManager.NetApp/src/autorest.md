@@ -103,6 +103,12 @@ prepend-rp-prefix:
   - RegionInfo
   - EncryptionIdentity
   - BackupVault
+  - ChangeKeyVault
+  - DestinationReplication
+  - EncryptionTransitionRequest
+  - KeyVaultPrivateEndpoint
+  - ReplicationType
+  - VolumeLanguage
 
 rename-mapping:
   CapacityPool.properties.poolId: -|uuid
@@ -247,7 +253,8 @@ rename-mapping:
   VolumeRevert.snapshotId: -|string
   Volume.properties.backupId: -|string
   BackupsMigrationRequest.backupVaultId: -|string
-  ListQuotaReportResponse: ListQuotaReportResult
+  ListQuotaReportResponse: NetAppVolumeQuotaReportListResult
+  QuotaReport: NetAppVolumeQuotaReport
 
 models-to-treat-empty-string-as-null:
 - VolumeSnapshotProperties

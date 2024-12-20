@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Quota Report for volume. </summary>
-    public partial class ListQuotaReportResult
+    /// <summary> Destination replication properties. </summary>
+    public partial class NetAppDestinationReplication
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +46,33 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ListQuotaReportResult"/>. </summary>
-        internal ListQuotaReportResult()
+        /// <summary> Initializes a new instance of <see cref="NetAppDestinationReplication"/>. </summary>
+        internal NetAppDestinationReplication()
         {
-            Value = new ChangeTrackingList<QuotaReport>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ListQuotaReportResult"/>. </summary>
-        /// <param name="value"> List of volume quota report records. </param>
-        /// <param name="nextLink"> URL to get the next set of results. </param>
+        /// <summary> Initializes a new instance of <see cref="NetAppDestinationReplication"/>. </summary>
+        /// <param name="resourceId"> The resource ID of the remote volume. </param>
+        /// <param name="replicationType"> Indicates whether the replication is cross zone or cross region. </param>
+        /// <param name="region"> The remote region for the destination volume. </param>
+        /// <param name="zone"> The remote zone for the destination volume. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ListQuotaReportResult(IReadOnlyList<QuotaReport> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppDestinationReplication(ResourceIdentifier resourceId, NetAppReplicationType? replicationType, string region, string zone, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            ResourceId = resourceId;
+            ReplicationType = replicationType;
+            Region = region;
+            Zone = zone;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of volume quota report records. </summary>
-        public IReadOnlyList<QuotaReport> Value { get; }
-        /// <summary> URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The resource ID of the remote volume. </summary>
+        public ResourceIdentifier ResourceId { get; }
+        /// <summary> Indicates whether the replication is cross zone or cross region. </summary>
+        public NetAppReplicationType? ReplicationType { get; }
+        /// <summary> The remote region for the destination volume. </summary>
+        public string Region { get; }
+        /// <summary> The remote zone for the destination volume. </summary>
+        public string Zone { get; }
     }
 }

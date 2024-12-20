@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.NetApp.Models
             ResourceIdentifier remoteVolumeResourceId = default;
             RemotePath remotePath = default;
             string remoteVolumeRegion = default;
-            IReadOnlyList<DestinationReplication> destinationReplications = default;
+            IReadOnlyList<NetAppDestinationReplication> destinationReplications = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,10 +174,10 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    List<DestinationReplication> array = new List<DestinationReplication>();
+                    List<NetAppDestinationReplication> array = new List<NetAppDestinationReplication>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DestinationReplication.DeserializeDestinationReplication(item, options));
+                        array.Add(NetAppDestinationReplication.DeserializeNetAppDestinationReplication(item, options));
                     }
                     destinationReplications = array;
                     continue;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 remoteVolumeResourceId,
                 remotePath,
                 remoteVolumeRegion,
-                destinationReplications ?? new ChangeTrackingList<DestinationReplication>(),
+                destinationReplications ?? new ChangeTrackingList<NetAppDestinationReplication>(),
                 serializedAdditionalRawData);
         }
 

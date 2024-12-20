@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Encryption transition request. </summary>
-    public partial class EncryptionTransitionContent
+    public partial class NetAppEncryptionTransitionContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="EncryptionTransitionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppEncryptionTransitionContent"/>. </summary>
         /// <param name="virtualNetworkId"> Identifier for the virtual network. </param>
         /// <param name="privateEndpointId"> Identifier of the private endpoint to reach the Azure Key Vault. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkId"/> or <paramref name="privateEndpointId"/> is null. </exception>
-        public EncryptionTransitionContent(ResourceIdentifier virtualNetworkId, ResourceIdentifier privateEndpointId)
+        public NetAppEncryptionTransitionContent(ResourceIdentifier virtualNetworkId, ResourceIdentifier privateEndpointId)
         {
             Argument.AssertNotNull(virtualNetworkId, nameof(virtualNetworkId));
             Argument.AssertNotNull(privateEndpointId, nameof(privateEndpointId));
@@ -59,19 +59,19 @@ namespace Azure.ResourceManager.NetApp.Models
             PrivateEndpointId = privateEndpointId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EncryptionTransitionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppEncryptionTransitionContent"/>. </summary>
         /// <param name="virtualNetworkId"> Identifier for the virtual network. </param>
         /// <param name="privateEndpointId"> Identifier of the private endpoint to reach the Azure Key Vault. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EncryptionTransitionContent(ResourceIdentifier virtualNetworkId, ResourceIdentifier privateEndpointId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppEncryptionTransitionContent(ResourceIdentifier virtualNetworkId, ResourceIdentifier privateEndpointId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VirtualNetworkId = virtualNetworkId;
             PrivateEndpointId = privateEndpointId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EncryptionTransitionContent"/> for deserialization. </summary>
-        internal EncryptionTransitionContent()
+        /// <summary> Initializes a new instance of <see cref="NetAppEncryptionTransitionContent"/> for deserialization. </summary>
+        internal NetAppEncryptionTransitionContent()
         {
         }
 

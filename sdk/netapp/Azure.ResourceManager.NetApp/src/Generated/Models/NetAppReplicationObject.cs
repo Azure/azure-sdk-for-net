@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="NetAppReplicationObject"/>. </summary>
         public NetAppReplicationObject()
         {
-            DestinationReplications = new ChangeTrackingList<DestinationReplication>();
+            DestinationReplications = new ChangeTrackingList<NetAppDestinationReplication>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppReplicationObject"/>. </summary>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="remoteVolumeRegion"> The remote region for the other end of the Volume Replication. </param>
         /// <param name="destinationReplications"> A list of destination replications. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppReplicationObject(string replicationId, NetAppEndpointType? endpointType, NetAppReplicationSchedule? replicationSchedule, ResourceIdentifier remoteVolumeResourceId, RemotePath remotePath, string remoteVolumeRegion, IReadOnlyList<DestinationReplication> destinationReplications, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppReplicationObject(string replicationId, NetAppEndpointType? endpointType, NetAppReplicationSchedule? replicationSchedule, ResourceIdentifier remoteVolumeResourceId, RemotePath remotePath, string remoteVolumeRegion, IReadOnlyList<NetAppDestinationReplication> destinationReplications, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ReplicationId = replicationId;
             EndpointType = endpointType;
@@ -83,6 +83,6 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> The remote region for the other end of the Volume Replication. </summary>
         public string RemoteVolumeRegion { get; set; }
         /// <summary> A list of destination replications. </summary>
-        public IReadOnlyList<DestinationReplication> DestinationReplications { get; }
+        public IReadOnlyList<NetAppDestinationReplication> DestinationReplications { get; }
     }
 }

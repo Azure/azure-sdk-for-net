@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class ChangeKeyVault : IUtf8JsonSerializable, IJsonModel<ChangeKeyVault>
+    public partial class NetAppChangeKeyVault : IUtf8JsonSerializable, IJsonModel<NetAppChangeKeyVault>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChangeKeyVault>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppChangeKeyVault>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ChangeKeyVault>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetAppChangeKeyVault>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChangeKeyVault>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppChangeKeyVault>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChangeKeyVault)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppChangeKeyVault)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("keyVaultUri"u8);
@@ -67,19 +67,19 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-        ChangeKeyVault IJsonModel<ChangeKeyVault>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NetAppChangeKeyVault IJsonModel<NetAppChangeKeyVault>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChangeKeyVault>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppChangeKeyVault>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChangeKeyVault)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppChangeKeyVault)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeChangeKeyVault(document.RootElement, options);
+            return DeserializeNetAppChangeKeyVault(document.RootElement, options);
         }
 
-        internal static ChangeKeyVault DeserializeChangeKeyVault(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NetAppChangeKeyVault DeserializeNetAppChangeKeyVault(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Uri keyVaultUri = default;
             string keyName = default;
             ResourceIdentifier keyVaultResourceId = default;
-            IList<KeyVaultPrivateEndpoint> keyVaultPrivateEndpoints = default;
+            IList<NetAppKeyVaultPrivateEndpoint> keyVaultPrivateEndpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (property.NameEquals("keyVaultPrivateEndpoints"u8))
                 {
-                    List<KeyVaultPrivateEndpoint> array = new List<KeyVaultPrivateEndpoint>();
+                    List<NetAppKeyVaultPrivateEndpoint> array = new List<NetAppKeyVaultPrivateEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KeyVaultPrivateEndpoint.DeserializeKeyVaultPrivateEndpoint(item, options));
+                        array.Add(NetAppKeyVaultPrivateEndpoint.DeserializeNetAppKeyVaultPrivateEndpoint(item, options));
                     }
                     keyVaultPrivateEndpoints = array;
                     continue;
@@ -130,38 +130,38 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ChangeKeyVault(keyVaultUri, keyName, keyVaultResourceId, keyVaultPrivateEndpoints, serializedAdditionalRawData);
+            return new NetAppChangeKeyVault(keyVaultUri, keyName, keyVaultResourceId, keyVaultPrivateEndpoints, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ChangeKeyVault>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NetAppChangeKeyVault>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChangeKeyVault>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppChangeKeyVault>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ChangeKeyVault)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppChangeKeyVault)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ChangeKeyVault IPersistableModel<ChangeKeyVault>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NetAppChangeKeyVault IPersistableModel<NetAppChangeKeyVault>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChangeKeyVault>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppChangeKeyVault>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeChangeKeyVault(document.RootElement, options);
+                        return DeserializeNetAppChangeKeyVault(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChangeKeyVault)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppChangeKeyVault)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ChangeKeyVault>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetAppChangeKeyVault>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

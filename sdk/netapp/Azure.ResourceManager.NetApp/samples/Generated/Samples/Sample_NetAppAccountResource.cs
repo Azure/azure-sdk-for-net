@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppAccountResource netAppAccount = client.GetNetAppAccountResource(netAppAccountResourceId);
 
             // invoke the operation
-            EncryptionTransitionContent content = new EncryptionTransitionContent(new ResourceIdentifier("/subscriptions/D633CC2E-722B-4AE1-B636-BBD9E4C60ED9/resourceGroups/myRG/providers/Microsoft.Network/virtualNetworks/vnet1"), new ResourceIdentifier("/subscriptions/D633CC2E-722B-4AE1-B636-BBD9E4C60ED9/resourceGroups/myRG/providers/Microsoft.Network/privateEndpoints/privip1"));
+            NetAppEncryptionTransitionContent content = new NetAppEncryptionTransitionContent(new ResourceIdentifier("/subscriptions/D633CC2E-722B-4AE1-B636-BBD9E4C60ED9/resourceGroups/myRG/providers/Microsoft.Network/virtualNetworks/vnet1"), new ResourceIdentifier("/subscriptions/D633CC2E-722B-4AE1-B636-BBD9E4C60ED9/resourceGroups/myRG/providers/Microsoft.Network/privateEndpoints/privip1"));
             await netAppAccount.TransitionToCmkAsync(WaitUntil.Completed, content: content);
 
             Console.WriteLine("Succeeded");
@@ -210,9 +210,9 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppAccountResource netAppAccount = client.GetNetAppAccountResource(netAppAccountResourceId);
 
             // invoke the operation
-            ChangeKeyVault body = new ChangeKeyVault(new Uri("https://my-key-vault.managedhsm.azure.net"), "rsakey", new KeyVaultPrivateEndpoint[]
+            NetAppChangeKeyVault body = new NetAppChangeKeyVault(new Uri("https://my-key-vault.managedhsm.azure.net"), "rsakey", new NetAppKeyVaultPrivateEndpoint[]
             {
-new KeyVaultPrivateEndpoint
+new NetAppKeyVaultPrivateEndpoint
 {
 VirtualNetworkId = "/subscriptions/D633CC2E-722B-4AE1-B636-BBD9E4C60ED9/resourceGroups/myRG/providers/Microsoft.Network/virtualNetworks/vnet1",
 PrivateEndpointId = "/subscriptions/D633CC2E-722B-4AE1-B636-BBD9E4C60ED9/resourceGroups/myRG/providers/Microsoft.Network/privateEndpoints/privip1",

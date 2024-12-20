@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class QuotaReport : IUtf8JsonSerializable, IJsonModel<QuotaReport>
+    public partial class NetAppVolumeQuotaReport : IUtf8JsonSerializable, IJsonModel<NetAppVolumeQuotaReport>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuotaReport>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppVolumeQuotaReport>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<QuotaReport>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetAppVolumeQuotaReport>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QuotaReport>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeQuotaReport>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaReport)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppVolumeQuotaReport)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(QuotaType))
@@ -81,19 +81,19 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-        QuotaReport IJsonModel<QuotaReport>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NetAppVolumeQuotaReport IJsonModel<NetAppVolumeQuotaReport>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QuotaReport>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeQuotaReport>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaReport)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppVolumeQuotaReport)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeQuotaReport(document.RootElement, options);
+            return DeserializeNetAppVolumeQuotaReport(document.RootElement, options);
         }
 
-        internal static QuotaReport DeserializeQuotaReport(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NetAppVolumeQuotaReport DeserializeNetAppVolumeQuotaReport(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new QuotaReport(
+            return new NetAppVolumeQuotaReport(
                 quotaType,
                 quotaTarget,
                 quotaLimitUsedInKiBs,
@@ -177,35 +177,35 @@ namespace Azure.ResourceManager.NetApp.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<QuotaReport>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NetAppVolumeQuotaReport>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QuotaReport>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeQuotaReport>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QuotaReport)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppVolumeQuotaReport)} does not support writing '{options.Format}' format.");
             }
         }
 
-        QuotaReport IPersistableModel<QuotaReport>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NetAppVolumeQuotaReport IPersistableModel<NetAppVolumeQuotaReport>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QuotaReport>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeQuotaReport>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeQuotaReport(document.RootElement, options);
+                        return DeserializeNetAppVolumeQuotaReport(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QuotaReport)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppVolumeQuotaReport)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<QuotaReport>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetAppVolumeQuotaReport>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

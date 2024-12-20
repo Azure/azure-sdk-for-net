@@ -809,7 +809,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The required parameters to perform encryption transition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> TransitionToCmkAsync(WaitUntil waitUntil, EncryptionTransitionContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> TransitionToCmkAsync(WaitUntil waitUntil, NetAppEncryptionTransitionContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _netAppAccountAccountsClientDiagnostics.CreateScope("NetAppAccountResource.TransitionToCmk");
             scope.Start();
@@ -852,7 +852,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The required parameters to perform encryption transition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation TransitionToCmk(WaitUntil waitUntil, EncryptionTransitionContent content = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation TransitionToCmk(WaitUntil waitUntil, NetAppEncryptionTransitionContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _netAppAccountAccountsClientDiagnostics.CreateScope("NetAppAccountResource.TransitionToCmk");
             scope.Start();
@@ -979,7 +979,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="body"> The required parameters to perform encryption migration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> ChangeKeyVaultAsync(WaitUntil waitUntil, ChangeKeyVault body = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> ChangeKeyVaultAsync(WaitUntil waitUntil, NetAppChangeKeyVault body = null, CancellationToken cancellationToken = default)
         {
             using var scope = _netAppAccountAccountsClientDiagnostics.CreateScope("NetAppAccountResource.ChangeKeyVault");
             scope.Start();
@@ -1022,7 +1022,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="body"> The required parameters to perform encryption migration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation ChangeKeyVault(WaitUntil waitUntil, ChangeKeyVault body = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation ChangeKeyVault(WaitUntil waitUntil, NetAppChangeKeyVault body = null, CancellationToken cancellationToken = default)
         {
             using var scope = _netAppAccountAccountsClientDiagnostics.CreateScope("NetAppAccountResource.ChangeKeyVault");
             scope.Start();

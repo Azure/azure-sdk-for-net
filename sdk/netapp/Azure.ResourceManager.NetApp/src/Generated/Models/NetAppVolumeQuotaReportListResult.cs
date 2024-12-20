@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Pairs of virtual network ID and private endpoint ID. Every virtual network that has volumes encrypted with customer-managed keys needs its own key vault private endpoint. </summary>
-    public partial class KeyVaultPrivateEndpoint
+    /// <summary> Quota Report for volume. </summary>
+    public partial class NetAppVolumeQuotaReportListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,26 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="KeyVaultPrivateEndpoint"/>. </summary>
-        public KeyVaultPrivateEndpoint()
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeQuotaReportListResult"/>. </summary>
+        internal NetAppVolumeQuotaReportListResult()
         {
+            Value = new ChangeTrackingList<NetAppVolumeQuotaReport>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="KeyVaultPrivateEndpoint"/>. </summary>
-        /// <param name="virtualNetworkId"> Identifier for the virtual network id. </param>
-        /// <param name="privateEndpointId"> Identifier of the private endpoint to reach the Azure Key Vault. </param>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeQuotaReportListResult"/>. </summary>
+        /// <param name="value"> List of volume quota report records. </param>
+        /// <param name="nextLink"> URL to get the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultPrivateEndpoint(string virtualNetworkId, string privateEndpointId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppVolumeQuotaReportListResult(IReadOnlyList<NetAppVolumeQuotaReport> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            VirtualNetworkId = virtualNetworkId;
-            PrivateEndpointId = privateEndpointId;
+            Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Identifier for the virtual network id. </summary>
-        public string VirtualNetworkId { get; set; }
-        /// <summary> Identifier of the private endpoint to reach the Azure Key Vault. </summary>
-        public string PrivateEndpointId { get; set; }
+        /// <summary> List of volume quota report records. </summary>
+        public IReadOnlyList<NetAppVolumeQuotaReport> Value { get; }
+        /// <summary> URL to get the next set of results. </summary>
+        public string NextLink { get; }
     }
 }

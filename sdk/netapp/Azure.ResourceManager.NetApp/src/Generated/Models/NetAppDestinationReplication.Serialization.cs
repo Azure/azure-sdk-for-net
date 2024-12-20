@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class DestinationReplication : IUtf8JsonSerializable, IJsonModel<DestinationReplication>
+    public partial class NetAppDestinationReplication : IUtf8JsonSerializable, IJsonModel<NetAppDestinationReplication>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DestinationReplication>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppDestinationReplication>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DestinationReplication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetAppDestinationReplication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DestinationReplication>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppDestinationReplication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DestinationReplication)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppDestinationReplication)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(ResourceId))
@@ -71,19 +71,19 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-        DestinationReplication IJsonModel<DestinationReplication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NetAppDestinationReplication IJsonModel<NetAppDestinationReplication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DestinationReplication>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppDestinationReplication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DestinationReplication)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppDestinationReplication)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDestinationReplication(document.RootElement, options);
+            return DeserializeNetAppDestinationReplication(document.RootElement, options);
         }
 
-        internal static DestinationReplication DeserializeDestinationReplication(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NetAppDestinationReplication DeserializeNetAppDestinationReplication(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 return null;
             }
             ResourceIdentifier resourceId = default;
-            ReplicationType? replicationType = default;
+            NetAppReplicationType? replicationType = default;
             string region = default;
             string zone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    replicationType = new ReplicationType(property.Value.GetString());
+                    replicationType = new NetAppReplicationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("region"u8))
@@ -133,38 +133,38 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DestinationReplication(resourceId, replicationType, region, zone, serializedAdditionalRawData);
+            return new NetAppDestinationReplication(resourceId, replicationType, region, zone, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DestinationReplication>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NetAppDestinationReplication>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DestinationReplication>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppDestinationReplication>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DestinationReplication)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppDestinationReplication)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DestinationReplication IPersistableModel<DestinationReplication>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NetAppDestinationReplication IPersistableModel<NetAppDestinationReplication>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DestinationReplication>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppDestinationReplication>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDestinationReplication(document.RootElement, options);
+                        return DeserializeNetAppDestinationReplication(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DestinationReplication)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppDestinationReplication)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DestinationReplication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetAppDestinationReplication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

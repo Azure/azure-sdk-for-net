@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Quota report record properties. </summary>
-    public partial class QuotaReport
+    public partial class NetAppVolumeQuotaReport
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="QuotaReport"/>. </summary>
-        internal QuotaReport()
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeQuotaReport"/>. </summary>
+        internal NetAppVolumeQuotaReport()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="QuotaReport"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeQuotaReport"/>. </summary>
         /// <param name="quotaType"> Type of quota. </param>
         /// <param name="quotaTarget"> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;. </param>
         /// <param name="quotaLimitUsedInKiBs"> Specifies the current usage in kibibytes for the user/group quota. </param>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="percentageUsed"> Percentage of used size compared to total size. </param>
         /// <param name="isDerivedQuota"> Flag to indicate whether the quota is derived from default quota. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QuotaReport(NetAppVolumeQuotaType? quotaType, string quotaTarget, long? quotaLimitUsedInKiBs, long? quotaLimitTotalInKiBs, float? percentageUsed, bool? isDerivedQuota, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppVolumeQuotaReport(NetAppVolumeQuotaType? quotaType, string quotaTarget, long? quotaLimitUsedInKiBs, long? quotaLimitTotalInKiBs, float? percentageUsed, bool? isDerivedQuota, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             QuotaType = quotaType;
             QuotaTarget = quotaTarget;

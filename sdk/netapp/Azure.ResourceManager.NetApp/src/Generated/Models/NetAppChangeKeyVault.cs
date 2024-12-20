@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Change key vault request. </summary>
-    public partial class ChangeKeyVault
+    public partial class NetAppChangeKeyVault
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ChangeKeyVault"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppChangeKeyVault"/>. </summary>
         /// <param name="keyVaultUri"> The URI of the key vault/managed HSM that should be used for encryption. </param>
         /// <param name="keyName"> The name of the key that should be used for encryption. </param>
         /// <param name="keyVaultPrivateEndpoints"> Pairs of virtual network ID and private endpoint ID. Every virtual network that has volumes encrypted with customer-managed keys needs its own key vault private endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultUri"/>, <paramref name="keyName"/> or <paramref name="keyVaultPrivateEndpoints"/> is null. </exception>
-        public ChangeKeyVault(Uri keyVaultUri, string keyName, IEnumerable<KeyVaultPrivateEndpoint> keyVaultPrivateEndpoints)
+        public NetAppChangeKeyVault(Uri keyVaultUri, string keyName, IEnumerable<NetAppKeyVaultPrivateEndpoint> keyVaultPrivateEndpoints)
         {
             Argument.AssertNotNull(keyVaultUri, nameof(keyVaultUri));
             Argument.AssertNotNull(keyName, nameof(keyName));
@@ -63,13 +63,13 @@ namespace Azure.ResourceManager.NetApp.Models
             KeyVaultPrivateEndpoints = keyVaultPrivateEndpoints.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChangeKeyVault"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppChangeKeyVault"/>. </summary>
         /// <param name="keyVaultUri"> The URI of the key vault/managed HSM that should be used for encryption. </param>
         /// <param name="keyName"> The name of the key that should be used for encryption. </param>
         /// <param name="keyVaultResourceId"> Azure resource ID of the key vault/managed HSM that should be used for encryption. </param>
         /// <param name="keyVaultPrivateEndpoints"> Pairs of virtual network ID and private endpoint ID. Every virtual network that has volumes encrypted with customer-managed keys needs its own key vault private endpoint. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChangeKeyVault(Uri keyVaultUri, string keyName, ResourceIdentifier keyVaultResourceId, IList<KeyVaultPrivateEndpoint> keyVaultPrivateEndpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppChangeKeyVault(Uri keyVaultUri, string keyName, ResourceIdentifier keyVaultResourceId, IList<NetAppKeyVaultPrivateEndpoint> keyVaultPrivateEndpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyVaultUri = keyVaultUri;
             KeyName = keyName;
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChangeKeyVault"/> for deserialization. </summary>
-        internal ChangeKeyVault()
+        /// <summary> Initializes a new instance of <see cref="NetAppChangeKeyVault"/> for deserialization. </summary>
+        internal NetAppChangeKeyVault()
         {
         }
 
@@ -90,6 +90,6 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Azure resource ID of the key vault/managed HSM that should be used for encryption. </summary>
         public ResourceIdentifier KeyVaultResourceId { get; set; }
         /// <summary> Pairs of virtual network ID and private endpoint ID. Every virtual network that has volumes encrypted with customer-managed keys needs its own key vault private endpoint. </summary>
-        public IList<KeyVaultPrivateEndpoint> KeyVaultPrivateEndpoints { get; }
+        public IList<NetAppKeyVaultPrivateEndpoint> KeyVaultPrivateEndpoints { get; }
     }
 }

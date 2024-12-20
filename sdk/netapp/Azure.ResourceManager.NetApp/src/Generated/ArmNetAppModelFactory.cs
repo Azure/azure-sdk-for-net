@@ -286,17 +286,17 @@ namespace Azure.ResourceManager.NetApp.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ChangeKeyVault"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppChangeKeyVault"/>. </summary>
         /// <param name="keyVaultUri"> The URI of the key vault/managed HSM that should be used for encryption. </param>
         /// <param name="keyName"> The name of the key that should be used for encryption. </param>
         /// <param name="keyVaultResourceId"> Azure resource ID of the key vault/managed HSM that should be used for encryption. </param>
         /// <param name="keyVaultPrivateEndpoints"> Pairs of virtual network ID and private endpoint ID. Every virtual network that has volumes encrypted with customer-managed keys needs its own key vault private endpoint. </param>
-        /// <returns> A new <see cref="Models.ChangeKeyVault"/> instance for mocking. </returns>
-        public static ChangeKeyVault ChangeKeyVault(Uri keyVaultUri = null, string keyName = null, ResourceIdentifier keyVaultResourceId = null, IEnumerable<KeyVaultPrivateEndpoint> keyVaultPrivateEndpoints = null)
+        /// <returns> A new <see cref="Models.NetAppChangeKeyVault"/> instance for mocking. </returns>
+        public static NetAppChangeKeyVault NetAppChangeKeyVault(Uri keyVaultUri = null, string keyName = null, ResourceIdentifier keyVaultResourceId = null, IEnumerable<NetAppKeyVaultPrivateEndpoint> keyVaultPrivateEndpoints = null)
         {
-            keyVaultPrivateEndpoints ??= new List<KeyVaultPrivateEndpoint>();
+            keyVaultPrivateEndpoints ??= new List<NetAppKeyVaultPrivateEndpoint>();
 
-            return new ChangeKeyVault(keyVaultUri, keyName, keyVaultResourceId, keyVaultPrivateEndpoints?.ToList(), serializedAdditionalRawData: null);
+            return new NetAppChangeKeyVault(keyVaultUri, keyName, keyVaultResourceId, keyVaultPrivateEndpoints?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetApp.CapacityPoolData"/>. </summary>
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="inheritedSizeInBytes"> Space shared by short term clone volume with parent volume in bytes. </param>
         /// <param name="language"> Language supported for volume. </param>
         /// <returns> A new <see cref="NetApp.NetAppVolumeData"/> instance for mocking. </returns>
-        public static NetAppVolumeData NetAppVolumeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, IEnumerable<string> zones = null, Guid? fileSystemId = null, string creationToken = null, NetAppFileServiceLevel? serviceLevel = null, long usageThreshold = default, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = null, IEnumerable<string> protocolTypes = null, string provisioningState = null, string snapshotId = null, bool? deleteBaseSnapshot = null, string backupId = null, string baremetalTenantId = null, ResourceIdentifier subnetId = null, NetAppNetworkFeature? networkFeatures = null, NetAppNetworkFeature? effectiveNetworkFeatures = null, Guid? networkSiblingSetId = null, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity = null, IEnumerable<NetAppVolumeMountTarget> mountTargets = null, string volumeType = null, NetAppVolumeDataProtection dataProtection = null, AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit = null, bool? isRestoring = null, bool? isSnapshotDirectoryVisible = null, bool? isKerberosEnabled = null, NetAppVolumeSecurityStyle? securityStyle = null, bool? isSmbEncryptionEnabled = null, SmbAccessBasedEnumeration? smbAccessBasedEnumeration = null, SmbNonBrowsable? smbNonBrowsable = null, bool? isSmbContinuouslyAvailable = null, float? throughputMibps = null, float? actualThroughputMibps = null, NetAppEncryptionKeySource? encryptionKeySource = null, ResourceIdentifier keyVaultPrivateEndpointResourceId = null, bool? isLdapEnabled = null, bool? isCoolAccessEnabled = null, int? coolnessPeriod = null, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = null, string unixPermissions = null, int? cloneProgress = null, NetAppFileAccessLog? fileAccessLogs = null, NetAppAvsDataStore? avsDataStore = null, IEnumerable<ResourceIdentifier> dataStoreResourceId = null, bool? isDefaultQuotaEnabled = null, long? defaultUserQuotaInKiBs = null, long? defaultGroupQuotaInKiBs = null, long? maximumNumberOfFiles = null, string volumeGroupName = null, ResourceIdentifier capacityPoolResourceId = null, ResourceIdentifier proximityPlacementGroupId = null, string t2Network = null, string volumeSpecName = null, bool? isEncrypted = null, IEnumerable<NetAppVolumePlacementRule> placementRules = null, EnableNetAppSubvolume? enableSubvolumes = null, string provisionedAvailabilityZone = null, bool? isLargeVolume = null, ResourceIdentifier originatingResourceId = null, long? inheritedSizeInBytes = null, VolumeLanguage? language = null)
+        public static NetAppVolumeData NetAppVolumeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, IEnumerable<string> zones = null, Guid? fileSystemId = null, string creationToken = null, NetAppFileServiceLevel? serviceLevel = null, long usageThreshold = default, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = null, IEnumerable<string> protocolTypes = null, string provisioningState = null, string snapshotId = null, bool? deleteBaseSnapshot = null, string backupId = null, string baremetalTenantId = null, ResourceIdentifier subnetId = null, NetAppNetworkFeature? networkFeatures = null, NetAppNetworkFeature? effectiveNetworkFeatures = null, Guid? networkSiblingSetId = null, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity = null, IEnumerable<NetAppVolumeMountTarget> mountTargets = null, string volumeType = null, NetAppVolumeDataProtection dataProtection = null, AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit = null, bool? isRestoring = null, bool? isSnapshotDirectoryVisible = null, bool? isKerberosEnabled = null, NetAppVolumeSecurityStyle? securityStyle = null, bool? isSmbEncryptionEnabled = null, SmbAccessBasedEnumeration? smbAccessBasedEnumeration = null, SmbNonBrowsable? smbNonBrowsable = null, bool? isSmbContinuouslyAvailable = null, float? throughputMibps = null, float? actualThroughputMibps = null, NetAppEncryptionKeySource? encryptionKeySource = null, ResourceIdentifier keyVaultPrivateEndpointResourceId = null, bool? isLdapEnabled = null, bool? isCoolAccessEnabled = null, int? coolnessPeriod = null, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = null, string unixPermissions = null, int? cloneProgress = null, NetAppFileAccessLog? fileAccessLogs = null, NetAppAvsDataStore? avsDataStore = null, IEnumerable<ResourceIdentifier> dataStoreResourceId = null, bool? isDefaultQuotaEnabled = null, long? defaultUserQuotaInKiBs = null, long? defaultGroupQuotaInKiBs = null, long? maximumNumberOfFiles = null, string volumeGroupName = null, ResourceIdentifier capacityPoolResourceId = null, ResourceIdentifier proximityPlacementGroupId = null, string t2Network = null, string volumeSpecName = null, bool? isEncrypted = null, IEnumerable<NetAppVolumePlacementRule> placementRules = null, EnableNetAppSubvolume? enableSubvolumes = null, string provisionedAvailabilityZone = null, bool? isLargeVolume = null, ResourceIdentifier originatingResourceId = null, long? inheritedSizeInBytes = null, NetAppVolumeLanguage? language = null)
         {
             tags ??= new Dictionary<string, string>();
             zones ??= new List<string>();
@@ -546,9 +546,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="remoteVolumeRegion"> The remote region for the other end of the Volume Replication. </param>
         /// <param name="destinationReplications"> A list of destination replications. </param>
         /// <returns> A new <see cref="Models.NetAppReplicationObject"/> instance for mocking. </returns>
-        public static NetAppReplicationObject NetAppReplicationObject(string replicationId = null, NetAppEndpointType? endpointType = null, NetAppReplicationSchedule? replicationSchedule = null, ResourceIdentifier remoteVolumeResourceId = null, RemotePath remotePath = null, string remoteVolumeRegion = null, IEnumerable<DestinationReplication> destinationReplications = null)
+        public static NetAppReplicationObject NetAppReplicationObject(string replicationId = null, NetAppEndpointType? endpointType = null, NetAppReplicationSchedule? replicationSchedule = null, ResourceIdentifier remoteVolumeResourceId = null, RemotePath remotePath = null, string remoteVolumeRegion = null, IEnumerable<NetAppDestinationReplication> destinationReplications = null)
         {
-            destinationReplications ??= new List<DestinationReplication>();
+            destinationReplications ??= new List<NetAppDestinationReplication>();
 
             return new NetAppReplicationObject(
                 replicationId,
@@ -561,15 +561,15 @@ namespace Azure.ResourceManager.NetApp.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DestinationReplication"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppDestinationReplication"/>. </summary>
         /// <param name="resourceId"> The resource ID of the remote volume. </param>
         /// <param name="replicationType"> Indicates whether the replication is cross zone or cross region. </param>
         /// <param name="region"> The remote region for the destination volume. </param>
         /// <param name="zone"> The remote zone for the destination volume. </param>
-        /// <returns> A new <see cref="Models.DestinationReplication"/> instance for mocking. </returns>
-        public static DestinationReplication DestinationReplication(ResourceIdentifier resourceId = null, ReplicationType? replicationType = null, string region = null, string zone = null)
+        /// <returns> A new <see cref="Models.NetAppDestinationReplication"/> instance for mocking. </returns>
+        public static NetAppDestinationReplication NetAppDestinationReplication(ResourceIdentifier resourceId = null, NetAppReplicationType? replicationType = null, string region = null, string zone = null)
         {
-            return new DestinationReplication(resourceId, replicationType, region, zone, serializedAdditionalRawData: null);
+            return new NetAppDestinationReplication(resourceId, replicationType, region, zone, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeRelocationProperties"/>. </summary>
@@ -652,28 +652,28 @@ namespace Azure.ResourceManager.NetApp.Models
             return new GetGroupIdListForLdapUserResult(groupIdsForLdapUser?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ListQuotaReportResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeQuotaReportListResult"/>. </summary>
         /// <param name="value"> List of volume quota report records. </param>
         /// <param name="nextLink"> URL to get the next set of results. </param>
-        /// <returns> A new <see cref="Models.ListQuotaReportResult"/> instance for mocking. </returns>
-        public static ListQuotaReportResult ListQuotaReportResult(IEnumerable<QuotaReport> value = null, string nextLink = null)
+        /// <returns> A new <see cref="Models.NetAppVolumeQuotaReportListResult"/> instance for mocking. </returns>
+        public static NetAppVolumeQuotaReportListResult NetAppVolumeQuotaReportListResult(IEnumerable<NetAppVolumeQuotaReport> value = null, string nextLink = null)
         {
-            value ??= new List<QuotaReport>();
+            value ??= new List<NetAppVolumeQuotaReport>();
 
-            return new ListQuotaReportResult(value?.ToList(), nextLink, serializedAdditionalRawData: null);
+            return new NetAppVolumeQuotaReportListResult(value?.ToList(), nextLink, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.QuotaReport"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeQuotaReport"/>. </summary>
         /// <param name="quotaType"> Type of quota. </param>
         /// <param name="quotaTarget"> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;. </param>
         /// <param name="quotaLimitUsedInKiBs"> Specifies the current usage in kibibytes for the user/group quota. </param>
         /// <param name="quotaLimitTotalInKiBs"> Specifies the total size limit in kibibytes for the user/group quota. </param>
         /// <param name="percentageUsed"> Percentage of used size compared to total size. </param>
         /// <param name="isDerivedQuota"> Flag to indicate whether the quota is derived from default quota. </param>
-        /// <returns> A new <see cref="Models.QuotaReport"/> instance for mocking. </returns>
-        public static QuotaReport QuotaReport(NetAppVolumeQuotaType? quotaType = null, string quotaTarget = null, long? quotaLimitUsedInKiBs = null, long? quotaLimitTotalInKiBs = null, float? percentageUsed = null, bool? isDerivedQuota = null)
+        /// <returns> A new <see cref="Models.NetAppVolumeQuotaReport"/> instance for mocking. </returns>
+        public static NetAppVolumeQuotaReport NetAppVolumeQuotaReport(NetAppVolumeQuotaType? quotaType = null, string quotaTarget = null, long? quotaLimitUsedInKiBs = null, long? quotaLimitTotalInKiBs = null, float? percentageUsed = null, bool? isDerivedQuota = null)
         {
-            return new QuotaReport(
+            return new NetAppVolumeQuotaReport(
                 quotaType,
                 quotaTarget,
                 quotaLimitUsedInKiBs,
@@ -1108,7 +1108,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="inheritedSizeInBytes"> Space shared by short term clone volume with parent volume in bytes. </param>
         /// <param name="language"> Language supported for volume. </param>
         /// <returns> A new <see cref="Models.NetAppVolumeGroupVolume"/> instance for mocking. </returns>
-        public static NetAppVolumeGroupVolume NetAppVolumeGroupVolume(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, IDictionary<string, string> tags = null, IEnumerable<string> zones = null, Guid? fileSystemId = null, string creationToken = null, NetAppFileServiceLevel? serviceLevel = null, long usageThreshold = default, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = null, IEnumerable<string> protocolTypes = null, string provisioningState = null, string snapshotId = null, bool? deleteBaseSnapshot = null, string backupId = null, string baremetalTenantId = null, ResourceIdentifier subnetId = null, NetAppNetworkFeature? networkFeatures = null, NetAppNetworkFeature? effectiveNetworkFeatures = null, Guid? networkSiblingSetId = null, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity = null, IEnumerable<NetAppVolumeMountTarget> mountTargets = null, string volumeType = null, NetAppVolumeDataProtection dataProtection = null, AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit = null, bool? isRestoring = null, bool? isSnapshotDirectoryVisible = null, bool? isKerberosEnabled = null, NetAppVolumeSecurityStyle? securityStyle = null, bool? isSmbEncryptionEnabled = null, SmbAccessBasedEnumeration? smbAccessBasedEnumeration = null, SmbNonBrowsable? smbNonBrowsable = null, bool? isSmbContinuouslyAvailable = null, float? throughputMibps = null, float? actualThroughputMibps = null, NetAppEncryptionKeySource? encryptionKeySource = null, ResourceIdentifier keyVaultPrivateEndpointResourceId = null, bool? isLdapEnabled = null, bool? isCoolAccessEnabled = null, int? coolnessPeriod = null, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = null, string unixPermissions = null, int? cloneProgress = null, NetAppFileAccessLog? fileAccessLogs = null, NetAppAvsDataStore? avsDataStore = null, IEnumerable<ResourceIdentifier> dataStoreResourceId = null, bool? isDefaultQuotaEnabled = null, long? defaultUserQuotaInKiBs = null, long? defaultGroupQuotaInKiBs = null, long? maximumNumberOfFiles = null, string volumeGroupName = null, ResourceIdentifier capacityPoolResourceId = null, ResourceIdentifier proximityPlacementGroupId = null, string t2Network = null, string volumeSpecName = null, bool? isEncrypted = null, IEnumerable<NetAppVolumePlacementRule> placementRules = null, EnableNetAppSubvolume? enableSubvolumes = null, string provisionedAvailabilityZone = null, bool? isLargeVolume = null, ResourceIdentifier originatingResourceId = null, long? inheritedSizeInBytes = null, VolumeLanguage? language = null)
+        public static NetAppVolumeGroupVolume NetAppVolumeGroupVolume(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, IDictionary<string, string> tags = null, IEnumerable<string> zones = null, Guid? fileSystemId = null, string creationToken = null, NetAppFileServiceLevel? serviceLevel = null, long usageThreshold = default, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = null, IEnumerable<string> protocolTypes = null, string provisioningState = null, string snapshotId = null, bool? deleteBaseSnapshot = null, string backupId = null, string baremetalTenantId = null, ResourceIdentifier subnetId = null, NetAppNetworkFeature? networkFeatures = null, NetAppNetworkFeature? effectiveNetworkFeatures = null, Guid? networkSiblingSetId = null, NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity = null, IEnumerable<NetAppVolumeMountTarget> mountTargets = null, string volumeType = null, NetAppVolumeDataProtection dataProtection = null, AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit = null, bool? isRestoring = null, bool? isSnapshotDirectoryVisible = null, bool? isKerberosEnabled = null, NetAppVolumeSecurityStyle? securityStyle = null, bool? isSmbEncryptionEnabled = null, SmbAccessBasedEnumeration? smbAccessBasedEnumeration = null, SmbNonBrowsable? smbNonBrowsable = null, bool? isSmbContinuouslyAvailable = null, float? throughputMibps = null, float? actualThroughputMibps = null, NetAppEncryptionKeySource? encryptionKeySource = null, ResourceIdentifier keyVaultPrivateEndpointResourceId = null, bool? isLdapEnabled = null, bool? isCoolAccessEnabled = null, int? coolnessPeriod = null, CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = null, string unixPermissions = null, int? cloneProgress = null, NetAppFileAccessLog? fileAccessLogs = null, NetAppAvsDataStore? avsDataStore = null, IEnumerable<ResourceIdentifier> dataStoreResourceId = null, bool? isDefaultQuotaEnabled = null, long? defaultUserQuotaInKiBs = null, long? defaultGroupQuotaInKiBs = null, long? maximumNumberOfFiles = null, string volumeGroupName = null, ResourceIdentifier capacityPoolResourceId = null, ResourceIdentifier proximityPlacementGroupId = null, string t2Network = null, string volumeSpecName = null, bool? isEncrypted = null, IEnumerable<NetAppVolumePlacementRule> placementRules = null, EnableNetAppSubvolume? enableSubvolumes = null, string provisionedAvailabilityZone = null, bool? isLargeVolume = null, ResourceIdentifier originatingResourceId = null, long? inheritedSizeInBytes = null, NetAppVolumeLanguage? language = null)
         {
             tags ??= new Dictionary<string, string>();
             zones ??= new List<string>();

@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Destination replication properties. </summary>
-    public partial class DestinationReplication
+    /// <summary> Pairs of virtual network ID and private endpoint ID. Every virtual network that has volumes encrypted with customer-managed keys needs its own key vault private endpoint. </summary>
+    public partial class NetAppKeyVaultPrivateEndpoint
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,33 +45,25 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DestinationReplication"/>. </summary>
-        internal DestinationReplication()
+        /// <summary> Initializes a new instance of <see cref="NetAppKeyVaultPrivateEndpoint"/>. </summary>
+        public NetAppKeyVaultPrivateEndpoint()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DestinationReplication"/>. </summary>
-        /// <param name="resourceId"> The resource ID of the remote volume. </param>
-        /// <param name="replicationType"> Indicates whether the replication is cross zone or cross region. </param>
-        /// <param name="region"> The remote region for the destination volume. </param>
-        /// <param name="zone"> The remote zone for the destination volume. </param>
+        /// <summary> Initializes a new instance of <see cref="NetAppKeyVaultPrivateEndpoint"/>. </summary>
+        /// <param name="virtualNetworkId"> Identifier for the virtual network id. </param>
+        /// <param name="privateEndpointId"> Identifier of the private endpoint to reach the Azure Key Vault. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DestinationReplication(ResourceIdentifier resourceId, ReplicationType? replicationType, string region, string zone, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppKeyVaultPrivateEndpoint(string virtualNetworkId, string privateEndpointId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ResourceId = resourceId;
-            ReplicationType = replicationType;
-            Region = region;
-            Zone = zone;
+            VirtualNetworkId = virtualNetworkId;
+            PrivateEndpointId = privateEndpointId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource ID of the remote volume. </summary>
-        public ResourceIdentifier ResourceId { get; }
-        /// <summary> Indicates whether the replication is cross zone or cross region. </summary>
-        public ReplicationType? ReplicationType { get; }
-        /// <summary> The remote region for the destination volume. </summary>
-        public string Region { get; }
-        /// <summary> The remote zone for the destination volume. </summary>
-        public string Zone { get; }
+        /// <summary> Identifier for the virtual network id. </summary>
+        public string VirtualNetworkId { get; set; }
+        /// <summary> Identifier of the private endpoint to reach the Azure Key Vault. </summary>
+        public string PrivateEndpointId { get; set; }
     }
 }
