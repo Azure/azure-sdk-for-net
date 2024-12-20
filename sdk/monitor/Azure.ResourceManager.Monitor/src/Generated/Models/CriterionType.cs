@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Specifies the type of threshold criteria. </summary>
-    internal readonly partial struct CriterionType : IEquatable<CriterionType>
+    public readonly partial struct CriterionType : IEquatable<CriterionType>
     {
         private readonly string _value;
 

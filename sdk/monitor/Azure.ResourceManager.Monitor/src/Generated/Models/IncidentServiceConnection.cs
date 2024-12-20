@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Actions to invoke when the alert fires. </summary>
-    public partial class ScheduledQueryRuleActions
+    /// <summary> The connection info for Incident Receiver. </summary>
+    public partial class IncidentServiceConnection
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,32 +45,38 @@ namespace Azure.ResourceManager.Monitor.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledQueryRuleActions"/>. </summary>
-        public ScheduledQueryRuleActions()
+        /// <summary> Initializes a new instance of <see cref="IncidentServiceConnection"/>. </summary>
+        /// <param name="name"> The name of the connection. </param>
+        /// <param name="id"> GUID value representing the connection ID for the incident management service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="id"/> is null. </exception>
+        public IncidentServiceConnection(string name, string id)
         {
-            ActionGroups = new ChangeTrackingList<string>();
-            CustomProperties = new ChangeTrackingDictionary<string, string>();
-            ActionProperties = new ChangeTrackingDictionary<string, string>();
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(id, nameof(id));
+
+            Name = name;
+            Id = id;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledQueryRuleActions"/>. </summary>
-        /// <param name="actionGroups"> Action Group resource Ids to invoke when the alert fires. </param>
-        /// <param name="customProperties"> The properties of an alert payload. </param>
-        /// <param name="actionProperties"> The properties of an action properties. </param>
+        /// <summary> Initializes a new instance of <see cref="IncidentServiceConnection"/>. </summary>
+        /// <param name="name"> The name of the connection. </param>
+        /// <param name="id"> GUID value representing the connection ID for the incident management service. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledQueryRuleActions(IList<string> actionGroups, IDictionary<string, string> customProperties, IDictionary<string, string> actionProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IncidentServiceConnection(string name, string id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ActionGroups = actionGroups;
-            CustomProperties = customProperties;
-            ActionProperties = actionProperties;
+            Name = name;
+            Id = id;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Action Group resource Ids to invoke when the alert fires. </summary>
-        public IList<string> ActionGroups { get; }
-        /// <summary> The properties of an alert payload. </summary>
-        public IDictionary<string, string> CustomProperties { get; }
-        /// <summary> The properties of an action properties. </summary>
-        public IDictionary<string, string> ActionProperties { get; }
+        /// <summary> Initializes a new instance of <see cref="IncidentServiceConnection"/> for deserialization. </summary>
+        internal IncidentServiceConnection()
+        {
+        }
+
+        /// <summary> The name of the connection. </summary>
+        public string Name { get; set; }
+        /// <summary> GUID value representing the connection ID for the incident management service. </summary>
+        public string Id { get; set; }
     }
 }
