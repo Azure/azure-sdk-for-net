@@ -14,20 +14,8 @@ namespace MgmtTypeSpec
     public partial class Operations
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
-        private static ResponseClassifier _pipelineMessageClassifier201;
-        private static ResponseClassifier _pipelineMessageClassifier202;
-        private static ResponseClassifier _pipelineMessageClassifier204;
-        private static Classifier2xxAnd4xx _pipelineMessageClassifier2xxAnd4xx;
 
         private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = new StatusCodeClassifier(stackalloc ushort[] { 200 });
-
-        private static ResponseClassifier PipelineMessageClassifier201 => _pipelineMessageClassifier201 = new StatusCodeClassifier(stackalloc ushort[] { 201 });
-
-        private static ResponseClassifier PipelineMessageClassifier202 => _pipelineMessageClassifier202 = new StatusCodeClassifier(stackalloc ushort[] { 202 });
-
-        private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 = new StatusCodeClassifier(stackalloc ushort[] { 204 });
-
-        private static Classifier2xxAnd4xx PipelineMessageClassifier2xxAnd4xx => _pipelineMessageClassifier2xxAnd4xx ??= new Classifier2xxAnd4xx();
 
         internal HttpMessage CreateListRequest(RequestContext context)
         {
@@ -41,10 +29,6 @@ namespace MgmtTypeSpec
             request.Uri = uri;
             request.Headers.SetValue("Accept", "application/json");
             return message;
-        }
-
-        private class Classifier2xxAnd4xx : ResponseClassifier
-        {
         }
     }
 }

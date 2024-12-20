@@ -4,11 +4,17 @@
 using Azure.Core;
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
-using Microsoft.Azure.Test.HttpRecorder;
+using Microsoft.Generator.CSharp.Expressions;
+using Microsoft.Generator.CSharp.Input;
+using Microsoft.Generator.CSharp.Primitives;
 using Microsoft.Generator.CSharp.Providers;
+using Microsoft.Generator.CSharp.Snippets;
 using NUnit.Framework;
 using System;
+using System.Buffers;
+using System.ClientModel.Primitives;
 using System.Net;
+using System.Text.Json;
 
 namespace Azure.Generator.Tests
 {
@@ -18,6 +24,38 @@ namespace Azure.Generator.Tests
         public void SetUp()
         {
             MockHelpers.LoadMockPlugin();
+        }
+
+        [TestCase(typeof(Guid), ExpectedResult = "writer.WriteStringValue(value);\n")]
+        [TestCase(typeof(IPAddress), ExpectedResult ="writer.WriteStringValue(value.ToString());\n")]
+        [TestCase(typeof(ETag), ExpectedResult = "writer.WriteStringValue(value.ToString());\n")]
+        [TestCase(typeof(AzureLocation), ExpectedResult = "writer.WriteStringValue(value);\n")]
+        [TestCase(typeof(ResourceIdentifier), ExpectedResult = "writer.WriteStringValue(value);\n")]
+        public string ValidateSerializationStatement(Type type)
+        {
+            var value = new ParameterProvider("value", $"", type).AsExpression().As(type);
+            var writer = new ParameterProvider("writer", $"", typeof(Utf8JsonWriter)).AsExpression().As<Utf8JsonWriter>();
+            var options = new ParameterProvider("options", $"", typeof(ModelReaderWriterOptions)).AsExpression().As<ModelReaderWriterOptions>();
+
+            var statement = AzureClientPlugin.Instance.TypeFactory.SerializeJsonValue(type, value, writer, options, SerializationFormat.Default);
+            Assert.IsNotNull(statement);
+
+            return statement.ToDisplayString();
+        }
+
+        [TestCase(typeof(Guid), ExpectedResult = "new global::System.Guid(element.GetString())")]
+        [TestCase(typeof(IPAddress), ExpectedResult = "global::System.Net.IPAddress.Parse(element.GetString())")]
+        [TestCase(typeof(ETag), ExpectedResult = "new global::Azure.ETag(element.GetString())")]
+        [TestCase(typeof(AzureLocation), ExpectedResult = "new global::Azure.Core.AzureLocation(element.GetString())")]
+        [TestCase(typeof(ResourceIdentifier), ExpectedResult = "new global::Azure.Core.ResourceIdentifier(element.GetString())")]
+        public string ValidateDeserializationExpression(Type type)
+        {
+            var element = new ParameterProvider("element", $"", typeof(JsonElement)).AsExpression().As<JsonElement>();
+
+            var expression = AzureClientPlugin.Instance.TypeFactory.DeserializeJsonValue(type, element, SerializationFormat.Default);
+            Assert.IsNotNull(expression);
+
+            return expression.ToDisplayString();
         }
 
         [Test]
