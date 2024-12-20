@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk"
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Version>1.7.0</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
