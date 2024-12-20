@@ -85,7 +85,7 @@ foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.
         EntityRecognitionOperationResult entityRecognitionLROResult = (EntityRecognitionOperationResult)analyzeTextLROResult;
 
         // View the classifications recognized in the input documents.
-        foreach (EntitiesDocumentResultWithMetadata nerResult in entityRecognitionLROResult.Results.Documents)
+        foreach (EntityActionResultWithMetadata nerResult in entityRecognitionLROResult.Results.Documents)
         {
             Console.WriteLine($"Result for document with Id = \"{nerResult.Id}\":");
 

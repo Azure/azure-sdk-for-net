@@ -78,14 +78,14 @@ Response<AnalyzeTextOperationState> response = client.AnalyzeTextOperation(multi
 
 AnalyzeTextOperationState analyzeTextJobState = response.Value;
 
-foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.Actions.Items)
+foreach (AnalyzeTextOperationResult AnalyzeTextOperationResult in analyzeTextJobState.Actions.Items)
 {
-    if (analyzeTextLROResult is EntityRecognitionOperationResult)
+    if (AnalyzeTextOperationResult is EntityRecognitionOperationResult)
     {
-        EntityRecognitionOperationResult entityRecognitionLROResult = (EntityRecognitionOperationResult)analyzeTextLROResult;
+        EntityRecognitionOperationResult EntityRecognitionOperationResult = (EntityRecognitionOperationResult)AnalyzeTextOperationResult;
 
         // View the classifications recognized in the input documents.
-        foreach (EntitiesDocumentResultWithMetadata nerResult in entityRecognitionLROResult.Results.Documents)
+        foreach (EntityActionResultWithMetadata nerResult in EntityRecognitionOperationResult.Results.Documents)
         {
             Console.WriteLine($"Result for document with Id = \"{nerResult.Id}\":");
 
@@ -110,7 +110,7 @@ foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.
             Console.WriteLine();
         }
         // View the errors in the document
-        foreach (DocumentError error in entityRecognitionLROResult.Results.Errors)
+        foreach (DocumentError error in EntityRecognitionOperationResult.Results.Errors)
         {
             Console.WriteLine($"  Error in document: {error.Id}!");
             Console.WriteLine($"  Document error: {error.Error}");
@@ -118,9 +118,9 @@ foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.
         }
     }
     Console.WriteLine();
-    if (analyzeTextLROResult is KeyPhraseExtractionOperationResult)
+    if (AnalyzeTextOperationResult is KeyPhraseExtractionOperationResult)
     {
-        KeyPhraseExtractionOperationResult keyPhraseExtractionLROResult = (KeyPhraseExtractionOperationResult)analyzeTextLROResult;
+        KeyPhraseExtractionOperationResult keyPhraseExtractionLROResult = (KeyPhraseExtractionOperationResult)AnalyzeTextOperationResult;
 
         // View the classifications recognized in the input documents.
         foreach (KeyPhrasesActionResult kpeResult in keyPhraseExtractionLROResult.Results.Documents)

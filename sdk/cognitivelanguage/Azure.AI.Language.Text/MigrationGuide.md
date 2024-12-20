@@ -573,7 +573,7 @@ AnalyzeTextInput body = new TextEntityRecognitionInput()
 Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(body);
 AnalyzeTextEntitiesResult entitiesTaskResult = (AnalyzeTextEntitiesResult)response.Value;
 
-foreach (EntitiesDocumentResultWithMetadataDetectedLanguage nerResult in entitiesTaskResult.Results.Documents)
+foreach (EntityActionResult nerResult in entitiesTaskResult.Results.Documents)
 {
     Console.WriteLine($"Result for document with Id = \"{nerResult.Id}\":");
 
@@ -711,7 +711,7 @@ foreach (PiiActionResult piiResult in piiTaskResult.Results.Documents)
     Console.WriteLine($"  Redacted Text: \"{piiResult.RedactedText}\":");
     Console.WriteLine($"  Recognized {piiResult.Entities.Count} entities:");
 
-    foreach (PiiEntityWithTags entity in piiResult.Entities)
+    foreach (PiiEntity entity in piiResult.Entities)
     {
         Console.WriteLine($"    Text: {entity.Text}");
         Console.WriteLine($"    Offset: {entity.Offset}");
@@ -1257,7 +1257,7 @@ foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.
         CustomEntityRecognitionOperationResult customClassificationResult = (CustomEntityRecognitionOperationResult)analyzeTextLROResult;
 
         // View the classifications recognized in the input documents.
-        foreach (EntityActionResult entitiesDocument in customClassificationResult.Results.Documents)
+        foreach (CustomEntityActionResult entitiesDocument in customClassificationResult.Results.Documents)
         {
             Console.WriteLine($"Result for document with Id = \"{entitiesDocument.Id}\":");
             Console.WriteLine($"  Recognized {entitiesDocument.Entities.Count} Entities:");
@@ -2056,7 +2056,7 @@ foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.
         EntityRecognitionOperationResult entityRecognitionLROResult = (EntityRecognitionOperationResult)analyzeTextLROResult;
 
         // View the classifications recognized in the input documents.
-        foreach (EntitiesDocumentResultWithMetadata nerResult in entityRecognitionLROResult.Results.Documents)
+        foreach (EntityActionResultWithMetadata nerResult in entityRecognitionLROResult.Results.Documents)
         {
             Console.WriteLine($"Result for document with Id = \"{nerResult.Id}\":");
 

@@ -58,7 +58,7 @@ foreach (PiiActionResult piiResult in piiTaskResult.Results.Documents)
     Console.WriteLine($"  Redacted Text: \"{piiResult.RedactedText}\":");
     Console.WriteLine($"  Recognized {piiResult.Entities.Count} entities:");
 
-    foreach (PiiEntityWithTags entity in piiResult.Entities)
+    foreach (PiiEntity entity in piiResult.Entities)
     {
         Console.WriteLine($"    Text: {entity.Text}");
         Console.WriteLine($"    Offset: {entity.Offset}");
@@ -128,7 +128,7 @@ foreach (PiiActionResult piiResult in piiTaskResult.Results.Documents)
     Console.WriteLine($"  Redacted Text: \"{piiResult.RedactedText}\":");
     Console.WriteLine($"  Recognized {piiResult.Entities.Count} entities:");
 
-    foreach (PiiEntityWithTags entity in piiResult.Entities)
+    foreach (PiiEntity entity in piiResult.Entities)
     {
         Console.WriteLine($"    Text: {entity.Text}");
         Console.WriteLine($"    Offset: {entity.Offset}");
