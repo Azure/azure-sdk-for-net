@@ -2,11 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Azure.Identity
 {
@@ -36,11 +32,6 @@ namespace Azure.Identity
             }
 
             return scopes[0].Remove(scopes[0].LastIndexOf(DefaultSuffix, StringComparison.Ordinal));
-        }
-
-        public static string[] ResourceToScopes(string resource)
-        {
-            return new string[] { resource + "/.default" };
         }
 
         public static void ValidateScope(string scope)
