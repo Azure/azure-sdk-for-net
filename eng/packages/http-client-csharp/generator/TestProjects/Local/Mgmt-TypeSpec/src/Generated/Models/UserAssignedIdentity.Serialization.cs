@@ -37,12 +37,12 @@ namespace MgmtTypeSpec.Models
             if (options.Format != "W" && Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
-                writer.WriteStringValue(PrincipalId);
+                writer.WriteStringValue(PrincipalId.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
-                writer.WriteStringValue(ClientId);
+                writer.WriteStringValue(ClientId.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

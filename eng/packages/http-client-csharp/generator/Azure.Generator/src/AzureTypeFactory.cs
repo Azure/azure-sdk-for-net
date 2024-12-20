@@ -75,32 +75,32 @@ namespace Azure.Generator
         }
 
         /// <inheritdoc/>
-        public override ValueExpression GetValueTypeDeserializationExpression(Type valueType, ScopedApi<JsonElement> element, SerializationFormat format)
+        public override ValueExpression DeserializeJsonValue(Type valueType, ScopedApi<JsonElement> element, SerializationFormat format)
         {
-            var expression = GetValueTypeDeserializationExpressionCore(valueType, element, format);
-            return expression ?? base.GetValueTypeDeserializationExpression(valueType, element, format);
+            var expression = DeserializeJsonValueCore(valueType, element, format);
+            return expression ?? base.DeserializeJsonValue(valueType, element, format);
         }
 
-        private ValueExpression? GetValueTypeDeserializationExpressionCore(
+        private ValueExpression? DeserializeJsonValueCore(
             Type valueType,
             ScopedApi<JsonElement> element,
             SerializationFormat format)
         {
-            return KnownAzureTypes.TryGetDeserializationExpression(valueType, out var deserializationExpression) ?
+            return KnownAzureTypes.TryGetJsonDeserializationExpression(valueType, out var deserializationExpression) ?
                 deserializationExpression(new CSharpType(valueType), element, format) :
                 null;
         }
 
         /// <inheritdoc/>
-        public override MethodBodyStatement SerializeValueType(CSharpType type, SerializationFormat serializationFormat, ValueExpression value, Type valueType, ScopedApi<Utf8JsonWriter> utf8JsonWriter, ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter)
+        public override MethodBodyStatement SerializeJsonValue(Type valueType, ValueExpression value, ScopedApi<Utf8JsonWriter> utf8JsonWriter, ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter, SerializationFormat serializationFormat)
         {
-            var statement = SerializeValueTypeCore(type, serializationFormat, value, valueType, utf8JsonWriter, mrwOptionsParameter);
-            return statement ?? base.SerializeValueType(type, serializationFormat, value, valueType, utf8JsonWriter, mrwOptionsParameter);
+            var statement = SerializeValueTypeCore(serializationFormat, value, valueType, utf8JsonWriter, mrwOptionsParameter);
+            return statement ?? base.SerializeJsonValue(valueType, value, utf8JsonWriter, mrwOptionsParameter, serializationFormat);
         }
 
-        private MethodBodyStatement? SerializeValueTypeCore(CSharpType type, SerializationFormat serializationFormat, ValueExpression value, Type valueType, ScopedApi<Utf8JsonWriter> utf8JsonWriter, ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter)
+        private MethodBodyStatement? SerializeValueTypeCore(SerializationFormat serializationFormat, ValueExpression value, Type valueType, ScopedApi<Utf8JsonWriter> utf8JsonWriter, ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter)
         {
-            return KnownAzureTypes.TryGetSerializationExpression(valueType, out var serializationExpression) ?
+            return KnownAzureTypes.TryGetJsonSerializationExpression(valueType, out var serializationExpression) ?
                 serializationExpression(value, utf8JsonWriter, mrwOptionsParameter, serializationFormat) :
                 null;
         }

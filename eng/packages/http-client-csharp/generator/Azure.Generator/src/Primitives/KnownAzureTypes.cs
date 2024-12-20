@@ -70,10 +70,10 @@ namespace Azure.Generator.Primitives
             [typeof(ResourceIdentifier)] = DeserializeNewInstanceStringLikeType,
         };
 
-        internal static bool TryGetPrimitiveType(string id, [MaybeNullWhen(false)] out CSharpType type) => _idToTypes.TryGetValue(id, out type);
+        public static bool TryGetPrimitiveType(string id, [MaybeNullWhen(false)] out CSharpType type) => _idToTypes.TryGetValue(id, out type);
 
-        internal static bool TryGetSerializationExpression(Type type, [MaybeNullWhen(false)] out SerializationExpression expression) => _typeToSerializationExpression.TryGetValue(type, out expression);
+        public static bool TryGetJsonSerializationExpression(Type type, [MaybeNullWhen(false)] out SerializationExpression expression) => _typeToSerializationExpression.TryGetValue(type, out expression);
 
-        internal static bool TryGetDeserializationExpression(Type type, [MaybeNullWhen(false)] out DeserializationExpression expression) => _typeToDeserializationExpression.TryGetValue(type, out expression);
+        public static bool TryGetJsonDeserializationExpression(Type type, [MaybeNullWhen(false)] out DeserializationExpression expression) => _typeToDeserializationExpression.TryGetValue(type, out expression);
     }
 }
