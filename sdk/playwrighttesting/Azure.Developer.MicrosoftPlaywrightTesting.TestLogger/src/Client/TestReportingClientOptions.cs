@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Client
 {
     /// <summary> Client options for TestReportingClient. </summary>
-    public partial class TestReportingClientOptions : ClientOptions
+    internal partial class TestReportingClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2024_09_01_Preview;
 
