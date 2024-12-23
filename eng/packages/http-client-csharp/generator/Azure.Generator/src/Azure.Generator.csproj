@@ -10,7 +10,6 @@
 
 	<ItemGroup>
 		<PackageReference Include="Azure.Core" />
-		<PackageReference Include="Microsoft.Generator.CSharp.ClientModel" />
 	</ItemGroup>
 
 	<!-- Copy output to package dist path for local execution -->
@@ -30,6 +29,10 @@
 		<Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\RawRequestUriBuilder.cs" LinkBase="Shared/Core">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Compile>
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\..\..\..\..\..\..\..\work\typespec\packages\http-client-csharp\generator\Microsoft.Generator.CSharp.ClientModel\src\Microsoft.Generator.CSharp.ClientModel.csproj" />
+	  <ProjectReference Include="..\..\..\..\..\..\..\..\work\typespec\packages\http-client-csharp\generator\Microsoft.Generator.CSharp\src\Microsoft.Generator.CSharp.csproj" />
 	</ItemGroup>
 
 </Project>
