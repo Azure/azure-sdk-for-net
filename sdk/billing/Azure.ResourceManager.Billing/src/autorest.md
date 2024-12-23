@@ -23,7 +23,7 @@ modelerfour:
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
-#mgmt-debug:
+# mgmt-debug:
 #  show-serialized-names: true
 
 request-path-to-resource-name:
@@ -113,6 +113,7 @@ rename-mapping:
   BillingProfileProperties.invoiceEmailOptIn: IsInvoiceEmailOptIn
   BillingRelationshipType.CSPPartner: CspPartner
   BillingRelationshipType.CSPCustomer: CspCustomer
+  BillingRoleAssignmentProperties.createdByPrincipalTenantId: CreatedByPrincipalTenantIdString
   BillingSubscription.properties.customerId: SubscriptionCustomerId
   BillingSubscription.properties.beneficiaryTenantId: SubscriptionBeneficiaryTenantId
   BillingSubscriptionAlias.properties.billingSubscriptionId: SubscriptionAliasSubscriptionId

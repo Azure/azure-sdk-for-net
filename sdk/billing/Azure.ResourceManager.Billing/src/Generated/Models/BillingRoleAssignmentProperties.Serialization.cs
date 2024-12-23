@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("createdOn"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedByPrincipalTenantId))
+            if (options.Format != "W" && Optional.IsDefined(CreatedByPrincipalTenantIdString))
             {
                 writer.WritePropertyName("createdByPrincipalTenantId"u8);
-                writer.WriteStringValue(CreatedByPrincipalTenantId.Value);
+                writer.WriteStringValue(CreatedByPrincipalTenantIdString);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedByPrincipalId))
             {
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Billing.Models
             }
             BillingProvisioningState? provisioningState = default;
             DateTimeOffset? createdOn = default;
-            Guid? createdByPrincipalTenantId = default;
+            string createdByPrincipalTenantId = default;
             string createdByPrincipalId = default;
             string createdByPrincipalPuid = default;
             string createdByUserEmailAddress = default;
@@ -273,11 +273,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (property.NameEquals("createdByPrincipalTenantId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    createdByPrincipalTenantId = property.Value.GetGuid();
+                    createdByPrincipalTenantId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("createdByPrincipalId"u8))
@@ -533,7 +529,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedByPrincipalTenantId), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedByPrincipalTenantIdString), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  createdByPrincipalTenantId: ");
@@ -541,10 +537,18 @@ namespace Azure.ResourceManager.Billing.Models
             }
             else
             {
-                if (Optional.IsDefined(CreatedByPrincipalTenantId))
+                if (Optional.IsDefined(CreatedByPrincipalTenantIdString))
                 {
                     builder.Append("  createdByPrincipalTenantId: ");
-                    builder.AppendLine($"'{CreatedByPrincipalTenantId.Value.ToString()}'");
+                    if (CreatedByPrincipalTenantIdString.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CreatedByPrincipalTenantIdString}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CreatedByPrincipalTenantIdString}'");
+                    }
                 }
             }
 
