@@ -1,4 +1,4 @@
-﻿﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -15,9 +15,9 @@ namespace Azure.Communication.CallAutomation
         /// Parameters for the Start Recording operation.
         /// </summary>
         /// <param name="callLocator"> . </param>
-        public StartRecordingOptions(CallLocator callLocator)
+        public StartRecordingOptions(CallLocator callLocator = null)
         {
-            CallLocator = callLocator ?? throw new ArgumentNullException(nameof(callLocator));
+            CallLocator = callLocator;
         }
 
         /// <summary>
@@ -71,5 +71,10 @@ namespace Azure.Communication.CallAutomation
         /// ///
         /// </summary>
         public IList<ChannelAffinity> ChannelAffinity { get; set; }
+
+        /// <summary>
+        /// The call connection id.
+        /// </summary>
+        public string CallConnectionId { get; set; }
     }
 }
