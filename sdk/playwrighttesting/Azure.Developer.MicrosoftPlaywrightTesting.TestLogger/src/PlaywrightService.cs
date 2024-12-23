@@ -76,7 +76,7 @@ public class PlaywrightService
     /// <summary>
     /// Gets or sets the operating system for Playwright service.
     /// </summary>
-    public OSPlatform? Os
+    public OSPlatform? OS
     {
         // fetch class level variable if set -> fetch environment variable -> default to null
         get
@@ -204,7 +204,7 @@ public class PlaywrightService
             throw new Exception(Constants.s_service_endpoint_removed_since_scalable_execution_disabled_error_message);
         if (string.IsNullOrEmpty(ServiceEndpoint))
             throw new Exception(Constants.s_no_service_endpoint_error_message);
-        string _serviceOs = Uri.EscapeDataString(GetServiceCompatibleOs(os) ?? GetServiceCompatibleOs(Os)!);
+        string _serviceOs = Uri.EscapeDataString(GetServiceCompatibleOs(os) ?? GetServiceCompatibleOs(OS)!);
         string _runId = Uri.EscapeDataString(runId ?? RunId!);
         string _exposeNetwork = exposeNetwork ?? ExposeNetwork!;
 
@@ -307,7 +307,7 @@ public class PlaywrightService
         }
         if (!string.IsNullOrEmpty(os))
         {
-            Os = GetOSPlatform(os);
+            OS = GetOSPlatform(os);
             if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs)))
             {
                 Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs, os);

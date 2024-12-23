@@ -77,7 +77,7 @@ public class PlaywrightServiceTests
             Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId), Is.Not.Null);
             Assert.That(playwrightService.ServiceAuth, Is.EqualTo(ServiceAuthType.EntraId));
             Assert.That(playwrightService.UseCloudHostedBrowsers, Is.True);
-            Assert.AreEqual(playwrightService.Os!, OSPlatform.Linux);
+            Assert.AreEqual(playwrightService.OS!, OSPlatform.Linux);
             Assert.AreEqual(playwrightService.ExposeNetwork!, Constants.s_default_expose_network);
             Assert.That(playwrightService.RunId, Is.Not.Null);
         });
@@ -88,7 +88,7 @@ public class PlaywrightServiceTests
     {
         var playwrightService = new PlaywrightService(os: OSPlatform.Windows, entraLifecycle: null);
         Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs), Is.EqualTo(ServiceOs.Windows));
-        Assert.That(playwrightService.Os, Is.EqualTo(OSPlatform.Windows));
+        Assert.That(playwrightService.OS, Is.EqualTo(OSPlatform.Windows));
     }
 
     [Test]
@@ -164,7 +164,7 @@ public class PlaywrightServiceTests
             Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId), Is.EqualTo("old-run-id"));
             Assert.That(Environment.GetEnvironmentVariable(Constants.s_playwright_service_disable_scalable_execution_environment_variable), Is.EqualTo("true"));
             Assert.That(Environment.GetEnvironmentVariable(Constants.s_playwright_service_auth_type_environment_variable), Is.EqualTo(ServiceAuthType.EntraId));
-            Assert.That(newPlaywrightService.Os, Is.EqualTo(OSPlatform.Windows));
+            Assert.That(newPlaywrightService.OS, Is.EqualTo(OSPlatform.Windows));
             Assert.That(newPlaywrightService.ExposeNetwork, Is.EqualTo("new-expose"));
             Assert.That(newPlaywrightService.RunId, Is.EqualTo("new-run-id"));
             Assert.That(newPlaywrightService.UseCloudHostedBrowsers, Is.True);
@@ -184,7 +184,7 @@ public class PlaywrightServiceTests
             Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId), Is.EqualTo("old-run-id"));
             Assert.That(Environment.GetEnvironmentVariable(Constants.s_playwright_service_disable_scalable_execution_environment_variable), Is.EqualTo("true"));
             Assert.That(Environment.GetEnvironmentVariable(Constants.s_playwright_service_auth_type_environment_variable), Is.EqualTo(ServiceAuthType.EntraId));
-            Assert.That(newPlaywrightService.Os, Is.EqualTo(OSPlatform.Linux));
+            Assert.That(newPlaywrightService.OS, Is.EqualTo(OSPlatform.Linux));
             Assert.That(newPlaywrightService.ExposeNetwork, Is.EqualTo("old-expose"));
             Assert.That(newPlaywrightService.RunId, Is.EqualTo("old-run-id"));
             Assert.That(newPlaywrightService.UseCloudHostedBrowsers, Is.False);
