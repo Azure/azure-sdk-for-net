@@ -45,14 +45,14 @@ Refresh-Build
 Write-Host "Generating BasicTypeSpec" -ForegroundColor Cyan
 Invoke-LoggedCommand (Get-TspCommand "$basicTypespecTestProject/Basic-TypeSpec.tsp" $basicTypespecTestProject)
 
-Write-Host "Generating MgmtTypeSpec" -ForegroundColor Cyan
-Invoke-LoggedCommand (Get-TspCommand "$mgmtTypespecTestProject/main.tsp" $mgmtTypespecTestProject)
-
 Write-Host "Building BasicTypeSpec" -ForegroundColor Cyan
 Invoke-LoggedCommand "dotnet build $packageRoot/generator/TestProjects/Local/Basic-TypeSpec/src/BasicTypeSpec.csproj"
 
-# skip the build of MgmtTypeSpec for now
-# Write-Host "Building MgmtTypeSpec" -ForegroundColor Cyan
+Write-Host "Generating MgmtTypeSpec" -ForegroundColor Cyan
+Invoke-LoggedCommand (Get-TspCommand "$mgmtTypespecTestProject/main.tsp" $mgmtTypespecTestProject)
+
+# temporarily disable building MgmtTypeSpec because now the generated code of this project cannot build
+# Write-Host "Building BasicTypeSpec" -ForegroundColor Cyan
 # Invoke-LoggedCommand "dotnet build $packageRoot/generator/TestProjects/Local/Mgmt-TypeSpec/src/MgmtTypeSpec.csproj"
 
 Pop-Location

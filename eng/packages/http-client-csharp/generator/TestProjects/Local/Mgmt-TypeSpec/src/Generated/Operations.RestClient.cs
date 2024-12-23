@@ -5,10 +5,30 @@
 
 #nullable disable
 
+using Azure;
+using Azure.Core;
+
 namespace MgmtTypeSpec
 {
     /// <summary></summary>
     public partial class Operations
     {
+        private static ResponseClassifier _pipelineMessageClassifier200;
+
+        private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = new StatusCodeClassifier(stackalloc ushort[] { 200 });
+
+        internal HttpMessage CreateListRequest(RequestContext context)
+        {
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Method = RequestMethod.Get;
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/MgmtTypeSpec/operations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
     }
 }
