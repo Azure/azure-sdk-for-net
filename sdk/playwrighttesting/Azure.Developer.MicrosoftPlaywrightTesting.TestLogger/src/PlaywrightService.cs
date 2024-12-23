@@ -232,11 +232,7 @@ public class PlaywrightService
                 ["Authorization"] = $"Bearer {GetAuthToken()}"
             }
         };
-        return new ConnectOptions<T>
-        {
-            WsEndpoint = wsEndpoint,
-            Options = BrowserConnectOptionsConverter.Convert<T>(browserConnectOptions)
-        };
+        return new ConnectOptions<T>(wsEndpoint, BrowserConnectOptionsConverter.Convert<T>(browserConnectOptions));
     }
 
     /// <summary>
