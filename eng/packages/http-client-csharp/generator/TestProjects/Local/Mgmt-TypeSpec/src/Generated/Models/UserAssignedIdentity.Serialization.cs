@@ -93,7 +93,7 @@ namespace MgmtTypeSpec.Models
                     {
                         continue;
                     }
-                    principalId = prop.Value.GetGuid();
+                    principalId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("clientId"u8))
@@ -102,7 +102,7 @@ namespace MgmtTypeSpec.Models
                     {
                         continue;
                     }
-                    clientId = prop.Value.GetGuid();
+                    clientId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

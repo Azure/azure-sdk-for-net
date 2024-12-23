@@ -44,7 +44,7 @@ namespace MgmtTypeSpec.Models
                 writer.WritePropertyName("isDataAction"u8);
                 writer.WriteBooleanValue(IsDataAction.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Display))
+            if (Optional.IsDefined(Display))
             {
                 writer.WritePropertyName("display"u8);
                 writer.WriteObjectValue(Display, options);
@@ -54,7 +54,7 @@ namespace MgmtTypeSpec.Models
                 writer.WritePropertyName("origin"u8);
                 writer.WriteStringValue(Origin.Value.ToString());
             }
-            if (Optional.IsDefined(ActionType))
+            if (options.Format != "W" && Optional.IsDefined(ActionType))
             {
                 writer.WritePropertyName("actionType"u8);
                 writer.WriteStringValue(ActionType.Value.ToString());
