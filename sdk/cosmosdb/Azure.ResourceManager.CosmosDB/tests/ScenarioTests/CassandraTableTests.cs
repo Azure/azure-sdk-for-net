@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             CassandraTableThroughputSettingResource throughput2 = (await throughput.CreateOrUpdateAsync(WaitUntil.Completed, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
                 new ThroughputSettingsResourceInfo(TestThroughput2, null, null, null, null, null,
-                    new List<ThroughputBucketResource>(),
+                    new List<CosmosDBThroughputBucket>(),
                     serializedAdditionalRawData: new Dictionary<string, BinaryData>())))).Value;
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);

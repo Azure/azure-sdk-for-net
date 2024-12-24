@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                                         new CosmosDBSpatialType("Point")
                                     }, null),
                         },
-                        new List<VectorIndex>(),
+                        new List<CosmosDBVectorIndex>(),
                         serializedAdditionalRawData: new Dictionary<string, BinaryData>())
                 })
             {
