@@ -19,7 +19,6 @@ namespace MgmtTypeSpec
         /// <summary> A credential used to authenticate to the service. </summary>
         private readonly TokenCredential _tokenCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "user_impersonation" };
-        private Operations _cachedOperations;
         private PrivateLinks _cachedPrivateLinks;
         private Foos _cachedFoos;
 
@@ -54,12 +53,6 @@ namespace MgmtTypeSpec
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public HttpPipeline Pipeline { get; }
-
-        /// <summary> Initializes a new instance of Operations. </summary>
-        public virtual Operations GetOperationsClient()
-        {
-            return Volatile.Read(ref _cachedOperations) ?? Interlocked.CompareExchange(ref _cachedOperations, new Operations(Pipeline, _tokenCredential, _endpoint), null) ?? _cachedOperations;
-        }
 
         /// <summary> Initializes a new instance of PrivateLinks. </summary>
         public virtual PrivateLinks GetPrivateLinksClient()
