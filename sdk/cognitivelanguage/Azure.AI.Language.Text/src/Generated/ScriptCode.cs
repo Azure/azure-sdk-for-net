@@ -34,6 +34,7 @@ namespace Azure.AI.Language.Text
         private const string GujrValue = "Gujr";
         private const string GuruValue = "Guru";
         private const string HangValue = "Hang";
+        private const string HaniValue = "Hani";
         private const string HansValue = "Hans";
         private const string HantValue = "Hant";
         private const string HebrValue = "Hebr";
@@ -43,9 +44,13 @@ namespace Azure.AI.Language.Text
         private const string LaooValue = "Laoo";
         private const string LatnValue = "Latn";
         private const string MlymValue = "Mlym";
+        private const string MongValue = "Mong";
+        private const string MteiValue = "Mtei";
         private const string MymrValue = "Mymr";
+        private const string OlckValue = "Olck";
         private const string OryaValue = "Orya";
         private const string SinhValue = "Sinh";
+        private const string ShrdValue = "Shrd";
         private const string TamlValue = "Taml";
         private const string TeluValue = "Telu";
         private const string ThaaValue = "Thaa";
@@ -76,6 +81,8 @@ namespace Azure.AI.Language.Text
         public static ScriptCode Guru { get; } = new ScriptCode(GuruValue);
         /// <summary> Script code for the Hangul script. </summary>
         public static ScriptCode Hang { get; } = new ScriptCode(HangValue);
+        /// <summary> Script code for the HanLiteral script. </summary>
+        public static ScriptCode Hani { get; } = new ScriptCode(HaniValue);
         /// <summary> Script code for the HanSimplified script. </summary>
         public static ScriptCode Hans { get; } = new ScriptCode(HansValue);
         /// <summary> Script code for the HanTraditional script. </summary>
@@ -94,12 +101,20 @@ namespace Azure.AI.Language.Text
         public static ScriptCode Latn { get; } = new ScriptCode(LatnValue);
         /// <summary> Script code for the Malayalam script. </summary>
         public static ScriptCode Mlym { get; } = new ScriptCode(MlymValue);
+        /// <summary> Script code for the Mongolian script. </summary>
+        public static ScriptCode Mong { get; } = new ScriptCode(MongValue);
+        /// <summary> Script code for the Meitei script. </summary>
+        public static ScriptCode Mtei { get; } = new ScriptCode(MteiValue);
         /// <summary> Script code for the Myanmar script. </summary>
         public static ScriptCode Mymr { get; } = new ScriptCode(MymrValue);
+        /// <summary> Script code for the Santali script. </summary>
+        public static ScriptCode Olck { get; } = new ScriptCode(OlckValue);
         /// <summary> Script code for the Odia script. </summary>
         public static ScriptCode Orya { get; } = new ScriptCode(OryaValue);
         /// <summary> Script code for the Sinhala script. </summary>
         public static ScriptCode Sinh { get; } = new ScriptCode(SinhValue);
+        /// <summary> Script code for the Sharada script. </summary>
+        public static ScriptCode Shrd { get; } = new ScriptCode(ShrdValue);
         /// <summary> Script code for the Tamil script. </summary>
         public static ScriptCode Taml { get; } = new ScriptCode(TamlValue);
         /// <summary> Script code for the Telugu script. </summary>

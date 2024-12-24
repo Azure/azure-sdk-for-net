@@ -14,20 +14,11 @@ namespace MgmtTypeSpec
     public partial class PrivateLinks
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
-        private static ResponseClassifier _pipelineMessageClassifier201;
-        private static ResponseClassifier _pipelineMessageClassifier202;
-        private static ResponseClassifier _pipelineMessageClassifier204;
-        private static Classifier2xxAnd4xx _pipelineMessageClassifier2xxAnd4xx;
+        private static ResponseClassifier _pipelineMessageClassifier200202;
 
         private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
-        private static ResponseClassifier PipelineMessageClassifier201 => _pipelineMessageClassifier201 = new StatusCodeClassifier(stackalloc ushort[] { 201 });
-
-        private static ResponseClassifier PipelineMessageClassifier202 => _pipelineMessageClassifier202 = new StatusCodeClassifier(stackalloc ushort[] { 202 });
-
-        private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 = new StatusCodeClassifier(stackalloc ushort[] { 204 });
-
-        private static Classifier2xxAnd4xx PipelineMessageClassifier2xxAnd4xx => _pipelineMessageClassifier2xxAnd4xx ??= new Classifier2xxAnd4xx();
+        private static ResponseClassifier PipelineMessageClassifier200202 => _pipelineMessageClassifier200202 = new StatusCodeClassifier(stackalloc ushort[] { 200, 202 });
 
         internal HttpMessage CreateGetAllPrivateLinkResourcesRequest(string resourceGroupName, RequestContext context)
         {
@@ -49,7 +40,7 @@ namespace MgmtTypeSpec
 
         internal HttpMessage CreateStartRequest(string resourceGroupName, string privateLinkResourcenName, RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200202);
             Request request = message.Request;
             request.Method = RequestMethod.Post;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
@@ -67,10 +58,6 @@ namespace MgmtTypeSpec
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
-        }
-
-        private class Classifier2xxAnd4xx : ResponseClassifier
-        {
         }
     }
 }
